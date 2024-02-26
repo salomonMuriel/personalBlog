@@ -18,6 +18,23 @@ module.exports = {
     },
 
     extend: {
+      animation: {
+        'slide-in-out-l': 'slideL 4s ease-in-out forwards',
+        'slide-in-out-r': 'slideR 4s ease-in-out forwards',
+
+      },
+      keyframes: {
+        slideL: {
+          '0%': { left:'0', transform: 'translateX(-100%)'},
+          '50%': { transform: 'translateX(120%)' },
+          '100%': { transform: 'translateX(-100%)' },
+        },
+        slideR: {
+          '0%': { right:'0', transform: 'translateX(100%)' },
+          '50%': { transform: 'translateX(-100%)' },
+          '100%': { transform: 'translateX(100%)' },
+        }
+      },
       textColor: {
         skin: {
           base: withOpacity("--color-text-base"),
