@@ -2,12 +2,15 @@
 import { LOGO_IMAGE, SITE } from "@config";
 import Hr from "./Hr.astro";
 import LinkButton from "./LinkButton.astro";
+import { getCollection } from "astro:content";
 
 export interface Props {
   activeNav?: "home" | "about" | "now" | "ideas" | "uses" | "posts" | "search";
 }
 
 const { activeNav } = Astro.props;
+
+const posts = await getCollection("blog");
 ---
 
 <header>
@@ -62,12 +65,12 @@ const { activeNav } = Astro.props;
             </a>
           </li>
           <li>
-            <a href="/now/" class={activeNav === "uses" ? "active" : ""}>
+            <a href="/now/" class={activeNav === "now" ? "active" : ""}>
               Now
             </a>
           </li>
           <li>
-            <a href="/ideas/" class={activeNav === "uses" ? "active" : ""}>
+            <a href="/ideas/" class={activeNav === "ideas" ? "active" : ""}>
               Ideas
             </a>
           </li>
@@ -77,7 +80,7 @@ const { activeNav } = Astro.props;
             </a>
           </li>
           {
-            (
+            posts.length > 1 && (
               <li>
                 <a href="/posts/" class={activeNav === "posts" ? "active" : ""}>
                   Posts
