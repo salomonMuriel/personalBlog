@@ -11,3 +11,6 @@
 !.prettierrc
 !.eslintrc.js
 !README.md
+
+*.mdx
+*.md
