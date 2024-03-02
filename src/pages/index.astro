@@ -27,9 +27,9 @@ const socialCount = SOCIALS.filter(social => social.active).length;
   <Header />
   <main id="main-content">
     <section id="hero">
-      <div class="flex w-full pb-4">
-        <h1 class="flex-2">Salomón Muriel</h1>
-        <div class="flex flex-1 justify-center">
+      <div class="flex w-full pb-4 justify-between items-center">
+        <h1 class="flex-1 ml-3">Salomón Muriel</h1>
+        <div class="flex flex-1 justify-center items-center">
           <Image
             src={salomonImage}
             alt="Salomón Muriel"
@@ -66,7 +66,8 @@ const socialCount = SOCIALS.filter(social => social.active).length;
         Data Science, and whatever else comes to mind.
       </p>
       <p class="font-bold">
-        👇 Please don't doubt to contact me. WhatsApp or LinkedIn are best.
+        I'm always eager to meet interesting and innovative people. Please don't
+        doubt to contact me 👇 WhatsApp or LinkedIn are best.
       </p>
       {
         // only display if at least one social link is enabled

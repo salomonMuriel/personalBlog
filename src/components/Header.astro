@@ -31,29 +31,12 @@ const posts = await getCollection("blog");
       </a>
       <nav id="nav-menu">
         <button
-          class="hamburger-menu focus-outline"
+          class="hamburger-menu focus-outline border-2 p-2"
           aria-label="Open Menu"
           aria-expanded="false"
           aria-controls="menu-items"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="menu-icon"
-          >
-            <line x1="7" y1="12" x2="21" y2="12" class="line"></line>
-            <line x1="3" y1="6" x2="21" y2="6" class="line"></line>
-            <line x1="12" y1="18" x2="21" y2="18" class="line"></line>
-            <line x1="18" y1="6" x2="6" y2="18" class="close"></line>
-            <line x1="6" y1="6" x2="18" y2="18" class="close"></line>
-          </svg>
+          more stuff here
         </button>
         <ul id="menu-items" class="display-none sm:flex">
           <li>
@@ -91,9 +74,9 @@ const posts = await getCollection("blog");
           <li>
             <LinkButton
               href="/search/"
-              className={`focus-outline p-3 sm:p-1 ${
+              className={`focus-outline ${
                 activeNav === "search" ? "active" : ""
-              } flex`}
+              }`}
               ariaLabel="search"
               title="Search"
             >
@@ -205,6 +188,10 @@ const posts = await getCollection("blog");
   .menu-icon.is-active .close {
     @apply opacity-100;
   }
+
+  #menu-items li {
+    @apply col-span-2 flex items-center justify-center;
+  }
 </style>
 
 <script>
@@ -222,6 +209,7 @@ const posts = await getCollection("blog");
         "aria-label",
         menuExpanded ? "Open Menu" : "Close Menu"
       );
+      menuBtn.textContent = menuExpanded ? "more stuff here" : "close menu";
       menuItems?.classList.toggle("display-none");
     });
   }
