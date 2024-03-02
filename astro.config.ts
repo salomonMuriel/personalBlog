@@ -40,4 +40,8 @@ export default defineConfig({
     },
   },
   scopedStyleStrategy: "where",
+  redirects: {
+    "/en": "/",
+    "/es": "/",
+  },
 });
