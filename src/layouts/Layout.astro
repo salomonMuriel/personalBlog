@@ -56,6 +56,11 @@ const socialImageURL = new URL(
         "@context": "https://schema.org",
         "@type": "ProfilePage",
         "@id": SITE.website,
+        primaryImageOfPage: {
+          "@context": "https://schema.org",
+          "@type": "ImageObject",
+          contentUrl: SITE.ogImage,
+        },
         mainEntity: {
           "@context": "https://schema.org",
           "@type": "Person",
@@ -72,6 +77,7 @@ const socialImageURL = new URL(
           alumniOf: {
             "@type": "CollegeOrUniversity",
             name: ["Universidad de los Andes"],
+            url: "https://uniandes.edu.co/",
           },
           knowsAbout: ["Entrepreneurship", "Technology", "Data Science"],
           url: SITE.website,
