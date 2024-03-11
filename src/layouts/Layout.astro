@@ -2,6 +2,7 @@
 import { LOCALE, SITE } from "@config";
 import "@styles/base.css";
 import { ViewTransitions } from "astro:transitions";
+import { Schema } from "astro-seo-schema";
 
 const googleSiteVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
 
@@ -49,6 +50,42 @@ const socialImageURL = new URL(
     <link rel="sitemap" href="/sitemap-index.xml" />
 
     <meta name="generator" content={Astro.generator} />
+
+    <Schema
+      item={{
+        "@context": "https://schema.org",
+        "@type": "Person",
+        name: SITE.author,
+        alternateName: "Luis Salomón Muriel Urbina",
+        description: "Entrepreneur, Data Scientist, Maker",
+        disambiguatingDescription:
+          "Colombian 🇨🇴, father of super-twins Franco & Luca 🦊🦊, gamer 👾 and beer-enthusiast 🍻",
+        spouse: {
+          "@type": "Person",
+          name: "Natalia Rodríguez Triana",
+          url: "https://www.linkedin.com/in/nat-innovacion/",
+        },
+        alumniOf: {
+          "@type": "CollegeOrUniversity",
+          name: ["Universidad de los Andes"],
+        },
+        knowsAbout: ["Entrepreneurship", "Technology", "Data Science"],
+        url: SITE.website,
+        image: SITE.website + SITE.ogImage,
+        birthDate: "1991-01-01",
+        birthPlace: {
+          "@type": "Place",
+          name: "Bogotá, Colombia",
+        },
+        sameAs: [
+          "https://www.linkedin.com/in/smuriel/",
+          "https://github.com/salomonMuriel",
+          "https://steamcommunity.com/id/salomonk/",
+        ],
+      }}
+    />
+
+    <slot name="head" />
 
     <!-- General Meta Tags -->
     <title>{title}</title>
