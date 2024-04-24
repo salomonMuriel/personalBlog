@@ -19,6 +19,8 @@
     "@astrojs/check": "^0.4.1",
     "@astrojs/mdx": "^2.1.1",
     "@astrojs/rss": "^4.0.2",
+    "@fontsource-variable/baloo-2": "^5.0.20",
+    "@fontsource/play": "^5.0.20",
     "@resvg/resvg-js": "^2.6.0",
     "astro": "^4.2.1",
     "astro-purgecss": "^4.1.0",

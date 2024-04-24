@@ -29,8 +29,14 @@
     display: block;
   }
   body {
-    @apply flex min-h-[100svh] flex-col bg-skin-fill font-mono text-skin-base 
+    @apply flex min-h-[100svh] flex-col bg-skin-fill font-text text-skin-base
     selection:bg-skin-accent selection:bg-opacity-70 selection:text-skin-inverted;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-hs font-normal;
+  }
+  p, ul, li {
+    @apply text-xl
   }
   section,
   footer {
@@ -48,8 +54,8 @@
     stroke-current stroke-2 opacity-90 group-hover:fill-transparent;
   }
   .prose {
-    @apply prose-headings:!mb-3 prose-headings:!text-skin-accent 
-    prose-p:!text-skin-base 
+    @apply prose-headings:!mb-3 prose-headings:!text-skin-accent
+    prose-p:!text-skin-base
     prose-a:!text-skin-base prose-a:!decoration-dashed prose-a:underline-offset-8
     hover:prose-a:text-skin-accent prose-blockquote:!border-l-skin-accent
     prose-blockquote:border-opacity-50 prose-blockquote:opacity-80

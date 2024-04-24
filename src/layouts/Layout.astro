@@ -1,5 +1,7 @@
 ---
 import { LOCALE, SITE } from "@config";
+import "@fontsource-variable/baloo-2";
+import "@fontsource/play";
 import "@styles/base.css";
 import { ViewTransitions } from "astro:transitions";
 import { Schema } from "astro-seo-schema";
@@ -103,6 +105,21 @@ const socialImageURL = new URL(
     />
 
     <slot name="head" />
+
+    <!-- Google Tag Manager -->
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-061B5QE8B1"
+    ></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-061B5QE8B1");
+    </script>
+    <!-- End Google Tag Manager -->
 
     <!-- General Meta Tags -->
     <title>{title}</title>

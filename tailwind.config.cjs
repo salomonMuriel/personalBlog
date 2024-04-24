@@ -71,7 +71,8 @@ module.exports = {
         transparent: "transparent",
       },
       fontFamily: {
-        mono: ["IBM Plex Mono", "monospace"],
+        text: ['"Baloo 2 Variable"', "system-ui"],
+        hs: ['"Play"', "sans-serif"]
       },
 
       typography: {
