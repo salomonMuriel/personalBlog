@@ -1,0 +1,10 @@
+---
+import { getCollection } from "astro:content";
+import Now from "@layouts/NowLayout.astro";
+
+const nows = await getCollection("now");
+
+const sortedNows = nows.sort((a, b) => b.data.date - a.data.date);
+---
+
+<Now now={sortedNows[0]} />

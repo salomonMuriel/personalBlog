@@ -10,7 +10,7 @@ export interface Props {
 
 const { activeNav } = Astro.props;
 
-const posts = await getCollection("blog");
+const posts = await getCollection("blog", a => a.data.draft != true);
 ---
 
 <header>
@@ -63,7 +63,7 @@ const posts = await getCollection("blog");
             </a>
           </li>
           {
-            posts.length > 1 && (
+            posts.length >= 1 && (
               <li>
                 <a href="/posts/" class={activeNav === "posts" ? "active" : ""}>
                   Posts

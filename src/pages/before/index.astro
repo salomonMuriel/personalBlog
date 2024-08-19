@@ -1,0 +1,32 @@
+---
+import Breadcrumbs from "@components/Breadcrumbs.astro";
+import Footer from "@components/Footer.astro";
+import Header from "@components/Header.astro";
+import { SITE } from "@config";
+import Layout from "@layouts/Layout.astro";
+import { getCollection } from "astro:content";
+
+const befores = await getCollection("now");
+---
+
+<Layout title={`${SITE.title}`}>
+  <Header activeNav="now" />
+  <Breadcrumbs />
+  <main id="main-content">
+    <section id="now" class="prose mb-28 max-w-4xl prose-img:border-0">
+      <ul>
+        {
+          befores
+            .reverse()
+            .splice(1)
+            .map(a => (
+              <li>
+                <a href={"/before/" + a.slug}>{a.data.header}</a>
+              </li>
+            ))
+        }
+      </ul>
+    </section>
+  </main>
+  <Footer />
+</Layout>

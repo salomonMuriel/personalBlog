@@ -1,0 +1,21 @@
+---
+import { type CollectionEntry, getCollection } from "astro:content";
+import Before from "@layouts/BeforeLayout.astro";
+
+export interface Props {
+  now: CollectionEntry<"now">;
+}
+
+export async function getStaticPaths() {
+  const nows = await getCollection("now");
+  const beforeResult = nows.map(now => ({
+    params: { slug: now.slug },
+    props: { now },
+  }));
+
+  return beforeResult;
+}
+const { now } = Astro.props;
+---
+
+{(<Before now={now} />)}
