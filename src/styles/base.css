@@ -138,3 +138,43 @@
     @apply outline-2 outline-offset-1 outline-skin-fill focus-visible:no-underline focus-visible:outline-dashed;
   }
 }
+
+/* Footnotes */
+
+/* This defines the displayed content  */
+.prose sup::after {
+  content: '✚';
+}
+
+/* This initially hides the footnote (i.e. span)  */
+.prose input[type=checkbox] ~ span {
+    @apply hidden
+}
+
+/* This styles the footnote text which appears 
+when the label is clicked  */
+.prose input[type=checkbox]:checked ~ span {
+    @apply block text-base text-skin-base cursor-default pl-8
+}
+
+/* This permanently hides the checkbox  */
+.prose input[type=checkbox]{
+  @apply hidden
+}
+
+/* This styles the footnote label to appear 
+like a hyperlink  */
+.prose input[type=checkbox] ~ label {
+    @apply inline cursor-pointer text-skin-accent underline-offset-1 underline
+}
+
+/* This styles the footnote label when the mouse 
+hovers over it */
+.prose input[type=checkbox] ~ label:hover {
+    @apply underline-offset-4 text-2xl
+}
+
+/* This styles the footnote label after it is clicked */
+.prose input[type=checkbox]:checked ~ label {
+    
+}
