@@ -5,7 +5,7 @@ export const SITE: Site = {
   author: "Salomón Muriel",
   desc: "Salomón's cool little corner of the internet.",
   title: "Salomón Muriel",
-  ogImage: "salomon-og.jpeg",
+  ogImage: "salomon-og.jpg",
   lightAndDarkMode: false,
   postPerPage: 3,
   scheduledPostMargin: 15 * 60 * 1000, // 15 minutes
