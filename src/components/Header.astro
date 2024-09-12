@@ -5,12 +5,23 @@ import LinkButton from "./LinkButton.astro";
 import { getCollection } from "astro:content";
 
 export interface Props {
-  activeNav?: "home" | "about" | "now" | "ideas" | "uses" | "posts" | "search";
+  activeNav?:
+    | "home"
+    | "about"
+    | "now"
+    | "ideas"
+    | "resources"
+    | "uses"
+    | "posts"
+    | "search";
 }
 
 const { activeNav } = Astro.props;
 
-const posts = await getCollection("blog", a => a.data.draft != true);
+const posts = await getCollection(
+  "blog",
+  (a: { data: { draft: boolean } }) => a.data.draft != true
+);
 ---
 
 <header>
@@ -55,6 +66,14 @@ const posts = await getCollection("blog", a => a.data.draft != true);
           <li>
             <a href="/ideas/" class={activeNav === "ideas" ? "active" : ""}>
               Ideas
+            </a>
+          </li>
+          <li>
+            <a
+              href="/resources/"
+              class={activeNav === "resources" ? "active" : ""}
+            >
+              Resources
             </a>
           </li>
           <li>

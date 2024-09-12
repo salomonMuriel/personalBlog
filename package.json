@@ -16,14 +16,15 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@astrojs/check": "^0.4.1",
-    "@astrojs/mdx": "^2.1.1",
-    "@astrojs/rss": "^4.0.2",
+    "@astrojs/check": "^0.9.3",
+    "@astrojs/mdx": "^3.1.5",
+    "@astrojs/rss": "^4.0.7",
     "@fontsource-variable/baloo-2": "^5.0.20",
     "@fontsource/play": "^5.0.20",
     "@resvg/resvg-js": "^2.6.0",
-    "astro": "^4.2.1",
+    "astro": "^4.15.4",
     "astro-purgecss": "^4.1.0",
+    "astro-remote": "^0.3.3",
     "astro-seo-schema": "^4.0.0",
     "fuse.js": "^7.0.0",
     "github-slugger": "^2.0.0",
@@ -36,8 +37,8 @@
     "typescript": "^5.3.3"
   },
   "devDependencies": {
-    "@astrojs/react": "^3.0.9",
-    "@astrojs/sitemap": "^3.1.1",
+    "@astrojs/react": "^3.6.2",
+    "@astrojs/sitemap": "^3.1.6",
     "@astrojs/tailwind": "^5.1.0",
     "@divriots/jampack": "^0.23.2",
     "@tailwindcss/typography": "^0.5.10",

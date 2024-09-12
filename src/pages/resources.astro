@@ -1,0 +1,13 @@
+---
+import Layout from "@layouts/ResourcesLayout.astro";
+import { Markdown } from "astro-remote";
+
+const response = await fetch(
+  "https://raw.githubusercontent.com/salomonMuriel/resources/main/README.md"
+);
+const markdown = await response.text();
+---
+
+<Layout frontmatter={{ title: "Resources" }}>
+  <Markdown content={markdown} />
+</Layout>
