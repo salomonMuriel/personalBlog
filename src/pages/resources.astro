@@ -3,7 +3,8 @@ import Layout from "@layouts/ResourcesLayout.astro";
 import { Markdown } from "astro-remote";
 
 const response = await fetch(
-  "https://raw.githubusercontent.com/salomonMuriel/resources/main/README.md"
+  "https://raw.githubusercontent.com/salomonMuriel/resources/main/README.md",
+  { cache: "no-store" }
 );
 const markdown = await response.text();
 ---
