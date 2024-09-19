@@ -2,9 +2,12 @@
 import Layout from "@layouts/ResourcesLayout.astro";
 import { Markdown } from "astro-remote";
 
+Astro.response.headers.set("Vercel-CDN-Cache-Control", "max-age=60");
+Astro.response.headers.set("CDN-Cache-Control", "max-age=60");
+Astro.response.headers.set("Cache-Control", "max-age=60");
+
 const response = await fetch(
-  "https://raw.githubusercontent.com/salomonMuriel/resources/main/README.md",
-  { cache: "no-store" }
+  "https://raw.githubusercontent.com/salomonMuriel/resources/main/README.md"
 );
 const markdown = await response.text();
 ---
