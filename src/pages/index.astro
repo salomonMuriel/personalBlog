@@ -15,8 +15,9 @@ import franco from "../assets/images/franco_cut.webp";
 import luca from "../assets/images/luca_cut.webp";
 
 const posts = await getCollection("blog");
-
+const nows = await getCollection("now");
 const sortedPosts = getSortedPosts(posts);
+const sortedNows = nows.sort((a, b) => b.data.date - a.data.date);
 const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
 const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
 
@@ -27,9 +28,9 @@ const socialCount = SOCIALS.filter(social => social.active).length;
   <Header />
   <main id="main-content">
     <section id="hero">
-      <div class="flex w-full pb-4 justify-between items-center">
-        <h1 class="flex-1 ml-3">Salomón Muriel</h1>
-        <div class="flex flex-1 justify-center items-center">
+      <div class="flex w-full items-center justify-between pb-4">
+        <h1 class="ml-3 flex-1">Salomón Muriel</h1>
+        <div class="flex flex-1 items-center justify-center">
           <Image
             src={salomonImage}
             alt="Salomón Muriel"
@@ -52,12 +53,12 @@ const socialCount = SOCIALS.filter(social => social.active).length;
           <Image
             src={franco}
             alt="Franco"
-            class="group-hover:animate-slide-in-out-r group fixed -right-full bottom-0 max-h-[50%] w-auto"
+            class="group fixed -right-full bottom-0 max-h-[50%] w-auto group-hover:animate-slide-in-out-r"
           />
           <Image
             src={luca}
             alt="Luca"
-            class="group-hover:animate-slide-in-out-l group fixed -left-full bottom-0 max-h-[50%] w-auto"
+            class="group fixed -left-full bottom-0 max-h-[50%] w-auto group-hover:animate-slide-in-out-l"
           />
         </span>.
       </p>
@@ -80,6 +81,54 @@ const socialCount = SOCIALS.filter(social => social.active).length;
     </section>
 
     <Hr />
+
+    {
+      nows.length > 0 && (
+        <>
+          <section id="now">
+            <h2>Now</h2>
+            Updates on what's happening in my life... right now.
+            <h3 class="text-lg font-medium text-skin-accent">Latest Update</h3>
+            <ul>
+              <li>
+                <a
+                  href={"/now"}
+                  class="text-lg font-medium decoration-dashed underline-offset-4 hover:underline focus-visible:no-underline focus-visible:underline-offset-0"
+                >
+                  {nows[0].data.header}
+                </a>
+              </li>
+            </ul>
+            <h3 class="text-lg font-medium text-skin-accent">Previous</h3>
+            <ul>
+              {nows.map(
+                ({ data, slug }, index) =>
+                  index < 4 &&
+                  index > 0 && (
+                    <li>
+                      <a
+                        href={`/before/${slug}`}
+                        class="text-lg font-medium decoration-dashed underline-offset-4 hover:underline focus-visible:no-underline focus-visible:underline-offset-0"
+                      >
+                        {data.header}
+                      </a>
+                    </li>
+                  )
+              )}
+            </ul>
+            <div class="all-posts-btn-wrapper">
+              <LinkButton href="/before/">
+                All Previous Updates
+                <svg xmlns="http://www.w3.org/2000/svg">
+                  <path d="m11.293 17.293 1.414 1.414L19.414 12l-6.707-6.707-1.414 1.414L15.586 11H6v2h9.586z" />
+                </svg>
+              </LinkButton>
+            </div>
+          </section>
+          <Hr />
+        </>
+      )
+    }
 
     {
       featuredPosts.length > 0 && (
@@ -144,7 +193,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
     @apply pb-6 pt-8;
   }
   #hero h1 {
-    @apply my-4 inline-block text-4xl sm:my-8 sm:text-6xl font-bold;
+    @apply my-4 inline-block text-4xl font-bold sm:my-8 sm:text-6xl;
   }
   #hero .rss-link {
     @apply mb-6;
@@ -164,14 +213,16 @@ const socialCount = SOCIALS.filter(social => social.active).length;
 
   /* ===== Featured & Recent Posts Sections ===== */
   #featured,
-  #recent-posts {
-    @apply pb-6 pt-12;
+  #recent-posts,
+  #now {
+    @apply pb-6 pt-6;
   }
   #featured h2,
-  #recent-posts h2 {
+  #recent-posts h2,
+  #now h2 {
     @apply text-2xl font-semibold tracking-wide;
   }
   .all-posts-btn-wrapper {
-    @apply my-8 text-center;
+    @apply my-4 text-center;
   }
 </style>
