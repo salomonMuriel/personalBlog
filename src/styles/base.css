@@ -53,6 +53,11 @@
     @apply inline-block h-6 w-6 scale-150 fill-transparent 
     stroke-current stroke-2 opacity-90 group-hover:fill-transparent;
   }
+
+  img + em {
+    @apply block text-center text-skin-base;
+  }
+
   .prose {
     @apply prose-headings:!mb-3 prose-headings:!text-skin-accent
     prose-p:!text-skin-base
