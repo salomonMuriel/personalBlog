@@ -93,7 +93,7 @@ export default (post: CollectionEntry<"blog">) => {
               }}
             >
               <img
-                src="http://localhost:4321/salomon.jpg"
+                src={`${SITE.website}/salomon.jpg`}
                 alt="Salomon"
                 style={{ width: "100%", height: "100%", objectFit: "cover" }}
               />
