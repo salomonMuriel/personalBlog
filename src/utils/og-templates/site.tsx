@@ -96,7 +96,9 @@ export default () => {
                 <img
                   src={`${SITE.website}salomon.jpg`}
                   alt="Salomon"
-                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  width={250}
+                  height={250}
+                  style={{ objectFit: "cover" }}
                 />
               </div>
             </div>
