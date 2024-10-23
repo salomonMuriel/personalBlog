@@ -94,7 +94,7 @@ export default () => {
                 }}
               >
                 <img
-                  src={`${SITE.website}/salomon.jpg`}
+                  src={`${SITE.website}salomon.jpg`}
                   alt="Salomon"
                   style={{ width: "100%", height: "100%", objectFit: "cover" }}
                 />
