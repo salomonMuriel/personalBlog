@@ -3,9 +3,9 @@ import type { Site, SocialObjects } from "./types";
 export const SITE: Site = {
   website: "https://www.salomonmuriel.com/", // replace this with your deployed domain
   author: "Salomón Muriel",
-  desc: "Salomón's cool little corner of the internet.",
+  desc: "Salomón's little corner of the internet.",
   title: "Salomón Muriel",
-  ogImage: "salomon-og.jpg",
+  ogImage: undefined,
   lightAndDarkMode: false,
   postPerPage: 3,
   scheduledPostMargin: 15 * 60 * 1000, // 15 minutes
@@ -130,7 +130,7 @@ export const SOCIALS: SocialObjects = [
     name: "Steam",
     href: "https://steamcommunity.com/id/salomonk/",
     linkTitle: `Add me on Steam!`,
-    active: true,
+    active: false,
   },
   {
     name: "Telegram",

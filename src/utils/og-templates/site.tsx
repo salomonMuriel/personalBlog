@@ -4,7 +4,7 @@ export default () => {
   return (
     <div
       style={{
-        background: "#fefbfb",
+        background: "rgb(0, 34, 79)",
         width: "100%",
         height: "100%",
         display: "flex",
@@ -17,8 +17,8 @@ export default () => {
           position: "absolute",
           top: "-1px",
           right: "-1px",
-          border: "4px solid #000",
-          background: "#ecebeb",
+          border: "4px solid rgb(255, 111, 89)",
+          background: "rgb(0, 34, 79)",
           opacity: "0.9",
           borderRadius: "4px",
           display: "flex",
@@ -31,14 +31,15 @@ export default () => {
 
       <div
         style={{
-          border: "4px solid #000",
-          background: "#fefbfb",
+          border: "4px solid rgb(255, 111, 89)",
+          background: "rgb(0, 34, 79)",
           borderRadius: "4px",
           display: "flex",
           justifyContent: "center",
           margin: "2rem",
           width: "88%",
           height: "80%",
+          color: "rgb(232, 233, 235)",
         }}
       >
         <div
@@ -63,10 +64,43 @@ export default () => {
               textAlign: "center",
             }}
           >
-            <p style={{ fontSize: 72, fontWeight: "bold" }}>{SITE.title}</p>
-            <p style={{ fontSize: 28 }}>{SITE.desc}</p>
+            <div
+              style={{ display: "flex", flexDirection: "row", height: "100%" }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                }}
+              >
+                <p style={{ fontSize: 72, fontWeight: "bold" }}>
+                  {SITE.title} 🚀
+                </p>
+                <p style={{ fontSize: 28 }}>{SITE.desc}</p>
+              </div>
+              <div
+                style={{
+                  width: 250,
+                  height: 250,
+                  borderRadius: "50%",
+                  overflow: "hidden",
+                  marginLeft: 20,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginTop: "auto",
+                  marginBottom: "auto",
+                }}
+              >
+                <img
+                  src="http://localhost:4321/salomon.jpg"
+                  alt="Salomon"
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                />
+              </div>
+            </div>
           </div>
-
           <div
             style={{
               display: "flex",

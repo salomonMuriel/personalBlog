@@ -5,7 +5,7 @@ export default (post: CollectionEntry<"blog">) => {
   return (
     <div
       style={{
-        background: "#fefbfb",
+        background: "rgb(0, 34, 79)",
         width: "100%",
         height: "100%",
         display: "flex",
@@ -18,8 +18,8 @@ export default (post: CollectionEntry<"blog">) => {
           position: "absolute",
           top: "-1px",
           right: "-1px",
-          border: "4px solid #000",
-          background: "#ecebeb",
+          border: "4px solid rgb(255, 111, 89)",
+          background: "rgb(0, 34, 79)",
           opacity: "0.9",
           borderRadius: "4px",
           display: "flex",
@@ -32,8 +32,8 @@ export default (post: CollectionEntry<"blog">) => {
 
       <div
         style={{
-          border: "4px solid #000",
-          background: "#fefbfb",
+          border: "4px solid rgb(255, 111, 89)",
+          background: "rgb(0, 34, 79)",
           borderRadius: "4px",
           display: "flex",
           justifyContent: "center",
@@ -50,6 +50,7 @@ export default (post: CollectionEntry<"blog">) => {
             margin: "20px",
             width: "90%",
             height: "90%",
+            color: "rgb(232, 233, 235)",
           }}
         >
           <p
@@ -57,7 +58,7 @@ export default (post: CollectionEntry<"blog">) => {
               fontSize: 72,
               fontWeight: "bold",
               maxHeight: "84%",
-              overflow: "hidden",
+              overflow: "visible",
             }}
           >
             {post.data.title}
@@ -66,28 +67,37 @@ export default (post: CollectionEntry<"blog">) => {
             style={{
               display: "flex",
               justifyContent: "space-between",
+              alignItems: "flex-end",
               width: "100%",
               marginBottom: "8px",
+              background: "transparent",
               fontSize: 28,
             }}
           >
-            <span>
-              by{" "}
-              <span
-                style={{
-                  color: "transparent",
-                }}
-              >
-                "
-              </span>
-              <span style={{ overflow: "hidden", fontWeight: "bold" }}>
-                {post.data.author}
-              </span>
-            </span>
-
-            <span style={{ overflow: "hidden", fontWeight: "bold" }}>
+            <span style={{ fontWeight: "bold", background: "transparent" }}>
               {SITE.title}
             </span>
+            <div
+              style={{
+                width: 180,
+                height: 180,
+                borderRadius: "50%",
+                overflow: "hidden",
+                marginLeft: 20,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                marginTop: "auto",
+                marginBottom: "auto",
+                background: "transparent",
+              }}
+            >
+              <img
+                src="http://localhost:4321/salomon.jpg"
+                alt="Salomon"
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              />
+            </div>
           </div>
         </div>
       </div>

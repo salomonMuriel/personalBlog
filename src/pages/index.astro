@@ -89,7 +89,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
             <h2>Now</h2>
             Updates on what's happening in my life... right now.
             <h3 class="text-lg font-medium text-skin-accent">Latest Update</h3>
-            <ul>
+            <ul class="prose">
               <li>
                 <a
                   href={"/now"}
@@ -100,7 +100,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
               </li>
             </ul>
             <h3 class="text-lg font-medium text-skin-accent">Previous</h3>
-            <ul>
+            <ul class="prose">
               {nows.map(
                 ({ data, slug }, index) =>
                   index < 4 &&

@@ -3,17 +3,17 @@ import { Resvg } from "@resvg/resvg-js";
 import { type CollectionEntry } from "astro:content";
 import postOgImage from "./og-templates/post";
 import siteOgImage from "./og-templates/site";
-
+import { writeFile } from "fs/promises";
 const fetchFonts = async () => {
   // Regular Font
   const fontFileRegular = await fetch(
-    "https://www.1001fonts.com/download/font/ibm-plex-mono.regular.ttf"
+    "https://cdn.jsdelivr.net/fontsource/fonts/baloo-2@latest/latin-400-normal.woff"
   );
   const fontRegular: ArrayBuffer = await fontFileRegular.arrayBuffer();
 
   // Bold Font
   const fontFileBold = await fetch(
-    "https://www.1001fonts.com/download/font/ibm-plex-mono.bold.ttf"
+    "https://cdn.jsdelivr.net/fontsource/fonts/play@latest/latin-700-normal.woff"
   );
   const fontBold: ArrayBuffer = await fontFileBold.arrayBuffer();
 
@@ -36,7 +36,7 @@ const options: SatoriOptions = {
     {
       name: "IBM Plex Mono",
       data: fontBold,
-      weight: 600,
+      weight: 700,
       style: "normal",
     },
   ],
@@ -55,5 +55,6 @@ export async function generateOgImageForPost(post: CollectionEntry<"blog">) {
 
 export async function generateOgImageForSite() {
   const svg = await satori(siteOgImage(), options);
-  return svgBufferToPngBuffer(svg);
+  const pngBuffer = svgBufferToPngBuffer(svg);
+  return pngBuffer;
 }
