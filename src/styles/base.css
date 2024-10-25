@@ -16,7 +16,7 @@
     --color-fill: 0, 34, 79;
     --color-accent: 255, 111, 89;
     --color-text-base: 232, 233, 235;
-    --color-card: 33, 34, 83;
+    --color-card: 0, 27, 63;
     --color-card-muted: 12, 14, 79;
     --color-border: 255, 111, 89;
   }
@@ -62,8 +62,7 @@
     @apply prose-headings:!mb-3 prose-headings:!text-skin-accent
     prose-p:!text-skin-base
     prose-a:!text-skin-base prose-a:!decoration-dashed prose-a:underline-offset-8
-    hover:prose-a:text-skin-accent prose-blockquote:!border-l-skin-accent
-    prose-blockquote:border-opacity-50 prose-blockquote:opacity-80
+    hover:prose-a:text-skin-accent
     prose-figcaption:!text-skin-base prose-figcaption:opacity-70
     prose-strong:!text-skin-base
 
@@ -75,9 +74,8 @@
     prose-ul:overflow-x-clip prose-ul:!text-skin-base prose-li:marker:!text-skin-accent
     prose-table:text-skin-base prose-th:border
     prose-th:border-skin-line prose-td:border 
-    prose-td:border-skin-line prose-img:!my-2 
-    prose-img:mx-auto prose-img:border-2 
-    prose-img:border-skin-line prose-hr:!border-skin-line;
+    prose-td:border-skin-line
+    prose-hr:!border-skin-line
   }
   .prose a {
     @apply break-words hover:!text-skin-accent;
@@ -98,6 +96,15 @@
   }
   .prose h2#table-of-contents + p {
     @apply hidden;
+  }
+
+  .prose blockquote {
+    @apply rounded-r-lg rounded-l-sm bg-skin-card pl-6 pr-6 pt-2 pb-2 !border-l-skin-accent;
+  }
+
+  .prose img {
+    @apply !my-2 mx-auto border-2 border-skin-line hover:outline hover:outline-2 hover:outline-skin-fill;
+
   }
 
   /* ===== scrollbar ===== */
