@@ -57,7 +57,11 @@
   img + em {
     @apply block text-center text-skin-base;
   }
-
+  
+  blockquote > p {
+    @apply before:!content-none after:!content-none;
+  }
+  
   .prose {
     @apply prose-headings:!mb-3 prose-headings:!text-skin-accent
     prose-p:!text-skin-base
@@ -65,11 +69,7 @@
     hover:prose-a:text-skin-accent
     prose-figcaption:!text-skin-base prose-figcaption:opacity-70
     prose-strong:!text-skin-base
-
     
-    prose-code:rounded prose-code:bg-skin-card 
-    prose-code:bg-opacity-75 prose-code:p-1 
-    prose-code:before:!content-none prose-code:after:!content-none
     prose-ol:!text-skin-base 
     prose-ul:overflow-x-clip prose-ul:!text-skin-base prose-li:marker:!text-skin-accent
     prose-table:text-skin-base prose-th:border
@@ -102,9 +102,12 @@
     @apply rounded-r-lg rounded-l-sm bg-skin-card pl-6 pr-6 pt-2 pb-2 !border-l-skin-accent;
   }
 
+  .prose code {
+    @apply rounded p-1 before:!content-none after:!content-none text-skin-accent font-normal;
+  }
+
   .prose img {
     @apply !my-2 mx-auto border-2 border-skin-line hover:outline hover:outline-2 hover:outline-skin-fill;
-
   }
 
   /* ===== scrollbar ===== */

@@ -1,0 +1,77 @@
+---
+author: Salomón Muriel
+pubDatetime: 2024-11-05T08:00:00Z
+modDatetime: 2024-11-05T08:00:00Z
+title: Dogmatic Programming
+description: Is there something in between OOP and Functional Programming?
+slug: dogmatic-programming
+featured: false
+draft: true
+tags:
+  - programming
+  - tech
+---
+
+### Code alla Bolognese
+
+At my current company, we had a big architecture headache: many of our microservices became intertwined over time, a spaghetti of coupled code. I think the reasons are matter for another post.
+
+This was ok for a while, but the technical debt finally caught up with us earlier this year when we tried adding new functionality that touched too many microservices at once. We couldn't move an inch without breaking someone else's stuff. Now, of course this project was huge and important, so we had to choose between unraveling the spaghetti and adding the new functionality afterwards, or adding it now (so we ship faster, of course) and mixing in some delightful linguini. Guess which option we chose?<input type="checkbox" id="cb1" /><label for="cb1"><sup></sup></label><span><br><br>I fully mean "we". I was fully on board with this (still think it was the correct decision). We really needed to ship quick, and I love pasta.</br></br></span>
+
+> We chose the linguini.
+
+What came next was 3 months of meetings (so many meetings) and much manual testing and re-testing. We ended up having to coordinate every change (while another functionality, that touched on the same spaghetti, was being developed in parallel). Changes in one team mandated tests from QAs from most of the organization. It was painful.
+
+We shipped and it worked. And we vowed (naively?), "never again".
+
+### First encounter with dogma.
+
+So we decided to unravel the spaghetti. We got buy-in from Product for an actual full-scale refactor of our whole codebase. We redesigned the entire architecture following Domain Driven Design, in order to maximize team independence (our main issue). And once we did that we decided some standards were overdue. Many of our microservices were to communicate internally using REST APIs, so we decided to build an API Template (using FastAPI ⚡) with the best code standards we could think of. The idea: Have everyone follow the same template, so we can have a common starting point. Great in paper right?
+
+Rafael and me had the task of building the template, and we were at odds in how to implement it. You see, he had been unscathed by the pasta-madness, so he was much more open to violate some design paradigms. I, on the other hand, had been scarred by the spaghetti, so I was much more dogmatic.
+
+Quick example. My initial design separated the code in several layers. FastAPI itself would only have the endpoints themselves and schema validation for input and reponses. Business logic would be in a business layer (with controllers for each REST operation), and the database layer would be in charge of database interactions through ORMs. Each layer can only "talk" with its adjacent layers. Nothing groundbreaking here, right? I was literally just following [this design by Martin Fowler](https://martinfowler.com/bliki/PresentationDomainDataLayering.html).
+
+![Layers](@assets/posts/blog/dogma_programming/layers.png)
+
+Also, the team was very keen on keeping with OOP practices, so let's use that as well. Here's the dogmatic design (which I was defending):
+```python
+"""endpoints.py"""
+from fastapi import FastAPI
+from api.v1.business import foo_controller
+from api.v1.schemas import FooInput
+
+app = FastAPI()
+
+@app.post("/foo")
+def create_foo(foo_input: FooInput):
+    foo = foo_controller.create_foo(foo_input)
+
+"""business/foo_controller.py"""
+from api.v1.schemas import FooInput
+from orm.models import Foo
+from orm.db_connection import get_db_session
+
+class FooController:
+  def __init__(self, foo_input: FooInput):
+    self._session = get_db_session()
+  
+  def create_foo(self, foo_input: FooInput):
+    foo = Foo(name=foo_input.name)
+    self._session.add(foo)
+    self._session.commit()
+    return foo
+
+"""orm/db_connection.py"""
+from sqlalchemy import create_engine
+from sqlalchemy
+
+engine = create_engine("sqlite:///:memory:")
+
+def get_db_session():
+  try:
+    session = sessionmaker(engine)
+    yield session
+  finally:
+    session.close()
+```
