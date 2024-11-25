@@ -30,7 +30,7 @@ const path = `../../talks/${presentation.id.replace(".md", ".html")}`;
       <p>{presentation.data.description}</p>
     </section>
     <section class="flex flex-col items-center">
-      <iframe src={path} class="h-[550px] w-full border-2"></iframe>
+      <iframe src={path} class="h-64 w-full border-2 sm:h-96"></iframe>
       <a
         class="mb-8 mt-4 rounded-md border-2 border-skin-accent px-4 py-2 text-xl font-bold hover:bg-skin-accent hover:text-skin-base"
         href={path.replace(".html", ".pdf")}
