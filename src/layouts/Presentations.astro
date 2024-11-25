@@ -1,0 +1,36 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@layouts/Layout.astro";
+import Main from "@layouts/Main.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import Card from "@components/Card";
+import { SITE } from "@config";
+
+const presentations = await getCollection("presentations");
+
+const sortedPresentations = presentations
+  .sort(
+    (a, b) =>
+      new Date(b.data.pubDatetime).getTime() -
+      new Date(a.data.pubDatetime).getTime()
+  )
+  .filter(({ data }) => !data.draft);
+---
+
+<Layout title={`Presentations | ${SITE.title}`}>
+  <Header activeNav="resources" />
+  <Main
+    pageTitle="Presentations"
+    pageDesc="All the presentations I've published."
+  >
+    <ul>
+      {
+        sortedPresentations.map(({ data, slug }) => (
+          <Card href={`/presentations/${slug}/`} frontmatter={data} />
+        ))
+      }
+    </ul>
+  </Main>
+  <Footer />
+</Layout>

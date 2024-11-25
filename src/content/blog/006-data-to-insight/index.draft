@@ -1,0 +1,89 @@
+---
+author: Salomón Muriel
+pubDatetime: 2020-06-09T08:00:00Z
+modDatetime: 2020-06-09T08:00:00Z
+title: From Data to Insight
+description: Data Science builds knowledge. Using that knowledge is Intelligence.
+slug: data-intelligence
+featured: false
+draft: false
+tags:
+  - data-intelligence
+  - data-science
+  - business
+  - analytics
+---
+
+_The devil knows more from being old than from being the devil._
+
+# **Data is the foundation of all good decisions.**
+---
+
+A _data point_ is a measurable and communicable fact: a time, place, name, number. Data is a "piece" or unit of information. The fact that my wife arrived home today at 5:54 PM is a _data point_. When we talk about _information_, we're actually talking about the plural or a set of data points.
+
+An _insight_ is learning obtained from the union of several, ideally many, data points. These can be aggregated simply or transformed using any variety of techniques to reach the _insight_. According to the Oxford dictionary, it's defined as "a deep and accurate understanding," emphasizing that insight is the understanding itself as a noun. For example, if I know my wife arrives home every day around 6 PM, that's a deep *understanding* about my wife, or an _insight_.
+
+Not all insights are equally valuable. If the data they're composed of is erroneous for any reason, the insight will be erroneous too. They also tend to have expiration dates: what I learned 20 years ago might not be valid today. And the amount of data is also relevant: an insight built with two data points isn't as robust as one composed of hundreds, thousands, or millions.
+
+![By the third trimester we'll have hundreds of babies!](./002.png) _Source: XKCD_
+
+There are insights that are very resistant to time and maintain their quality. Proverbs, for example, are insights created from data collected through the everyday life experience of an entire culture over generations and turned into a teaching that is easy to understand and learn: "a shrimp that falls asleep is carried away by the current," "the devil knows more because he is old than because he is the devil." These proverbs feed the knowledge of daily life for an entire culture.
+
+Others, like the series of breakfasts I’ve had in the last month, are more ethereal. Today, I don’t even remember what I had for breakfast the day before yesterday, and it’s not uncommon for me to forget that I’ve had breakfast by the time night comes. The insight into the average number of calories I consume for breakfast compared to my wife’s would be interesting to know, but quickly forgotten as a fun fact, since I neither count calories nor does my wife make comparisons of that kind.
+
+In general, a simple process is followed to create insights: First, we must ask a _question_. Then, we understand the quality of the data itself and correct its deficiencies. Finally, we aim to create insights that help us answer our question through simple or sophisticated models. Some simple models are timelines or regressions, and some of the sophisticated ones are Decision Trees or the famous Neural Networks. Our question will determine the complexity of our models:
+
+What happened? Simple.  
+Why did it happen? Not so easy.  
+What will happen? Difficult.  
+What is the best that can happen? More complex.
+
+![Our models depend on our question](./piramide.png) _Source: Dylan Gregersen_
+
+A group of related insights gives us domain knowledge. Here, "domain" is synonymous with "field" or "topic." Domain knowledge is the sum of general knowledge that a *person* has about a particular domain.
+
+Each person has different domain knowledge depending on the area: my lawyer might be an expert in Colombian commercial law, but he has intermediate domain knowledge in chess, and very poor (I think?) knowledge of crocheting. I made an assumption there: I said that Jorge, my lawyer, didn’t know anything about crochet when, in reality, I have no idea. It’s better to avoid making assumptions, although sometimes it’s inevitable.
+
+The greater the domain knowledge, the more intelligent the decisions are made, meaning decisions with a higher probability of being accurate or correct. Since I have domain knowledge about my wife, I have the insight that she gets home at 6 PM, and I also know that she likes me to wait for her near her bus stop so we can walk home together. So, I can make the decision to stop my activities at 5:45 PM to go pick her up. Before having this complete domain knowledge, I used to be late picking her up, which was definitely not the right choice, as she made sure to let me know.
+
+This domain knowledge has both magnitude and quality factors. An executive with 30 years of experience in a rapidly innovating field but who continues to make decisions based on insights from 10 years ago probably has broad domain knowledge, but of low quality. A young 30-year-old entrepreneur about to launch their first company with fresh knowledge may have less domain knowledge in terms of magnitude, but of higher quality.
+
+This leap from insight to knowledge doesn't happen by magic: The findings of that process must be explained in a way that they are easily understood. An insight **must** be communicated in the most understandable way possible. The most valuable skill of the person or team responsible for measuring, storing, transforming, and communicating the data is not the manipulation of the data to create insights, but the explanation of the insight to create domain knowledge.
+
+Once this domain knowledge has been lovingly cultivated with data, it feeds into and improves the other stages of the process. Experience is the best guide when it comes to understanding what data to look for, how to cook it perfectly for the industry and the problem at hand, and how to serve and present it in such a way that everyone in our organization can digest it well to grow big, _informed_, and intelligent. This is what will differentiate your decisions from mere opinions.
+
+![From Opinion to Decision](./deming.png)
+
+This process of measuring, understanding, transforming, and explaining information is what is now known as "Data Science." In my opinion, the first part of the name is overstated. The variety of data to measure is only limited by creativity. What’s needed is not science, but domain knowledge and intuition to figure out what more we can measure in our processes.
+
+In the transformation stage, a myriad of models borrowed from statistics and enabled by computing are used, but it’s not necessary to be a mathematician or statistician to understand their results, just as you don’t need to understand how a paintbrush is made to know what it’s for and understand its effects. Although it’s worth saying: it is necessary, at least today, to know how to program in order to implement those models.
+
+The process of _explaining_ is largely a creative activity, and the one that most resembles _art_: Good visualizations and interfaces, which are both understandable and user-friendly as well as useful, make all the difference in turning a mountain of wasted data and insights into a competitive differentiator by creating domain knowledge instantly and in real-time for an entire organization.
+
+Therefore, the term "Science" is not appropriate since these processes of measuring, storing, transforming, and explaining data are not governed by the scientific method, or at least not entirely (nor mostly). While it draws on techniques and skills from some sciences like statistics and mathematics, the process is much more flexible than these and involves more intuition, luck, and creativity.
+
+The ultimate goal of the process is to lead to intelligent decision-making. I propose calling it Data Intelligence instead, which more accurately reflects its purpose rather than emphasizing the methodology.
+
+If insights are ignored, data is ignored, and it can be demonstrably proven that worse decisions will be made on average. Likewise, if data is not measured and stored, our insights will be limited or nonexistent, and the quality of our decisions will suffer. The quality or intelligence of a decision is directly proportional to the domain knowledge of the person making it.
+
+Organizations must therefore be data-obsessed, data-crazy, data-maniacs, data-fans, and even data-addicts in order to create insights and domain knowledge of high quality. An organization can only make *competitive* decisions to the extent that it has domain knowledge of equal or better quality than its competition.
+
+Being data-obsessed does mean measuring absolutely all relevant data in your processes, storing it, using statistics, computational models, and a healthy dose of common sense to transform it, turn it into insights, and learn from it to create domain knowledge.
+
+![Data Lovers?](./datos.png)  
+_Any valuable data must be measured, stored, and used._
+
+Being data-obsessed does not mean ignoring all the principles of statistics (serious) or common sense (even more serious) in an attempt to find meaning in that data. If I want to understand why my dog guards the table with more excitement and energy on some occasions than others, I should not start by counting the hairs on her head every day she guards it. It probably has to do with what type of food is being cooked that day, or how much she has eaten in the last 24 hours, and I should start looking for insights related to those more sensible measurements.
+
+The first question someone wanting to start building a data-obsessed organization would ask is: _Where do I start?_ The answer is with their operational processes: Every process in an organization generates data. In general, it generates more data than the obvious ones, and it generates a large variety of data types. When I brushed my teeth this morning, data was generated about the time I started, finished, my average speed and pressure, the quality of my breath (according to my wife), the number of bacteria exterminated, how many calories I burned in the activity, among many others. I didn’t store any of that data in my head except for the approximate time, but that doesn’t mean it wasn’t generated.
+
+An agent in a call center also generates a great deal of data during their workday, only some of which is measured and stored, and an even smaller proportion is used to create insights, feed domain knowledge, and make decisions. In addition to the time, duration, audio recording, and rating of each call, the agent is also located in a specific part of the office, near certain colleagues. Maybe when they are near Pedro, their performance drops by 10%, not because of Pedro specifically, but because this agent and Pedro have a friendship that distracts them and lowers their productivity. The agent also generates data about their mood every hour, their health status, their distance from their crush, the bathroom, or the coffee machine, the cologne they wore that day, or the number of micrometers their nails grew that day. Some of this data is likely to be useful, while others are not so much.
+
+Organizations must make a tremendous effort to identify *valuable data* to be measured within their organizational processes, so that it can then be stored, transformed, aggregated, and used. All organizations, particularly those where there was no data culture before becoming familiar with this methodology, should create a map of their processes and the data they generate. By mapping the processes in our organization and the data they create, we will have the necessary inputs to understand the complete lifecycle of our information and the path that data takes as it flows through our organization.
+
+&nbsp;
+&nbsp;
+
+##### 1. [XKCD](https://xkcd.com/) is a webcomic about "romance, sarcasm, math, and language." Highly recommended! There’s one for every situation.  
+##### 2. [W. Edwards Deming](https://en.wikipedia.org/wiki/W._Edwards_Deming) invented much of the modern census sampling methods, among many other things.  
+##### 3. Contrary to what the post might suggest, my wife doesn't usually rate my breath.

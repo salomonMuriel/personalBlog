@@ -7,13 +7,13 @@ slug: demystifying-data-science
 featured: false
 draft: false
 tags:
-  - Data Intelligence
-  - Data Science
+  - data-science
 ---
 
 _From data we build insights, from insights we form knowledge, and with knowledge we can make powerful decisions._
 
 # **Data Science is Not Magic. Nor is it Science.**
+---
 
 Throughout my professional experience, I've dedicated myself in one way or another to manipulating information. My work has always involved taking sources of information to transform them, wrestle with them, frame them to make sense, and present them to make them more understandable. To turn them from databases into plain English, making that information speak as clearly to the engineer as to the manager or the salesperson.
 

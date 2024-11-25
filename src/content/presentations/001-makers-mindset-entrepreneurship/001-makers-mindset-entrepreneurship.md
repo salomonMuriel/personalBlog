@@ -1,22 +1,27 @@
 ---
-slug: makers-mindset-entrepreneurship
 marp: true
+slug: makers-mindset-entrepreneurship
 theme: uncover
 author: Salomón Muriel
 title: Maker Mindset
-style: |
-  section {
-    --color-background: rgb(0, 34, 79);
-    --color-background-code: rgb(40, 44, 52);
-    --color-background-paginate: rgba(12, 14, 79, 0.05);
-    --color-foreground: rgb(232, 233, 235);
-    --color-highlight: rgb(255, 111, 89);
-    --color-highlight-hover: rgba(255, 111, 89, 0.8);
-    --color-highlight-heading: rgb(255, 111, 89);
-    --color-header: rgb(232, 233, 235);
-    --color-header-shadow: transparent;
-  }
+pubDatetime: 2024-11-16T08:00:00Z
+description: A talk about the Maker Mindset and Entrepreneurship. Originally for U. Catolica, Bogotá.
 ---
+
+<style>
+  section {
+      --color-background: rgb(0, 34, 79);
+      --color-background-code: rgb(40, 44, 52);
+      --color-background-paginate: rgba(12, 14, 79, 0.05);
+      --color-foreground: rgb(232, 233, 235);
+      --color-highlight: rgb(255, 111, 89);
+      --color-highlight-hover: rgba(255, 111, 89, 0.8);
+      --color-highlight-heading: rgb(255, 111, 89);
+      --color-header: rgb(232, 233, 235);
+      --color-header-shadow: transparent;
+    }
+</style>
+
 
 # **Maker Mindset** <!--fit-->
 
@@ -50,7 +55,7 @@ Ganas de aprender y <mark>experimentar</mark>
 ---
 
 # Resilencia 💪 <!--fit-->
-Ganas de volver a intentarlo![bg right 70% My personal website](qr-code.png)
+Ganas de volver a intentarlo
 
 ---
 

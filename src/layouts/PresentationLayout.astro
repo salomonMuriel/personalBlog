@@ -1,0 +1,28 @@
+---
+import { SITE } from "@config";
+import Breadcrumbs from "@components/Breadcrumbs.astro";
+import Footer from "@components/Footer.astro";
+import Header from "@components/Header.astro";
+import Layout from "./Layout.astro";
+import type { CollectionEntry } from "astro:content";
+import { Marp } from "@marp-team/marp-core";
+import { rawContent } from "content/presentations/001-makers-mindset-entrepreneurship/001-makers-mindset-entrepreneurship.md";
+
+export interface Props {
+  presentation: CollectionEntry<"presentations">;
+}
+
+const { presentation } = Astro.props;
+
+const marp = new Marp();
+const { html, css } = await marp.render(rawContent());
+---
+
+<Layout title={`${SITE.title}`}>
+  <Header activeNav="resources" />
+  <Breadcrumbs />
+  <main id="main-content">
+    <div class="marp-content" set:html={html} />
+  </main>
+  <Footer />
+</Layout>
