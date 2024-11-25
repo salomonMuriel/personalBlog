@@ -1,14 +1,14 @@
 ---
 import { type CollectionEntry, getCollection } from "astro:content";
-import Presentation from "@layouts/PresentationLayout.astro";
+import Talk from "@layouts/TalkLayout.astro";
 
 export interface Props {
-  presentation: CollectionEntry<"presentations">;
+  presentation: CollectionEntry<"talks">;
 }
 
 export async function getStaticPaths() {
-  const presentations = await getCollection("presentations");
-  const presentationResult = presentations.map(presentation => ({
+  const talks = await getCollection("talks");
+  const presentationResult = talks.map(presentation => ({
     params: { slug: presentation.slug },
     props: { presentation },
   }));
@@ -18,4 +18,4 @@ export async function getStaticPaths() {
 const { presentation } = Astro.props;
 ---
 
-{(<Presentation presentation={presentation} />)}
+{(<Talk presentation={presentation} />)}

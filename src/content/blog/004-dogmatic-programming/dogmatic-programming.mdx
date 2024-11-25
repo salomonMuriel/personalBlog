@@ -30,7 +30,7 @@ So we decided to unravel the spaghetti. We got buy-in from Product for an actual
 
 Rafael and me had the task of building the template, and we were at odds in how to implement it. You see, he had been unscathed by the pasta-madness, so he was much more open to violate some design paradigms. I, on the other hand, had been scarred by the spaghetti, so I was much more dogmatic.
 
-Quick example. My initial design separated the code in several layers. FastAPI itself would only have the endpoints themselves and schema validation for input and reponses. Business logic would be in a business layer (with controllers for each REST operation), and the database layer would be in charge of database interactions through ORMs. Each layer can only "talk" with its adjacent layers. Nothing groundbreaking here, right? I was literally just following [this design by Martin Fowler](https://martinfowler.com/bliki/PresentationDomainDataLayering.html).
+Quick example. My initial design separated the code in several layers. FastAPI itself would only have the endpoints themselves and schema validation for input and reponses. Business logic would be in a business layer (with controllers for each REST operation), and the database layer would be in charge of database interactions through ORMs. Each layer can only "talk" with its adjacent layers. Nothing groundbreaking here, right? I was literally just following [this design by Martin Fowler](https://martinfowler.com/bliki/TalkDomainDataLayering.html).
 
 ![Layers](@assets/posts/blog/dogma_programming/layers.png)
 

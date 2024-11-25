@@ -7,9 +7,9 @@ import Footer from "@components/Footer.astro";
 import Card from "@components/Card";
 import { SITE } from "@config";
 
-const presentations = await getCollection("presentations");
+const talks = await getCollection("talks");
 
-const sortedPresentations = presentations
+const sortedTalks = talks
   .sort(
     (a, b) =>
       new Date(b.data.pubDatetime).getTime() -
@@ -18,16 +18,13 @@ const sortedPresentations = presentations
   .filter(({ data }) => !data.draft);
 ---
 
-<Layout title={`Presentations | ${SITE.title}`}>
-  <Header activeNav="resources" />
-  <Main
-    pageTitle="Presentations"
-    pageDesc="All the presentations I've published."
-  >
+<Layout title={`Talks | ${SITE.title}`}>
+  <Header activeNav="talks" />
+  <Main pageTitle="Talks" pageDesc="Talks and presentations I've given.">
     <ul>
       {
-        sortedPresentations.map(({ data, slug }) => (
-          <Card href={`/presentations/${slug}/`} frontmatter={data} />
+        sortedTalks.map(({ data, slug }) => (
+          <Card href={`/talks/${slug}/`} frontmatter={data} />
         ))
       }
     </ul>

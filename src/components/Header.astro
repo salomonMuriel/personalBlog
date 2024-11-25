@@ -13,6 +13,7 @@ export interface Props {
     | "resources"
     | "uses"
     | "posts"
+    | "talks"
     | "search";
 }
 
@@ -22,6 +23,8 @@ const posts = await getCollection(
   "blog",
   (a: { data: { draft: boolean } }) => a.data.draft != true
 );
+
+const talks = await getCollection("talks");
 ---
 
 <header>
@@ -86,6 +89,15 @@ const posts = await getCollection(
               <li>
                 <a href="/posts/" class={activeNav === "posts" ? "active" : ""}>
                   Posts
+                </a>
+              </li>
+            )
+          }
+          {
+            talks.length >= 1 && (
+              <li>
+                <a href="/talks/" class={activeNav === "talks" ? "active" : ""}>
+                  Talks
                 </a>
               </li>
             )

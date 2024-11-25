@@ -1,0 +1,42 @@
+---
+import { SITE } from "@config";
+import Breadcrumbs from "@components/Breadcrumbs.astro";
+import Footer from "@components/Footer.astro";
+import Header from "@components/Header.astro";
+import Layout from "./Layout.astro";
+import type { CollectionEntry } from "astro:content";
+import Datetime from "@components/Datetime";
+
+export interface Props {
+  presentation: CollectionEntry<"talks">;
+}
+
+const { presentation } = Astro.props;
+
+const path = `../../talks/${presentation.id.replace(".md", ".html")}`;
+---
+
+<Layout title={`${SITE.title}`}>
+  <Header activeNav="talks" />
+  <Breadcrumbs />
+  <main id="main-content">
+    <section class="prose mb-10 max-w-4xl">
+      <h1>{presentation.data.title}</h1>
+      <Datetime
+        className="text-skin-base"
+        pubDatetime={presentation.data.pubDatetime}
+        modDatetime={presentation.data.modDatetime}
+      />
+      <p>{presentation.data.description}</p>
+    </section>
+    <section class="flex flex-col items-center">
+      <iframe src={path} class="h-[550px] w-full border-2"></iframe>
+      <a
+        class="mb-8 mt-4 rounded-md border-2 border-skin-accent px-4 py-2 text-xl font-bold hover:bg-skin-accent hover:text-skin-base"
+        href={path.replace(".html", ".pdf")}
+        download>Download as PDF</a
+      >
+    </section>
+  </main>
+  <Footer />
+</Layout>

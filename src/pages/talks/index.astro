@@ -1,0 +1,8 @@
+---
+import { getCollection } from "astro:content";
+import Talks from "@layouts/Talks.astro";
+
+const ppts = await getCollection("talks");
+---
+
+<Talks />

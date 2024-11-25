@@ -29,7 +29,7 @@ description: A talk about the Maker Mindset and Entrepreneurship. Originally for
 
 ---
 
-![bg right 70% My personal website](qr-code.png)
+![bg right 70% My personal website](./qr-code.png)
 
 ## Yo soy...
 
@@ -54,7 +54,7 @@ Ganas de aprender y <mark>experimentar</mark>
 
 ---
 
-# Resilencia 💪 <!--fit-->
+# Resiliencia 💪 <!--fit-->
 Ganas de volver a intentarlo
 
 ---
