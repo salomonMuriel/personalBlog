@@ -21,6 +21,13 @@ const sortedTalks = talks
 <Layout title={`Talks | ${SITE.title}`}>
   <Header activeNav="talks" />
   <Main pageTitle="Talks" pageDesc="Talks and presentations I've given.">
+    <p class="prose text-skin-base text-lg">
+      If you would like to book me for a talk please <a
+        href="https://cal.com/salomuriel/15min"
+        >schedule a 15 minute call on this link</a
+      > to talk details!
+    </p>
+    <hr class="my-8 border-skin-accent" />
     <ul>
       {
         sortedTalks.map(({ data, slug }) => (
