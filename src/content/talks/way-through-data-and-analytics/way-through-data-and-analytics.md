@@ -4,7 +4,7 @@ slug: way-through-data-and-analytics
 author: Salomón Muriel
 title: My Way Through Data and Analytics
 pubDatetime: 2023-08-30T08:00:00Z
-description: A talk for EIA's "Experiencias en Analítica e Inteligencia de Negocios".
+description: A talk for EAFIT University's "Experiencias en Analítica e Inteligencia de Negocios".
 pdf: true
 embed_pdf: true
 ---
