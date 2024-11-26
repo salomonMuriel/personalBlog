@@ -6,13 +6,13 @@ import Header from "@components/Header.astro";
 import Layout from "./Layout.astro";
 import type { CollectionEntry } from "astro:content";
 import Datetime from "@components/Datetime";
+import { YouTube } from "astro-embed";
 
 export interface Props {
   presentation: CollectionEntry<"talks">;
 }
 
 const { presentation } = Astro.props;
-
 const path = `../../talks/${presentation.id.replace(".md", ".html")}`;
 ---
 
@@ -30,12 +30,30 @@ const path = `../../talks/${presentation.id.replace(".md", ".html")}`;
       <p>{presentation.data.description}</p>
     </section>
     <section class="flex flex-col items-center">
-      <iframe src={path} class="h-64 w-full border-2 sm:h-96"></iframe>
-      <a
-        class="mb-8 mt-4 rounded-md border-2 border-skin-accent px-4 py-2 text-xl font-bold hover:bg-skin-accent hover:text-skin-base"
-        href={path.replace(".html", ".pdf")}
-        download>Download as PDF</a
-      >
+      {
+        presentation.data.youtube && (
+          <YouTube
+            class="w-full border-2 mb-8"
+            id={presentation.data.youtube}
+          />
+        )
+      }
+      {
+        presentation.data.marp && (
+          <iframe src={path} class="h-64 w-full border-2 sm:h-96" />
+        )
+      }
+      {
+        (presentation.data.marp || presentation.data.pdf) && (
+          <a
+            class="mb-8 mt-4 rounded-md border-2 border-skin-accent px-4 py-2 text-xl font-bold hover:bg-skin-accent hover:text-skin-base"
+            href={path.replace(".html", ".pdf")}
+            download
+          >
+            Download as PDF
+          </a>
+        )
+      }
     </section>
   </main>
   <Footer />
