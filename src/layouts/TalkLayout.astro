@@ -30,7 +30,7 @@ const pdf_path = `../../talks/${presentation.id.replace(".md", ".pdf")}`;
         modDatetime={presentation.data.modDatetime}
       />
       <p>{presentation.data.description}</p>
-      <Content />
+      {!presentation.data.marp && <Content />}
     </section>
     <section class="flex flex-col items-center">
       {
