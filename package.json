@@ -3,7 +3,7 @@
   "version": "4.2.0",
   "private": false,
   "scripts": {
-    "dev": "astro dev",
+    "dev": "astro dev --host",
     "start": "astro dev",
     "build": "astro build && jampack ./dist",
     "preview": "astro preview",

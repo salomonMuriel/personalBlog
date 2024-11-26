@@ -13,7 +13,9 @@ export interface Props {
 }
 
 const { presentation } = Astro.props;
-const path = `../../talks/${presentation.id.replace(".md", ".html")}`;
+const { Content } = await presentation.render();
+const html_path = `../../talks/${presentation.id.replace(".md", ".html")}`;
+const pdf_path = `../../talks/${presentation.id.replace(".md", ".pdf")}`;
 ---
 
 <Layout title={`${SITE.title}`}>
@@ -28,6 +30,7 @@ const path = `../../talks/${presentation.id.replace(".md", ".html")}`;
         modDatetime={presentation.data.modDatetime}
       />
       <p>{presentation.data.description}</p>
+      <Content />
     </section>
     <section class="flex flex-col items-center">
       {
@@ -40,17 +43,35 @@ const path = `../../talks/${presentation.id.replace(".md", ".html")}`;
       }
       {
         presentation.data.marp && (
-          <iframe src={path} class="h-64 w-full border-2 sm:h-96" />
+          <iframe src={html_path} class="h-64 w-full border-2 sm:h-96" />
+        )
+      }
+      {
+        presentation.data.embed_pdf && (
+          <object
+            data={pdf_path}
+            type="application/pdf"
+            class="h-64 w-full border-2 sm:h-96"
+          >
+            <span class="flex flex-col items-center justify-center align-middle text-center h-full">
+              <p>
+                It appears you can't preview PDFs in this browser (probably
+                Chrome on Android?)
+              </p>
+              <br />
+              <p>Download the PDF to view it with the button below 🔽 </p>
+            </span>
+          </object>
         )
       }
       {
         (presentation.data.marp || presentation.data.pdf) && (
           <a
             class="mb-8 mt-4 rounded-md border-2 border-skin-accent px-4 py-2 text-xl font-bold hover:bg-skin-accent hover:text-skin-base"
-            href={path.replace(".html", ".pdf")}
+            href={pdf_path}
             download
           >
-            Download as PDF
+            Download PDF
           </a>
         )
       }
