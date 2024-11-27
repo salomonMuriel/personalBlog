@@ -6,7 +6,7 @@ export const SITE: Site = {
   desc: "Salomón's little corner of the internet.",
   title: "Salomón Muriel",
   ogImage: undefined,
-  lightAndDarkMode: true,
+  lightAndDarkMode: false,
   postPerPage: 3,
   scheduledPostMargin: 15 * 60 * 1000, // 15 minutes
 };
