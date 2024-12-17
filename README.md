@@ -1,4 +1,4 @@
-# Salomón's Personal Website / Eventual Blog 📄
+# Salomón's Personal Website / Blog 📄
 
 Just my happy little corner of the internet.
 
@@ -21,7 +21,9 @@ Merrily used a great template called [AstroPaper](https://github.com/satnaing/as
 * Added Google Tag Manager support
 * (Subjectively) improved Hero page layout
 * Added about, now, uses and ideas pages 📝
-* Improved UX behavior when there are no blog posts (like right now 😛)
+* Improved UX behavior when there are no blog posts.
+* Added a "now" page with link to previous updates.
+* Added a "uses", "ideas" and "resources" page.
 
 
 ## ✨ Feedback & Suggestions
