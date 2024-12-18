@@ -100,6 +100,7 @@
 
   .prose img {
     @apply !my-2 mx-auto border-2 border-skin-line hover:outline hover:outline-2 hover:outline-skin-fill;
+    @apply max-w-[70%];
   }
 
   /* ===== scrollbar ===== */
