@@ -1,0 +1,47 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@layouts/Layout.astro";
+import Main from "@layouts/Main.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import { SITE } from "@config";
+
+const ideas = await getCollection("ideas");
+
+const sortedIdeas = ideas
+  .sort((a, b) => b.data.importance - a.data.importance)
+  .filter(({ data }) => !data.draft);
+---
+
+<Layout title={`Ideas | ${SITE.title}`}>
+  <Header activeNav="ideas" />
+  <Main pageTitle="Ideas" pageDesc="Ideas on I want to build or have built.">
+    <p class="prose text-skin-base text-lg w-full">
+      These are a few of the ideas I have pondered creating over the last few
+      years. If you think any of them are worth pursuing and would like to talk
+      about them please don't hesitate to <a
+        data-cal-link="salomuriel/personal-site-intro-call"
+        data-cal-namespace="personal-site-intro-call"
+        data-cal-config='{"layout":"month_view","theme":"dark"}'
+        >schedule a 15 minute call on this link</a
+      > to talk about it!
+    </p>
+    <hr class="my-8 border-skin-accent" />
+    <ul class="list-disc">
+      {
+        sortedIdeas.map(({ data, slug }) => (
+          <li>
+            <a
+              class="inline-block text-xl font-medium text-skin-accent decoration-dashed underline-offset-4 focus-visible:no-underline focus-visible:underline-offset-0 underline"
+              href={`/ideas/${slug}/`}
+            >
+              {data.title}
+            </a>{" "}
+            {data.current ? "- 🚀Currently working on this🚀" : ""}
+          </li>
+        ))
+      }
+    </ul>
+  </Main>
+  <Footer />
+</Layout>

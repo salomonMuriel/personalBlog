@@ -1,13 +1,14 @@
 ---
 author: Salomón Muriel
 pubDatetime: 2024-11-14T00:00:00Z
-title: 'Part 1 - Demystifying Data Science'
+title: 'Demystifying Data Science - Part 1'
 description: 'Data and technology are the foundation of a competitive organization. So why is Data Science so misunderstood?'
 slug: demystifying-data-science
 featured: false
 draft: false
 tags:
   - data-science
+  - demystifying-data-science
 ---
 
 _From data we build insights, from insights we form knowledge, and with knowledge we can make powerful decisions._

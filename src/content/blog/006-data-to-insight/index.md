@@ -2,7 +2,7 @@
 author: Salomón Muriel
 pubDatetime: 2024-11-25T08:00:00Z
 modDatetime: 2024-11-25T08:00:00Z
-title: Part 2 - From Data to Insights
+title: Demystifying Data Science - Part 2 - From Data to Insights
 description: Data is an ingredient, insights are the meal.
 slug: data-to-insights
 featured: false
@@ -10,9 +10,10 @@ draft: false
 tags:
   - data-science
   - analytics
+  - demystifying-data-science
 ---
 
-<span class="text-sm">This is the second part of a series of posts explaining data science in language for people who don't know anything about it. [You can go to the start here](/posts/demystifying-data-science/).</span>
+<span class="text-sm">This is the second part of a series of posts explaining data science in language for people who don't know anything about it. [You can see all the posts in the series here](/tags/demystifying-data-science/).</span>
 
 _The devil is wiser from age than from being the devil. - Colombian Proverb_
 

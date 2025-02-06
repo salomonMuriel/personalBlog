@@ -1,0 +1,21 @@
+---
+import { type CollectionEntry, getCollection } from "astro:content";
+import Idea from "@layouts/IdeasLayout.astro";
+
+export interface Props {
+  idea: CollectionEntry<"ideas">;
+}
+
+export async function getStaticPaths() {
+  const ideas = await getCollection("ideas");
+  const ideaResult = ideas.map(idea => ({
+    params: { slug: idea.slug },
+    props: { idea },
+  }));
+
+  return ideaResult;
+}
+const { idea } = Astro.props;
+---
+
+{(<Idea idea={idea} />)}

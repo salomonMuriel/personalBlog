@@ -4,24 +4,25 @@ import Breadcrumbs from "@components/Breadcrumbs.astro";
 import Footer from "@components/Footer.astro";
 import Header from "@components/Header.astro";
 import Layout from "./Layout.astro";
+import type { CollectionEntry } from "astro:content";
+import Datetime from "@components/Datetime";
+import { YouTube } from "astro-embed";
 
 export interface Props {
-  frontmatter: {
-    title: string;
-    description?: string;
-  };
+  idea: CollectionEntry<"ideas">;
 }
 
-const { frontmatter } = Astro.props;
+const { idea } = Astro.props;
+const { Content } = await idea.render();
 ---
 
-<Layout title={`${frontmatter.title} | ${SITE.title}`}>
+<Layout title={`${SITE.title}`}>
   <Header activeNav="ideas" />
   <Breadcrumbs />
   <main id="main-content">
-    <section id="ideas" class="prose mb-28 max-w-4xl prose-img:border-0">
-      <h1 class="text-2xl tracking-wider sm:text-3xl">{frontmatter.title}</h1>
-      <slot />
+    <section id="idea" class="prose mb-28 max-w-4xl prose-img:border-0">
+      <h2>{idea.data.title}</h2>
+      <Content />
     </section>
   </main>
   <Footer />
