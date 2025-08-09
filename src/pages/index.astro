@@ -39,8 +39,8 @@ const socialCount = SOCIALS.filter(social => social.active).length;
         </div>
       </div>
       <p class="pb-1">
-        I'm a serial founder with 4 companies under my belt. I love building new
-        stuff.
+        I'm a serial founder with 4 companies under my belt and building my 5th.
+        I love building new stuff.
       </p>
       <p class="pb-1">
         I'm a leading data scientist who loves to make through data and
@@ -253,7 +253,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
     @apply my-2;
   }
   .social-wrapper {
-    @apply mt-4 flex flex-col sm:flex-row sm:items-center;
+    @apply mt-4 flex flex-row sm:items-center;
   }
   .social-links {
     @apply mb-1 mr-2 whitespace-nowrap sm:mb-0;
@@ -283,10 +283,10 @@ const socialCount = SOCIALS.filter(social => social.active).length;
   }
 
   .consultancy-wrapper {
-    @apply my-4 flex flex-col sm:flex-row sm:items-center;
+    @apply my-4 flex flex-wrap sm:flex-row sm:items-center;
   }
 
   .btn {
-    @apply rounded-lg border-2 border-skin-line bg-skin-fill px-4 py-2 text-skin-base no-underline hover:bg-skin-accent hover:text-skin-inverted;
+    @apply flex-grow-0 rounded-lg border-2 border-skin-line bg-skin-fill px-4 py-2 text-skin-base no-underline hover:bg-skin-accent hover:text-skin-inverted;
   }
 </style>
