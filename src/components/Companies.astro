@@ -1,0 +1,75 @@
+---
+const currentCompany = {
+  name: "Current Company",
+  description: "A brief description of my current venture and our mission.",
+  // logo: "/assets/images/current-company-logo.png",
+};
+
+const pastCompanies = [
+  {
+    name: "Company One (Exit)",
+    description: "A brief description of what this company did and its impact.",
+    // logo: "/assets/images/company-one-logo.png", // Uncomment and replace with your logo path
+  },
+  {
+    name: "Company Two (Exit)",
+    description: "A brief description of what this company did and its impact.",
+    // logo: "/assets/images/company-two-logo.png",
+  },
+  {
+    name: "Company Three",
+    description:
+      "A brief description of what this company does and its mission.",
+    // logo: "/assets/images/company-three-logo.png",
+  },
+  {
+    name: "Company Four",
+    description:
+      "A brief description of what this company does and its mission.",
+    // logo: "/assets/images/company-four-logo.png",
+  },
+];
+---
+
+<section id="current-company" class="mb-12">
+  <h2 class="text-2xl font-semibold mb-6 text-center">Currently Building</h2>
+  <div class="flex justify-center">
+    <div class="current-company-card w-full max-w-2xl">
+      <div class="flex items-center mb-4">
+        <div class="logo-placeholder"></div>
+        <h3 class="text-xl font-semibold ml-4">{currentCompany.name}</h3>
+      </div>
+      <p class="text-skin-base text-opacity-80">{currentCompany.description}</p>
+    </div>
+  </div>
+</section>
+
+<section id="companies">
+  <h2 class="text-2xl font-semibold mb-6">Past Ventures</h2>
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+    {
+      pastCompanies.map(company => (
+        <div class="company-card">
+          <div class="flex items-center mb-4">
+            <div class="logo-placeholder" />
+            <h3 class="text-xl font-semibold ml-4">{company.name}</h3>
+          </div>
+          <p class="text-skin-base text-opacity-80">{company.description}</p>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .current-company-card {
+    @apply bg-skin-card-muted border-2 border-skin-accent rounded-lg p-6;
+  }
+  .company-card {
+    @apply bg-skin-card border border-skin-line rounded-lg p-6 transition-transform duration-300 ease-in-out hover:scale-105;
+  }
+  .logo-placeholder {
+    @apply w-12 h-12 bg-skin-fill rounded-md flex-shrink-0;
+    /* Replace with <img> tag if you have logos */
+  }
+</style>

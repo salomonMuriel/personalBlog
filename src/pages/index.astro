@@ -90,6 +90,45 @@ const socialCount = SOCIALS.filter(social => social.active).length;
 
     <Hr />
 
+    <section id="consultancy">
+      <h2>Consultancy Services</h2>
+      <p>
+        I offer consultancy services in the following areas. Click on any of
+        them to schedule a call with me.
+      </p>
+      <div class="consultancy-wrapper gap-4">
+        <LinkButton
+          href="https://cal.com/salomuriel/data-science-consulting"
+          className="btn"
+        >
+          Data Science 📊
+        </LinkButton>
+        <LinkButton
+          href="https://cal.com/salomuriel/company-building-consulting"
+          className="btn"
+        >
+          Company-Building 📈
+        </LinkButton>
+        <LinkButton
+          href="https://cal.com/salomuriel/mentorship"
+          className="btn"
+        >
+          Mentorship 🤝
+        </LinkButton>
+        <LinkButton
+          href="https://cal.com/salomuriel/ai-tech-consulting"
+          className="btn"
+        >
+          AI & Tech 🤖
+        </LinkButton>
+        <LinkButton href="https://cal.com/salomuriel/talks" className="btn">
+          Talks 🎤
+        </LinkButton>
+      </div>
+    </section>
+
+    <Hr />
+
     {
       nows.length > 0 && (
         <>
@@ -232,5 +271,21 @@ const socialCount = SOCIALS.filter(social => social.active).length;
   }
   .all-posts-btn-wrapper {
     @apply my-4 text-center;
+  }
+
+  #consultancy {
+    @apply pb-6 pt-6;
+  }
+
+  #consultancy h2 {
+    @apply text-2xl font-semibold tracking-wide;
+  }
+
+  .consultancy-wrapper {
+    @apply my-4 flex flex-col sm:flex-row sm:items-center;
+  }
+
+  .btn {
+    @apply rounded-lg border-2 border-skin-line bg-skin-fill px-4 py-2 text-skin-base no-underline hover:bg-skin-accent hover:text-skin-inverted;
   }
 </style>

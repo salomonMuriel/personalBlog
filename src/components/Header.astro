@@ -14,15 +14,13 @@ export interface Props {
     | "uses"
     | "posts"
     | "talks"
+    | "companies"
     | "search";
 }
 
 const { activeNav } = Astro.props;
 
-const posts = await getCollection(
-  "blog",
-  (a: { data: { draft: boolean } }) => a.data.draft != true
-);
+const posts = await getCollection("blog", ({ data }) => !data.draft);
 
 const talks = await getCollection("talks");
 ---
@@ -67,6 +65,14 @@ const talks = await getCollection("talks");
             </a>
           </li>
           <li>
+            <a
+              href="/companies/"
+              class={activeNav === "companies" ? "active" : ""}
+            >
+              Companies
+            </a>
+          </li>
+          <li>
             <a href="/ideas/" class={activeNav === "ideas" ? "active" : ""}>
               Ideas
             </a>
@@ -102,6 +108,7 @@ const talks = await getCollection("talks");
               </li>
             )
           }
+
           <li>
             <LinkButton
               href="/search/"
