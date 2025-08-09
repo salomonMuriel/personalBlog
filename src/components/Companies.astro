@@ -1,32 +1,61 @@
 ---
-const currentCompany = {
-  name: "Current Company",
-  description: "A brief description of my current venture and our mission.",
-  // logo: "/assets/images/current-company-logo.png",
+import type { ImageMetadata } from "astro";
+import elpalomoLogo from "../assets/images/elpalomo.png";
+import prestagenteLogo from "../assets/images/prestagente.png";
+import beriblockLogo from "../assets/images/beriblock.png";
+import fincoLogo from "../assets/images/finco.png";
+import igniaLogo from "../assets/images/ignia.png";
+
+interface Company {
+  name: string;
+  description: string;
+  dates: string;
+  status: string;
+  logo?: ImageMetadata;
+}
+
+const currentCompany: Company = {
+  name: "Ignia 🔥",
+  description:
+    "A new model for Higher Education, iterating on the main pain points of the traditional system: Content, Methodology, Community, Vibe, Purpose, Financing model, and Duration.",
+  dates: "2025 - Present",
+  status: "Active - www.ignia.lat",
+  logo: igniaLogo,
 };
 
-const pastCompanies = [
+const pastCompanies: Company[] = [
   {
-    name: "Company One (Exit)",
-    description: "A brief description of what this company did and its impact.",
-    // logo: "/assets/images/company-one-logo.png", // Uncomment and replace with your logo path
-  },
-  {
-    name: "Company Two (Exit)",
-    description: "A brief description of what this company did and its impact.",
-    // logo: "/assets/images/company-two-logo.png",
-  },
-  {
-    name: "Company Three",
+    name: "Finco",
     description:
-      "A brief description of what this company does and its mission.",
-    // logo: "/assets/images/company-three-logo.png",
+      "A Big Data and AI-powered valuation and decision-making service for the real estate market in Latin America. Over 100.000 reports served.",
+    dates: "2019 - 2022",
+    status: "Acquired by RED Atlas",
+    logo: fincoLogo,
   },
   {
-    name: "Company Four",
+    name: "Beriblock",
     description:
-      "A brief description of what this company does and its mission.",
-    // logo: "/assets/images/company-four-logo.png",
+      "Service to authenticate, track, and certify promissory notes using Blockchain technology.",
+    dates: "2018 - 2019",
+    status: "Went bankrupt",
+    logo: beriblockLogo,
+  },
+  {
+    name: "PrestaGente",
+    description:
+      "P2P payroll loan model tailored to Colombian regulations, using Blockchain as a disruptive technology.",
+    dates: "2017 - 2019",
+    status:
+      "Acquired by Taurus Capital and still running - www.prestagente.com",
+    logo: prestagenteLogo,
+  },
+  {
+    name: "El Palomo",
+    description:
+      "Subscription-based flower delivery service focused on a 100% online customer experience.",
+    dates: "2016 - 2017",
+    status: "Failed Spectacularly",
+    logo: elpalomoLogo,
   },
 ];
 ---
@@ -35,11 +64,29 @@ const pastCompanies = [
   <h2 class="text-2xl font-semibold mb-6 text-center">Currently Building</h2>
   <div class="flex justify-center">
     <div class="current-company-card w-full max-w-2xl">
-      <div class="flex items-center mb-4">
-        <div class="logo-placeholder"></div>
-        <h3 class="text-xl font-semibold ml-4">{currentCompany.name}</h3>
+      <div class="flex items-center">
+        {
+          currentCompany.logo ? (
+            <img
+              src={currentCompany.logo.src}
+              alt={`${currentCompany.name} logo`}
+              class="company-logo"
+            />
+          ) : (
+            <div class="logo-placeholder" />
+          )
+        }
+        <div class="ml-4">
+          <h3 class="text-xl font-semibold">{currentCompany.name}</h3>
+          <p class="text-sm font-normal text-skin-accent">
+            {currentCompany.status}
+          </p>
+          <p class="text-sm text-skin-muted">{currentCompany.dates}</p>
+        </div>
       </div>
-      <p class="text-skin-base text-opacity-80">{currentCompany.description}</p>
+      <p class="text-skin-base text-opacity-80 mt-4">
+        {currentCompany.description}
+      </p>
     </div>
   </div>
 </section>
@@ -50,11 +97,29 @@ const pastCompanies = [
     {
       pastCompanies.map(company => (
         <div class="company-card">
-          <div class="flex items-center mb-4">
-            <div class="logo-placeholder" />
-            <h3 class="text-xl font-semibold ml-4">{company.name}</h3>
+          <div class="flex items-center">
+            {company.logo ? (
+              <img
+                src={company.logo.src}
+                alt={`${company.name} logo`}
+                class="company-logo"
+              />
+            ) : (
+              <div class="logo-placeholder" />
+            )}
+            <div class="ml-4">
+              <h3 class="text-xl font-semibold">{company.name}</h3>
+              {company.status && (
+                <p class="text-sm font-normal text-skin-accent">
+                  {company.status}
+                </p>
+              )}
+              <p class="text-sm text-skin-muted">{company.dates}</p>
+            </div>
           </div>
-          <p class="text-skin-base text-opacity-80">{company.description}</p>
+          <p class="text-skin-base text-opacity-80 mt-4 flex-grow">
+            {company.description}
+          </p>
         </div>
       ))
     }
@@ -63,13 +128,15 @@ const pastCompanies = [
 
 <style>
   .current-company-card {
-    @apply bg-skin-card-muted border-2 border-skin-accent rounded-lg p-6;
+    @apply bg-skin-card border-2 border-skin-accent rounded-lg p-6 transition-transform duration-300 ease-in-out hover:scale-105;
   }
   .company-card {
-    @apply bg-skin-card border border-skin-line rounded-lg p-6 transition-transform duration-300 ease-in-out hover:scale-105;
+    @apply bg-skin-card border border-skin-line rounded-lg p-6 transition-transform duration-300 ease-in-out hover:scale-105 flex flex-col;
   }
   .logo-placeholder {
-    @apply w-12 h-12 bg-skin-fill rounded-md flex-shrink-0;
-    /* Replace with <img> tag if you have logos */
+    @apply w-16 h-16 bg-skin-fill rounded-md flex-shrink-0;
+  }
+  .company-logo {
+    @apply w-16 h-16 bg-white rounded-md flex-shrink-0 object-contain p-1;
   }
 </style>
