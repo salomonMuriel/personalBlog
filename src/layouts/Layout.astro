@@ -208,8 +208,66 @@ const socialImageURL = new URL(
             p(cal, ar);
           };
       })(window, "https://app.cal.com/embed/embed.js", "init");
+
+      // Initialize all Cal.com namespaces
       Cal("init", "personal-site-intro-call", { origin: "https://cal.com" });
       Cal.ns["personal-site-intro-call"]("ui", {
+        styles: { branding: { brandColor: "#000000" } },
+        hideEventTypeDetails: false,
+        layout: "month_view",
+      });
+
+      // Main CTA - 30min call
+      Cal("init", "30min", { origin: "https://cal.com" });
+      Cal.ns["30min"]("ui", {
+        styles: { branding: { brandColor: "#000000" } },
+        hideEventTypeDetails: false,
+        layout: "month_view",
+      });
+
+      // AI & Tech Consulting
+      Cal("init", "ai-tech-consulting", { origin: "https://cal.com" });
+      Cal.ns["ai-tech-consulting"]("ui", {
+        styles: { branding: { brandColor: "#000000" } },
+        hideEventTypeDetails: false,
+        layout: "month_view",
+      });
+
+      // Data Science Consulting
+      Cal("init", "data-science-consulting", { origin: "https://cal.com" });
+      Cal.ns["data-science-consulting"]("ui", {
+        styles: { branding: { brandColor: "#000000" } },
+        hideEventTypeDetails: false,
+        layout: "month_view",
+      });
+
+      // Company Building
+      Cal("init", "company-building-consulting", { origin: "https://cal.com" });
+      Cal.ns["company-building-consulting"]("ui", {
+        styles: { branding: { brandColor: "#000000" } },
+        hideEventTypeDetails: false,
+        layout: "month_view",
+      });
+
+      // Mentorship
+      Cal("init", "mentorship", { origin: "https://cal.com" });
+      Cal.ns["mentorship"]("ui", {
+        styles: { branding: { brandColor: "#000000" } },
+        hideEventTypeDetails: false,
+        layout: "month_view",
+      });
+
+      // Talks
+      Cal("init", "talks", { origin: "https://cal.com" });
+      Cal.ns["talks"]("ui", {
+        styles: { branding: { brandColor: "#000000" } },
+        hideEventTypeDetails: false,
+        layout: "month_view",
+      });
+
+      // Talks booking (separate namespace for speaking section)
+      Cal("init", "talks-booking", { origin: "https://cal.com" });
+      Cal.ns["talks-booking"]("ui", {
         styles: { branding: { brandColor: "#000000" } },
         hideEventTypeDetails: false,
         layout: "month_view",
