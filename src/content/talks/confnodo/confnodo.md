@@ -6,6 +6,7 @@ title: Claude Code para Product Management
 pubDatetime: 2025-10-11T08:00:00Z
 description: Herramientas de IA más allá del código. Demostración de cómo Product Managers pueden usar Claude Code para workflows no-técnicos - análisis de investigación de usuarios, comprensión de código y automatización de tareas.
 embed_html: true
+pdf: true
 ---
 
 Una charla práctica mostrando 3 workflows clave para Product Managers usando Claude Code:
