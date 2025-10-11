@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Code para Product Management</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+            color: #ffffff;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .presentation {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        .slide {
+            width: 100%;
+            height: 100%;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 3rem;
+            text-align: center;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00d4ff 0%, #7b2ff7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 2rem;
+            animation: fadeIn 0.6s ease-out 0.2s both;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #00d4ff 0%, #7b2ff7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+            animation: fadeIn 0.6s ease-out 0.2s both;
+        }
+
+        .subtitle {
+            font-size: 2rem;
+            color: #a0aec0;
+            margin-bottom: 3rem;
+            animation: fadeIn 0.6s ease-out 0.4s both;
+        }
+
+        .feature-highlight {
+            font-size: 2.5rem;
+            color: #e2e8f0;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            max-width: 1400px;
+            animation: fadeIn 0.6s ease-out 0.3s both;
+        }
+
+        code {
+            background: rgba(0, 212, 255, 0.1);
+            color: #00d4ff;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+        }
+
+        .features-list {
+            text-align: left;
+            margin: 1rem auto 1rem auto;
+            max-width: 1400px;
+            animation: fadeIn 0.6s ease-out 0.5s both;
+        }
+
+        .features-list li {
+            font-size: 1.8rem;
+            color: #e2e8f0;
+            margin: 1rem 0;
+            padding-left: 2rem;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        .features-list li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: #00d4ff;
+            font-weight: bold;
+        }
+
+        .prompt-box {
+            background: rgba(0, 0, 0, 0.4);
+            border: 2px solid #00d4ff;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 3rem;
+            max-width: 1400px;
+            width: 100%;
+            animation: fadeIn 0.6s ease-out 0.6s both;
+            position: relative;
+        }
+
+        .prompt-label {
+            color: #00d4ff;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+            text-align: left;
+        }
+
+        .prompt-code {
+            background: rgba(10, 14, 39, 0.8);
+            border-radius: 8px;
+            padding: 1.5rem;
+            font-family: 'Courier New', monospace;
+            font-size: 1.3rem;
+            color: #e2e8f0;
+            text-align: left;
+            line-height: 1.8;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            position: relative;
+            max-height: 375px;
+            overflow-y: auto;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: linear-gradient(135deg, #00d4ff 0%, #7b2ff7 100%);
+            color: white;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+        }
+
+        .copy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 212, 255, 0.5);
+        }
+
+        .copy-btn:active {
+            transform: translateY(0);
+        }
+
+        .copy-btn.copied {
+            background: linear-gradient(135deg, #00ff88 0%, #00d4ff 100%);
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 1.5rem;
+            z-index: 100;
+        }
+
+        .nav-btn {
+            background: rgba(0, 212, 255, 0.1);
+            border: 2px solid #00d4ff;
+            color: #00d4ff;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-btn:hover {
+            background: rgba(0, 212, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 212, 255, 0.4);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .nav-btn:disabled:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
+        .slide-counter {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background: rgba(0, 212, 255, 0.1);
+            border: 2px solid #00d4ff;
+            color: #00d4ff;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #00d4ff;
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float 20s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0);
+            }
+            25% {
+                transform: translate(100px, -100px);
+            }
+            50% {
+                transform: translate(-100px, 100px);
+            }
+            75% {
+                transform: translate(100px, 100px);
+            }
+        }
+
+        .contact-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 4rem;
+            margin-top: 1.5rem;
+            animation: fadeIn 0.6s ease-out 0.6s both;
+        }
+
+        .profile-photo {
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            border: 5px solid #00d4ff;
+            box-shadow: 0 0 40px rgba(0, 212, 255, 0.6);
+            object-fit: cover;
+            animation: fadeIn 0.6s ease-out 0.7s both;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .qr-code {
+            width: 350px;
+            height: 350px;
+            border: 4px solid #00d4ff;
+            border-radius: 16px;
+            padding: 1rem;
+            background: white;
+            box-shadow: 0 0 40px rgba(0, 212, 255, 0.6);
+            animation: fadeIn 0.6s ease-out 0.8s both;
+        }
+
+        .phone-number {
+            font-size: 2rem;
+            color: #00d4ff;
+            font-weight: 600;
+            letter-spacing: 1px;
+            animation: fadeIn 0.6s ease-out 0.9s both;
+        }
+
+        .linkedin-label {
+            font-size: 1.4rem;
+            color: #a0aec0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            animation: fadeIn 0.6s ease-out 0.8s both;
+        }
+
+        .profile-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .presenter-name {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00d4ff 0%, #7b2ff7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeIn 0.6s ease-out 0.7s both;
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+
+    <div class="slide-counter" id="slideCounter">1 / 14</div>
+
+    <div class="presentation">
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <h1>Claude Code para Product Management</h1>
+            <p class="subtitle">Herramientas de IA más allá del código</p>
+        </div>
+
+        <!-- Slide 2: Workflows Overview -->
+        <div class="slide">
+            <h2>3 Workflows para Product Managers</h2>
+            <p class="subtitle">Casos de uso prácticos con Claude Code</p>
+            <ul class="features-list">
+                <li><strong>Workflow 1:</strong> Analizar Feedback de Usuarios - Procesar entrevistas, transcribir audio y generar insights con agentes paralelos</li>
+                <li><strong>Workflow 2:</strong> Entender Código Complejo - Explorar arquitectura y cambios sin conocimiento técnico usando comandos personalizados</li>
+                <li><strong>Workflow 3:</strong> Cambios Rápidos de Código - Hacer actualizaciones pequeñas sin necesitar un ingeniero</li>
+            </ul>
+        </div>
+
+        <!-- Slide 3: Step 1 - CLAUDE.md Context -->
+        <div class="slide">
+            <h2>Paso 1: CLAUDE.md como Contexto Persistente</h2>
+            <p class="feature-highlight">Claude Code lee <code>CLAUDE.md</code> automáticamente al iniciar cada sesión</p>
+            <ul class="features-list">
+                <li><strong>Mantenerlo conciso:</strong> Documenta comandos comunes, estilo de código, instrucciones de testing</li>
+                <li><strong>Incluye contexto relevante:</strong> Visión del producto, terminología, workflows, métricas clave</li>
+                <li><strong>Actualízalo regularmente:</strong> Cuando Claude cometa errores, actualiza CLAUDE.md para que recuerde</li>
+            </ul>
+        </div>
+
+        <!-- Slide 4: Step 2 - File Organization -->
+        <div class="slide">
+            <h2>Paso 2: Gestión Autónoma</h2>
+            <p class="feature-highlight">Crea estructuras de carpetas y descarga archivos automáticamente</p>
+            <div class="prompt-box">
+                <div class="prompt-label">Prompt para usar:</div>
+                <div class="prompt-code">Tengo un archivo CSV con URLs de audios de entrevistas con usuarios.
+
+Lee el CSV, crea una estructura de carpetas en `user-research/` para organizar audios, transcripciones y análisis.
+
+Luego, descarga los archivos de audio desde las URLs con curl o wget, no Python. Usa subtasks/subagentes en paralelo para hacerlo más rápido.</div>
+                <button class="copy-btn" onclick="copyPrompt(this)">Copiar</button>
+            </div>
+        </div>
+
+        <!-- Slide 5: Step 3 - Python Script -->
+        <div class="slide">
+            <h2>Paso 3: Generación y Ejecución de Código</h2>
+            <p class="feature-highlight">Genera scripts y ejecútalos sin ayuda de ingenieros</p>
+            <div class="prompt-box">
+                <div class="prompt-label">Prompt para usar:</div>
+                <div class="prompt-code">Necesito transcribir automáticamente los audios que acabamos de descargar. ¿Puedes generar un script de Python que:
+
+1. Busque los archivos de audio descargados
+2. Use alguna librería de transcripción automática para convertir el audio a texto
+3. Guarde las transcripciones en archivos de texto con nombres descriptivos que incluyan el ID de la entrevista y nombre del participante
+
+Usa uv y crea un ambiente para el script.
+
+El script debe dar un output claro cuando finalice su proceso con cada archivo y en su totalidad.
+
+Puedes usar la API de Gemini en tu script, como ves aquí: https://ai.google.dev/gemini-api/docs/audio (usa 'gemini-2.5-flash' para el modelo)
+
+Cuando lo tengas, ejecútalo.</div>
+                <button class="copy-btn" onclick="copyPrompt(this)">Copiar</button>
+            </div>
+        </div>
+
+        <!-- Slide 6: Step 4 - Autonomous Execution -->
+        <div class="slide">
+            <h2>Paso 4: Ejecución Autónoma</h2>
+            <p class="feature-highlight"><code>--dangerously-skip-permissions</code> para workflows sin interrupciones</p>
+            <ul class="features-list">
+                <li>Claude trabaja sin pedir confirmación en cada acción</li>
+                <li>Permite completar tareas complejas de principio a fin automáticamente</li>
+                <li>⚠️ <strong>Usar con precaución:</strong> Solo cuando confías completamente en el contexto y las tareas</li>
+                <li>Ideal para procesos repetitivos o workflows bien definidos</li>
+            </ul>
+        </div>
+
+        <!-- Slide 7: Step 5 - Parallel Analysis -->
+        <div class="slide">
+            <h2>Paso 5: Análisis Paralelo con Subagentes</h2>
+            <p class="feature-highlight">Ejecuta múltiples análisis simultáneamente</p>
+            <div class="prompt-box">
+                <div class="prompt-label">Prompt para usar:</div>
+                <div class="prompt-code">Ahora quiero que los dos subagentes analicen todas las transcripciones en paralelo. Son edtech-innovation-analyst y learning-experience-analyst.
+
+Cada uno debe revisar todo el contenido desde su perspectiva especializada y generar un solo reporte conciso pero explícito con:
+- Principales hallazgos
+- Citas relevantes de las entrevistas
+- Recomendaciones específicas
+
+Deben guardar sus reportes en archivos de Markdown. Cada reporte debe ser de máximo 200 líneas.
+
+Lanza los agentes en paralelo para aprovechar la eficiencia.</div>
+                <button class="copy-btn" onclick="copyPrompt(this)">Copiar</button>
+            </div>
+        </div>
+
+        <!-- Slide 8: Step 6 - ultrathink Synthesis -->
+        <div class="slide">
+            <h2>Paso 6: Síntesis Final con ultrathink + MCP</h2>
+            <p class="feature-highlight">Análisis profundo para consolidar insights y publicar a <code>Notion</code></p>
+            <div class="prompt-box">
+                <div class="prompt-label">Prompt para usar:</div>
+                <div class="prompt-code">Ahora necesito un reporte ejecutivo que consolide todo lo que encontraron los analistas.
+
+Por favor, genera un reporte de síntesis que incluya:
+- Resumen ejecutivo con los insights más importantes
+- Hallazgos consolidados por categoría (pain points, feature requests, oportunidades de UX, integraciones)
+- Recomendaciones accionables priorizadas
+- Impacto potencial en nuestras métricas clave
+- Próximos pasos sugeridos
+
+Usa análisis profundo para encontrar patrones y conexiones entre los reportes. Guárdalo localmente en markdown y publícalo también en Notion en la database "User Research Findings" con formato ejecutivo.
+
+Máximo 300 líneas. ultrathink.</div>
+                <button class="copy-btn" onclick="copyPrompt(this)">Copiar</button>
+            </div>
+        </div>
+
+        <!-- Slide 9: Workflow 2 - All Commands -->
+        <div class="slide">
+            <h2>Comandos Personalizados para PMs</h2>
+            <p class="feature-highlight">Workflows reutilizables sin conocimiento técnico</p>
+            <ul class="features-list">
+                <li><code>/explain-code</code> - Entender arquitectura: "¿Cómo funciona el sistema multi-agente?"</li>
+                <li><code>/git-summary</code> - Analizar historial: "¿Qué cambios hubo en los últimos 5 commits?"</li>
+                <li><code>/document-codebase</code> - Generar docs no-técnicas automáticamente</li>
+            </ul>
+        </div>
+
+        <!-- Slide 10: Workflow 3, Step 1 -->
+        <div class="slide">
+            <h2>Inicialización: Crear Contexto del Proyecto</h2>
+            <p class="feature-highlight">Genera <code>CLAUDE.md</code> automáticamente para cualquier proyecto</p>
+            <div class="prompt-box">
+                <div class="prompt-label">Comando para ejecutar:</div>
+                <div class="prompt-code">/init</div>
+                <button class="copy-btn" onclick="copyPrompt(this)">Copiar</button>
+            </div>
+        </div>
+
+        <!-- Slide 11: Workflow 3, Step 2 -->
+        <div class="slide">
+            <h2>Actualización Rápida: Publicar en mi Sitio Web</h2>
+            <p class="feature-highlight">Cambios pequeños sin necesitar un ingeniero</p>
+            <div class="prompt-box">
+                <div class="prompt-label">Prompt para usar:</div>
+                <div class="prompt-code">Agrega esta presentación (presentation/index.html) a la sección /talks de mi sitio web personal.
+
+Usa el slug 'confnodo' para la presentación.
+
+Debes:
+1. Analizar la estructura actual de la sección /talks
+2. Crear una nueva entrada para esta charla con título, fecha y descripción
+3. Mantener el formato y estilo existentes
+4. Embedir o de alguna manera incluir la presentación misma
+5. Actualizar el slide de recursos en ../presentation/index.html para agregar la URL final donde quede publicada la presentación (reemplazar "[URL se agregará al publicar]" con "[URL FINAL]")
+6. Hacer commit de los cambios con un mensaje descriptivo y push al repositorio</div>
+                <button class="copy-btn" onclick="copyPrompt(this)">Copiar</button>
+            </div>
+        </div>
+
+        <!-- Slide 12: Reminder Check Notion -->
+        <div class="slide">
+            <h2>Revisemos Workflow 1</h2>
+            <p class="feature-highlight">Verificar resultados en Notion</p>
+            <ul class="features-list">
+                <li>Los agentes terminaron su análisis en segundo plano</li>
+                <li>El reporte ejecutivo de síntesis fue generado con ultrathink</li>
+                <li>Vamos a Notion a revisar que los reportes se publicaron correctamente en "User Research Findings"</li>
+            </ul>
+        </div>
+
+        <!-- Slide 13: Resources -->
+        <div class="slide">
+            <h2>Recursos</h2>
+            <ul class="features-list">
+                <li>Docs: <code>docs.claude.com/en/docs/claude-code</code></li>
+                <li>MCP Servers: <code>github.com/modelcontextprotocol/servers</code></li>
+                <li>Commands Marketplace: <code>claudecodecommands.directory</code></li>
+                <li>Ignia Action Lab: <code>www.ignia.lat/action-lab</code></li>
+                <li>Tokens Gratis: <code>aistudio.google.com/api-keys</code></li>
+                <li>Esta presentación: <code>www.salomonmuriel.com/talks/confnodo</code></li>
+            </ul>
+        </div>
+
+        <!-- Slide 14: Closing -->
+        <div class="slide">
+            <h1>¡Gracias!</h1>
+            <div class="contact-section">
+                <div class="profile-section">
+                    <img src="assets/fotoSalo.jpg" alt="Salomon Muriel" class="profile-photo">
+                    <div class="presenter-name">Salomón Muriel</div>
+                </div>
+                <div class="contact-info">
+                    <div class="linkedin-label">Conectemos en LinkedIn</div>
+                    <img src="assets/qr_linkedin.png" alt="LinkedIn QR Code" class="qr-code">
+                    <div class="phone-number">+57.313.246.5100</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <button class="nav-btn" id="prevBtn" onclick="previousSlide()">← Anterior</button>
+        <button class="nav-btn" id="nextBtn" onclick="nextSlide()">Siguiente →</button>
+    </div>
+
+    <script>
+        let currentSlide = parseInt(localStorage.getItem('presentationSlide') || '0');
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        // Create particles
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 30; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.top = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 20 + 's';
+            particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        function updateSlide() {
+            slides.forEach((slide, index) => {
+                slide.classList.toggle('active', index === currentSlide);
+            });
+
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+            document.getElementById('slideCounter').textContent = `${currentSlide + 1} / ${totalSlides}`;
+
+            // Save current slide position
+            localStorage.setItem('presentationSlide', currentSlide);
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateSlide();
+            }
+        }
+
+        function previousSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlide();
+            }
+        }
+
+        function copyPrompt(button) {
+            const promptCode = button.previousElementSibling;
+            const text = promptCode.textContent;
+
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = button.textContent;
+                button.textContent = '✓ Copiado';
+                button.classList.add('copied');
+
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.classList.remove('copied');
+                }, 2000);
+            });
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                previousSlide();
+            }
+        });
+
+        // Initialize
+        updateSlide();
+    </script>
+</body>
+</html>

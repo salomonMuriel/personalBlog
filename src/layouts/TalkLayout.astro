@@ -47,6 +47,11 @@ const pdf_path = `../../talks/${presentation.id.replace(".md", ".pdf")}`;
         )
       }
       {
+        presentation.data.embed_html && (
+          <iframe src={html_path} class="h-screen w-full border-2" />
+        )
+      }
+      {
         presentation.data.embed_pdf && (
           <object
             data={pdf_path}
