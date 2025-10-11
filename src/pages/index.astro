@@ -10,7 +10,7 @@ import Socials from "@components/Socials.astro";
 import getSortedPosts from "@utils/getSortedPosts";
 import { SOCIALS } from "@config";
 import { Image } from "astro:assets";
-import salomonImage from "../assets/images/salomon.jpg";
+import salomonImage from "../assets/images/fotoSalo.jpeg";
 import franco from "../assets/images/franco_cut.webp";
 import luca from "../assets/images/luca_cut.webp";
 
@@ -33,84 +33,117 @@ const socialCount = SOCIALS.filter(social => social.active).length;
   <Header />
   <main id="main-content">
     <section id="hero">
-      <div class="flex w-full items-center justify-between pb-6">
-        <div class="flex-1">
-          <h1 class="hero-title">Salomón Muriel</h1>
-          <p class="hero-subtitle">Serial Founder × Data Scientist</p>
-        </div>
-        <div class="flex flex-1 items-center justify-center">
-          <Image
-            src={salomonImage}
-            alt="Salomón Muriel"
-            class="size-24 rounded-full sm:size-32"
-          />
-        </div>
-      </div>
-
-      <h2 class="value-prop">
-        Transform Your Business with Tech & AI Innovation
-      </h2>
-      <p class="value-prop-subtitle">
-        I help ambitious companies and founders combine cutting-edge tech & AI
-        with proven business strategy—because I've done both: founded 4
-        companies AND led data science teams at scale.
-      </p>
-
-      <div class="cta-wrapper">
-        <button
-          data-cal-namespace="30min"
-          data-cal-link="salomuriel/30min"
-          data-cal-config='{"layout":"month_view"}'
-          class="cta-primary"
-        >
-          Book an Intro Call →
-        </button>
-        <button
-          data-cal-namespace="talks"
-          data-cal-link="salomuriel/talks"
-          data-cal-config='{"layout":"month_view"}'
-          class="cta-secondary"
-        >
-          Book Me to Speak →
-        </button>
-      </div>
-
-      {
-        // only display if at least one social link is enabled
-        socialCount > 0 && (
-          <div class="social-wrapper">
-            <div class="social-links-text">Connect with me:</div>
-            <Socials />
+      <div class="hero-container">
+        <!-- Photo Section (Left on Desktop, Top on Mobile) -->
+        <div class="hero-photo-section">
+          <div class="hero-photo-wrapper">
+            <Image
+              src={salomonImage}
+              alt="Salomón Muriel - Serial Entrepreneur and Tech Leader"
+              class="hero-photo"
+            />
           </div>
-        )
-      }
+        </div>
+
+        <!-- Content Section (Right on Desktop, Bottom on Mobile) -->
+        <div class="hero-content-section">
+          <h1 class="hero-title">Salomón Muriel</h1>
+          <p class="hero-subtitle">Serial Entrepreneur and Tech Leader</p>
+
+          <h2 class="value-prop">
+            Turn Technical Ambition into Business Reality
+          </h2>
+          <p class="value-prop-subtitle">
+            I've founded 4 companies and led Tech, AI & Data teams at scale. I
+            help you combine cutting-edge tech with proven strategy.
+          </p>
+
+          <div class="cta-wrapper">
+            <button
+              data-cal-namespace="30min"
+              data-cal-link="salomuriel/30min"
+              data-cal-config='{"layout":"month_view"}'
+              class="cta-primary"
+            >
+              Book an Intro Call →
+            </button>
+            <button
+              data-cal-namespace="talks"
+              data-cal-link="salomuriel/talks"
+              data-cal-config='{"layout":"month_view"}'
+              class="cta-secondary"
+            >
+              Book Me to Speak →
+            </button>
+          </div>
+
+          {
+            // only display if at least one social link is enabled
+            socialCount > 0 && (
+              <div class="social-wrapper">
+                <div class="social-links-text">Connect with me:</div>
+                <Socials />
+              </div>
+            )
+          }
+        </div>
+      </div>
+    </section>
+
+    <Hr />
+
+    <section id="about-personal">
+      <h2>About Me</h2>
+      <div class="personal-content">
+        <p class="pb-2">
+          I've founded 4 companies (building #5 now) and led Tech, AI & Data
+          teams at scale. I combine technical depth with real-world business
+          experience.
+        </p>
+        <p class="pb-2">
+          Beyond business, I'm a dad to twin boys, Luca & Franco{" "}
+          <span class="group inline-block"
+            >👶👶
+            <Image
+              src={franco}
+              alt="Franco"
+              class="group fixed -right-full bottom-0 max-h-[50%] w-auto group-hover:animate-slide-in-out-r"
+            />
+            <Image
+              src={luca}
+              alt="Luca"
+              class="group fixed -left-full bottom-0 max-h-[50%] w-auto group-hover:animate-slide-in-out-l"
+            />
+          </span>. I write about Entrepreneurship, Education, Tech, Data
+          Science, and Life Balance—most of what I write <a
+            href="https://www.linkedin.com/in/smuriel/"
+            class="underline hover:text-skin-accent"
+            target="_blank"
+            rel="noopener noreferrer">is on LinkedIn</a
+          >.
+        </p>
+      </div>
     </section>
 
     <Hr />
 
     <section id="consultancy">
       <h2>Work With Me</h2>
-      <p class="consultancy-intro">
-        Tech expertise meets business acumen. Here's how I can help:
-      </p>
+      <p class="consultancy-intro">Here's how I can help:</p>
 
       <div class="services-grid">
         <div class="service-card">
           <div class="flex items-center gap-4 sm:flex-shrink-0">
             <div class="service-icon">🤖</div>
-            <h3 class="service-title sm:hidden">Tech & AI Consulting</h3>
+            <h3 class="service-title sm:hidden">Tech & AI</h3>
           </div>
           <div class="service-content">
-            <h3 class="service-title hidden sm:block">Tech & AI Consulting</h3>
+            <h3 class="service-title hidden sm:block">Tech & AI</h3>
             <p class="service-for">
               <strong>For:</strong> CTOs, Tech Leaders, Product Teams
             </p>
-            <p class="service-problem">
-              <strong>Problem:</strong> You need technical direction but don't know
-              where to start
-            </p>
             <p class="service-outcome">
-              <strong>Outcome:</strong> Clear roadmap + implementation strategy
+              <strong>Delivery:</strong> Technical roadmap to implementation
             </p>
           </div>
           <div class="service-cta">
@@ -120,7 +153,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
               data-cal-config='{"layout":"month_view"}'
               class="btn-service"
             >
-              Book a Tech Call →
+              Book a Call →
             </button>
           </div>
         </div>
@@ -135,12 +168,8 @@ const socialCount = SOCIALS.filter(social => social.active).length;
             <p class="service-for">
               <strong>For:</strong> Companies with data but no insights
             </p>
-            <p class="service-problem">
-              <strong>Problem:</strong> Your data isn't driving decisions
-            </p>
             <p class="service-outcome">
-              <strong>Outcome:</strong> Analytics infrastructure that creates business
-              value
+              <strong>Delivery:</strong> Analytics that drive decisions
             </p>
           </div>
           <div class="service-cta">
@@ -150,7 +179,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
               data-cal-config='{"layout":"month_view"}'
               class="btn-service"
             >
-              Book a Data Call →
+              Book a Call →
             </button>
           </div>
         </div>
@@ -165,13 +194,8 @@ const socialCount = SOCIALS.filter(social => social.active).length;
             <p class="service-for">
               <strong>For:</strong> Founders, CEOs, Growth-stage companies
             </p>
-            <p class="service-problem">
-              <strong>Problem:</strong> Scaling is chaotic and mistakes are slowing
-              growth
-            </p>
             <p class="service-outcome">
-              <strong>Outcome:</strong> Proven playbooks from 4 companies built from
-              scratch
+              <strong>Delivery:</strong> Playbooks from 4 companies, from 0 to scale
             </p>
           </div>
           <div class="service-cta">
@@ -181,7 +205,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
               data-cal-config='{"layout":"month_view"}'
               class="btn-service"
             >
-              Book a Founder Call →
+              Book a Call →
             </button>
           </div>
         </div>
@@ -196,11 +220,8 @@ const socialCount = SOCIALS.filter(social => social.active).length;
             <p class="service-for">
               <strong>For:</strong> Aspiring founders, data scientists, product leaders
             </p>
-            <p class="service-problem">
-              <strong>Problem:</strong> You need guidance from someone in the trenches
-            </p>
             <p class="service-outcome">
-              <strong>Outcome:</strong> Actionable advice and accountability
+              <strong>Delivery:</strong> Actionable advice and accountability
             </p>
           </div>
           <div class="service-cta">
@@ -210,7 +231,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
               data-cal-config='{"layout":"month_view"}'
               class="btn-service"
             >
-              Book a Mentorship Call →
+              Book a Call →
             </button>
           </div>
         </div>
@@ -218,14 +239,14 @@ const socialCount = SOCIALS.filter(social => social.active).length;
 
       <div class="consultancy-footer">
         <p class="not-sure">
-          <strong>Not sure which fits your needs?</strong>
+          <strong>Not sure which service fits best?</strong>
           <a
             data-cal-link="salomuriel/personal-site-intro-call"
             data-cal-namespace="personal-site-intro-call"
             data-cal-config='{"layout":"month_view","theme":"dark"}'
             class="underline cursor-pointer hover:text-skin-accent ml-2"
           >
-            Book a free 15-minute intro call
+            Book a free 15-minute intro call to discuss your needs
           </a>
         </p>
       </div>
@@ -236,24 +257,23 @@ const socialCount = SOCIALS.filter(social => social.active).length;
     <section id="speaking">
       <h2>Speaking & Workshops</h2>
       <p class="speaking-intro">
-        I speak about AI & tech, data science, and entrepreneurship—combining
-        technical depth with practical business insights.
+        I speak about AI, data science, and building companies—technical depth
+        meets business reality.
       </p>
 
       <div class="speaking-topics">
         <h3 class="topics-title">Popular Topics:</h3>
         <ul class="topics-list">
           <li>
-            🤖 <strong>AI & Tech</strong> - Practical AI applications and cutting-edge
-            technology for business impact
+            🤖 <strong>AI & Tech</strong> - Practical applications for business impact
           </li>
           <li>
-            📊 <strong>Data-Driven Decision Making</strong> - Building analytics
-            culture in growing companies
+            📊 <strong>Data-Driven Decisions</strong> - Building analytics culture
+            in growing companies
           </li>
           <li>
-            🚀 <strong>The Maker's Mindset</strong> - From idea to launched product:
-            lessons from 4 companies
+            🚀 <strong>The Maker's Mindset</strong> - From idea to product: lessons
+            from 4 companies
           </li>
           <li>
             🏗️ <strong>Entrepreneurship</strong> - Practical strategies for founders
@@ -282,7 +302,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
 
       <div class="speaking-cta-wrapper">
         <p class="speaking-cta-text">
-          Looking for a speaker who bridges technical and business perspectives?
+          Need a speaker who's been in the code AND the boardroom?
         </p>
         <button
           data-cal-namespace="talks-booking"
@@ -297,39 +317,6 @@ const socialCount = SOCIALS.filter(social => social.active).length;
             See All Talks
           </LinkButton>
         </div>
-      </div>
-    </section>
-
-    <Hr />
-
-    <section id="about-personal">
-      <h2>About Me</h2>
-      <div class="personal-content">
-        <p class="pb-2">
-          I'm a serial founder with <strong>4 companies under my belt</strong> and
-          building my 5th. I'm also a leading data scientist who loves making impact
-          through data and innovation.
-        </p>
-        <p class="pb-2">
-          Beyond business, I'm the father of super-twins, Luca & Franco{" "}
-          <span class="group inline-block"
-            >👶👶
-            <Image
-              src={franco}
-              alt="Franco"
-              class="group fixed -right-full bottom-0 max-h-[50%] w-auto group-hover:animate-slide-in-out-r"
-            />
-            <Image
-              src={luca}
-              alt="Luca"
-              class="group fixed -left-full bottom-0 max-h-[50%] w-auto group-hover:animate-slide-in-out-l"
-            />
-          </span>. I often write about Entrepreneurship, Education, Tech & Data
-          Science, and Life Balance.
-        </p>
-        <p>
-          I'm always eager to meet creative, interesting, innovative people.
-        </p>
       </div>
     </section>
 
@@ -446,20 +433,151 @@ const socialCount = SOCIALS.filter(social => social.active).length;
     @apply pb-8 pt-8;
   }
 
+  .hero-container {
+    @apply flex flex-col gap-8;
+  }
+
+  /* Desktop: Split-screen layout (photo left 40%, content right 60%) */
+  @media (min-width: 768px) {
+    .hero-container {
+      @apply flex-row gap-12 items-center;
+    }
+  }
+
+  /* Photo Section */
+  .hero-photo-section {
+    @apply flex justify-center;
+    @apply w-full;
+    @apply flex-shrink-0;
+  }
+
+  @media (min-width: 768px) {
+    .hero-photo-section {
+      @apply justify-start;
+      width: 40%;
+    }
+  }
+
+  .hero-photo-wrapper {
+    @apply relative;
+    @apply w-full;
+    max-width: 300px;
+  }
+
+  @media (min-width: 768px) {
+    .hero-photo-wrapper {
+      max-width: none;
+    }
+  }
+
+  /* Gradient background blob behind photo */
+  .hero-photo-wrapper::before {
+    content: "";
+    @apply absolute rounded-full;
+    width: 120%;
+    height: 120%;
+    top: -10%;
+    left: -10%;
+    z-index: -1;
+    background: radial-gradient(
+      circle,
+      rgba(255, 111, 89, 0.1) 0%,
+      transparent 70%
+    );
+  }
+
+  .hero-photo {
+    @apply w-full h-auto rounded-2xl shadow-xl;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    border: 1px solid rgba(255, 111, 89, 0.2);
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+
+  @media (min-width: 768px) {
+    .hero-photo {
+      aspect-ratio: 3/4;
+    }
+  }
+
+  .hero-photo:hover {
+    transform: scale(1.02);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Support for reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .hero-photo {
+      transition: none;
+    }
+    .hero-photo:hover {
+      transform: none;
+    }
+  }
+
+  /* Content Section */
+  .hero-content-section {
+    @apply flex-1 flex flex-col;
+  }
+
   .hero-title {
-    @apply text-4xl font-bold sm:text-5xl mb-1;
+    @apply text-4xl font-bold mb-1;
+  }
+
+  @media (min-width: 768px) {
+    .hero-title {
+      @apply text-5xl;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .hero-title {
+      @apply text-6xl;
+    }
   }
 
   .hero-subtitle {
-    @apply text-lg sm:text-xl text-skin-accent font-medium;
+    @apply text-lg text-skin-accent font-medium;
+  }
+
+  @media (min-width: 768px) {
+    .hero-subtitle {
+      @apply text-xl;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .hero-subtitle {
+      @apply text-2xl;
+    }
   }
 
   .value-prop {
-    @apply text-2xl sm:text-3xl font-bold mt-6 mb-3 leading-tight;
+    @apply text-2xl font-bold mt-6 mb-3 leading-tight;
+  }
+
+  @media (min-width: 768px) {
+    .value-prop {
+      @apply text-3xl;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .value-prop {
+      @apply text-4xl;
+    }
   }
 
   .value-prop-subtitle {
-    @apply text-base sm:text-lg mb-6 leading-relaxed;
+    @apply text-base mb-6 leading-relaxed;
+  }
+
+  @media (min-width: 768px) {
+    .value-prop-subtitle {
+      @apply text-lg;
+    }
   }
 
   .cta-wrapper {
@@ -603,7 +721,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
   }
 
   .btn-speaking-secondary {
-    @apply inline-block rounded-lg border-2 border-skin-line px-4 py-2 text-sm font-semibold text-skin-base no-underline hover:border-skin-accent hover:text-skin-accent transition-all;
+    @apply inline-block rounded-lg border-2 border-skin-line px-4 py-2 text-sm font-medium text-skin-base no-underline hover:border-skin-accent hover:text-skin-accent transition-all;
   }
 
   /* ===== About Personal Section ===== */
