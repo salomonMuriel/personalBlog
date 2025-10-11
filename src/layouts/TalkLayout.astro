@@ -48,7 +48,20 @@ const pdf_path = `../../talks/${presentation.id.replace(".md", ".pdf")}`;
       }
       {
         presentation.data.embed_html && (
-          <iframe src={html_path} class="h-screen w-full border-2" />
+          <>
+            <div class="hidden sm:block w-full">
+              <iframe src={html_path} class="h-screen w-full border-2" />
+            </div>
+            <div class="block sm:hidden w-full border-2 border-skin-line rounded-md p-8 text-center">
+              <p class="text-lg mb-4">
+                Interactive presentation is only available on desktop screens.
+              </p>
+              <p class="text-sm text-skin-base opacity-75">
+                Download the files below to view on mobile or use a desktop
+                device for the best experience.
+              </p>
+            </div>
+          </>
         )
       }
       {
@@ -69,17 +82,30 @@ const pdf_path = `../../talks/${presentation.id.replace(".md", ".pdf")}`;
           </object>
         )
       }
-      {
-        (presentation.data.marp || presentation.data.pdf) && (
-          <a
-            class="mb-8 mt-4 rounded-md border-2 border-skin-accent px-4 py-2 text-xl font-bold hover:bg-skin-accent hover:text-skin-base"
-            href={pdf_path}
-            download
-          >
-            Download PDF
-          </a>
-        )
-      }
+      <div class="flex flex-wrap gap-4 justify-center mt-4 mb-8">
+        {
+          (presentation.data.marp || presentation.data.pdf) && (
+            <a
+              class="rounded-md border-2 border-skin-accent px-4 py-2 text-xl font-bold hover:bg-skin-accent hover:text-skin-base"
+              href={pdf_path}
+              download
+            >
+              Download PDF
+            </a>
+          )
+        }
+        {
+          presentation.data.embed_html && (
+            <a
+              class="rounded-md border-2 border-skin-accent px-4 py-2 text-xl font-bold hover:bg-skin-accent hover:text-skin-base"
+              href={html_path}
+              download
+            >
+              Download Interactive HTML
+            </a>
+          )
+        }
+      </div>
     </section>
   </main>
   <Footer />
