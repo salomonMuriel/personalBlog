@@ -91,6 +91,7 @@ const talks = await getCollection("talks");
             </a>
           </li>
           {
+            /* Posts menu item hidden - uncomment to restore
             posts.length >= 1 && (
               <li>
                 <a href="/posts/" class={activeNav === "posts" ? "active" : ""}>
@@ -98,6 +99,7 @@ const talks = await getCollection("talks");
                 </a>
               </li>
             )
+          */
           }
           {
             talks.length >= 1 && (

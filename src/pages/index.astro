@@ -301,6 +301,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
     }
 
     {
+      /* Featured posts section hidden - uncomment to restore
       featuredPosts.length > 0 && (
         <>
           <section id="featured">
@@ -318,9 +319,11 @@ const socialCount = SOCIALS.filter(social => social.active).length;
           {recentPosts.length > 0 && <Hr />}
         </>
       )
+    */
     }
 
     {
+      /* Recent posts section hidden - uncomment to restore
       recentPosts.length > 0 && (
         <section id="recent-posts">
           <h2>Recent Posts</h2>
@@ -338,9 +341,11 @@ const socialCount = SOCIALS.filter(social => social.active).length;
           </ul>
         </section>
       )
+    */
     }
 
     {
+      /* All posts button hidden - uncomment to restore
       sortedPosts.length > 0 && (
         <div class="all-posts-btn-wrapper">
           <LinkButton href="/posts/">
@@ -351,6 +356,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
           </LinkButton>
         </div>
       )
+    */
     }
   </main>
 
