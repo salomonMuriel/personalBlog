@@ -55,7 +55,8 @@ const socialCount = SOCIALS.filter(social => social.active).length;
           </h2>
           <p class="value-prop-subtitle">
             I've founded 4 companies and led Tech, AI & Data teams at scale. I
-            help you combine cutting-edge tech with proven strategy.
+            consult with founders and companies, and speak at conferences and
+            corporate events.
           </p>
 
           <div class="cta-wrapper">
@@ -65,15 +66,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
               data-cal-config='{"layout":"month_view"}'
               class="cta-primary"
             >
-              Book an Intro Call →
-            </button>
-            <button
-              data-cal-namespace="talks"
-              data-cal-link="salomuriel/talks"
-              data-cal-config='{"layout":"month_view"}'
-              class="cta-secondary"
-            >
-              Book Me to Speak →
+              Let's Talk →
             </button>
           </div>
 
@@ -129,125 +122,62 @@ const socialCount = SOCIALS.filter(social => social.active).length;
 
     <section id="consultancy">
       <h2>Work With Me</h2>
-      <p class="consultancy-intro">Here's how I can help:</p>
+      <p class="consultancy-intro">
+        I partner with founders, CTOs, and growing companies to solve their
+        toughest challenges. Whether you need hands-on technical guidance or
+        strategic advice, I bring real experience from building 4 companies and
+        leading teams at scale.
+      </p>
 
-      <div class="services-grid">
-        <div class="service-card">
-          <div class="flex items-center gap-4 sm:flex-shrink-0">
-            <div class="service-icon">🤖</div>
-            <h3 class="service-title sm:hidden">Tech & AI</h3>
-          </div>
-          <div class="service-content">
-            <h3 class="service-title hidden sm:block">Tech & AI</h3>
-            <p class="service-for">
-              <strong>For:</strong> CTOs, Tech Leaders, Product Teams
-            </p>
-            <p class="service-outcome">
-              <strong>Delivery:</strong> Technical roadmap to implementation
-            </p>
-          </div>
-          <div class="service-cta">
-            <button
-              data-cal-namespace="ai-tech-consulting"
-              data-cal-link="salomuriel/ai-tech-consulting"
-              data-cal-config='{"layout":"month_view"}'
-              class="btn-service"
-            >
-              Book a Call →
-            </button>
+      <div class="services-list">
+        <div class="service-item">
+          <span class="service-emoji">🤖</span>
+          <div class="service-text">
+            <strong>Tech & AI Consulting</strong> — Navigate AI adoption, build technical
+            roadmaps, and make implementation decisions with confidence.
           </div>
         </div>
-
-        <div class="service-card">
-          <div class="flex items-center gap-4 sm:flex-shrink-0">
-            <div class="service-icon">📊</div>
-            <h3 class="service-title sm:hidden">Data Science</h3>
-          </div>
-          <div class="service-content">
-            <h3 class="service-title hidden sm:block">Data Science</h3>
-            <p class="service-for">
-              <strong>For:</strong> Companies with data but no insights
-            </p>
-            <p class="service-outcome">
-              <strong>Delivery:</strong> Analytics that drive decisions
-            </p>
-          </div>
-          <div class="service-cta">
-            <button
-              data-cal-namespace="data-science-consulting"
-              data-cal-link="salomuriel/data-science-consulting"
-              data-cal-config='{"layout":"month_view"}'
-              class="btn-service"
-            >
-              Book a Call →
-            </button>
+        <div class="service-item">
+          <span class="service-emoji">📊</span>
+          <div class="service-text">
+            <strong>Data Science</strong> — Turn your data into actionable insights
+            and build analytics capabilities that drive real business decisions.
           </div>
         </div>
-
-        <div class="service-card">
-          <div class="flex items-center gap-4 sm:flex-shrink-0">
-            <div class="service-icon">📈</div>
-            <h3 class="service-title sm:hidden">Company-Building</h3>
-          </div>
-          <div class="service-content">
-            <h3 class="service-title hidden sm:block">Company-Building</h3>
-            <p class="service-for">
-              <strong>For:</strong> Founders, CEOs, Growth-stage companies
-            </p>
-            <p class="service-outcome">
-              <strong>Delivery:</strong> Playbooks from 4 companies, from 0 to scale
-            </p>
-          </div>
-          <div class="service-cta">
-            <button
-              data-cal-namespace="company-building-consulting"
-              data-cal-link="salomuriel/company-building-consulting"
-              data-cal-config='{"layout":"month_view"}'
-              class="btn-service"
-            >
-              Book a Call →
-            </button>
+        <div class="service-item">
+          <span class="service-emoji">📈</span>
+          <div class="service-text">
+            <strong>Company-Building</strong> — Learn from hard-won lessons across
+            4 companies: fundraising, hiring, scaling, and avoiding the mistakes
+            I've already made.
           </div>
         </div>
-
-        <div class="service-card">
-          <div class="flex items-center gap-4 sm:flex-shrink-0">
-            <div class="service-icon">🤝</div>
-            <h3 class="service-title sm:hidden">Mentorship</h3>
-          </div>
-          <div class="service-content">
-            <h3 class="service-title hidden sm:block">Mentorship</h3>
-            <p class="service-for">
-              <strong>For:</strong> Aspiring founders, data scientists, product leaders
-            </p>
-            <p class="service-outcome">
-              <strong>Delivery:</strong> Actionable advice and accountability
-            </p>
-          </div>
-          <div class="service-cta">
-            <button
-              data-cal-namespace="mentorship"
-              data-cal-link="salomuriel/mentorship"
-              data-cal-config='{"layout":"month_view"}'
-              class="btn-service"
-            >
-              Book a Call →
-            </button>
+        <div class="service-item">
+          <span class="service-emoji">🤝</span>
+          <div class="service-text">
+            <strong>Mentorship</strong> — Ongoing accountability and guidance for
+            founders, data scientists, and tech leaders navigating their next chapter.
           </div>
         </div>
       </div>
 
-      <div class="consultancy-footer">
-        <p class="not-sure">
-          <strong>Not sure which service fits best?</strong>
-          <a
-            data-cal-link="salomuriel/personal-site-intro-call"
-            data-cal-namespace="personal-site-intro-call"
-            data-cal-config='{"layout":"month_view","theme":"dark"}'
-            class="underline cursor-pointer hover:text-skin-accent ml-2"
-          >
-            Book a free 15-minute intro call to discuss your needs
-          </a>
+      <div class="trust-metrics">
+        <span>4 companies founded</span>
+        <span class="trust-separator">•</span>
+        <span>10+ years in tech</span>
+      </div>
+
+      <div class="consultancy-cta-wrapper">
+        <button
+          data-cal-namespace="personal-site-intro-call"
+          data-cal-link="salomuriel/personal-site-intro-call"
+          data-cal-config='{"layout":"month_view"}'
+          class="cta-primary"
+        >
+          Book a Free Intro Call →
+        </button>
+        <p class="cta-subtext">
+          15 minutes to discuss your needs — no pitch, no pressure.
         </p>
       </div>
     </section>
@@ -581,7 +511,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
   }
 
   .cta-wrapper {
-    @apply mt-6 mb-6 flex flex-col sm:flex-row gap-3 sm:gap-4;
+    @apply mt-6 mb-6 flex flex-col sm:flex-row gap-4;
   }
 
   .cta-primary {
@@ -613,46 +543,40 @@ const socialCount = SOCIALS.filter(social => social.active).length;
     @apply text-base sm:text-lg mb-6 leading-relaxed;
   }
 
-  .services-grid {
-    @apply flex flex-col gap-6 my-6;
+  .services-list {
+    @apply flex flex-col gap-4 my-6;
   }
 
-  .service-card {
-    @apply border-2 border-skin-line rounded-lg p-4 hover:border-skin-accent transition-all hover:shadow-lg flex flex-col sm:flex-row gap-4 sm:gap-6 sm:items-center;
+  .service-item {
+    @apply flex gap-3 items-start;
   }
 
-  .service-icon {
-    @apply text-5xl sm:text-6xl flex-shrink-0;
+  .service-emoji {
+    @apply text-2xl flex-shrink-0 leading-relaxed;
   }
 
-  .service-content {
-    @apply flex-1;
+  .service-text {
+    @apply text-base sm:text-lg leading-relaxed;
   }
 
-  .service-title {
-    @apply text-xl sm:text-2xl font-bold mb-2 text-skin-accent;
+  .service-text strong {
+    @apply text-skin-accent;
   }
 
-  .service-for,
-  .service-problem,
-  .service-outcome {
-    @apply text-sm sm:text-base mb-2 leading-relaxed;
+  .trust-metrics {
+    @apply flex flex-wrap justify-center gap-2 sm:gap-4 text-sm sm:text-base text-skin-base/70 my-6 py-4 border-y border-skin-line;
   }
 
-  .service-cta {
-    @apply flex items-center justify-center sm:justify-center flex-shrink-0 w-full sm:w-auto;
+  .trust-separator {
+    @apply text-skin-accent;
   }
 
-  .btn-service {
-    @apply inline-block rounded-lg bg-skin-accent px-5 py-3 text-sm sm:text-base font-semibold text-skin-inverted hover:bg-opacity-90 transition-all cursor-pointer border-0 w-full sm:w-auto;
+  .consultancy-cta-wrapper {
+    @apply text-center mt-6;
   }
 
-  .consultancy-footer {
-    @apply mt-6 text-center p-4 bg-skin-card-muted rounded-lg;
-  }
-
-  .not-sure {
-    @apply text-base;
+  .cta-subtext {
+    @apply text-sm text-skin-base/70 mt-3;
   }
 
   /* ===== Speaking Section ===== */
