@@ -1,0 +1,37 @@
+---
+import { getCollection } from "astro:content";
+import { SITE } from "@config";
+import Layout from "@layouts/Layout.astro";
+import Main from "@layouts/Main.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import SearchBar from "@components/Search";
+import getSortedPosts from "@utils/getSortedPosts";
+import { t } from "@i18n/utils";
+import type { Lang } from "@i18n/ui";
+
+export function getStaticPaths() {
+  return [{ params: { lang: "en" } }, { params: { lang: "es" } }];
+}
+
+const lang = Astro.params.lang as Lang;
+const blogCollection = lang === "es" ? "blog-es" : "blog";
+
+const posts = await getCollection(blogCollection, ({ data }) => !data.draft);
+const sortedPosts = getSortedPosts(posts);
+
+const searchList = sortedPosts.map(({ data, slug }) => ({
+  title: data.title,
+  description: data.description,
+  data,
+  slug,
+}));
+---
+
+<Layout title={`${t(lang, "search.title")} | ${SITE.title}`} lang={lang}>
+  <Header activeNav="search" lang={lang} />
+  <Main pageTitle={t(lang, "search.title")} pageDesc={t(lang, "search.desc")}>
+    <SearchBar client:load searchList={searchList} lang={lang} />
+  </Main>
+  <Footer lang={lang} />
+</Layout>

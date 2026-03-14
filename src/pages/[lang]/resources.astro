@@ -1,0 +1,39 @@
+---
+import { SITE } from "@config";
+import Breadcrumbs from "@components/Breadcrumbs.astro";
+import Footer from "@components/Footer.astro";
+import Header from "@components/Header.astro";
+import Layout from "@layouts/Layout.astro";
+import { Markdown } from "astro-remote";
+import { t } from "@i18n/utils";
+import type { Lang } from "@i18n/ui";
+
+export function getStaticPaths() {
+  return [{ params: { lang: "en" } }, { params: { lang: "es" } }];
+}
+
+const lang = Astro.params.lang as Lang;
+
+Astro.response.headers.set("Vercel-CDN-Cache-Control", "max-age=60");
+Astro.response.headers.set("CDN-Cache-Control", "max-age=60");
+Astro.response.headers.set("Cache-Control", "max-age=60");
+
+const response = await fetch(
+  "https://raw.githubusercontent.com/salomonMuriel/resources/main/README.md"
+);
+const markdown = await response.text();
+---
+
+<Layout title={`${t(lang, "resources.title")} | ${SITE.title}`} lang={lang}>
+  <Header activeNav="resources" lang={lang} />
+  <Breadcrumbs lang={lang} />
+  <main id="main-content">
+    <section id="uses" class="prose mb-28 max-w-4xl prose-img:border-0">
+      <h1 class="text-2xl tracking-wider sm:text-3xl">
+        {t(lang, "resources.title")}
+      </h1>
+      <Markdown content={markdown} />
+    </section>
+  </main>
+  <Footer lang={lang} />
+</Layout>

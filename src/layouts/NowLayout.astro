@@ -5,28 +5,32 @@ import Footer from "@components/Footer.astro";
 import Header from "@components/Header.astro";
 import Layout from "./Layout.astro";
 import type { CollectionEntry } from "astro:content";
+import { t } from "@i18n/utils";
+import type { Lang } from "@i18n/ui";
+import { defaultLang } from "@i18n/ui";
 
 export interface Props {
-  now: CollectionEntry<"now">;
+  now: CollectionEntry<"now"> | CollectionEntry<"now-es">;
+  lang?: Lang;
 }
 
-const { now } = Astro.props;
+const { now, lang = defaultLang } = Astro.props;
 
 const { Content } = await now.render();
 ---
 
-<Layout title={`${SITE.title}`}>
-  <Header activeNav="now" />
-  <Breadcrumbs />
+<Layout title={`${SITE.title}`} lang={lang}>
+  <Header activeNav="now" lang={lang} />
+  <Breadcrumbs lang={lang} />
   <main id="main-content">
     <section id="now" class="prose mb-28 max-w-4xl prose-img:border-0">
-      <h3>Last updated {now.data.header}</h3>
+      <h3>{t(lang, "now.lastUpdated")} {now.data.header}</h3>
       <p>
-        What's happening in my life right about now. <a href="/before"
-          >You can see previous updates here.</a>
+        {t(lang, "now.whatsHappening")}{" "}
+        <a href={`/${lang}/before`}>{t(lang, "now.seePrevious")}</a>
       </p>
       <Content />
     </section>
   </main>
-  <Footer />
+  <Footer lang={lang} />
 </Layout>

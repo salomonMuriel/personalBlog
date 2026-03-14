@@ -7,20 +7,24 @@ import Layout from "./Layout.astro";
 import type { CollectionEntry } from "astro:content";
 import Datetime from "@components/Datetime";
 import { YouTube } from "astro-embed";
+import { t } from "@i18n/utils";
+import type { Lang } from "@i18n/ui";
+import { defaultLang } from "@i18n/ui";
 
 export interface Props {
   presentation: CollectionEntry<"talks">;
+  lang?: Lang;
 }
 
-const { presentation } = Astro.props;
+const { presentation, lang = defaultLang } = Astro.props;
 const { Content } = await presentation.render();
 const html_path = `../../talks/${presentation.id.replace(".md", ".html")}`;
 const pdf_path = `../../talks/${presentation.id.replace(".md", ".pdf")}`;
 ---
 
-<Layout title={`${SITE.title}`}>
-  <Header activeNav="talks" />
-  <Breadcrumbs />
+<Layout title={`${SITE.title}`} lang={lang}>
+  <Header activeNav="talks" lang={lang} />
+  <Breadcrumbs lang={lang} />
   <main id="main-content">
     <section class="prose mb-10 max-w-4xl">
       <h1>{presentation.data.title}</h1>
@@ -28,6 +32,7 @@ const pdf_path = `../../talks/${presentation.id.replace(".md", ".pdf")}`;
         className="text-skin-base"
         pubDatetime={presentation.data.pubDatetime}
         modDatetime={presentation.data.modDatetime}
+        lang={lang}
       />
       <p>{presentation.data.description}</p>
       {!presentation.data.marp && <Content />}
@@ -53,12 +58,9 @@ const pdf_path = `../../talks/${presentation.id.replace(".md", ".pdf")}`;
               <iframe src={html_path} class="h-screen w-full border-2" />
             </div>
             <div class="block sm:hidden w-full border-2 border-skin-line rounded-md p-8 text-center">
-              <p class="text-lg mb-4">
-                Interactive presentation is only available on desktop screens.
-              </p>
+              <p class="text-lg mb-4">{t(lang, "talks.mobileOnly")}</p>
               <p class="text-sm text-skin-base opacity-75">
-                Download the files below to view on mobile or use a desktop
-                device for the best experience.
+                {t(lang, "talks.mobileDownload")}
               </p>
             </div>
           </>
@@ -72,12 +74,9 @@ const pdf_path = `../../talks/${presentation.id.replace(".md", ".pdf")}`;
             class="h-64 w-full border-2 sm:h-96"
           >
             <span class="flex flex-col items-center justify-center align-middle text-center h-full">
-              <p>
-                It appears you can't preview PDFs in this browser (probably
-                Chrome on Android?)
-              </p>
+              <p>{t(lang, "talks.pdfFallback")}</p>
               <br />
-              <p>Download the PDF to view it with the button below 🔽 </p>
+              <p>{t(lang, "talks.pdfDownloadHint")} 🔽</p>
             </span>
           </object>
         )
@@ -90,7 +89,7 @@ const pdf_path = `../../talks/${presentation.id.replace(".md", ".pdf")}`;
               href={pdf_path}
               download
             >
-              Download PDF
+              {t(lang, "talks.downloadPdf")}
             </a>
           )
         }
@@ -101,12 +100,12 @@ const pdf_path = `../../talks/${presentation.id.replace(".md", ".pdf")}`;
               href={html_path}
               download
             >
-              Download Interactive HTML
+              {t(lang, "talks.downloadHtml")}
             </a>
           )
         }
       </div>
     </section>
   </main>
-  <Footer />
+  <Footer lang={lang} />
 </Layout>

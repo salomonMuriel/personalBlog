@@ -1,10 +1,14 @@
 ---
+import type { Lang } from "@i18n/ui";
+import { defaultLang } from "@i18n/ui";
+
 export interface Props {
   tag: string;
   size?: "sm" | "lg";
+  lang?: Lang;
 }
 
-const { tag, size = "sm" } = Astro.props;
+const { tag, size = "sm", lang = defaultLang } = Astro.props;
 ---
 
 <li
@@ -13,7 +17,7 @@ const { tag, size = "sm" } = Astro.props;
   }`}
 >
   <a
-    href={`/tags/${tag}/`}
+    href={`/${lang}/tags/${tag}/`}
     transition:name={tag}
     class={`${size === "sm" ? "text-sm" : "text-lg"} pr-2 group`}
   >

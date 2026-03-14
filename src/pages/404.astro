@@ -13,13 +13,14 @@ import LinkButton from "@components/LinkButton.astro";
     <div class="not-found-wrapper">
       <h1 aria-label="404 Not Found">404</h1>
       <span aria-hidden="true">¯\_(ツ)_/¯</span>
-      <p>Page Not Found</p>
-      <LinkButton
-        href="/"
-        className="my-6 text-lg underline decoration-dashed underline-offset-8"
+      <p id="not-found-text">Page Not Found</p>
+      <a
+        href="/en/"
+        class="my-6 text-lg underline decoration-dashed underline-offset-8 group inline-block hover:text-skin-accent"
+        id="go-home-link"
       >
         Go back home
-      </LinkButton>
+      </a>
     </div>
   </main>
 
@@ -40,3 +41,22 @@ import LinkButton from "@components/LinkButton.astro";
     @apply mt-4 text-2xl sm:text-3xl;
   }
 </style>
+
+<script is:inline>
+  // Detect language from URL or browser
+  const path = window.location.pathname;
+  const isSpanish =
+    path.startsWith("/es/") ||
+    (!path.startsWith("/en/") &&
+      navigator.language.toLowerCase().startsWith("es"));
+
+  if (isSpanish) {
+    const text = document.getElementById("not-found-text");
+    if (text) text.textContent = "Página No Encontrada";
+    const link = document.getElementById("go-home-link");
+    if (link) {
+      link.textContent = "Volver al inicio";
+      link.setAttribute("href", "/es/");
+    }
+  }
+</script>

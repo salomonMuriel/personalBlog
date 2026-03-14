@@ -42,8 +42,11 @@ export default defineConfig({
     },
   },
   scopedStyleStrategy: "where",
-  redirects: {
-    "/en": "/",
-    "/es": "/",
+  i18n: {
+    defaultLocale: "en",
+    locales: ["en", "es"],
+    routing: {
+      prefixDefaultLocale: true,
+    },
   },
 });

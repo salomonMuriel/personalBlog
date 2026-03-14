@@ -6,8 +6,21 @@ import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
 import Card from "@components/Card";
 import { SITE } from "@config";
+import { t } from "@i18n/utils";
+import type { Lang } from "@i18n/ui";
+import { defaultLang } from "@i18n/ui";
 
-const blogs = await getCollection("blog");
+export interface Props {
+  lang?: Lang;
+  currentPage?: number;
+  totalPages?: number;
+  paginatedPosts?: any[];
+}
+
+const { lang = defaultLang } = Astro.props;
+
+const blogCollection = lang === "es" ? "blog-es" : "blog";
+const blogs = await getCollection(blogCollection);
 
 const sortedBlogs = blogs
   .sort(
@@ -18,16 +31,16 @@ const sortedBlogs = blogs
   .filter(({ data }) => !data.draft);
 ---
 
-<Layout title={`Posts | ${SITE.title}`}>
-  <Header activeNav="posts" />
-  <Main pageTitle="Posts" pageDesc="All the articles I've posted.">
+<Layout title={`${t(lang, "posts.title")} | ${SITE.title}`} lang={lang}>
+  <Header activeNav="posts" lang={lang} />
+  <Main pageTitle={t(lang, "posts.title")} pageDesc={t(lang, "posts.desc")}>
     <ul>
       {
         sortedBlogs.map(({ data, slug }) => (
-          <Card href={`/posts/${slug}/`} frontmatter={data} />
+          <Card href={`/${lang}/posts/${slug}/`} frontmatter={data} />
         ))
       }
     </ul>
   </Main>
-  <Footer />
+  <Footer lang={lang} />
 </Layout>

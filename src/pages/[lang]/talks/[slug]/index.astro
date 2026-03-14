@@ -1,0 +1,32 @@
+---
+import { type CollectionEntry, getCollection } from "astro:content";
+import Talk from "@layouts/TalkLayout.astro";
+import type { Lang } from "@i18n/ui";
+
+export interface Props {
+  presentation: CollectionEntry<"talks">;
+  lang: Lang;
+}
+
+export async function getStaticPaths() {
+  const langs: Lang[] = ["en", "es"];
+  const paths = [];
+
+  for (const lang of langs) {
+    const collection = lang === "es" ? "talks-es" : "talks";
+    const talks = await getCollection(collection);
+    paths.push(
+      ...talks.map(presentation => ({
+        params: { lang, slug: presentation.slug },
+        props: { presentation, lang },
+      }))
+    );
+  }
+
+  return paths;
+}
+
+const { presentation, lang } = Astro.props;
+---
+
+<Talk presentation={presentation} lang={lang} />

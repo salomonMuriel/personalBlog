@@ -6,8 +6,18 @@ import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
 import Card from "@components/Card";
 import { SITE } from "@config";
+import { t } from "@i18n/utils";
+import type { Lang } from "@i18n/ui";
+import { defaultLang } from "@i18n/ui";
 
-const talks = await getCollection("talks");
+export interface Props {
+  lang?: Lang;
+}
+
+const { lang = defaultLang } = Astro.props;
+
+const talksCollection = lang === "es" ? "talks-es" : "talks";
+const talks = await getCollection(talksCollection);
 
 const sortedTalks = talks
   .sort(
@@ -18,25 +28,26 @@ const sortedTalks = talks
   .filter(({ data }) => !data.draft);
 ---
 
-<Layout title={`Talks | ${SITE.title}`}>
-  <Header activeNav="talks" />
-  <Main pageTitle="Talks" pageDesc="Talks and presentations I've given.">
+<Layout title={`${t(lang, "talks.title")} | ${SITE.title}`} lang={lang}>
+  <Header activeNav="talks" lang={lang} />
+  <Main pageTitle={t(lang, "talks.title")} pageDesc={t(lang, "talks.desc")}>
     <p class="prose text-skin-base text-lg">
-      If you would like to book me for a talk please <a
+      {t(lang, "talks.bookIntro")}{" "}
+      <a
         data-cal-link="salomuriel/personal-site-intro-call"
         data-cal-namespace="personal-site-intro-call"
         data-cal-config='{"layout":"month_view","theme":"dark"}'
-        >schedule a 15 minute call on this link</a
-      > to talk details!
+        >{t(lang, "talks.bookLink")}</a
+      >{" "}{t(lang, "talks.bookOutro")}
     </p>
     <hr class="my-8 border-skin-accent" />
     <ul>
       {
         sortedTalks.map(({ data, slug }) => (
-          <Card href={`/talks/${slug}/`} frontmatter={data} />
+          <Card href={`/${lang}/talks/${slug}/`} frontmatter={data} />
         ))
       }
     </ul>
   </Main>
-  <Footer />
+  <Footer lang={lang} />
 </Layout>

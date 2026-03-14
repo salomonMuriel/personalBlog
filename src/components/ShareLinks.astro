@@ -1,45 +1,54 @@
 ---
 import LinkButton from "./LinkButton.astro";
 import socialIcons from "@assets/socialIcons";
+import { t } from "@i18n/utils";
+import type { Lang } from "@i18n/ui";
+import { defaultLang } from "@i18n/ui";
+
+export interface Props {
+  lang?: Lang;
+}
+
+const { lang = defaultLang } = Astro.props;
 
 const URL = Astro.url;
 
 const shareLinks = [
   {
-    name: "WhatsApp",
+    name: "WhatsApp" as const,
     href: "https://wa.me/?text=",
-    linkTitle: `Share this post via WhatsApp`,
+    linkTitle: t(lang, "share.whatsapp"),
   },
   {
-    name: "Facebook",
+    name: "Facebook" as const,
     href: "https://www.facebook.com/sharer.php?u=",
-    linkTitle: `Share this post on Facebook`,
+    linkTitle: t(lang, "share.facebook"),
   },
   {
-    name: "Twitter",
+    name: "Twitter" as const,
     href: "https://twitter.com/intent/tweet?url=",
-    linkTitle: `Tweet this post`,
+    linkTitle: t(lang, "share.twitter"),
   },
   {
-    name: "Telegram",
+    name: "Telegram" as const,
     href: "https://t.me/share/url?url=",
-    linkTitle: `Share this post via Telegram`,
+    linkTitle: t(lang, "share.telegram"),
   },
   {
-    name: "Pinterest",
+    name: "Pinterest" as const,
     href: "https://pinterest.com/pin/create/button/?url=",
-    linkTitle: `Share this post on Pinterest`,
+    linkTitle: t(lang, "share.pinterest"),
   },
   {
-    name: "Mail",
+    name: "Mail" as const,
     href: "mailto:?subject=See%20this%20post&body=",
-    linkTitle: `Share this post via email`,
+    linkTitle: t(lang, "share.email"),
   },
-] as const;
+];
 ---
 
 <div class={`social-icons`}>
-  <span class="italic">Share this post on:</span>
+  <span class="italic">{t(lang, "share.title")}</span>
   <div class="text-center">
     {
       shareLinks.map(social => (

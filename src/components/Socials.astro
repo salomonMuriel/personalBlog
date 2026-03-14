@@ -2,12 +2,23 @@
 import { SOCIALS } from "@config";
 import LinkButton from "./LinkButton.astro";
 import socialIcons from "@assets/socialIcons";
+import { t } from "@i18n/utils";
+import type { Lang } from "@i18n/ui";
+import { defaultLang } from "@i18n/ui";
 
 export interface Props {
   centered?: boolean;
+  lang?: Lang;
 }
 
-const { centered = false } = Astro.props;
+const { centered = false, lang = defaultLang } = Astro.props;
+
+const socialTitles: Record<string, string> = {
+  LinkedIn: t(lang, "social.linkedin"),
+  WhatsApp: t(lang, "social.whatsapp"),
+  Mail: t(lang, "social.mail"),
+  Github: t(lang, "social.github"),
+};
 ---
 
 <div class={`social-icons ${centered ? "flex" : ""}`}>
@@ -16,10 +27,12 @@ const { centered = false } = Astro.props;
       <LinkButton
         href={social.href}
         className="link-button"
-        title={social.linkTitle}
+        title={socialTitles[social.name] || social.linkTitle}
       >
         <Fragment set:html={socialIcons[social.name]} className="size-20" />
-        <span class="sr-only">{social.linkTitle}</span>
+        <span class="sr-only">
+          {socialTitles[social.name] || social.linkTitle}
+        </span>
       </LinkButton>
     ))
   }

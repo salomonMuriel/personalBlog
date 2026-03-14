@@ -1,10 +1,13 @@
 ---
-import { LOCALE, SITE } from "@config";
+import { SITE } from "@config";
 import "@fontsource-variable/baloo-2";
 import "@fontsource/play";
 import "@styles/base.css";
 import { ViewTransitions } from "astro:transitions";
 import { Schema } from "astro-seo-schema";
+import { t, getLangTag } from "@i18n/utils";
+import type { Lang } from "@i18n/ui";
+import { defaultLang } from "@i18n/ui";
 
 const googleSiteVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
 
@@ -17,6 +20,7 @@ export interface Props {
   pubDatetime?: Date;
   modDatetime?: Date | null;
   scrollSmooth?: boolean;
+  lang?: Lang;
 }
 
 const {
@@ -28,19 +32,20 @@ const {
   pubDatetime,
   modDatetime,
   scrollSmooth = false,
+  lang = defaultLang,
 } = Astro.props;
 
 const socialImageURL = new URL(
   ogImage ?? SITE.ogImage ?? "og.png",
   Astro.url.origin
 ).href;
+
+const htmlLang = lang;
+const langTags = getLangTag(lang);
 ---
 
 <!doctype html>
-<html
-  lang=`${LOCALE.lang ?? "en"}`
-  class={`${scrollSmooth && "scroll-smooth"}`}
->
+<html lang={htmlLang} class={`${scrollSmooth && "scroll-smooth"}`}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
@@ -50,6 +55,23 @@ const socialImageURL = new URL(
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="canonical" href={canonicalURL} />
     <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <!-- Alternate language links -->
+    <link
+      rel="alternate"
+      hreflang="en"
+      href={canonicalURL.replace(`/${lang}/`, "/en/")}
+    />
+    <link
+      rel="alternate"
+      hreflang="es"
+      href={canonicalURL.replace(`/${lang}/`, "/es/")}
+    />
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href={canonicalURL.replace(`/${lang}/`, "/en/")}
+    />
 
     <meta name="generator" content={Astro.generator} />
 
@@ -68,9 +90,8 @@ const socialImageURL = new URL(
           "@type": "Person",
           name: SITE.author,
           alternateName: "Luis Salomón Muriel Urbina",
-          description: "Entrepreneur, Data Scientist, Maker",
-          disambiguatingDescription:
-            "Colombian 🇨🇴, father of super-twins Franco & Luca 🦊🦊, gamer 👾 and beer-enthusiast 🍻",
+          description: t(lang, "seo.schemaDesc"),
+          disambiguatingDescription: t(lang, "seo.schemaDisambig"),
           spouse: {
             "@type": "Person",
             name: "Natalia Rodríguez Triana",
@@ -107,7 +128,6 @@ const socialImageURL = new URL(
     <slot name="head" />
 
     <!-- Google Tag Manager -->
-    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-061B5QE8B1"
     ></script>
     <script is:inline>
@@ -116,7 +136,6 @@ const socialImageURL = new URL(
         dataLayer.push(arguments);
       }
       gtag("js", new Date());
-
       gtag("config", "G-061B5QE8B1");
     </script>
     <!-- End Google Tag Manager -->
@@ -134,6 +153,7 @@ const socialImageURL = new URL(
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:image" content={socialImageURL} />
     <meta property="og:type" content="website" />
+    <meta property="og:locale" content={lang === "es" ? "es_CO" : "en_US"} />
 
     <!-- Article Published/Modified time -->
     {
@@ -163,9 +183,6 @@ const socialImageURL = new URL(
     <meta name="theme-color" content="" />
 
     {
-      // If PUBLIC_GOOGLE_SITE_VERIFICATION is set in the environment variable,
-      // include google-site-verification tag in the heading
-      // Learn more: https://support.google.com/webmasters/answer/9008080#meta_tag_verification&zippy=%2Chtml-tag
       googleSiteVerification && (
         <meta
           name="google-site-verification"
@@ -209,7 +226,6 @@ const socialImageURL = new URL(
           };
       })(window, "https://app.cal.com/embed/embed.js", "init");
 
-      // Initialize all Cal.com namespaces
       Cal("init", "personal-site-intro-call", { origin: "https://cal.com" });
       Cal.ns["personal-site-intro-call"]("ui", {
         styles: { branding: { brandColor: "#000000" } },
@@ -217,7 +233,6 @@ const socialImageURL = new URL(
         layout: "month_view",
       });
 
-      // Main CTA - 30min call
       Cal("init", "30min", { origin: "https://cal.com" });
       Cal.ns["30min"]("ui", {
         styles: { branding: { brandColor: "#000000" } },
@@ -225,7 +240,6 @@ const socialImageURL = new URL(
         layout: "month_view",
       });
 
-      // AI & Tech Consulting
       Cal("init", "ai-tech-consulting", { origin: "https://cal.com" });
       Cal.ns["ai-tech-consulting"]("ui", {
         styles: { branding: { brandColor: "#000000" } },
@@ -233,7 +247,6 @@ const socialImageURL = new URL(
         layout: "month_view",
       });
 
-      // Data Science Consulting
       Cal("init", "data-science-consulting", { origin: "https://cal.com" });
       Cal.ns["data-science-consulting"]("ui", {
         styles: { branding: { brandColor: "#000000" } },
@@ -241,7 +254,6 @@ const socialImageURL = new URL(
         layout: "month_view",
       });
 
-      // Company Building
       Cal("init", "company-building-consulting", { origin: "https://cal.com" });
       Cal.ns["company-building-consulting"]("ui", {
         styles: { branding: { brandColor: "#000000" } },
@@ -249,7 +261,6 @@ const socialImageURL = new URL(
         layout: "month_view",
       });
 
-      // Mentorship
       Cal("init", "mentorship", { origin: "https://cal.com" });
       Cal.ns["mentorship"]("ui", {
         styles: { branding: { brandColor: "#000000" } },
@@ -257,7 +268,6 @@ const socialImageURL = new URL(
         layout: "month_view",
       });
 
-      // Talks
       Cal("init", "talks", { origin: "https://cal.com" });
       Cal.ns["talks"]("ui", {
         styles: { branding: { brandColor: "#000000" } },
@@ -265,7 +275,6 @@ const socialImageURL = new URL(
         layout: "month_view",
       });
 
-      // Talks booking (separate namespace for speaking section)
       Cal("init", "talks-booking", { origin: "https://cal.com" });
       Cal.ns["talks-booking"]("ui", {
         styles: { branding: { brandColor: "#000000" } },
