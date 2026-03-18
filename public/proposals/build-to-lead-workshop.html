@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BUILD TO LEAD — Workshop Proposal</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --red: #CC2B2B;
+    --red-light: #F9EDED;
+    --red-mid: #E24B4A;
+    --dark: #111110;
+    --dark-2: #1E1E1C;
+    --mid: #444441;
+    --muted: #888780;
+    --light: #F5F4F0;
+    --white: #FFFFFF;
+    --border: #E2E0D8;
+    --accent: #CC2B2B;
+  }
+
+  html { font-size: 16px; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    color: var(--dark);
+    background: var(--white);
+    line-height: 1.6;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0;
+  }
+
+  /* ---- HERO ---- */
+  .hero {
+    background: var(--dark);
+    color: var(--white);
+    padding: 60px 60px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    background: var(--red);
+    opacity: 0.12;
+  }
+  .hero-eyebrow {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--red-mid);
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 58px;
+    font-weight: 800;
+    line-height: 1.0;
+    letter-spacing: -1px;
+    color: var(--white);
+    margin-bottom: 16px;
+  }
+  .hero h1 span { color: var(--red-mid); }
+  .hero-sub {
+    font-size: 17px;
+    font-weight: 300;
+    color: #BDBBB0;
+    max-width: 480px;
+    margin-bottom: 40px;
+    line-height: 1.6;
+  }
+  .hero-meta {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .hero-meta-item { }
+  .hero-meta-item .label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #888780;
+    display: block;
+    margin-bottom: 3px;
+  }
+  .hero-meta-item .value {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--white);
+  }
+
+  /* ---- SECTIONS ---- */
+  .section {
+    padding: 52px 60px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section:last-child { border-bottom: none; }
+
+  .section-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 10px;
+  }
+  .section h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 30px;
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 20px;
+    color: var(--dark);
+  }
+  .section p {
+    font-size: 15.5px;
+    line-height: 1.75;
+    color: var(--mid);
+    margin-bottom: 16px;
+    max-width: 620px;
+  }
+  .section p:last-child { margin-bottom: 0; }
+
+  /* ---- PILLARS ---- */
+  .pillars {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 28px;
+  }
+  .pillar {
+    background: var(--light);
+    border-radius: 10px;
+    padding: 20px 22px;
+    border-left: 3px solid var(--red);
+  }
+  .pillar-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--red);
+    letter-spacing: 0.1em;
+    margin-bottom: 6px;
+  }
+  .pillar-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 6px;
+  }
+  .pillar-desc {
+    font-size: 13.5px;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+
+  /* ---- DIFFERENTIAL ---- */
+  .diff-box {
+    background: var(--dark);
+    color: var(--white);
+    border-radius: 12px;
+    padding: 32px 36px;
+    margin-top: 28px;
+  }
+  .diff-box h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+  .diff-box p {
+    font-size: 14.5px;
+    color: #BDBBB0;
+    max-width: 540px;
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+  .diff-steps {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    margin-top: 4px;
+  }
+  .diff-step {
+    background: rgba(255,255,255,0.06);
+    border-radius: 8px;
+    padding: 16px;
+    border-top: 2px solid var(--red-mid);
+  }
+  .diff-step-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--red-mid);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .diff-step-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+  .diff-step-desc {
+    font-size: 12.5px;
+    color: #888780;
+    line-height: 1.5;
+  }
+
+  /* ---- AGENDA / TIMELINE ---- */
+  .agenda { margin-top: 32px; }
+  .agenda-block {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 0 20px;
+    margin-bottom: 0;
+  }
+  .agenda-block:last-child .agenda-content { border-bottom: none; }
+
+  .agenda-time {
+    padding: 24px 0 0;
+    text-align: right;
+  }
+  .agenda-time .time-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--dark);
+    display: block;
+  }
+  .agenda-time .dur-label {
+    font-size: 11px;
+    color: var(--muted);
+    display: block;
+    margin-top: 2px;
+  }
+
+  .agenda-connector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 20px;
+    padding-top: 28px;
+  }
+  .agenda-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--red);
+    flex-shrink: 0;
+  }
+  .agenda-line {
+    width: 2px;
+    flex: 1;
+    background: var(--border);
+    margin-top: 6px;
+  }
+
+  .agenda-content {
+    padding: 20px 0 32px;
+    border-bottom: 1px solid var(--border);
+  }
+  .agenda-phase {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 4px;
+  }
+  .agenda-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 10px;
+  }
+  .agenda-desc {
+    font-size: 14.5px;
+    color: var(--mid);
+    line-height: 1.7;
+    max-width: 520px;
+    margin-bottom: 12px;
+  }
+  .agenda-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .tag {
+    font-size: 11.5px;
+    background: var(--light);
+    color: var(--mid);
+    border-radius: 20px;
+    padding: 3px 10px;
+    font-weight: 400;
+  }
+  .tag.red {
+    background: var(--red-light);
+    color: var(--red);
+    font-weight: 500;
+  }
+
+  /* pre-session block style */
+  .pre-block {
+    background: var(--light);
+    border-radius: 10px;
+    padding: 22px 26px;
+    margin-bottom: 28px;
+    border-left: 3px solid var(--muted);
+  }
+  .pre-block .pre-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .pre-block .pre-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 8px;
+  }
+  .pre-block p {
+    font-size: 14px;
+    color: var(--mid);
+    max-width: 540px;
+    margin-bottom: 10px;
+  }
+  .pre-block p:last-child { margin-bottom: 0; }
+
+  /* ---- TAKEAWAYS ---- */
+  .takeaways-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px;
+    margin-top: 28px;
+  }
+  .takeaway-card {
+    background: var(--light);
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .takeaway-icon {
+    font-size: 22px;
+    margin-bottom: 10px;
+    display: block;
+  }
+  .takeaway-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 6px;
+  }
+  .takeaway-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+
+  /* ---- FACILITATOR ---- */
+  .facilitator-layout {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 32px;
+    align-items: start;
+    margin-top: 8px;
+  }
+  .facilitator-img {
+    width: 140px;
+    height: 140px;
+    border-radius: 10px;
+    background: var(--light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--red);
+    overflow: hidden;
+  }
+  .facilitator-img img { width: 100%; height: 100%; object-fit: cover; }
+  .facilitator-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--dark);
+    margin-bottom: 4px;
+  }
+  .facilitator-role {
+    font-size: 13px;
+    color: var(--red);
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    margin-bottom: 14px;
+  }
+  .creds {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+  .cred {
+    font-size: 12.5px;
+    background: var(--light);
+    border-radius: 20px;
+    padding: 4px 12px;
+    color: var(--mid);
+  }
+
+  /* ---- INVESTMENT ---- */
+  .investment-box {
+    background: var(--dark);
+    border-radius: 12px;
+    padding: 40px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 32px;
+    margin-top: 8px;
+  }
+  .investment-left h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #888780;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .investment-amount {
+    font-family: 'Syne', sans-serif;
+    font-size: 52px;
+    font-weight: 800;
+    color: var(--white);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .investment-amount span {
+    font-size: 22px;
+    color: var(--red-mid);
+    vertical-align: top;
+    margin-top: 8px;
+    display: inline-block;
+  }
+  .investment-note {
+    font-size: 13px;
+    color: #888780;
+    max-width: 280px;
+    line-height: 1.55;
+  }
+  .investment-includes {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .inc-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .inc-check {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--red);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1px;
+  }
+  .inc-check::after {
+    content: '';
+    width: 7px; height: 4px;
+    border-left: 1.5px solid white;
+    border-bottom: 1.5px solid white;
+    transform: rotate(-45deg) translate(0px, -1px);
+    display: block;
+  }
+  .inc-text {
+    font-size: 13.5px;
+    color: #BDBBB0;
+    line-height: 1.5;
+  }
+
+  /* ---- FOOTER ---- */
+  .footer {
+    padding: 32px 60px;
+    text-align: center;
+    background: var(--light);
+  }
+  .footer p {
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .footer a {
+    color: var(--red);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  /* ---- QUOTE BLOCK ---- */
+  .quote-block {
+    border-left: 3px solid var(--red);
+    padding: 16px 24px;
+    margin: 24px 0;
+    background: var(--red-light);
+    border-radius: 0 8px 8px 0;
+  }
+  .quote-block p {
+    font-style: italic;
+    font-size: 15px;
+    color: var(--dark);
+    margin: 0;
+  }
+
+  @media (max-width: 680px) {
+    .hero { padding: 40px 28px 36px; }
+    .hero h1 { font-size: 38px; }
+    .section { padding: 36px 28px; }
+    .pillars, .diff-steps, .takeaways-grid { grid-template-columns: 1fr; }
+    .facilitator-layout { grid-template-columns: 1fr; }
+    .investment-box { flex-direction: column; padding: 28px; }
+    .agenda-block { grid-template-columns: 70px 1fr; }
+    .footer { padding: 24px 28px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">Workshop Proposal · Lenovo &amp; AMD · Abril 2025</div>
+  <h1>BUILD<br>TO <span>LEAD.</span></h1>
+  <p class="hero-sub">Un workshop de liderazgo, colaboración y adaptación al cambio — donde la mitad del tiempo lo pasan construyendo en vivo con IA.</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item">
+      <span class="label">Fecha</span>
+      <span class="value">Martes 14 de Abril</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="label">Duración</span>
+      <span class="value">3 horas</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="label">Participantes</span>
+      <span class="value">25 líderes</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="label">Facilitador</span>
+      <span class="value">Salomón Muriel</span>
+    </div>
+  </div>
+</div>
+
+<!-- OVERVIEW -->
+<div class="section">
+  <div class="section-label">El contexto</div>
+  <h2>¿Para qué estamos aquí?</h2>
+  <p>Lenovo y AMD están construyendo una relación estratégica. Eso requiere algo que ningún organigrama ni email puede crear por sí solo: líderes de dos empresas que se conocen de verdad, que confían los unos en los otros, y que saben cómo co-crear juntos cuando el terreno cambia bajo sus pies.</p>
+  <p>Este workshop no es una charla donde alguien les explica qué es el liderazgo. Es una sesión donde los 25 van a hacer exactamente lo que necesitan hacer juntos en su día a día: pensar diferente, construir algo real, y entrar en acción.</p>
+
+  <div class="quote-block">
+    <p>"No les voy a decir cómo liderar. Les voy a poner en situaciones donde lo tengan que demostrar — y saldrán con algo concreto en la mano."</p>
+  </div>
+</div>
+
+<!-- PILLARS -->
+<div class="section">
+  <div class="section-label">Metodología</div>
+  <h2>Los 4 pilares que guían todo</h2>
+  <p>Cada decisión de diseño en este workshop responde a una de estas cuatro premisas. Sin excepciones.</p>
+  <div class="pillars">
+    <div class="pillar">
+      <div class="pillar-num">PILAR 01</div>
+      <div class="pillar-title">Aprender haciendo</div>
+      <div class="pillar-desc">Todo es práctico. Si no pueden usar algo el lunes siguiente, no tiene cabida en la agenda.</div>
+    </div>
+    <div class="pillar">
+      <div class="pillar-num">PILAR 02</div>
+      <div class="pillar-title">Zero fluff</div>
+      <div class="pillar-desc">Sin teorías que no aplican, sin diapositivas de relleno. Cada minuto debe poder justificarse con un resultado concreto.</div>
+    </div>
+    <div class="pillar">
+      <div class="pillar-num">PILAR 03</div>
+      <div class="pillar-title">Comunidad</div>
+      <div class="pillar-desc">El objetivo real de este workshop es crear conexión entre las dos organizaciones. Todo el diseño empuja hacia eso.</div>
+    </div>
+    <div class="pillar">
+      <div class="pillar-num">PILAR 04</div>
+      <div class="pillar-title">Vibe</div>
+      <div class="pillar-desc">Esto tiene que ser divertido. Si la sala no tiene energía, nada funciona. La dinámica está diseñada para que todos participen.</div>
+    </div>
+  </div>
+</div>
+
+<!-- DIFFERENTIAL -->
+<div class="section">
+  <div class="section-label">El diferencial</div>
+  <h2>Prework que la IA puede leer</h2>
+  <p>La mayoría de workshops arrancan sin saber nada del grupo. Aquí, cuando lleguen al salón, la IA ya va a saber quiénes son, qué les preocupa, y qué quieren construir. Eso cambia todo.</p>
+  <p>Una semana antes, cada participante completa un formulario de 10 minutos. Las respuestas se procesan y se convierten en un <strong>Documento de Inteligencia del Grupo</strong> — contexto que se carga directamente en las herramientas de IA que se usan en el workshop. El resultado: una sesión de construcción que no parece genérica, sino que responde a la realidad específica de este grupo.</p>
+  <div class="diff-box">
+    <h3>Cómo funciona el sistema de prework</h3>
+    <p>Tres pasos simples que transforman un workshop estándar en una sesión diseñada a medida.</p>
+    <div class="diff-steps">
+      <div class="diff-step">
+        <div class="diff-step-num">01</div>
+        <div class="diff-step-title">Formulario individual</div>
+        <div class="diff-step-desc">5 preguntas, 10 min. Cada participante comparte su realidad actual, su reto más grande y qué quiere co-crear.</div>
+      </div>
+      <div class="diff-step">
+        <div class="diff-step-num">02</div>
+        <div class="diff-step-title">Procesamiento IA</div>
+        <div class="diff-step-desc">Las respuestas se agrupan y se compilan en un documento de contexto que incluye patrones del grupo, tensiones y oportunidades.</div>
+      </div>
+      <div class="diff-step">
+        <div class="diff-step-num">03</div>
+        <div class="diff-step-title">Sesión en vivo</div>
+        <div class="diff-step-desc">Las herramientas de IA en el workshop ya conocen el contexto del grupo. Los desafíos de construcción salen de sus propias respuestas.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AGENDA -->
+<div class="section">
+  <div class="section-label">La metodología</div>
+  <h2>Agenda del workshop</h2>
+  <p>3 horas divididas en dos mitades — con un descanso de 20 minutos en el centro: <strong>La Historia</strong> (conceptos + reflexión) y <strong>La Construcción</strong> (AI + creación en grupo). El prework de IA es exclusivo de este formato.</p>
+
+  <div class="pre-block">
+    <div class="pre-label">Pre-sesión · 1 semana antes · Asíncrono</div>
+    <div class="pre-title">Prework: Formulario de Inteligencia del Grupo</div>
+    <p>Cada participante recibe un formulario de 5 preguntas con una duración máxima de 10 minutos. Las preguntas exploran su reto de liderazgo actual, cómo vive el cambio en su equipo, y qué esperan construir con los líderes de la otra empresa.</p>
+    <p>Las respuestas se compilan en un documento de contexto que se carga en las herramientas de IA antes de la sesión — y se usa como "espejo del grupo" durante la parte de reflexión.</p>
+    <div class="agenda-tags" style="margin-top:4px;">
+      <span class="tag">~10 min por persona</span>
+      <span class="tag">Formulario digital</span>
+      <span class="tag red">Diferencial IA</span>
+    </div>
+  </div>
+
+  <div class="agenda">
+
+    <!-- BLOCK 1 -->
+    <div class="agenda-block">
+      <div class="agenda-time">
+        <span class="time-label">00:00</span>
+        <span class="dur-label">20 min</span>
+      </div>
+      <div style="display:flex; gap:0;">
+        <div class="agenda-connector">
+          <div class="agenda-dot"></div>
+          <div class="agenda-line"></div>
+        </div>
+        <div class="agenda-content">
+          <div class="agenda-phase">Apertura</div>
+          <div class="agenda-title">La Apuesta — Icebreaker de creencias</div>
+          <div class="agenda-desc">Nada de rondas de presentación donde nadie escucha. Cada persona escribe anónimamente una creencia contraria que tiene sobre liderazgo o cambio. Las respuestas se revelan y el grupo vota. Crea energía inmediata, introduce el tema, y ya sabemos quién piensa diferente en la sala.</div>
+          <div class="agenda-tags">
+            <span class="tag">Anónimo</span>
+            <span class="tag">Alta energía</span>
+            <span class="tag">Rompe el hielo sin vergüenza</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOCK 2 -->
+    <div class="agenda-block">
+      <div class="agenda-time">
+        <span class="time-label">00:20</span>
+        <span class="dur-label">30 min</span>
+      </div>
+      <div style="display:flex; gap:0;">
+        <div class="agenda-connector">
+          <div class="agenda-dot"></div>
+          <div class="agenda-line"></div>
+        </div>
+        <div class="agenda-content">
+          <div class="agenda-phase">Parte 1 — La Historia</div>
+          <div class="agenda-title">El Marco: Líderes que Construyen</div>
+          <div class="agenda-desc">Los conceptos centrales del workshop no se presentan como teoría sino como historia. Desde mis propias empresas (dos que quebré, dos que vendí), vamos a explorar qué diferencia a los líderes que saben construir en medio del cambio de los que solo saben administrar la calma. El foco: cómo funciona esta dinámica específicamente entre dos organizaciones que quieren colaborar.</div>
+          <div class="agenda-tags">
+            <span class="tag">Storytelling</span>
+            <span class="tag">3–4 conceptos accionables</span>
+            <span class="tag">Sin diapositivas de relleno</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOCK 3 -->
+    <div class="agenda-block">
+      <div class="agenda-time">
+        <span class="time-label">00:50</span>
+        <span class="dur-label">20 min</span>
+      </div>
+      <div style="display:flex; gap:0;">
+        <div class="agenda-connector">
+          <div class="agenda-dot"></div>
+          <div class="agenda-line"></div>
+        </div>
+        <div class="agenda-content">
+          <div class="agenda-phase">Parte 1 — La Historia</div>
+          <div class="agenda-title">El Espejo — Insights del grupo revelados</div>
+          <div class="agenda-desc">Aquí entra el prework. Los patrones que emergieron de las respuestas de los 25 participantes se presentan de vuelta al grupo de forma anónima. "Su grupo dijo esto. ¿Qué nos dice sobre cómo viven el cambio hoy?" Es el momento donde la sala deja de verse como audiencia y empieza a verse como protagonista. La IA procesó sus palabras — y ahora se las devolvemos.</div>
+          <div class="agenda-tags">
+            <span class="tag red">Impulsado por prework IA</span>
+            <span class="tag">Reflexión facilitada</span>
+            <span class="tag">Discusión en sala</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BREAK -->
+    <div class="agenda-block">
+      <div class="agenda-time">
+        <span class="time-label">01:10</span>
+        <span class="dur-label">20 min</span>
+      </div>
+      <div style="display:flex; gap:0;">
+        <div class="agenda-connector">
+          <div class="agenda-dot" style="background: var(--muted);"></div>
+          <div class="agenda-line"></div>
+        </div>
+        <div class="agenda-content">
+          <div class="agenda-phase" style="color:var(--muted);">Descanso</div>
+          <div class="agenda-title" style="color:var(--muted);">Pausa — Networking informal</div>
+          <div class="agenda-desc">El descanso no es solo para estirar las piernas. Es el momento donde los líderes de Lenovo y AMD pueden hablar sin estructura ni facilitador. Muchas veces las conversaciones más valiosas del día ocurren aquí.</div>
+          <div class="agenda-tags">
+            <span class="tag">Café disponible</span>
+            <span class="tag">Networking libre</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOCK 4 -->
+    <div class="agenda-block">
+      <div class="agenda-time">
+        <span class="time-label">01:30</span>
+        <span class="dur-label">10 min</span>
+      </div>
+      <div style="display:flex; gap:0;">
+        <div class="agenda-connector">
+          <div class="agenda-dot"></div>
+          <div class="agenda-line"></div>
+        </div>
+        <div class="agenda-content">
+          <div class="agenda-phase">Transición</div>
+          <div class="agenda-title">Formación de equipos — The Mix</div>
+          <div class="agenda-desc">Grupos de 5 personas, mezclados intencionalmente (Lenovo + AMD en cada grupo). Los grupos se nombran a sí mismos en 60 segundos. Cada grupo recibe un desafío de liderazgo extraído de las respuestas del prework — así el desafío es real, no inventado.</div>
+          <div class="agenda-tags">
+            <span class="tag">Mezcla Lenovo–AMD</span>
+            <span class="tag">5 grupos de 5</span>
+            <span class="tag red">Desafíos del prework</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOCK 5 -->
+    <div class="agenda-block">
+      <div class="agenda-time">
+        <span class="time-label">01:40</span>
+        <span class="dur-label">40 min</span>
+      </div>
+      <div style="display:flex; gap:0;">
+        <div class="agenda-connector">
+          <div class="agenda-dot"></div>
+          <div class="agenda-line"></div>
+        </div>
+        <div class="agenda-content">
+          <div class="agenda-phase">Parte 2 — La Construcción</div>
+          <div class="agenda-title">Build: El Playbook de Liderazgo</div>
+          <div class="agenda-desc">Cada grupo usa herramientas de IA (con contexto del prework ya cargado) para atacar su desafío en tres rondas: <strong>Diagnóstico</strong> — identificar la raíz real del problema (10 min). <strong>Co-creación</strong> — diseñar una solución concreta usando IA como partner de pensamiento (20 min). <strong>Acción de lunes</strong> — comprometerse con una acción específica que pueden ejecutar en los próximos 7 días (10 min). La IA no da las respuestas — facilita que el grupo llegue a las suyas.</div>
+          <div class="agenda-tags">
+            <span class="tag red">IA + prework en vivo</span>
+            <span class="tag">Construcción colaborativa</span>
+            <span class="tag">Resultado concreto</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOCK 6 -->
+    <div class="agenda-block">
+      <div class="agenda-time">
+        <span class="time-label">02:20</span>
+        <span class="dur-label">15 min</span>
+      </div>
+      <div style="display:flex; gap:0;">
+        <div class="agenda-connector">
+          <div class="agenda-dot"></div>
+          <div class="agenda-line"></div>
+        </div>
+        <div class="agenda-content">
+          <div class="agenda-phase">Parte 2 — La Construcción</div>
+          <div class="agenda-title">Show &amp; Tell — Las pitches de 2 minutos</div>
+          <div class="agenda-desc">Cada grupo presenta su playbook en exactamente 2 minutos. Sin slides — solo hablar. El resto de la sala vota por la idea más accionable (no la más bonita). La idea ganadora se lleva el reconocimiento del grupo. Esta dinámica genera competencia sana y obliga a ser concisos y concretos.</div>
+          <div class="agenda-tags">
+            <span class="tag">2 min por grupo</span>
+            <span class="tag">Voto anónimo</span>
+            <span class="tag">Alta energía</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOCK 7 -->
+    <div class="agenda-block">
+      <div class="agenda-time">
+        <span class="time-label">02:35</span>
+        <span class="dur-label">10 min</span>
+      </div>
+      <div style="display:flex; gap:0;">
+        <div class="agenda-connector">
+          <div class="agenda-dot"></div>
+          <div class="agenda-line"></div>
+        </div>
+        <div class="agenda-content">
+          <div class="agenda-phase">Cierre</div>
+          <div class="agenda-title">El Muro de Compromisos</div>
+          <div class="agenda-desc">Cada persona escribe un compromiso público visible para todo el grupo: qué van a hacer diferente en los próximos 30 días. Se publica en un tablero compartido (físico o digital). Los compromisos son breves, específicos y nombran a una persona responsable. Esta es la capa de accountability que diferencia un workshop que se olvida de uno que genera cambio.</div>
+          <div class="agenda-tags">
+            <span class="tag">Accountability</span>
+            <span class="tag">Tablero compartido</span>
+            <span class="tag">1 compromiso por persona</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOCK 8 -->
+    <div class="agenda-block">
+      <div class="agenda-time">
+        <span class="time-label">02:45</span>
+        <span class="dur-label">15 min</span>
+      </div>
+      <div style="display:flex; gap:0;">
+        <div class="agenda-connector">
+          <div class="agenda-dot" style="background: var(--mid);"></div>
+          <div class="agenda-line" style="background: transparent;"></div>
+        </div>
+        <div class="agenda-content" style="border-bottom:none;">
+          <div class="agenda-phase">Cierre</div>
+          <div class="agenda-title">El Protocolo del Apretón de Manos</div>
+          <div class="agenda-desc">Cada líder de Lenovo queda emparejado con uno o dos de AMD. En 5 minutos estructurados, intercambian contacto y acuerdan un punto de seguimiento específico — no "hablamos pronto" sino "hablamos el miércoles 23 a las 10am sobre X." El workshop termina con conexiones concretas, no tarjetas en el bolsillo.</div>
+          <div class="agenda-tags">
+            <span class="tag">Parejas Lenovo–AMD</span>
+            <span class="tag">Follow-up comprometido</span>
+            <span class="tag">Comunidad real</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- TAKEAWAYS -->
+<div class="section">
+  <div class="section-label">Lo que se llevan</div>
+  <h2>Resultados concretos para cada participante</h2>
+  <p>No saldrán con un cuaderno de apuntes. Saldrán con esto.</p>
+  <div class="takeaways-grid">
+    <div class="takeaway-card">
+      <div class="takeaway-title">Un playbook de liderazgo</div>
+      <div class="takeaway-desc">Co-creado con su equipo mixto, aplicable a un desafío real de su contexto actual.</div>
+    </div>
+    <div class="takeaway-card">
+      <div class="takeaway-title">Una acción para el lunes</div>
+      <div class="takeaway-desc">Específica, comprometida públicamente ante sus pares.</div>
+    </div>
+    <div class="takeaway-card">
+      <div class="takeaway-title">Conexiones reales</div>
+      <div class="takeaway-desc">Al menos un contacto nuevo de la otra empresa con un follow-up concreto agendado.</div>
+    </div>
+    <div class="takeaway-card">
+      <div class="takeaway-title">Un marco mental</div>
+      <div class="takeaway-desc">3–4 principios de liderazgo adaptativo que pueden usar (y explicarle a sus equipos) inmediatamente.</div>
+    </div>
+    <div class="takeaway-card">
+      <div class="takeaway-title">Experiencia práctica con IA</div>
+      <div class="takeaway-desc">Han usado IA como herramienta de pensamiento colectivo — no como generador de texto.</div>
+    </div>
+    <div class="takeaway-card">
+      <div class="takeaway-title">Un muro de compromisos</div>
+      <div class="takeaway-desc">Documento compartido con los compromisos de todos: visible, trazable, con nombres.</div>
+    </div>
+  </div>
+</div>
+
+<!-- FACILITATOR -->
+<div class="section">
+  <div class="section-label">El facilitador</div>
+  <h2>Salomón Muriel</h2>
+  <div class="facilitator-layout">
+    <div style="display:flex; flex-direction:column; align-items:center; gap:10px;">
+      <div class="facilitator-img"><img src="/images/fotoSalo.jpeg" alt="Salomón Muriel" style="width:100%;height:100%;object-fit:cover;border-radius:10px;" /></div>
+      <a href="https://www.linkedin.com/in/smuriel/" target="_blank" style="display:flex; align-items:center; gap:6px; font-size:12.5px; font-weight:500; color:#0A66C2; text-decoration:none;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="#0A66C2"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        /in/smuriel
+      </a>
+    </div>
+    <div>
+      <div class="facilitator-role">Emprendedor en Serie · Speaker · Fundador de Ignia</div>
+      <div class="creds">
+        <span class="cred">12+ años de experiencia</span>
+        <span class="cred">5 empresas fundadas</span>
+        <span class="cred">2 vendidas</span>
+        <span class="cred">Líder de equipos de IA &amp; Data</span>
+        <span class="cred">Fundador de Ignia</span>
+        <span class="cred">Speaker en conferencias tech</span>
+      </div>
+      <p style="font-size:14.5px; color: var(--mid); line-height:1.75; max-width:460px;">Con <strong>más de 12 años de experiencia en liderazgo, emprendimiento y tecnología</strong>, he fundado 5 empresas, liderado equipos de tecnología, IA y datos a escala, y hoy construyo Ignia — un nuevo modelo de educación superior. Hablo y facilito sobre IA, toma de decisiones basadas en datos, y la mentalidad del founder aplicada al liderazgo empresarial.</p>
+      <p style="font-size:14.5px; color: var(--mid); line-height:1.75; max-width:460px; margin-top:10px;">Lo que traigo a este workshop no es teoría académica sino cicatrices reales: equipos que fracasaron, empresas que quebré, y los patrones que descubrí cuando todo funcionó. Eso es lo que hace que las salas presten atención.</p>
+      <div style="margin-top:18px;">
+        <div style="font-size:10px; font-weight:500; letter-spacing:0.14em; text-transform:uppercase; color:var(--muted); margin-bottom:10px;">Han confiado en mí</div>
+        <div style="display:flex; flex-wrap:wrap; gap:7px;">
+          <span style="font-size:12px; background:var(--light); border-radius:20px; padding:4px 12px; color:var(--mid);">Colsubsidio</span>
+          <span style="font-size:12px; background:var(--light); border-radius:20px; padding:4px 12px; color:var(--mid);">Amarilo</span>
+          <span style="font-size:12px; background:var(--light); border-radius:20px; padding:4px 12px; color:var(--mid);">Halcyon</span>
+          <span style="font-size:12px; background:var(--light); border-radius:20px; padding:4px 12px; color:var(--mid);">Colombia Edtech</span>
+          <span style="font-size:12px; background:var(--light); border-radius:20px; padding:4px 12px; color:var(--mid);">EAFIT</span>
+          <span style="font-size:12px; background:var(--light); border-radius:20px; padding:4px 12px; color:var(--mid);">Universidad Católica</span>
+          <span style="font-size:12px; background:var(--light); border-radius:20px; padding:4px 12px; color:var(--mid);">EIA</span>
+          <span style="font-size:12px; background:var(--light); border-radius:20px; padding:4px 12px; color:var(--mid);">Universidad Externado</span>
+          <span style="font-size:12px; background:var(--light); border-radius:20px; padding:4px 12px; color:var(--mid);">PM Beers</span>
+          <span style="font-size:12px; background:var(--light); border-radius:20px; padding:4px 12px; color:var(--mid);">Landa Club</span>
+          <span style="font-size:12px; background:var(--light); border-radius:20px; padding:4px 12px; color:var(--mid);">Dr. Reddy's</span>
+          <span style="font-size:12px; background:var(--light); border-radius:20px; padding:4px 12px; color:var(--mid);">Correlation One</span>
+          <span style="font-size:12px; background:var(--light); border-radius:20px; padding:4px 12px; color:var(--muted); font-style:italic;">y más</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- INVESTMENT -->
+<div class="section">
+  <div class="section-label">Inversión</div>
+  <h2>Lo que incluye</h2>
+  <div class="investment-box">
+    <div class="investment-left">
+      <h3>Inversión total</h3>
+      <div class="investment-amount"><span>USD </span>2,000</div>
+      <div class="investment-note">Pago único. Incluye diseño, prework, facilitación y materiales de seguimiento.</div>
+    </div>
+    <div class="investment-includes">
+      <div class="inc-item">
+        <div class="inc-check"></div>
+        <span class="inc-text">Diseño personalizado del workshop para el contexto Lenovo–AMD</span>
+      </div>
+      <div class="inc-item">
+        <div class="inc-check"></div>
+        <span class="inc-text">Formulario de prework + procesamiento de respuestas con IA</span>
+      </div>
+      <div class="inc-item">
+        <div class="inc-check"></div>
+        <span class="inc-text">Construcción de herramienta de IA con contexto del grupo pre-cargado</span>
+      </div>
+      <div class="inc-item">
+        <div class="inc-check"></div>
+        <span class="inc-text">Facilitación completa de la sesión (3 horas)</span>
+      </div>
+      <div class="inc-item">
+        <div class="inc-check"></div>
+        <span class="inc-text">Documento de compromisos y resumen post-sesión</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <p>Salomón Muriel · <a href="https://salomonmuriel.com">salomonmuriel.com</a> · <a href="https://wa.me/573132465100">WhatsApp</a> · <a href="/cdn-cgi/l/email-protection#6714060b080a0809490a12150e020b27000a060e0b4904080a"><span clas
