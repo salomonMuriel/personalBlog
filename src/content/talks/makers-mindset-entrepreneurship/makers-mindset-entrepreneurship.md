@@ -10,14 +10,14 @@ description: A talk about the Maker Mindset and Entrepreneurship. Originally for
 
 <style>
   section {
-      --color-background: rgb(0, 34, 79);
+      --color-background: rgb(17, 17, 16);
       --color-background-code: rgb(40, 44, 52);
-      --color-background-paginate: rgba(12, 14, 79, 0.05);
-      --color-foreground: rgb(232, 233, 235);
-      --color-highlight: rgb(255, 111, 89);
-      --color-highlight-hover: rgba(255, 111, 89, 0.8);
-      --color-highlight-heading: rgb(255, 111, 89);
-      --color-header: rgb(232, 233, 235);
+      --color-background-paginate: rgba(17, 17, 16, 0.05);
+      --color-foreground: rgb(245, 244, 240);
+      --color-highlight: rgb(204, 43, 43);
+      --color-highlight-hover: rgba(204, 43, 43, 0.8);
+      --color-highlight-heading: rgb(204, 43, 43);
+      --color-header: rgb(245, 244, 240);
       --color-header-shadow: transparent;
     }
 </style>

@@ -5,15 +5,15 @@ import postOgImage from "./og-templates/post";
 import siteOgImage from "./og-templates/site";
 import { writeFile } from "fs/promises";
 const fetchFonts = async () => {
-  // Regular Font
+  // Regular Font (DM Sans)
   const fontFileRegular = await fetch(
-    "https://cdn.jsdelivr.net/fontsource/fonts/baloo-2@latest/latin-400-normal.woff"
+    "https://cdn.jsdelivr.net/fontsource/fonts/dm-sans@latest/latin-400-normal.woff"
   );
   const fontRegular: ArrayBuffer = await fontFileRegular.arrayBuffer();
 
-  // Bold Font
+  // Bold Font (Syne)
   const fontFileBold = await fetch(
-    "https://cdn.jsdelivr.net/fontsource/fonts/play@latest/latin-700-normal.woff"
+    "https://cdn.jsdelivr.net/fontsource/fonts/syne@latest/latin-700-normal.woff"
   );
   const fontBold: ArrayBuffer = await fontFileBold.arrayBuffer();
 
@@ -28,13 +28,13 @@ const options: SatoriOptions = {
   embedFont: true,
   fonts: [
     {
-      name: "IBM Plex Mono",
+      name: "DM Sans",
       data: fontRegular,
       weight: 400,
       style: "normal",
     },
     {
-      name: "IBM Plex Mono",
+      name: "Syne",
       data: fontBold,
       weight: 700,
       style: "normal",

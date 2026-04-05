@@ -71,8 +71,8 @@ module.exports = {
         transparent: "transparent",
       },
       fontFamily: {
-        text: ['"Baloo 2 Variable"', "system-ui"],
-        hs: ['"Play"', "sans-serif"]
+        text: ['"DM Sans Variable"', "sans-serif"],
+        hs: ['"Syne Variable"', "sans-serif"]
       },
 
       typography: {
