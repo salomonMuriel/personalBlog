@@ -5,19 +5,27 @@ import postOgImage from "./og-templates/post";
 import siteOgImage from "./og-templates/site";
 import { writeFile } from "fs/promises";
 const fetchFonts = async () => {
-  // Regular Font (DM Sans)
-  const fontFileRegular = await fetch(
-    "https://cdn.jsdelivr.net/fontsource/fonts/dm-sans@latest/latin-400-normal.woff"
-  );
-  const fontRegular: ArrayBuffer = await fontFileRegular.arrayBuffer();
+  try {
+    // Regular Font (DM Sans)
+    const fontFileRegular = await fetch(
+      "https://cdn.jsdelivr.net/fontsource/fonts/dm-sans@latest/latin-400-normal.woff"
+    );
+    const fontRegular: ArrayBuffer = await fontFileRegular.arrayBuffer();
 
-  // Bold Font (Syne)
-  const fontFileBold = await fetch(
-    "https://cdn.jsdelivr.net/fontsource/fonts/syne@latest/latin-700-normal.woff"
-  );
-  const fontBold: ArrayBuffer = await fontFileBold.arrayBuffer();
+    // Bold Font (Syne)
+    const fontFileBold = await fetch(
+      "https://cdn.jsdelivr.net/fontsource/fonts/syne@latest/latin-700-normal.woff"
+    );
+    const fontBold: ArrayBuffer = await fontFileBold.arrayBuffer();
 
-  return { fontRegular, fontBold };
+    return { fontRegular, fontBold };
+  } catch {
+    // Fallback: return empty buffers when fonts can't be fetched (e.g., no network)
+    return {
+      fontRegular: new ArrayBuffer(0),
+      fontBold: new ArrayBuffer(0),
+    };
+  }
 };
 
 const { fontRegular, fontBold } = await fetchFonts();

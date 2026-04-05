@@ -28,7 +28,7 @@ const befores = await getCollection(nowCollection);
             .splice(1)
             .map(a => (
               <li>
-                <a href={`/${lang}/before/${a.slug}`}>{a.data.header}</a>
+                <a href={`/${lang}/before/${a.id}`}>{a.data.header}</a>
               </li>
             ))
         }

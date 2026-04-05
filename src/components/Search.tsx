@@ -8,7 +8,7 @@ export type SearchItem = {
   title: string;
   description: string;
   data: CollectionEntry<"blog">["data"];
-  slug: string;
+  id: string;
 };
 
 interface Props {
@@ -88,8 +88,8 @@ export default function SearchBar({ searchList, lang = "en" }: Props) {
         </span>
         <input
           className="block w-full rounded border border-skin-fill
-        border-opacity-40 bg-skin-fill py-3 pl-10
-        pr-3 placeholder:italic placeholder:text-opacity-75
+        border-skin-fill/40 bg-skin-fill py-3 pl-10
+        pr-3 placeholder:italic placeholder:text-skin-base/75
         focus:border-skin-accent focus:outline-none"
           placeholder={placeholder}
           type="text"
@@ -115,9 +115,9 @@ export default function SearchBar({ searchList, lang = "en" }: Props) {
         {searchResults &&
           searchResults.map(({ item, refIndex }) => (
             <Card
-              href={`/${lang}/posts/${item.slug}/`}
+              href={`/${lang}/posts/${item.id}/`}
               frontmatter={item.data}
-              key={`${refIndex}-${item.slug}`}
+              key={`${refIndex}-${item.id}`}
             />
           ))}
       </ul>

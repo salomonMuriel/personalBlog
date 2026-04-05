@@ -17,7 +17,7 @@ export async function getStaticPaths() {
     const talks = await getCollection(collection);
     paths.push(
       ...talks.map(presentation => ({
-        params: { lang, slug: presentation.slug },
+        params: { lang, slug: presentation.id },
         props: { presentation, lang },
       }))
     );

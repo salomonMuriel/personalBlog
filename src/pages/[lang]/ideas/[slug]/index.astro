@@ -17,7 +17,7 @@ export async function getStaticPaths() {
     const ideas = await getCollection(collection);
     paths.push(
       ...ideas.map(idea => ({
-        params: { lang, slug: idea.slug },
+        params: { lang, slug: idea.id },
         props: { idea, lang },
       }))
     );

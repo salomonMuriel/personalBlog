@@ -3,7 +3,7 @@ import { LOCALE, SITE } from "@config";
 import "@fontsource-variable/dm-sans";
 import "@fontsource-variable/syne";
 import "@styles/base.css";
-import { ViewTransitions } from "astro:transitions";
+import { ClientRouter } from "astro:transitions";
 import { Schema } from "astro-seo-schema";
 import { t, getLangTag } from "@i18n/utils";
 import type { Lang } from "@i18n/ui";
@@ -274,7 +274,7 @@ const langTags = getLangTag(lang);
     </script>
     <!-- Cal element-click embed code ends -->
 
-    <ViewTransitions />
+    <ClientRouter />
   </head>
   <body>
     <script is:inline>
