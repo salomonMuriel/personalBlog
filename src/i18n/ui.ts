@@ -211,12 +211,12 @@ export const ui = {
   es: {
     // Nav
     "nav.home": "Inicio",
-    "nav.about": "Sobre Mí",
+    "nav.about": "Bio",
     "nav.now": "Ahora",
     "nav.companies": "Empresas",
     "nav.ideas": "Ideas",
     "nav.resources": "Recursos",
-    "nav.uses": "Herramientas",
+    "nav.uses": "Usa",
     "nav.posts": "Blog",
     "nav.talks": "Charlas",
     "nav.search": "Buscar",
