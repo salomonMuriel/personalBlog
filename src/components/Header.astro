@@ -15,6 +15,7 @@ export interface Props {
     | "posts"
     | "talks"
     | "companies"
+    | "explore"
     | "search";
 }
 
@@ -48,7 +49,7 @@ const talks = await getCollection("talks");
           aria-expanded="false"
           aria-controls="menu-items"
         >
-          more stuff here
+          Menu
         </button>
         <ul id="menu-items" class="display-none sm:flex">
           <li>
@@ -72,26 +73,7 @@ const talks = await getCollection("talks");
               Companies
             </a>
           </li>
-          <li>
-            <a href="/ideas/" class={activeNav === "ideas" ? "active" : ""}>
-              Ideas
-            </a>
-          </li>
-          <li>
-            <a
-              href="/resources/"
-              class={activeNav === "resources" ? "active" : ""}
-            >
-              Resources
-            </a>
-          </li>
-          <li>
-            <a href="/uses/" class={activeNav === "uses" ? "active" : ""}>
-              Uses
-            </a>
-          </li>
           {
-            /* Posts menu item hidden - uncomment to restore
             posts.length >= 1 && (
               <li>
                 <a href="/posts/" class={activeNav === "posts" ? "active" : ""}>
@@ -99,7 +81,6 @@ const talks = await getCollection("talks");
                 </a>
               </li>
             )
-          */
           }
           {
             talks.length >= 1 && (
@@ -110,6 +91,32 @@ const talks = await getCollection("talks");
               </li>
             )
           }
+          <li class="explore-dropdown">
+            <button
+              class={`explore-btn ${["ideas", "resources", "uses", "explore"].includes(activeNav ?? "") ? "active" : ""}`}
+              aria-expanded="false"
+              aria-haspopup="true"
+            >
+              Explore ▾
+            </button>
+            <ul class="explore-menu">
+              <li>
+                <a href="/ideas/" class={activeNav === "ideas" ? "active" : ""}>
+                  Ideas
+                </a>
+              </li>
+              <li>
+                <a href="/resources/" class={activeNav === "resources" ? "active" : ""}>
+                  Resources
+                </a>
+              </li>
+              <li>
+                <a href="/uses/" class={activeNav === "uses" ? "active" : ""}>
+                  Uses
+                </a>
+              </li>
+            </ul>
+          </li>
           <li>
             <LinkButton
               href="/search/"
@@ -211,6 +218,30 @@ const talks = await getCollection("talks");
   .menu-items li {
     @apply col-span-2 flex items-center justify-center;
   }
+
+  /* Explore dropdown */
+  .explore-dropdown {
+    @apply relative;
+  }
+  .explore-btn {
+    @apply w-full px-4 py-3 text-center font-medium hover:text-skin-accent sm:my-0 sm:px-2 sm:py-1 cursor-pointer bg-transparent border-0 text-skin-base;
+  }
+  .explore-btn.active {
+    @apply underline decoration-wavy decoration-2 underline-offset-4;
+  }
+  .explore-menu {
+    @apply hidden flex-col border-2 border-skin-line bg-skin-fill rounded-lg overflow-hidden;
+    @apply sm:absolute sm:top-full sm:left-1/2 sm:-translate-x-1/2 sm:mt-1 sm:min-w-[8rem] sm:z-50 sm:shadow-lg;
+  }
+  .explore-dropdown.open .explore-menu {
+    @apply flex;
+  }
+  .explore-menu li {
+    @apply border-0;
+  }
+  .explore-menu li a {
+    @apply block w-full px-4 py-2 text-sm text-center hover:text-skin-accent hover:bg-skin-card;
+  }
 </style>
 
 <script>
@@ -228,13 +259,35 @@ const talks = await getCollection("talks");
         "aria-label",
         menuExpanded ? "Open Menu" : "Close Menu"
       );
-      menuBtn.textContent = menuExpanded ? "more stuff here" : "close menu";
+      menuBtn.textContent = menuExpanded ? "Menu" : "Close";
       menuItems?.classList.toggle("display-none");
     });
   }
 
   toggleNav();
 
+  function setupExploreDropdown() {
+    const dropdown = document.querySelector(".explore-dropdown");
+    const btn = dropdown?.querySelector(".explore-btn");
+
+    btn?.addEventListener("click", (e) => {
+      e.stopPropagation();
+      dropdown?.classList.toggle("open");
+      const expanded = dropdown?.classList.contains("open");
+      btn.setAttribute("aria-expanded", expanded ? "true" : "false");
+    });
+
+    document.addEventListener("click", () => {
+      dropdown?.classList.remove("open");
+      btn?.setAttribute("aria-expanded", "false");
+    });
+  }
+
+  setupExploreDropdown();
+
   // Runs on view transitions navigation
-  document.addEventListener("astro:after-swap", toggleNav);
+  document.addEventListener("astro:after-swap", () => {
+    toggleNav();
+    setupExploreDropdown();
+  });
 </script>

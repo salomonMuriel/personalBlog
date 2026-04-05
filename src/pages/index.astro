@@ -8,6 +8,7 @@ import Hr from "@components/Hr.astro";
 import Card from "@components/Card";
 import Socials from "@components/Socials.astro";
 import getSortedPosts from "@utils/getSortedPosts";
+import getReadingTime from "@utils/getReadingTime";
 import { SOCIALS } from "@config";
 import { Image } from "astro:assets";
 import salomonImage from "../assets/images/fotoSalo.jpeg";
@@ -298,17 +299,17 @@ const socialCount = SOCIALS.filter(social => social.active).length;
     }
 
     {
-      /* Featured posts section hidden - uncomment to restore
       featuredPosts.length > 0 && (
         <>
           <section id="featured">
             <h2>Featured</h2>
             <ul>
-              {featuredPosts.map(({ data, slug }) => (
+              {featuredPosts.map(({ data, slug, body }) => (
                 <Card
                   href={`/posts/${slug}/`}
                   frontmatter={data}
                   secHeading={false}
+                  readingTime={getReadingTime(body)}
                 />
               ))}
             </ul>
@@ -316,33 +317,30 @@ const socialCount = SOCIALS.filter(social => social.active).length;
           {recentPosts.length > 0 && <Hr />}
         </>
       )
-    */
     }
 
     {
-      /* Recent posts section hidden - uncomment to restore
       recentPosts.length > 0 && (
         <section id="recent-posts">
           <h2>Recent Posts</h2>
           <ul>
             {recentPosts.map(
-              ({ data, slug }, index) =>
+              ({ data, slug, body }, index) =>
                 index < 4 && (
                   <Card
                     href={`/posts/${slug}/`}
                     frontmatter={data}
                     secHeading={false}
+                    readingTime={getReadingTime(body)}
                   />
                 )
             )}
           </ul>
         </section>
       )
-    */
     }
 
     {
-      /* All posts button hidden - uncomment to restore
       sortedPosts.length > 0 && (
         <div class="all-posts-btn-wrapper">
           <LinkButton href="/posts/">
@@ -353,7 +351,6 @@ const socialCount = SOCIALS.filter(social => social.active).length;
           </LinkButton>
         </div>
       )
-    */
     }
   </main>
 
