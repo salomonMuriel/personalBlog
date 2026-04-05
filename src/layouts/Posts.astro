@@ -6,6 +6,7 @@ import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
 import Card from "@components/Card";
 import { SITE } from "@config";
+import getReadingTime from "@utils/getReadingTime";
 
 const blogs = await getCollection("blog");
 
@@ -23,8 +24,8 @@ const sortedBlogs = blogs
   <Main pageTitle="Posts" pageDesc="All the articles I've posted.">
     <ul>
       {
-        sortedBlogs.map(({ data, slug }) => (
-          <Card href={`/posts/${slug}/`} frontmatter={data} />
+        sortedBlogs.map(({ data, slug, body }) => (
+          <Card href={`/posts/${slug}/`} frontmatter={data} readingTime={getReadingTime(body)} />
         ))
       }
     </ul>

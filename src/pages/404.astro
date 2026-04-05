@@ -12,14 +12,40 @@ import LinkButton from "@components/LinkButton.astro";
   <main id="main-content">
     <div class="not-found-wrapper">
       <h1 aria-label="404 Not Found">404</h1>
-      <span aria-hidden="true">¯\_(ツ)_/¯</span>
-      <p>Page Not Found</p>
-      <LinkButton
-        href="/"
-        className="my-6 text-lg underline decoration-dashed underline-offset-8"
-      >
-        Go back home
-      </LinkButton>
+      <span aria-hidden="true" class="shrug">¯\_(ツ)_/¯</span>
+      <p>This page wandered off somewhere.</p>
+
+      <div class="mt-8 flex flex-col items-center gap-4 sm:flex-row">
+        <LinkButton
+          href="/"
+          className="text-lg underline decoration-dashed underline-offset-8"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="mr-1 inline-block h-5 w-5">
+            <path d="M5 12h14M5 12l6-6M5 12l6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          </svg>
+          Go Home
+        </LinkButton>
+
+        <LinkButton
+          href="/search/"
+          className="text-lg underline decoration-dashed underline-offset-8"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="mr-1 inline-block h-5 w-5">
+            <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          </svg>
+          Search
+        </LinkButton>
+      </div>
+
+      <div class="mt-10 text-center">
+        <p class="mb-3 text-sm opacity-60">Or check out these:</p>
+        <div class="flex flex-wrap justify-center gap-3">
+          <a href="/posts/" class="quick-link">Blog</a>
+          <a href="/talks/" class="quick-link">Talks</a>
+          <a href="/now/" class="quick-link">Now</a>
+          <a href="/companies/" class="quick-link">Companies</a>
+        </div>
+      </div>
     </div>
   </main>
 
@@ -28,7 +54,7 @@ import LinkButton from "@components/LinkButton.astro";
 
 <style>
   #main-content {
-    @apply mx-auto flex max-w-4xl flex-1 items-center justify-center;
+    @apply mx-auto flex max-w-4xl flex-1 items-center justify-center px-4;
   }
   .not-found-wrapper {
     @apply mb-14 flex flex-col items-center justify-center;
@@ -36,7 +62,14 @@ import LinkButton from "@components/LinkButton.astro";
   .not-found-wrapper h1 {
     @apply text-9xl font-bold text-skin-accent;
   }
-  .not-found-wrapper p {
+  .shrug {
+    @apply text-2xl;
+  }
+  .not-found-wrapper > p {
     @apply mt-4 text-2xl sm:text-3xl;
+  }
+  .quick-link {
+    @apply rounded-lg border border-skin-accent/30 px-4 py-2 text-sm text-skin-accent
+      transition-colors hover:bg-skin-accent/10;
   }
 </style>

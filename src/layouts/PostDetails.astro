@@ -8,6 +8,7 @@ import type { CollectionEntry } from "astro:content";
 import { slugifyStr } from "@utils/slugify";
 import ShareLinks from "@components/ShareLinks.astro";
 import { SITE } from "@config";
+import getReadingTime from "@utils/getReadingTime";
 
 export interface Props {
   post: CollectionEntry<"blog">;
@@ -27,6 +28,7 @@ const {
 } = post.data;
 
 const { Content } = await post.render();
+const readingTime = getReadingTime(post.body);
 
 const ogImageUrl = typeof ogImage === "string" ? ogImage : ogImage?.src;
 const ogUrl = new URL(
@@ -67,12 +69,14 @@ const layoutProps = {
   </div>
   <main id="main-content">
     <h1 transition:name={slugifyStr(title)} class="post-title">{title}</h1>
-    <Datetime
-      pubDatetime={pubDatetime}
-      modDatetime={modDatetime}
-      size="lg"
-      className="my-2"
-    />
+    <div class="flex items-center gap-4 my-2">
+      <Datetime
+        pubDatetime={pubDatetime}
+        modDatetime={modDatetime}
+        size="lg"
+      />
+      <span class="opacity-80 italic">· {readingTime}</span>
+    </div>
     <article id="article" role="article" class="prose mx-auto mt-8 max-w-4xl">
       <Content />
     </article>
