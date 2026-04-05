@@ -191,96 +191,86 @@ const langTags = getLangTag(lang);
       )
     }
 
-    <!-- Cal element-click embed code begins -->
-    <script type="text/javascript">
-      (function (C, A, L) {
-        let p = function (a, ar) {
-          a.q.push(ar);
-        };
-        let d = C.document;
-        C.Cal =
-          C.Cal ||
-          function () {
-            let cal = C.Cal;
-            let ar = arguments;
-            if (!cal.loaded) {
-              cal.ns = {};
-              cal.q = cal.q || [];
-              d.head.appendChild(d.createElement("script")).src = A;
-              cal.loaded = true;
-            }
-            if (ar[0] === L) {
-              const api = function () {
-                p(api, arguments);
+    <!-- Cal element-click embed code (lazy loaded) -->
+    <script is:inline>
+      (function () {
+        var calLoaded = false;
+        var calNamespaces = [
+          "personal-site-intro-call",
+          "30min",
+          "ai-tech-consulting",
+          "data-science-consulting",
+          "company-building-consulting",
+          "mentorship",
+          "talks",
+          "talks-booking",
+        ];
+
+        function loadCal() {
+          if (calLoaded) return;
+          calLoaded = true;
+
+          (function (C, A, L) {
+            var p = function (a, ar) {
+              a.q.push(ar);
+            };
+            var d = C.document;
+            C.Cal =
+              C.Cal ||
+              function () {
+                var cal = C.Cal;
+                var ar = arguments;
+                if (!cal.loaded) {
+                  cal.ns = {};
+                  cal.q = cal.q || [];
+                  d.head.appendChild(d.createElement("script")).src = A;
+                  cal.loaded = true;
+                }
+                if (ar[0] === L) {
+                  var api = function () {
+                    p(api, arguments);
+                  };
+                  var namespace = ar[1];
+                  api.q = api.q || [];
+                  if (typeof namespace === "string") {
+                    cal.ns[namespace] = cal.ns[namespace] || api;
+                    p(cal.ns[namespace], ar);
+                    p(cal, ["initNamespace", namespace]);
+                  } else p(cal, ar);
+                  return;
+                }
+                p(cal, ar);
               };
-              const namespace = ar[1];
-              api.q = api.q || [];
-              if (typeof namespace === "string") {
-                cal.ns[namespace] = cal.ns[namespace] || api;
-                p(cal.ns[namespace], ar);
-                p(cal, ["initNamespace", namespace]);
-              } else p(cal, ar);
-              return;
-            }
-            p(cal, ar);
+          })(window, "https://app.cal.com/embed/embed.js", "init");
+
+          var uiConfig = {
+            styles: { branding: { brandColor: "#000000" } },
+            hideEventTypeDetails: false,
+            layout: "month_view",
           };
-      })(window, "https://app.cal.com/embed/embed.js", "init");
 
-      Cal("init", "personal-site-intro-call", { origin: "https://cal.com" });
-      Cal.ns["personal-site-intro-call"]("ui", {
-        styles: { branding: { brandColor: "#000000" } },
-        hideEventTypeDetails: false,
-        layout: "month_view",
-      });
+          calNamespaces.forEach(function (ns) {
+            Cal("init", ns, { origin: "https://cal.com" });
+            Cal.ns[ns]("ui", uiConfig);
+          });
+        }
 
-      Cal("init", "30min", { origin: "https://cal.com" });
-      Cal.ns["30min"]("ui", {
-        styles: { branding: { brandColor: "#000000" } },
-        hideEventTypeDetails: false,
-        layout: "month_view",
-      });
+        // Load Cal.com on first user interaction
+        ["mouseover", "touchstart", "scroll"].forEach(function (evt) {
+          document.addEventListener(evt, loadCal, {
+            once: true,
+            passive: true,
+          });
+        });
 
-      Cal("init", "ai-tech-consulting", { origin: "https://cal.com" });
-      Cal.ns["ai-tech-consulting"]("ui", {
-        styles: { branding: { brandColor: "#000000" } },
-        hideEventTypeDetails: false,
-        layout: "month_view",
-      });
-
-      Cal("init", "data-science-consulting", { origin: "https://cal.com" });
-      Cal.ns["data-science-consulting"]("ui", {
-        styles: { branding: { brandColor: "#000000" } },
-        hideEventTypeDetails: false,
-        layout: "month_view",
-      });
-
-      Cal("init", "company-building-consulting", { origin: "https://cal.com" });
-      Cal.ns["company-building-consulting"]("ui", {
-        styles: { branding: { brandColor: "#000000" } },
-        hideEventTypeDetails: false,
-        layout: "month_view",
-      });
-
-      Cal("init", "mentorship", { origin: "https://cal.com" });
-      Cal.ns["mentorship"]("ui", {
-        styles: { branding: { brandColor: "#000000" } },
-        hideEventTypeDetails: false,
-        layout: "month_view",
-      });
-
-      Cal("init", "talks", { origin: "https://cal.com" });
-      Cal.ns["talks"]("ui", {
-        styles: { branding: { brandColor: "#000000" } },
-        hideEventTypeDetails: false,
-        layout: "month_view",
-      });
-
-      Cal("init", "talks-booking", { origin: "https://cal.com" });
-      Cal.ns["talks-booking"]("ui", {
-        styles: { branding: { brandColor: "#000000" } },
-        hideEventTypeDetails: false,
-        layout: "month_view",
-      });
+        // Also load if a cal link is clicked before interaction events fire
+        document.addEventListener("click", function (e) {
+          var el = e.target.closest("[data-cal-link]");
+          if (el) {
+            loadCal();
+          }
+        });
+      })();
     </script>
     <!-- Cal element-click embed code ends -->
 

@@ -20,6 +20,7 @@ export interface Props {
     | "posts"
     | "talks"
     | "companies"
+    | "explore"
     | "search"
     | "tags";
   lang?: Lang;
@@ -60,7 +61,7 @@ const prefix = `/${lang}`;
           aria-expanded="false"
           aria-controls="menu-items"
         >
-          {t(lang, "nav.moreStuff")}
+          {t(lang, "nav.menu")}
         </button>
         <ul id="menu-items" class="display-none sm:flex">
           <li>
@@ -92,30 +93,18 @@ const prefix = `/${lang}`;
               {t(lang, "nav.companies")}
             </a>
           </li>
-          <li>
-            <a
-              href={`${prefix}/ideas/`}
-              class={activeNav === "ideas" ? "active" : ""}
-            >
-              {t(lang, "nav.ideas")}
-            </a>
-          </li>
-          <li>
-            <a
-              href={`${prefix}/resources/`}
-              class={activeNav === "resources" ? "active" : ""}
-            >
-              {t(lang, "nav.resources")}
-            </a>
-          </li>
-          <li>
-            <a
-              href={`${prefix}/uses/`}
-              class={activeNav === "uses" ? "active" : ""}
-            >
-              {t(lang, "nav.uses")}
-            </a>
-          </li>
+          {
+            posts.length >= 1 && (
+              <li>
+                <a
+                  href={`${prefix}/posts/`}
+                  class={activeNav === "posts" ? "active" : ""}
+                >
+                  {t(lang, "nav.posts")}
+                </a>
+              </li>
+            )
+          }
           {
             talks.length >= 1 && (
               <li>
@@ -128,6 +117,41 @@ const prefix = `/${lang}`;
               </li>
             )
           }
+          <li class="explore-dropdown">
+            <button
+              class={`explore-btn ${["ideas", "resources", "uses", "explore"].includes(activeNav ?? "") ? "active" : ""}`}
+              aria-expanded="false"
+              aria-haspopup="true"
+            >
+              {t(lang, "nav.explore")} ▾
+            </button>
+            <ul class="explore-menu">
+              <li>
+                <a
+                  href={`${prefix}/ideas/`}
+                  class={activeNav === "ideas" ? "active" : ""}
+                >
+                  {t(lang, "nav.ideas")}
+                </a>
+              </li>
+              <li>
+                <a
+                  href={`${prefix}/resources/`}
+                  class={activeNav === "resources" ? "active" : ""}
+                >
+                  {t(lang, "nav.resources")}
+                </a>
+              </li>
+              <li>
+                <a
+                  href={`${prefix}/uses/`}
+                  class={activeNav === "uses" ? "active" : ""}
+                >
+                  {t(lang, "nav.uses")}
+                </a>
+              </li>
+            </ul>
+          </li>
           <li>
             <LanguageSwitcher lang={lang} />
           </li>
@@ -245,6 +269,30 @@ const prefix = `/${lang}`;
   .menu-items li {
     @apply col-span-2 flex items-center justify-center;
   }
+
+  /* Explore dropdown */
+  .explore-dropdown {
+    @apply relative;
+  }
+  .explore-btn {
+    @apply w-full px-4 py-3 text-center font-medium hover:text-skin-accent sm:my-0 sm:px-2 sm:py-1 cursor-pointer bg-transparent border-0 text-skin-base;
+  }
+  .explore-btn.active {
+    @apply underline decoration-wavy decoration-2 underline-offset-4;
+  }
+  .explore-menu {
+    @apply hidden flex-col border-2 border-skin-line bg-skin-fill rounded-lg overflow-hidden;
+    @apply sm:absolute sm:top-full sm:left-1/2 sm:-translate-x-1/2 sm:mt-1 sm:min-w-[8rem] sm:z-50 sm:shadow-lg;
+  }
+  .explore-dropdown.open .explore-menu {
+    @apply flex;
+  }
+  .explore-menu li {
+    @apply border-0;
+  }
+  .explore-menu li a {
+    @apply block w-full px-4 py-2 text-sm text-center hover:text-skin-accent hover:bg-skin-card;
+  }
 </style>
 
 <script>
@@ -270,11 +318,11 @@ const prefix = `/${lang}`;
       );
       menuBtn.textContent = menuExpanded
         ? isSpanish
-          ? "menú"
-          : "more stuff here"
+          ? "Menú"
+          : "Menu"
         : isSpanish
-          ? "cerrar menú"
-          : "close menu";
+          ? "Cerrar"
+          : "Close";
       menuItems?.classList.toggle("display-none");
     });
   }
@@ -293,9 +341,29 @@ const prefix = `/${lang}`;
 
   toggleTheme();
 
+  function setupExploreDropdown() {
+    const dropdown = document.querySelector(".explore-dropdown");
+    const btn = dropdown?.querySelector(".explore-btn");
+
+    btn?.addEventListener("click", e => {
+      e.stopPropagation();
+      dropdown?.classList.toggle("open");
+      const expanded = dropdown?.classList.contains("open");
+      btn.setAttribute("aria-expanded", expanded ? "true" : "false");
+    });
+
+    document.addEventListener("click", () => {
+      dropdown?.classList.remove("open");
+      btn?.setAttribute("aria-expanded", "false");
+    });
+  }
+
+  setupExploreDropdown();
+
   // Runs on view transitions navigation
   document.addEventListener("astro:after-swap", () => {
     toggleNav();
     toggleTheme();
+    setupExploreDropdown();
   });
 </script>

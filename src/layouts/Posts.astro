@@ -9,6 +9,7 @@ import { SITE } from "@config";
 import { t } from "@i18n/utils";
 import type { Lang } from "@i18n/ui";
 import { defaultLang } from "@i18n/ui";
+import getReadingTime from "@utils/getReadingTime";
 
 export interface Props {
   lang?: Lang;
@@ -36,8 +37,12 @@ const sortedBlogs = blogs
   <Main pageTitle={t(lang, "posts.title")} pageDesc={t(lang, "posts.desc")}>
     <ul>
       {
-        sortedBlogs.map(({ data, slug }) => (
-          <Card href={`/${lang}/posts/${slug}/`} frontmatter={data} />
+        sortedBlogs.map(({ data, slug, body }) => (
+          <Card
+            href={`/${lang}/posts/${slug}/`}
+            frontmatter={data}
+            readingTime={`${getReadingTime(body)} ${t(lang, "readingTime.suffix")}`}
+          />
         ))
       }
     </ul>

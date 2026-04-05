@@ -11,6 +11,7 @@ import { SITE } from "@config";
 import { t } from "@i18n/utils";
 import type { Lang } from "@i18n/ui";
 import { defaultLang } from "@i18n/ui";
+import getReadingTime from "@utils/getReadingTime";
 
 export interface Props {
   post: CollectionEntry<"blog">;
@@ -31,6 +32,7 @@ const {
 } = post.data;
 
 const { Content } = await post.render();
+const readingTime = getReadingTime(post.body);
 
 const ogImageUrl = typeof ogImage === "string" ? ogImage : ogImage?.src;
 const ogUrl = new URL(
@@ -71,13 +73,17 @@ const copiedLabel = t(lang, "code.copied");
   </div>
   <main id="main-content">
     <h1 transition:name={slugifyStr(title)} class="post-title">{title}</h1>
-    <Datetime
-      pubDatetime={pubDatetime}
-      modDatetime={modDatetime}
-      size="lg"
-      className="my-2"
-      lang={lang}
-    />
+    <div class="flex items-center gap-4 my-2">
+      <Datetime
+        pubDatetime={pubDatetime}
+        modDatetime={modDatetime}
+        size="lg"
+        lang={lang}
+      />
+      <span class="opacity-80 italic"
+        >{`· ${readingTime} ${t(lang, "readingTime.suffix")}`}</span
+      >
+    </div>
     <article id="article" role="article" class="prose mx-auto mt-8 max-w-4xl">
       <Content />
     </article>

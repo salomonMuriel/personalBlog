@@ -12,15 +12,62 @@ import LinkButton from "@components/LinkButton.astro";
   <main id="main-content">
     <div class="not-found-wrapper">
       <h1 aria-label="404 Not Found">404</h1>
-      <span aria-hidden="true">¯\_(ツ)_/¯</span>
-      <p id="not-found-text">Page Not Found</p>
-      <a
-        href="/en/"
-        class="my-6 text-lg underline decoration-dashed underline-offset-8 group inline-block hover:text-skin-accent"
-        id="go-home-link"
-      >
-        Go back home
-      </a>
+      <span aria-hidden="true" class="shrug">¯\_(ツ)_/¯</span>
+      <p id="not-found-text">This page wandered off somewhere.</p>
+
+      <div class="mt-8 flex flex-col items-center gap-4 sm:flex-row">
+        <LinkButton
+          href="/en/"
+          id="go-home-link"
+          className="text-lg underline decoration-dashed underline-offset-8"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="mr-1 inline-block h-5 w-5"
+          >
+            <path
+              d="M5 12h14M5 12l6-6M5 12l6 6"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              fill="none"></path>
+          </svg>
+          <span id="go-home-text">Go Home</span>
+        </LinkButton>
+
+        <LinkButton
+          href="/en/search/"
+          id="search-link"
+          className="text-lg underline decoration-dashed underline-offset-8"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="mr-1 inline-block h-5 w-5"
+          >
+            <path
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              fill="none"></path>
+          </svg>
+          <span id="search-text">Search</span>
+        </LinkButton>
+      </div>
+
+      <div class="mt-10 text-center">
+        <p class="mb-3 text-sm opacity-60" id="check-out-text">
+          Or check out these:
+        </p>
+        <div class="flex flex-wrap justify-center gap-3" id="quick-links">
+          <a href="/en/posts/" class="quick-link">Blog</a>
+          <a href="/en/talks/" class="quick-link">Talks</a>
+          <a href="/en/now/" class="quick-link">Now</a>
+          <a href="/en/companies/" class="quick-link">Companies</a>
+        </div>
+      </div>
     </div>
   </main>
 
@@ -29,7 +76,7 @@ import LinkButton from "@components/LinkButton.astro";
 
 <style>
   #main-content {
-    @apply mx-auto flex max-w-4xl flex-1 items-center justify-center;
+    @apply mx-auto flex max-w-4xl flex-1 items-center justify-center px-4;
   }
   .not-found-wrapper {
     @apply mb-14 flex flex-col items-center justify-center;
@@ -37,26 +84,61 @@ import LinkButton from "@components/LinkButton.astro";
   .not-found-wrapper h1 {
     @apply text-9xl font-bold text-skin-accent;
   }
-  .not-found-wrapper p {
+  .shrug {
+    @apply text-2xl;
+  }
+  .not-found-wrapper > p {
     @apply mt-4 text-2xl sm:text-3xl;
+  }
+  .quick-link {
+    @apply rounded-lg border border-skin-accent/30 px-4 py-2 text-sm text-skin-accent
+      transition-colors hover:bg-skin-accent/10;
   }
 </style>
 
 <script is:inline>
   // Detect language from URL or browser
-  const path = window.location.pathname;
-  const isSpanish =
+  var path = window.location.pathname;
+  var isSpanish =
     path.startsWith("/es/") ||
     (!path.startsWith("/en/") &&
       navigator.language.toLowerCase().startsWith("es"));
 
+  var langPrefix = isSpanish ? "/es" : "/en";
+
   if (isSpanish) {
-    const text = document.getElementById("not-found-text");
-    if (text) text.textContent = "Página No Encontrada";
-    const link = document.getElementById("go-home-link");
-    if (link) {
-      link.textContent = "Volver al inicio";
-      link.setAttribute("href", "/es/");
-    }
+    var text = document.getElementById("not-found-text");
+    if (text) text.textContent = "Esta página se fue a algún lado.";
+
+    var homeText = document.getElementById("go-home-text");
+    if (homeText) homeText.textContent = "Inicio";
+
+    var searchText = document.getElementById("search-text");
+    if (searchText) searchText.textContent = "Buscar";
+
+    var checkOut = document.getElementById("check-out-text");
+    if (checkOut) checkOut.textContent = "O revisa estos:";
+  }
+
+  // Update all links with correct language prefix
+  var homeLink = document.getElementById("go-home-link");
+  if (homeLink) homeLink.setAttribute("href", langPrefix + "/");
+
+  var searchLink = document.getElementById("search-link");
+  if (searchLink) searchLink.setAttribute("href", langPrefix + "/search/");
+
+  var quickLinks = document.getElementById("quick-links");
+  if (quickLinks) {
+    var links = quickLinks.querySelectorAll("a");
+    var routes = [
+      { path: "/posts/", esLabel: "Blog" },
+      { path: "/talks/", esLabel: "Charlas" },
+      { path: "/now/", esLabel: "Ahora" },
+      { path: "/companies/", esLabel: "Empresas" },
+    ];
+    links.forEach(function (link, i) {
+      link.setAttribute("href", langPrefix + routes[i].path);
+      if (isSpanish) link.textContent = routes[i].esLabel;
+    });
   }
 </script>

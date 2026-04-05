@@ -179,6 +179,28 @@ export const ui = {
     "404.text": "Page Not Found",
     "404.goHome": "Go back home",
 
+    // Reading time
+    "readingTime.suffix": "min read",
+
+    // Explore dropdown
+    "nav.explore": "Explore",
+    "nav.menu": "Menu",
+    "nav.close": "Close",
+
+    // 404 improved
+    "404.wanderedOff": "This page wandered off somewhere.",
+    "404.search": "Search",
+    "404.checkOut": "Or check out these:",
+    "404.blog": "Blog",
+    "404.talks": "Talks",
+    "404.now": "Now",
+    "404.companies": "Companies",
+
+    // Featured/Recent posts
+    "posts.featured": "Featured",
+    "posts.recent": "Recent Posts",
+    "posts.allPosts": "All Posts",
+
     // Code blocks
     "code.copy": "Copy",
     "code.copied": "Copied",
@@ -380,6 +402,28 @@ export const ui = {
     "404.title": "404 No Encontrado",
     "404.text": "Página No Encontrada",
     "404.goHome": "Volver al inicio",
+
+    // Reading time
+    "readingTime.suffix": "min de lectura",
+
+    // Explore dropdown
+    "nav.explore": "Explorar",
+    "nav.menu": "Menú",
+    "nav.close": "Cerrar",
+
+    // 404 improved
+    "404.wanderedOff": "Esta página se fue a algún lado.",
+    "404.search": "Buscar",
+    "404.checkOut": "O revisa estos:",
+    "404.blog": "Blog",
+    "404.talks": "Charlas",
+    "404.now": "Ahora",
+    "404.companies": "Empresas",
+
+    // Featured/Recent posts
+    "posts.featured": "Destacados",
+    "posts.recent": "Posts Recientes",
+    "posts.allPosts": "Todos los Posts",
 
     // Code blocks
     "code.copy": "Copiar",

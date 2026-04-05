@@ -8,6 +8,7 @@ import Hr from "@components/Hr.astro";
 import Card from "@components/Card";
 import Socials from "@components/Socials.astro";
 import getSortedPosts from "@utils/getSortedPosts";
+import getReadingTime from "@utils/getReadingTime";
 import { SOCIALS } from "@config";
 import { Image } from "astro:assets";
 import salomonImage from "../../assets/images/fotoSalo.jpeg";
@@ -314,6 +315,61 @@ const socialCount = SOCIALS.filter(social => social.active).length;
           </section>
           <Hr />
         </>
+      )
+    }
+
+    {
+      featuredPosts.length > 0 && (
+        <>
+          <section id="featured">
+            <h2>{t(lang, "posts.featured")}</h2>
+            <ul>
+              {featuredPosts.map(({ data, slug, body }) => (
+                <Card
+                  href={`/${lang}/posts/${slug}/`}
+                  frontmatter={data}
+                  secHeading={false}
+                  readingTime={`${getReadingTime(body)} ${t(lang, "readingTime.suffix")}`}
+                />
+              ))}
+            </ul>
+          </section>
+          {recentPosts.length > 0 && <Hr />}
+        </>
+      )
+    }
+
+    {
+      recentPosts.length > 0 && (
+        <section id="recent-posts">
+          <h2>{t(lang, "posts.recent")}</h2>
+          <ul>
+            {recentPosts.map(
+              ({ data, slug, body }, index) =>
+                index < 4 && (
+                  <Card
+                    href={`/${lang}/posts/${slug}/`}
+                    frontmatter={data}
+                    secHeading={false}
+                    readingTime={`${getReadingTime(body)} ${t(lang, "readingTime.suffix")}`}
+                  />
+                )
+            )}
+          </ul>
+        </section>
+      )
+    }
+
+    {
+      sortedPosts.length > 0 && (
+        <div class="all-posts-btn-wrapper">
+          <LinkButton href={`/${lang}/posts/`}>
+            {t(lang, "posts.allPosts")}
+            <svg xmlns="http://www.w3.org/2000/svg">
+              <path d="m11.293 17.293 1.414 1.414L19.414 12l-6.707-6.707-1.414 1.414L15.586 11H6v2h9.586z" />
+            </svg>
+          </LinkButton>
+        </div>
       )
     }
   </main>
