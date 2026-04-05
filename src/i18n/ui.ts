@@ -183,7 +183,7 @@ export const ui = {
     "readingTime.suffix": "min read",
 
     // Explore dropdown
-    "nav.explore": "Explore",
+    "nav.explore": "More",
     "nav.menu": "Menu",
     "nav.close": "Close",
 
@@ -407,7 +407,7 @@ export const ui = {
     "readingTime.suffix": "min de lectura",
 
     // Explore dropdown
-    "nav.explore": "Explorar",
+    "nav.explore": "Más",
     "nav.menu": "Menú",
     "nav.close": "Cerrar",
 

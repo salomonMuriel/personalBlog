@@ -453,17 +453,8 @@ const socialCount = SOCIALS.filter(social => social.active).length;
     @apply flex-1 flex flex-col;
   }
   .hero-title {
-    @apply text-4xl font-bold mb-1;
-  }
-  @media (min-width: 768px) {
-    .hero-title {
-      @apply text-5xl;
-    }
-  }
-  @media (min-width: 1024px) {
-    .hero-title {
-      @apply text-6xl;
-    }
+    @apply font-bold mb-1 whitespace-nowrap;
+    font-size: clamp(2rem, 8vw, 3.75rem);
   }
   .hero-subtitle {
     @apply text-lg text-skin-accent font-medium;
