@@ -1,5 +1,5 @@
 ---
-import { getEntry } from "astro:content";
+import { getEntry, render } from "astro:content";
 import { SITE } from "@config";
 import Breadcrumbs from "@components/Breadcrumbs.astro";
 import Footer from "@components/Footer.astro";
@@ -14,7 +14,7 @@ export function getStaticPaths() {
 
 const lang = Astro.params.lang as Lang;
 const about = await getEntry("pages", `about-${lang}`);
-const { Content } = await about.render();
+const { Content } = await render(about);
 ---
 
 <Layout title={`${t(lang, "aboutPage.title")} | ${SITE.title}`} lang={lang}>

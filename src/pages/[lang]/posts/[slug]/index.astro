@@ -6,6 +6,7 @@ import getSortedPosts from "@utils/getSortedPosts";
 import getPageNumbers from "@utils/getPageNumbers";
 import getPagination from "@utils/getPagination";
 import type { Lang } from "@i18n/ui";
+import { getCollectionName } from "@i18n/utils";
 
 export interface Props {
   post: CollectionEntry<"blog">;
@@ -17,11 +18,10 @@ export async function getStaticPaths() {
   const paths = [];
 
   for (const lang of langs) {
-    const collection = lang === "es" ? "blog-es" : "blog";
-    const posts = await getCollection(collection);
+    const posts = await getCollection(getCollectionName(lang, "blog"));
 
     const postResult = posts.map(post => ({
-      params: { lang, slug: post.slug },
+      params: { lang, slug: post.id },
       props: { post, lang },
     }));
 
@@ -39,8 +39,7 @@ export async function getStaticPaths() {
 const { slug } = Astro.params;
 const { post, lang } = Astro.props;
 
-const blogCollection = lang === "es" ? "blog-es" : "blog";
-const posts = await getCollection(blogCollection);
+const posts = await getCollection(getCollectionName(lang, "blog"));
 const sortedPosts = getSortedPosts(posts);
 
 const pagination = getPagination({

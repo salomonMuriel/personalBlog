@@ -7,7 +7,7 @@ import Main from "@layouts/Main.astro";
 import Tag from "@components/Tag.astro";
 import getUniqueTags from "@utils/getUniqueTags";
 import { SITE } from "@config";
-import { t } from "@i18n/utils";
+import { t, getCollectionName } from "@i18n/utils";
 import type { Lang } from "@i18n/ui";
 
 export function getStaticPaths() {
@@ -15,8 +15,7 @@ export function getStaticPaths() {
 }
 
 const lang = Astro.params.lang as Lang;
-const blogCollection = lang === "es" ? "blog-es" : "blog";
-const posts = await getCollection(blogCollection);
+const posts = await getCollection(getCollectionName(lang, "blog"));
 let tags = getUniqueTags(posts);
 ---
 

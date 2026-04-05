@@ -119,7 +119,7 @@ const pastCompanies: Company[] = [
           <p class="text-sm text-skin-muted">{currentCompany.dates}</p>
         </div>
       </div>
-      <p class="text-skin-base text-opacity-80 mt-4">
+      <p class="text-skin-base/80 mt-4">
         {currentCompany.description[lang]}
       </p>
     </div>
@@ -154,7 +154,7 @@ const pastCompanies: Company[] = [
               <p class="text-sm text-skin-muted">{company.dates}</p>
             </div>
           </div>
-          <p class="text-skin-base text-opacity-80 mt-4 flex-grow">
+          <p class="text-skin-base/80 mt-4 flex-grow">
             {company.description[lang]}
           </p>
         </div>
@@ -164,6 +164,7 @@ const pastCompanies: Company[] = [
 </section>
 
 <style>
+  @reference "../styles/base.css";
   .current-company-card {
     @apply bg-skin-card border-2 border-skin-accent rounded-lg p-6 transition-transform duration-300 ease-in-out hover:scale-105;
   }

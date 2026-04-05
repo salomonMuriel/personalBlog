@@ -9,22 +9,25 @@ import SearchBar from "@components/Search";
 import getSortedPosts from "@utils/getSortedPosts";
 import { t } from "@i18n/utils";
 import type { Lang } from "@i18n/ui";
+import { getCollectionName } from "@i18n/utils";
 
 export function getStaticPaths() {
   return [{ params: { lang: "en" } }, { params: { lang: "es" } }];
 }
 
 const lang = Astro.params.lang as Lang;
-const blogCollection = lang === "es" ? "blog-es" : "blog";
 
-const posts = await getCollection(blogCollection, ({ data }) => !data.draft);
+const posts = await getCollection(
+  getCollectionName(lang, "blog"),
+  ({ data }) => !data.draft
+);
 const sortedPosts = getSortedPosts(posts);
 
-const searchList = sortedPosts.map(({ data, slug }) => ({
+const searchList = sortedPosts.map(({ data, id }) => ({
   title: data.title,
   description: data.description,
   data,
-  slug,
+  id,
 }));
 ---
 

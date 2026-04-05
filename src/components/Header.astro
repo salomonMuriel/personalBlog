@@ -4,7 +4,7 @@ import Hr from "./Hr.astro";
 import LinkButton from "./LinkButton.astro";
 import LanguageSwitcher from "./LanguageSwitcher.astro";
 import { getCollection } from "astro:content";
-import { t } from "@i18n/utils";
+import { t, getCollectionName } from "@i18n/utils";
 import type { Lang } from "@i18n/ui";
 import { defaultLang } from "@i18n/ui";
 const { lightAndDarkMode } = SITE;
@@ -28,11 +28,11 @@ export interface Props {
 
 const { activeNav, lang = defaultLang } = Astro.props;
 
-const blogCollection = lang === "es" ? "blog-es" : "blog";
-const talksCollection = lang === "es" ? "talks-es" : "talks";
-
-const posts = await getCollection(blogCollection, ({ data }) => !data.draft);
-const talks = await getCollection(talksCollection);
+const posts = await getCollection(
+  getCollectionName(lang, "blog"),
+  ({ data }) => !data.draft
+);
+const talks = await getCollection(getCollectionName(lang, "talks"));
 
 const prefix = `/${lang}`;
 ---
@@ -227,6 +227,7 @@ const prefix = `/${lang}`;
 </header>
 
 <style>
+  @reference "../styles/base.css";
   #skip-to-content {
     @apply absolute -top-full left-16 z-50 bg-skin-accent px-3 py-2 text-skin-inverted transition-all focus:top-4;
   }
@@ -260,13 +261,13 @@ const prefix = `/${lang}`;
   }
 
   /* Nav links list: toggled on mobile, always visible on desktop */
-  nav ul {
+  #menu-items {
     @apply mt-4 w-full sm:order-1 sm:ml-0 sm:mt-0 sm:flex sm:w-auto sm:items-center sm:gap-x-3;
   }
-  nav ul > li {
+  #menu-items > li {
     @apply border-b border-skin-line sm:border-none;
   }
-  nav ul > li a {
+  #menu-items > li > a {
     @apply block w-full px-4 py-3 text-center font-medium hover:text-skin-accent sm:my-0 sm:px-1 sm:py-1;
   }
   nav a.active {

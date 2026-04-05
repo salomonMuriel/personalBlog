@@ -14,7 +14,7 @@ import { Image } from "astro:assets";
 import salomonImage from "../assets/images/fotoSalo.jpeg";
 import franco from "../assets/images/franco_cut.webp";
 import luca from "../assets/images/luca_cut.webp";
-import { t } from "@i18n/utils";
+import { t, getCollectionName } from "@i18n/utils";
 import type { Lang } from "@i18n/ui";
 
 export interface Props {
@@ -24,13 +24,9 @@ export interface Props {
 
 const { lang, canonicalURL } = Astro.props;
 
-const blogCollection = lang === "es" ? "blog-es" : "blog";
-const nowCollection = lang === "es" ? "now-es" : "now";
-const talksCollection = lang === "es" ? "talks-es" : "talks";
-
-const posts = await getCollection(blogCollection);
-const nows = await getCollection(nowCollection);
-const talks = await getCollection(talksCollection);
+const posts = await getCollection(getCollectionName(lang, "blog"));
+const nows = await getCollection(getCollectionName(lang, "now"));
+const talks = await getCollection(getCollectionName(lang, "talks"));
 const sortedPosts = getSortedPosts(posts);
 const sortedNows = nows.sort(
   (a, b) => Number(b.data.date) - Number(a.data.date)
@@ -233,7 +229,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
               <h4 class="talk-card-title">{latestTalk.data.title}</h4>
               <p class="talk-card-desc">{latestTalk.data.description}</p>
               <LinkButton
-                href={`/${lang}/talks/${latestTalk.slug}/`}
+                href={`/${lang}/talks/${latestTalk.id}/`}
                 className="btn-talk-view"
               >
                 {t(lang, "speaking.viewPresentation")}
@@ -380,6 +376,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
 </Layout>
 
 <style>
+  @reference "../styles/base.css";
   #hero {
     @apply pb-8 pt-8;
   }
@@ -481,7 +478,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
     @apply mt-6 mb-6 flex flex-col sm:flex-row gap-4;
   }
   .cta-primary {
-    @apply rounded-lg bg-skin-accent px-6 py-3 text-lg font-semibold text-skin-inverted hover:bg-opacity-90 transition-all shadow-md hover:shadow-lg cursor-pointer border-0;
+    @apply rounded-lg bg-skin-accent px-6 py-3 text-lg font-semibold text-skin-inverted hover:bg-skin-accent/90 transition-all shadow-md hover:shadow-lg cursor-pointer border-0;
   }
   .social-wrapper {
     @apply mt-6 flex flex-col sm:flex-row sm:items-center gap-2;
@@ -571,7 +568,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
     @apply text-base sm:text-lg font-medium mb-4;
   }
   .btn-speaking-primary {
-    @apply inline-block rounded-lg bg-skin-accent px-6 py-3 text-lg font-semibold text-skin-inverted hover:bg-opacity-90 transition-all shadow-md cursor-pointer border-0;
+    @apply inline-block rounded-lg bg-skin-accent px-6 py-3 text-lg font-semibold text-skin-inverted hover:bg-skin-accent/90 transition-all shadow-md cursor-pointer border-0;
   }
   .btn-speaking-secondary {
     @apply inline-block rounded-lg border-2 border-skin-line px-4 py-2 text-sm font-medium text-skin-base no-underline hover:border-skin-accent hover:text-skin-accent transition-all;
