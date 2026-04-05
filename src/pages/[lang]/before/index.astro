@@ -6,14 +6,14 @@ import { SITE } from "@config";
 import Layout from "@layouts/Layout.astro";
 import { getCollection } from "astro:content";
 import type { Lang } from "@i18n/ui";
+import { getCollectionName } from "@i18n/utils";
 
 export function getStaticPaths() {
   return [{ params: { lang: "en" } }, { params: { lang: "es" } }];
 }
 
 const lang = Astro.params.lang as Lang;
-const nowCollection = lang === "es" ? "now-es" : "now";
-const befores = await getCollection(nowCollection);
+const befores = await getCollection(getCollectionName(lang, "now"));
 ---
 
 <Layout title={`${SITE.title}`} lang={lang}>

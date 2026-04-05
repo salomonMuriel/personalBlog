@@ -6,7 +6,7 @@ import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
 import Card from "@components/Card";
 import { SITE } from "@config";
-import { t } from "@i18n/utils";
+import { t, getCollectionName } from "@i18n/utils";
 import type { Lang } from "@i18n/ui";
 import { defaultLang } from "@i18n/ui";
 
@@ -16,8 +16,7 @@ export interface Props {
 
 const { lang = defaultLang } = Astro.props;
 
-const talksCollection = lang === "es" ? "talks-es" : "talks";
-const talks = await getCollection(talksCollection);
+const talks = await getCollection(getCollectionName(lang, "talks"));
 
 const sortedTalks = talks
   .sort(
@@ -43,8 +42,8 @@ const sortedTalks = talks
     <hr class="my-8 border-skin-accent" />
     <ul>
       {
-        sortedTalks.map(({ data, slug }) => (
-          <Card href={`/${lang}/talks/${slug}/`} frontmatter={data} />
+        sortedTalks.map(({ data, id }) => (
+          <Card href={`/${lang}/talks/${id}/`} frontmatter={data} />
         ))
       }
     </ul>

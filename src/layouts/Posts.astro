@@ -6,7 +6,7 @@ import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
 import Card from "@components/Card";
 import { SITE } from "@config";
-import { t } from "@i18n/utils";
+import { t, getCollectionName } from "@i18n/utils";
 import type { Lang } from "@i18n/ui";
 import { defaultLang } from "@i18n/ui";
 import getReadingTime from "@utils/getReadingTime";
@@ -20,8 +20,7 @@ export interface Props {
 
 const { lang = defaultLang } = Astro.props;
 
-const blogCollection = lang === "es" ? "blog-es" : "blog";
-const blogs = await getCollection(blogCollection);
+const blogs = await getCollection(getCollectionName(lang, "blog"));
 
 const sortedBlogs = blogs
   .sort(
@@ -37,11 +36,11 @@ const sortedBlogs = blogs
   <Main pageTitle={t(lang, "posts.title")} pageDesc={t(lang, "posts.desc")}>
     <ul>
       {
-        sortedBlogs.map(({ data, slug, body }) => (
+        sortedBlogs.map(({ data, id, body }) => (
           <Card
-            href={`/${lang}/posts/${slug}/`}
+            href={`/${lang}/posts/${id}/`}
             frontmatter={data}
-            readingTime={`${getReadingTime(body)} ${t(lang, "readingTime.suffix")}`}
+            readingTime={`${getReadingTime(body ?? "")} ${t(lang, "readingTime.suffix")}`}
           />
         ))
       }

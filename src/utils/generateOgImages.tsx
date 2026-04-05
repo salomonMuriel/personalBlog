@@ -3,32 +3,34 @@ import { Resvg } from "@resvg/resvg-js";
 import { type CollectionEntry } from "astro:content";
 import postOgImage from "./og-templates/post";
 import siteOgImage from "./og-templates/site";
-import { writeFile } from "fs/promises";
+
 const fetchFonts = async () => {
-  try {
-    // Regular Font (DM Sans)
-    const fontFileRegular = await fetch(
-      "https://cdn.jsdelivr.net/fontsource/fonts/dm-sans@latest/latin-400-normal.woff"
-    );
-    const fontRegular: ArrayBuffer = await fontFileRegular.arrayBuffer();
+  // Regular Font (DM Sans)
+  const fontFileRegular = await fetch(
+    "https://cdn.jsdelivr.net/fontsource/fonts/dm-sans@latest/latin-400-normal.woff"
+  );
+  const fontRegular: ArrayBuffer = await fontFileRegular.arrayBuffer();
 
-    // Bold Font (Syne)
-    const fontFileBold = await fetch(
-      "https://cdn.jsdelivr.net/fontsource/fonts/syne@latest/latin-700-normal.woff"
-    );
-    const fontBold: ArrayBuffer = await fontFileBold.arrayBuffer();
+  // Bold Font (Syne)
+  const fontFileBold = await fetch(
+    "https://cdn.jsdelivr.net/fontsource/fonts/syne@latest/latin-700-normal.woff"
+  );
+  const fontBold: ArrayBuffer = await fontFileBold.arrayBuffer();
 
-    return { fontRegular, fontBold };
-  } catch {
-    // Fallback: return empty buffers when fonts can't be fetched (e.g., no network)
-    return {
-      fontRegular: new ArrayBuffer(0),
-      fontBold: new ArrayBuffer(0),
-    };
-  }
+  return { fontRegular, fontBold };
 };
 
-const { fontRegular, fontBold } = await fetchFonts();
+let fontRegular: ArrayBuffer;
+let fontBold: ArrayBuffer;
+try {
+  const fonts = await fetchFonts();
+  fontRegular = fonts.fontRegular;
+  fontBold = fonts.fontBold;
+} catch {
+  // Fallback: empty buffers when fonts can't be fetched (e.g., no network in CI)
+  fontRegular = new ArrayBuffer(0);
+  fontBold = new ArrayBuffer(0);
+}
 
 const options: SatoriOptions = {
   width: 1200,

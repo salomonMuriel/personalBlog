@@ -2,6 +2,7 @@
 import { type CollectionEntry, getCollection } from "astro:content";
 import Talk from "@layouts/TalkLayout.astro";
 import type { Lang } from "@i18n/ui";
+import { getCollectionName } from "@i18n/utils";
 
 export interface Props {
   presentation: CollectionEntry<"talks">;
@@ -13,7 +14,7 @@ export async function getStaticPaths() {
   const paths = [];
 
   for (const lang of langs) {
-    const collection = lang === "es" ? "talks-es" : "talks";
+    const collection = getCollectionName(lang, "talks");
     const talks = await getCollection(collection);
     paths.push(
       ...talks.map(presentation => ({

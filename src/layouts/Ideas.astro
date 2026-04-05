@@ -5,7 +5,7 @@ import Main from "@layouts/Main.astro";
 import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
 import { SITE } from "@config";
-import { t } from "@i18n/utils";
+import { t, getCollectionName } from "@i18n/utils";
 import type { Lang } from "@i18n/ui";
 import { defaultLang } from "@i18n/ui";
 
@@ -15,8 +15,7 @@ export interface Props {
 
 const { lang = defaultLang } = Astro.props;
 
-const ideasCollection = lang === "es" ? "ideas-es" : "ideas";
-const ideas = await getCollection(ideasCollection);
+const ideas = await getCollection(getCollectionName(lang, "ideas"));
 
 const sortedIdeas = ideas
   .sort((a, b) => b.data.importance - a.data.importance)
@@ -38,11 +37,11 @@ const sortedIdeas = ideas
     <hr class="my-8 border-skin-accent" />
     <ul class="list-disc">
       {
-        sortedIdeas.map(({ data, slug }) => (
+        sortedIdeas.map(({ data, id }) => (
           <li>
             <a
               class="inline-block text-xl font-medium text-skin-accent decoration-dashed underline-offset-4 focus-visible:no-underline focus-visible:underline-offset-0 underline"
-              href={`/${lang}/ideas/${slug}/`}
+              href={`/${lang}/ideas/${id}/`}
             >
               {data.title}
             </a>{" "}

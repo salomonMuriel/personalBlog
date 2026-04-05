@@ -14,7 +14,7 @@ import { Image } from "astro:assets";
 import salomonImage from "../assets/images/fotoSalo.jpeg";
 import franco from "../assets/images/franco_cut.webp";
 import luca from "../assets/images/luca_cut.webp";
-import { t } from "@i18n/utils";
+import { t, getCollectionName } from "@i18n/utils";
 import type { Lang } from "@i18n/ui";
 
 export interface Props {
@@ -24,13 +24,9 @@ export interface Props {
 
 const { lang, canonicalURL } = Astro.props;
 
-const blogCollection = lang === "es" ? "blog-es" : "blog";
-const nowCollection = lang === "es" ? "now-es" : "now";
-const talksCollection = lang === "es" ? "talks-es" : "talks";
-
-const posts = await getCollection(blogCollection);
-const nows = await getCollection(nowCollection);
-const talks = await getCollection(talksCollection);
+const posts = await getCollection(getCollectionName(lang, "blog"));
+const nows = await getCollection(getCollectionName(lang, "now"));
+const talks = await getCollection(getCollectionName(lang, "talks"));
 const sortedPosts = getSortedPosts(posts);
 const sortedNows = nows.sort(
   (a, b) => Number(b.data.date) - Number(a.data.date)
