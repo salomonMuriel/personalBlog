@@ -6,6 +6,7 @@ import getPostsByTag from "@utils/getPostsByTag";
 import getPageNumbers from "@utils/getPageNumbers";
 import getPagination from "@utils/getPagination";
 import type { Lang } from "@i18n/ui";
+import { getCollectionName } from "@i18n/utils";
 
 export interface Props {
   post: CollectionEntry<"blog">;
@@ -19,7 +20,7 @@ export async function getStaticPaths() {
   const paths = [];
 
   for (const lang of langs) {
-    const collection = lang === "es" ? "blog-es" : "blog";
+    const collection = getCollectionName(lang, "blog");
     const posts = await getCollection(collection);
     const tags = getUniqueTags(posts);
 
@@ -29,7 +30,7 @@ export async function getStaticPaths() {
         const totalPages = getPageNumbers(tagPosts.length);
 
         return totalPages.map(page => ({
-          params: { lang, tag, page },
+          params: { lang, tag, page: String(page) },
           props: { tag, tagName, lang },
         }));
       })
@@ -42,8 +43,10 @@ export async function getStaticPaths() {
 const { page } = Astro.params;
 const { tag, tagName, lang } = Astro.props;
 
-const blogCollection = lang === "es" ? "blog-es" : "blog";
-const posts = await getCollection(blogCollection, ({ data }) => !data.draft);
+const posts = await getCollection(
+  getCollectionName(lang, "blog"),
+  ({ data }) => !data.draft
+);
 
 const postsByTag = getPostsByTag(posts, tag);
 

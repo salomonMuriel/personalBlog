@@ -3,7 +3,7 @@ import { Resvg } from "@resvg/resvg-js";
 import { type CollectionEntry } from "astro:content";
 import postOgImage from "./og-templates/post";
 import siteOgImage from "./og-templates/site";
-import { writeFile } from "fs/promises";
+
 const fetchFonts = async () => {
   // Regular Font (DM Sans)
   const fontFileRegular = await fetch(
@@ -20,7 +20,17 @@ const fetchFonts = async () => {
   return { fontRegular, fontBold };
 };
 
-const { fontRegular, fontBold } = await fetchFonts();
+let fontRegular: ArrayBuffer;
+let fontBold: ArrayBuffer;
+try {
+  const fonts = await fetchFonts();
+  fontRegular = fonts.fontRegular;
+  fontBold = fonts.fontBold;
+} catch {
+  // Fallback: empty buffers when fonts can't be fetched (e.g., no network in CI)
+  fontRegular = new ArrayBuffer(0);
+  fontBold = new ArrayBuffer(0);
+}
 
 const options: SatoriOptions = {
   width: 1200,

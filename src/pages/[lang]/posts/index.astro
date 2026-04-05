@@ -4,14 +4,14 @@ import Posts from "@layouts/Posts.astro";
 import getSortedPosts from "@utils/getSortedPosts";
 import getPagination from "@utils/getPagination";
 import type { Lang } from "@i18n/ui";
+import { getCollectionName } from "@i18n/utils";
 
 export function getStaticPaths() {
   return [{ params: { lang: "en" } }, { params: { lang: "es" } }];
 }
 
 const lang = Astro.params.lang as Lang;
-const blogCollection = lang === "es" ? "blog-es" : "blog";
-const posts = await getCollection(blogCollection);
+const posts = await getCollection(getCollectionName(lang, "blog"));
 const sortedPosts = getSortedPosts(posts);
 
 const pagination = getPagination({

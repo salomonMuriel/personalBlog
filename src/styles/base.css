@@ -1,6 +1,39 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  /* Custom colors - using CSS variable references for dark mode toggling */
+  --color-skin-fill: rgb(var(--color-fill));
+  --color-skin-accent: rgb(var(--color-accent));
+  --color-skin-base: rgb(var(--color-text-base));
+  --color-skin-inverted: rgb(var(--color-fill));
+  --color-skin-card: rgb(var(--color-card));
+  --color-skin-card-muted: rgb(var(--color-card-muted));
+  --color-skin-line: rgb(var(--color-border));
+
+  /* Fonts — references Astro's font CSS variables from astro.config.ts */
+  --font-text: var(--font-dm-sans), sans-serif;
+  --font-hs: var(--font-syne), sans-serif;
+
+  /* Screens */
+  --breakpoint-sm: 640px;
+
+  /* Animations */
+  --animate-slide-in-out-l: slideL 4s ease-in-out forwards;
+  --animate-slide-in-out-r: slideR 4s ease-in-out forwards;
+}
+
+@keyframes slideL {
+  0% { left: 0; transform: translateX(-100%); }
+  50% { transform: translateX(120%); }
+  100% { transform: translateX(-100%); }
+}
+
+@keyframes slideR {
+  0% { right: 0; transform: translateX(100%); }
+  50% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
 
 @layer base {
   :root {
@@ -29,7 +62,7 @@
   }
   body {
     @apply flex min-h-[100svh] flex-col bg-skin-fill font-text text-skin-base
-    selection:bg-skin-accent selection:bg-opacity-70 selection:text-skin-inverted;
+    selection:bg-skin-accent/70 selection:text-skin-inverted;
   }
   h1, h2, h3, h4, h5, h6 {
     @apply font-hs font-normal;
@@ -42,25 +75,25 @@
     @apply mx-auto max-w-4xl px-4;
   }
   a {
-    @apply outline-2 outline-offset-1 outline-skin-fill 
+    @apply outline-2 outline-offset-1 outline-skin-fill
     focus-visible:no-underline focus-visible:outline-dashed;
   }
   svg {
     @apply inline-block h-6 w-6 fill-skin-base group-hover:fill-skin-accent;
   }
   svg.icon-tabler {
-    @apply inline-block h-6 w-6 scale-150 fill-transparent 
+    @apply inline-block h-6 w-6 scale-150 fill-transparent
     stroke-current stroke-2 opacity-90 group-hover:fill-transparent;
   }
 
   img + em {
     @apply block text-center text-skin-base;
   }
-  
+
   blockquote > p {
     @apply before:!content-none after:!content-none;
   }
-  
+
   .prose {
     @apply prose-headings:!mb-3 prose-headings:!text-skin-accent
     prose-p:!text-skin-base
@@ -68,11 +101,11 @@
     hover:prose-a:text-skin-accent
     prose-figcaption:!text-skin-base prose-figcaption:opacity-70
     prose-strong:!text-skin-base
-    
-    prose-ol:!text-skin-base 
+
+    prose-ol:!text-skin-base
     prose-ul:overflow-x-clip prose-ul:!text-skin-base prose-li:marker:!text-skin-accent
     prose-table:text-skin-base prose-th:border
-    prose-th:border-skin-line prose-td:border 
+    prose-th:border-skin-line prose-td:border
     prose-td:border-skin-line
     prose-hr:!border-skin-line
   }
@@ -145,13 +178,12 @@
   }
 }
 
-@layer components {
-  .display-none {
-    @apply hidden;
-  }
-  .focus-outline {
-    @apply outline-2 outline-offset-1 outline-skin-fill focus-visible:no-underline focus-visible:outline-dashed;
-  }
+@utility display-none {
+  @apply hidden;
+}
+
+@utility focus-outline {
+  @apply outline-2 outline-offset-1 outline-skin-fill focus-visible:no-underline focus-visible:outline-dashed;
 }
 
 /* Footnotes */
@@ -166,7 +198,7 @@
     @apply hidden
 }
 
-/* This styles the footnote text which appears 
+/* This styles the footnote text which appears
 when the label is clicked  */
 .prose input[type=checkbox]:checked ~ span {
     @apply block text-base text-skin-base cursor-default pl-8
@@ -177,13 +209,13 @@ when the label is clicked  */
   @apply hidden
 }
 
-/* This styles the footnote label to appear 
+/* This styles the footnote label to appear
 like a hyperlink  */
 .prose input[type=checkbox] ~ label {
     @apply inline cursor-pointer text-skin-accent underline-offset-1 underline
 }
 
-/* This styles the footnote label when the mouse 
+/* This styles the footnote label when the mouse
 hovers over it */
 .prose input[type=checkbox] ~ label:hover {
     @apply underline-offset-4 text-2xl
@@ -191,5 +223,5 @@ hovers over it */
 
 /* This styles the footnote label after it is clicked */
 .prose input[type=checkbox]:checked ~ label {
-    
+
 }

@@ -1,9 +1,7 @@
 ---
 import { LOCALE, SITE } from "@config";
-import "@fontsource-variable/dm-sans";
-import "@fontsource-variable/syne";
 import "@styles/base.css";
-import { ViewTransitions } from "astro:transitions";
+import { ClientRouter } from "astro:transitions";
 import { Schema } from "astro-seo-schema";
 import { t, getLangTag } from "@i18n/utils";
 import type { Lang } from "@i18n/ui";
@@ -191,90 +189,10 @@ const langTags = getLangTag(lang);
       )
     }
 
-    <!-- Cal element-click embed code (lazy loaded) -->
-    <script is:inline>
-      (function () {
-        var calLoaded = false;
-        var calNamespaces = [
-          "personal-site-intro-call",
-          "30min",
-          "ai-tech-consulting",
-          "data-science-consulting",
-          "company-building-consulting",
-          "mentorship",
-          "talks",
-          "talks-booking",
-        ];
+    <!-- Cal.com embed — lazy loaded on first interaction -->
+    <script src="../scripts/cal-embed.ts"></script>
 
-        function loadCal() {
-          if (calLoaded) return;
-          calLoaded = true;
-
-          (function (C, A, L) {
-            var p = function (a, ar) {
-              a.q.push(ar);
-            };
-            var d = C.document;
-            C.Cal =
-              C.Cal ||
-              function () {
-                var cal = C.Cal;
-                var ar = arguments;
-                if (!cal.loaded) {
-                  cal.ns = {};
-                  cal.q = cal.q || [];
-                  d.head.appendChild(d.createElement("script")).src = A;
-                  cal.loaded = true;
-                }
-                if (ar[0] === L) {
-                  var api = function () {
-                    p(api, arguments);
-                  };
-                  var namespace = ar[1];
-                  api.q = api.q || [];
-                  if (typeof namespace === "string") {
-                    cal.ns[namespace] = cal.ns[namespace] || api;
-                    p(cal.ns[namespace], ar);
-                    p(cal, ["initNamespace", namespace]);
-                  } else p(cal, ar);
-                  return;
-                }
-                p(cal, ar);
-              };
-          })(window, "https://app.cal.com/embed/embed.js", "init");
-
-          var uiConfig = {
-            styles: { branding: { brandColor: "#000000" } },
-            hideEventTypeDetails: false,
-            layout: "month_view",
-          };
-
-          calNamespaces.forEach(function (ns) {
-            Cal("init", ns, { origin: "https://cal.com" });
-            Cal.ns[ns]("ui", uiConfig);
-          });
-        }
-
-        // Load Cal.com on first user interaction
-        ["mouseover", "touchstart", "scroll"].forEach(function (evt) {
-          document.addEventListener(evt, loadCal, {
-            once: true,
-            passive: true,
-          });
-        });
-
-        // Also load if a cal link is clicked before interaction events fire
-        document.addEventListener("click", function (e) {
-          var el = e.target.closest("[data-cal-link]");
-          if (el) {
-            loadCal();
-          }
-        });
-      })();
-    </script>
-    <!-- Cal element-click embed code ends -->
-
-    <ViewTransitions />
+    <ClientRouter />
   </head>
   <body>
     <script is:inline>
