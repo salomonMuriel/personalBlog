@@ -2,7 +2,11 @@
 import { LOGO_IMAGE, SITE } from "@config";
 import Hr from "./Hr.astro";
 import LinkButton from "./LinkButton.astro";
+import LanguageSwitcher from "./LanguageSwitcher.astro";
 import { getCollection } from "astro:content";
+import { t } from "@i18n/utils";
+import type { Lang } from "@i18n/ui";
+import { defaultLang } from "@i18n/ui";
 const { lightAndDarkMode } = SITE;
 
 export interface Props {
@@ -16,21 +20,28 @@ export interface Props {
     | "posts"
     | "talks"
     | "companies"
-    | "search";
+    | "search"
+    | "tags";
+  lang?: Lang;
 }
 
-const { activeNav } = Astro.props;
+const { activeNav, lang = defaultLang } = Astro.props;
 
-const posts = await getCollection("blog", ({ data }) => !data.draft);
+const blogCollection = lang === "es" ? "blog-es" : "blog";
+const talksCollection = lang === "es" ? "talks-es" : "talks";
 
-const talks = await getCollection("talks");
+const posts = await getCollection(blogCollection, ({ data }) => !data.draft);
+const talks = await getCollection(talksCollection);
+
+const prefix = `/${lang}`;
 ---
 
 <header>
-  <a id="skip-to-content" href="#main-content">Skip to content</a>
+  <a id="skip-to-content" href="#main-content">{t(lang, "nav.skipToContent")}</a
+  >
   <div class="nav-container">
     <div class="top-nav-wrap">
-      <a href="/" class="logo whitespace-nowrap">
+      <a href={`${prefix}/`} class="logo whitespace-nowrap">
         {
           LOGO_IMAGE.enable && (
             <img
@@ -45,80 +56,87 @@ const talks = await getCollection("talks");
       <nav id="nav-menu">
         <button
           class="hamburger-menu focus-outline border-2 p-2"
-          aria-label="Open Menu"
+          aria-label={t(lang, "nav.openMenu")}
           aria-expanded="false"
           aria-controls="menu-items"
         >
-          more stuff here
+          {t(lang, "nav.moreStuff")}
         </button>
         <ul id="menu-items" class="display-none sm:flex">
           <li>
-            <a href="/" class={activeNav === "home" ? "active" : ""}> Home </a>
-          </li>
-          <li>
-            <a href="/about/" class={activeNav === "about" ? "active" : ""}>
-              About
-            </a>
-          </li>
-          <li>
-            <a href="/now/" class={activeNav === "now" ? "active" : ""}>
-              Now
+            <a href={`${prefix}/`} class={activeNav === "home" ? "active" : ""}>
+              {t(lang, "nav.home")}
             </a>
           </li>
           <li>
             <a
-              href="/companies/"
+              href={`${prefix}/about/`}
+              class={activeNav === "about" ? "active" : ""}
+            >
+              {t(lang, "nav.about")}
+            </a>
+          </li>
+          <li>
+            <a
+              href={`${prefix}/now/`}
+              class={activeNav === "now" ? "active" : ""}
+            >
+              {t(lang, "nav.now")}
+            </a>
+          </li>
+          <li>
+            <a
+              href={`${prefix}/companies/`}
               class={activeNav === "companies" ? "active" : ""}
             >
-              Companies
-            </a>
-          </li>
-          <li>
-            <a href="/ideas/" class={activeNav === "ideas" ? "active" : ""}>
-              Ideas
+              {t(lang, "nav.companies")}
             </a>
           </li>
           <li>
             <a
-              href="/resources/"
-              class={activeNav === "resources" ? "active" : ""}
+              href={`${prefix}/ideas/`}
+              class={activeNav === "ideas" ? "active" : ""}
             >
-              Resources
+              {t(lang, "nav.ideas")}
             </a>
           </li>
           <li>
-            <a href="/uses/" class={activeNav === "uses" ? "active" : ""}>
-              Uses
+            <a
+              href={`${prefix}/resources/`}
+              class={activeNav === "resources" ? "active" : ""}
+            >
+              {t(lang, "nav.resources")}
             </a>
           </li>
-          {
-            /* Posts menu item hidden - uncomment to restore
-            posts.length >= 1 && (
-              <li>
-                <a href="/posts/" class={activeNav === "posts" ? "active" : ""}>
-                  Posts
-                </a>
-              </li>
-            )
-          */
-          }
+          <li>
+            <a
+              href={`${prefix}/uses/`}
+              class={activeNav === "uses" ? "active" : ""}
+            >
+              {t(lang, "nav.uses")}
+            </a>
+          </li>
           {
             talks.length >= 1 && (
               <li>
-                <a href="/talks/" class={activeNav === "talks" ? "active" : ""}>
-                  Talks
+                <a
+                  href={`${prefix}/talks/`}
+                  class={activeNav === "talks" ? "active" : ""}
+                >
+                  {t(lang, "nav.talks")}
                 </a>
               </li>
             )
           }
           <li>
+            <LanguageSwitcher lang={lang} />
+          </li>
+          <li>
             <LinkButton
-              href="/search/"
-              className={`focus-outline ${
-                activeNav === "search" ? "active" : ""
-              }`}
-              ariaLabel="search"
-              title="Search"
+              href={`${prefix}/search/`}
+              className={`focus-outline ${activeNav === "search" ? "active" : ""}`}
+              ariaLabel={t(lang, "nav.search")}
+              title={t(lang, "nav.search")}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -127,7 +145,7 @@ const talks = await getCollection("talks");
                   d="M19.023 16.977a35.13 35.13 0 0 1-1.367-1.384c-.372-.378-.596-.653-.596-.653l-2.8-1.337A6.962 6.962 0 0 0 16 9c0-3.859-3.14-7-7-7S2 5.141 2 9s3.14 7 7 7c1.763 0 3.37-.66 4.603-1.739l1.337 2.8s.275.224.653.596c.387.363.896.854 1.384 1.367l1.358 1.392.604.646 2.121-2.121-.646-.604c-.379-.372-.885-.866-1.391-1.36zM9 14c-2.757 0-5-2.243-5-5s2.243-5 5-5 5 2.243 5 5-2.243 5-5 5z"
                 ></path>
               </svg>
-              <span class="sr-only">Search</span>
+              <span class="sr-only">{t(lang, "nav.search")}</span>
             </LinkButton>
           </li>
           {
@@ -175,18 +193,17 @@ const talks = await getCollection("talks");
   .hamburger-menu svg {
     @apply h-6 w-6 scale-125 fill-skin-base;
   }
-
   nav {
-    @apply flex w-full flex-col items-center sm:ml-2 sm:flex-row sm:justify-end sm:space-x-4 sm:py-0;
+    @apply flex w-full flex-col items-center sm:ml-2 sm:flex-row sm:justify-end sm:space-x-3 sm:py-0;
   }
   nav ul {
-    @apply mt-4 grid w-60 grid-cols-2 gap-x-2 gap-y-2 sm:ml-0 sm:mt-0 sm:w-auto sm:gap-x-5 sm:gap-y-0;
+    @apply mt-4 grid w-60 grid-cols-2 gap-x-2 gap-y-2 sm:ml-0 sm:mt-0 sm:w-auto sm:gap-x-3 sm:gap-y-0;
   }
   nav ul li {
     @apply col-span-1 flex justify-center border-2 sm:border-none;
   }
   nav ul li a {
-    @apply w-full px-4 py-3 text-center font-medium hover:text-skin-accent sm:my-0 sm:px-2 sm:py-1;
+    @apply w-full px-4 py-3 text-center font-medium hover:text-skin-accent sm:my-0 sm:px-1 sm:py-1;
   }
   nav ul li:nth-last-child(2) a {
     @apply w-auto;
@@ -201,7 +218,6 @@ const talks = await getCollection("talks");
   nav a.active svg {
     @apply fill-skin-accent;
   }
-
   nav button {
     @apply p-1;
   }
@@ -214,7 +230,6 @@ const talks = await getCollection("talks");
   #theme-btn svg {
     @apply scale-125 hover:rotate-12 sm:scale-100;
   }
-
   .menu-icon line {
     @apply transition-opacity duration-75 ease-in-out;
   }
@@ -227,7 +242,6 @@ const talks = await getCollection("talks");
   .menu-icon.is-active .close {
     @apply opacity-100;
   }
-
   .menu-items li {
     @apply col-span-2 flex items-center justify-center;
   }
@@ -235,7 +249,6 @@ const talks = await getCollection("talks");
 
 <script>
   function toggleNav() {
-    // Toggle menu
     const menuBtn = document.querySelector(".hamburger-menu");
     const menuIcon = document.querySelector(".menu-icon");
     const menuItems = document.querySelector("#menu-items");
@@ -244,11 +257,24 @@ const talks = await getCollection("talks");
       const menuExpanded = menuBtn.getAttribute("aria-expanded") === "true";
       menuIcon?.classList.toggle("is-active");
       menuBtn.setAttribute("aria-expanded", menuExpanded ? "false" : "true");
+      const isSpanish = window.location.pathname.startsWith("/es");
       menuBtn.setAttribute(
         "aria-label",
-        menuExpanded ? "Open Menu" : "Close Menu"
+        menuExpanded
+          ? isSpanish
+            ? "Abrir menú"
+            : "Open Menu"
+          : isSpanish
+            ? "Cerrar menú"
+            : "Close Menu"
       );
-      menuBtn.textContent = menuExpanded ? "more stuff here" : "close menu";
+      menuBtn.textContent = menuExpanded
+        ? isSpanish
+          ? "menú"
+          : "more stuff here"
+        : isSpanish
+          ? "cerrar menú"
+          : "close menu";
       menuItems?.classList.toggle("display-none");
     });
   }

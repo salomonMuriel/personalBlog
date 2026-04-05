@@ -7,23 +7,26 @@ import Layout from "./Layout.astro";
 import type { CollectionEntry } from "astro:content";
 import Datetime from "@components/Datetime";
 import { YouTube } from "astro-embed";
+import type { Lang } from "@i18n/ui";
+import { defaultLang } from "@i18n/ui";
 
 export interface Props {
   idea: CollectionEntry<"ideas">;
+  lang?: Lang;
 }
 
-const { idea } = Astro.props;
+const { idea, lang = defaultLang } = Astro.props;
 const { Content } = await idea.render();
 ---
 
-<Layout title={`${SITE.title}`}>
-  <Header activeNav="ideas" />
-  <Breadcrumbs />
+<Layout title={`${SITE.title}`} lang={lang}>
+  <Header activeNav="ideas" lang={lang} />
+  <Breadcrumbs lang={lang} />
   <main id="main-content">
     <section id="idea" class="prose mb-28 max-w-4xl prose-img:border-0">
       <h2>{idea.data.title}</h2>
       <Content />
     </section>
   </main>
-  <Footer />
+  <Footer lang={lang} />
 </Layout>

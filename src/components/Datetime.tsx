@@ -1,8 +1,9 @@
-import { LOCALE } from "@config";
+import type { Lang } from "@i18n/ui";
 
 interface DatetimesProps {
   pubDatetime: string | Date;
   modDatetime: string | Date | undefined | null;
+  lang?: Lang;
 }
 
 interface Props extends DatetimesProps {
@@ -15,7 +16,11 @@ export default function Datetime({
   modDatetime,
   size = "sm",
   className,
+  lang = "en",
 }: Props) {
+  const updatedLabel = lang === "es" ? "Actualizado:" : "Updated:";
+  const publishedLabel = lang === "es" ? "Publicado:" : "Published:";
+
   return (
     <div className={`flex items-center space-x-2 opacity-80 ${className}`}>
       <svg
@@ -30,27 +35,34 @@ export default function Datetime({
       </svg>
       {modDatetime && modDatetime > pubDatetime ? (
         <span className={`italic ${size === "sm" ? "text-sm" : "text-base"}`}>
-          Updated:
+          {updatedLabel}
         </span>
       ) : (
-        <span className="sr-only">Published:</span>
+        <span className="sr-only">{publishedLabel}</span>
       )}
       <span className={`italic ${size === "sm" ? "text-sm" : "text-base"}`}>
         <FormattedDatetime
           pubDatetime={pubDatetime}
           modDatetime={modDatetime}
+          lang={lang}
         />
       </span>
     </div>
   );
 }
 
-const FormattedDatetime = ({ pubDatetime, modDatetime }: DatetimesProps) => {
+const FormattedDatetime = ({
+  pubDatetime,
+  modDatetime,
+  lang = "en",
+}: DatetimesProps) => {
   const myDatetime = new Date(
     modDatetime && modDatetime > pubDatetime ? modDatetime : pubDatetime
   );
 
-  const date = myDatetime.toLocaleDateString(LOCALE.langTag, {
+  const langTag = lang === "es" ? ["es-419"] : ["en-EN"];
+
+  const date = myDatetime.toLocaleDateString(langTag, {
     year: "numeric",
     month: "short",
     day: "numeric",

@@ -1,7 +1,8 @@
-import { SITE } from "@config";
 import type { CollectionEntry } from "astro:content";
 
-const postFilter = ({ data }: CollectionEntry<"blog">) => {
+const postFilter = ({
+  data,
+}: CollectionEntry<"blog"> | CollectionEntry<"blog-es">) => {
   return !data.draft;
 };
 

@@ -1,0 +1,77 @@
+---
+author: Salomón Muriel
+pubDatetime: 2024-11-05T08:00:00Z
+modDatetime: 2024-11-05T08:00:00Z
+title: Programación dogmática
+description: ¿Hay algo entre la Programación Orientada a Objetos y la Programación Funcional?
+slug: dogmatic-programming
+featured: false
+draft: true
+tags:
+  - programming
+  - tech
+---
+
+### Código alla Bolognese
+
+En mi empresa actual, teníamos un gran dolor de cabeza arquitectónico: muchos de nuestros microservicios se entrelazaron con el tiempo, un espagueti de código acoplado. Creo que las razones son tema para otro post.
+
+Esto estuvo bien por un rato, pero la deuda técnica finalmente nos alcanzó a principios de este año cuando intentamos agregar nueva funcionalidad que tocaba demasiados microservicios a la vez. No podíamos movernos un centímetro sin romper las cosas de alguien más. Ahora, por supuesto este proyecto era enorme e importante, así que teníamos que elegir entre desenredar el espagueti y agregar la nueva funcionalidad después, o agregarla ahora (para entregar más rápido, por supuesto) y mezclar unos deliciosos linguini. ¿Adivinan qué opción elegimos?<input type="checkbox" id="cb1" /><label for="cb1"><sup></sup></label><span><br><br>Digo "elegimos" con toda intención. Yo estaba totalmente de acuerdo con esto (sigo pensando que fue la decisión correcta). Realmente necesitábamos entregar rápido, y me encanta la pasta.</br></br></span>
+
+> Elegimos los linguini.
+
+Lo que vino después fueron 3 meses de reuniones (tantas reuniones) y mucho testing manual y re-testing. Terminamos teniendo que coordinar cada cambio (mientras otra funcionalidad, que tocaba el mismo espagueti, se desarrollaba en paralelo). Los cambios en un equipo mandaban pruebas de QA de la mayor parte de la organización. Fue doloroso.
+
+Entregamos y funcionó. Y juramos (¿ingenuamente?), "nunca más".
+
+### Primer encuentro con el dogma.
+
+Así que decidimos desenredar el espagueti. Conseguimos aprobación de Producto para un refactoreo real a escala completa de toda nuestra base de código. Rediseñamos toda la arquitectura siguiendo Domain Driven Design, para maximizar la independencia de los equipos (nuestro problema principal). Y una vez hecho eso, decidimos que algunos estándares estaban pendientes. Muchos de nuestros microservicios se iban a comunicar internamente usando APIs REST, así que decidimos construir un Template de API (usando FastAPI ⚡) con los mejores estándares de código que pudiéramos pensar. La idea: que todos siguieran el mismo template, para tener un punto de partida común. ¿Genial en papel, verdad?
+
+Rafael y yo teníamos la tarea de construir el template, y estábamos en desacuerdo en cómo implementarlo. Verás, él no había sido afectado por la locura de la pasta, así que estaba mucho más abierto a violar algunos paradigmas de diseño. Yo, por otro lado, había quedado marcado por el espagueti, así que era mucho más dogmático.
+
+Ejemplo rápido. Mi diseño inicial separaba el código en varias capas. FastAPI en sí solo tendría los endpoints y la validación de esquemas para entrada y respuestas. La lógica de negocio estaría en una capa de negocio (con controladores para cada operación REST), y la capa de base de datos se encargaría de las interacciones con la base de datos a través de ORMs. Cada capa solo puede "hablar" con sus capas adyacentes. Nada revolucionario aquí, ¿verdad? Literalmente estaba siguiendo [este diseño de Martin Fowler](https://martinfowler.com/bliki/TalkDomainDataLayering.html).
+
+![Capas](@assets/posts/blog/dogma_programming/layers.png)
+
+Además, el equipo estaba muy interesado en mantener prácticas OOP, así que usemos eso también. Aquí está el diseño dogmático (que yo estaba defendiendo):
+```python
+"""endpoints.py"""
+from fastapi import FastAPI
+from api.v1.business import foo_controller
+from api.v1.schemas import FooInput
+
+app = FastAPI()
+
+@app.post("/foo")
+def create_foo(foo_input: FooInput):
+    foo = foo_controller.create_foo(foo_input)
+
+"""business/foo_controller.py"""
+from api.v1.schemas import FooInput
+from orm.models import Foo
+from orm.db_connection import get_db_session
+
+class FooController:
+  def __init__(self, foo_input: FooInput):
+    self._session = get_db_session()
+
+  def create_foo(self, foo_input: FooInput):
+    foo = Foo(name=foo_input.name)
+    self._session.add(foo)
+    self._session.commit()
+    return foo
+
+"""orm/db_connection.py"""
+from sqlalchemy import create_engine
+from sqlalchemy
+
+engine = create_engine("sqlite:///:memory:")
+
+def get_db_session():
+  try:
+    session = sessionmaker(engine)
+    yield session
+  finally:
+    session.close()
+```

@@ -5,63 +5,98 @@ import prestagenteLogo from "../assets/images/prestagente.png";
 import beriblockLogo from "../assets/images/beriblock.png";
 import fincoLogo from "../assets/images/finco.png";
 import igniaLogo from "../assets/images/ignia.png";
+import { t } from "@i18n/utils";
+import type { Lang } from "@i18n/ui";
+import { defaultLang } from "@i18n/ui";
+
+export interface Props {
+  lang?: Lang;
+}
+
+const { lang = defaultLang } = Astro.props;
 
 interface Company {
   name: string;
-  description: string;
+  description: Record<Lang, string>;
   dates: string;
-  status: string;
+  status: Record<Lang, string>;
   logo?: ImageMetadata;
 }
 
 const currentCompany: Company = {
   name: "Ignia 🔥",
-  description:
-    "A new model for Higher Education, iterating on the main pain points of the traditional system: Content, Methodology, Community, Vibe, Purpose, Financing model, and Duration.",
+  description: {
+    en: "A new model for Higher Education, iterating on the main pain points of the traditional system: Content, Methodology, Community, Vibe, Purpose, Financing model, and Duration.",
+    es: "Un nuevo modelo de Educación Superior, iterando sobre los principales problemas del sistema tradicional: Contenido, Metodología, Comunidad, Vibra, Propósito, Modelo de financiación y Duración.",
+  },
   dates: "2025 - Present",
-  status: "Active - www.ignia.lat",
+  status: {
+    en: "Active - www.ignia.lat",
+    es: "Activa - www.ignia.lat",
+  },
   logo: igniaLogo,
 };
 
 const pastCompanies: Company[] = [
   {
     name: "Finco",
-    description:
-      "A Big Data and AI-powered valuation and decision-making service for the real estate market in Latin America. Over 100.000 reports served.",
+    description: {
+      en: "A Big Data and AI-powered valuation and decision-making service for the real estate market in Latin America. Over 100.000 reports served.",
+      es: "Un servicio de valoración y toma de decisiones impulsado por Big Data e IA para el mercado inmobiliario en Latinoamérica. Más de 100.000 reportes generados.",
+    },
     dates: "2019 - 2022",
-    status: "Acquired by RED Atlas",
+    status: {
+      en: "Acquired by RED Atlas",
+      es: "Adquirida por RED Atlas",
+    },
     logo: fincoLogo,
   },
   {
     name: "Beriblock",
-    description:
-      "Service to authenticate, track, and certify promissory notes using Blockchain technology.",
+    description: {
+      en: "Service to authenticate, track, and certify promissory notes using Blockchain technology.",
+      es: "Servicio para autenticar, rastrear y certificar pagarés usando tecnología Blockchain.",
+    },
     dates: "2018 - 2019",
-    status: "Went bankrupt",
+    status: {
+      en: "Went bankrupt",
+      es: "Quebró",
+    },
     logo: beriblockLogo,
   },
   {
     name: "PrestaGente",
-    description:
-      "P2P payroll loan model tailored to Colombian regulations, using Blockchain as a disruptive technology.",
+    description: {
+      en: "P2P payroll loan model tailored to Colombian regulations, using Blockchain as a disruptive technology.",
+      es: "Modelo de préstamos de libranza P2P adaptado a la regulación colombiana, usando Blockchain como tecnología disruptiva.",
+    },
     dates: "2017 - 2019",
-    status:
-      "Acquired by Taurus Capital and still running - www.prestagente.com",
+    status: {
+      en: "Acquired by Taurus Capital and still running - www.prestagente.com",
+      es: "Adquirida por Taurus Capital y sigue operando - www.prestagente.com",
+    },
     logo: prestagenteLogo,
   },
   {
     name: "El Palomo",
-    description:
-      "Subscription-based flower delivery service focused on a 100% online customer experience.",
+    description: {
+      en: "Subscription-based flower delivery service focused on a 100% online customer experience.",
+      es: "Servicio de entrega de flores por suscripción enfocado en una experiencia de cliente 100% en línea.",
+    },
     dates: "2016 - 2017",
-    status: "Failed Spectacularly",
+    status: {
+      en: "Failed Spectacularly",
+      es: "Fracasó Espectacularmente",
+    },
     logo: elpalomoLogo,
   },
 ];
 ---
 
 <section id="current-company" class="mb-12">
-  <h2 class="text-2xl font-semibold mb-6 text-center">Currently Building</h2>
+  <h2 class="text-2xl font-semibold mb-6 text-center">
+    {t(lang, "companies.currentlyBuilding")}
+  </h2>
   <div class="flex justify-center">
     <div class="current-company-card w-full max-w-2xl">
       <div class="flex items-center">
@@ -79,20 +114,22 @@ const pastCompanies: Company[] = [
         <div class="ml-4">
           <h3 class="text-xl font-semibold">{currentCompany.name}</h3>
           <p class="text-sm font-normal text-skin-accent">
-            {currentCompany.status}
+            {currentCompany.status[lang]}
           </p>
           <p class="text-sm text-skin-muted">{currentCompany.dates}</p>
         </div>
       </div>
       <p class="text-skin-base text-opacity-80 mt-4">
-        {currentCompany.description}
+        {currentCompany.description[lang]}
       </p>
     </div>
   </div>
 </section>
 
 <section id="companies">
-  <h2 class="text-2xl font-semibold mb-6">Past Ventures</h2>
+  <h2 class="text-2xl font-semibold mb-6">
+    {t(lang, "companies.pastVentures")}
+  </h2>
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
     {
       pastCompanies.map(company => (
@@ -111,14 +148,14 @@ const pastCompanies: Company[] = [
               <h3 class="text-xl font-semibold">{company.name}</h3>
               {company.status && (
                 <p class="text-sm font-normal text-skin-accent">
-                  {company.status}
+                  {company.status[lang]}
                 </p>
               )}
               <p class="text-sm text-skin-muted">{company.dates}</p>
             </div>
           </div>
           <p class="text-skin-base text-opacity-80 mt-4 flex-grow">
-            {company.description}
+            {company.description[lang]}
           </p>
         </div>
       ))

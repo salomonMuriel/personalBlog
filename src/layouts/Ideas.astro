@@ -5,26 +5,35 @@ import Main from "@layouts/Main.astro";
 import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
 import { SITE } from "@config";
+import { t } from "@i18n/utils";
+import type { Lang } from "@i18n/ui";
+import { defaultLang } from "@i18n/ui";
 
-const ideas = await getCollection("ideas");
+export interface Props {
+  lang?: Lang;
+}
+
+const { lang = defaultLang } = Astro.props;
+
+const ideasCollection = lang === "es" ? "ideas-es" : "ideas";
+const ideas = await getCollection(ideasCollection);
 
 const sortedIdeas = ideas
   .sort((a, b) => b.data.importance - a.data.importance)
   .filter(({ data }) => !data.draft);
 ---
 
-<Layout title={`Ideas | ${SITE.title}`}>
-  <Header activeNav="ideas" />
-  <Main pageTitle="Ideas" pageDesc="Ideas on I want to build or have built.">
+<Layout title={`${t(lang, "ideas.title")} | ${SITE.title}`} lang={lang}>
+  <Header activeNav="ideas" lang={lang} />
+  <Main pageTitle={t(lang, "ideas.title")} pageDesc={t(lang, "ideas.desc")}>
     <p class="prose text-skin-base text-lg w-full">
-      These are a few of the ideas I have pondered creating over the last few
-      years. If you think any of them are worth pursuing and would like to talk
-      about them please don't hesitate to <a
+      {t(lang, "ideas.intro")}{" "}
+      <a
         data-cal-link="salomuriel/personal-site-intro-call"
         data-cal-namespace="personal-site-intro-call"
         data-cal-config='{"layout":"month_view","theme":"dark"}'
-        >schedule a 15 minute call on this link</a
-      > to talk about it!
+        >{t(lang, "ideas.introLink")}</a
+      >{" "}{t(lang, "ideas.introOutro")}
     </p>
     <hr class="my-8 border-skin-accent" />
     <ul class="list-disc">
@@ -33,15 +42,15 @@ const sortedIdeas = ideas
           <li>
             <a
               class="inline-block text-xl font-medium text-skin-accent decoration-dashed underline-offset-4 focus-visible:no-underline focus-visible:underline-offset-0 underline"
-              href={`/ideas/${slug}/`}
+              href={`/${lang}/ideas/${slug}/`}
             >
               {data.title}
             </a>{" "}
-            {data.current ? "- 🚀Currently working on this🚀" : ""}
+            {data.current ? `- 🚀${t(lang, "ideas.currentlyWorking")}🚀` : ""}
           </li>
         ))
       }
     </ul>
   </Main>
-  <Footer />
+  <Footer lang={lang} />
 </Layout>

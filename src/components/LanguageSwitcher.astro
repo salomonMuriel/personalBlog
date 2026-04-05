@@ -1,0 +1,27 @@
+---
+import { t, getAlternateUrl } from "@i18n/utils";
+import type { Lang } from "@i18n/ui";
+
+export interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const targetLang: Lang = lang === "es" ? "en" : "es";
+const alternateUrl = getAlternateUrl(Astro.url, targetLang);
+---
+
+<a
+  href={alternateUrl}
+  class="lang-switcher"
+  title={t(lang, "lang.switchLabel")}
+  aria-label={t(lang, "lang.switchLabel")}
+>
+  {t(lang, "lang.switch")}
+</a>
+
+<style>
+  .lang-switcher {
+    @apply inline-flex items-center justify-center rounded border-2 border-skin-accent px-2 py-1 text-sm font-bold text-skin-accent hover:bg-skin-accent hover:text-skin-inverted transition-all cursor-pointer no-underline;
+  }
+</style>

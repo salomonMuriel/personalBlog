@@ -7,30 +7,46 @@ import Footer from "@components/Footer.astro";
 import Card from "@components/Card";
 import Pagination from "@components/Pagination.astro";
 import { SITE } from "@config";
+import { t } from "@i18n/utils";
+import type { Lang } from "@i18n/ui";
+import { defaultLang } from "@i18n/ui";
 
 export interface Props {
   currentPage: number;
   totalPages: number;
-  paginatedPosts: CollectionEntry<"blog">[];
+  paginatedPosts: (CollectionEntry<"blog"> | CollectionEntry<"blog-es">)[];
   tag: string;
   tagName: string;
+  lang?: Lang;
 }
 
-const { currentPage, totalPages, paginatedPosts, tag, tagName } = Astro.props;
+const {
+  currentPage,
+  totalPages,
+  paginatedPosts,
+  tag,
+  tagName,
+  lang = defaultLang,
+} = Astro.props;
 ---
 
-<Layout title={`Tag: ${tagName} | ${SITE.title}`}>
-  <Header activeNav="tags" />
+<Layout
+  title={`${t(lang, "tags.prefix")} ${tagName} | ${SITE.title}`}
+  lang={lang}
+>
+  <Header activeNav="tags" lang={lang} />
   <Main
-    pageTitle={[`Tag:`, `${tagName}`]}
+    pageTitle={[`${t(lang, "tags.prefix")}`, `${tagName}`]}
     titleTransition={tag}
-    pageDesc={`All the articles with the tag "${tagName}".`}
+    pageDesc={`${t(lang, "tags.allArticles")} "${tagName}".`}
   >
-    <h1 slot="title" transition:name={tag}>{`Tag:${tag}`}</h1>
+    <h1 slot="title" transition:name={tag}>
+      {`${t(lang, "tags.prefix")}${tag}`}
+    </h1>
     <ul>
       {
         paginatedPosts.map(({ data, slug }) => (
-          <Card href={`/posts/${slug}/`} frontmatter={data} />
+          <Card href={`/${lang}/posts/${slug}/`} frontmatter={data} />
         ))
       }
     </ul>
@@ -39,11 +55,12 @@ const { currentPage, totalPages, paginatedPosts, tag, tagName } = Astro.props;
   <Pagination
     {currentPage}
     {totalPages}
-    prevUrl={`/tags/${tag}${
+    prevUrl={`/${lang}/tags/${tag}${
       currentPage - 1 !== 1 ? "/" + (currentPage - 1) : ""
     }/`}
-    nextUrl={`/tags/${tag}/${currentPage + 1}/`}
+    nextUrl={`/${lang}/tags/${tag}/${currentPage + 1}/`}
+    lang={lang}
   />
 
-  <Footer noMarginTop={totalPages > 1} />
+  <Footer noMarginTop={totalPages > 1} lang={lang} />
 </Layout>

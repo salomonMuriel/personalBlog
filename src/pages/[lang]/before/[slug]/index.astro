@@ -1,0 +1,32 @@
+---
+import { type CollectionEntry, getCollection } from "astro:content";
+import Before from "@layouts/BeforeLayout.astro";
+import type { Lang } from "@i18n/ui";
+
+export interface Props {
+  now: CollectionEntry<"now">;
+  lang: Lang;
+}
+
+export async function getStaticPaths() {
+  const langs: Lang[] = ["en", "es"];
+  const paths = [];
+
+  for (const lang of langs) {
+    const collection = lang === "es" ? "now-es" : "now";
+    const nows = await getCollection(collection);
+    paths.push(
+      ...nows.map(now => ({
+        params: { lang, slug: now.slug },
+        props: { now, lang },
+      }))
+    );
+  }
+
+  return paths;
+}
+
+const { now, lang } = Astro.props;
+---
+
+<Before now={now} lang={lang} />

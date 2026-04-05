@@ -1,0 +1,21 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import CompaniesComponent from "@components/Companies.astro";
+import type { Lang } from "@i18n/ui";
+
+export function getStaticPaths() {
+  return [{ params: { lang: "en" } }, { params: { lang: "es" } }];
+}
+
+const lang = Astro.params.lang as Lang;
+---
+
+<Layout lang={lang}>
+  <Header activeNav="companies" lang={lang} />
+  <main id="main-content" class="py-8">
+    <CompaniesComponent lang={lang} />
+  </main>
+  <Footer lang={lang} />
+</Layout>

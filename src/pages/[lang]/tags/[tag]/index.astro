@@ -1,0 +1,40 @@
+---
+import { getCollection } from "astro:content";
+import TagPosts from "@layouts/TagPosts.astro";
+import getPostsByTag from "@utils/getPostsByTag";
+import getPagination from "@utils/getPagination";
+import getUniqueTags from "@utils/getUniqueTags";
+import type { Lang } from "@i18n/ui";
+
+export async function getStaticPaths() {
+  const langs: Lang[] = ["en", "es"];
+  const paths = [];
+
+  for (const lang of langs) {
+    const collection = lang === "es" ? "blog-es" : "blog";
+    const posts = await getCollection(collection);
+    const tags = getUniqueTags(posts);
+
+    paths.push(
+      ...tags.map(({ tag, tagName }) => ({
+        params: { lang, tag },
+        props: { tag, tagName, posts, lang },
+      }))
+    );
+  }
+
+  return paths;
+}
+
+const { tag, tagName, posts, lang } = Astro.props;
+
+const postsByTag = getPostsByTag(posts, tag);
+
+const pagination = getPagination({
+  posts: postsByTag,
+  page: 1,
+  isIndex: true,
+});
+---
+
+<TagPosts {...pagination} {tag} {tagName} lang={lang} />

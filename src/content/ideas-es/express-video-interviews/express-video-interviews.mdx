@@ -1,0 +1,16 @@
+---
+author: Salomón Muriel
+importance: 1
+title: ⏯️ Entrevistas Express en Video
+slug: express-video-interviews
+current: false
+---
+##### Agregada el 5 de marzo de 2024
+
+En mi experiencia, la parte más tediosa de reclutar a alguien nuevo para tu equipo es la primera ronda de descarte. Publicas un buen aviso en LinkedIn y de repente tienes más de 20 candidatos que quieres entrevistar. Ahora, hablar con todos te tomaría al menos 30 minutos cada uno, o sea 20 horas en total, así que en la práctica terminas preseleccionando solo 5 y cruzando los dedos.
+
+¿Y si pudieras reducir ese tiempo inicial de 30 minutos a solo 5? La idea es crear un pequeño servicio que te permita ingresar un conjunto de preguntas de filtro para ser respondidas en menos de 1 minuto cada una. Los candidatos se grabarían respondiendo en el sitio web y lo que saliera, salió. ¡Sin segundas tomas!
+
+Función bonus: usar [Whisper](https://openai.com/research/whisper) para transcribir las respuestas y luego automáticamente usar la [API de GPT-4](https://platform.openai.com/docs/api-reference) para calificar candidatos según tus respuestas esperadas.
+
+Este formato también reduciría la posibilidad de que el candidato use IA para obtener una respuesta, ya que habría muy poco tiempo para responder.
