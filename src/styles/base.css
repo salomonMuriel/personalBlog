@@ -3,14 +3,21 @@
 @tailwind utilities;
 
 @layer base {
-  :root,
-  html[data-theme="dark"] {
+  :root {
     --color-fill: 255, 255, 255;
     --color-accent: 204, 43, 43;
     --color-text-base: 17, 17, 16;
     --color-card: 245, 244, 240;
     --color-card-muted: 226, 224, 216;
     --color-border: 226, 224, 216;
+  }
+  html[data-theme="dark"] {
+    --color-fill: 0, 34, 79;
+    --color-accent: 255, 111, 89;
+    --color-text-base: 232, 233, 235;
+    --color-card: 0, 27, 63;
+    --color-card-muted: 12, 14, 79;
+    --color-border: 255, 111, 89;
   }
   #sun-svg,
   html[data-theme="dark"] #moon-svg {
