@@ -1,8 +1,21 @@
 ---
-// Root page: detect browser language and redirect
-const acceptLanguage = Astro.request.headers.get("accept-language") || "";
-const prefersSpanish = acceptLanguage.toLowerCase().startsWith("es");
-const targetLang = prefersSpanish ? "es" : "en";
-
-return Astro.redirect(`/${targetLang}/`, 302);
+import HomePage from "@components/HomePage.astro";
+import { SITE } from "@config";
 ---
+
+<HomePage lang="en" canonicalURL={new URL("/en/", SITE.website).href}>
+  <script is:inline slot="head">
+    (function () {
+      var s = localStorage.getItem("preferred-lang");
+      if (s === "es") {
+        location.replace("/es/");
+        return;
+      }
+      if (s) return;
+      var primary = (navigator.language || "").toLowerCase();
+      if (primary.indexOf("es") === 0) {
+        location.replace("/es/");
+      }
+    })();
+  </script>
+</HomePage>

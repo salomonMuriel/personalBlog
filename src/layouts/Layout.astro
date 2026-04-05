@@ -278,15 +278,19 @@ const langTags = getLangTag(lang);
   </head>
   <body>
     <script is:inline>
-      const savedTheme = localStorage.getItem("theme");
-      const prefersDark = window.matchMedia(
-        "(prefers-color-scheme: dark)"
-      ).matches;
-      if (savedTheme) {
-        document.documentElement.setAttribute("data-theme", savedTheme);
-      } else if (prefersDark) {
-        document.documentElement.setAttribute("data-theme", "dark");
+      function applyTheme() {
+        const savedTheme = localStorage.getItem("theme");
+        const prefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)"
+        ).matches;
+        if (savedTheme) {
+          document.documentElement.setAttribute("data-theme", savedTheme);
+        } else if (prefersDark) {
+          document.documentElement.setAttribute("data-theme", "dark");
+        }
       }
+      applyTheme();
+      document.addEventListener("astro:after-swap", applyTheme);
     </script>
     <slot />
   </body>

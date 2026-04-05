@@ -17,7 +17,9 @@ export default defineConfig({
       applyBaseStyles: false,
     }),
     react(),
-    sitemap(),
+    sitemap({
+      filter: page => page !== "https://www.salomonmuriel.com/",
+    }),
     mdx(),
     purgecss(),
   ],
@@ -47,6 +49,7 @@ export default defineConfig({
     locales: ["en", "es"],
     routing: {
       prefixDefaultLocale: true,
+      redirectToDefaultLocale: false,
     },
   },
 });

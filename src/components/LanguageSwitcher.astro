@@ -16,9 +16,23 @@ const alternateUrl = getAlternateUrl(Astro.url, targetLang);
   class="lang-switcher"
   title={t(lang, "lang.switchLabel")}
   aria-label={t(lang, "lang.switchLabel")}
+  data-target-lang={targetLang}
 >
   {t(lang, "lang.switch")}
 </a>
+
+<script>
+  function setupLangSwitcher() {
+    document.querySelectorAll(".lang-switcher").forEach(el => {
+      el.addEventListener("click", () => {
+        const target = (el as HTMLElement).dataset.targetLang;
+        if (target) localStorage.setItem("preferred-lang", target);
+      });
+    });
+  }
+  setupLangSwitcher();
+  document.addEventListener("astro:after-swap", setupLangSwitcher);
+</script>
 
 <style>
   .lang-switcher {
