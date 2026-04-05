@@ -1,7 +1,7 @@
 ---
 import { LOCALE, SITE } from "@config";
-import "@fontsource-variable/baloo-2";
-import "@fontsource/play";
+import "@fontsource-variable/dm-sans";
+import "@fontsource-variable/syne";
 import "@styles/base.css";
 import { ViewTransitions } from "astro:transitions";
 import { Schema } from "astro-seo-schema";
@@ -278,6 +278,15 @@ const socialImageURL = new URL(
     <ViewTransitions />
   </head>
   <body>
+    <script is:inline>
+      const savedTheme = localStorage.getItem("theme");
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      if (savedTheme) {
+        document.documentElement.setAttribute("data-theme", savedTheme);
+      } else if (prefersDark) {
+        document.documentElement.setAttribute("data-theme", "dark");
+      }
+    </script>
     <slot />
   </body>
 </html>

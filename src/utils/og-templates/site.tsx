@@ -4,7 +4,7 @@ export default () => {
   return (
     <div
       style={{
-        background: "rgb(0, 34, 79)",
+        background: "rgb(17, 17, 16)",
         width: "100%",
         height: "100%",
         display: "flex",
@@ -17,8 +17,8 @@ export default () => {
           position: "absolute",
           top: "-1px",
           right: "-1px",
-          border: "4px solid rgb(255, 111, 89)",
-          background: "rgb(0, 34, 79)",
+          border: "4px solid rgb(204, 43, 43)",
+          background: "rgb(17, 17, 16)",
           opacity: "0.9",
           borderRadius: "4px",
           display: "flex",
@@ -31,15 +31,15 @@ export default () => {
 
       <div
         style={{
-          border: "4px solid rgb(255, 111, 89)",
-          background: "rgb(0, 34, 79)",
+          border: "4px solid rgb(204, 43, 43)",
+          background: "rgb(17, 17, 16)",
           borderRadius: "4px",
           display: "flex",
           justifyContent: "center",
           margin: "2rem",
           width: "88%",
           height: "80%",
-          color: "rgb(232, 233, 235)",
+          color: "rgb(245, 244, 240)",
         }}
       >
         <div
