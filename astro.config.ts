@@ -1,4 +1,4 @@
-import { defineConfig, fontProviders } from "astro/config";
+import { defineConfig } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
 import react from "@astrojs/react";
 import remarkToc from "remark-toc";
@@ -6,8 +6,6 @@ import remarkCollapse from "remark-collapse";
 import sitemap from "@astrojs/sitemap";
 import { SITE } from "./src/config";
 import mdx from "@astrojs/mdx";
-
-import purgecss from "astro-purgecss";
 
 // https://astro.build/config
 export default defineConfig({
@@ -18,7 +16,8 @@ export default defineConfig({
       filter: page => page !== "https://www.salomonmuriel.com/",
     }),
     mdx(),
-    purgecss(),
+    // purgecss removed — Tailwind v4 has built-in CSS tree-shaking,
+    // making purgecss redundant. It was also stripping valid TW v4 styles.
   ],
   markdown: {
     remarkPlugins: [
@@ -49,18 +48,6 @@ export default defineConfig({
       redirectToDefaultLocale: false,
     },
   },
-  fonts: [
-    {
-      provider: fontProviders.fontsource(),
-      name: "DM Sans Variable",
-      cssVariable: "--font-dm-sans",
-    },
-    {
-      provider: fontProviders.fontsource(),
-      name: "Syne Variable",
-      cssVariable: "--font-syne",
-    },
-  ],
   experimental: {
     queuedRendering: {
       enabled: true,

@@ -11,9 +11,9 @@
   --color-skin-card-muted: rgb(var(--color-card-muted));
   --color-skin-line: rgb(var(--color-border));
 
-  /* Fonts — references Astro's font CSS variables from astro.config.ts */
-  --font-text: var(--font-dm-sans), sans-serif;
-  --font-hs: var(--font-syne), sans-serif;
+  /* Fonts */
+  --font-text: "DM Sans Variable", sans-serif;
+  --font-hs: "Syne Variable", sans-serif;
 
   /* Screens */
   --breakpoint-sm: 640px;
