@@ -261,13 +261,13 @@ const prefix = `/${lang}`;
   }
 
   /* Nav links list: toggled on mobile, always visible on desktop */
-  nav ul {
+  #menu-items {
     @apply mt-4 w-full sm:order-1 sm:ml-0 sm:mt-0 sm:flex sm:w-auto sm:items-center sm:gap-x-3;
   }
-  nav ul > li {
+  #menu-items > li {
     @apply border-b border-skin-line sm:border-none;
   }
-  nav ul > li a {
+  #menu-items > li > a {
     @apply block w-full px-4 py-3 text-center font-medium hover:text-skin-accent sm:my-0 sm:px-1 sm:py-1;
   }
   nav a.active {
