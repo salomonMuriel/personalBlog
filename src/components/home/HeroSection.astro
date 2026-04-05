@@ -1,0 +1,171 @@
+---
+import Socials from "@components/Socials.astro";
+import { Image } from "astro:assets";
+import salomonImage from "../../assets/images/fotoSalo.jpeg";
+import { t } from "@i18n/utils";
+import type { Lang } from "@i18n/ui";
+import { SOCIALS } from "@config";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const socialCount = SOCIALS.filter(social => social.active).length;
+---
+
+<section id="hero">
+  <div class="hero-container">
+    <div class="hero-photo-section">
+      <div class="hero-photo-wrapper">
+        <Image
+          src={salomonImage}
+          alt={`Salomón Muriel - ${t(lang, "hero.subtitle")}`}
+          class="hero-photo"
+        />
+      </div>
+    </div>
+
+    <div class="hero-content-section">
+      <h1 class="hero-title">Salomón Muriel</h1>
+      <p class="hero-subtitle">{t(lang, "hero.subtitle")}</p>
+
+      <p class="value-prop-subtitle">
+        {t(lang, "hero.valueProp")}
+      </p>
+
+      <div class="cta-wrapper">
+        <button
+          data-cal-namespace="30min"
+          data-cal-link="salomuriel/30min"
+          data-cal-config='{"layout":"month_view"}'
+          class="cta-primary"
+        >
+          {t(lang, "hero.cta")}
+        </button>
+      </div>
+
+      {
+        socialCount > 0 && (
+          <div class="social-wrapper">
+            <div class="social-links-text">{t(lang, "hero.connectWith")}</div>
+            <Socials lang={lang} />
+          </div>
+        )
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  @reference "../../styles/base.css";
+  #hero {
+    @apply pb-8 pt-8;
+  }
+  .hero-container {
+    @apply flex flex-col gap-8;
+  }
+  @media (min-width: 768px) {
+    .hero-container {
+      @apply flex-row gap-12 items-center;
+    }
+  }
+  .hero-photo-section {
+    @apply flex justify-center w-full flex-shrink-0;
+  }
+  @media (min-width: 768px) {
+    .hero-photo-section {
+      @apply justify-start;
+      width: 40%;
+    }
+  }
+  .hero-photo-wrapper {
+    @apply relative w-full;
+    max-width: 300px;
+  }
+  @media (min-width: 768px) {
+    .hero-photo-wrapper {
+      max-width: none;
+    }
+  }
+  .hero-photo-wrapper::before {
+    content: "";
+    @apply absolute rounded-full;
+    width: 120%;
+    height: 120%;
+    top: -10%;
+    left: -10%;
+    z-index: -1;
+    background: radial-gradient(
+      circle,
+      rgba(255, 111, 89, 0.1) 0%,
+      transparent 70%
+    );
+  }
+  .hero-photo {
+    @apply w-full h-auto rounded-2xl shadow-xl;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    border: 1px solid rgba(255, 111, 89, 0.2);
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+  @media (min-width: 768px) {
+    .hero-photo {
+      aspect-ratio: 3/4;
+    }
+  }
+  .hero-photo:hover {
+    transform: scale(1.02);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-photo {
+      transition: none;
+    }
+    .hero-photo:hover {
+      transform: none;
+    }
+  }
+  .hero-content-section {
+    @apply flex-1 flex flex-col;
+  }
+  .hero-title {
+    @apply font-bold mb-1 whitespace-nowrap;
+    font-size: clamp(2rem, 8vw, 3.75rem);
+  }
+  .hero-subtitle {
+    @apply text-lg text-skin-accent font-medium;
+  }
+  @media (min-width: 768px) {
+    .hero-subtitle {
+      @apply text-xl;
+    }
+  }
+  @media (min-width: 1024px) {
+    .hero-subtitle {
+      @apply text-2xl;
+    }
+  }
+  .value-prop-subtitle {
+    @apply text-base mb-6 leading-relaxed;
+  }
+  @media (min-width: 768px) {
+    .value-prop-subtitle {
+      @apply text-lg;
+    }
+  }
+  .cta-wrapper {
+    @apply mt-6 mb-6 flex flex-col sm:flex-row gap-4;
+  }
+  .cta-primary {
+    @apply rounded-lg bg-skin-accent px-6 py-3 text-lg font-semibold text-skin-inverted hover:bg-skin-accent/90 transition-all shadow-md hover:shadow-lg cursor-pointer border-0;
+  }
+  .social-wrapper {
+    @apply mt-6 flex flex-col sm:flex-row sm:items-center gap-2;
+  }
+  .social-links-text {
+    @apply text-sm font-medium text-skin-base;
+  }
+</style>

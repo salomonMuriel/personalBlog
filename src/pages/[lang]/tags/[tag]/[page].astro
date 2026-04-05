@@ -1,36 +1,26 @@
 ---
-import { type CollectionEntry, getCollection } from "astro:content";
 import TagPosts from "@layouts/TagPosts.astro";
 import getUniqueTags from "@utils/getUniqueTags";
-import getPostsByTag from "@utils/getPostsByTag";
-import getPageNumbers from "@utils/getPageNumbers";
-import getPagination from "@utils/getPagination";
+import getPosts from "@utils/getPosts";
 import type { Lang } from "@i18n/ui";
-import { getCollectionName } from "@i18n/utils";
-
-export interface Props {
-  post: CollectionEntry<"blog">;
-  tag: string;
-  tagName: string;
-  lang: Lang;
-}
+import { getLocalizedCollection } from "@i18n/utils";
+import { SITE } from "@config";
 
 export async function getStaticPaths() {
   const langs: Lang[] = ["en", "es"];
   const paths = [];
 
   for (const lang of langs) {
-    const collection = getCollectionName(lang, "blog");
-    const posts = await getCollection(collection);
+    const posts = await getLocalizedCollection(lang, "blog");
     const tags = getUniqueTags(posts);
 
     paths.push(
       ...tags.flatMap(({ tag, tagName }) => {
-        const tagPosts = getPostsByTag(posts, tag);
-        const totalPages = getPageNumbers(tagPosts.length);
+        const tagPosts = getPosts(posts, { tag });
+        const totalPages = Math.ceil(tagPosts.length / SITE.postPerPage);
 
-        return totalPages.map(page => ({
-          params: { lang, tag, page: String(page) },
+        return Array.from({ length: totalPages }, (_, i) => ({
+          params: { lang, tag, page: String(i + 1) },
           props: { tag, tagName, lang },
         }));
       })
@@ -43,17 +33,20 @@ export async function getStaticPaths() {
 const { page } = Astro.params;
 const { tag, tagName, lang } = Astro.props;
 
-const posts = await getCollection(
-  getCollectionName(lang, "blog"),
-  ({ data }) => !data.draft
-);
+const posts = await getLocalizedCollection(lang, "blog");
+const postsByTag = getPosts(posts, { tag });
 
-const postsByTag = getPostsByTag(posts, tag);
-
-const pagination = getPagination({
-  posts: postsByTag,
-  page,
-});
+const currentPage = Number(page);
+const totalPages = Math.ceil(postsByTag.length / SITE.postPerPage);
+const startIdx = (currentPage - 1) * SITE.postPerPage;
+const paginatedPosts = postsByTag.slice(startIdx, startIdx + SITE.postPerPage);
 ---
 
-<TagPosts {...pagination} {tag} {tagName} lang={lang} />
+<TagPosts
+  {currentPage}
+  {totalPages}
+  {paginatedPosts}
+  {tag}
+  {tagName}
+  lang={lang}
+/>

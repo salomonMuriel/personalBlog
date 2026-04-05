@@ -1,18 +1,17 @@
 ---
-import { getCollection } from "astro:content";
 import TagPosts from "@layouts/TagPosts.astro";
-import getPostsByTag from "@utils/getPostsByTag";
-import getPagination from "@utils/getPagination";
 import getUniqueTags from "@utils/getUniqueTags";
+import getPosts from "@utils/getPosts";
 import type { Lang } from "@i18n/ui";
-import { getCollectionName } from "@i18n/utils";
+import { getLocalizedCollection } from "@i18n/utils";
+import { SITE } from "@config";
 
 export async function getStaticPaths() {
   const langs: Lang[] = ["en", "es"];
   const paths = [];
 
   for (const lang of langs) {
-    const posts = await getCollection(getCollectionName(lang, "blog"));
+    const posts = await getLocalizedCollection(lang, "blog");
     const tags = getUniqueTags(posts);
 
     paths.push(
@@ -27,14 +26,17 @@ export async function getStaticPaths() {
 }
 
 const { tag, tagName, posts, lang } = Astro.props;
+const postsByTag = getPosts(posts, { tag });
 
-const postsByTag = getPostsByTag(posts, tag);
-
-const pagination = getPagination({
-  posts: postsByTag,
-  page: 1,
-  isIndex: true,
-});
+const totalPages = Math.ceil(postsByTag.length / SITE.postPerPage);
+const paginatedPosts = postsByTag.slice(0, SITE.postPerPage);
 ---
 
-<TagPosts {...pagination} {tag} {tagName} lang={lang} />
+<TagPosts
+  currentPage={1}
+  {totalPages}
+  {paginatedPosts}
+  {tag}
+  {tagName}
+  lang={lang}
+/>

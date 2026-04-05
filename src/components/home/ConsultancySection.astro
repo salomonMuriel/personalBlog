@@ -1,0 +1,115 @@
+---
+import { t } from "@i18n/utils";
+import type { Lang } from "@i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+---
+
+<section id="consultancy">
+  <h2>{t(lang, "consultancy.title")}</h2>
+  <p class="consultancy-intro">
+    {t(lang, "consultancy.intro")}
+  </p>
+
+  <div class="services-list">
+    <div class="service-item">
+      <span class="service-emoji">🤖</span>
+      <div class="service-text">
+        <strong>{t(lang, "consultancy.aiTitle")}</strong> — {
+          t(lang, "consultancy.aiDesc")
+        }
+      </div>
+    </div>
+    <div class="service-item">
+      <span class="service-emoji">📊</span>
+      <div class="service-text">
+        <strong>{t(lang, "consultancy.dataTitle")}</strong> — {
+          t(lang, "consultancy.dataDesc")
+        }
+      </div>
+    </div>
+    <div class="service-item">
+      <span class="service-emoji">📈</span>
+      <div class="service-text">
+        <strong>{t(lang, "consultancy.companyTitle")}</strong> — {
+          t(lang, "consultancy.companyDesc")
+        }
+      </div>
+    </div>
+    <div class="service-item">
+      <span class="service-emoji">🤝</span>
+      <div class="service-text">
+        <strong>{t(lang, "consultancy.mentorTitle")}</strong> — {
+          t(lang, "consultancy.mentorDesc")
+        }
+      </div>
+    </div>
+  </div>
+
+  <div class="trust-metrics">
+    <span>{t(lang, "consultancy.trust1")}</span>
+    <span class="trust-separator">•</span>
+    <span>{t(lang, "consultancy.trust2")}</span>
+  </div>
+
+  <div class="consultancy-cta-wrapper">
+    <button
+      data-cal-namespace="personal-site-intro-call"
+      data-cal-link="salomuriel/personal-site-intro-call"
+      data-cal-config='{"layout":"month_view"}'
+      class="cta-primary"
+    >
+      {t(lang, "consultancy.cta")}
+    </button>
+    <p class="cta-subtext">
+      {t(lang, "consultancy.ctaSub")}
+    </p>
+  </div>
+</section>
+
+<style>
+  @reference "../../styles/base.css";
+  #consultancy {
+    @apply pb-6 pt-6;
+  }
+  #consultancy h2 {
+    @apply text-2xl sm:text-3xl font-bold tracking-wide mb-3;
+  }
+  .consultancy-intro {
+    @apply text-base sm:text-lg mb-6 leading-relaxed;
+  }
+  .services-list {
+    @apply flex flex-col gap-4 my-6;
+  }
+  .service-item {
+    @apply flex gap-3 items-start;
+  }
+  .service-emoji {
+    @apply text-2xl flex-shrink-0 leading-relaxed;
+  }
+  .service-text {
+    @apply text-base sm:text-lg leading-relaxed;
+  }
+  .service-text strong {
+    @apply text-skin-accent;
+  }
+  .trust-metrics {
+    @apply flex flex-wrap justify-center gap-2 sm:gap-4 text-sm sm:text-base text-skin-base/70 my-6 py-4 border-y border-skin-line;
+  }
+  .trust-separator {
+    @apply text-skin-accent;
+  }
+  .consultancy-cta-wrapper {
+    @apply text-center mt-6;
+  }
+  .cta-primary {
+    @apply rounded-lg bg-skin-accent px-6 py-3 text-lg font-semibold text-skin-inverted hover:bg-skin-accent/90 transition-all shadow-md hover:shadow-lg cursor-pointer border-0;
+  }
+  .cta-subtext {
+    @apply text-sm text-skin-base/70 mt-3;
+  }
+</style>

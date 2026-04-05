@@ -1,12 +1,8 @@
 ---
-import { type CollectionEntry, getCollection } from "astro:content";
-import Posts from "@layouts/Posts.astro";
+import { type CollectionEntry } from "astro:content";
 import PostDetails from "@layouts/PostDetails.astro";
-import getSortedPosts from "@utils/getSortedPosts";
-import getPageNumbers from "@utils/getPageNumbers";
-import getPagination from "@utils/getPagination";
 import type { Lang } from "@i18n/ui";
-import { getCollectionName } from "@i18n/utils";
+import { getLocalizedCollection } from "@i18n/utils";
 
 export interface Props {
   post: CollectionEntry<"blog">;
@@ -18,40 +14,19 @@ export async function getStaticPaths() {
   const paths = [];
 
   for (const lang of langs) {
-    const posts = await getCollection(getCollectionName(lang, "blog"));
-
-    const postResult = posts.map(post => ({
-      params: { lang, slug: post.id },
-      props: { post, lang },
-    }));
-
-    const pagePaths = getPageNumbers(posts.length).map(pageNum => ({
-      params: { lang, slug: String(pageNum) },
-      props: { lang },
-    }));
-
-    paths.push(...postResult, ...pagePaths);
+    const posts = await getLocalizedCollection(lang, "blog");
+    paths.push(
+      ...posts.map(post => ({
+        params: { lang, slug: post.id },
+        props: { post, lang },
+      }))
+    );
   }
 
   return paths;
 }
 
-const { slug } = Astro.params;
 const { post, lang } = Astro.props;
-
-const posts = await getCollection(getCollectionName(lang, "blog"));
-const sortedPosts = getSortedPosts(posts);
-
-const pagination = getPagination({
-  posts: sortedPosts,
-  page: slug,
-});
 ---
 
-{
-  post ? (
-    <PostDetails post={post} lang={lang} />
-  ) : (
-    <Posts {...pagination} lang={lang} />
-  )
-}
+<PostDetails post={post} lang={lang} />

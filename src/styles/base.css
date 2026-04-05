@@ -1,15 +1,18 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+/* Register custom dark mode selector so dark: prefix uses data-theme attribute */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
 @theme {
-  /* Custom colors - using CSS variable references for dark mode toggling */
-  --color-skin-fill: rgb(var(--color-fill));
-  --color-skin-accent: rgb(var(--color-accent));
-  --color-skin-base: rgb(var(--color-text-base));
-  --color-skin-inverted: rgb(var(--color-fill));
-  --color-skin-card: rgb(var(--color-card));
-  --color-skin-card-muted: rgb(var(--color-card-muted));
-  --color-skin-line: rgb(var(--color-border));
+  /* Skin colors — resolved from CSS variables for theme toggling */
+  --color-skin-fill: var(--color-fill);
+  --color-skin-accent: var(--color-accent);
+  --color-skin-base: var(--color-text-base);
+  --color-skin-inverted: var(--color-fill);
+  --color-skin-card: var(--color-card);
+  --color-skin-card-muted: var(--color-card-muted);
+  --color-skin-line: var(--color-border);
 
   /* Fonts */
   --font-text: "DM Sans Variable", sans-serif;
@@ -35,23 +38,27 @@
   100% { transform: translateX(100%); }
 }
 
+/* ===== Light theme (default) ===== */
+:root {
+  --color-fill: #ffffff;
+  --color-accent: #cc2b2b;
+  --color-text-base: #111110;
+  --color-card: #f5f4f0;
+  --color-card-muted: #e2e0d8;
+  --color-border: #e2e0d8;
+}
+
+/* ===== Dark theme ===== */
+[data-theme="dark"] {
+  --color-fill: #00224f;
+  --color-accent: #ff6f59;
+  --color-text-base: #e8e9eb;
+  --color-card: #001b3f;
+  --color-card-muted: #0c0e4f;
+  --color-border: #ff6f59;
+}
+
 @layer base {
-  :root {
-    --color-fill: 255, 255, 255;
-    --color-accent: 204, 43, 43;
-    --color-text-base: 17, 17, 16;
-    --color-card: 245, 244, 240;
-    --color-card-muted: 226, 224, 216;
-    --color-border: 226, 224, 216;
-  }
-  html[data-theme="dark"] {
-    --color-fill: 0, 34, 79;
-    --color-accent: 255, 111, 89;
-    --color-text-base: 232, 233, 235;
-    --color-card: 0, 27, 63;
-    --color-card-muted: 12, 14, 79;
-    --color-border: 255, 111, 89;
-  }
   #sun-svg,
   html[data-theme="dark"] #moon-svg {
     display: none;
@@ -94,6 +101,39 @@
     @apply before:!content-none after:!content-none;
   }
 
+  /* ===== scrollbar ===== */
+  html {
+    overflow-y: scroll;
+  }
+
+  ::-webkit-scrollbar {
+    @apply w-3;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-skin-fill;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-skin-card;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-skin-card-muted;
+  }
+
+  code,
+  blockquote {
+    word-wrap: break-word;
+  }
+
+  pre > code {
+    white-space: pre;
+  }
+}
+
+/* ===== Typography / Prose ===== */
+@layer typography {
   .prose {
     @apply prose-headings:!mb-3 prose-headings:!text-skin-accent
     prose-p:!text-skin-base
@@ -142,40 +182,6 @@
     @apply !my-2 mx-auto border-2 border-skin-line hover:outline hover:outline-2 hover:outline-skin-fill;
     @apply max-w-[70%];
   }
-
-  /* ===== scrollbar ===== */
-  html {
-    overflow-y: scroll;
-  }
-
-  /* width */
-  ::-webkit-scrollbar {
-    @apply w-3;
-  }
-
-  /* Track */
-  ::-webkit-scrollbar-track {
-    @apply bg-skin-fill;
-  }
-
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-    @apply bg-skin-card;
-  }
-
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-    @apply bg-skin-card-muted;
-  }
-
-  code,
-  blockquote {
-    word-wrap: break-word;
-  }
-
-  pre > code {
-    white-space: pre;
-  }
 }
 
 @utility display-none {
@@ -186,42 +192,32 @@
   @apply outline-2 outline-offset-1 outline-skin-fill focus-visible:no-underline focus-visible:outline-dashed;
 }
 
-/* Footnotes */
+/* ===== Footnotes ===== */
 
-/* This defines the displayed content  */
 .prose sup::after {
   content: '✚';
 }
 
-/* This initially hides the footnote (i.e. span)  */
 .prose input[type=checkbox] ~ span {
     @apply hidden
 }
 
-/* This styles the footnote text which appears
-when the label is clicked  */
 .prose input[type=checkbox]:checked ~ span {
     @apply block text-base text-skin-base cursor-default pl-8
 }
 
-/* This permanently hides the checkbox  */
 .prose input[type=checkbox]{
   @apply hidden
 }
 
-/* This styles the footnote label to appear
-like a hyperlink  */
 .prose input[type=checkbox] ~ label {
     @apply inline cursor-pointer text-skin-accent underline-offset-1 underline
 }
 
-/* This styles the footnote label when the mouse
-hovers over it */
 .prose input[type=checkbox] ~ label:hover {
     @apply underline-offset-4 text-2xl
 }
 
-/* This styles the footnote label after it is clicked */
 .prose input[type=checkbox]:checked ~ label {
 
 }

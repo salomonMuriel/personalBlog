@@ -1,0 +1,57 @@
+---
+import { Image } from "astro:assets";
+import franco from "../../assets/images/franco_cut.webp";
+import luca from "../../assets/images/luca_cut.webp";
+import { t } from "@i18n/utils";
+import type { Lang } from "@i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+---
+
+<section id="about-personal">
+  <h2>{t(lang, "about.title")}</h2>
+  <div class="personal-content">
+    <p class="pb-2">
+      {t(lang, "about.p1")}
+    </p>
+    <p class="pb-2">
+      {t(lang, "about.p2Start")}{" "}
+      <span class="group inline-block"
+        >👶👶
+        <Image
+          src={franco}
+          alt="Franco"
+          class="group fixed -right-full bottom-0 max-h-[50%] w-auto group-hover:animate-slide-in-out-r"
+        />
+        <Image
+          src={luca}
+          alt="Luca"
+          class="group fixed -left-full bottom-0 max-h-[50%] w-auto group-hover:animate-slide-in-out-l"
+        />
+      </span>{t(lang, "about.p2End")}{" "}
+      <a
+        href="https://www.linkedin.com/in/smuriel/"
+        class="underline hover:text-skin-accent"
+        target="_blank"
+        rel="noopener noreferrer">{t(lang, "about.linkedinLink")}</a
+      >.
+    </p>
+  </div>
+</section>
+
+<style>
+  @reference "../../styles/base.css";
+  #about-personal {
+    @apply pb-6 pt-6;
+  }
+  #about-personal h2 {
+    @apply text-2xl font-semibold tracking-wide mb-4;
+  }
+  .personal-content {
+    @apply text-base leading-relaxed;
+  }
+</style>
