@@ -51,9 +51,6 @@ const layoutProps = {
   scrollSmooth: true,
   lang,
 };
-
-const copyLabel = t(lang, "code.copy");
-const copiedLabel = t(lang, "code.copied");
 ---
 
 <Layout {...layoutProps}>
@@ -84,7 +81,13 @@ const copiedLabel = t(lang, "code.copied");
         >{`· ${readingTime} ${t(lang, "readingTime.suffix")}`}</span
       >
     </div>
-    <article id="article" role="article" class="prose mx-auto mt-8 max-w-4xl">
+    <article
+      id="article"
+      role="article"
+      class="prose mx-auto mt-8 max-w-4xl"
+      data-copy-label={t(lang, "code.copy")}
+      data-copied-label={t(lang, "code.copied")}
+    >
       <Content />
     </article>
 
@@ -123,91 +126,4 @@ const copiedLabel = t(lang, "code.copied");
   }
 </style>
 
-<script is:inline define:vars={{ copyLabel, copiedLabel }}>
-  function createProgressBar() {
-    const progressContainer = document.createElement("div");
-    progressContainer.className =
-      "progress-container fixed top-0 z-10 h-1 w-full bg-skin-fill";
-    const progressBar = document.createElement("div");
-    progressBar.className = "progress-bar h-1 w-0 bg-skin-accent";
-    progressBar.id = "myBar";
-    progressContainer.appendChild(progressBar);
-    document.body.appendChild(progressContainer);
-  }
-  createProgressBar();
-
-  function updateScrollProgress() {
-    const winScroll =
-      document.body.scrollTop || document.documentElement.scrollTop;
-    const height =
-      document.documentElement.scrollHeight -
-      document.documentElement.clientHeight;
-    const scrolled = (winScroll / height) * 100;
-    if (document) {
-      const myBar = document.getElementById("myBar");
-      if (myBar) {
-        myBar.style.width = scrolled + "%";
-      }
-    }
-  }
-  document.addEventListener("scroll", updateScrollProgress);
-
-  function addHeadingLinks() {
-    let headings = Array.from(document.querySelectorAll("h2, h3, h4, h5, h6"));
-    for (let heading of headings) {
-      heading.classList.add("group");
-      let link = document.createElement("a");
-      link.innerText = "#";
-      link.className = "heading-link hidden group-hover:inline-block ml-2";
-      link.href = "#" + heading.id;
-      link.ariaHidden = "true";
-      heading.appendChild(link);
-    }
-  }
-  addHeadingLinks();
-
-  function attachCopyButtons() {
-    let codeBlocks = Array.from(document.querySelectorAll("pre"));
-
-    for (let codeBlock of codeBlocks) {
-      let wrapper = document.createElement("div");
-      wrapper.style.position = "relative";
-
-      let copyButton = document.createElement("button");
-      copyButton.className =
-        "copy-code absolute right-3 -top-3 rounded bg-skin-card px-2 py-1 text-xs leading-4 text-skin-base font-medium";
-      copyButton.innerHTML = copyLabel;
-      codeBlock.setAttribute("tabindex", "0");
-      codeBlock.appendChild(copyButton);
-
-      codeBlock?.parentNode?.insertBefore(wrapper, codeBlock);
-      wrapper.appendChild(codeBlock);
-
-      copyButton.addEventListener("click", async () => {
-        await copyCode(codeBlock, copyButton);
-      });
-    }
-
-    async function copyCode(block, button) {
-      let code = block.querySelector("code");
-      let text = code?.innerText;
-
-      await navigator.clipboard.writeText(text ?? "");
-
-      button.innerText = copiedLabel;
-
-      setTimeout(() => {
-        button.innerText = copyLabel;
-      }, 700);
-    }
-  }
-  attachCopyButtons();
-
-  function backToTop() {
-    document.querySelector("#back-to-top")?.addEventListener("click", () => {
-      document.body.scrollTop = 0;
-      document.documentElement.scrollTop = 0;
-    });
-  }
-  backToTop();
-</script>
+<script src="../scripts/post-details.ts"></script>

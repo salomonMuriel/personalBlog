@@ -1,4 +1,4 @@
-import { defineConfig } from "astro/config";
+import { defineConfig, fontProviders } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
 import react from "@astrojs/react";
 import remarkToc from "remark-toc";
@@ -47,6 +47,23 @@ export default defineConfig({
     routing: {
       prefixDefaultLocale: true,
       redirectToDefaultLocale: false,
+    },
+  },
+  fonts: [
+    {
+      provider: fontProviders.fontsource(),
+      name: "DM Sans Variable",
+      cssVariable: "--font-dm-sans",
+    },
+    {
+      provider: fontProviders.fontsource(),
+      name: "Syne Variable",
+      cssVariable: "--font-syne",
+    },
+  ],
+  experimental: {
+    queuedRendering: {
+      enabled: true,
     },
   },
 });
