@@ -216,7 +216,7 @@ export const ui = {
     "nav.companies": "Empresas",
     "nav.ideas": "Ideas",
     "nav.resources": "Recursos",
-    "nav.uses": "Usa",
+    "nav.uses": "Stack",
     "nav.posts": "Blog",
     "nav.talks": "Charlas",
     "nav.search": "Buscar",
