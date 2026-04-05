@@ -20,18 +20,28 @@ export function getLocalizedPath(lang: Lang, path: string): string {
 }
 
 /**
- * Fetch a collection filtered by language, with lang prefix stripped from IDs.
- * Content is stored as `src/content/<type>/<lang>/...`, so IDs come in as "en/slug".
- * This returns entries with clean IDs like "slug" — ready for URL building.
+ * Type-safe map from (base collection name, lang) → actual collection key.
+ * Each collection only contains entries for that language, with clean IDs.
  */
-export async function getLocalizedCollection<
-  T extends "blog" | "ideas" | "now" | "talks",
->(lang: Lang, name: T) {
-  const entries = await getCollection(name);
-  const prefix = `${lang}/`;
-  return entries
-    .filter(entry => entry.id.startsWith(prefix))
-    .map(entry => ({ ...entry, id: entry.id.slice(prefix.length) }));
+const collectionMap = {
+  blog: { en: "blog-en", es: "blog-es" },
+  ideas: { en: "ideas-en", es: "ideas-es" },
+  now: { en: "now-en", es: "now-es" },
+  talks: { en: "talks-en", es: "talks-es" },
+} as const;
+
+type BaseCollection = keyof typeof collectionMap;
+type CollectionKey<T extends BaseCollection> = (typeof collectionMap)[T][Lang];
+
+/**
+ * Fetch the language-specific collection. No runtime filtering — Astro only
+ * loads entries from the matching lang directory. IDs are clean slugs.
+ */
+export function getLocalizedCollection<T extends BaseCollection>(
+  lang: Lang,
+  name: T
+) {
+  return getCollection(collectionMap[name][lang] as CollectionKey<T>);
 }
 
 export function stripLangFromPath(pathname: string): string {

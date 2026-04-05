@@ -1,24 +1,7 @@
 import { defineCollection, z } from "astro:content";
 import { glob } from "astro/loaders";
 
-/**
- * Custom ID generator that preserves the lang prefix (en/es) in the entry ID.
- * e.g., "en/001-sense-of-wonder/sense-of-wonder.mdx" → "en/sense-of-wonder"
- */
-function langPrefixedId({
-  entry,
-}: {
-  entry: string;
-  base: string;
-  data: Record<string, unknown>;
-}) {
-  // entry is like "en/001-sense-of-wonder/sense-of-wonder.mdx"
-  const parts = entry.split("/");
-  const lang = parts[0]; // "en" or "es"
-  const fileName = parts[parts.length - 1].replace(/\.(md|mdx)$/, "");
-  // For entries like "en/2024-04-23.mdx" (now collection), parts.length is 2
-  return `${lang}/${fileName}`;
-}
+// ── Schemas ──────────────────────────────────────────────
 
 const blogSchema = z.object({
   author: z.string().default("Salomon Muriel"),
@@ -71,45 +54,40 @@ const pagesSchema = z.object({
   description: z.string().optional(),
 });
 
-const blog = defineCollection({
-  loader: glob({
-    pattern: "**/*.{md,mdx}",
-    base: "src/content/blog",
-    generateId: langPrefixedId,
-  }),
-  schema: blogSchema,
-});
+// ── Factory: one collection per (type, lang) pair ────────
 
-const ideas = defineCollection({
-  loader: glob({
-    pattern: "**/*.{md,mdx}",
-    base: "src/content/ideas",
-    generateId: langPrefixedId,
-  }),
-  schema: ideasSchema,
-});
+function localizedCollection<S extends z.ZodTypeAny>(base: string, schema: S) {
+  const make = (lang: string) =>
+    defineCollection({
+      loader: glob({
+        pattern: "**/*.{md,mdx}",
+        base: `src/content/${base}/${lang}`,
+      }),
+      schema,
+    });
+  return { en: make("en"), es: make("es") };
+}
 
-const now = defineCollection({
-  loader: glob({
-    pattern: "**/*.{md,mdx}",
-    base: "src/content/now",
-    generateId: langPrefixedId,
-  }),
-  schema: nowSchema,
-});
-
-const talks = defineCollection({
-  loader: glob({
-    pattern: "**/*.{md,mdx}",
-    base: "src/content/talks",
-    generateId: langPrefixedId,
-  }),
-  schema: talksSchema,
-});
+const blog = localizedCollection("blog", blogSchema);
+const ideas = localizedCollection("ideas", ideasSchema);
+const now = localizedCollection("now", nowSchema);
+const talks = localizedCollection("talks", talksSchema);
 
 const pages = defineCollection({
   loader: glob({ pattern: "**/*.{md,mdx}", base: "src/content/pages" }),
   schema: pagesSchema,
 });
 
-export const collections = { blog, ideas, now, talks, pages };
+// ── Exports ──────────────────────────────────────────────
+
+export const collections = {
+  "blog-en": blog.en,
+  "blog-es": blog.es,
+  "ideas-en": ideas.en,
+  "ideas-es": ideas.es,
+  "now-en": now.en,
+  "now-es": now.es,
+  "talks-en": talks.en,
+  "talks-es": talks.es,
+  pages,
+};
