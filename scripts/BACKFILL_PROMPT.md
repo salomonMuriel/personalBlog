@@ -22,7 +22,7 @@ For each post assigned to it:
    - `tags`: always include "linkedin", pick 2-4 more from: entrepreneurship, tech, leadership, education, parenting, ai, startups, innovation, culture, books, personal, colombia, business, productivity, hiring, consulting, balance
    - `content_es`: full post body in Colombian Spanish with markdown formatting
    - `content_en`: full post body in English with markdown formatting
-5. Download images from post.postImages to `src/assets/posts/blog/linkedin/li-{postId}-{index}.jpg` and reference them at the END of the post
+5. Images have already been downloaded to `src/assets/posts/blog/linkedin/li-{postId}-{index}.jpg`. For each post.postImages entry, reference the corresponding local file at the END of the post. Do NOT download images — they are already there.
 6. Write MDX files to `src/content/blog/en/{dir}/{slug}.mdx` and `src/content/blog/es/{dir}/{slug}.mdx`
 
 ## Translation guidelines
@@ -88,5 +88,13 @@ Existing blog posts go up to 009 (plus 999 which is special). Assign directories
 2. Filter out posts with empty content, sort by date ascending
 3. Split into ~10 batches of ~23 posts each
 4. Launch 10 agents IN PARALLEL — each agent gets its batch of posts (as JSON) and its directory number range (e.g., agent 1: 010-032, agent 2: 033-055, etc.)
-5. Each agent processes all its posts, writing the MDX files and downloading images
+5. Each agent processes all its posts, writing the MDX files (images are already downloaded)
 6. After ALL agents complete, update `scripts/.linkedin-sync-state.json` with all synced post IDs
+
+## Pre-requisite: download images first
+
+Before running this prompt, images must be downloaded by running:
+
+```
+node scripts/sync-linkedin.mjs --backfill scripts/linkedin-backfill.json --download-images-only
+```

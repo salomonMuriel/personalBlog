@@ -11,6 +11,7 @@
  *   node scripts/sync-linkedin.mjs                                  # sync new posts since last run
  *   node scripts/sync-linkedin.mjs --backfill FILE                  # import from a JSON file (Apify output)
  *   node scripts/sync-linkedin.mjs --backfill FILE --no-translate   # import without translating (reuses original content for both langs)
+ *   node scripts/sync-linkedin.mjs --backfill FILE --download-images-only  # only download images, no post creation
  */
 
 import fs from "node:fs";
@@ -505,9 +506,45 @@ async function processPost(post, dirNumber, { skipTranslation = false } = {}) {
   return true;
 }
 
+/** Download all images from posts without creating blog posts. */
+async function downloadImagesOnly(posts) {
+  fs.mkdirSync(ASSETS_DIR, { recursive: true });
+  let downloaded = 0;
+  let skipped = 0;
+  let failed = 0;
+
+  for (const post of posts) {
+    const postId = post.id || post.entityId;
+    if (!post.postImages?.length) continue;
+
+    for (let i = 0; i < post.postImages.length; i++) {
+      const img = post.postImages[i];
+      const ext = img.url.includes(".gif") ? "gif" : img.url.includes(".png") ? "png" : "jpg";
+      const filename = `li-${postId}-${i}.${ext}`;
+      const destPath = path.join(ASSETS_DIR, filename);
+
+      if (fs.existsSync(destPath) && fs.statSync(destPath).size > 0) {
+        skipped++;
+        continue;
+      }
+
+      console.log(`  Downloading ${filename}...`);
+      const result = await downloadFile(img.url, ASSETS_DIR, filename);
+      if (result) {
+        downloaded++;
+      } else {
+        failed++;
+      }
+    }
+  }
+
+  console.log(`\nImages done: ${downloaded} downloaded, ${skipped} already existed, ${failed} failed.`);
+}
+
 async function main() {
   const args = process.argv.slice(2);
   const skipTranslation = args.includes("--no-translate");
+  const downloadOnly = args.includes("--download-images-only");
   const backfillIdx = args.indexOf("--backfill");
   const isBackfill = backfillIdx !== -1;
   const backfillFile = isBackfill ? args[backfillIdx + 1] : null;
@@ -527,6 +564,12 @@ async function main() {
     sinceDate.setDate(sinceDate.getDate() - 2);
     const sinceDateStr = sinceDate.toISOString().split("T")[0];
     posts = await fetchLinkedInPosts(sinceDateStr);
+  }
+
+  if (downloadOnly) {
+    console.log("\nDownloading images only...");
+    await downloadImagesOnly(posts);
+    return;
   }
 
   // Filter out already-synced posts
