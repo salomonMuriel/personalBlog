@@ -76,7 +76,6 @@ tags:
   - some
   - example
   - tags
-ogImage: ""
 description: This is the example description of the example post.
 canonicalURL: https://example.org/my-article-was-already-posted-here
 ---
