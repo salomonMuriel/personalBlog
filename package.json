@@ -13,7 +13,6 @@
     "astro": "astro",
     "format:check": "prettier --check . --plugin=prettier-plugin-astro",
     "format": "prettier --write . --plugin=prettier-plugin-astro",
-    "cz": "cz",
     "prepare": "husky install",
     "lint": "eslint .",
     "generate-pdf": "node scripts/generate-pdf.js",
@@ -52,8 +51,6 @@
     "@types/react": "^19.0.0",
     "@typescript-eslint/parser": "^8.58.0",
     "astro-eslint-parser": "^1.4.0",
-    "commitizen": "^4.3.0",
-    "cz-conventional-changelog": "^3.3.0",
     "eslint": "^9.39.4",
     "eslint-plugin-astro": "^1.6.0",
     "husky": "^8.0.3",
@@ -66,17 +63,12 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
-  },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,md,mdx,json,astro}": [
       "prettier --write --plugin=prettier-plugin-astro"
     ]
   },
   "engines": {
-    "node": ">=22"
+    "node": ">=22.19.0"
   }
 }
