@@ -325,17 +325,30 @@ ${postContent}${mediaContext}
 }
 
 /** Create an MDX blog post file. */
-function createBlogPost(dir, dirName, fileName, { title, slug, description, tags, pubDatetime, linkedinUrl, content, images }) {
+function createBlogPost(dir, dirName, fileName, { title, slug, description, tags, pubDatetime, linkedinUrl, content, media }) {
   const postDir = path.join(dir, dirName);
   fs.mkdirSync(postDir, { recursive: true });
 
-  // Build image references
-  let imageMarkdown = "";
-  if (images && images.length > 0) {
-    imageMarkdown = "\n" + images.map((img, i) => {
-      const relPath = `../../../../assets/posts/blog/linkedin/${img}`;
-      return `![Post image ${i + 1}](${relPath})`;
-    }).join("\n\n") + "\n";
+  // Build media references
+  let mediaMarkdown = "";
+  if (media && media.length > 0) {
+    const parts = [];
+    let imgCount = 0;
+    for (const m of media) {
+      const relPath = `../../../../assets/posts/blog/linkedin/${m.filename}`;
+      if (m.type === "image") {
+        imgCount++;
+        parts.push(`![Post image ${imgCount}](${relPath})`);
+      } else if (m.type === "video") {
+        parts.push(`<video controls src="${relPath}" />`);
+      } else if (m.type === "document") {
+        parts.push(`[${m.title || "Document"}](${relPath})`);
+      } else if (m.type === "article-image") {
+        const caption = m.link ? `[${m.title || "Article"}](${m.link})` : (m.title || "Article");
+        parts.push(`![${m.title || "Article preview"}](${relPath})\n${caption}`);
+      }
+    }
+    if (parts.length) mediaMarkdown = "\n" + parts.join("\n\n") + "\n";
   }
 
   const linkedinNotice = `> *Originally posted on [LinkedIn](${linkedinUrl})*`;
@@ -359,7 +372,7 @@ canonicalURL: ${linkedinUrl}
 ${linkedinNotice}
 
 ${content}
-${imageMarkdown}`;
+${mediaMarkdown}`;
 
   fs.writeFileSync(path.join(postDir, fileName), fileContent);
   console.log(`  Created: ${path.join(dirName, fileName)}`);
@@ -447,11 +460,11 @@ async function processPost(post, dirNumber, { skipTranslation = false } = {}) {
   const detectedLang = detectLanguage(post.content);
   console.log(`  Detected language: ${detectedLang}${skipTranslation ? " (no-translate mode)" : ""}`);
 
-  // Download images
-  const images = [];
+  // Download media
+  const media = [];
   fs.mkdirSync(ASSETS_DIR, { recursive: true });
 
-  if (post.postImages && post.postImages.length > 0) {
+  if (post.postImages?.length) {
     for (let i = 0; i < post.postImages.length; i++) {
       const img = post.postImages[i];
       const ext = img.url.includes(".gif") ? "gif" : img.url.includes(".png") ? "png" : "jpg";
@@ -459,11 +472,40 @@ async function processPost(post, dirNumber, { skipTranslation = false } = {}) {
       if (!fs.existsSync(path.join(ASSETS_DIR, filename))) {
         console.log(`  Downloading image ${i + 1}/${post.postImages.length}...`);
         const result = await downloadFile(img.url, ASSETS_DIR, filename);
-        if (result) images.push(filename);
+        if (result) media.push({ type: "image", filename });
       } else {
-        images.push(filename);
+        media.push({ type: "image", filename });
       }
     }
+  }
+
+  if (post.postVideo?.videoUrl) {
+    const videoFile = `li-${postId}-video.mp4`;
+    if (!fs.existsSync(path.join(ASSETS_DIR, videoFile))) {
+      console.log(`  Downloading video...`);
+      const result = await downloadFile(post.postVideo.videoUrl, ASSETS_DIR, videoFile);
+      if (result) media.push({ type: "video", filename: videoFile });
+    } else {
+      media.push({ type: "video", filename: videoFile });
+    }
+  }
+
+  if (post.document?.transcribedDocumentUrl) {
+    const docFile = `li-${postId}-doc.pdf`;
+    if (!fs.existsSync(path.join(ASSETS_DIR, docFile))) {
+      console.log(`  Downloading document...`);
+      await downloadFile(post.document.transcribedDocumentUrl, ASSETS_DIR, docFile);
+    }
+    media.push({ type: "document", filename: docFile, title: post.document.title });
+  }
+
+  if (post.article?.image?.url) {
+    const articleImg = `li-${postId}-article.jpg`;
+    if (!fs.existsSync(path.join(ASSETS_DIR, articleImg))) {
+      console.log(`  Downloading article image...`);
+      await downloadFile(post.article.image.url, ASSETS_DIR, articleImg);
+    }
+    media.push({ type: "article-image", filename: articleImg, title: post.article.title, link: post.article.link });
   }
 
   // Generate metadata (and translations unless --no-translate)
@@ -488,7 +530,7 @@ async function processPost(post, dirNumber, { skipTranslation = false } = {}) {
     pubDatetime,
     linkedinUrl,
     content: contentEn,
-    images,
+    media,
   });
 
   // Create Spanish version
@@ -500,45 +542,66 @@ async function processPost(post, dirNumber, { skipTranslation = false } = {}) {
     pubDatetime,
     linkedinUrl,
     content: contentEs,
-    images,
+    media,
   });
 
   return true;
 }
 
-/** Download all images from posts without creating blog posts. */
+/** Download a single file if it doesn't already exist. Returns true if downloaded or already existed. */
+async function downloadIfMissing(url, filename, stats) {
+  const destPath = path.join(ASSETS_DIR, filename);
+  if (fs.existsSync(destPath) && fs.statSync(destPath).size > 0) {
+    stats.skipped++;
+    return true;
+  }
+  console.log(`  Downloading ${filename}...`);
+  const result = await downloadFile(url, ASSETS_DIR, filename);
+  if (result) {
+    stats.downloaded++;
+    return true;
+  }
+  stats.failed++;
+  return false;
+}
+
+/** Download all media (images, videos, documents, article images) from posts. */
 async function downloadImagesOnly(posts) {
   fs.mkdirSync(ASSETS_DIR, { recursive: true });
-  let downloaded = 0;
-  let skipped = 0;
-  let failed = 0;
+  const stats = { downloaded: 0, skipped: 0, failed: 0 };
 
   for (const post of posts) {
     const postId = post.id || post.entityId;
-    if (!post.postImages?.length) continue;
 
-    for (let i = 0; i < post.postImages.length; i++) {
-      const img = post.postImages[i];
-      const ext = img.url.includes(".gif") ? "gif" : img.url.includes(".png") ? "png" : "jpg";
-      const filename = `li-${postId}-${i}.${ext}`;
-      const destPath = path.join(ASSETS_DIR, filename);
-
-      if (fs.existsSync(destPath) && fs.statSync(destPath).size > 0) {
-        skipped++;
-        continue;
+    // Post images
+    if (post.postImages?.length) {
+      for (let i = 0; i < post.postImages.length; i++) {
+        const img = post.postImages[i];
+        const ext = img.url.includes(".gif") ? "gif" : img.url.includes(".png") ? "png" : "jpg";
+        await downloadIfMissing(img.url, `li-${postId}-${i}.${ext}`, stats);
       }
+    }
 
-      console.log(`  Downloading ${filename}...`);
-      const result = await downloadFile(img.url, ASSETS_DIR, filename);
-      if (result) {
-        downloaded++;
-      } else {
-        failed++;
+    // Videos
+    if (post.postVideo?.videoUrl) {
+      await downloadIfMissing(post.postVideo.videoUrl, `li-${postId}-video.mp4`, stats);
+      if (post.postVideo.thumbnailUrl) {
+        await downloadIfMissing(post.postVideo.thumbnailUrl, `li-${postId}-thumb.jpg`, stats);
       }
+    }
+
+    // Documents (PDF carousel)
+    if (post.document?.transcribedDocumentUrl) {
+      await downloadIfMissing(post.document.transcribedDocumentUrl, `li-${postId}-doc.pdf`, stats);
+    }
+
+    // Article preview images
+    if (post.article?.image?.url) {
+      await downloadIfMissing(post.article.image.url, `li-${postId}-article.jpg`, stats);
     }
   }
 
-  console.log(`\nImages done: ${downloaded} downloaded, ${skipped} already existed, ${failed} failed.`);
+  console.log(`\nMedia done: ${stats.downloaded} downloaded, ${stats.skipped} already existed, ${stats.failed} failed.`);
 }
 
 async function main() {
