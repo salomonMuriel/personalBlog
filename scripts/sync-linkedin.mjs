@@ -19,6 +19,15 @@ import https from "node:https";
 import http from "node:http";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+// Load .env file if present (Node 22 has --env-file but this works without flags)
+const envPath = path.resolve(__dirname, "..", ".env");
+if (fs.existsSync(envPath)) {
+  for (const line of fs.readFileSync(envPath, "utf-8").split("\n")) {
+    const match = line.match(/^\s*([^#=]+?)\s*=\s*(.*)\s*$/);
+    if (match && !process.env[match[1]]) process.env[match[1]] = match[2];
+  }
+}
 const ROOT = path.resolve(__dirname, "..");
 const BLOG_EN = path.join(ROOT, "src/content/blog/en");
 const BLOG_ES = path.join(ROOT, "src/content/blog/es");
@@ -150,89 +159,124 @@ function detectLanguage(text) {
   return spanishCount >= 4 ? "es" : "en";
 }
 
-/** Call LLM via OpenRouter for translation and metadata generation. */
-async function callLLM(prompt) {
+/** Call LLM via OpenRouter with retry logic. Returns parsed JSON. */
+async function callLLM(systemPrompt, userPrompt, retries = 3) {
   const apiKey = process.env.OPENROUTER_API_KEY;
   if (!apiKey) throw new Error("OPENROUTER_API_KEY environment variable is required");
 
   const body = JSON.stringify({
     model: "anthropic/claude-sonnet-4",
-    max_tokens: 4096,
-    messages: [{ role: "user", content: prompt }],
+    max_completion_tokens: 4096,
+    temperature: 0.3,
+    response_format: { type: "json_object" },
+    messages: [
+      { role: "system", content: systemPrompt },
+      { role: "user", content: userPrompt },
+    ],
   });
 
-  const res = await new Promise((resolve, reject) => {
-    const req = https.request(
-      "https://openrouter.ai/api/v1/chat/completions",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${apiKey}`,
-        },
-      },
-      response => {
-        let data = "";
-        response.on("data", chunk => (data += chunk));
-        response.on("end", () => {
-          if (response.statusCode >= 400) {
-            reject(new Error(`OpenRouter API error ${response.statusCode}: ${data.slice(0, 500)}`));
-          } else {
-            resolve(JSON.parse(data));
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    try {
+      const res = await new Promise((resolve, reject) => {
+        const req = https.request(
+          "https://openrouter.ai/api/v1/chat/completions",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${apiKey}`,
+              "HTTP-Referer": "https://www.salomonmuriel.com",
+              "X-Title": "Salomon Muriel Blog - LinkedIn Sync",
+            },
+          },
+          response => {
+            let data = "";
+            response.on("data", chunk => (data += chunk));
+            response.on("end", () => {
+              if (response.statusCode === 429 || response.statusCode >= 500) {
+                reject(new Error(`RETRYABLE: HTTP ${response.statusCode}: ${data.slice(0, 300)}`));
+              } else if (response.statusCode >= 400) {
+                reject(new Error(`OpenRouter API error ${response.statusCode}: ${data.slice(0, 500)}`));
+              } else {
+                resolve(JSON.parse(data));
+              }
+            });
           }
-        });
-      }
-    );
-    req.on("error", reject);
-    req.write(body);
-    req.end();
-  });
+        );
+        req.on("error", reject);
+        req.write(body);
+        req.end();
+      });
 
-  return res.choices[0].message.content;
+      const content = res.choices?.[0]?.message?.content;
+      if (!content) throw new Error("Empty response from OpenRouter");
+      return JSON.parse(content);
+    } catch (err) {
+      const isRetryable = err.message.startsWith("RETRYABLE") || err.code === "ECONNRESET";
+      if (isRetryable && attempt < retries) {
+        const delay = Math.pow(2, attempt) * 1000; // 2s, 4s, 8s
+        console.warn(`  Retry ${attempt}/${retries} after ${delay}ms: ${err.message}`);
+        await new Promise(r => setTimeout(r, delay));
+        continue;
+      }
+      throw err;
+    }
+  }
 }
 
-/** Generate metadata and translation for a post using Claude. */
-async function generatePostMetadata(postContent, detectedLang, linkedinUrl) {
-  const prompt = `You are helping convert a LinkedIn post into a bilingual blog post. The post is written in ${detectedLang === "es" ? "Spanish" : "English"}.
+// ── Translation prompt ───────────────────────────────────
 
-Here is the LinkedIn post content:
----
-${postContent}
----
+const SYSTEM_PROMPT = `You are a bilingual content adapter for Salomón Muriel's personal blog (salomonmuriel.com). Salomón is a Colombian serial entrepreneur who writes about tech, entrepreneurship, leadership, education, parenting, and AI.
+
+Your job: take a LinkedIn post and produce a JSON object with both a Colombian Spanish version and an English version.
+
+## Translation guidelines
+
+**Colombian Spanish (es):**
+- Use natural Colombian Spanish — "tú" form, colloquial where the original is colloquial.
+- Use expressions natural to Colombia (e.g., "bacano", "parcero", "chimba", "marica" as filler, "de una", "qué nota") ONLY if the original already uses them. Do not add slang the author didn't use.
+- If the original IS in Spanish, keep it essentially unchanged — only light cleanup for blog readability (paragraph breaks, formatting). Do NOT rephrase or "improve" the author's words.
+
+**English (en):**
+- Natural, conversational American English.
+- Preserve the author's voice: direct, passionate, sometimes irreverent.
+- Adapt cultural references so English readers get the intent (add brief context in parentheses if needed, e.g., "parcero (Colombian slang for buddy)").
+- If the original IS in English, keep it essentially unchanged — only light cleanup for blog readability.
+
+## Key rules
+- PRESERVE the author's intent, humor, and personality above all. The translation should feel like Salomón wrote it in that language, not like it was machine-translated.
+- Keep ALL markdown links exactly as they appear (e.g., [Name](url)).
+- Keep emojis that add personality.
+- Do NOT add content that wasn't in the original. Do NOT remove opinions or strong statements.
+- Use markdown formatting: paragraph breaks, **bold**, *italic*, lists where appropriate.
+- The content fields should NOT include a title or LinkedIn link — those go in frontmatter.
+
+## Output format
+Respond with a single JSON object (no markdown fences, no commentary):
+{
+  "slug": "english-url-slug-max-8-words",
+  "title_es": "Título del post en español",
+  "title_en": "Post title in English",
+  "description_es": "1-2 oraciones de resumen en español",
+  "description_en": "1-2 sentence summary in English",
+  "tags": ["linkedin", "other-relevant-tags"],
+  "content_es": "Full post body in Colombian Spanish with markdown formatting",
+  "content_en": "Full post body in English with markdown formatting"
+}
+
+Tags must be lowercase. Always include "linkedin". Pick 2-4 more from: entrepreneurship, tech, leadership, education, parenting, ai, startups, innovation, culture, books, personal, colombia, business, productivity, hiring, consulting.`;
+
+/** Generate metadata and translation for a post using Claude via OpenRouter. */
+async function generatePostMetadata(postContent, detectedLang, linkedinUrl) {
+  const userPrompt = `Convert this LinkedIn post to a bilingual blog post. The original language is ${detectedLang === "es" ? "Colombian Spanish" : "English"}.
 
 LinkedIn URL: ${linkedinUrl}
 
-Please provide the following as a JSON object (no markdown code fences, just raw JSON):
-{
-  "slug": "a-url-friendly-slug-for-this-post-in-english (max 8 words, lowercase, hyphens)",
-  "title_es": "Spanish title for the blog post (compelling, not just the first line)",
-  "title_en": "English title for the blog post",
-  "description_es": "1-2 sentence Spanish description/summary",
-  "description_en": "1-2 sentence English description/summary",
-  "tags": ["tag1", "tag2", "tag3"],
-  "content_es": "The full post content in Spanish (if original is Spanish, clean it up slightly for blog format; if English, translate it)",
-  "content_en": "The full post content in English (if original is English, clean it up slightly for blog format; if Spanish, translate it)"
-}
+--- POST CONTENT ---
+${postContent}
+--- END POST CONTENT ---`;
 
-Important rules:
-- Keep the original voice and tone - this is Salomon Muriel's personal blog
-- The content should feel natural as a blog post, not like a LinkedIn copy-paste
-- Preserve all markdown links that exist in the content
-- Keep emojis if they add personality
-- Tags should be lowercase, relevant topics (e.g., "entrepreneurship", "tech", "leadership", "education", "parenting", "AI")
-- Always include "linkedin" as one of the tags
-- The slug should be descriptive and in English
-- For content_es and content_en: Do NOT include the title, do NOT include the LinkedIn link (those go in frontmatter). Just the body text.
-- Use markdown formatting where appropriate (paragraphs, bold, italic, lists)`;
-
-  const response = await callLLM(prompt);
-
-  // Parse JSON from response, handling potential markdown fences
-  let jsonStr = response.trim();
-  if (jsonStr.startsWith("```")) {
-    jsonStr = jsonStr.replace(/^```(?:json)?\n?/, "").replace(/\n?```$/, "");
-  }
-  return JSON.parse(jsonStr);
+  return await callLLM(SYSTEM_PROMPT, userPrompt);
 }
 
 /** Create an MDX blog post file. */
