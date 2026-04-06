@@ -1,15 +1,14 @@
 ---
-import { getCollection } from "astro:content";
 import Now from "@layouts/NowLayout.astro";
 import type { Lang } from "@i18n/ui";
-import { getCollectionName } from "@i18n/utils";
+import { getLocalizedCollection } from "@i18n/utils";
 
 export function getStaticPaths() {
   return [{ params: { lang: "en" } }, { params: { lang: "es" } }];
 }
 
 const lang = Astro.params.lang as Lang;
-const nows = await getCollection(getCollectionName(lang, "now"));
+const nows = await getLocalizedCollection(lang, "now");
 const sortedNows = nows.sort((a, b) => b.data.date - a.data.date);
 ---
 

@@ -1,15 +1,12 @@
 ---
-import { getCollection } from "astro:content";
 import { SITE } from "@config";
 import Layout from "@layouts/Layout.astro";
 import Main from "@layouts/Main.astro";
 import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
-import SearchBar from "@components/Search";
-import getSortedPosts from "@utils/getSortedPosts";
-import { t } from "@i18n/utils";
+import SearchBar from "@components/Search.astro";
+import { t, getLocalizedCollection } from "@i18n/utils";
 import type { Lang } from "@i18n/ui";
-import { getCollectionName } from "@i18n/utils";
 
 export function getStaticPaths() {
   return [{ params: { lang: "en" } }, { params: { lang: "es" } }];
@@ -17,11 +14,14 @@ export function getStaticPaths() {
 
 const lang = Astro.params.lang as Lang;
 
-const posts = await getCollection(
-  getCollectionName(lang, "blog"),
-  ({ data }) => !data.draft
-);
-const sortedPosts = getSortedPosts(posts);
+const posts = await getLocalizedCollection(lang, "blog");
+const sortedPosts = posts
+  .filter(({ data }) => !data.draft)
+  .sort(
+    (a, b) =>
+      new Date(b.data.modDatetime ?? b.data.pubDatetime).getTime() -
+      new Date(a.data.modDatetime ?? a.data.pubDatetime).getTime()
+  );
 
 const searchList = sortedPosts.map(({ data, id }) => ({
   title: data.title,
@@ -34,7 +34,7 @@ const searchList = sortedPosts.map(({ data, id }) => ({
 <Layout title={`${t(lang, "search.title")} | ${SITE.title}`} lang={lang}>
   <Header activeNav="search" lang={lang} />
   <Main pageTitle={t(lang, "search.title")} pageDesc={t(lang, "search.desc")}>
-    <SearchBar client:load searchList={searchList} lang={lang} />
+    <SearchBar searchList={searchList} lang={lang} />
   </Main>
   <Footer lang={lang} />
 </Layout>

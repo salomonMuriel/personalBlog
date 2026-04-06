@@ -1,6 +1,8 @@
 import { defineCollection, z } from "astro:content";
 import { glob } from "astro/loaders";
 
+// ── Schemas ──────────────────────────────────────────────
+
 const blogSchema = z.object({
   author: z.string().default("Salomon Muriel"),
   pubDatetime: z.date(),
@@ -14,16 +16,6 @@ const blogSchema = z.object({
   canonicalURL: z.string().optional(),
 });
 
-const blog = defineCollection({
-  loader: glob({ pattern: "**/*.{md,mdx}", base: "src/content/blog" }),
-  schema: blogSchema,
-});
-
-const blogEs = defineCollection({
-  loader: glob({ pattern: "**/*.{md,mdx}", base: "src/content/blog-es" }),
-  schema: blogSchema,
-});
-
 const ideasSchema = z.object({
   title: z.string(),
   description: z.string().optional(),
@@ -34,29 +26,9 @@ const ideasSchema = z.object({
   draft: z.boolean().optional(),
 });
 
-const ideas = defineCollection({
-  loader: glob({ pattern: "**/*.{md,mdx}", base: "src/content/ideas" }),
-  schema: ideasSchema,
-});
-
-const ideasEs = defineCollection({
-  loader: glob({ pattern: "**/*.{md,mdx}", base: "src/content/ideas-es" }),
-  schema: ideasSchema,
-});
-
 const nowSchema = z.object({
   header: z.string(),
   date: z.number(),
-});
-
-const now = defineCollection({
-  loader: glob({ pattern: "**/*.{md,mdx}", base: "src/content/now" }),
-  schema: nowSchema,
-});
-
-const nowEs = defineCollection({
-  loader: glob({ pattern: "**/*.{md,mdx}", base: "src/content/now-es" }),
-  schema: nowSchema,
 });
 
 const talksSchema = z.object({
@@ -77,34 +49,45 @@ const talksSchema = z.object({
   embed_pdf: z.boolean().optional(),
 });
 
-const talks = defineCollection({
-  loader: glob({ pattern: "**/*.{md,mdx}", base: "src/content/talks" }),
-  schema: talksSchema,
-});
-
-const talksEs = defineCollection({
-  loader: glob({ pattern: "**/*.{md,mdx}", base: "src/content/talks-es" }),
-  schema: talksSchema,
-});
-
 const pagesSchema = z.object({
   title: z.string(),
   description: z.string().optional(),
 });
+
+// ── Factory: one collection per (type, lang) pair ────────
+
+function localizedCollection<S extends z.ZodTypeAny>(base: string, schema: S) {
+  const make = (lang: string) =>
+    defineCollection({
+      loader: glob({
+        pattern: "**/*.{md,mdx}",
+        base: `src/content/${base}/${lang}`,
+      }),
+      schema,
+    });
+  return { en: make("en"), es: make("es") };
+}
+
+const blog = localizedCollection("blog", blogSchema);
+const ideas = localizedCollection("ideas", ideasSchema);
+const now = localizedCollection("now", nowSchema);
+const talks = localizedCollection("talks", talksSchema);
 
 const pages = defineCollection({
   loader: glob({ pattern: "**/*.{md,mdx}", base: "src/content/pages" }),
   schema: pagesSchema,
 });
 
+// ── Exports ──────────────────────────────────────────────
+
 export const collections = {
-  blog,
-  "blog-es": blogEs,
-  ideas,
-  "ideas-es": ideasEs,
-  now,
-  "now-es": nowEs,
-  talks,
-  "talks-es": talksEs,
+  "blog-en": blog.en,
+  "blog-es": blog.es,
+  "ideas-en": ideas.en,
+  "ideas-es": ideas.es,
+  "now-en": now.en,
+  "now-es": now.es,
+  "talks-en": talks.en,
+  "talks-es": talks.es,
   pages,
 };

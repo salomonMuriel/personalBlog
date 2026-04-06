@@ -1,0 +1,137 @@
+---
+import LinkButton from "@components/LinkButton.astro";
+import { t } from "@i18n/utils";
+import type { Lang } from "@i18n/ui";
+
+interface Props {
+  lang: Lang;
+  latestTalk?: { id: string; data: { title: string; description: string } };
+}
+
+const { lang, latestTalk } = Astro.props;
+---
+
+<section id="speaking">
+  <h2>{t(lang, "speaking.title")}</h2>
+  <p class="speaking-intro">
+    {t(lang, "speaking.intro")}
+  </p>
+
+  <div class="speaking-topics">
+    <h3 class="topics-title">{t(lang, "speaking.topicsTitle")}</h3>
+    <ul class="topics-list">
+      <li>
+        🤖 <strong>{t(lang, "speaking.topic1Title")}</strong> - {
+          t(lang, "speaking.topic1Desc")
+        }
+      </li>
+      <li>
+        📊 <strong>{t(lang, "speaking.topic2Title")}</strong> - {
+          t(lang, "speaking.topic2Desc")
+        }
+      </li>
+      <li>
+        🚀 <strong>{t(lang, "speaking.topic3Title")}</strong> - {
+          t(lang, "speaking.topic3Desc")
+        }
+      </li>
+      <li>
+        🏗️ <strong>{t(lang, "speaking.topic4Title")}</strong> - {
+          t(lang, "speaking.topic4Desc")
+        }
+      </li>
+    </ul>
+  </div>
+
+  {
+    latestTalk && (
+      <div class="recent-talk-highlight">
+        <h3 class="recent-talk-title">{t(lang, "speaking.recentTalk")}</h3>
+        <div class="talk-card-featured">
+          <h4 class="talk-card-title">{latestTalk.data.title}</h4>
+          <p class="talk-card-desc">{latestTalk.data.description}</p>
+          <LinkButton
+            href={`/${lang}/talks/${latestTalk.id}/`}
+            className="btn-talk-view"
+          >
+            {t(lang, "speaking.viewPresentation")}
+          </LinkButton>
+        </div>
+      </div>
+    )
+  }
+
+  <div class="speaking-cta-wrapper">
+    <p class="speaking-cta-text">
+      {t(lang, "speaking.ctaText")}
+    </p>
+    <button
+      data-cal-namespace="talks-booking"
+      data-cal-link="salomuriel/talks"
+      data-cal-config='{"layout":"month_view"}'
+      class="btn-speaking-primary"
+    >
+      {t(lang, "speaking.ctaButton")}
+    </button>
+    <div class="mt-2">
+      <LinkButton href={`/${lang}/talks/`} className="btn-speaking-secondary">
+        {t(lang, "speaking.seeAll")}
+      </LinkButton>
+    </div>
+  </div>
+</section>
+
+<style>
+  @reference "../../styles/base.css";
+  #speaking {
+    @apply pb-6 pt-6;
+  }
+  #speaking h2 {
+    @apply text-2xl sm:text-3xl font-bold tracking-wide mb-3;
+  }
+  .speaking-intro {
+    @apply text-base sm:text-lg mb-6 leading-relaxed;
+  }
+  .speaking-topics {
+    @apply mb-6;
+  }
+  .topics-title {
+    @apply text-lg font-semibold mb-3 text-skin-accent;
+  }
+  .topics-list {
+    @apply list-none space-y-2 ml-0;
+  }
+  .topics-list li {
+    @apply text-sm sm:text-base leading-relaxed;
+  }
+  .recent-talk-highlight {
+    @apply my-6;
+  }
+  .recent-talk-title {
+    @apply text-lg font-semibold mb-3 text-skin-accent;
+  }
+  .talk-card-featured {
+    @apply border-2 border-skin-accent rounded-lg p-5 bg-skin-card-muted;
+  }
+  .talk-card-title {
+    @apply text-xl font-bold mb-2;
+  }
+  .talk-card-desc {
+    @apply text-sm mb-4 leading-relaxed;
+  }
+  .btn-talk-view {
+    @apply inline-block rounded-lg border-2 border-skin-accent px-4 py-2 text-sm font-semibold text-skin-accent no-underline hover:bg-skin-accent hover:text-skin-inverted transition-all;
+  }
+  .speaking-cta-wrapper {
+    @apply mt-6 text-center p-6 bg-skin-card-muted rounded-lg;
+  }
+  .speaking-cta-text {
+    @apply text-base sm:text-lg font-medium mb-4;
+  }
+  .btn-speaking-primary {
+    @apply inline-block rounded-lg bg-skin-accent px-6 py-3 text-lg font-semibold text-skin-inverted hover:bg-skin-accent/90 transition-all shadow-md cursor-pointer border-0;
+  }
+  .btn-speaking-secondary {
+    @apply inline-block rounded-lg border-2 border-skin-line px-4 py-2 text-sm font-medium text-skin-base no-underline hover:border-skin-accent hover:text-skin-accent transition-all;
+  }
+</style>

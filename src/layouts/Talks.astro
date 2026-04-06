@@ -1,12 +1,11 @@
 ---
-import { getCollection } from "astro:content";
 import Layout from "@layouts/Layout.astro";
 import Main from "@layouts/Main.astro";
 import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
-import Card from "@components/Card";
+import Card from "@components/Card.astro";
 import { SITE } from "@config";
-import { t, getCollectionName } from "@i18n/utils";
+import { t, getLocalizedCollection } from "@i18n/utils";
 import type { Lang } from "@i18n/ui";
 import { defaultLang } from "@i18n/ui";
 
@@ -16,7 +15,7 @@ export interface Props {
 
 const { lang = defaultLang } = Astro.props;
 
-const talks = await getCollection(getCollectionName(lang, "talks"));
+const talks = await getLocalizedCollection(lang, "talks");
 
 const sortedTalks = talks
   .sort(

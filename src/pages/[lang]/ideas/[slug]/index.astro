@@ -1,8 +1,8 @@
 ---
-import { type CollectionEntry, getCollection } from "astro:content";
+import { type CollectionEntry } from "astro:content";
 import Idea from "@layouts/IdeasLayout.astro";
 import type { Lang } from "@i18n/ui";
-import { getCollectionName } from "@i18n/utils";
+import { getLocalizedCollection } from "@i18n/utils";
 
 export interface Props {
   idea: CollectionEntry<"ideas">;
@@ -14,8 +14,7 @@ export async function getStaticPaths() {
   const paths = [];
 
   for (const lang of langs) {
-    const collection = getCollectionName(lang, "ideas");
-    const ideas = await getCollection(collection);
+    const ideas = await getLocalizedCollection(lang, "ideas");
     paths.push(
       ...ideas.map(idea => ({
         params: { lang, slug: idea.id },

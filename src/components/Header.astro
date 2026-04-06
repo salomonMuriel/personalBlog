@@ -3,8 +3,7 @@ import { LOGO_IMAGE, SITE } from "@config";
 import Hr from "./Hr.astro";
 import LinkButton from "./LinkButton.astro";
 import LanguageSwitcher from "./LanguageSwitcher.astro";
-import { getCollection } from "astro:content";
-import { t, getCollectionName } from "@i18n/utils";
+import { t, getLocalizedCollection } from "@i18n/utils";
 import type { Lang } from "@i18n/ui";
 import { defaultLang } from "@i18n/ui";
 const { lightAndDarkMode } = SITE;
@@ -28,11 +27,10 @@ export interface Props {
 
 const { activeNav, lang = defaultLang } = Astro.props;
 
-const posts = await getCollection(
-  getCollectionName(lang, "blog"),
+const posts = (await getLocalizedCollection(lang, "blog")).filter(
   ({ data }) => !data.draft
 );
-const talks = await getCollection(getCollectionName(lang, "talks"));
+const talks = await getLocalizedCollection(lang, "talks");
 
 const prefix = `/${lang}`;
 ---

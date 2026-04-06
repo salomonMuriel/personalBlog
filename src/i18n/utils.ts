@@ -1,4 +1,5 @@
 import { ui, defaultLang, type Lang } from "./ui";
+import { getCollection } from "astro:content";
 
 export function getLangFromUrl(url: URL): Lang {
   const [, lang] = url.pathname.split("/");
@@ -14,13 +15,33 @@ export function t(
 }
 
 export function getLocalizedPath(lang: Lang, path: string): string {
-  // Ensure path starts with /
   const cleanPath = path.startsWith("/") ? path : `/${path}`;
   return `/${lang}${cleanPath}`;
 }
 
-export function getCollectionName(lang: Lang, baseName: string): string {
-  return lang === "es" ? `${baseName}-es` : baseName;
+/**
+ * Type-safe map from (base collection name, lang) → actual collection key.
+ * Each collection only contains entries for that language, with clean IDs.
+ */
+const collectionMap = {
+  blog: { en: "blog-en", es: "blog-es" },
+  ideas: { en: "ideas-en", es: "ideas-es" },
+  now: { en: "now-en", es: "now-es" },
+  talks: { en: "talks-en", es: "talks-es" },
+} as const;
+
+type BaseCollection = keyof typeof collectionMap;
+type CollectionKey<T extends BaseCollection> = (typeof collectionMap)[T][Lang];
+
+/**
+ * Fetch the language-specific collection. No runtime filtering — Astro only
+ * loads entries from the matching lang directory. IDs are clean slugs.
+ */
+export function getLocalizedCollection<T extends BaseCollection>(
+  lang: Lang,
+  name: T
+) {
+  return getCollection(collectionMap[name][lang] as CollectionKey<T>);
 }
 
 export function stripLangFromPath(pathname: string): string {
