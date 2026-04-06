@@ -10,9 +10,9 @@ export default (authorPhoto: string) => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        fontFamily: "DM Sans",
       }}
     >
-      {/* Main card with box shadow */}
       <div
         style={{
           border: "4px solid #cc2b2b",
@@ -32,9 +32,10 @@ export default (authorPhoto: string) => {
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between",
-            margin: "20px",
-            width: "90%",
-            height: "90%",
+            padding: "28px 32px",
+            width: "100%",
+            height: "100%",
+            boxSizing: "border-box",
           }}
         >
           <div
@@ -43,8 +44,7 @@ export default (authorPhoto: string) => {
               flexDirection: "row",
               alignItems: "center",
               justifyContent: "space-between",
-              height: "90%",
-              maxHeight: "90%",
+              flexGrow: 1,
               overflow: "hidden",
             }}
           >
@@ -59,34 +59,43 @@ export default (authorPhoto: string) => {
             >
               <p
                 style={{
-                  fontSize: 72,
-                  fontWeight: "bold",
-                  textWrap: "balance",
+                  fontFamily: "Syne",
+                  fontSize: 68,
+                  fontWeight: 700,
+                  margin: 0,
                   letterSpacing: "-0.01em",
                 }}
               >
                 {SITE.title}
               </p>
-              <p style={{ fontSize: 28, color: "#555" }}>{SITE.desc}</p>
+              <p
+                style={{
+                  fontFamily: "DM Sans",
+                  fontSize: 28,
+                  color: "#555555",
+                  margin: 0,
+                  marginTop: 12,
+                }}
+              >
+                {SITE.desc}
+              </p>
             </div>
             {authorPhoto && (
               <div
                 style={{
-                  width: 220,
-                  height: 220,
+                  width: 200,
+                  height: 200,
                   borderRadius: "50%",
                   overflow: "hidden",
                   flexShrink: 0,
                   display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
                 }}
               >
                 <img
                   src={authorPhoto}
                   alt="Salomon"
-                  width={220}
-                  height={220}
+                  width={200}
+                  height={200}
                   style={{ objectFit: "cover" }}
                 />
               </div>
@@ -96,15 +105,15 @@ export default (authorPhoto: string) => {
             style={{
               display: "flex",
               justifyContent: "flex-end",
-              width: "100%",
-              marginBottom: "8px",
-              fontSize: 28,
+              flexShrink: 0,
+              paddingTop: "16px",
             }}
           >
             <span
               style={{
-                overflow: "hidden",
-                fontWeight: "bold",
+                fontFamily: "Syne",
+                fontWeight: 700,
+                fontSize: 24,
                 color: "#cc2b2b",
                 letterSpacing: "0.02em",
               }}
