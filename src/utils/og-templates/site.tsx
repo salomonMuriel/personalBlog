@@ -1,10 +1,10 @@
 import { SITE } from "@config";
 
-export default () => {
+export default (authorPhoto: string) => {
   return (
     <div
       style={{
-        background: "rgb(17, 17, 16)",
+        background: "#ffffff",
         width: "100%",
         height: "100%",
         display: "flex",
@@ -12,34 +12,19 @@ export default () => {
         justifyContent: "center",
       }}
     >
+      {/* Main card with box shadow */}
       <div
         style={{
-          position: "absolute",
-          top: "-1px",
-          right: "-1px",
-          border: "4px solid rgb(204, 43, 43)",
-          background: "rgb(17, 17, 16)",
-          opacity: "0.9",
+          border: "4px solid #cc2b2b",
+          background: "#ffffff",
           borderRadius: "4px",
+          boxShadow: "8px 8px 0px #cc2b2b",
           display: "flex",
           justifyContent: "center",
           margin: "2.5rem",
           width: "88%",
           height: "80%",
-        }}
-      />
-
-      <div
-        style={{
-          border: "4px solid rgb(204, 43, 43)",
-          background: "rgb(17, 17, 16)",
-          borderRadius: "4px",
-          display: "flex",
-          justifyContent: "center",
-          margin: "2rem",
-          width: "88%",
-          height: "80%",
-          color: "rgb(245, 244, 240)",
+          color: "#111110",
         }}
       >
         <div
@@ -55,53 +40,57 @@ export default () => {
           <div
             style={{
               display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
+              flexDirection: "row",
               alignItems: "center",
+              justifyContent: "space-between",
               height: "90%",
               maxHeight: "90%",
               overflow: "hidden",
-              textAlign: "center",
             }}
           >
             <div
-              style={{ display: "flex", flexDirection: "row", height: "100%" }}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                flexShrink: 1,
+                marginRight: 40,
+              }}
             >
-              <div
+              <p
                 style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
+                  fontSize: 72,
+                  fontWeight: "bold",
+                  textWrap: "balance",
+                  letterSpacing: "-0.01em",
                 }}
               >
-                <p style={{ fontSize: 72, fontWeight: "bold" }}>
-                  {SITE.title} 🚀
-                </p>
-                <p style={{ fontSize: 28 }}>{SITE.desc}</p>
-              </div>
+                {SITE.title}
+              </p>
+              <p style={{ fontSize: 28, color: "#555" }}>{SITE.desc}</p>
+            </div>
+            {authorPhoto && (
               <div
                 style={{
-                  width: 250,
-                  height: 250,
+                  width: 220,
+                  height: 220,
                   borderRadius: "50%",
                   overflow: "hidden",
-                  marginLeft: 20,
+                  flexShrink: 0,
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
-                  marginTop: "auto",
-                  marginBottom: "auto",
                 }}
               >
                 <img
-                  src={`${SITE.website}salomon.jpg`}
+                  src={authorPhoto}
                   alt="Salomon"
-                  width={250}
-                  height={250}
+                  width={220}
+                  height={220}
                   style={{ objectFit: "cover" }}
                 />
               </div>
-            </div>
+            )}
           </div>
           <div
             style={{
@@ -112,7 +101,14 @@ export default () => {
               fontSize: 28,
             }}
           >
-            <span style={{ overflow: "hidden", fontWeight: "bold" }}>
+            <span
+              style={{
+                overflow: "hidden",
+                fontWeight: "bold",
+                color: "#cc2b2b",
+                letterSpacing: "0.02em",
+              }}
+            >
               {new URL(SITE.website).hostname}
             </span>
           </div>

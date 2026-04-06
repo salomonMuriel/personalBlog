@@ -1,11 +1,14 @@
 import { SITE } from "@config";
 import type { CollectionEntry } from "astro:content";
 
-export default (post: CollectionEntry<"ideas" | "blog">) => {
+export default (
+  post: CollectionEntry<"ideas" | "blog">,
+  authorPhoto: string
+) => {
   return (
     <div
       style={{
-        background: "rgb(17, 17, 16)",
+        background: "#ffffff",
         width: "100%",
         height: "100%",
         display: "flex",
@@ -13,31 +16,16 @@ export default (post: CollectionEntry<"ideas" | "blog">) => {
         justifyContent: "center",
       }}
     >
+      {/* Main card with box shadow replacing the offset-div trick */}
       <div
         style={{
-          position: "absolute",
-          top: "-1px",
-          right: "-1px",
-          border: "4px solid rgb(204, 43, 43)",
-          background: "rgb(17, 17, 16)",
-          opacity: "0.9",
+          border: "4px solid #cc2b2b",
+          background: "#ffffff",
           borderRadius: "4px",
+          boxShadow: "8px 8px 0px #cc2b2b",
           display: "flex",
           justifyContent: "center",
           margin: "2.5rem",
-          width: "88%",
-          height: "80%",
-        }}
-      />
-
-      <div
-        style={{
-          border: "4px solid rgb(204, 43, 43)",
-          background: "rgb(17, 17, 16)",
-          borderRadius: "4px",
-          display: "flex",
-          justifyContent: "center",
-          margin: "2rem",
           width: "88%",
           height: "80%",
         }}
@@ -50,15 +38,16 @@ export default (post: CollectionEntry<"ideas" | "blog">) => {
             margin: "20px",
             width: "90%",
             height: "90%",
-            color: "rgb(245, 244, 240)",
+            color: "#111110",
           }}
         >
           <p
             style={{
-              fontSize: 72,
+              fontSize: 68,
               fontWeight: "bold",
-              maxHeight: "84%",
-              overflow: "visible",
+              lineClamp: 4,
+              textWrap: "balance",
+              wordBreak: "break-word",
             }}
           >
             {post.data.title}
@@ -67,39 +56,44 @@ export default (post: CollectionEntry<"ideas" | "blog">) => {
             style={{
               display: "flex",
               justifyContent: "space-between",
-              alignItems: "flex-end",
+              alignItems: "center",
               width: "100%",
               marginBottom: "8px",
               background: "transparent",
               fontSize: 28,
             }}
           >
-            <span style={{ fontWeight: "bold", background: "transparent" }}>
-              {SITE.title}
-            </span>
-            <div
+            <span
               style={{
-                width: 180,
-                height: 180,
-                borderRadius: "50%",
-                overflow: "hidden",
-                marginLeft: 20,
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                marginTop: "auto",
-                marginBottom: "auto",
+                fontWeight: "bold",
                 background: "transparent",
+                color: "#cc2b2b",
+                letterSpacing: "0.02em",
               }}
             >
-              <img
-                src={`${SITE.website}salomon.jpg`}
-                alt="Salomon"
-                width={180}
-                height={180}
-                style={{ objectFit: "cover" }}
-              />
-            </div>
+              {SITE.title}
+            </span>
+            {authorPhoto && (
+              <div
+                style={{
+                  width: 160,
+                  height: 160,
+                  borderRadius: "50%",
+                  overflow: "hidden",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <img
+                  src={authorPhoto}
+                  alt="Salomon"
+                  width={160}
+                  height={160}
+                  style={{ objectFit: "cover" }}
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>
