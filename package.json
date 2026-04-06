@@ -15,7 +15,9 @@
     "cz": "cz",
     "prepare": "husky install",
     "lint": "eslint .",
-    "generate-pdf": "node scripts/generate-pdf.js"
+    "generate-pdf": "node scripts/generate-pdf.js",
+    "sync-linkedin": "node scripts/sync-linkedin.mjs",
+    "sync-linkedin:backfill": "node scripts/sync-linkedin.mjs --backfill"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.8",
