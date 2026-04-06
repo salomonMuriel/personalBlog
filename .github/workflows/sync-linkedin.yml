@@ -1,0 +1,40 @@
+name: Sync LinkedIn Posts
+
+on:
+  schedule:
+    # 2PM Colombia time (COT = UTC-5) = 7PM UTC
+    - cron: "0 19 * * *"
+  workflow_dispatch: # Allow manual trigger
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Sync LinkedIn posts
+        env:
+          APIFY_API_TOKEN: ${{ secrets.APIFY_API_TOKEN }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: node scripts/sync-linkedin.mjs
+
+      - name: Check for changes
+        id: changes
+        run: |
+          git diff --quiet && git diff --cached --quiet && echo "changed=false" >> $GITHUB_OUTPUT || echo "changed=true" >> $GITHUB_OUTPUT
+
+      - name: Commit and push new posts
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/content/blog/ src/assets/posts/blog/linkedin/ scripts/.linkedin-sync-state.json
+          git commit -m "chore: sync LinkedIn posts $(date -u +%Y-%m-%d)"
+          git push
