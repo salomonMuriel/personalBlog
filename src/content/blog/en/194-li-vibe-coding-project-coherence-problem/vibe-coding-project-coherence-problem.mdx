@@ -1,0 +1,34 @@
+---
+author: Salomon Muriel
+pubDatetime: 2026-02-03T14:32:36.238Z
+modDatetime: 2026-02-03T14:32:36.238Z
+title: "The Vibe-Coding Problem: No Coherence Between Projects"
+slug: vibe-coding-project-coherence-problem
+featured: false
+draft: false
+tags:
+  - linkedin
+  - tech
+  - ai
+  - productivity
+description: "Vibe-coding has a major coherence problem: each project ends up with its own stack, styles, and patterns, making it a nightmare to merge them. How are you handling this?"
+canonicalURL: https://www.linkedin.com/posts/smuriel_un-problema-del-vibe-coding-no-mantiene-activity-7424459800526114816-Fwg2
+---
+
+> *Originally posted on [LinkedIn](https://www.linkedin.com/posts/smuriel_un-problema-del-vibe-coding-no-mantiene-activity-7424459800526114816-Fwg2)*
+
+One big problem with vibe-coding — it doesn't maintain patterns and coherence across projects. I think it's one of the biggest UX opportunities to improve. Slightly technical post 👇
+
+The typical Lovable (or tool X) user workflow: I go in, build what I imagine, iterate over time.
+
+Then, if I want something else, I do the same. And again and again.
+
+But if I want to merge them, it's a horrible mess. Lovable and similar tools make it very hard (or impossible) to pass another repo so they can "combine" the code — styles, libraries, and patterns from each project can all be different.
+
+So you end up with things like a "central" project linking to 10 "satellite" projects, each with its own look and feel and patterns, each running on its own subdomain (!!!), no shared state (like login!!) between them — total chaos.
+
+With Claude Code (or similar tools) it's a different story — you can "limit" the context (context engineering, really) to sub-routes very easily and keep everything in the same repo, asking the agent to reference existing styles and patterns for whatever's being built next.
+
+Lately I've wanted to collaborate with non-tech colleagues who are building what they imagine — but the headache of merging the resulting code into the central repo makes me think twice.
+
+How do you handle this? In my case, I'm going to teach my colleagues to "vibe-code" using Claude Code directly on the central repo and have them submit PRs — but it should be easier than this. Don't Lovable and similar tools have a way to handle this yet?
