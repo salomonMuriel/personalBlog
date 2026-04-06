@@ -7,6 +7,7 @@
     "dev": "astro dev --host",
     "start": "astro dev",
     "build": "astro build && jampack ./dist",
+    "build:quiet": "bash scripts/build-quiet.sh",
     "preview": "astro preview",
     "sync": "astro sync",
     "astro": "astro",
