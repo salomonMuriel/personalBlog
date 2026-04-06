@@ -119,7 +119,7 @@ function getNextDirNumber(blogDir) {
   return max + 1;
 }
 
-/** Build post content with profile mention links resolved. */
+/** Build post content with all inline links resolved to markdown. */
 function buildPostContent(post) {
   let content = post.content || "";
   const attrs = post.contentAttributes || [];
@@ -128,19 +128,46 @@ function buildPostContent(post) {
   const sorted = [...attrs].sort((a, b) => b.start - a.start);
 
   for (const attr of sorted) {
+    const mentionText = content.slice(attr.start, attr.start + attr.length);
+    let replacement = null;
+
     if (attr.type === "PROFILE_MENTION" && attr.profile) {
-      const mentionText = content.slice(attr.start, attr.start + attr.length);
       const profileUrl = `https://www.linkedin.com/in/${attr.profile.publicIdentifier}`;
-      const replacement = `[${mentionText}](${profileUrl})`;
-      content = content.slice(0, attr.start) + replacement + content.slice(attr.start + attr.length);
-    } else if (attr.type === "HYPERLINK" && attr.hyperlink) {
-      const linkText = content.slice(attr.start, attr.start + attr.length);
-      const replacement = `[${linkText}](${attr.hyperlink})`;
+      replacement = `[${mentionText}](${profileUrl})`;
+    } else if (attr.type === "COMPANY_NAME" && attr.company) {
+      replacement = `[${mentionText}](${attr.company.linkedinUrl})`;
+    } else if (attr.type === "TEXT_LINK") {
+      const url = attr.textLink || attr.hyperlink;
+      if (url) replacement = `[${mentionText}](${url})`;
+    }
+
+    if (replacement) {
       content = content.slice(0, attr.start) + replacement + content.slice(attr.start + attr.length);
     }
   }
 
   return content;
+}
+
+/** Build a metadata summary of attached media for the LLM prompt. */
+function buildMediaContext(post) {
+  const parts = [];
+
+  if (post.postImages?.length) {
+    parts.push(`[${post.postImages.length} image(s) attached]`);
+  }
+  if (post.article) {
+    const a = post.article;
+    parts.push(`[Linked article: "${a.title || "Untitled"}"${a.link ? ` — ${a.link}` : ""}${a.subtitle ? ` (${a.subtitle})` : ""}]`);
+  }
+  if (post.postVideo) {
+    parts.push(`[Video attached]`);
+  }
+  if (post.document) {
+    parts.push(`[Document carousel: "${post.document.title || "Untitled"}"]`);
+  }
+
+  return parts.length ? "\n\n" + parts.join("\n") : "";
 }
 
 /** Detect language - simple heuristic based on common Spanish words. */
@@ -264,16 +291,14 @@ Respond with a single JSON object (no markdown fences, no commentary):
   "content_en": "Full post body in English with markdown formatting"
 }
 
-Tags must be lowercase. Always include "linkedin". Pick 2-4 more from: entrepreneurship, tech, leadership, education, parenting, ai, startups, innovation, culture, books, personal, colombia, business, productivity, hiring, consulting.`;
+Tags must be lowercase. Always include "linkedin". Pick 2-4 more from: entrepreneurship, tech, leadership, education, parenting, ai, startups, innovation, culture, books, personal, colombia, business, productivity, hiring, consulting, balance.`;
 
 /** Generate metadata and translation for a post using Claude via OpenRouter. */
-async function generatePostMetadata(postContent, detectedLang, linkedinUrl) {
+async function generatePostMetadata(postContent, mediaContext, detectedLang) {
   const userPrompt = `Convert this LinkedIn post to a bilingual blog post. The original language is ${detectedLang === "es" ? "Colombian Spanish" : "English"}.
 
-LinkedIn URL: ${linkedinUrl}
-
 --- POST CONTENT ---
-${postContent}
+${postContent}${mediaContext}
 --- END POST CONTENT ---`;
 
   return await callLLM(SYSTEM_PROMPT, userPrompt);
@@ -312,9 +337,9 @@ canonicalURL: ${linkedinUrl}
   const fileContent = `${frontmatter}
 
 ${linkedinNotice}
-${imageMarkdown}
+
 ${content}
-`;
+${imageMarkdown}`;
 
   fs.writeFileSync(path.join(postDir, fileName), fileContent);
   console.log(`  Created: ${path.join(dirName, fileName)}`);
@@ -429,7 +454,8 @@ async function processPost(post, dirNumber) {
 
   // Generate metadata and translations via Claude
   console.log("  Generating metadata and translations...");
-  const metadata = await generatePostMetadata(processedContent, detectedLang, linkedinUrl);
+  const mediaContext = buildMediaContext(post);
+  const metadata = await generatePostMetadata(processedContent, mediaContext, detectedLang);
 
   const dirNum = String(dirNumber).padStart(3, "0");
   const dirName = `${dirNum}-li-${metadata.slug}`;
