@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "astro dev --host",
     "start": "astro dev",
-    "build": "astro build && jampack ./dist",
+    "build": "astro build && jampack ./dist --exclude 'posts/**'",
     "build:quiet": "bash scripts/build-quiet.sh",
     "preview": "astro preview",
     "sync": "astro sync",
@@ -17,7 +17,10 @@
     "lint": "eslint .",
     "generate-pdf": "node scripts/generate-pdf.js",
     "sync-linkedin": "node scripts/sync-linkedin.mjs",
-    "sync-linkedin:backfill": "node scripts/sync-linkedin.mjs --backfill"
+    "sync-linkedin:backfill": "node scripts/sync-linkedin.mjs --backfill",
+    "og:generate": "node scripts/generate-og-images.mjs",
+    "og:generate:force": "node scripts/generate-og-images.mjs --force",
+    "og:clear": "rm -rf public/posts/"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.8",

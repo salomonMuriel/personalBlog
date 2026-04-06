@@ -129,7 +129,7 @@ Social links configured in `SOCIALS` array (LinkedIn, WhatsApp, GitHub, etc.)
 - **View transitions** — Astro's ViewTransitions enabled
 - **RSS feed** — at `/rss.xml` (and `/es/rss.xml`)
 - **Sitemap** — auto-generated
-- **OG images** — site-level OG image at `/og.png`; posts fall back to `/posts/${title-slug}.png` (referenced in meta but not dynamically generated per post)
+- **OG images** — site-level OG image at `/og.png`; per-post images at `/posts/${title-slug}.png` pre-generated into `public/posts/` (see Build Optimization)
 - **Explore dropdown** — nav groups Ideas, Resources, Stack
 
 ## Utility Functions
@@ -158,5 +158,19 @@ Key utilities in `src/utils/`:
 
 Production builds:
 1. `astro build`
-2. Jampack post-processing (`@divriots/jampack`) — image optimization, asset compression
+2. Jampack post-processing (`@divriots/jampack`) — image optimization, asset compression (excludes `posts/` — OG images are pre-optimized)
 3. No PurgeCSS (removed; Tailwind 4 handles unused styles)
+
+### OG Image Pre-generation
+
+Post OG images are pre-generated as static PNGs in `public/posts/` rather than rendered at build time via Satori/Resvg. This keeps builds fast (~35s) even with hundreds of posts.
+
+- **New posts**: OG images are generated automatically by `scripts/sync-linkedin.mjs` during the daily LinkedIn sync and committed alongside the MDX files.
+- **Template changes**: If you modify `src/utils/og-templates/post.tsx`, regenerate all images and commit:
+  ```bash
+  npm run og:generate:force   # regenerate all ~500 images
+  git add public/posts/
+  ```
+- **Missing images**: The build endpoint (`src/pages/posts/[slug].png.ts`) falls back to generating and caching any images not found in `public/posts/`.
+- **Clear cache**: `npm run og:clear` deletes `public/posts/` — next build regenerates everything via the fallback.
+- **Fonts**: OG image fonts (DM Sans 400, Syne 700) are bundled locally at `src/assets/fonts/og/` — no CDN calls at build time.

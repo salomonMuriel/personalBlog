@@ -9,8 +9,8 @@ astro_output=$(npx astro build 2>&1) || {
     echo "$astro_output" | grep -E "ERROR|error" >&2
     exit 1
 }
-echo "$astro_output" | grep -E "\[build\]|\[vite\]"
+echo "$astro_output" | grep -E "\[build\]|\[vite\]" | grep -v "Skipping"
 
 echo ""
 echo "=== Jampack Optimization ==="
-npx jampack ./dist 2>&1 | tail -20
+npx jampack ./dist --exclude "posts/**" 2>&1 | tail -20

@@ -19,6 +19,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import https from "node:https";
 import http from "node:http";
+import { generateAndSaveOgImage } from "./generate-og-images.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -544,6 +545,17 @@ async function processPost(post, dirNumber, { skipTranslation = false } = {}) {
     content: contentEs,
     media,
   });
+
+  // Pre-generate OG images so builds don't have to render them via Satori
+  console.log(`  Generating OG images...`);
+  await generateAndSaveOgImage(metadata.title_en).catch(e =>
+    console.warn(`  OG image (en) failed: ${e.message}`)
+  );
+  if (metadata.title_es !== metadata.title_en) {
+    await generateAndSaveOgImage(metadata.title_es).catch(e =>
+      console.warn(`  OG image (es) failed: ${e.message}`)
+    );
+  }
 
   return true;
 }

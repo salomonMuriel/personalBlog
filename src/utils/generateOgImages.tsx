@@ -6,33 +6,11 @@ import { type CollectionEntry } from "astro:content";
 import postOgImage from "./og-templates/post";
 import siteOgImage from "./og-templates/site";
 
-const fetchFonts = async () => {
-  // Regular Font (DM Sans)
-  const fontFileRegular = await fetch(
-    "https://cdn.jsdelivr.net/fontsource/fonts/dm-sans@latest/latin-400-normal.woff"
-  );
-  const fontRegular: ArrayBuffer = await fontFileRegular.arrayBuffer();
-
-  // Bold Font (Syne)
-  const fontFileBold = await fetch(
-    "https://cdn.jsdelivr.net/fontsource/fonts/syne@latest/latin-700-normal.woff"
-  );
-  const fontBold: ArrayBuffer = await fontFileBold.arrayBuffer();
-
-  return { fontRegular, fontBold };
-};
-
-let fontRegular: ArrayBuffer;
-let fontBold: ArrayBuffer;
-try {
-  const fonts = await fetchFonts();
-  fontRegular = fonts.fontRegular;
-  fontBold = fonts.fontBold;
-} catch {
-  // Fallback: empty buffers when fonts can't be fetched (e.g., no network in CI)
-  fontRegular = new ArrayBuffer(0);
-  fontBold = new ArrayBuffer(0);
-}
+// Load fonts from local files — no CDN round-trips on every build
+const fontRegular = readFileSync(
+  resolve("./src/assets/fonts/og/dm-sans-400.woff")
+);
+const fontBold = readFileSync(resolve("./src/assets/fonts/og/syne-700.woff"));
 
 // Load author photo as base64 from local file to avoid network I/O during rendering
 let authorPhoto = "";
@@ -47,7 +25,6 @@ const options: SatoriOptions = {
   width: 1200,
   height: 630,
   embedFont: true,
-  pointScaleFactor: 2,
   fonts: [
     {
       name: "DM Sans",
