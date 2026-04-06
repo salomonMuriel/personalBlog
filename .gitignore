@@ -16,6 +16,10 @@ pnpm-debug.log*
 .env
 .env.production
 
+# LinkedIn sync temp files
+scripts/linkedin-backfill.json
+scripts/linkedin-test-*.json
+
 # macOS-specific files
 .DS_Store
 
