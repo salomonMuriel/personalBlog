@@ -22,7 +22,12 @@ For each post assigned to it:
    - `tags`: always include "linkedin", pick 2-4 more from: entrepreneurship, tech, leadership, education, parenting, ai, startups, innovation, culture, books, personal, colombia, business, productivity, hiring, consulting, balance
    - `content_es`: full post body in Colombian Spanish with markdown formatting
    - `content_en`: full post body in English with markdown formatting
-5. Images have already been downloaded to `src/assets/posts/blog/linkedin/li-{postId}-{index}.jpg`. For each post.postImages entry, reference the corresponding local file at the END of the post. Do NOT download images — they are already there.
+5. All media has already been downloaded to `src/assets/posts/blog/linkedin/`. Do NOT download anything — just reference the local files at the END of each post:
+   - Images: `li-{postId}-{index}.jpg` -> `![Post image](../../../../assets/posts/blog/linkedin/li-{postId}-{index}.jpg)`
+   - Videos: `li-{postId}-video.mp4` -> `<video controls src="../../../../assets/posts/blog/linkedin/li-{postId}-video.mp4" />`
+   - Documents: `li-{postId}-doc.pdf` -> `[Document Title](../../../../assets/posts/blog/linkedin/li-{postId}-doc.pdf)`
+   - Article images: `li-{postId}-article.jpg` -> `![Article title](../../../../assets/posts/blog/linkedin/li-{postId}-article.jpg)`
+   - Only reference media that exists for that post (check post.postImages, post.postVideo, post.document, post.article)
 6. Write MDX files to `src/content/blog/en/{dir}/{slug}.mdx` and `src/content/blog/es/{dir}/{slug}.mdx`
 
 ## Translation guidelines
