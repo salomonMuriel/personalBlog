@@ -5,7 +5,7 @@
  *
  * Environment variables:
  *   APIFY_API_TOKEN    – Apify API token
- *   ANTHROPIC_API_KEY  – Anthropic API key (for translation / metadata)
+ *   OPENROUTER_API_KEY – OpenRouter API key (for translation / metadata)
  *
  * Usage:
  *   node scripts/sync-linkedin.mjs                  # sync new posts since last run
@@ -150,26 +150,25 @@ function detectLanguage(text) {
   return spanishCount >= 4 ? "es" : "en";
 }
 
-/** Call Claude API for translation and metadata generation. */
-async function callClaude(prompt) {
-  const apiKey = process.env.ANTHROPIC_API_KEY;
-  if (!apiKey) throw new Error("ANTHROPIC_API_KEY environment variable is required");
+/** Call LLM via OpenRouter for translation and metadata generation. */
+async function callLLM(prompt) {
+  const apiKey = process.env.OPENROUTER_API_KEY;
+  if (!apiKey) throw new Error("OPENROUTER_API_KEY environment variable is required");
 
   const body = JSON.stringify({
-    model: "claude-sonnet-4-20250514",
+    model: "anthropic/claude-sonnet-4",
     max_tokens: 4096,
     messages: [{ role: "user", content: prompt }],
   });
 
   const res = await new Promise((resolve, reject) => {
     const req = https.request(
-      "https://api.anthropic.com/v1/messages",
+      "https://openrouter.ai/api/v1/chat/completions",
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "x-api-key": apiKey,
-          "anthropic-version": "2023-06-01",
+          Authorization: `Bearer ${apiKey}`,
         },
       },
       response => {
@@ -177,7 +176,7 @@ async function callClaude(prompt) {
         response.on("data", chunk => (data += chunk));
         response.on("end", () => {
           if (response.statusCode >= 400) {
-            reject(new Error(`Claude API error ${response.statusCode}: ${data.slice(0, 500)}`));
+            reject(new Error(`OpenRouter API error ${response.statusCode}: ${data.slice(0, 500)}`));
           } else {
             resolve(JSON.parse(data));
           }
@@ -189,7 +188,7 @@ async function callClaude(prompt) {
     req.end();
   });
 
-  return res.content[0].text;
+  return res.choices[0].message.content;
 }
 
 /** Generate metadata and translation for a post using Claude. */
@@ -226,7 +225,7 @@ Important rules:
 - For content_es and content_en: Do NOT include the title, do NOT include the LinkedIn link (those go in frontmatter). Just the body text.
 - Use markdown formatting where appropriate (paragraphs, bold, italic, lists)`;
 
-  const response = await callClaude(prompt);
+  const response = await callLLM(prompt);
 
   // Parse JSON from response, handling potential markdown fences
   let jsonStr = response.trim();
