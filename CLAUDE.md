@@ -43,11 +43,13 @@ npm run generate-pdf
 
 Defined in `src/content.config.ts` using a factory pattern for bilingual schemas. Collections live in `src/content/`:
 
-- **blog/** - Blog posts (bilingual MDX, many synced from LinkedIn)
-- **now/** - "Now" page updates (latest shown on homepage)
-- **talks/** - Conference/speaking engagements
-- **ideas/** - Business/project ideas
-- **pages/** - Static page content (About, Uses, Resources) as bilingual MDX
+- **blog/en/ + blog/es/** - Blog posts (bilingual MDX), exposed as `blog-en` and `blog-es` collections
+- **now/en/ + now/es/** - "Now" page updates (latest shown on homepage), exposed as `now-en` and `now-es`
+- **talks/en/ + talks/es/** - Conference/speaking engagements, exposed as `talks-en` and `talks-es`
+- **ideas/en/ + ideas/es/** - Business/project ideas, exposed as `ideas-en` and `ideas-es`
+- **pages/** - Static page content (About, Uses, Resources) as bilingual MDX using lang-suffixed filenames (e.g. `about-en.mdx`, `about-es.mdx`), single `pages` collection
+
+The factory function `localizedCollection()` creates `en`/`es` collection pairs automatically. Language separation is done by collection, not by a `lang` frontmatter field.
 
 ### Content Schema
 
@@ -58,19 +60,16 @@ Blog posts require the following frontmatter:
 - `modDatetime`: Date (optional)
 - `author`: string (defaults to site author)
 - `tags`: string[] (defaults to ["others"])
-- `lang`: `"en"` | `"es"` — content language
-- `translationKey`: string — links EN/ES pairs together
 - `featured`: boolean (optional)
 - `draft`: boolean (optional, excludes from production)
-- `ogImage`: image or string (optional, must be ≥1200x630px)
+- `ogImage`: string (optional, URL or path to image ≥1200x630px recommended)
 - `canonicalURL`: string (optional)
 
 ### Content Filtering
 
 Posts are filtered by `src/utils/getPosts.ts`:
-- Excludes drafts in production (`import.meta.env.PROD`)
-- Excludes scheduled posts (based on `SITE.scheduledPostMargin` - 15 minutes)
-- Filters by language (`lang` frontmatter field)
+- Excludes drafts
+- Language filtering is implicit — callers pass the appropriate lang-specific collection (e.g. `getLocalizedCollection(lang, "blog")` from `src/i18n/utils.ts`)
 
 ## Bilingual (i18n) System
 
@@ -78,7 +77,7 @@ Posts are filtered by `src/utils/getPosts.ts`:
 - **Root**: English served at `/` with client-side Spanish detection that soft-redirects to `/es/` for Spanish browsers
 - **Translation strings**: `src/i18n/ui.ts` (string map) + `src/i18n/utils.ts` (helpers)
 - **Language switcher**: `src/components/LanguageSwitcher.astro`
-- **Config**: `SITE.langTag` in `src/config.ts` sets supported BCP 47 tags
+- **Config**: `LOCALE.langTag` in `src/config.ts` sets supported BCP 47 tags
 
 ## LinkedIn Sync
 
@@ -91,13 +90,13 @@ Posts are filtered by `src/utils/getPosts.ts`:
 Site-wide settings in `src/config.ts`:
 
 ```typescript
-SITE.website          // Deployed domain
-SITE.author           // Default author name
-SITE.desc             // Site description
-SITE.postPerPage      // Pagination limit (currently 3)
-SITE.scheduledPostMargin  // Future post margin (15 min)
-SITE.lang             // Default html lang
-SITE.langTag          // Supported BCP 47 language tags
+SITE.website    // Deployed domain
+SITE.author     // Default author name
+SITE.desc       // Site description
+SITE.postPerPage  // Pagination limit (currently 3)
+
+LOCALE.lang     // Default html lang (e.g. "en")
+LOCALE.langTag  // Supported BCP 47 language tags (e.g. ["en-EN", "es-419"])
 ```
 
 Social links configured in `SOCIALS` array (LinkedIn, WhatsApp, GitHub, etc.)
@@ -106,8 +105,8 @@ Social links configured in `SOCIALS` array (LinkedIn, WhatsApp, GitHub, etc.)
 
 ### Page Structure
 - **Dynamic routes**: `[lang]` prefix for all bilingual pages (e.g., `/[lang]/posts/[slug]/`)
-- **Pagination**: `[page].astro` routes with `getPagination` utility
-- **Tag filtering**: `/[lang]/tags/[tag]/[page].astro`
+- **Pagination**: only tags pages use `[page].astro` at `/[lang]/tags/[tag]/[page].astro`
+- **Tag filtering**: `/[lang]/tags/[tag]/index.astro` and `/[lang]/tags/[tag]/[page].astro`
 
 ### Layouts Hierarchy
 - `Layout.astro` - Base layout: SEO, meta tags, Google Analytics, Cal.com integration, schema markup
@@ -130,17 +129,17 @@ Social links configured in `SOCIALS` array (LinkedIn, WhatsApp, GitHub, etc.)
 - **View transitions** — Astro's ViewTransitions enabled
 - **RSS feed** — at `/rss.xml` (and `/es/rss.xml`)
 - **Sitemap** — auto-generated
-- **OG images** — generated per post at `/posts/[slug]/index.png`
+- **OG images** — site-level OG image at `/og.png`; posts fall back to `/posts/${title-slug}.png` (referenced in meta but not dynamically generated per post)
 - **Explore dropdown** — nav groups Ideas, Resources, Stack
 
 ## Utility Functions
 
 Key utilities in `src/utils/`:
-- `getPosts.ts` — `getSortedPosts()`, `getPostsByTag()`, filtered by lang
-- `getUniqueTags.ts` — extracts unique tags
+- `getPosts.ts` — default export `getPosts(posts, options?)`: filters drafts, sorts by date, optional tag filter
+- `getUniqueTags.ts` — extracts unique tags from a post collection
 - `getReadingTime.ts` — estimates reading time
-- `slugify.ts` — URL-safe slugs
-- `utils.ts` — shared helpers including `getPagination()`
+- `slugify.ts` — URL-safe slugs (`slugifyStr`, `slugifyAll`)
+- `generateOgImages.tsx` — `generateOgImageForPost()` and `generateOgImageForSite()` via Satori
 
 ## Special Pages
 
