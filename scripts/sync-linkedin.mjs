@@ -8,8 +8,10 @@
  *   OPENROUTER_API_KEY – OpenRouter API key (for translation / metadata)
  *
  * Usage:
- *   node scripts/sync-linkedin.mjs                  # sync new posts since last run
- *   node scripts/sync-linkedin.mjs --backfill FILE  # import from a JSON file (Apify output)
+ *   node scripts/sync-linkedin.mjs                                  # sync new posts since last run
+ *   node scripts/sync-linkedin.mjs --backfill FILE                  # import from a JSON file (Apify output)
+ *   node scripts/sync-linkedin.mjs --backfill FILE --no-translate   # import without translating (reuses original content for both langs)
+ *   node scripts/sync-linkedin.mjs --backfill FILE --download-images-only  # only download images, no post creation
  */
 
 import fs from "node:fs";
@@ -293,15 +295,33 @@ Respond with a single JSON object (no markdown fences, no commentary):
 
 Tags must be lowercase. Always include "linkedin". Pick 2-4 more from: entrepreneurship, tech, leadership, education, parenting, ai, startups, innovation, culture, books, personal, colombia, business, productivity, hiring, consulting, balance.`;
 
+const SYSTEM_PROMPT_METADATA_ONLY = `You are a content assistant for Salomón Muriel's personal blog (salomonmuriel.com). Salomón is a Colombian serial entrepreneur.
+
+Your job: take a LinkedIn post and produce ONLY metadata for it — a slug, title, description, and tags. You do NOT need to translate or rewrite the content.
+
+## Output format
+Respond with a single JSON object (no markdown fences, no commentary):
+{
+  "slug": "english-url-slug-max-8-words",
+  "title_es": "Título del post en español (compelling, captures the essence)",
+  "title_en": "Post title in English",
+  "description_es": "1-2 oraciones de resumen en español",
+  "description_en": "1-2 sentence summary in English",
+  "tags": ["linkedin", "other-relevant-tags"]
+}
+
+Tags must be lowercase. Always include "linkedin". Pick 2-4 more from: entrepreneurship, tech, leadership, education, parenting, ai, startups, innovation, culture, books, personal, colombia, business, productivity, hiring, consulting, balance.`;
+
 /** Generate metadata and translation for a post using Claude via OpenRouter. */
-async function generatePostMetadata(postContent, mediaContext, detectedLang) {
-  const userPrompt = `Convert this LinkedIn post to a bilingual blog post. The original language is ${detectedLang === "es" ? "Colombian Spanish" : "English"}.
+async function generatePostMetadata(postContent, mediaContext, detectedLang, skipTranslation = false) {
+  const systemPrompt = skipTranslation ? SYSTEM_PROMPT_METADATA_ONLY : SYSTEM_PROMPT;
+  const userPrompt = `${skipTranslation ? "Generate metadata for" : "Convert"} this LinkedIn post${skipTranslation ? "" : " to a bilingual blog post"}. The original language is ${detectedLang === "es" ? "Colombian Spanish" : "English"}.
 
 --- POST CONTENT ---
 ${postContent}${mediaContext}
 --- END POST CONTENT ---`;
 
-  return await callLLM(SYSTEM_PROMPT, userPrompt);
+  return await callLLM(systemPrompt, userPrompt);
 }
 
 /** Create an MDX blog post file. */
@@ -408,7 +428,7 @@ async function fetchLinkedInPosts(sinceDate) {
 
 // ── Main sync logic ──────────────────────────────────────
 
-async function processPost(post, dirNumber) {
+async function processPost(post, dirNumber, { skipTranslation = false } = {}) {
   const postId = post.id || post.entityId;
   const linkedinUrl = post.linkedinUrl || post.shareUrl || `https://www.linkedin.com/feed/update/urn:li:activity:${postId}/`;
   const postedAt = post.postedAt?.date || post.postedAt?.timestamp;
@@ -422,16 +442,10 @@ async function processPost(post, dirNumber) {
     return false;
   }
 
-  // Skip very short posts (less than 50 chars)
-  if (post.content.trim().length < 50) {
-    console.log("  Skipping: too short");
-    return false;
-  }
-
   // Build content with links resolved
   const processedContent = buildPostContent(post);
   const detectedLang = detectLanguage(post.content);
-  console.log(`  Detected language: ${detectedLang}`);
+  console.log(`  Detected language: ${detectedLang}${skipTranslation ? " (no-translate mode)" : ""}`);
 
   // Download images
   const images = [];
@@ -452,10 +466,14 @@ async function processPost(post, dirNumber) {
     }
   }
 
-  // Generate metadata and translations via Claude
-  console.log("  Generating metadata and translations...");
+  // Generate metadata (and translations unless --no-translate)
+  console.log(`  Generating metadata${skipTranslation ? "" : " and translations"}...`);
   const mediaContext = buildMediaContext(post);
-  const metadata = await generatePostMetadata(processedContent, mediaContext, detectedLang);
+  const metadata = await generatePostMetadata(processedContent, mediaContext, detectedLang, skipTranslation);
+
+  // In no-translate mode, use the original content for both languages
+  const contentEs = skipTranslation ? processedContent : metadata.content_es;
+  const contentEn = skipTranslation ? processedContent : metadata.content_en;
 
   const dirNum = String(dirNumber).padStart(3, "0");
   const dirName = `${dirNum}-li-${metadata.slug}`;
@@ -469,7 +487,7 @@ async function processPost(post, dirNumber) {
     tags: metadata.tags,
     pubDatetime,
     linkedinUrl,
-    content: metadata.content_en,
+    content: contentEn,
     images,
   });
 
@@ -481,17 +499,55 @@ async function processPost(post, dirNumber) {
     tags: metadata.tags,
     pubDatetime,
     linkedinUrl,
-    content: metadata.content_es,
+    content: contentEs,
     images,
   });
 
   return true;
 }
 
+/** Download all images from posts without creating blog posts. */
+async function downloadImagesOnly(posts) {
+  fs.mkdirSync(ASSETS_DIR, { recursive: true });
+  let downloaded = 0;
+  let skipped = 0;
+  let failed = 0;
+
+  for (const post of posts) {
+    const postId = post.id || post.entityId;
+    if (!post.postImages?.length) continue;
+
+    for (let i = 0; i < post.postImages.length; i++) {
+      const img = post.postImages[i];
+      const ext = img.url.includes(".gif") ? "gif" : img.url.includes(".png") ? "png" : "jpg";
+      const filename = `li-${postId}-${i}.${ext}`;
+      const destPath = path.join(ASSETS_DIR, filename);
+
+      if (fs.existsSync(destPath) && fs.statSync(destPath).size > 0) {
+        skipped++;
+        continue;
+      }
+
+      console.log(`  Downloading ${filename}...`);
+      const result = await downloadFile(img.url, ASSETS_DIR, filename);
+      if (result) {
+        downloaded++;
+      } else {
+        failed++;
+      }
+    }
+  }
+
+  console.log(`\nImages done: ${downloaded} downloaded, ${skipped} already existed, ${failed} failed.`);
+}
+
 async function main() {
   const args = process.argv.slice(2);
-  const isBackfill = args[0] === "--backfill";
-  const backfillFile = isBackfill ? args[1] : null;
+  const skipTranslation = args.includes("--no-translate");
+  const downloadOnly = args.includes("--download-images-only");
+  const backfillIdx = args.indexOf("--backfill");
+  const isBackfill = backfillIdx !== -1;
+  const backfillFile = isBackfill ? args[backfillIdx + 1] : null;
 
   const state = loadState();
   let posts;
@@ -508,6 +564,12 @@ async function main() {
     sinceDate.setDate(sinceDate.getDate() - 2);
     const sinceDateStr = sinceDate.toISOString().split("T")[0];
     posts = await fetchLinkedInPosts(sinceDateStr);
+  }
+
+  if (downloadOnly) {
+    console.log("\nDownloading images only...");
+    await downloadImagesOnly(posts);
+    return;
   }
 
   // Filter out already-synced posts
@@ -535,7 +597,7 @@ async function main() {
   for (const post of newPosts) {
     const postId = post.id || post.entityId;
     try {
-      const created = await processPost(post, dirNumber);
+      const created = await processPost(post, dirNumber, { skipTranslation });
       if (created) {
         dirNumber++;
       }
