@@ -195,8 +195,7 @@ async function callLLM(systemPrompt, userPrompt, retries = 3) {
   if (!apiKey) throw new Error("OPENROUTER_API_KEY environment variable is required");
 
   const body = JSON.stringify({
-    model: "anthropic/claude-sonnet-4",
-    max_completion_tokens: 4096,
+    model: "minimax/minimax-m2.5:free",
     temperature: 0.3,
     response_format: { type: "json_object" },
     messages: [
