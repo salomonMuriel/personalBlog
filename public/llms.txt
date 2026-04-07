@@ -1,0 +1,139 @@
+# Salomon Muriel
+
+> Serial entrepreneur, tech leader, and consultant based in Bogota, Colombia. Founder of 5 companies, speaker on AI, data science, and entrepreneurship. This site is his personal website and bilingual (English/Spanish) blog.
+
+## About
+
+Salomon Muriel is a 35-year-old serial entrepreneur and tech leader based in Bogota, Colombia. He has founded 5 companies — 2 were acquired, 2 failed, and the 5th (Ignia) is currently active. He has 10+ years of experience in tech, leading AI, Data Science, and engineering teams at scale. He combines deep technical skills with hands-on business experience across fundraising, hiring, scaling, and product development.
+
+He is married (since 2018, together since 2010) and father to twin boys Franco and Luca (born 2022). He is a self-described proud geek who learned English through online gaming. Entrepreneurship runs in his family — his father and grandfather are also entrepreneurs.
+
+Beyond tech, he is a maker at heart: he tinkers with tools, a 3D printer (Bambu Lab P1S), a Raspberry Pi, and builds everything from furniture to prototypes. He runs Linux Mint as his daily OS and codes primarily in Python, TypeScript, and SQL.
+
+## Current Company
+
+**Ignia** (2025 - Present)
+- Website: https://www.ignia.lat
+- Reinventing higher education in Latin America through project-based, experiential learning
+- A "no-university" model for 500-1000 students from diverse backgrounds
+- Free core program, 2-year duration
+- Profitable from day one
+- Currently ~30 fellows in the Action Lab program with a team of 5
+
+## Previous Companies
+
+**Finco** (2019-2022) — Acquired by RED Atlas
+- Big Data and AI-powered real estate valuation for Latin America
+- Generated 100,000+ automated valuation reports
+
+**PrestaGente** (2017-2019) — Acquired by Taurus Capital
+- P2P payroll loan platform for Colombia using blockchain technology
+- Still operating at www.prestagente.com
+
+**Beriblock** (2018-2019) — Failed
+- Blockchain-based promissory note authentication and tracking
+
+**El Palomo** (2016-2017) — Failed
+- Subscription-based online flower delivery service in Colombia
+
+## Expertise & Skills
+
+### Technical
+- Languages: Python, TypeScript, SQL
+- Backend: FastAPI, Django, Node.js
+- Frontend: React, Next.js, Astro
+- Databases: PostgreSQL (preferred), Redshift
+- Data Science: Pandas, Polars, PySpark, Airflow, Metabase, NLP, DVC, TensorFlow, PyTorch, scikit-learn, XGBoost, LightGBM, Pycaret, Optuna
+- Cloud: AWS (preferred), GCP
+- Tools: VSCode, DBeaver, ZSH, Brave, Insomnia
+- AI: Practical AI adoption strategy, LLM integration, Claude Code workflows
+
+### Business
+- Company building: fundraising, hiring, scaling, and team leadership
+- 2 successful acquisitions and 2 failures across 4 companies
+- Data-driven decision making and analytics culture
+- EdTech and higher education innovation
+- Real estate technology and fintech
+- Latin American market expertise
+
+## Consulting Services
+
+Salomon partners with founders, CTOs, and growing companies. His consulting areas include:
+
+- **Tech & AI Consulting**: AI adoption strategy, technical roadmaps, implementation decisions
+- **Data Science**: Turning data into actionable insights, building analytics capabilities
+- **Company-Building Advisory**: Fundraising, hiring, scaling — lessons from 4 companies
+- **Mentorship**: Ongoing guidance for founders, data scientists, and tech leaders
+
+Free 15-minute intro calls available via his website.
+
+## Speaking Topics
+
+Salomon speaks at conferences, universities, and corporate events. His main topics:
+
+- **AI & Tech**: Practical applications for business impact, Claude Code for non-technical workflows
+- **Data-Driven Decisions**: Building analytics culture in growing companies, data science for EdTechs
+- **The Maker's Mindset**: From idea to product — lessons from building 4 companies
+- **Entrepreneurship**: Practical strategies for founders and scale-ups, boring businesses and innovation
+- **Education**: Reinventing higher education, experiential learning models
+
+### Notable Speaking Engagements
+- Claude Code for Product Management (2025)
+- Data Science for EdTechs — Colombia EdTech Association (2025)
+- Maker Mindset — Universidad Catolica, Bogota (2024)
+- Full Stack Data Science — Polygon Research Podcast (2022)
+- Boring Businesses and Innovation — Ventaja Podcast (2023)
+- My Way Through Data and Analytics — EAFIT University (2023, 3rd consecutive year)
+- Tech Entrepreneurship — EIA, EAFIT, Externado universities (2022)
+
+## Writing Topics
+
+Salomon writes primarily on LinkedIn and cross-posts to his blog. His 229+ posts cover:
+
+- Entrepreneurship (135+ posts)
+- Personal reflections (82+ posts)
+- Colombia and Latin America (81+ posts)
+- Education and higher education (73+ posts)
+- Startups (68+ posts)
+- Innovation (48+ posts)
+- Technology (45+ posts)
+- Productivity (44+ posts)
+- AI and artificial intelligence (33+ posts)
+- Business strategy (33+ posts)
+- Culture (27+ posts)
+- Leadership (23+ posts)
+- Work-life balance (20+ posts)
+- Parenting (12+ posts)
+- Consulting (11+ posts)
+- Books and reading (11+ posts)
+- Hiring (10+ posts)
+- Data Science and analytics
+
+All blog content is available in both English and Spanish.
+
+## Links
+
+- Website: https://www.salomonmuriel.com/
+- LinkedIn: https://www.linkedin.com/in/smuriel/
+- GitHub: https://github.com/salomonMuriel
+- Email: salomon.muriel@gmail.com
+- WhatsApp: https://wa.me/573132465100
+- Ignia: https://www.ignia.lat
+- Blog (English): https://www.salomonmuriel.com/posts/
+- Blog (Spanish): https://www.salomonmuriel.com/es/posts/
+- Talks: https://www.salomonmuriel.com/talks/
+- Ideas: https://www.salomonmuriel.com/ideas/
+- Now: https://www.salomonmuriel.com/now/
+- About: https://www.salomonmuriel.com/about/
+- Uses/Stack: https://www.salomonmuriel.com/uses/
+- Resources: https://www.salomonmuriel.com/resources/
+- RSS (English): https://www.salomonmuriel.com/rss.xml
+- RSS (Spanish): https://www.salomonmuriel.com/es/rss.xml
+
+## Site Details
+
+- Built with Astro 6 + Tailwind CSS 4
+- Bilingual: English (default at /) and Spanish (at /es/)
+- Blog posts synced daily from LinkedIn via automated workflow with LLM translation
+- Features: blog, conference talks, business ideas, "now" updates, companies portfolio, curated resources, search
+- Open source on GitHub
