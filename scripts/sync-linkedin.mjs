@@ -191,7 +191,7 @@ function detectLanguage(text) {
 
 /** Call LLM via OpenRouter with retry logic. Returns parsed JSON. */
 async function callLLM(systemPrompt, userPrompt, retries = 3) {
-  const apiKey = process.env.OPENROUTER_API_KEY;
+  const apiKey = process.env.OPENROUTER_API_KEY?.trim();
   if (!apiKey) throw new Error("OPENROUTER_API_KEY environment variable is required");
 
   const body = JSON.stringify({
@@ -382,7 +382,7 @@ ${mediaMarkdown}`;
 // ── Apify integration ────────────────────────────────────
 
 async function fetchLinkedInPosts(sinceDate) {
-  const token = process.env.APIFY_API_TOKEN;
+  const token = process.env.APIFY_API_TOKEN?.trim();
   if (!token) throw new Error("APIFY_API_TOKEN environment variable is required");
 
   console.log(`Fetching LinkedIn posts since ${sinceDate || "all time"}...`);
@@ -669,6 +669,8 @@ async function main() {
 
   let dirNumber = getNextDirNumber(BLOG_EN);
 
+  let failed = 0;
+
   for (const post of newPosts) {
     const postId = post.id || post.entityId;
     try {
@@ -679,12 +681,18 @@ async function main() {
       state.syncedPostIds.push(postId);
       saveState(state);
     } catch (err) {
+      failed++;
       console.error(`  Error processing post ${postId}: ${err.message}`);
       // Continue with next post
     }
   }
 
   console.log("\nSync complete!");
+
+  if (failed > 0) {
+    console.error(`\n${failed}/${newPosts.length} posts failed to sync.`);
+    process.exit(1);
+  }
 }
 
 main().catch(err => {
