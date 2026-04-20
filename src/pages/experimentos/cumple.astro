@@ -1,0 +1,697 @@
+---
+import Layout from "@layouts/Layout.astro";
+
+const pageTitle = "Nivel 35 Desbloqueado · Salo";
+const pageDesc =
+  "Invitación oficial: el sábado 25 de abril celebramos los 35 de Salo en La Rana Dorada, Usaquén. ¿Listo para el boss fight?";
+
+// Pixel frog mascot — 16x12 grid, rendered as <rect>s.
+const FROG: string[] = [
+  "................",
+  "...GGG....GGG...",
+  "..GWWG...GWWG...",
+  "..GWBG...GWBG...",
+  ".GGGGGGGGGGGGG..",
+  "GGGGGGGGGGGGGGG.",
+  "GGGGGGGGGGGGGGG.",
+  "GGGGDDDDDDDGGGG.",
+  "GGGGGGGGGGGGGGG.",
+  ".GGGGGGGGGGGGG..",
+  ".GG.GGGGGGG.GG..",
+  ".GG..G...G..GG..",
+];
+const FROG_COLORS: Record<string, string> = {
+  G: "#ffd93d",
+  D: "#6b4b00",
+  W: "#ffffff",
+  B: "#111110",
+};
+const frogCells: { x: number; y: number; c: string }[] = [];
+FROG.forEach((row, y) =>
+  row.split("").forEach((ch, x) => {
+    if (ch !== ".") frogCells.push({ x, y, c: FROG_COLORS[ch] });
+  })
+);
+
+const stats: { label: string; value: string }[] = [
+  { label: "NIVEL", value: "35" },
+  { label: "HP", value: "∞" },
+  { label: "XP", value: "+35 años" },
+  { label: "PARTY", value: "∞ panas" },
+  { label: "EMPRESAS", value: "5" },
+  { label: "GEMELOS", value: "2" },
+  { label: "CERVEZAS", value: "∞" },
+];
+
+const achievements: { icon: string; title: string; year: string }[] = [
+  { icon: "🌎", title: "AIESEC Bond", year: "—" },
+  { icon: "💚", title: "Team Nata", year: "2010" },
+  { icon: "👶", title: "Dual Spawn", year: "2022" },
+  { icon: "🚀", title: "Ignia Launch", year: "2024" },
+  { icon: "🎂", title: "Nivel 35", year: "2026" },
+];
+
+const polaroids: { caption: string; tilt: number }[] = [
+  { caption: "AIESEC era", tilt: -8 },
+  { caption: "Nata + yo", tilt: 5 },
+  { caption: "Franco & Luca", tilt: -3 },
+  { caption: "Modo empresa", tilt: 7 },
+  { caption: "Ignia crew", tilt: -12 },
+  { caption: "Cerveza time", tilt: 2 },
+];
+
+const mapsUrl =
+  "https://www.google.com/maps/search/?api=1&query=La+Rana+Dorada+Usaqu%C3%A9n+Bogot%C3%A1";
+const icsUrl = "/experimentos/cumple/fiesta-salo-35.ics";
+
+// TODO: Reemplaza este URL con el embed real del Google Form (termina en "/viewform?embedded=true").
+const GOOGLE_FORM_EMBED_URL = "";
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDesc}
+  lang="es"
+  canonicalURL="https://www.salomonmuriel.com/experimentos/cumple"
+>
+  <Fragment slot="head">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap"
+      rel="stylesheet"
+    />
+    <meta name="robots" content="noindex,nofollow" />
+  </Fragment>
+
+  <main class="arcade">
+    <div class="scanlines" aria-hidden="true"></div>
+
+    <section class="stage">
+      <!-- HERO -->
+      <header class="hero">
+        <p class="tag-blink">● PRESS START</p>
+        <h1 class="title">
+          <span class="title-row title-row--top">NIVEL 35</span>
+          <span class="title-row title-row--bot">DESBLOQUEADO</span>
+        </h1>
+
+        <div class="mascot" aria-label="La Rana Dorada pixel mascot">
+          <svg viewBox="0 0 16 12" shape-rendering="crispEdges" role="img">
+            <title>Rana Dorada</title>
+            {
+              frogCells.map(cell => (
+                <rect
+                  x={cell.x}
+                  y={cell.y}
+                  width="1"
+                  height="1"
+                  fill={cell.c}
+                />
+              ))
+            }
+          </svg>
+        </div>
+
+        <p class="subtitle">
+          &gt; Iniciando fiesta... Saturday 25.04.26 · 19:00
+        </p>
+      </header>
+
+      <!-- QUEST BRIEF -->
+      <section class="panel brief">
+        <div class="panel__tab">QUEST BRIEF</div>
+        <p>
+          Llegué al <strong>NIVEL 35</strong> y mirando atrás me doy cuenta: todo
+          lo chévere lo viví con ustedes. Los panas que me regaló AIESEC, mi combo
+          en casa (Nata + los monstruitos Franco y Luca), los socios de empresa tras
+          empresa, y ahora la última aventura — <strong>Ignia</strong>. Ustedes
+          han caminado esta ruta conmigo, así que toca celebrarlo con ustedes.
+          Nos vemos con cerveza fría, polaroids y mucha mamera. 🎮
+        </p>
+      </section>
+
+      <!-- STATS -->
+      <section class="panel stats">
+        <div class="panel__tab">CHARACTER SHEET</div>
+        <ul class="stats__grid">
+          {
+            stats.map(s => (
+              <li>
+                <span class="stat__label">{s.label}</span>
+                <span class="stat__value">{s.value}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <!-- ACHIEVEMENTS -->
+      <section class="panel achievements">
+        <div class="panel__tab">ACHIEVEMENTS UNLOCKED</div>
+        <ul class="achievements__row">
+          {
+            achievements.map(a => (
+              <li class="ach">
+                <div class="ach__icon" aria-hidden="true">
+                  {a.icon}
+                </div>
+                <div class="ach__meta">
+                  <span class="ach__title">{a.title}</span>
+                  <span class="ach__year">{a.year}</span>
+                </div>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <!-- QUEST LOG -->
+      <section class="panel quest">
+        <div class="panel__tab">QUEST LOG</div>
+        <dl class="quest__list">
+          <div>
+            <dt>📅 Fecha</dt><dd>Sábado 25 de abril · 7:00 PM</dd>
+          </div>
+          <div>
+            <dt>📍 Mapa</dt>
+            <dd>
+              <a href={mapsUrl} target="_blank" rel="noopener noreferrer">
+                La Rana Dorada — Usaquén (Cra 6A # 117-45)
+              </a>
+            </dd>
+          </div>
+          <div>
+            <dt>🎯 Misión</dt>
+            <dd>Cerveza, abrazos, polaroids, trolleos y risa floja.</dd>
+          </div>
+          <div>
+            <dt>👕 Dress code</dt><dd>Ponte lo que te haga feliz.</dd>
+          </div>
+        </dl>
+        <div class="quest__ctas">
+          <a class="btn btn--primary" href={icsUrl} download>
+            📅 Agregar al calendario
+          </a>
+          <a
+            class="btn btn--secondary"
+            href={mapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            🗺️ Cómo llegar
+          </a>
+        </div>
+      </section>
+
+      <!-- POLAROIDS -->
+      <section class="polaroids" aria-label="Recuerdos">
+        <div class="panel__tab polaroids__tab">INVENTORY · MEMORIES</div>
+        <ul>
+          {
+            polaroids.map(p => (
+              <li class="polaroid" style={`--tilt:${p.tilt}deg`}>
+                <div class="polaroid__photo" aria-hidden="true" />
+                <span class="polaroid__caption">{p.caption}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <!-- RSVP -->
+      <section class="panel rsvp" id="rsvp">
+        <div class="panel__tab">RSVP · PRESS START</div>
+        <p class="rsvp__prompt">
+          ¿Te apareces? Cuéntame si vas y si traes +1. ¡No me dejes solo en el
+          boss fight!
+        </p>
+
+        {
+          GOOGLE_FORM_EMBED_URL ? (
+            <div class="rsvp__frame">
+              <iframe
+                src={GOOGLE_FORM_EMBED_URL}
+                width="100%"
+                height="720"
+                frameborder="0"
+                marginheight="0"
+                marginwidth="0"
+                title="RSVP fiesta Salo 35"
+              >
+                Cargando…
+              </iframe>
+            </div>
+          ) : (
+            <div class="rsvp__todo" role="status">
+              <strong>⚠️ TODO (Salo):</strong> reemplaza
+              <code>GOOGLE_FORM_EMBED_URL</code> en
+              <code>src/pages/experimentos/cumple.astro</code> con el link
+              <code>/viewform?embedded=true</code> de tu Google Form.
+            </div>
+          )
+        }
+
+        <p class="rsvp__fallback">
+          ¿No te carga? Mándame un
+          <a
+            href="https://wa.me/573132465100?text=Voy%20a%20tu%20cumple%2035%20%F0%9F%8E%89"
+          >
+            WhatsApp
+          </a>
+          y listo.
+        </p>
+      </section>
+
+      <footer class="foot">
+        <p>&gt; END OF INVITE · made with ❤ y mucho pixel por Salo</p>
+      </footer>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  /* -- Palette & tokens (page-scoped, theme-independent) -- */
+  .arcade {
+    --bg: #1a0b2e;
+    --bg-2: #0b0920;
+    --gold: #ffd93d;
+    --gold-dim: #c9a827;
+    --ink: #f4eeff;
+    --ink-dim: #a3a0c9;
+    --magenta: #ff5ec4;
+    --green: #6bffb5;
+    --red: #ff5a5a;
+    --pixel: 4px;
+
+    position: relative;
+    min-height: 100svh;
+    padding: 0 1rem 3rem;
+    overflow-x: hidden;
+    background:
+      radial-gradient(2px 2px at 20% 30%, #fff 99%, transparent 100%),
+      radial-gradient(2px 2px at 70% 18%, #fff 99%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 45% 65%, #fff 99%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 85% 80%, #fff 99%, transparent 100%),
+      radial-gradient(1px 1px at 10% 90%, #fff 99%, transparent 100%),
+      radial-gradient(1px 1px at 55% 40%, #fff 99%, transparent 100%),
+      radial-gradient(1px 1px at 30% 10%, #fff 99%, transparent 100%),
+      linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+    background-attachment: fixed;
+    color: var(--ink);
+    font-family: "VT323", ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 20px;
+    line-height: 1.5;
+  }
+
+  .scanlines {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.18) 0,
+      rgba(0, 0, 0, 0.18) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+    mix-blend-mode: multiply;
+    z-index: 1;
+  }
+
+  .stage {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+    margin: 0 auto;
+    padding-top: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  /* --- HERO --- */
+  .hero {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  .tag-blink {
+    font-family: "Press Start 2P", monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--green);
+    animation: blink 1.1s steps(2, end) infinite;
+    margin: 0;
+  }
+  @keyframes blink {
+    50% {
+      opacity: 0;
+    }
+  }
+  .title {
+    font-family: "Press Start 2P", monospace;
+    font-size: clamp(1.4rem, 6vw, 2.6rem);
+    line-height: 1.15;
+    margin: 0;
+    color: var(--gold);
+    text-shadow:
+      4px 4px 0 var(--magenta),
+      8px 8px 0 rgba(0, 0, 0, 0.45);
+  }
+  .title-row {
+    display: block;
+  }
+  .subtitle {
+    font-family: "Press Start 2P", monospace;
+    font-size: 0.75rem;
+    color: var(--ink-dim);
+    margin: 0.25rem 0 0;
+    letter-spacing: 0.05em;
+  }
+
+  .mascot {
+    width: clamp(120px, 22vw, 180px);
+    aspect-ratio: 16 / 12;
+    image-rendering: pixelated;
+    filter: drop-shadow(4px 4px 0 rgba(0, 0, 0, 0.6));
+    animation: bob 2.4s ease-in-out infinite;
+  }
+  .mascot svg {
+    width: 100%;
+    height: 100%;
+  }
+  @keyframes bob {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-6px);
+    }
+  }
+
+  /* --- PANELS --- */
+  .panel {
+    position: relative;
+    background: rgba(11, 9, 32, 0.85);
+    border: var(--pixel) solid var(--gold);
+    padding: 1.75rem 1.25rem 1.25rem;
+    box-shadow:
+      0 0 0 var(--pixel) var(--bg-2),
+      8px 8px 0 0 rgba(255, 94, 196, 0.35);
+  }
+  .panel__tab {
+    position: absolute;
+    top: -14px;
+    left: 14px;
+    background: var(--gold);
+    color: var(--bg-2);
+    font-family: "Press Start 2P", monospace;
+    font-size: 0.6rem;
+    padding: 4px 10px;
+    letter-spacing: 0.08em;
+  }
+  .panel p,
+  .panel dd,
+  .panel dt,
+  .panel li {
+    font-size: 1.15rem;
+  }
+  .panel strong {
+    color: var(--gold);
+  }
+  .panel a {
+    color: var(--green);
+    text-decoration: underline dotted;
+    text-underline-offset: 3px;
+  }
+  .panel a:hover {
+    color: var(--gold);
+  }
+
+  /* --- STATS --- */
+  .stats__grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 0.75rem;
+  }
+  .stats__grid li {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem 0.75rem;
+    background: rgba(255, 217, 61, 0.08);
+    border-left: 4px solid var(--gold);
+  }
+  .stat__label {
+    font-family: "Press Start 2P", monospace;
+    font-size: 0.6rem;
+    color: var(--ink-dim);
+    letter-spacing: 0.08em;
+  }
+  .stat__value {
+    font-size: 1.8rem;
+    color: var(--gold);
+    line-height: 1;
+    margin-top: 4px;
+  }
+
+  /* --- ACHIEVEMENTS --- */
+  .achievements__row {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 0.75rem;
+    overflow-x: auto;
+    padding-bottom: 0.25rem;
+  }
+  .ach {
+    flex: 0 0 auto;
+    min-width: 140px;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.6rem 0.75rem;
+    background: rgba(107, 255, 181, 0.08);
+    border: 2px dashed var(--green);
+  }
+  .ach__icon {
+    font-size: 1.6rem;
+    filter: saturate(1.3);
+  }
+  .ach__meta {
+    display: flex;
+    flex-direction: column;
+  }
+  .ach__title {
+    font-family: "Press Start 2P", monospace;
+    font-size: 0.6rem;
+    color: var(--ink);
+    letter-spacing: 0.03em;
+  }
+  .ach__year {
+    font-size: 0.95rem;
+    color: var(--ink-dim);
+  }
+
+  /* --- QUEST LOG --- */
+  .quest__list {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .quest__list > div {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 0.5rem;
+    align-items: baseline;
+  }
+  .quest__list dt {
+    font-family: "Press Start 2P", monospace;
+    font-size: 0.6rem;
+    color: var(--ink-dim);
+    letter-spacing: 0.04em;
+    margin: 0;
+  }
+  .quest__list dd {
+    margin: 0;
+    color: var(--ink);
+  }
+  .quest__ctas {
+    margin-top: 1.25rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  .btn {
+    font-family: "Press Start 2P", monospace;
+    font-size: 0.7rem;
+    padding: 0.85rem 1.1rem;
+    text-decoration: none !important;
+    letter-spacing: 0.05em;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: var(--pixel) solid var(--gold);
+    transition: transform 0.1s ease;
+  }
+  .btn:hover {
+    transform: translate(-2px, -2px);
+  }
+  .btn--primary {
+    background: var(--gold);
+    color: var(--bg-2) !important;
+    box-shadow: 6px 6px 0 0 var(--magenta);
+  }
+  .btn--secondary {
+    background: transparent;
+    color: var(--gold) !important;
+    box-shadow: 6px 6px 0 0 rgba(255, 217, 61, 0.3);
+  }
+
+  /* --- POLAROIDS --- */
+  .polaroids {
+    position: relative;
+    padding-top: 1rem;
+  }
+  .polaroids__tab {
+    position: relative;
+    display: inline-block;
+    top: 0;
+    left: 0;
+    margin-bottom: 0.75rem;
+  }
+  .polaroids ul {
+    list-style: none;
+    margin: 0;
+    padding: 1rem 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1.5rem 1rem;
+    place-items: center;
+  }
+  .polaroid {
+    --tilt: 0deg;
+    width: 150px;
+    padding: 10px 10px 28px;
+    background: #f4eeff;
+    color: #111;
+    transform: rotate(var(--tilt));
+    box-shadow: 6px 6px 0 0 rgba(0, 0, 0, 0.45);
+    transition: transform 0.2s ease;
+  }
+  .polaroid:hover {
+    transform: rotate(0deg) scale(1.05);
+    z-index: 3;
+  }
+  .polaroid__photo {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background: repeating-conic-gradient(
+        var(--magenta) 0% 25%,
+        var(--bg-2) 0% 50%
+      )
+      50% / 14px 14px;
+    image-rendering: pixelated;
+  }
+  .polaroid__caption {
+    display: block;
+    margin-top: 8px;
+    font-family: "Press Start 2P", monospace;
+    font-size: 0.55rem;
+    text-align: center;
+    color: #2a1a4a;
+    letter-spacing: 0.04em;
+  }
+
+  /* --- RSVP --- */
+  .rsvp__prompt {
+    margin: 0 0 1rem;
+  }
+  .rsvp__frame {
+    background: rgba(244, 238, 255, 0.97);
+    border: var(--pixel) solid var(--green);
+    padding: 4px;
+  }
+  .rsvp__frame iframe {
+    display: block;
+    width: 100%;
+    border: 0;
+    background: #fff;
+  }
+  .rsvp__todo {
+    padding: 1rem;
+    background: rgba(255, 90, 90, 0.15);
+    border: 2px dashed var(--red);
+    font-size: 1.05rem;
+    line-height: 1.6;
+  }
+  .rsvp__todo code {
+    font-family: "VT323", monospace;
+    background: rgba(255, 217, 61, 0.15);
+    color: var(--gold);
+    padding: 0 4px;
+    margin: 0 2px;
+  }
+  .rsvp__fallback {
+    margin-top: 1rem;
+    font-size: 1rem;
+    color: var(--ink-dim);
+    text-align: center;
+  }
+
+  /* --- FOOTER --- */
+  .foot {
+    text-align: center;
+    font-family: "Press Start 2P", monospace;
+    font-size: 0.6rem;
+    color: var(--ink-dim);
+    letter-spacing: 0.08em;
+    padding: 1rem 0;
+  }
+
+  /* --- Mobile tuning --- */
+  @media (max-width: 520px) {
+    .arcade {
+      padding: 0 0.75rem 2rem;
+    }
+    .stage {
+      gap: 1.75rem;
+      padding-top: 1.5rem;
+    }
+    .panel {
+      padding: 1.5rem 1rem 1rem;
+    }
+    .quest__list > div {
+      grid-template-columns: 1fr;
+      gap: 0.1rem;
+    }
+    .quest__ctas .btn {
+      width: 100%;
+      justify-content: center;
+    }
+    .polaroids ul {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem 0.5rem;
+    }
+    .polaroid {
+      width: 100%;
+      max-width: 150px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tag-blink,
+    .mascot {
+      animation: none;
+    }
+  }
+</style>
