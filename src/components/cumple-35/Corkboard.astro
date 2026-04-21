@@ -188,13 +188,10 @@ const MAPS_URL = "https://maps.app.goo.gl/krJCM93AZrA8PmbT9";
     padding: 0;
     margin: 0;
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    /* Fit as many guest cards per row as width allows; each card is at
+       least ~100px wide (enough for the 68px thumb + a first name). */
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
     gap: 10px;
-  }
-  @media (min-width: 480px) {
-    .names {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
   }
   .names :global(li) {
     display: flex;
