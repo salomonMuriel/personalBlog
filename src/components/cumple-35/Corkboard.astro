@@ -254,10 +254,17 @@ const MAPS_URL = "https://maps.app.goo.gl/krJCM93AZrA8PmbT9";
       if (g.hasSelfie) {
         li.classList.add("has-selfie");
         const img = document.createElement("img");
-        img.src = `/api/cumple-35/selfie/${g.id}.png`;
         img.alt = "";
         img.loading = "lazy";
         img.decoding = "async";
+        // If the server 404s, clear src so the 1 Hz countdown reflow
+        // doesn't keep retrying the failed lazy image every tick.
+        img.addEventListener("error", () => {
+          img.removeAttribute("src");
+          img.style.display = "none";
+          li.classList.remove("has-selfie");
+        });
+        img.src = `/api/cumple-35/selfie/${g.id}.png`;
         li.appendChild(img);
       }
       const span = document.createElement("span");
