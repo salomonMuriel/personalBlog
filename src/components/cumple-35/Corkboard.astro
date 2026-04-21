@@ -172,13 +172,20 @@ const MAPS_URL = "https://maps.app.goo.gl/krJCM93AZrA8PmbT9";
     image-rendering: pixelated;
   }
 
+  .pin-count {
+    display: flex;
+    flex-direction: column;
+  }
   .count {
     margin: 0;
     font-family: "Press Start 2P", monospace;
     font-size: clamp(36px, 10vw, 72px);
     color: var(--red);
     text-align: center;
-    margin-top: auto;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-shadow: 3px 3px 0 var(--gold-dark);
     line-height: 1;
   }
