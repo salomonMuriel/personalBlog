@@ -218,7 +218,9 @@ const MAPS_URL = "https://maps.app.goo.gl/krJCM93AZrA8PmbT9";
     object-fit: cover;
     image-rendering: pixelated;
     border: 2px solid var(--ink);
-    background: var(--bg-deep);
+    /* White backdrop so transparent PNGs (AI-generated mascots/selfies)
+       read clearly against the card's gold background. */
+    background: #ffffff;
   }
   .names :global(li.empty) {
     grid-column: 1 / -1;
