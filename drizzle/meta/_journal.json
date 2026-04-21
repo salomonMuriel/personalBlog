@@ -15,6 +15,13 @@
       "when": 1776784905158,
       "tag": "0001_misty_stardust",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1776789000000,
+      "tag": "0002_move_to_cumple_35_schema",
+      "breakpoints": true
     }
   ]
 }

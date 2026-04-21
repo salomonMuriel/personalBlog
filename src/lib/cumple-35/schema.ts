@@ -1,17 +1,22 @@
 import {
-  pgTable,
   serial,
   varchar,
   text,
   boolean,
   timestamp,
   index,
-  pgEnum,
+  pgSchema,
 } from "drizzle-orm/pg-core";
 
-export const attendingEnum = pgEnum("attending_enum", ["yes", "no", "maybe"]);
+export const cumpleSchema = pgSchema("cumple-35");
 
-export const rsvps = pgTable(
+export const attendingEnum = cumpleSchema.enum("attending_enum", [
+  "yes",
+  "no",
+  "maybe",
+]);
+
+export const rsvps = cumpleSchema.table(
   "rsvps",
   {
     id: serial("id").primaryKey(),
