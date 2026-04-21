@@ -6,9 +6,6 @@ import {
 } from "../../../lib/cumple-35/openai";
 
 export const prerender = false;
-// OpenAI gpt-image-1.5 edits typically take 10-30s; raise Vercel's default
-// function timeout so the gateway doesn't 504 before OpenAI responds.
-export const maxDuration = 60;
 
 function json(data: unknown, status = 200): Response {
   return new Response(JSON.stringify(data), {

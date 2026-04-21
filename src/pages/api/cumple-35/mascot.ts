@@ -7,9 +7,6 @@ import { setSelfieIfMissing } from "../../../lib/cumple-35/db";
 import { verifyMascotToken } from "../../../lib/cumple-35/mascot-token";
 
 export const prerender = false;
-// OpenAI image gen can take 10-20s; give the function enough headroom on
-// Vercel. Ignored on Hobby tier (capped at 10s there) — consider Pro.
-export const maxDuration = 60;
 
 function json(data: unknown, status = 200): Response {
   return new Response(JSON.stringify(data), {
