@@ -17,6 +17,24 @@ const spritesSrc = readFileSync(
   "utf8"
 );
 
+function inlineLocalImageHrefs(svg) {
+  // Resvg has no network/FS loader — rewrite href="/cumple-35/*" references
+  // into base64 data URLs read from public/.
+  return svg.replace(
+    /href="(\/[A-Za-z0-9_./-]+\.(?:png|jpg|jpeg|webp))"/g,
+    (_match, urlPath) => {
+      const filePath = resolve(root, "public" + urlPath);
+      const buf = readFileSync(filePath);
+      const ext = urlPath.toLowerCase().endsWith(".jpg") || urlPath.toLowerCase().endsWith(".jpeg")
+        ? "image/jpeg"
+        : urlPath.toLowerCase().endsWith(".webp")
+          ? "image/webp"
+          : "image/png";
+      return `href="data:${ext};base64,${buf.toString("base64")}"`;
+    }
+  );
+}
+
 function extractSymbolInner(id) {
   const re = new RegExp(
     `<symbol id="${id}"[^>]*>([\\s\\S]*?)<\\/symbol>`,
@@ -24,7 +42,7 @@ function extractSymbolInner(id) {
   );
   const m = spritesSrc.match(re);
   if (!m) throw new Error(`symbol #${id} not found`);
-  return m[1].replace(/<!--[\s\S]*?-->/g, "").trim();
+  return inlineLocalImageHrefs(m[1].replace(/<!--[\s\S]*?-->/g, "").trim());
 }
 
 const frogInner = extractSymbolInner("frog"); // 32x32
