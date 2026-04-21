@@ -321,6 +321,18 @@
   ) as HTMLAudioElement | null;
   const coinEl = document.getElementById("sfx-coin") as HTMLAudioElement | null;
   const ostEl = document.getElementById("ost-track") as HTMLAudioElement | null;
+  if (ostEl) {
+    ostEl.loop = true;
+    ostEl.addEventListener("ended", () => {
+      if (ostOn) {
+        try {
+          ostEl.currentTime = 0;
+          const p = ostEl.play();
+          if (p) p.catch(() => {});
+        } catch {}
+      }
+    });
+  }
 
   const fileOk = (el: HTMLAudioElement | null) =>
     !!el &&

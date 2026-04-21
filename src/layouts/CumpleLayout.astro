@@ -43,11 +43,71 @@ const ogImage = new URL("/cumple-35/og.png", SITE.website).toString();
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   </head>
   <body class="cumple-root">
+    <div id="cumple-loader" class="cumple-loader" aria-hidden="true">
+      <div class="loader-inner">
+        <p class="loader-label">NOW LOADING</p>
+        <div class="loader-bar">
+          <div class="loader-fill"></div>
+        </div>
+        <p class="loader-pct"><span id="cumple-loader-pct">0</span>%</p>
+        <p class="loader-hint">Press any key to continue...</p>
+      </div>
+    </div>
     <Sprites />
     <GlobalFX />
     <main id="cumple-main">
       <slot />
     </main>
+
+    <script is:inline>
+      (function () {
+        const loader = document.getElementById("cumple-loader");
+        const main = document.getElementById("cumple-main");
+        const pctEl = document.getElementById("cumple-loader-pct");
+        const fillEl = loader && loader.querySelector(".loader-fill");
+        if (!loader || !main) return;
+
+        const MIN_SHOW_MS = 900;
+        const start = performance.now();
+        let pct = 0;
+        let ready = false;
+
+        const fakeTick = setInterval(() => {
+          const target = ready ? 100 : Math.min(92, pct + Math.random() * 7);
+          pct += (target - pct) * 0.25;
+          if (pctEl) pctEl.textContent = String(Math.round(pct));
+          if (fillEl) fillEl.style.width = pct + "%";
+          if (ready && pct >= 99.5) {
+            clearInterval(fakeTick);
+            if (pctEl) pctEl.textContent = "100";
+            if (fillEl) fillEl.style.width = "100%";
+          }
+        }, 80);
+
+        function finish() {
+          const elapsed = performance.now() - start;
+          const wait = Math.max(0, MIN_SHOW_MS - elapsed);
+          setTimeout(() => {
+            ready = true;
+            setTimeout(() => {
+              loader.classList.add("is-hidden");
+              document.body.classList.add("cumple-ready");
+              setTimeout(() => loader.remove(), 600);
+            }, 220);
+          }, wait);
+        }
+
+        const whenFonts =
+          (document.fonts && document.fonts.ready) || Promise.resolve();
+        const whenLoad = new Promise(resolve => {
+          if (document.readyState === "complete") resolve();
+          else window.addEventListener("load", () => resolve(), { once: true });
+        });
+        Promise.all([whenFonts, whenLoad]).then(finish);
+
+        setTimeout(finish, 6000);
+      })();
+    </script>
 
     <style is:global>
       :root.cumple-html,
@@ -129,6 +189,77 @@ const ogImage = new URL("/cumple-35/og.png", SITE.website).toString();
         max-width: 760px;
         margin: 0 auto;
         padding: 56px 20px;
+        opacity: 0;
+        transition: opacity 400ms ease-out;
+      }
+      body.cumple-ready #cumple-main {
+        opacity: 1;
+      }
+
+      .cumple-loader {
+        position: fixed;
+        inset: 0;
+        z-index: 99999;
+        background: var(--bg-deep);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: opacity 500ms ease-out;
+      }
+      .cumple-loader.is-hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+      .cumple-loader .loader-inner {
+        width: min(420px, 86vw);
+        text-align: center;
+      }
+      .cumple-loader .loader-label {
+        font-family: "Press Start 2P", monospace;
+        font-size: 12px;
+        color: var(--cyan);
+        letter-spacing: 0.18em;
+        margin: 0 0 16px;
+        animation: loader-blink 1.2s steps(2) infinite;
+      }
+      .cumple-loader .loader-bar {
+        width: 100%;
+        height: 20px;
+        border: 3px solid var(--cream);
+        background: var(--bg-deep);
+        position: relative;
+        overflow: hidden;
+        image-rendering: pixelated;
+      }
+      .cumple-loader .loader-fill {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(
+          to bottom,
+          var(--gold-light) 0 25%,
+          var(--gold) 25% 70%,
+          var(--gold-dark) 70% 100%
+        );
+        transition: width 140ms linear;
+      }
+      .cumple-loader .loader-pct {
+        margin: 12px 0 0;
+        font-family: "Press Start 2P", monospace;
+        font-size: 14px;
+        color: var(--gold);
+      }
+      .cumple-loader .loader-hint {
+        margin: 28px 0 0;
+        font-family: "VT323", monospace;
+        font-size: 18px;
+        color: var(--cream);
+        opacity: 0.65;
+        animation: loader-blink 1.4s steps(2) infinite;
+      }
+      @keyframes loader-blink {
+        50% {
+          opacity: 0.35;
+        }
       }
 
       @media (max-width: 480px) {
