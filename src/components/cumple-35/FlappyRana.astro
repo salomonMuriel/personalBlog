@@ -90,6 +90,9 @@
     background: #0a5370;
     border: 4px solid var(--cream);
     box-shadow: inset 0 0 0 3px var(--ink);
+    touch-action: none;
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
   }
 
   .flappy-foot {
@@ -317,15 +320,24 @@
         localStorage.setItem("flappy-rana-best", String(best));
         if (bestEl) bestEl.textContent = String(best);
       }
+      (window as any).__cumpleSfx?.ribbit?.();
       draw();
       rafId = requestAnimationFrame(step);
     }
 
+    function startRun() {
+      reset();
+      running = true;
+      vy = FLAP;
+      (window as any).__cumpleSfx?.coin?.();
+    }
+
     function flap() {
-      if (gameOver) return;
-      if (!running) {
-        running = true;
+      if (gameOver) {
+        startRun();
+        return;
       }
+      running = true;
       vy = FLAP;
       (window as any).__cumpleSfx?.coin?.();
     }
@@ -347,8 +359,8 @@
     window.addEventListener("frog:invite", open);
     closeBtn?.addEventListener("click", close);
     startBtn?.addEventListener("click", () => {
-      reset();
-      running = true;
+      startRun();
+      startBtn?.blur();
     });
 
     canvas.addEventListener("pointerdown", e => {
@@ -359,6 +371,7 @@
       if (modal.hidden) return;
       if (e.key === " " || e.key === "ArrowUp" || e.key === "w") {
         e.preventDefault();
+        e.stopPropagation();
         flap();
       }
       if (e.key === "Escape") close();

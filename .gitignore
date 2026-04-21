@@ -39,3 +39,4 @@ scripts/linkedin-test-*.json
 !.yarn/versions
 .pnp.*
 .vercel
+.env*.local
