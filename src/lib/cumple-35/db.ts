@@ -1,6 +1,6 @@
 import { neon } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-http";
-import { eq, desc, sql } from "drizzle-orm";
+import { eq, desc, sql, inArray } from "drizzle-orm";
 import { rsvps, type RsvpInsert } from "./schema";
 
 export { rsvps } from "./schema";
@@ -13,14 +13,11 @@ function getDb() {
   return drizzle(neon(url));
 }
 
-function firstName(full: string): string {
-  return full.trim().split(/\s+/)[0];
-}
-
 export interface ConfirmedGuest {
   id: number;
   name: string;
   hasSelfie: boolean;
+  maybe: boolean;
 }
 
 export async function getConfirmed(): Promise<{
@@ -33,20 +30,25 @@ export async function getConfirmed(): Promise<{
     .select({
       id: rsvps.id,
       name: rsvps.name,
+      attending: rsvps.attending,
       plusOne: rsvps.plusOne,
       selfie: rsvps.selfie,
       createdAt: rsvps.createdAt,
     })
     .from(rsvps)
-    .where(eq(rsvps.attending, "yes"))
+    .where(inArray(rsvps.attending, ["yes", "maybe"]))
     .orderBy(desc(rsvps.createdAt));
 
-  const count = rows.reduce((acc, r) => acc + 1 + (r.plusOne ? 1 : 0), 0);
-  const names = rows.map(r => firstName(r.name));
+  const count = rows.reduce(
+    (acc, r) => (r.attending === "yes" ? acc + 1 + (r.plusOne ? 1 : 0) : acc),
+    0
+  );
+  const names = rows.map(r => r.name.trim());
   const guests: ConfirmedGuest[] = rows.map(r => ({
     id: r.id,
-    name: firstName(r.name),
+    name: r.name.trim(),
     hasSelfie: !!r.selfie,
+    maybe: r.attending === "maybe",
   }));
   return { count, names, guests };
 }

@@ -197,7 +197,7 @@ const MAPS_URL = "https://maps.app.goo.gl/krJCM93AZrA8PmbT9";
     display: grid;
     /* Fit as many guest cards per row as width allows; each card is at
        least ~100px wide (enough for the 68px thumb + a first name). */
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     gap: 10px;
   }
   .names :global(li) {
@@ -227,6 +227,25 @@ const MAPS_URL = "https://maps.app.goo.gl/krJCM93AZrA8PmbT9";
        read clearly against the card's gold background. */
     background: #ffffff;
   }
+  .names :global(li.is-maybe) {
+    background: #f4e4a8;
+    position: relative;
+  }
+  .names :global(li .maybe-badge) {
+    font-family: "Press Start 2P", monospace;
+    font-size: 8px;
+    font-style: normal;
+    letter-spacing: 0.04em;
+    color: var(--paper);
+    background: var(--ink);
+    border: 2px solid var(--ink);
+    padding: 3px 5px;
+    line-height: 1;
+    text-transform: uppercase;
+    display: inline-block;
+    transform: rotate(-4deg);
+    margin-top: 2px;
+  }
   .names :global(li.empty) {
     grid-column: 1 / -1;
     display: block;
@@ -243,7 +262,12 @@ const MAPS_URL = "https://maps.app.goo.gl/krJCM93AZrA8PmbT9";
   const countEl = document.getElementById("cork-count");
   const namesEl = document.getElementById("cork-names");
 
-  type Guest = { id: number; name: string; hasSelfie: boolean };
+  type Guest = {
+    id: number;
+    name: string;
+    hasSelfie: boolean;
+    maybe?: boolean;
+  };
 
   function render(count: number, guests: Guest[]) {
     if (countEl) countEl.textContent = String(count);
@@ -258,6 +282,7 @@ const MAPS_URL = "https://maps.app.goo.gl/krJCM93AZrA8PmbT9";
     }
     for (const g of guests) {
       const li = document.createElement("li");
+      if (g.maybe) li.classList.add("is-maybe");
       if (g.hasSelfie) {
         li.classList.add("has-selfie");
         const img = document.createElement("img");
@@ -277,6 +302,12 @@ const MAPS_URL = "https://maps.app.goo.gl/krJCM93AZrA8PmbT9";
       const span = document.createElement("span");
       span.textContent = g.name;
       li.appendChild(span);
+      if (g.maybe) {
+        const badge = document.createElement("em");
+        badge.className = "maybe-badge";
+        badge.textContent = "tal vez";
+        li.appendChild(badge);
+      }
       namesEl.appendChild(li);
     }
   }
