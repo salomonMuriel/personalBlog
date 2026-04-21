@@ -142,6 +142,9 @@ const ogImage = new URL("/cumple-35/og.png", SITE.website).toString();
         image-rendering: pixelated;
         image-rendering: -moz-crisp-edges;
         image-rendering: crisp-edges;
+        /* Prevent iOS momentum from chaining into the document and causing
+           the "autoscroll up" glitch after fast scrolls. */
+        overscroll-behavior-y: contain;
       }
 
       body.cumple-root {
@@ -156,6 +159,7 @@ const ogImage = new URL("/cumple-35/og.png", SITE.website).toString();
         position: relative;
         -webkit-font-smoothing: none;
         -moz-osx-font-smoothing: grayscale;
+        overscroll-behavior-y: contain;
       }
 
       body.cumple-root svg,

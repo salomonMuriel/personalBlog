@@ -110,7 +110,10 @@
     }
   }
 
-  /* Scanlines over everything. */
+  /* Scanlines over everything. Plain alpha (no mix-blend-mode) so iOS Safari
+     can composite this layer on the GPU instead of repainting the viewport
+     every scroll frame — that repaint was causing the fixed OST button to
+     jitter and the page to hitch on scroll. */
   .fx-scanlines {
     position: fixed;
     inset: 0;
@@ -118,12 +121,12 @@
     z-index: 9999;
     background-image: repeating-linear-gradient(
       to bottom,
-      rgba(0, 0, 0, 0.08) 0px,
-      rgba(0, 0, 0, 0.08) 1px,
+      rgba(0, 0, 0, 0.1) 0px,
+      rgba(0, 0, 0, 0.1) 1px,
       transparent 1px,
       transparent 3px
     );
-    mix-blend-mode: multiply;
+    transform: translateZ(0);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -133,12 +136,15 @@
     }
   }
 
-  /* Music toggle */
+  /* Music toggle. translateZ + will-change promote to its own compositor
+     layer so iOS Safari stops re-laying-out the button while scrolling. */
   .music-btn {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 1000;
+    bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+    right: calc(20px + env(safe-area-inset-right, 0px));
+    /* Above the scanlines overlay (9999) so the 1px-line pattern can't
+       strobe on top of the button during scroll repaints on Android. */
+    z-index: 10000;
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -151,9 +157,13 @@
     box-shadow: 3px 3px 0 0 var(--ink);
     cursor: pointer;
     letter-spacing: 0.1em;
+    transform: translateZ(0);
+    will-change: transform;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
   }
   .music-btn:active {
-    transform: translate(3px, 3px);
+    transform: translate3d(3px, 3px, 0);
     box-shadow: 0 0 0 0 var(--ink);
   }
   .music-btn .ico {

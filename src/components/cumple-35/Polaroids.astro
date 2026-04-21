@@ -29,7 +29,7 @@ const captions = [
               src={p.src}
               alt={p.text}
               loading="lazy"
-              onerror="this.style.display='none'; this.parentElement.classList.add('missing');"
+              onerror="this.removeAttribute('src'); this.style.display='none'; this.parentElement.classList.add('missing');"
             />
             <div class="ph-fallback" aria-hidden="true">
               <span class="ph-icon">📷</span>
