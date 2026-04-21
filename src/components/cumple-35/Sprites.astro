@@ -24,15 +24,19 @@
       />
     </symbol>
 
-    <!-- ==================== SALO ARTIFICER (32x32, AI-generated) ==================== -->
+    <!-- ==================== SALO ARTIFICER (32x32, AI-generated, clipped to circle) ==================== -->
     <symbol id="salo-artificer" viewBox="0 0 32 32">
+      <clipPath id="salo-clip">
+        <circle cx="16" cy="16" r="16"></circle>
+      </clipPath>
       <image
         href="/cumple-35/salo.png"
         x="0"
         y="0"
         width="32"
         height="32"
-        preserveAspectRatio="xMidYMid meet"
+        preserveAspectRatio="xMidYMid slice"
+        clip-path="url(#salo-clip)"
       />
     </symbol>
 

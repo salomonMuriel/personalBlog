@@ -37,8 +37,12 @@ const sourceArg = arg("source", "~/Downloads/frog.webp").replace(
 );
 const outArg = arg("out", "public/cumple-35/frog.png");
 const extraArg = arg("extra", "");
+const opaque = process.argv.includes("--opaque");
 
-const prompt = BASE_PROMPT_SINGLE + (extraArg ? `\n\n${extraArg}` : "") + TRANSPARENT_NOTE;
+const prompt =
+  BASE_PROMPT_SINGLE +
+  (extraArg ? `\n\n${extraArg}` : "") +
+  (opaque ? "" : TRANSPARENT_NOTE);
 
 function getApiKey() {
   if (process.env.OPENAI_API_KEY) return process.env.OPENAI_API_KEY;
@@ -73,7 +77,7 @@ form.append("model", "gpt-image-1.5");
 form.append("prompt", prompt);
 form.append("n", "1");
 form.append("size", "1024x1024");
-form.append("background", "transparent");
+if (!opaque) form.append("background", "transparent");
 form.append(
   "image",
   new Blob([new Uint8Array(sourcePng)], { type: "image/png" }),
