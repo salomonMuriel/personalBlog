@@ -10,18 +10,27 @@
   </h1>
   <p class="hero-sub">Y me los celebro con ustedes</p>
 
-  <div
-    class="frog-stage"
-    id="frog-stage"
-    role="button"
-    tabindex="0"
-    aria-label="La rana dorada"
-  >
-    <div class="frog-shadow"></div>
-    <svg class="frog-sprite" viewBox="0 0 32 32" aria-hidden="true">
-      <use href="#frog"></use>
-    </svg>
-    <div class="frog-bubble" id="frog-bubble" aria-live="polite"></div>
+  <div class="duo">
+    <div class="salo-stage" aria-label="Salo artífice">
+      <div class="salo-shadow"></div>
+      <svg class="salo-sprite" viewBox="0 0 32 32" aria-hidden="true">
+        <use href="#salo-artificer"></use>
+      </svg>
+    </div>
+
+    <div
+      class="frog-stage"
+      id="frog-stage"
+      role="button"
+      tabindex="0"
+      aria-label="La rana dorada"
+    >
+      <div class="frog-shadow"></div>
+      <svg class="frog-sprite" viewBox="0 0 32 32" aria-hidden="true">
+        <use href="#frog"></use>
+      </svg>
+      <div class="frog-bubble" id="frog-bubble" aria-live="polite"></div>
+    </div>
   </div>
 
   <p class="press-start">Scrollea ▼</p>
@@ -108,6 +117,79 @@
     color: var(--pink);
     letter-spacing: 0.04em;
   }
+  .duo {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: clamp(8px, 3vw, 40px);
+  }
+  .salo-stage {
+    width: 160px;
+    height: 180px;
+    position: relative;
+  }
+  .salo-sprite {
+    width: 120px;
+    height: 120px;
+    position: absolute;
+    left: 50%;
+    bottom: 30px;
+    transform: translateX(-50%);
+    animation: salo-idle 2.8s ease-in-out infinite;
+  }
+  .salo-shadow {
+    position: absolute;
+    left: 50%;
+    bottom: 24px;
+    transform: translateX(-50%);
+    width: 96px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.55);
+    filter: blur(2px);
+    animation: salo-shadow 2.8s ease-in-out infinite;
+  }
+  @keyframes salo-idle {
+    0%,
+    100% {
+      transform: translateX(-50%) translateY(0);
+    }
+    50% {
+      transform: translateX(-50%) translateY(-6px);
+    }
+  }
+  @keyframes salo-shadow {
+    0%,
+    100% {
+      width: 96px;
+      opacity: 0.55;
+    }
+    50% {
+      width: 84px;
+      opacity: 0.4;
+    }
+  }
+  @media (max-width: 480px) {
+    .salo-stage {
+      width: 112px;
+      height: 140px;
+    }
+    .salo-sprite {
+      width: 90px;
+      height: 90px;
+    }
+    .salo-shadow {
+      width: 70px;
+      bottom: 22px;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .salo-sprite,
+    .salo-shadow {
+      animation: none;
+    }
+  }
+
   .frog-stage {
     width: 160px;
     height: 180px;

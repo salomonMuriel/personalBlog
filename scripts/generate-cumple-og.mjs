@@ -47,6 +47,7 @@ function extractSymbolInner(id) {
 
 const frogInner = extractSymbolInner("frog"); // 32x32
 const beerInner = extractSymbolInner("beer"); // 24x32
+const saloInner = extractSymbolInner("salo-artificer"); // 32x32
 
 // Press Start 2P font (latin) — loaded into resvg so SVG <text> renders.
 const pressStartPath = resolve(root, "src/assets/fonts/og/press-start-2p.ttf");
@@ -99,6 +100,10 @@ function frogAt(x, y, scale) {
 // Place a 24x32 beer sprite at (x,y) scaled by `scale`
 function beerAt(x, y, scale) {
   return `<g transform="translate(${x},${y}) scale(${scale})" shape-rendering="crispEdges">${beerInner}</g>`;
+}
+// Place the 32x32 Salo artificer sprite at (x,y) scaled by `scale`
+function saloAt(x, y, scale) {
+  return `<g transform="translate(${x},${y}) scale(${scale})" shape-rendering="crispEdges">${saloInner}</g>`;
 }
 
 // Chunky pixel text with the SNES-style tri-color shadow used on hero title
@@ -180,8 +185,8 @@ const svg = `<?xml version="1.0" encoding="UTF-8"?>
   <!-- big gold frog, left -->
   ${frogAt(50, 370, 6)}
 
-  <!-- big beer mug, right (24x32 -> scale 6 = 144x192) -->
-  ${beerAt(1020, 370, 6)}
+  <!-- Salo artificer, right (32x32 -> scale 6 = 192x192) -->
+  ${saloAt(960, 370, 6)}
 
   <!-- small floating beers/frogs across top corners -->
   ${beerAt(70, 30, 2.4)}

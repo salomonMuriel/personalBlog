@@ -1,8 +1,12 @@
-// One-off: turn ~/Downloads/frog.webp into a 16-bit pixel-art PNG with
-// transparent background via OpenAI gpt-image-1.5 edits, using the same
-// BASE_PROMPT_SINGLE we use for user RSVP selfies.
+// One-off: turn a local photo into a 16-bit pixel-art PNG with transparent
+// background via OpenAI gpt-image-1.5 edits, using the same BASE_PROMPT_SINGLE
+// we use for user RSVP selfies, plus an optional extra style direction.
 //
-// Writes public/cumple-35/frog.png.
+// Usage:
+//   node scripts/generate-cumple-frog.mjs              # default: frog.webp -> frog.png
+//   node scripts/generate-cumple-frog.mjs --source=~/Downloads/Salo.jpg \
+//        --out=public/cumple-35/salo.png \
+//        --extra="Depict them as a D&D Artificer ..."
 
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { resolve, dirname } from "node:path";
@@ -21,7 +25,20 @@ Square framing, subject centered, flat or simple background.`;
 
 const TRANSPARENT_NOTE = `\n\nRender the image with a fully TRANSPARENT background (no backdrop, no sky, no platform). Only the subject should be visible; everything around it must be transparent.`;
 
-const prompt = BASE_PROMPT_SINGLE + TRANSPARENT_NOTE;
+function arg(name, fallback) {
+  const hit = process.argv.find(a => a.startsWith(`--${name}=`));
+  if (!hit) return fallback;
+  return hit.slice(name.length + 3);
+}
+
+const sourceArg = arg("source", "~/Downloads/frog.webp").replace(
+  /^~(?=\/|$)/,
+  homedir()
+);
+const outArg = arg("out", "public/cumple-35/frog.png");
+const extraArg = arg("extra", "");
+
+const prompt = BASE_PROMPT_SINGLE + (extraArg ? `\n\n${extraArg}` : "") + TRANSPARENT_NOTE;
 
 function getApiKey() {
   if (process.env.OPENAI_API_KEY) return process.env.OPENAI_API_KEY;
@@ -40,7 +57,7 @@ if (!apiKey) {
   process.exit(1);
 }
 
-const srcPath = resolve(homedir(), "Downloads/frog.webp");
+const srcPath = resolve(sourceArg);
 console.log("Reading", srcPath);
 const srcBuf = readFileSync(srcPath);
 
@@ -80,8 +97,7 @@ if (!b64) {
   process.exit(1);
 }
 
-const outDir = resolve(root, "public/cumple-35");
-mkdirSync(outDir, { recursive: true });
-const outPath = resolve(outDir, "frog.png");
+const outPath = resolve(root, outArg);
+mkdirSync(dirname(outPath), { recursive: true });
 writeFileSync(outPath, Buffer.from(b64, "base64"));
 console.log("Wrote", outPath);
