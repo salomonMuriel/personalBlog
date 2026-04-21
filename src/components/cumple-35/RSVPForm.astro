@@ -442,6 +442,12 @@
     font-family: "VT323", monospace;
     font-size: 18px;
     padding: 8px 10px;
+    /* On mobile, when the native <select> opens its dropdown below the
+       control, Chrome/Android can clip the options list if the select
+       is near the bottom of the viewport. Pair this with scrollIntoView
+       on focus so the picker sits in the upper half of the screen. */
+    scroll-margin-top: 20vh;
+    scroll-margin-bottom: 60vh;
   }
   .style-custom {
     margin-top: 6px;
@@ -771,6 +777,18 @@
       else styleCustom.setAttribute("hidden", "");
     }
   });
+  // On mobile (esp. Android Chrome), the native <select> dropdown opens
+  // below the control and can be clipped off-screen when the select is
+  // near the bottom of the viewport. Proactively scroll it into the
+  // upper portion of the viewport before the browser opens the picker.
+  styleSelect?.addEventListener("focus", () => {
+    requestAnimationFrame(() => {
+      styleSelect.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
+  styleSelect?.addEventListener("mousedown", () => {
+    styleSelect.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
   tabs.forEach(t =>
     t.addEventListener("click", () => setMode(t.dataset.tab as any))
   );
@@ -861,15 +879,6 @@
     show(groupUp, false);
     show(groupPost, false);
     show(groupStyle, true);
-    // On small screens the newly-revealed style picker (and its GENERAR
-    // button) often falls below the fold. Pull it into view so the user
-    // can see the actions without hunting.
-    requestAnimationFrame(() => {
-      groupStyle?.scrollIntoView({
-        behavior: "smooth",
-        block: "center",
-      });
-    });
   }
 
   async function callPixelize(blob: Blob) {
