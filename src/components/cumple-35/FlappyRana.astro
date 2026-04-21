@@ -1,0 +1,367 @@
+---
+// 6.5 Flappy Rana — modal canvas minigame. Opens on CustomEvent('frog:invite').
+---
+
+<div
+  id="flappy-modal"
+  class="flappy"
+  hidden
+  aria-modal="true"
+  role="dialog"
+  aria-label="Flappy Rana"
+>
+  <div class="flappy-inner panel">
+    <header class="flappy-head">
+      <h2>FLAPPY RANA</h2>
+      <button type="button" class="close" id="flappy-close" aria-label="Cerrar"
+        >✕</button
+      >
+    </header>
+
+    <canvas id="flappy-canvas" width="360" height="540"></canvas>
+
+    <footer class="flappy-foot">
+      <div class="scores">
+        <span class="lbl">SCORE</span><span class="val" id="flappy-score"
+          >0</span
+        >
+        <span class="lbl">BEST</span><span class="val" id="flappy-best">0</span>
+      </div>
+      <p class="tip">TAP / CLICK / ESPACIO para saltar</p>
+      <button type="button" class="btn btn-gold" id="flappy-start"
+        >▶ JUGAR</button
+      >
+    </footer>
+  </div>
+</div>
+
+<style>
+  .flappy {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background: rgba(26, 11, 46, 0.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+  .flappy[hidden] {
+    display: none;
+  }
+  .flappy-inner {
+    max-width: 420px;
+    width: 100%;
+    margin: 0;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .flappy-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .flappy-head h2 {
+    margin: 0;
+    font-family: "Press Start 2P", monospace;
+    font-size: 14px;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+  }
+  .close {
+    background: transparent;
+    color: var(--cream);
+    border: 3px solid var(--cream);
+    width: 34px;
+    height: 34px;
+    font-family: "Press Start 2P", monospace;
+    font-size: 11px;
+    cursor: pointer;
+  }
+
+  #flappy-canvas {
+    display: block;
+    width: 100%;
+    max-width: 360px;
+    aspect-ratio: 2 / 3;
+    margin: 0 auto;
+    background: #0a5370;
+    border: 4px solid var(--cream);
+    box-shadow: inset 0 0 0 3px var(--ink);
+  }
+
+  .flappy-foot {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+  .scores {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    gap: 6px 12px;
+    font-family: "Press Start 2P", monospace;
+    font-size: 11px;
+  }
+  .scores .lbl {
+    color: var(--cyan);
+  }
+  .scores .val {
+    color: var(--gold-light);
+  }
+  .tip {
+    margin: 0;
+    font-family: "VT323", monospace;
+    font-size: 18px;
+    opacity: 0.8;
+  }
+</style>
+
+<script>
+  const modal = document.getElementById("flappy-modal") as HTMLElement | null;
+  const closeBtn = document.getElementById("flappy-close");
+  const startBtn = document.getElementById(
+    "flappy-start"
+  ) as HTMLButtonElement | null;
+  const scoreEl = document.getElementById("flappy-score");
+  const bestEl = document.getElementById("flappy-best");
+  const canvas = document.getElementById(
+    "flappy-canvas"
+  ) as HTMLCanvasElement | null;
+  const ctx = canvas?.getContext("2d") ?? null;
+
+  if (!modal || !canvas || !ctx) {
+    // If dom missing, silently no-op
+  } else {
+    ctx.imageSmoothingEnabled = false;
+
+    const W = canvas.width;
+    const H = canvas.height;
+
+    type Pipe = { x: number; gapY: number; passed: boolean };
+    const GAP = 150;
+    const PIPE_W = 60;
+    const GRAVITY = 0.45;
+    const FLAP = -7.5;
+
+    let frogY = H / 2;
+    let vy = 0;
+    let pipes: Pipe[] = [];
+    let score = 0;
+    let best = Number(localStorage.getItem("flappy-rana-best") || 0);
+    let running = false;
+    let frame = 0;
+    let rafId = 0;
+    let gameOver = false;
+
+    if (bestEl) bestEl.textContent = String(best);
+
+    function reset() {
+      frogY = H / 2;
+      vy = 0;
+      pipes = [{ x: W + 60, gapY: H / 2, passed: false }];
+      score = 0;
+      frame = 0;
+      gameOver = false;
+      if (scoreEl) scoreEl.textContent = "0";
+    }
+
+    function draw() {
+      if (!ctx) return;
+      // sky gradient (dithered-ish)
+      ctx.fillStyle = "#0a5370";
+      ctx.fillRect(0, 0, W, H);
+      ctx.fillStyle = "#1a6a8a";
+      for (let y = 0; y < H; y += 8) {
+        if ((y / 8) % 2 === 0) ctx.fillRect(0, y, W, 2);
+      }
+      // stars
+      ctx.fillStyle = "#f5e6d3";
+      for (let i = 0; i < 18; i++) {
+        const sx = (i * 97 + frame * 0.5) % W;
+        const sy = (i * 53) % (H - 80);
+        ctx.fillRect(Math.floor(sx), sy, 2, 2);
+      }
+
+      // pipes (beer jugs — stylized)
+      ctx.fillStyle = "#f4c430";
+      for (const p of pipes) {
+        // top
+        ctx.fillRect(p.x, 0, PIPE_W, p.gapY - GAP / 2);
+        // bottom
+        ctx.fillRect(p.x, p.gapY + GAP / 2, PIPE_W, H - (p.gapY + GAP / 2));
+        // rim (ink)
+        ctx.fillStyle = "#2a2015";
+        ctx.fillRect(p.x, p.gapY - GAP / 2 - 8, PIPE_W, 8);
+        ctx.fillRect(p.x, p.gapY + GAP / 2, PIPE_W, 8);
+        // foam
+        ctx.fillStyle = "#fff8e4";
+        ctx.fillRect(p.x + 4, p.gapY - GAP / 2 - 14, PIPE_W - 8, 6);
+        ctx.fillRect(p.x + 4, p.gapY + GAP / 2 + 8, PIPE_W - 8, 6);
+        // highlight
+        ctx.fillStyle = "#ffe168";
+        ctx.fillRect(p.x + 6, 0, 4, p.gapY - GAP / 2 - 8);
+        ctx.fillRect(
+          p.x + 6,
+          p.gapY + GAP / 2 + 8,
+          4,
+          H - (p.gapY + GAP / 2 + 8)
+        );
+        ctx.fillStyle = "#f4c430";
+      }
+
+      // ground
+      ctx.fillStyle = "#1e5631";
+      ctx.fillRect(0, H - 40, W, 40);
+      ctx.fillStyle = "#4a9a5a";
+      ctx.fillRect(0, H - 40, W, 6);
+
+      // frog sprite (simple 24x24)
+      const fx = 70;
+      const fy = Math.floor(frogY);
+      ctx.fillStyle = "#2a2015";
+      ctx.fillRect(fx - 14, fy - 12, 28, 24);
+      ctx.fillStyle = "#c89205";
+      ctx.fillRect(fx - 12, fy - 10, 24, 20);
+      ctx.fillStyle = "#f4c430";
+      ctx.fillRect(fx - 10, fy - 8, 20, 14);
+      ctx.fillStyle = "#ffe168";
+      ctx.fillRect(fx - 8, fy - 7, 4, 3);
+      // eyes
+      ctx.fillStyle = "#f5e6d3";
+      ctx.fillRect(fx - 10, fy - 14, 6, 6);
+      ctx.fillRect(fx + 4, fy - 14, 6, 6);
+      ctx.fillStyle = "#2a2015";
+      ctx.fillRect(fx - 7, fy - 12, 3, 3);
+      ctx.fillRect(fx + 7, fy - 12, 3, 3);
+      // mouth
+      ctx.fillRect(fx - 4, fy + 2, 8, 1);
+
+      // score HUD
+      ctx.fillStyle = "rgba(0,0,0,0.4)";
+      ctx.fillRect(10, 10, 84, 28);
+      ctx.fillStyle = "#ffe168";
+      ctx.font = "16px 'Press Start 2P', monospace";
+      ctx.textBaseline = "top";
+      ctx.fillText(String(score), 18, 16);
+
+      if (gameOver) {
+        ctx.fillStyle = "rgba(26, 11, 46, 0.85)";
+        ctx.fillRect(0, H / 2 - 60, W, 120);
+        ctx.fillStyle = "#ff3b3b";
+        ctx.font = "18px 'Press Start 2P', monospace";
+        ctx.textAlign = "center";
+        ctx.fillText("GAME OVER", W / 2, H / 2 - 30);
+        ctx.fillStyle = "#f5e6d3";
+        ctx.font = "12px 'Press Start 2P', monospace";
+        ctx.fillText("Pulsa JUGAR", W / 2, H / 2);
+        ctx.textAlign = "left";
+      }
+    }
+
+    function step() {
+      frame++;
+      if (!running) {
+        draw();
+        rafId = requestAnimationFrame(step);
+        return;
+      }
+      vy += GRAVITY;
+      frogY += vy;
+
+      // pipes move
+      for (const p of pipes) p.x -= 2.2;
+      // spawn new
+      const last = pipes[pipes.length - 1];
+      if (!last || last.x < W - 220) {
+        pipes.push({
+          x: W + 20,
+          gapY: 120 + Math.random() * (H - 240),
+          passed: false,
+        });
+      }
+      // cull
+      pipes = pipes.filter(p => p.x + PIPE_W > -10);
+
+      // score
+      for (const p of pipes) {
+        if (!p.passed && p.x + PIPE_W < 70) {
+          p.passed = true;
+          score++;
+          if (scoreEl) scoreEl.textContent = String(score);
+        }
+      }
+
+      // collisions
+      const fx = 70;
+      for (const p of pipes) {
+        if (fx + 12 > p.x && fx - 12 < p.x + PIPE_W) {
+          if (frogY - 12 < p.gapY - GAP / 2 || frogY + 12 > p.gapY + GAP / 2) {
+            return endGame();
+          }
+        }
+      }
+      if (frogY > H - 50 || frogY < 10) return endGame();
+
+      draw();
+      rafId = requestAnimationFrame(step);
+    }
+
+    function endGame() {
+      running = false;
+      gameOver = true;
+      if (score > best) {
+        best = score;
+        localStorage.setItem("flappy-rana-best", String(best));
+        if (bestEl) bestEl.textContent = String(best);
+      }
+      draw();
+      rafId = requestAnimationFrame(step);
+    }
+
+    function flap() {
+      if (gameOver) return;
+      if (!running) {
+        running = true;
+      }
+      vy = FLAP;
+      (window as any).__cumpleSfx?.coin?.();
+    }
+
+    function open() {
+      if (!modal) return;
+      modal.hidden = false;
+      reset();
+      draw();
+      rafId = requestAnimationFrame(step);
+    }
+    function close() {
+      if (!modal) return;
+      modal.hidden = true;
+      running = false;
+      cancelAnimationFrame(rafId);
+    }
+
+    window.addEventListener("frog:invite", open);
+    closeBtn?.addEventListener("click", close);
+    startBtn?.addEventListener("click", () => {
+      reset();
+      running = true;
+    });
+
+    canvas.addEventListener("pointerdown", e => {
+      e.preventDefault();
+      flap();
+    });
+    window.addEventListener("keydown", e => {
+      if (modal.hidden) return;
+      if (e.key === " " || e.key === "ArrowUp" || e.key === "w") {
+        e.preventDefault();
+        flap();
+      }
+      if (e.key === "Escape") close();
+    });
+  }
+</script>

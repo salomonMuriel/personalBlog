@@ -1,0 +1,184 @@
+---
+// 5.12 RSVP form — POSTs to /api/cumple-35/rsvp, dispatches rsvp:confirmed for corkboard refresh
+---
+
+<section class="rsvp">
+  <h2 class="section-heading">&gt; CONFIRMA</h2>
+  <form id="rsvp-form" class="panel form" novalidate>
+    <label class="field">
+      <span class="lbl">NOMBRE</span>
+      <input
+        class="input"
+        name="name"
+        type="text"
+        required
+        maxlength="60"
+        autocomplete="name"
+      />
+    </label>
+
+    <fieldset class="field">
+      <legend class="lbl">¿VIENES?</legend>
+      <div class="pill-group">
+        <label class="pill"
+          ><input type="radio" name="attending" value="yes" checked /><span
+            >Sí, obvio 🎉</span
+          ></label
+        >
+        <label class="pill"
+          ><input type="radio" name="attending" value="maybe" /><span
+            >Tal vez 🤔</span
+          ></label
+        >
+        <label class="pill"
+          ><input type="radio" name="attending" value="no" /><span
+            >No puedo 😢</span
+          ></label
+        >
+      </div>
+    </fieldset>
+
+    <fieldset class="field">
+      <legend class="lbl">¿TRAES +1?</legend>
+      <div class="pill-group">
+        <label class="pill"
+          ><input type="radio" name="plusOne" value="false" checked /><span
+            >Voy solo</span
+          ></label
+        >
+        <label class="pill"
+          ><input type="radio" name="plusOne" value="true" /><span
+            >Sí, +1 🙌</span
+          ></label
+        >
+      </div>
+    </fieldset>
+
+    <label class="field">
+      <span class="lbl">MENSAJE (opcional)</span>
+      <textarea
+        class="textarea"
+        name="message"
+        rows="3"
+        maxlength="500"
+        placeholder="Un chiste malo, una profecía, lo que sea..."></textarea>
+    </label>
+
+    <div class="submit-row">
+      <button type="submit" class="btn btn-gold" id="rsvp-submit">
+        <span class="label-default">▶ ENVIAR CONFIRMACIÓN</span>
+        <span class="label-busy" hidden>GUARDANDO...</span>
+        <span class="label-done" hidden>✓ CONFIRMADO</span>
+      </button>
+    </div>
+
+    <p id="rsvp-msg" class="feedback" hidden></p>
+  </form>
+</section>
+
+<style>
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .field {
+    border: 0;
+    padding: 0;
+    margin: 0;
+  }
+  .lbl {
+    display: block;
+    margin-bottom: 8px;
+    font-family: "Press Start 2P", monospace;
+    font-size: 10px;
+    color: var(--cyan);
+    letter-spacing: 0.1em;
+  }
+  .submit-row {
+    margin-top: 8px;
+    display: flex;
+    justify-content: center;
+  }
+  .feedback {
+    margin: 0;
+    text-align: center;
+    font-family: "VT323", monospace;
+    font-size: 20px;
+  }
+  .feedback.ok {
+    color: var(--gold-light);
+  }
+  .feedback.err {
+    color: var(--red);
+  }
+</style>
+
+<script>
+  const form = document.getElementById("rsvp-form") as HTMLFormElement | null;
+  const btn = document.getElementById(
+    "rsvp-submit"
+  ) as HTMLButtonElement | null;
+  const msg = document.getElementById("rsvp-msg") as HTMLElement | null;
+  const lDef = btn?.querySelector<HTMLElement>(".label-default");
+  const lBusy = btn?.querySelector<HTMLElement>(".label-busy");
+  const lDone = btn?.querySelector<HTMLElement>(".label-done");
+
+  function setMsg(text: string, kind: "ok" | "err") {
+    if (!msg) return;
+    msg.hidden = false;
+    msg.textContent = text;
+    msg.classList.remove("ok", "err");
+    msg.classList.add(kind);
+  }
+
+  form?.addEventListener("submit", async e => {
+    e.preventDefault();
+    if (!form || !btn || !lDef || !lBusy || !lDone) return;
+    const fd = new FormData(form);
+    const payload = {
+      name: String(fd.get("name") || "").trim(),
+      attending: String(fd.get("attending") || "yes"),
+      plusOne: String(fd.get("plusOne")) === "true",
+      message: String(fd.get("message") || ""),
+    };
+    if (payload.name.length < 1) {
+      setMsg("Pon tu nombre, parce.", "err");
+      return;
+    }
+
+    btn.disabled = true;
+    lDef.hidden = true;
+    lBusy.hidden = false;
+    lDone.hidden = true;
+
+    try {
+      const res = await fetch("/api/cumple-35/rsvp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data.ok) {
+        throw new Error(data.error || "Error del servidor");
+      }
+
+      lBusy.hidden = true;
+      lDone.hidden = false;
+      setMsg("¡Listo! Nos vemos el 25. 🍺", "ok");
+      (window as any).__cumpleSfx?.coin?.();
+
+      // Notify corkboard to refresh / seed with fresh data
+      window.dispatchEvent(
+        new CustomEvent("rsvp:confirmed", {
+          detail: { count: data.count, names: data.names },
+        })
+      );
+    } catch (err: any) {
+      lBusy.hidden = true;
+      lDef.hidden = false;
+      btn.disabled = false;
+      setMsg(err?.message || "Algo falló. Intenta de nuevo.", "err");
+    }
+  });
+</script>

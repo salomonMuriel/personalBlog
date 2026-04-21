@@ -1,0 +1,289 @@
+---
+// 5.11 Corcho (Misión Principal) — pin-cards on a corkboard
+const MAPS_URL = "https://maps.app.goo.gl/krJCM93AZrA8PmbT9";
+---
+
+<section class="cork-section">
+  <h2 class="section-heading">&gt; MISIÓN PRINCIPAL</h2>
+  <div class="corkboard">
+    <div class="pins">
+      <article class="pin pin-where">
+        <span class="tack" aria-hidden="true"></span>
+        <h3 class="pin-title">DÓNDE Y CUÁNDO</h3>
+        <p class="pin-body">
+          <strong>SÁB 25 ABR · 7:00 PM</strong><br />
+          <a href={MAPS_URL} target="_blank" rel="noopener">LA RANA DORADA</a
+          ><br />
+          Bogotá, Colombia
+        </p>
+      </article>
+
+      <article class="pin pin-map">
+        <span class="tack" aria-hidden="true"></span>
+        <h3 class="pin-title">MAPA</h3>
+        <a
+          href={MAPS_URL}
+          target="_blank"
+          rel="noopener"
+          aria-label="Abrir en Google Maps"
+        >
+          <svg class="map-svg" viewBox="0 0 64 48" aria-hidden="true"
+            ><use href="#pixmap"></use></svg
+          >
+        </a>
+      </article>
+
+      <article class="pin pin-count">
+        <span class="tack tack-red" aria-hidden="true"></span>
+        <h3 class="pin-title">JUGADORES CONFIRMADOS</h3>
+        <p class="count" id="cork-count">--</p>
+      </article>
+
+      <article class="pin pin-list">
+        <span class="tack" aria-hidden="true"></span>
+        <h3 class="pin-title">YA LLEGARON</h3>
+        <ul class="names" id="cork-names">
+          <li class="empty">Cargando...</li>
+        </ul>
+      </article>
+
+      <article class="pin pin-cal">
+        <span class="tack tack-red" aria-hidden="true"></span>
+        <button type="button" class="btn btn-gold" id="add-cal-btn">
+          📅 AGREGAR AL CALENDARIO
+        </button>
+      </article>
+    </div>
+  </div>
+</section>
+
+<style>
+  .corkboard {
+    background:
+      radial-gradient(rgba(0, 0, 0, 0.12) 1px, transparent 1.5px),
+      radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1.5px),
+      linear-gradient(135deg, var(--cork) 0%, var(--cork-dark) 100%);
+    background-size:
+      8px 8px,
+      11px 11px,
+      100% 100%;
+    background-position:
+      0 0,
+      4px 4px,
+      0 0;
+    border: 6px solid var(--cork-deep);
+    box-shadow:
+      inset 0 0 0 3px rgba(0, 0, 0, 0.2),
+      0 0 0 4px var(--ink),
+      8px 8px 0 0 var(--gold-dark);
+    padding: 28px 20px;
+    position: relative;
+  }
+  /* corners of the wood frame */
+  .corkboard::before,
+  .corkboard::after {
+    content: "";
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: var(--cork-deep);
+    border: 2px solid var(--ink);
+  }
+  .corkboard::before {
+    top: 4px;
+    left: 4px;
+  }
+  .corkboard::after {
+    bottom: 4px;
+    right: 4px;
+  }
+
+  .pins {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+  @media (min-width: 620px) {
+    .pins {
+      grid-template-columns: 1fr 1fr;
+    }
+    .pin-list {
+      grid-column: 1 / -1;
+    }
+    .pin-cal {
+      grid-column: 1 / -1;
+      justify-self: center;
+    }
+  }
+
+  .pin {
+    position: relative;
+    background: var(--paper);
+    color: var(--ink);
+    border: 3px solid var(--ink);
+    box-shadow: 3px 5px 0 0 rgba(0, 0, 0, 0.35);
+    padding: 16px;
+    transform: rotate(-1.2deg);
+  }
+  .pin:nth-child(even) {
+    transform: rotate(1.4deg);
+  }
+  .pin-cal {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    transform: none;
+  }
+
+  .tack {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle at 30% 30%,
+      #ffaaaa 0 25%,
+      var(--red) 26% 60%,
+      #8a1010 61% 100%
+    );
+    border: 2px solid var(--ink);
+    box-shadow: 0 3px 0 0 rgba(0, 0, 0, 0.4);
+  }
+  .tack-red {
+    background: radial-gradient(
+      circle at 30% 30%,
+      #88ddff 0 25%,
+      var(--cyan) 26% 60%,
+      #1a6a7a 61% 100%
+    );
+  }
+
+  .pin-title {
+    margin: 0 0 10px;
+    font-family: "Press Start 2P", monospace;
+    font-size: 10px;
+    color: var(--red);
+    letter-spacing: 0.06em;
+  }
+  .pin-body {
+    margin: 0;
+    font-family: "VT323", monospace;
+    font-size: 20px;
+    line-height: 1.4;
+  }
+  .pin-body strong {
+    font-family: "Press Start 2P", monospace;
+    font-size: 11px;
+    color: var(--ink);
+    display: inline-block;
+    margin-bottom: 4px;
+  }
+  .pin-body a {
+    color: var(--red);
+  }
+
+  .map-svg {
+    width: 100%;
+    height: auto;
+    max-width: 320px;
+    display: block;
+    margin: 0 auto;
+    border: 3px solid var(--ink);
+    image-rendering: pixelated;
+  }
+
+  .count {
+    margin: 0;
+    font-family: "Press Start 2P", monospace;
+    font-size: clamp(36px, 10vw, 72px);
+    color: var(--red);
+    text-align: center;
+    text-shadow: 3px 3px 0 var(--gold-dark);
+    line-height: 1;
+  }
+
+  .names {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 10px;
+    font-family: "VT323", monospace;
+    font-size: 18px;
+    color: var(--ink);
+  }
+  .names li {
+    padding: 2px 10px;
+    background: var(--gold-light);
+    border: 2px solid var(--ink);
+  }
+  .names li.empty {
+    background: transparent;
+    border: none;
+    opacity: 0.6;
+  }
+</style>
+
+<script>
+  import { downloadIcs } from "../../lib/cumple-35/ics";
+
+  const countEl = document.getElementById("cork-count");
+  const namesEl = document.getElementById("cork-names");
+  const calBtn = document.getElementById("add-cal-btn");
+
+  function render(count: number, names: string[]) {
+    if (countEl) countEl.textContent = String(count);
+    if (namesEl) {
+      namesEl.innerHTML = "";
+      if (!names.length) {
+        const li = document.createElement("li");
+        li.className = "empty";
+        li.textContent = "Todavía nadie — ¡sé el primero!";
+        namesEl.appendChild(li);
+        return;
+      }
+      for (const n of names) {
+        const li = document.createElement("li");
+        li.textContent = n;
+        namesEl.appendChild(li);
+      }
+    }
+  }
+
+  async function load() {
+    try {
+      const res = await fetch("/api/cumple-35/confirmed", {
+        cache: "no-store",
+      });
+      if (!res.ok) throw new Error("status " + res.status);
+      const data = await res.json();
+      render(data.count ?? 0, Array.isArray(data.names) ? data.names : []);
+    } catch (err) {
+      if (countEl) countEl.textContent = "—";
+      if (namesEl) {
+        namesEl.innerHTML = '<li class="empty">No se pudo cargar</li>';
+      }
+    }
+  }
+
+  load();
+
+  window.addEventListener("rsvp:confirmed", ((e: CustomEvent) => {
+    const { count, names } = e.detail ?? {};
+    if (typeof count === "number" && Array.isArray(names)) {
+      render(count, names);
+    } else {
+      load();
+    }
+  }) as EventListener);
+
+  calBtn?.addEventListener("click", () => {
+    downloadIcs();
+    (window as any).__cumpleSfx?.coin?.();
+  });
+</script>

@@ -1,0 +1,97 @@
+---
+const list = [
+  { icon: "🏆", name: "DAD MODE x2", unlocked: true },
+  { icon: "💍", name: "16 AÑOS CON NATA", unlocked: true },
+  { icon: "💥", name: "QUEBRAR UNA EMPRESA II", unlocked: true },
+  { icon: "💰", name: "VENDER UNA EMPRESA II", unlocked: true },
+  { icon: "🎓", name: "AIESEC FOREVER", unlocked: true },
+  { icon: "🔧", name: "MAKER VERDADERO", unlocked: true },
+  { icon: "🎮", name: "LIFELONG GAMER", unlocked: true },
+  { icon: "🔥", name: "IGNIA — CURRENT QUEST", unlocked: false },
+  { icon: "🍺", name: "35 AÑOS SIN RENDIRSE", unlocked: true },
+];
+---
+
+<section class="ach">
+  <h2 class="section-heading">&gt; ACHIEVEMENTS DESBLOQUEADOS</h2>
+  <p class="micro sub">8/9 COMPLETADOS</p>
+  <div class="grid">
+    {
+      list.map(a => (
+        <div class={`badge ${a.unlocked ? "unl" : "lock"}`}>
+          <div class="icon">{a.icon}</div>
+          <div class="name">{a.name}</div>
+          {!a.unlocked && (
+            <div class="overlay">
+              <span class="lock-ico">🔒</span>
+              <span class="prog">EN PROGRESO...</span>
+            </div>
+          )}
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .sub {
+    margin: 0 0 20px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  @media (min-width: 620px) {
+    .grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  .badge {
+    position: relative;
+    background: var(--bg-panel);
+    border: 3px solid var(--gold);
+    box-shadow: 3px 3px 0 0 var(--ink);
+    padding: 14px 10px;
+    text-align: center;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+  }
+  .badge.lock {
+    border-color: var(--cork-dark);
+    opacity: 0.85;
+  }
+  .icon {
+    font-size: 28px;
+    line-height: 1;
+  }
+  .name {
+    font-family: "Press Start 2P", monospace;
+    font-size: 9px;
+    color: var(--cream);
+    letter-spacing: 0.04em;
+    line-height: 1.5;
+  }
+  .overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(26, 11, 46, 0.8);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+  }
+  .lock-ico {
+    font-size: 20px;
+  }
+  .prog {
+    font-family: "Press Start 2P", monospace;
+    font-size: 8px;
+    color: var(--red);
+    letter-spacing: 0.08em;
+  }
+</style>

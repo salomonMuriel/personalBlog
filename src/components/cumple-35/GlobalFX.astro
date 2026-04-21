@@ -1,0 +1,472 @@
+---
+// Global visual effects + interactive shell: starfield, scanlines, music toggle,
+// Konami rain, SFX bank. Everything lives at the body level so it applies
+// uniformly regardless of which section is visible.
+---
+
+<div class="fx-starfield" aria-hidden="true"></div>
+<div class="fx-scanlines" aria-hidden="true"></div>
+
+<!-- Music toggle (floating) -->
+<button
+  id="music-toggle"
+  class="music-btn"
+  type="button"
+  aria-pressed="true"
+  aria-label="Toggle music"
+>
+  <span class="ico" data-on="🔊" data-off="🔇">🔊</span>
+  <span class="ost-label">OST</span>
+</button>
+
+<!-- Frog rain container (populated by JS on Konami) -->
+<div id="frog-rain" class="frog-rain" aria-hidden="true"></div>
+
+<!-- Audio files (CC0). If missing, the script falls back to Web Audio synthesis. -->
+<audio id="sfx-ribbit" preload="auto" src="/cumple-35/audio/ribbit.mp3"></audio>
+<audio id="sfx-coin" preload="auto" src="/cumple-35/audio/coin.mp3"></audio>
+<audio id="ost-track" loop preload="auto" src="/cumple-35/audio/ost.mp3"
+></audio>
+
+<style>
+  /* Starfield: multiple radial dots drifting slowly. */
+  .fx-starfield {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+      radial-gradient(
+        1px 1px at 17% 23%,
+        rgba(245, 230, 211, 0.9) 50%,
+        transparent 51%
+      ),
+      radial-gradient(
+        1px 1px at 83% 11%,
+        rgba(77, 212, 231, 0.85) 50%,
+        transparent 51%
+      ),
+      radial-gradient(
+        1px 1px at 42% 61%,
+        rgba(244, 196, 48, 0.85) 50%,
+        transparent 51%
+      ),
+      radial-gradient(
+        1px 1px at 9% 78%,
+        rgba(245, 230, 211, 0.8) 50%,
+        transparent 51%
+      ),
+      radial-gradient(
+        1px 1px at 71% 52%,
+        rgba(245, 230, 211, 0.6) 50%,
+        transparent 51%
+      ),
+      radial-gradient(
+        1px 1px at 55% 18%,
+        rgba(77, 212, 231, 0.6) 50%,
+        transparent 51%
+      ),
+      radial-gradient(
+        1px 1px at 29% 88%,
+        rgba(244, 196, 48, 0.75) 50%,
+        transparent 51%
+      ),
+      radial-gradient(
+        1px 1px at 91% 78%,
+        rgba(245, 230, 211, 0.85) 50%,
+        transparent 51%
+      ),
+      radial-gradient(
+        1px 1px at 62% 34%,
+        rgba(245, 230, 211, 0.5) 50%,
+        transparent 51%
+      ),
+      radial-gradient(
+        1px 1px at 6% 41%,
+        rgba(77, 212, 231, 0.7) 50%,
+        transparent 51%
+      ),
+      radial-gradient(
+        1px 1px at 37% 8%,
+        rgba(244, 196, 48, 0.6) 50%,
+        transparent 51%
+      ),
+      radial-gradient(
+        1px 1px at 78% 94%,
+        rgba(245, 230, 211, 0.75) 50%,
+        transparent 51%
+      );
+    background-size: 400px 400px;
+    background-repeat: repeat;
+    animation: drift 80s linear infinite;
+    opacity: 0.7;
+  }
+  @keyframes drift {
+    from {
+      background-position: 0 0;
+    }
+    to {
+      background-position: 400px 400px;
+    }
+  }
+
+  /* Scanlines over everything. */
+  .fx-scanlines {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    background-image: repeating-linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.08) 0px,
+      rgba(0, 0, 0, 0.08) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+    mix-blend-mode: multiply;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fx-starfield {
+      animation: none;
+      opacity: 0.4;
+    }
+  }
+
+  /* Music toggle */
+  .music-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    font-family: "Press Start 2P", monospace;
+    font-size: 10px;
+    background: var(--bg-panel);
+    color: var(--cream);
+    border: 3px solid var(--cream);
+    box-shadow: 3px 3px 0 0 var(--ink);
+    cursor: pointer;
+    letter-spacing: 0.1em;
+  }
+  .music-btn:active {
+    transform: translate(3px, 3px);
+    box-shadow: 0 0 0 0 var(--ink);
+  }
+  .music-btn .ico {
+    font-size: 14px;
+  }
+  .music-btn[aria-pressed="true"] {
+    background: var(--gold);
+    color: var(--ink);
+    border-color: var(--ink);
+  }
+
+  /* Frog rain */
+  .frog-rain {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9998;
+  }
+  .frog-rain svg {
+    position: absolute;
+    animation: frog-fall linear forwards;
+  }
+  @keyframes frog-fall {
+    0% {
+      transform: translateY(-60px) rotate(0deg);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(110vh) rotate(360deg);
+      opacity: 1;
+    }
+  }
+  .frog-rain.flash {
+    background: rgba(244, 196, 48, 0.35);
+    transition: background 400ms ease-out;
+  }
+
+  audio {
+    display: none;
+  }
+</style>
+
+<script>
+  // Web Audio — lazily created on first user gesture (browsers block otherwise).
+  let ctx: AudioContext | null = null;
+  function getCtx(): AudioContext | null {
+    if (ctx) return ctx;
+    const Ctor =
+      (window as any).AudioContext || (window as any).webkitAudioContext;
+    if (!Ctor) return null;
+    ctx = new Ctor() as AudioContext;
+    return ctx;
+  }
+  function resumeCtx() {
+    const c = getCtx();
+    if (c && c.state === "suspended") c.resume().catch(() => {});
+  }
+
+  // Coin: classic two-note "ding" (B5 → E6), square wave.
+  function playCoin() {
+    const c = getCtx();
+    if (!c) return;
+    const now = c.currentTime;
+    const gain = c.createGain();
+    gain.gain.setValueAtTime(0.0001, now);
+    gain.gain.exponentialRampToValueAtTime(0.25, now + 0.01);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.18);
+    gain.connect(c.destination);
+    const osc = c.createOscillator();
+    osc.type = "square";
+    osc.frequency.setValueAtTime(987.77, now); // B5
+    osc.frequency.setValueAtTime(1318.51, now + 0.06); // E6
+    osc.connect(gain);
+    osc.start(now);
+    osc.stop(now + 0.2);
+  }
+
+  // Ribbit: two short pitch-bent blips with a noisy "croak" layer.
+  function playRibbit() {
+    const c = getCtx();
+    if (!c) return;
+    const now = c.currentTime;
+    const blip = (t0: number) => {
+      const g = c.createGain();
+      g.gain.setValueAtTime(0.0001, t0);
+      g.gain.exponentialRampToValueAtTime(0.3, t0 + 0.01);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.12);
+      g.connect(c.destination);
+      const o = c.createOscillator();
+      o.type = "sawtooth";
+      o.frequency.setValueAtTime(220, t0);
+      o.frequency.exponentialRampToValueAtTime(90, t0 + 0.1);
+      o.connect(g);
+      o.start(t0);
+      o.stop(t0 + 0.14);
+    };
+    blip(now);
+    blip(now + 0.13);
+  }
+
+  // Chiptune OST — a simple looping arpeggio, square wave + bass.
+  let ostNodes: {
+    osc: OscillatorNode;
+    bass: OscillatorNode;
+    gain: GainNode;
+    timer: number;
+  } | null = null;
+  function startOst() {
+    const c = getCtx();
+    if (!c || ostNodes) return;
+    const master = c.createGain();
+    master.gain.value = 0.08;
+    master.connect(c.destination);
+
+    const lead = c.createOscillator();
+    lead.type = "square";
+    lead.connect(master);
+
+    const bass = c.createOscillator();
+    bass.type = "triangle";
+    const bassGain = c.createGain();
+    bassGain.gain.value = 0.5;
+    bass.connect(bassGain).connect(master);
+
+    // C major / A minor-ish bouncy loop
+    const melody = [
+      523.25, 659.25, 783.99, 659.25, 698.46, 880.0, 659.25, 523.25,
+    ];
+    const bassline = [
+      130.81, 130.81, 174.61, 174.61, 196.0, 196.0, 164.81, 164.81,
+    ];
+    const stepMs = 180;
+    let i = 0;
+    lead.frequency.setValueAtTime(melody[0], c.currentTime);
+    bass.frequency.setValueAtTime(bassline[0], c.currentTime);
+    lead.start();
+    bass.start();
+    const timer = window.setInterval(() => {
+      i = (i + 1) % melody.length;
+      const t = c.currentTime;
+      lead.frequency.setValueAtTime(melody[i], t);
+      bass.frequency.setValueAtTime(bassline[i], t);
+    }, stepMs);
+
+    ostNodes = { osc: lead, bass, gain: master, timer };
+  }
+  function stopOst() {
+    if (!ostNodes) return;
+    window.clearInterval(ostNodes.timer);
+    try {
+      ostNodes.osc.stop();
+    } catch {}
+    try {
+      ostNodes.bass.stop();
+    } catch {}
+    try {
+      ostNodes.gain.disconnect();
+    } catch {}
+    ostNodes = null;
+  }
+
+  // Prefer real audio files; fall back to synthesis if they fail to load.
+  const ribbitEl = document.getElementById(
+    "sfx-ribbit"
+  ) as HTMLAudioElement | null;
+  const coinEl = document.getElementById("sfx-coin") as HTMLAudioElement | null;
+  const ostEl = document.getElementById("ost-track") as HTMLAudioElement | null;
+
+  const fileOk = (el: HTMLAudioElement | null) =>
+    !!el &&
+    !el.error &&
+    (el.readyState >= 2 ||
+      el.networkState !== HTMLMediaElement.NETWORK_NO_SOURCE);
+
+  function playFile(el: HTMLAudioElement | null, volume: number): boolean {
+    if (!fileOk(el) || !el) return false;
+    try {
+      el.currentTime = 0;
+      el.volume = volume;
+      const p = el.play();
+      if (p) p.catch(() => {});
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  const OST_VOLUME = 0.15;
+
+  let ostOn = false;
+  function startMusic() {
+    if (ostOn) return;
+    ostOn = true;
+    if (ostEl && !ostEl.error) {
+      ostEl.volume = OST_VOLUME;
+      const p = ostEl.play();
+      if (p)
+        p.catch(() => {
+          startOst();
+        }); // browser blocked — use synthesis
+    } else {
+      startOst();
+    }
+  }
+  function stopMusic() {
+    if (!ostOn) return;
+    ostOn = false;
+    if (ostEl) {
+      try {
+        ostEl.pause();
+      } catch {}
+    }
+    stopOst();
+  }
+
+  // Music toggle — starts "on"; clicking toggles mute.
+  const toggle = document.getElementById(
+    "music-toggle"
+  ) as HTMLButtonElement | null;
+  const icoEl = toggle?.querySelector(".ico") as HTMLElement | null;
+  if (toggle && icoEl) {
+    toggle.addEventListener("click", () => {
+      resumeCtx();
+      const on = toggle.getAttribute("aria-pressed") === "true";
+      if (on) {
+        stopMusic();
+        toggle.setAttribute("aria-pressed", "false");
+        icoEl.textContent = icoEl.dataset.off ?? "🔇";
+      } else {
+        startMusic();
+        toggle.setAttribute("aria-pressed", "true");
+        icoEl.textContent = icoEl.dataset.on ?? "🔊";
+      }
+    });
+  }
+
+  // Auto-start music on first user gesture (browsers block autoplay otherwise).
+  const unlock = () => {
+    resumeCtx();
+    if (toggle?.getAttribute("aria-pressed") === "true") startMusic();
+    window.removeEventListener("pointerdown", unlock);
+    window.removeEventListener("keydown", unlock);
+    window.removeEventListener("touchstart", unlock);
+  };
+  window.addEventListener("pointerdown", unlock);
+  window.addEventListener("keydown", unlock);
+  window.addEventListener("touchstart", unlock);
+
+  (window as any).__cumpleSfx = {
+    ribbit: () => {
+      resumeCtx();
+      if (!playFile(ribbitEl, 0.4)) playRibbit();
+    },
+    coin: () => {
+      resumeCtx();
+      if (!playFile(coinEl, 0.4)) playCoin();
+    },
+  };
+
+  // Konami code: ↑ ↑ ↓ ↓ ← → ← → B A
+  const sequence = [
+    "ArrowUp",
+    "ArrowUp",
+    "ArrowDown",
+    "ArrowDown",
+    "ArrowLeft",
+    "ArrowRight",
+    "ArrowLeft",
+    "ArrowRight",
+    "b",
+    "a",
+  ];
+  let pos = 0;
+  window.addEventListener("keydown", e => {
+    const expected = sequence[pos];
+    const key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+    if (key === expected) {
+      pos++;
+      if (pos === sequence.length) {
+        pos = 0;
+        frogRain();
+      }
+    } else {
+      // allow restart if the current key matches first
+      pos = key === sequence[0] ? 1 : 0;
+    }
+  });
+
+  function frogRain() {
+    const container = document.getElementById("frog-rain");
+    if (!container) return;
+    container.classList.add("flash");
+    setTimeout(() => container.classList.remove("flash"), 500);
+
+    const count = 25;
+    for (let i = 0; i < count; i++) {
+      const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      svg.setAttribute("viewBox", "0 0 32 32");
+      const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
+      use.setAttribute("href", "#frog");
+      svg.appendChild(use);
+      const size = 40 + Math.random() * 40;
+      svg.setAttribute("width", String(size));
+      svg.setAttribute("height", String(size));
+      const s = svg.style;
+      s.left = `${Math.random() * 100}vw`;
+      s.top = "-60px";
+      s.animationDuration = `${1.5 + Math.random() * 1.8}s`;
+      s.animationDelay = `${Math.random() * 0.4}s`;
+      container.appendChild(svg);
+      setTimeout(() => svg.remove(), 4500);
+    }
+
+    (window as any).__cumpleSfx?.ribbit?.();
+  }
+</script>

@@ -1,0 +1,344 @@
+---
+// 5.1 Hero — full screen. Frog stage is interactive: 3 clicks opens Flappy Rana.
+---
+
+<section class="hero">
+  <p class="micro hero-eyebrow">★ PLAYER 1 READY ★</p>
+  <h1 class="hero-title">
+    <span>CUMPLO</span>
+    <span>35</span>
+  </h1>
+  <p class="hero-sub">Y me los celebro con ustedes</p>
+
+  <div
+    class="frog-stage"
+    id="frog-stage"
+    role="button"
+    tabindex="0"
+    aria-label="La rana dorada"
+  >
+    <div class="frog-shadow"></div>
+    <svg class="frog-sprite" viewBox="0 0 32 32" aria-hidden="true">
+      <use href="#frog"></use>
+    </svg>
+    <div class="frog-bubble" id="frog-bubble" aria-live="polite"></div>
+  </div>
+
+  <p class="press-start">▶ PRESS START ▼</p>
+
+  <!-- Floating maker items -->
+  <svg class="float-item fi-beer" viewBox="0 0 24 32" aria-hidden="true"
+    ><use href="#beer"></use></svg
+  >
+  <svg class="float-item fi-controller" viewBox="0 0 32 16" aria-hidden="true"
+    ><use href="#controller"></use></svg
+  >
+  <svg class="float-item fi-hammer" viewBox="0 0 20 20" aria-hidden="true"
+    ><use href="#hammer"></use></svg
+  >
+  <svg class="float-item fi-heart" viewBox="0 0 16 16" aria-hidden="true"
+    ><use href="#heart"></use></svg
+  >
+  <!-- Top band: extra floating sprites -->
+  <svg class="float-item fi-rocket" viewBox="0 0 16 24" aria-hidden="true"
+    ><use href="#rocket"></use></svg
+  >
+  <svg class="float-item fi-gameboy" viewBox="0 0 20 32" aria-hidden="true"
+    ><use href="#gameboy"></use></svg
+  >
+  <svg class="float-item fi-laptop" viewBox="0 0 32 24" aria-hidden="true"
+    ><use href="#laptop"></use></svg
+  >
+  <svg class="float-item fi-printer" viewBox="0 0 32 32" aria-hidden="true"
+    ><use href="#printer3d"></use></svg
+  >
+  <svg class="float-item fi-fire" viewBox="0 0 16 20" aria-hidden="true"
+    ><use href="#fire"></use></svg
+  >
+  <svg class="float-item fi-fries" viewBox="0 0 20 20" aria-hidden="true"
+    ><use href="#fries"></use></svg
+  >
+  <svg class="float-item fi-burger" viewBox="0 0 20 16" aria-hidden="true"
+    ><use href="#burger"></use></svg
+  >
+  <svg class="float-item fi-zap" viewBox="0 0 16 20" aria-hidden="true"
+    ><use href="#zap"></use></svg
+  >
+</section>
+
+<style>
+  .hero {
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    padding: 40px 0;
+  }
+  .hero-eyebrow {
+    margin: 0 0 20px;
+    font-size: 10px;
+  }
+  .hero-title {
+    margin: 0;
+    font-size: clamp(28px, 9vw, 64px);
+    color: var(--gold);
+    line-height: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-shadow:
+      -3px 0 0 var(--red),
+      3px 0 0 var(--cyan),
+      4px 4px 0 var(--gold-dark),
+      0 0 2px var(--ink);
+    letter-spacing: 0.02em;
+  }
+  .hero-sub {
+    margin: 28px 0 36px;
+    font-family: "Press Start 2P", monospace;
+    font-size: clamp(12px, 2.4vw, 16px);
+    color: var(--pink);
+    letter-spacing: 0.04em;
+  }
+  .frog-stage {
+    width: 160px;
+    height: 180px;
+    position: relative;
+    cursor: pointer;
+    outline: none;
+  }
+  .frog-stage:focus-visible {
+    box-shadow: 0 0 0 3px var(--gold);
+  }
+  .frog-sprite {
+    width: 96px;
+    height: 96px;
+    position: absolute;
+    left: 50%;
+    bottom: 30px;
+    transform: translateX(-50%);
+    animation: frog-hop 1.4s ease-in-out infinite;
+  }
+  .frog-shadow {
+    position: absolute;
+    left: 50%;
+    bottom: 20px;
+    transform: translateX(-50%);
+    width: 90px;
+    height: 14px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.55);
+    filter: blur(2px);
+    animation: shadow-pulse 1.4s ease-in-out infinite;
+  }
+  @keyframes frog-hop {
+    0%,
+    100% {
+      transform: translateX(-50%) translateY(0);
+    }
+    30% {
+      transform: translateX(-50%) translateY(-40px) scaleY(1.05);
+    }
+    55% {
+      transform: translateX(-50%) translateY(-20px);
+    }
+  }
+  @keyframes shadow-pulse {
+    0%,
+    100% {
+      width: 90px;
+      opacity: 0.55;
+    }
+    30% {
+      width: 56px;
+      opacity: 0.3;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .frog-sprite {
+      animation-duration: 2.8s;
+    }
+    .frog-shadow {
+      animation-duration: 2.8s;
+    }
+  }
+
+  .frog-bubble {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translate(-50%, -100%);
+    background: var(--paper);
+    color: var(--ink);
+    border: 3px solid var(--ink);
+    padding: 6px 10px;
+    font-family: "Press Start 2P", monospace;
+    font-size: 9px;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 150ms linear;
+    pointer-events: none;
+    box-shadow: 3px 3px 0 0 var(--gold-dark);
+  }
+  .frog-bubble.show {
+    opacity: 1;
+  }
+
+  .press-start {
+    margin-top: 28px;
+    font-family: "Press Start 2P", monospace;
+    font-size: 11px;
+    color: var(--cream);
+    animation: blink 1.1s steps(2, end) infinite;
+  }
+  @keyframes blink {
+    50% {
+      opacity: 0.2;
+    }
+  }
+
+  .float-item {
+    position: absolute;
+    animation: float 3.4s ease-in-out infinite;
+  }
+  .fi-beer {
+    top: 38%;
+    left: 4%;
+    width: 42px;
+    height: 56px;
+    animation-delay: 0s;
+  }
+  .fi-controller {
+    top: 40%;
+    right: 4%;
+    width: 56px;
+    height: 28px;
+    animation-delay: 0.5s;
+  }
+  .fi-hammer {
+    bottom: 14%;
+    left: 7%;
+    width: 40px;
+    height: 40px;
+    animation-delay: 1.1s;
+  }
+  .fi-heart {
+    bottom: 10%;
+    right: 8%;
+    width: 32px;
+    height: 32px;
+    animation-delay: 1.7s;
+  }
+  /* Top band: row of maker sprites across the top */
+  .fi-rocket {
+    top: 2%;
+    left: 14%;
+    width: 28px;
+    height: 42px;
+    animation-delay: 0.2s;
+  }
+  .fi-gameboy {
+    top: 1%;
+    right: 14%;
+    width: 26px;
+    height: 42px;
+    animation-delay: 0.7s;
+  }
+  .fi-laptop {
+    top: 16%;
+    left: 22%;
+    width: 56px;
+    height: 42px;
+    animation-delay: 1.3s;
+  }
+  .fi-printer {
+    top: 14%;
+    right: 22%;
+    width: 42px;
+    height: 42px;
+    animation-delay: 1.9s;
+  }
+  .fi-fire {
+    top: 18%;
+    left: 4%;
+    width: 28px;
+    height: 36px;
+    animation-delay: 0.4s;
+  }
+  .fi-fries {
+    top: 20%;
+    right: 4%;
+    width: 36px;
+    height: 36px;
+    animation-delay: 0.9s;
+  }
+  .fi-burger {
+    top: 3%;
+    left: 38%;
+    width: 44px;
+    height: 36px;
+    animation-delay: 1.5s;
+  }
+  .fi-zap {
+    top: 2%;
+    right: 38%;
+    width: 26px;
+    height: 34px;
+    animation-delay: 2s;
+  }
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0) rotate(-2deg);
+    }
+    50% {
+      transform: translateY(-10px) rotate(2deg);
+    }
+  }
+  @media (max-width: 480px) {
+    .float-item {
+      transform: scale(0.65);
+    }
+    .fi-burger,
+    .fi-zap {
+      display: none;
+    }
+    .fi-laptop,
+    .fi-printer {
+      top: 22%;
+    }
+  }
+</style>
+
+<script>
+  const stage = document.getElementById("frog-stage");
+  const bubble = document.getElementById("frog-bubble");
+  let clicks = 0;
+  function show(text: string) {
+    if (!bubble) return;
+    bubble.textContent = text;
+    bubble.classList.add("show");
+    setTimeout(() => bubble.classList.remove("show"), 1600);
+  }
+  function tap() {
+    clicks++;
+    (window as any).__cumpleSfx?.ribbit?.();
+    if (clicks === 1) show("¡CROAK! 🐸");
+    else if (clicks === 2) show("¿Otra vez? jeje");
+    else if (clicks >= 3) {
+      show("Ok, ya me caíste bien. ¿Jugamos?");
+      clicks = 0;
+      window.dispatchEvent(new CustomEvent("frog:invite"));
+    }
+  }
+  stage?.addEventListener("click", tap);
+  stage?.addEventListener("keydown", e => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      tap();
+    }
+  });
+</script>

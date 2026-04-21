@@ -1,0 +1,36 @@
+---
+import CumpleLayout from "@layouts/CumpleLayout.astro";
+import Hero from "@components/cumple-35/Hero.astro";
+import StatsParty from "@components/cumple-35/StatsParty.astro";
+import Countdown from "@components/cumple-35/Countdown.astro";
+import LoadingJoke from "@components/cumple-35/LoadingJoke.astro";
+import Quest from "@components/cumple-35/Quest.astro";
+import Inventory from "@components/cumple-35/Inventory.astro";
+import Achievements from "@components/cumple-35/Achievements.astro";
+import Polaroids from "@components/cumple-35/Polaroids.astro";
+import PhotoBooth from "@components/cumple-35/PhotoBooth.astro";
+import Gifts from "@components/cumple-35/Gifts.astro";
+import Corkboard from "@components/cumple-35/Corkboard.astro";
+import RSVPForm from "@components/cumple-35/RSVPForm.astro";
+import FlappyRana from "@components/cumple-35/FlappyRana.astro";
+
+const title = "¡Salo cumple 35! 🐸🍺";
+const description =
+  "25 de abril · 7pm · La Rana Dorada · Bogotá. Ven a tomarte una pola conmigo. No traer regalos.";
+---
+
+<CumpleLayout title={title} description={description}>
+  <Hero />
+  <StatsParty />
+  <Countdown />
+  <LoadingJoke />
+  <Quest />
+  <Inventory />
+  <Achievements />
+  <Polaroids />
+  <PhotoBooth />
+  <Gifts />
+  <Corkboard />
+  <RSVPForm />
+  <FlappyRana />
+</CumpleLayout>

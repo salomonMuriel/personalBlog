@@ -1,0 +1,144 @@
+---
+// 5.3 Countdown — target 2026-04-25T19:00:00-05:00
+---
+
+<section class="countdown">
+  <h2 class="section-heading">&gt; TIEMPO PARA EL PARCHE</h2>
+  <div class="cassettes" id="cassettes">
+    <div class="cassette">
+      <div class="digits" data-unit="days">--</div><div class="unit">DÍAS</div>
+    </div>
+    <div class="cassette">
+      <div class="digits" data-unit="hours">--</div><div class="unit">
+        HORAS
+      </div>
+    </div>
+    <div class="cassette">
+      <div class="digits" data-unit="minutes">--</div><div class="unit">
+        MIN
+      </div>
+    </div>
+    <div class="cassette">
+      <div class="digits" data-unit="seconds">--</div><div class="unit">
+        SEG
+      </div>
+    </div>
+  </div>
+  <p class="started" id="started" hidden>
+    ¡¡¡YA EMPEZÓ!!!<br />
+    CORRE PA' LA RANA <svg
+      class="inline-frog"
+      viewBox="0 0 32 32"
+      aria-hidden="true"><use href="#frog"></use></svg
+    >
+  </p>
+</section>
+
+<style>
+  .cassettes {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+  @media (max-width: 420px) {
+    .cassettes {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  .cassette {
+    background: var(--bg-panel);
+    border: 4px solid var(--cream);
+    box-shadow:
+      0 0 0 3px var(--ink),
+      5px 5px 0 0 var(--gold-dark);
+    padding: 14px 6px;
+    text-align: center;
+  }
+  .digits {
+    font-family: "Press Start 2P", monospace;
+    font-size: clamp(26px, 8vw, 56px);
+    color: var(--gold);
+    text-shadow: 2px 2px 0 var(--ink);
+    line-height: 1;
+    transition: transform 180ms ease-out;
+  }
+  .digits.flip {
+    transform: translateY(-4px);
+  }
+  .unit {
+    margin-top: 8px;
+    font-family: "Press Start 2P", monospace;
+    font-size: 10px;
+    color: var(--cyan);
+    letter-spacing: 0.1em;
+  }
+  .started {
+    margin-top: 24px;
+    text-align: center;
+    font-family: "Press Start 2P", monospace;
+    font-size: clamp(14px, 3.6vw, 20px);
+    color: var(--red);
+    line-height: 1.6;
+  }
+  .inline-frog {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+  }
+</style>
+
+<script>
+  const TARGET = new Date("2026-04-25T19:00:00-05:00").getTime();
+  const nodes: Record<string, HTMLElement | null> = {
+    days: document.querySelector<HTMLElement>('.digits[data-unit="days"]'),
+    hours: document.querySelector<HTMLElement>('.digits[data-unit="hours"]'),
+    minutes: document.querySelector<HTMLElement>(
+      '.digits[data-unit="minutes"]'
+    ),
+    seconds: document.querySelector<HTMLElement>(
+      '.digits[data-unit="seconds"]'
+    ),
+  };
+  const startedEl = document.getElementById("started");
+  const cassettes = document.getElementById("cassettes");
+  const prev: Record<string, string> = {
+    days: "",
+    hours: "",
+    minutes: "",
+    seconds: "",
+  };
+  function pad(n: number) {
+    return String(Math.max(0, Math.floor(n))).padStart(2, "0");
+  }
+  function tick() {
+    const ms = TARGET - Date.now();
+    if (ms <= 0) {
+      if (startedEl) startedEl.hidden = false;
+      if (cassettes) cassettes.style.opacity = "0.35";
+      Object.values(nodes).forEach(n => {
+        if (n) n.textContent = "00";
+      });
+      return;
+    }
+    const days = Math.floor(ms / 86400000);
+    const hours = Math.floor((ms % 86400000) / 3600000);
+    const minutes = Math.floor((ms % 3600000) / 60000);
+    const seconds = Math.floor((ms % 60000) / 1000);
+    update("days", pad(days));
+    update("hours", pad(hours));
+    update("minutes", pad(minutes));
+    update("seconds", pad(seconds));
+  }
+  function update(key: string, val: string) {
+    const node = nodes[key];
+    if (!node) return;
+    if (prev[key] === val) return;
+    prev[key] = val;
+    node.textContent = val;
+    node.classList.add("flip");
+    setTimeout(() => node.classList.remove("flip"), 180);
+  }
+  tick();
+  setInterval(tick, 1000);
+</script>

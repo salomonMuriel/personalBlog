@@ -1,0 +1,90 @@
+---
+// 5.4 Loading screen joke
+---
+
+<section class="loading">
+  <p class="micro label">LOADING SAVE FILE...</p>
+  <div class="load-bar" aria-hidden="true">
+    <div class="load-fill"></div>
+  </div>
+  <p class="joke">
+    Ya sé, ya sé — mi cumple <em>real</em> fue el 1 de enero. Pero cumplir en Año
+    Nuevo es un bajón épico: todos están de guayabo, viajando, o las dos. Así que
+    hace como 15 años me mudé pa' abril. Bienvenid@ al parche.
+  </p>
+</section>
+
+<style>
+  .loading {
+    margin: 48px 0;
+    text-align: center;
+  }
+  .label {
+    margin: 0 0 12px;
+  }
+  .load-bar {
+    width: 80%;
+    max-width: 560px;
+    height: 18px;
+    margin: 0 auto;
+    border: 3px solid var(--cream);
+    background: var(--bg-deep);
+    position: relative;
+    image-rendering: pixelated;
+  }
+  .load-fill {
+    width: 80%;
+    height: 100%;
+    background: linear-gradient(
+      to bottom,
+      var(--gold-light) 0 25%,
+      var(--gold) 25% 70%,
+      var(--gold-dark) 70% 100%
+    );
+    position: relative;
+    animation: load-pulse 1.6s ease-in-out infinite;
+  }
+  .load-fill::after {
+    content: "";
+    position: absolute;
+    inset: 0 0 0 -20%;
+    background: linear-gradient(
+      to right,
+      transparent 0,
+      rgba(255, 255, 255, 0.35) 50%,
+      transparent 100%
+    );
+    animation: sheen 2.4s linear infinite;
+  }
+  @keyframes load-pulse {
+    0%,
+    100% {
+      filter: brightness(1);
+    }
+    50% {
+      filter: brightness(1.18);
+    }
+  }
+  @keyframes sheen {
+    0% {
+      transform: translateX(-40%);
+    }
+    100% {
+      transform: translateX(140%);
+    }
+  }
+  .joke {
+    margin: 24px auto 0;
+    max-width: 600px;
+    font-family: "VT323", monospace;
+    font-size: 22px;
+    color: var(--cream);
+    line-height: 1.4;
+    text-align: left;
+  }
+  .joke em {
+    color: var(--gold);
+    font-style: normal;
+    font-weight: bold;
+  }
+</style>

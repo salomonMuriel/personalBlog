@@ -1,0 +1,245 @@
+---
+// 5.2 Stats del Jugador — hoja de personaje D&D
+---
+
+<section class="stats">
+  <h2 class="section-heading">&gt; STATS DEL JUGADOR</h2>
+  <div class="panel stats-grid">
+    <div class="area area-id">
+      <div class="row">
+        <span class="k">CLASS:</span><span class="v">Maker (homebrew)</span>
+      </div>
+      <div class="row">
+        <span class="k">LVL:</span><span class="v">35</span>
+      </div>
+      <div class="row hp-row">
+        <span class="k">HP:</span>
+        <div class="hp-bar" aria-label="HP 35/100">
+          <div class="hp-fill" style="width: 35%"></div>
+        </div>
+        <span class="hp-text">35/100</span>
+      </div>
+      <p class="flavor">(los gemelos me lo bajaron)</p>
+    </div>
+
+    <div class="area area-party">
+      <p class="micro sub">CURRENT PARTY</p>
+      <div class="party-row">
+        <div class="ppl">
+          <svg class="spr" viewBox="0 0 32 48" aria-hidden="true"
+            ><use href="#sprite-nata"></use></svg
+          >
+          <div class="floor"></div>
+          <span class="nm">Nata</span>
+        </div>
+        <div class="ppl">
+          <svg class="spr" viewBox="0 0 32 48" aria-hidden="true"
+            ><use href="#sprite-salo"></use></svg
+          >
+          <div class="floor"></div>
+          <span class="nm">Salo</span>
+        </div>
+        <div class="ppl">
+          <svg class="spr spr-kid" viewBox="0 0 24 32" aria-hidden="true"
+            ><use href="#sprite-franco"></use></svg
+          >
+          <div class="floor"></div>
+          <span class="nm">Franco</span>
+        </div>
+        <div class="ppl">
+          <svg class="spr spr-kid" viewBox="0 0 24 32" aria-hidden="true"
+            ><use href="#sprite-luca"></use></svg
+          >
+          <div class="floor"></div>
+          <span class="nm">Luca</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="area area-attr">
+      <div class="attr">
+        <span class="atag">INT</span><span class="aval">15</span><span
+          class="amod">(+2)</span
+        ><span class="ahi">← highest</span>
+      </div>
+      <div class="attr">
+        <span class="atag">CHA</span><span class="aval">14</span><span
+          class="amod">(+2)</span>
+      </div>
+      <div class="attr">
+        <span class="atag">WIS</span><span class="aval">13</span><span
+          class="amod">(+1)</span>
+      </div>
+      <div class="attr">
+        <span class="atag">DEX</span><span class="aval">12</span><span
+          class="amod">(+1)</span>
+      </div>
+      <div class="attr">
+        <span class="atag">CON</span><span class="aval">10</span><span
+          class="amod">(+0)</span>
+      </div>
+      <div class="attr">
+        <span class="atag">STR</span><span class="aval"> 8</span><span
+          class="amod">(-1)</span>
+      </div>
+      <p class="footnote">
+        Standard array · 72 pts · build optimizado pa' armar empresas, no pa'
+        levantar cajas.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  @media (min-width: 720px) {
+    .stats-grid {
+      grid-template-columns: 1fr 1fr;
+      grid-template-areas:
+        "id party"
+        "attr party";
+      gap: 28px;
+    }
+    .area-id {
+      grid-area: id;
+    }
+    .area-party {
+      grid-area: party;
+    }
+    .area-attr {
+      grid-area: attr;
+    }
+  }
+
+  .area .row {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    font-family: "Press Start 2P", monospace;
+    font-size: 10px;
+    margin-bottom: 10px;
+  }
+  .area .k {
+    color: var(--cyan);
+  }
+  .area .v {
+    color: var(--cream);
+  }
+
+  .hp-row {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .hp-bar {
+    flex: 1 1 140px;
+    height: 16px;
+    border: 3px solid var(--cream);
+    background: var(--bg-deep);
+    position: relative;
+    image-rendering: pixelated;
+  }
+  .hp-fill {
+    height: 100%;
+    background: linear-gradient(
+      to bottom,
+      #5a3a28 0 30%,
+      #ff3b3b 30% 70%,
+      #8a1010 70% 100%
+    );
+    box-shadow:
+      inset 0 1px 0 var(--gold-light),
+      inset 0 -1px 0 #5a0000;
+  }
+  .hp-text {
+    font-size: 10px;
+    color: var(--cream);
+  }
+
+  .flavor {
+    margin: 6px 0 0;
+    font-family: "VT323", monospace;
+    font-size: 18px;
+    color: var(--cream);
+    opacity: 0.75;
+  }
+
+  .sub {
+    margin: 0 0 12px;
+  }
+  .party-row {
+    display: flex;
+    justify-content: space-around;
+    align-items: end;
+    gap: 4px;
+    flex-wrap: wrap;
+    padding: 8px 0;
+    border-top: 2px dashed var(--cork);
+    border-bottom: 2px dashed var(--cork);
+  }
+  .ppl {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+  .spr {
+    width: 44px;
+    height: 66px;
+  }
+  .spr-kid {
+    width: 36px;
+    height: 48px;
+  }
+  .floor {
+    margin-top: -3px;
+    width: 32px;
+    height: 4px;
+    background: radial-gradient(
+      ellipse,
+      rgba(0, 0, 0, 0.6) 0%,
+      rgba(0, 0, 0, 0) 70%
+    );
+  }
+  .nm {
+    font-family: "Press Start 2P", monospace;
+    font-size: 8px;
+    color: var(--cream);
+    margin-top: 4px;
+  }
+
+  .attr {
+    display: grid;
+    grid-template-columns: 40px 30px 40px 1fr;
+    align-items: center;
+    gap: 8px;
+    font-family: "Press Start 2P", monospace;
+    font-size: 10px;
+    margin-bottom: 6px;
+  }
+  .atag {
+    color: var(--gold);
+  }
+  .aval {
+    color: var(--cream);
+  }
+  .amod {
+    color: var(--cyan);
+  }
+  .ahi {
+    color: var(--pink);
+    font-size: 9px;
+  }
+
+  .footnote {
+    margin: 12px 0 0;
+    font-family: "VT323", monospace;
+    font-size: 16px;
+    color: var(--cream);
+    opacity: 0.75;
+    line-height: 1.3;
+  }
+</style>

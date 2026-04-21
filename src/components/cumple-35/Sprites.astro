@@ -1,0 +1,1902 @@
+---
+// All sprites as inline SVG <symbol>s. Use with <svg><use href="#id"/></svg>.
+// Pixel grid: each unit = 1 pixel. Scale via CSS width/height on the consuming <svg>.
+// SNES-style: strong outlines, 4-6 tones per region, specular highlights, rim lights.
+---
+
+<svg
+  width="0"
+  height="0"
+  aria-hidden="true"
+  style="position:absolute; overflow:hidden;"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <defs>
+    <!-- ==================== FROG (32x32) — La Rana Dorada ==================== -->
+    <symbol id="frog" viewBox="0 0 32 32">
+      <g shape-rendering="crispEdges">
+        <!-- ========== LEFT EYE (bulging dome, 6 wide x 6 tall) ========== -->
+        <!-- outline -->
+        <rect x="5" y="1" width="4" height="1" fill="#15100a"></rect>
+        <rect x="4" y="2" width="1" height="1" fill="#15100a"></rect>
+        <rect x="9" y="2" width="1" height="1" fill="#15100a"></rect>
+        <rect x="3" y="3" width="1" height="4" fill="#15100a"></rect>
+        <rect x="10" y="3" width="1" height="4" fill="#15100a"></rect>
+        <rect x="4" y="7" width="1" height="1" fill="#15100a"></rect>
+        <rect x="9" y="7" width="1" height="1" fill="#15100a"></rect>
+        <!-- sclera -->
+        <rect x="5" y="2" width="4" height="1" fill="#fff8e4"></rect>
+        <rect x="4" y="3" width="6" height="4" fill="#fff8e4"></rect>
+        <rect x="5" y="7" width="4" height="1" fill="#fff8e4"></rect>
+        <!-- sclera bottom shadow -->
+        <rect x="5" y="6" width="4" height="1" fill="#d9c7a7"></rect>
+        <!-- iris (gold ring) -->
+        <rect x="6" y="3" width="3" height="3" fill="#c89205"></rect>
+        <!-- pupil -->
+        <rect x="6" y="4" width="2" height="2" fill="#15100a"></rect>
+        <!-- specular -->
+        <rect x="5" y="3" width="1" height="1" fill="#fff8e4"></rect>
+        <rect x="6" y="3" width="1" height="1" fill="#fff3a8"></rect>
+        <rect x="6" y="4" width="1" height="1" fill="#5a3d04"></rect>
+
+        <!-- ========== RIGHT EYE ========== -->
+        <rect x="23" y="1" width="4" height="1" fill="#15100a"></rect>
+        <rect x="22" y="2" width="1" height="1" fill="#15100a"></rect>
+        <rect x="27" y="2" width="1" height="1" fill="#15100a"></rect>
+        <rect x="21" y="3" width="1" height="4" fill="#15100a"></rect>
+        <rect x="28" y="3" width="1" height="4" fill="#15100a"></rect>
+        <rect x="22" y="7" width="1" height="1" fill="#15100a"></rect>
+        <rect x="27" y="7" width="1" height="1" fill="#15100a"></rect>
+        <rect x="23" y="2" width="4" height="1" fill="#fff8e4"></rect>
+        <rect x="22" y="3" width="6" height="4" fill="#fff8e4"></rect>
+        <rect x="23" y="7" width="4" height="1" fill="#fff8e4"></rect>
+        <rect x="23" y="6" width="4" height="1" fill="#d9c7a7"></rect>
+        <rect x="23" y="3" width="3" height="3" fill="#c89205"></rect>
+        <rect x="24" y="4" width="2" height="2" fill="#15100a"></rect>
+        <rect x="23" y="3" width="1" height="1" fill="#fff3a8"></rect>
+        <rect x="22" y="3" width="1" height="1" fill="#fff8e4"></rect>
+        <rect x="24" y="4" width="1" height="1" fill="#5a3d04"></rect>
+
+        <!-- ========== HEAD/BODY OUTLINE ========== -->
+        <!-- top between eyes (forehead dip) -->
+        <rect x="10" y="7" width="12" height="1" fill="#15100a"></rect>
+        <!-- left side curve -->
+        <rect x="3" y="8" width="1" height="1" fill="#15100a"></rect>
+        <rect x="2" y="9" width="1" height="1" fill="#15100a"></rect>
+        <rect x="1" y="10" width="1" height="2" fill="#15100a"></rect>
+        <rect x="0" y="12" width="1" height="6" fill="#15100a"></rect>
+        <rect x="1" y="18" width="1" height="2" fill="#15100a"></rect>
+        <rect x="2" y="20" width="1" height="2" fill="#15100a"></rect>
+        <rect x="3" y="22" width="1" height="1" fill="#15100a"></rect>
+        <!-- right side curve -->
+        <rect x="28" y="8" width="1" height="1" fill="#15100a"></rect>
+        <rect x="29" y="9" width="1" height="1" fill="#15100a"></rect>
+        <rect x="30" y="10" width="1" height="2" fill="#15100a"></rect>
+        <rect x="31" y="12" width="1" height="6" fill="#15100a"></rect>
+        <rect x="30" y="18" width="1" height="2" fill="#15100a"></rect>
+        <rect x="29" y="20" width="1" height="2" fill="#15100a"></rect>
+        <rect x="28" y="22" width="1" height="1" fill="#15100a"></rect>
+        <!-- bottom outline (above feet) -->
+        <rect x="4" y="23" width="24" height="1" fill="#15100a"></rect>
+
+        <!-- ========== BODY BASE (gold) ========== -->
+        <rect x="4" y="8" width="24" height="1" fill="#c89205"></rect>
+        <rect x="3" y="9" width="26" height="1" fill="#f4c430"></rect>
+        <rect x="2" y="10" width="28" height="2" fill="#f4c430"></rect>
+        <rect x="1" y="12" width="30" height="6" fill="#f4c430"></rect>
+        <rect x="2" y="18" width="28" height="2" fill="#f4c430"></rect>
+        <rect x="3" y="20" width="26" height="2" fill="#f4c430"></rect>
+        <rect x="4" y="22" width="24" height="1" fill="#c89205"></rect>
+
+        <!-- ========== TOP HIGHLIGHT (light gold dome top) ========== -->
+        <rect x="11" y="8" width="10" height="1" fill="#ffe168"></rect>
+        <rect x="4" y="9" width="8" height="1" fill="#ffe168"></rect>
+        <rect x="20" y="9" width="8" height="1" fill="#ffe168"></rect>
+        <rect x="2" y="10" width="5" height="1" fill="#ffe168"></rect>
+        <rect x="1" y="12" width="3" height="2" fill="#ffe168"></rect>
+
+        <!-- ========== SPECULAR (brightest shine, top-left) ========== -->
+        <rect x="13" y="8" width="5" height="1" fill="#fff3a8"></rect>
+        <rect x="5" y="9" width="4" height="1" fill="#fff3a8"></rect>
+        <rect x="2" y="11" width="3" height="1" fill="#fff3a8"></rect>
+
+        <!-- ========== BOTTOM/SIDE SHADOWS (under-lighting) ========== -->
+        <rect x="2" y="20" width="28" height="1" fill="#c89205"></rect>
+        <rect x="3" y="21" width="26" height="1" fill="#8a6408"></rect>
+        <rect x="4" y="22" width="24" height="1" fill="#8a6408"></rect>
+        <!-- right rim shadow (gentle, no harsh bar) -->
+        <rect x="29" y="12" width="1" height="6" fill="#c89205"></rect>
+        <rect x="30" y="13" width="1" height="4" fill="#8a6408"></rect>
+
+        <!-- ========== BROW RIDGE (under eyes, above mouth) ========== -->
+        <rect x="5" y="8" width="3" height="1" fill="#8a6408"></rect>
+        <rect x="24" y="8" width="3" height="1" fill="#8a6408"></rect>
+
+        <!-- ========== BELLY (cream patch) ========== -->
+        <!-- belly top arc -->
+        <rect x="10" y="14" width="12" height="1" fill="#ffe168"></rect>
+        <rect x="9" y="15" width="14" height="1" fill="#fff0c0"></rect>
+        <rect x="8" y="16" width="16" height="5" fill="#fff0c0"></rect>
+        <rect x="9" y="21" width="14" height="1" fill="#ffe168"></rect>
+        <!-- belly inner highlight (top) -->
+        <rect x="10" y="15" width="10" height="1" fill="#fffbe0"></rect>
+        <rect x="9" y="16" width="12" height="1" fill="#fffbe0"></rect>
+        <!-- belly center dimple -->
+        <rect x="15" y="17" width="2" height="3" fill="#ffe168"></rect>
+
+        <!-- ========== WIDE HAPPY MOUTH/SMILE (corners up) ========== -->
+        <!-- smile corners lifted -->
+        <rect x="10" y="12" width="1" height="1" fill="#15100a"></rect>
+        <rect x="21" y="12" width="1" height="1" fill="#15100a"></rect>
+        <!-- mouth line (wide, curving down to corners) -->
+        <rect x="11" y="13" width="10" height="1" fill="#15100a"></rect>
+        <rect x="10" y="14" width="1" height="1" fill="#15100a"></rect>
+        <rect x="21" y="14" width="1" height="1" fill="#15100a"></rect>
+        <rect x="11" y="15" width="10" height="1" fill="#15100a"></rect>
+        <!-- mouth inside (tongue peek) -->
+        <rect x="12" y="14" width="8" height="1" fill="#a84060"></rect>
+        <rect x="13" y="14" width="6" height="1" fill="#c8506a"></rect>
+        <!-- teeth hint (top row of mouth) -->
+        <rect x="13" y="13" width="6" height="1" fill="#fff8e4"></rect>
+        <rect x="14" y="13" width="1" height="1" fill="#d9c7a7"></rect>
+        <rect x="17" y="13" width="1" height="1" fill="#d9c7a7"></rect>
+        <!-- lip highlight (above mouth) -->
+        <rect x="12" y="11" width="8" height="1" fill="#ffe168"></rect>
+
+        <!-- ========== CHEEKS (pink blush, on face) ========== -->
+        <rect x="6" y="11" width="3" height="2" fill="#ff6b9d"></rect>
+        <rect x="6" y="11" width="2" height="1" fill="#ffc8d4"></rect>
+        <rect x="23" y="11" width="3" height="2" fill="#ff6b9d"></rect>
+        <rect x="24" y="11" width="2" height="1" fill="#ffc8d4"></rect>
+
+        <!-- ========== FRONT LEGS/FEET (paddle-shaped) ========== -->
+        <!-- left foot outline -->
+        <rect x="3" y="24" width="1" height="3" fill="#15100a"></rect>
+        <rect x="4" y="27" width="7" height="1" fill="#15100a"></rect>
+        <rect x="11" y="24" width="1" height="3" fill="#15100a"></rect>
+        <!-- left foot fill -->
+        <rect x="4" y="24" width="7" height="3" fill="#f4c430"></rect>
+        <rect x="4" y="24" width="7" height="1" fill="#ffe168"></rect>
+        <rect x="4" y="26" width="7" height="1" fill="#c89205"></rect>
+        <!-- left toes (3 separator lines) -->
+        <rect x="5" y="25" width="1" height="2" fill="#8a6408"></rect>
+        <rect x="7" y="25" width="1" height="2" fill="#8a6408"></rect>
+        <rect x="9" y="25" width="1" height="2" fill="#8a6408"></rect>
+        <!-- left toe pads (bumps at front) -->
+        <rect x="4" y="25" width="1" height="1" fill="#fff3a8"></rect>
+
+        <!-- right foot outline -->
+        <rect x="20" y="24" width="1" height="3" fill="#15100a"></rect>
+        <rect x="21" y="27" width="7" height="1" fill="#15100a"></rect>
+        <rect x="28" y="24" width="1" height="3" fill="#15100a"></rect>
+        <!-- right foot fill -->
+        <rect x="21" y="24" width="7" height="3" fill="#f4c430"></rect>
+        <rect x="21" y="24" width="7" height="1" fill="#ffe168"></rect>
+        <rect x="21" y="26" width="7" height="1" fill="#c89205"></rect>
+        <rect x="22" y="25" width="1" height="2" fill="#8a6408"></rect>
+        <rect x="24" y="25" width="1" height="2" fill="#8a6408"></rect>
+        <rect x="26" y="25" width="1" height="2" fill="#8a6408"></rect>
+        <rect x="21" y="25" width="1" height="1" fill="#fff3a8"></rect>
+
+        <!-- ========== GROUND SHADOW ========== -->
+        <rect x="5" y="28" width="22" height="1" fill="#0a0508" opacity="0.35"
+        ></rect>
+      </g>
+    </symbol>
+
+    <!-- ==================== SALO (32x48) ==================== -->
+    <symbol id="sprite-salo" viewBox="0 0 32 48">
+      <g shape-rendering="crispEdges">
+        <!-- ========== BALD HEAD ========== -->
+        <!-- head outline -->
+        <rect x="10" y="2" width="12" height="1" fill="#2a2015"></rect>
+        <rect x="9" y="3" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="22" y="3" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="8" y="4" width="1" height="10" fill="#2a2015"></rect>
+        <rect x="23" y="4" width="1" height="10" fill="#2a2015"></rect>
+        <rect x="9" y="14" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="22" y="14" width="1" height="1" fill="#2a2015"></rect>
+        <!-- face base -->
+        <rect x="10" y="3" width="12" height="1" fill="#f0c9a4"></rect>
+        <rect x="9" y="4" width="14" height="10" fill="#f0c9a4"></rect>
+        <rect x="10" y="14" width="12" height="1" fill="#f0c9a4"></rect>
+        <!-- bald dome highlights (top-left light source) -->
+        <rect x="11" y="3" width="4" height="1" fill="#ffeac8"></rect>
+        <rect x="10" y="4" width="6" height="2" fill="#f8d9b6"></rect>
+        <rect x="12" y="4" width="3" height="1" fill="#ffeac8"></rect>
+        <!-- dome specular sparkle -->
+        <rect x="12" y="5" width="2" height="1" fill="#fff6e0"></rect>
+        <!-- right side shadow -->
+        <rect x="20" y="5" width="2" height="7" fill="#d4a880"></rect>
+        <rect x="21" y="4" width="1" height="9" fill="#b8925a"></rect>
+        <!-- stubble beard (jaw) -->
+        <rect x="10" y="11" width="12" height="3" fill="#5a3a28"></rect>
+        <rect x="11" y="11" width="10" height="1" fill="#8a6540"></rect>
+        <rect x="10" y="14" width="12" height="1" fill="#3a2418"></rect>
+        <!-- dither stubble to avoid flat block -->
+        <rect x="11" y="12" width="1" height="1" fill="#8a6540"></rect>
+        <rect x="13" y="12" width="1" height="1" fill="#8a6540"></rect>
+        <rect x="15" y="12" width="1" height="1" fill="#8a6540"></rect>
+        <rect x="17" y="12" width="1" height="1" fill="#8a6540"></rect>
+        <rect x="19" y="12" width="1" height="1" fill="#8a6540"></rect>
+        <rect x="10" y="13" width="1" height="1" fill="#b8925a"></rect>
+        <rect x="12" y="13" width="1" height="1" fill="#b8925a"></rect>
+        <rect x="14" y="13" width="1" height="1" fill="#b8925a"></rect>
+        <rect x="18" y="13" width="1" height="1" fill="#b8925a"></rect>
+        <rect x="20" y="13" width="1" height="1" fill="#b8925a"></rect>
+        <!-- happy closed/squint eyes (arched ^_^) -->
+        <rect x="12" y="8" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="13" y="7" width="2" height="1" fill="#2a2015"></rect>
+        <rect x="15" y="8" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="18" y="8" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="19" y="7" width="2" height="1" fill="#2a2015"></rect>
+        <rect x="21" y="8" width="1" height="1" fill="#2a2015"></rect>
+        <!-- brows (raised for joy) -->
+        <rect x="12" y="6" width="3" height="1" fill="#3a2418"></rect>
+        <rect x="18" y="6" width="3" height="1" fill="#3a2418"></rect>
+        <!-- cheek blush (happy flush) -->
+        <rect x="10" y="10" width="2" height="1" fill="#ff9bb8"></rect>
+        <rect x="20" y="10" width="2" height="1" fill="#ff9bb8"></rect>
+        <!-- nose shadow -->
+        <rect x="15" y="9" width="2" height="2" fill="#d4a880"></rect>
+        <rect x="15" y="11" width="2" height="1" fill="#b8925a"></rect>
+        <!-- open happy smile with teeth -->
+        <rect x="12" y="12" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="19" y="12" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="13" y="13" width="6" height="1" fill="#2a2015"></rect>
+        <rect x="13" y="13" width="6" height="1" fill="#fff8e4"></rect>
+        <rect x="14" y="13" width="1" height="1" fill="#d9c7a7"></rect>
+        <rect x="17" y="13" width="1" height="1" fill="#d9c7a7"></rect>
+        <rect x="14" y="14" width="4" height="1" fill="#a84060"></rect>
+        <rect x="13" y="14" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="18" y="14" width="1" height="1" fill="#2a2015"></rect>
+
+        <!-- ========== NECK ========== -->
+        <rect x="13" y="15" width="6" height="2" fill="#f0c9a4"></rect>
+        <rect x="13" y="16" width="6" height="1" fill="#d4a880"></rect>
+        <rect x="13" y="15" width="1" height="2" fill="#2a2015"></rect>
+        <rect x="18" y="15" width="1" height="2" fill="#2a2015"></rect>
+
+        <!-- ========== WHITE T-SHIRT ========== -->
+        <!-- shirt outline -->
+        <rect x="6" y="17" width="20" height="1" fill="#2a2015"></rect>
+        <rect x="5" y="18" width="1" height="12" fill="#2a2015"></rect>
+        <rect x="26" y="18" width="1" height="12" fill="#2a2015"></rect>
+        <rect x="6" y="30" width="20" height="1" fill="#2a2015"></rect>
+        <!-- shirt base -->
+        <rect x="6" y="18" width="20" height="12" fill="#fff8e4"></rect>
+        <!-- shirt shading (sides) -->
+        <rect x="6" y="18" width="2" height="12" fill="#d9c7a7"></rect>
+        <rect x="24" y="18" width="2" height="12" fill="#d9c7a7"></rect>
+        <rect x="25" y="19" width="1" height="10" fill="#b5a085"></rect>
+        <!-- chest highlight -->
+        <rect x="10" y="19" width="12" height="1" fill="#ffffff"></rect>
+        <rect x="11" y="20" width="10" height="1" fill="#ffffff"></rect>
+        <!-- collar V -->
+        <rect x="14" y="18" width="4" height="1" fill="#d9c7a7"></rect>
+        <rect x="15" y="19" width="2" height="1" fill="#b5a085"></rect>
+        <!-- subtle body shadow under chest -->
+        <rect x="10" y="25" width="12" height="1" fill="#d9c7a7"></rect>
+        <rect x="8" y="27" width="16" height="1" fill="#d9c7a7"></rect>
+        <!-- shirt hem -->
+        <rect x="6" y="29" width="20" height="1" fill="#b5a085"></rect>
+
+        <!-- ========== ARMS ========== -->
+        <!-- arm outlines -->
+        <rect x="3" y="18" width="1" height="10" fill="#2a2015"></rect>
+        <rect x="4" y="17" width="2" height="1" fill="#2a2015"></rect>
+        <rect x="26" y="17" width="2" height="1" fill="#2a2015"></rect>
+        <rect x="28" y="18" width="1" height="10" fill="#2a2015"></rect>
+        <rect x="3" y="28" width="3" height="1" fill="#2a2015"></rect>
+        <rect x="26" y="28" width="3" height="1" fill="#2a2015"></rect>
+        <!-- sleeves (white shirt, shoulder) -->
+        <rect x="4" y="18" width="2" height="4" fill="#fff8e4"></rect>
+        <rect x="26" y="18" width="2" height="4" fill="#fff8e4"></rect>
+        <rect x="4" y="18" width="2" height="1" fill="#ffffff"></rect>
+        <rect x="26" y="18" width="2" height="1" fill="#ffffff"></rect>
+        <rect x="5" y="21" width="1" height="1" fill="#d9c7a7"></rect>
+        <rect x="26" y="21" width="1" height="1" fill="#d9c7a7"></rect>
+        <rect x="4" y="22" width="2" height="1" fill="#2a2015"></rect>
+        <rect x="26" y="22" width="2" height="1" fill="#2a2015"></rect>
+        <!-- forearm (skin) -->
+        <rect x="4" y="23" width="2" height="5" fill="#f0c9a4"></rect>
+        <rect x="26" y="23" width="2" height="5" fill="#f0c9a4"></rect>
+        <rect x="5" y="23" width="1" height="4" fill="#f8d9b6"></rect>
+        <rect x="26" y="23" width="1" height="4" fill="#f8d9b6"></rect>
+        <rect x="4" y="27" width="2" height="1" fill="#d4a880"></rect>
+        <rect x="26" y="27" width="2" height="1" fill="#d4a880"></rect>
+
+        <!-- ========== JEANS ========== -->
+        <!-- jeans outline -->
+        <rect x="5" y="31" width="1" height="10" fill="#2a2015"></rect>
+        <rect x="26" y="31" width="1" height="10" fill="#2a2015"></rect>
+        <rect x="5" y="41" width="10" height="1" fill="#2a2015"></rect>
+        <rect x="17" y="41" width="10" height="1" fill="#2a2015"></rect>
+        <!-- belt -->
+        <rect x="6" y="31" width="20" height="2" fill="#3a2418"></rect>
+        <rect x="6" y="31" width="20" height="1" fill="#5a3a28"></rect>
+        <rect x="15" y="31" width="2" height="2" fill="#c89205"></rect>
+        <rect x="15" y="32" width="2" height="1" fill="#8a6500"></rect>
+        <!-- jeans base -->
+        <rect x="6" y="33" width="20" height="8" fill="#3a5a8a"></rect>
+        <!-- jean leg separation -->
+        <rect x="15" y="33" width="2" height="8" fill="#2d4a7a"></rect>
+        <rect x="16" y="33" width="1" height="8" fill="#1a3560"></rect>
+        <!-- jean highlights -->
+        <rect x="8" y="34" width="2" height="6" fill="#5a78a8"></rect>
+        <rect x="20" y="34" width="2" height="6" fill="#5a78a8"></rect>
+        <rect x="8" y="34" width="1" height="5" fill="#7a98c8"></rect>
+        <rect x="20" y="34" width="1" height="5" fill="#7a98c8"></rect>
+        <!-- jean shadows -->
+        <rect x="13" y="34" width="2" height="6" fill="#2d4a7a"></rect>
+        <rect x="17" y="34" width="2" height="6" fill="#2d4a7a"></rect>
+        <rect x="24" y="34" width="2" height="6" fill="#2d4a7a"></rect>
+        <rect x="6" y="34" width="2" height="6" fill="#2d4a7a"></rect>
+        <!-- pockets (stitch hint) -->
+        <rect x="7" y="34" width="1" height="1" fill="#7a98c8"></rect>
+        <rect x="23" y="34" width="1" height="1" fill="#7a98c8"></rect>
+        <!-- hem -->
+        <rect x="6" y="40" width="20" height="1" fill="#1a3560"></rect>
+
+        <!-- ========== SNEAKERS (white) ========== -->
+        <!-- left -->
+        <rect x="5" y="42" width="10" height="1" fill="#2a2015"></rect>
+        <rect x="4" y="43" width="1" height="3" fill="#2a2015"></rect>
+        <rect x="15" y="42" width="1" height="3" fill="#2a2015"></rect>
+        <rect x="5" y="43" width="10" height="3" fill="#fff8e4"></rect>
+        <rect x="5" y="43" width="10" height="1" fill="#ffffff"></rect>
+        <rect x="6" y="44" width="2" height="1" fill="#ff3b3b"></rect>
+        <!-- sole -->
+        <rect x="5" y="46" width="10" height="1" fill="#d9c7a7"></rect>
+        <rect x="4" y="46" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="15" y="46" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="5" y="47" width="10" height="1" fill="#2a2015"></rect>
+        <!-- right -->
+        <rect x="17" y="42" width="10" height="1" fill="#2a2015"></rect>
+        <rect x="16" y="43" width="1" height="3" fill="#2a2015"></rect>
+        <rect x="27" y="42" width="1" height="3" fill="#2a2015"></rect>
+        <rect x="17" y="43" width="10" height="3" fill="#fff8e4"></rect>
+        <rect x="17" y="43" width="10" height="1" fill="#ffffff"></rect>
+        <rect x="18" y="44" width="2" height="1" fill="#ff3b3b"></rect>
+        <rect x="17" y="46" width="10" height="1" fill="#d9c7a7"></rect>
+        <rect x="16" y="46" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="27" y="46" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="17" y="47" width="10" height="1" fill="#2a2015"></rect>
+      </g>
+    </symbol>
+
+    <!-- ==================== NATA (32x48) ==================== -->
+    <symbol id="sprite-nata" viewBox="0 0 32 48">
+      <g shape-rendering="crispEdges">
+        <!-- ========== LONG BLACK HAIR (back) ========== -->
+        <!-- hair silhouette outline (rounded top) -->
+        <rect x="10" y="1" width="12" height="1" fill="#0a0505"></rect>
+        <rect x="8" y="2" width="2" height="1" fill="#0a0505"></rect>
+        <rect x="22" y="2" width="2" height="1" fill="#0a0505"></rect>
+        <rect x="7" y="3" width="1" height="1" fill="#0a0505"></rect>
+        <rect x="24" y="3" width="1" height="1" fill="#0a0505"></rect>
+        <rect x="6" y="4" width="1" height="1" fill="#0a0505"></rect>
+        <rect x="25" y="4" width="1" height="1" fill="#0a0505"></rect>
+        <rect x="5" y="5" width="1" height="21" fill="#0a0505"></rect>
+        <rect x="26" y="5" width="1" height="21" fill="#0a0505"></rect>
+        <rect x="6" y="26" width="1" height="2" fill="#0a0505"></rect>
+        <rect x="25" y="26" width="1" height="2" fill="#0a0505"></rect>
+        <rect x="7" y="28" width="2" height="1" fill="#0a0505"></rect>
+        <rect x="23" y="28" width="2" height="1" fill="#0a0505"></rect>
+        <!-- hair fill (rounded top) -->
+        <rect x="10" y="2" width="12" height="1" fill="#1a1010"></rect>
+        <rect x="9" y="2" width="1" height="1" fill="#1a1010"></rect>
+        <rect x="22" y="2" width="1" height="1" fill="#1a1010"></rect>
+        <rect x="8" y="3" width="16" height="1" fill="#1a1010"></rect>
+        <rect x="7" y="4" width="18" height="1" fill="#1a1010"></rect>
+        <rect x="6" y="5" width="20" height="21" fill="#1a1010"></rect>
+        <rect x="7" y="26" width="18" height="2" fill="#1a1010"></rect>
+        <rect x="9" y="28" width="14" height="1" fill="#1a1010"></rect>
+        <!-- hair highlights (volume) -->
+        <rect x="7" y="4" width="2" height="4" fill="#3a2525"></rect>
+        <rect x="23" y="4" width="2" height="4" fill="#3a2525"></rect>
+        <rect x="8" y="5" width="1" height="2" fill="#5a3a3a"></rect>
+        <rect x="23" y="5" width="1" height="2" fill="#5a3a3a"></rect>
+        <rect x="6" y="10" width="1" height="8" fill="#3a2525"></rect>
+        <rect x="25" y="10" width="1" height="8" fill="#3a2525"></rect>
+        <rect x="6" y="12" width="1" height="4" fill="#5a3a3a"></rect>
+        <rect x="25" y="12" width="1" height="4" fill="#5a3a3a"></rect>
+        <!-- hair strands -->
+        <rect x="7" y="20" width="1" height="6" fill="#3a2525"></rect>
+        <rect x="24" y="20" width="1" height="6" fill="#3a2525"></rect>
+
+        <!-- ========== FACE ========== -->
+        <rect x="10" y="4" width="12" height="12" fill="#f0c9a4"></rect>
+        <!-- face highlights -->
+        <rect x="10" y="4" width="12" height="2" fill="#f8d9b6"></rect>
+        <rect x="10" y="4" width="6" height="1" fill="#ffeac8"></rect>
+        <!-- face shading right -->
+        <rect x="20" y="6" width="2" height="10" fill="#d4a880"></rect>
+        <rect x="21" y="8" width="1" height="7" fill="#b8925a"></rect>
+        <!-- bangs (shorter fringe) -->
+        <rect x="10" y="4" width="12" height="3" fill="#1a1010"></rect>
+        <rect x="11" y="7" width="2" height="1" fill="#1a1010"></rect>
+        <rect x="16" y="7" width="2" height="1" fill="#1a1010"></rect>
+        <rect x="20" y="7" width="1" height="1" fill="#1a1010"></rect>
+        <!-- bang highlights -->
+        <rect x="12" y="5" width="3" height="1" fill="#3a2525"></rect>
+        <rect x="18" y="5" width="2" height="1" fill="#3a2525"></rect>
+
+        <!-- happy closed eyes (arched ^_^) -->
+        <rect x="12" y="10" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="13" y="9" width="2" height="1" fill="#2a2015"></rect>
+        <rect x="15" y="10" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="18" y="10" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="19" y="9" width="2" height="1" fill="#2a2015"></rect>
+        <rect x="21" y="10" width="1" height="1" fill="#2a2015"></rect>
+        <!-- eyelashes (happy, slight upward tick) -->
+        <rect x="11" y="10" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="22" y="10" width="1" height="1" fill="#2a2015"></rect>
+        <!-- blush (wide and pink) -->
+        <rect x="10" y="11" width="2" height="2" fill="#ff9bb8"></rect>
+        <rect x="20" y="11" width="2" height="2" fill="#ff9bb8"></rect>
+        <rect x="10" y="11" width="1" height="1" fill="#ffc8d4"></rect>
+        <rect x="20" y="11" width="1" height="1" fill="#ffc8d4"></rect>
+        <!-- nose -->
+        <rect x="15" y="11" width="1" height="2" fill="#d4a880"></rect>
+        <!-- big open smile with teeth, corners up -->
+        <rect x="13" y="12" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="18" y="12" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="14" y="13" width="4" height="1" fill="#2a2015"></rect>
+        <rect x="14" y="13" width="4" height="1" fill="#fff8e4"></rect>
+        <rect x="14" y="14" width="4" height="1" fill="#e86890"></rect>
+        <rect x="15" y="14" width="2" height="1" fill="#ff9bb8"></rect>
+        <rect x="13" y="14" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="18" y="14" width="1" height="1" fill="#2a2015"></rect>
+        <!-- chin shadow -->
+        <rect x="10" y="15" width="12" height="1" fill="#d4a880"></rect>
+
+        <!-- ========== NECK ========== -->
+        <rect x="13" y="16" width="6" height="2" fill="#f0c9a4"></rect>
+        <rect x="13" y="17" width="6" height="1" fill="#d4a880"></rect>
+        <rect x="13" y="16" width="1" height="2" fill="#2a2015"></rect>
+        <rect x="18" y="16" width="1" height="2" fill="#2a2015"></rect>
+
+        <!-- ========== KIMONO-STYLE TOP ========== -->
+        <!-- outline -->
+        <rect x="4" y="18" width="24" height="1" fill="#2a2015"></rect>
+        <rect x="3" y="19" width="1" height="12" fill="#2a2015"></rect>
+        <rect x="28" y="19" width="1" height="12" fill="#2a2015"></rect>
+        <rect x="4" y="31" width="24" height="1" fill="#2a2015"></rect>
+        <!-- base magenta -->
+        <rect x="4" y="19" width="24" height="12" fill="#a8408c"></rect>
+        <!-- kimono panels (cyan sides like sleeves) -->
+        <rect x="4" y="20" width="5" height="10" fill="#4dd4e7"></rect>
+        <rect x="23" y="20" width="5" height="10" fill="#4dd4e7"></rect>
+        <rect x="4" y="19" width="5" height="1" fill="#8fe2ef"></rect>
+        <rect x="23" y="19" width="5" height="1" fill="#8fe2ef"></rect>
+        <rect x="5" y="20" width="1" height="10" fill="#8fe2ef"></rect>
+        <rect x="24" y="20" width="1" height="10" fill="#8fe2ef"></rect>
+        <rect x="8" y="20" width="1" height="10" fill="#2a7a90"></rect>
+        <rect x="23" y="20" width="1" height="10" fill="#2a7a90"></rect>
+        <!-- sakura pattern on magenta chest -->
+        <rect x="12" y="22" width="2" height="2" fill="#ff6b9d"></rect>
+        <rect x="13" y="22" width="1" height="1" fill="#ffc8d4"></rect>
+        <rect x="18" y="22" width="2" height="2" fill="#ff6b9d"></rect>
+        <rect x="19" y="22" width="1" height="1" fill="#ffc8d4"></rect>
+        <rect x="15" y="24" width="2" height="2" fill="#ffe168"></rect>
+        <rect x="15" y="24" width="1" height="1" fill="#fff3a8"></rect>
+        <rect x="11" y="27" width="2" height="2" fill="#ff6b9d"></rect>
+        <rect x="11" y="27" width="1" height="1" fill="#ffc8d4"></rect>
+        <rect x="19" y="27" width="2" height="2" fill="#ff6b9d"></rect>
+        <rect x="19" y="27" width="1" height="1" fill="#ffc8d4"></rect>
+        <!-- obi sash at waist -->
+        <rect x="4" y="29" width="24" height="2" fill="#c89205"></rect>
+        <rect x="4" y="29" width="24" height="1" fill="#ffe168"></rect>
+        <rect x="15" y="29" width="2" height="2" fill="#ff3b3b"></rect>
+        <!-- kimono top highlight (chest) -->
+        <rect x="10" y="19" width="2" height="1" fill="#c060a8"></rect>
+        <rect x="20" y="19" width="2" height="1" fill="#c060a8"></rect>
+
+        <!-- ========== ARMS (forearms hanging below kimono sleeves) ========== -->
+        <!-- left arm outline -->
+        <rect x="3" y="28" width="1" height="4" fill="#2a2015"></rect>
+        <rect x="6" y="28" width="1" height="4" fill="#2a2015"></rect>
+        <rect x="3" y="32" width="4" height="1" fill="#2a2015"></rect>
+        <!-- left forearm skin -->
+        <rect x="4" y="28" width="2" height="4" fill="#f0c9a4"></rect>
+        <rect x="4" y="28" width="1" height="4" fill="#f8d9b6"></rect>
+        <rect x="4" y="31" width="2" height="1" fill="#d4a880"></rect>
+        <!-- right arm outline -->
+        <rect x="25" y="28" width="1" height="4" fill="#2a2015"></rect>
+        <rect x="28" y="28" width="1" height="4" fill="#2a2015"></rect>
+        <rect x="25" y="32" width="4" height="1" fill="#2a2015"></rect>
+        <!-- right forearm skin -->
+        <rect x="26" y="28" width="2" height="4" fill="#f0c9a4"></rect>
+        <rect x="26" y="28" width="1" height="4" fill="#f8d9b6"></rect>
+        <rect x="26" y="31" width="2" height="1" fill="#d4a880"></rect>
+
+        <!-- ========== JEANS ========== -->
+        <rect x="5" y="32" width="1" height="9" fill="#2a2015"></rect>
+        <rect x="26" y="32" width="1" height="9" fill="#2a2015"></rect>
+        <rect x="5" y="41" width="10" height="1" fill="#2a2015"></rect>
+        <rect x="17" y="41" width="10" height="1" fill="#2a2015"></rect>
+        <!-- belt line -->
+        <rect x="6" y="32" width="20" height="1" fill="#1a1010"></rect>
+        <!-- jeans base -->
+        <rect x="6" y="33" width="20" height="8" fill="#3a5a8a"></rect>
+        <rect x="15" y="33" width="2" height="8" fill="#2d4a7a"></rect>
+        <rect x="16" y="33" width="1" height="8" fill="#1a3560"></rect>
+        <rect x="8" y="34" width="2" height="6" fill="#5a78a8"></rect>
+        <rect x="20" y="34" width="2" height="6" fill="#5a78a8"></rect>
+        <rect x="8" y="34" width="1" height="5" fill="#7a98c8"></rect>
+        <rect x="20" y="34" width="1" height="5" fill="#7a98c8"></rect>
+        <rect x="13" y="34" width="2" height="6" fill="#2d4a7a"></rect>
+        <rect x="17" y="34" width="2" height="6" fill="#2d4a7a"></rect>
+        <rect x="24" y="34" width="2" height="6" fill="#2d4a7a"></rect>
+        <rect x="6" y="34" width="2" height="6" fill="#2d4a7a"></rect>
+        <rect x="6" y="40" width="20" height="1" fill="#1a3560"></rect>
+
+        <!-- ========== DARK BOOTS ========== -->
+        <!-- left -->
+        <rect x="5" y="42" width="10" height="1" fill="#2a2015"></rect>
+        <rect x="4" y="43" width="1" height="3" fill="#2a2015"></rect>
+        <rect x="15" y="42" width="1" height="3" fill="#2a2015"></rect>
+        <rect x="5" y="43" width="10" height="3" fill="#3a2418"></rect>
+        <rect x="5" y="43" width="10" height="1" fill="#5a3a28"></rect>
+        <rect x="6" y="44" width="2" height="1" fill="#8a6540"></rect>
+        <!-- sole -->
+        <rect x="5" y="46" width="10" height="1" fill="#8a8a8a"></rect>
+        <rect x="4" y="46" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="15" y="46" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="5" y="47" width="10" height="1" fill="#2a2015"></rect>
+        <!-- right -->
+        <rect x="17" y="42" width="10" height="1" fill="#2a2015"></rect>
+        <rect x="16" y="43" width="1" height="3" fill="#2a2015"></rect>
+        <rect x="27" y="42" width="1" height="3" fill="#2a2015"></rect>
+        <rect x="17" y="43" width="10" height="3" fill="#3a2418"></rect>
+        <rect x="17" y="43" width="10" height="1" fill="#5a3a28"></rect>
+        <rect x="18" y="44" width="2" height="1" fill="#8a6540"></rect>
+        <rect x="17" y="46" width="10" height="1" fill="#8a8a8a"></rect>
+        <rect x="16" y="46" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="27" y="46" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="17" y="47" width="10" height="1" fill="#2a2015"></rect>
+      </g>
+    </symbol>
+
+    <!-- ==================== LUCA (24x32) — straight dirty-blonde ==================== -->
+    <symbol id="sprite-luca" viewBox="0 0 24 32">
+      <g shape-rendering="crispEdges">
+        <!-- ========== HEAD ========== -->
+        <!-- head outline -->
+        <rect x="6" y="1" width="12" height="1" fill="#2a2015"></rect>
+        <rect x="5" y="2" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="18" y="2" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="4" y="3" width="1" height="8" fill="#2a2015"></rect>
+        <rect x="19" y="3" width="1" height="8" fill="#2a2015"></rect>
+        <rect x="5" y="11" width="14" height="1" fill="#2a2015"></rect>
+        <!-- hair (straight dirty-blonde) -->
+        <rect x="6" y="2" width="12" height="1" fill="#8a6540"></rect>
+        <rect x="5" y="3" width="14" height="4" fill="#b8925a"></rect>
+        <!-- hair darks -->
+        <rect x="5" y="3" width="14" height="1" fill="#8a6540"></rect>
+        <rect x="5" y="6" width="14" height="1" fill="#8a6540"></rect>
+        <!-- hair highlights (straight strands) -->
+        <rect x="6" y="4" width="2" height="2" fill="#d4b070"></rect>
+        <rect x="10" y="4" width="2" height="2" fill="#d4b070"></rect>
+        <rect x="14" y="4" width="2" height="2" fill="#d4b070"></rect>
+        <rect x="7" y="4" width="1" height="1" fill="#e8c890"></rect>
+        <rect x="11" y="4" width="1" height="1" fill="#e8c890"></rect>
+        <rect x="15" y="4" width="1" height="1" fill="#e8c890"></rect>
+        <!-- hair bottom (covers sides of head) -->
+        <rect x="5" y="7" width="2" height="4" fill="#8a6540"></rect>
+        <rect x="17" y="7" width="2" height="4" fill="#8a6540"></rect>
+        <rect x="5" y="7" width="1" height="4" fill="#6a4a30"></rect>
+        <rect x="18" y="7" width="1" height="4" fill="#6a4a30"></rect>
+
+        <!-- face -->
+        <rect x="7" y="7" width="10" height="4" fill="#f0c9a4"></rect>
+        <rect x="7" y="7" width="10" height="1" fill="#f8d9b6"></rect>
+        <!-- right shadow -->
+        <rect x="16" y="8" width="1" height="3" fill="#d4a880"></rect>
+        <!-- happy closed eyes (^_^) -->
+        <rect x="8" y="8" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="9" y="7" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="10" y="8" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="13" y="8" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="14" y="7" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="15" y="8" width="1" height="1" fill="#2a2015"></rect>
+        <!-- wide happy blush cheeks -->
+        <rect x="7" y="9" width="2" height="1" fill="#ff9bb8"></rect>
+        <rect x="15" y="9" width="2" height="1" fill="#ff9bb8"></rect>
+        <!-- big open smile w/ tooth -->
+        <rect x="9" y="9" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="14" y="9" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="10" y="10" width="4" height="1" fill="#2a2015"></rect>
+        <rect x="10" y="10" width="4" height="1" fill="#fff8e4"></rect>
+        <rect x="11" y="10" width="2" height="1" fill="#ff9bb8"></rect>
+
+        <!-- ========== SHIRT (yellow) ========== -->
+        <!-- outline -->
+        <rect x="5" y="12" width="14" height="1" fill="#2a2015"></rect>
+        <rect x="4" y="13" width="1" height="10" fill="#2a2015"></rect>
+        <rect x="19" y="13" width="1" height="10" fill="#2a2015"></rect>
+        <rect x="5" y="23" width="14" height="1" fill="#2a2015"></rect>
+        <!-- shirt base -->
+        <rect x="5" y="13" width="14" height="10" fill="#ffd93d"></rect>
+        <!-- ========== ARMS (at sides, under sleeves) ========== -->
+        <!-- left arm outline -->
+        <rect x="2" y="13" width="1" height="9" fill="#2a2015"></rect>
+        <rect x="3" y="12" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="2" y="22" width="3" height="1" fill="#2a2015"></rect>
+        <!-- left sleeve (yellow) -->
+        <rect x="3" y="13" width="2" height="3" fill="#ffd93d"></rect>
+        <rect x="3" y="13" width="1" height="3" fill="#ffe978"></rect>
+        <rect x="3" y="15" width="2" height="1" fill="#2a2015"></rect>
+        <!-- left forearm skin -->
+        <rect x="3" y="16" width="2" height="6" fill="#f0c9a4"></rect>
+        <rect x="3" y="16" width="1" height="6" fill="#f8d9b6"></rect>
+        <rect x="3" y="21" width="2" height="1" fill="#d4a880"></rect>
+        <!-- right arm outline -->
+        <rect x="21" y="13" width="1" height="9" fill="#2a2015"></rect>
+        <rect x="20" y="12" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="19" y="22" width="3" height="1" fill="#2a2015"></rect>
+        <!-- right sleeve (yellow) -->
+        <rect x="19" y="13" width="2" height="3" fill="#ffd93d"></rect>
+        <rect x="20" y="13" width="1" height="3" fill="#c89a1d"></rect>
+        <rect x="19" y="15" width="2" height="1" fill="#2a2015"></rect>
+        <!-- right forearm skin -->
+        <rect x="19" y="16" width="2" height="6" fill="#f0c9a4"></rect>
+        <rect x="20" y="16" width="1" height="6" fill="#d4a880"></rect>
+        <rect x="19" y="21" width="2" height="1" fill="#d4a880"></rect>
+        <!-- highlights -->
+        <rect x="6" y="13" width="3" height="1" fill="#ffe978"></rect>
+        <rect x="10" y="13" width="4" height="1" fill="#ffe978"></rect>
+        <rect x="15" y="13" width="3" height="1" fill="#ffe978"></rect>
+        <rect x="6" y="14" width="2" height="3" fill="#ffe978"></rect>
+        <rect x="6" y="14" width="1" height="2" fill="#fff4b8"></rect>
+        <!-- shadows -->
+        <rect x="17" y="14" width="2" height="8" fill="#c89a1d"></rect>
+        <rect x="18" y="15" width="1" height="6" fill="#8a6a10"></rect>
+        <rect x="5" y="22" width="14" height="1" fill="#c89a1d"></rect>
+        <!-- graphic: a star -->
+        <rect x="11" y="16" width="2" height="1" fill="#ff6b9d"></rect>
+        <rect x="10" y="17" width="4" height="1" fill="#ff6b9d"></rect>
+        <rect x="11" y="18" width="2" height="1" fill="#ff6b9d"></rect>
+        <rect x="11" y="17" width="2" height="1" fill="#ffc8d4"></rect>
+
+        <!-- ========== SHORTS ========== -->
+        <rect x="5" y="24" width="14" height="4" fill="#3a5a8a"></rect>
+        <rect x="5" y="24" width="14" height="1" fill="#5a78a8"></rect>
+        <rect x="11" y="24" width="2" height="4" fill="#2d4a7a"></rect>
+        <rect x="12" y="24" width="1" height="4" fill="#1a3560"></rect>
+        <rect x="6" y="25" width="1" height="2" fill="#7a98c8"></rect>
+        <rect x="17" y="25" width="1" height="2" fill="#2d4a7a"></rect>
+        <rect x="4" y="24" width="1" height="4" fill="#2a2015"></rect>
+        <rect x="19" y="24" width="1" height="4" fill="#2a2015"></rect>
+        <rect x="5" y="28" width="14" height="1" fill="#1a3560"></rect>
+
+        <!-- ========== LEGS ========== -->
+        <rect x="7" y="29" width="4" height="2" fill="#f0c9a4"></rect>
+        <rect x="13" y="29" width="4" height="2" fill="#f0c9a4"></rect>
+        <rect x="7" y="29" width="1" height="2" fill="#d4a880"></rect>
+        <rect x="13" y="29" width="1" height="2" fill="#d4a880"></rect>
+
+        <!-- ========== SHOES ========== -->
+        <rect x="6" y="31" width="6" height="1" fill="#4dd4e7"></rect>
+        <rect x="12" y="31" width="6" height="1" fill="#4dd4e7"></rect>
+        <rect x="6" y="31" width="6" height="1" fill="#4dd4e7"></rect>
+        <rect x="6" y="30" width="6" height="1" fill="#4dd4e7"></rect>
+        <rect x="12" y="30" width="6" height="1" fill="#4dd4e7"></rect>
+        <rect x="6" y="30" width="6" height="1" fill="#8fe2ef"></rect>
+        <rect x="12" y="30" width="6" height="1" fill="#8fe2ef"></rect>
+        <rect x="6" y="30" width="1" height="2" fill="#2a2015"></rect>
+        <rect x="11" y="30" width="1" height="2" fill="#2a2015"></rect>
+        <rect x="12" y="30" width="1" height="2" fill="#2a2015"></rect>
+        <rect x="17" y="30" width="1" height="2" fill="#2a2015"></rect>
+        <rect x="6" y="32" width="6" height="0" fill="#2a2015"></rect>
+      </g>
+    </symbol>
+
+    <!-- ==================== FRANCO (24x32) — wavy w/ front curl ==================== -->
+    <symbol id="sprite-franco" viewBox="0 0 24 32">
+      <g shape-rendering="crispEdges">
+        <!-- ========== HEAD w/ WAVY HAIR + CURL ========== -->
+        <!-- head outline -->
+        <rect x="6" y="1" width="12" height="1" fill="#2a2015"></rect>
+        <rect x="5" y="2" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="18" y="2" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="4" y="3" width="1" height="8" fill="#2a2015"></rect>
+        <rect x="19" y="3" width="1" height="8" fill="#2a2015"></rect>
+        <rect x="5" y="11" width="14" height="1" fill="#2a2015"></rect>
+        <!-- wavy hair base -->
+        <rect x="6" y="2" width="12" height="1" fill="#8a6540"></rect>
+        <rect x="5" y="3" width="14" height="4" fill="#b8925a"></rect>
+        <rect x="5" y="3" width="14" height="2" fill="#8a6540"></rect>
+        <!-- wave bumps on top (staggered for wavy feel) -->
+        <rect x="5" y="2" width="2" height="1" fill="#8a6540"></rect>
+        <rect x="9" y="2" width="2" height="1" fill="#8a6540"></rect>
+        <rect x="13" y="2" width="2" height="1" fill="#8a6540"></rect>
+        <rect x="17" y="2" width="2" height="1" fill="#8a6540"></rect>
+        <rect x="7" y="3" width="1" height="1" fill="#6a4a30"></rect>
+        <rect x="11" y="3" width="1" height="1" fill="#6a4a30"></rect>
+        <rect x="15" y="3" width="1" height="1" fill="#6a4a30"></rect>
+        <!-- hair highlights (wavy shine strands) -->
+        <rect x="6" y="5" width="2" height="1" fill="#d4b070"></rect>
+        <rect x="15" y="5" width="2" height="1" fill="#d4b070"></rect>
+        <rect x="6" y="5" width="1" height="1" fill="#e8c890"></rect>
+        <!-- the front curl (prominent swoosh over forehead) -->
+        <rect x="10" y="6" width="4" height="1" fill="#4a3018"></rect>
+        <rect x="9" y="7" width="2" height="2" fill="#6a4a30"></rect>
+        <rect x="13" y="7" width="2" height="2" fill="#6a4a30"></rect>
+        <rect x="10" y="7" width="1" height="1" fill="#8a6540"></rect>
+        <rect x="14" y="7" width="1" height="1" fill="#8a6540"></rect>
+        <rect x="11" y="8" width="3" height="1" fill="#4a3018"></rect>
+        <rect x="12" y="9" width="1" height="1" fill="#6a4a30"></rect>
+        <!-- hair sides -->
+        <rect x="5" y="7" width="2" height="4" fill="#8a6540"></rect>
+        <rect x="17" y="7" width="2" height="4" fill="#8a6540"></rect>
+        <rect x="5" y="7" width="1" height="4" fill="#6a4a30"></rect>
+        <rect x="18" y="7" width="1" height="4" fill="#6a4a30"></rect>
+
+        <!-- face -->
+        <rect x="7" y="7" width="10" height="4" fill="#f0c9a4"></rect>
+        <rect x="7" y="7" width="10" height="1" fill="#f8d9b6"></rect>
+        <rect x="16" y="8" width="1" height="3" fill="#d4a880"></rect>
+        <!-- happy closed eyes (^_^) -->
+        <rect x="8" y="8" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="9" y="7" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="10" y="8" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="14" y="8" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="15" y="7" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="16" y="8" width="1" height="1" fill="#2a2015"></rect>
+        <!-- wide happy blush cheeks -->
+        <rect x="7" y="9" width="2" height="1" fill="#ff9bb8"></rect>
+        <rect x="15" y="9" width="2" height="1" fill="#ff9bb8"></rect>
+        <!-- big open smile with tooth -->
+        <rect x="9" y="9" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="14" y="9" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="10" y="10" width="4" height="1" fill="#2a2015"></rect>
+        <rect x="10" y="10" width="4" height="1" fill="#fff8e4"></rect>
+        <rect x="11" y="10" width="2" height="1" fill="#ff9bb8"></rect>
+
+        <!-- ========== SHIRT (cyan) ========== -->
+        <rect x="5" y="12" width="14" height="1" fill="#2a2015"></rect>
+        <rect x="4" y="13" width="1" height="10" fill="#2a2015"></rect>
+        <rect x="19" y="13" width="1" height="10" fill="#2a2015"></rect>
+        <rect x="5" y="23" width="14" height="1" fill="#2a2015"></rect>
+        <rect x="5" y="13" width="14" height="10" fill="#4dd4e7"></rect>
+        <!-- ========== ARMS (cyan sleeves + skin forearms) ========== -->
+        <!-- left arm outline -->
+        <rect x="2" y="13" width="1" height="9" fill="#2a2015"></rect>
+        <rect x="3" y="12" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="2" y="22" width="3" height="1" fill="#2a2015"></rect>
+        <!-- left sleeve (cyan) -->
+        <rect x="3" y="13" width="2" height="3" fill="#4dd4e7"></rect>
+        <rect x="3" y="13" width="1" height="3" fill="#8fe2ef"></rect>
+        <rect x="3" y="15" width="2" height="1" fill="#2a2015"></rect>
+        <!-- left forearm skin -->
+        <rect x="3" y="16" width="2" height="6" fill="#f0c9a4"></rect>
+        <rect x="3" y="16" width="1" height="6" fill="#f8d9b6"></rect>
+        <rect x="3" y="21" width="2" height="1" fill="#d4a880"></rect>
+        <!-- right arm outline -->
+        <rect x="21" y="13" width="1" height="9" fill="#2a2015"></rect>
+        <rect x="20" y="12" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="19" y="22" width="3" height="1" fill="#2a2015"></rect>
+        <!-- right sleeve (cyan) -->
+        <rect x="19" y="13" width="2" height="3" fill="#4dd4e7"></rect>
+        <rect x="20" y="13" width="1" height="3" fill="#2a9abd"></rect>
+        <rect x="19" y="15" width="2" height="1" fill="#2a2015"></rect>
+        <!-- right forearm skin -->
+        <rect x="19" y="16" width="2" height="6" fill="#f0c9a4"></rect>
+        <rect x="20" y="16" width="1" height="6" fill="#d4a880"></rect>
+        <rect x="19" y="21" width="2" height="1" fill="#d4a880"></rect>
+        <!-- highlights -->
+        <rect x="6" y="13" width="3" height="1" fill="#8fe2ef"></rect>
+        <rect x="10" y="13" width="4" height="1" fill="#8fe2ef"></rect>
+        <rect x="15" y="13" width="3" height="1" fill="#8fe2ef"></rect>
+        <rect x="6" y="14" width="2" height="3" fill="#8fe2ef"></rect>
+        <rect x="6" y="14" width="1" height="2" fill="#c8f4fa"></rect>
+        <!-- shadows -->
+        <rect x="17" y="14" width="2" height="8" fill="#2a9abd"></rect>
+        <rect x="18" y="15" width="1" height="6" fill="#186882"></rect>
+        <rect x="5" y="22" width="14" height="1" fill="#2a9abd"></rect>
+        <!-- graphic: lightning bolt -->
+        <rect x="12" y="16" width="2" height="1" fill="#ffe168"></rect>
+        <rect x="11" y="17" width="2" height="1" fill="#ffe168"></rect>
+        <rect x="10" y="18" width="2" height="1" fill="#ffe168"></rect>
+        <rect x="12" y="18" width="2" height="1" fill="#ffe168"></rect>
+        <rect x="11" y="19" width="2" height="1" fill="#ffe168"></rect>
+
+        <!-- ========== SHORTS (yellow) ========== -->
+        <rect x="5" y="24" width="14" height="4" fill="#c89205"></rect>
+        <rect x="5" y="24" width="14" height="1" fill="#f4c430"></rect>
+        <rect x="11" y="24" width="2" height="4" fill="#8a6500"></rect>
+        <rect x="12" y="24" width="1" height="4" fill="#5a4000"></rect>
+        <rect x="6" y="25" width="1" height="2" fill="#ffe168"></rect>
+        <rect x="17" y="25" width="1" height="2" fill="#8a6500"></rect>
+        <rect x="4" y="24" width="1" height="4" fill="#2a2015"></rect>
+        <rect x="19" y="24" width="1" height="4" fill="#2a2015"></rect>
+        <rect x="5" y="28" width="14" height="1" fill="#5a4000"></rect>
+
+        <!-- ========== LEGS ========== -->
+        <rect x="7" y="29" width="4" height="2" fill="#f0c9a4"></rect>
+        <rect x="13" y="29" width="4" height="2" fill="#f0c9a4"></rect>
+        <rect x="7" y="29" width="1" height="2" fill="#d4a880"></rect>
+        <rect x="13" y="29" width="1" height="2" fill="#d4a880"></rect>
+
+        <!-- ========== SHOES (red sneakers) ========== -->
+        <rect x="6" y="30" width="6" height="1" fill="#ff3b3b"></rect>
+        <rect x="12" y="30" width="6" height="1" fill="#ff3b3b"></rect>
+        <rect x="6" y="30" width="6" height="1" fill="#ff6060"></rect>
+        <rect x="12" y="30" width="6" height="1" fill="#ff6060"></rect>
+        <rect x="6" y="31" width="6" height="1" fill="#fff8e4"></rect>
+        <rect x="12" y="31" width="6" height="1" fill="#fff8e4"></rect>
+        <rect x="6" y="30" width="1" height="2" fill="#2a2015"></rect>
+        <rect x="11" y="30" width="1" height="2" fill="#2a2015"></rect>
+        <rect x="12" y="30" width="1" height="2" fill="#2a2015"></rect>
+        <rect x="17" y="30" width="1" height="2" fill="#2a2015"></rect>
+      </g>
+    </symbol>
+
+    <!-- ==================== BEER (24x32) — classic mug ==================== -->
+    <symbol id="beer" viewBox="0 0 24 32">
+      <g shape-rendering="crispEdges">
+        <!-- glass outline -->
+        <rect x="3" y="4" width="14" height="1" fill="#2a2015"></rect>
+        <rect x="2" y="5" width="1" height="24" fill="#2a2015"></rect>
+        <rect x="16" y="5" width="1" height="24" fill="#2a2015"></rect>
+        <rect x="3" y="29" width="14" height="1" fill="#2a2015"></rect>
+        <!-- handle outline -->
+        <rect x="17" y="9" width="2" height="1" fill="#2a2015"></rect>
+        <rect x="19" y="10" width="2" height="1" fill="#2a2015"></rect>
+        <rect x="21" y="11" width="1" height="10" fill="#2a2015"></rect>
+        <rect x="19" y="21" width="2" height="1" fill="#2a2015"></rect>
+        <rect x="17" y="22" width="2" height="1" fill="#2a2015"></rect>
+        <rect x="16" y="13" width="1" height="6" fill="#2a2015"></rect>
+        <rect x="18" y="11" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="18" y="22" width="1" height="0" fill="#2a2015"></rect>
+
+        <!-- foam (overflow on top) -->
+        <rect x="3" y="5" width="14" height="4" fill="#fff8e4"></rect>
+        <!-- foam bumps (above rim) -->
+        <rect x="4" y="3" width="3" height="2" fill="#fff8e4"></rect>
+        <rect x="8" y="2" width="3" height="3" fill="#fff8e4"></rect>
+        <rect x="12" y="3" width="4" height="2" fill="#fff8e4"></rect>
+        <rect x="5" y="4" width="1" height="1" fill="#ffffff"></rect>
+        <rect x="9" y="3" width="1" height="1" fill="#ffffff"></rect>
+        <rect x="13" y="4" width="1" height="1" fill="#ffffff"></rect>
+        <!-- foam shadows -->
+        <rect x="3" y="8" width="14" height="1" fill="#d9c7a7"></rect>
+        <rect x="15" y="5" width="1" height="3" fill="#d9c7a7"></rect>
+        <rect x="3" y="5" width="1" height="3" fill="#d9c7a7"></rect>
+        <!-- foam bubbles -->
+        <rect x="6" y="6" width="1" height="1" fill="#d9c7a7"></rect>
+        <rect x="11" y="7" width="1" height="1" fill="#d9c7a7"></rect>
+        <rect x="14" y="6" width="1" height="1" fill="#d9c7a7"></rect>
+
+        <!-- liquid (amber beer) -->
+        <rect x="3" y="9" width="14" height="20" fill="#f4c430"></rect>
+        <!-- liquid top shadow band -->
+        <rect x="3" y="9" width="14" height="1" fill="#c89205"></rect>
+        <!-- liquid rim on sides (glass shading) -->
+        <rect x="3" y="9" width="1" height="20" fill="#c89205"></rect>
+        <rect x="15" y="9" width="1" height="20" fill="#c89205"></rect>
+        <rect x="15" y="9" width="1" height="20" fill="#c89205"></rect>
+        <rect x="15" y="12" width="1" height="14" fill="#8a6500"></rect>
+        <!-- liquid specular highlight (tall strip on left) -->
+        <rect x="4" y="10" width="2" height="16" fill="#ffe168"></rect>
+        <rect x="4" y="10" width="1" height="16" fill="#fff3a8"></rect>
+        <!-- liquid second highlight (smaller) -->
+        <rect x="11" y="12" width="1" height="10" fill="#ffe168"></rect>
+        <!-- bubbles rising -->
+        <rect x="7" y="14" width="1" height="1" fill="#fff3a8"></rect>
+        <rect x="9" y="18" width="1" height="1" fill="#fff3a8"></rect>
+        <rect x="12" y="16" width="1" height="1" fill="#fff3a8"></rect>
+        <rect x="13" y="22" width="1" height="1" fill="#fff3a8"></rect>
+        <rect x="8" y="24" width="1" height="1" fill="#fff3a8"></rect>
+        <!-- bottom sediment shadow -->
+        <rect x="3" y="28" width="14" height="1" fill="#8a6500"></rect>
+        <!-- handle inner (see-through highlight) -->
+        <rect x="19" y="11" width="2" height="10" fill="#3d1f5e"></rect>
+        <rect x="20" y="12" width="1" height="8" fill="#2a1746"></rect>
+      </g>
+    </symbol>
+
+    <!-- ==================== HEART (16x16) ==================== -->
+    <symbol id="heart" viewBox="0 0 16 16">
+      <g shape-rendering="crispEdges">
+        <!-- outline -->
+        <rect x="2" y="2" width="4" height="1" fill="#2a2015"></rect>
+        <rect x="10" y="2" width="4" height="1" fill="#2a2015"></rect>
+        <rect x="1" y="3" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="6" y="3" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="9" y="3" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="14" y="3" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="0" y="4" width="1" height="3" fill="#2a2015"></rect>
+        <rect x="7" y="4" width="2" height="1" fill="#2a2015"></rect>
+        <rect x="15" y="4" width="1" height="3" fill="#2a2015"></rect>
+        <rect x="1" y="7" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="14" y="7" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="2" y="8" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="13" y="8" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="3" y="9" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="12" y="9" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="4" y="10" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="11" y="10" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="5" y="11" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="10" y="11" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="6" y="12" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="9" y="12" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="7" y="13" width="2" height="1" fill="#2a2015"></rect>
+        <!-- red body -->
+        <rect x="2" y="3" width="4" height="1" fill="#ff3b3b"></rect>
+        <rect x="10" y="3" width="4" height="1" fill="#ff3b3b"></rect>
+        <rect x="1" y="4" width="6" height="3" fill="#ff3b3b"></rect>
+        <rect x="9" y="4" width="6" height="3" fill="#ff3b3b"></rect>
+        <rect x="2" y="7" width="12" height="1" fill="#ff3b3b"></rect>
+        <rect x="3" y="8" width="10" height="1" fill="#ff3b3b"></rect>
+        <rect x="4" y="9" width="8" height="1" fill="#ff3b3b"></rect>
+        <rect x="5" y="10" width="6" height="1" fill="#ff3b3b"></rect>
+        <rect x="6" y="11" width="4" height="1" fill="#ff3b3b"></rect>
+        <rect x="7" y="12" width="2" height="1" fill="#ff3b3b"></rect>
+        <!-- shading (dark side bottom-right) -->
+        <rect x="12" y="4" width="2" height="3" fill="#c82020"></rect>
+        <rect x="11" y="7" width="3" height="1" fill="#c82020"></rect>
+        <rect x="10" y="8" width="3" height="1" fill="#c82020"></rect>
+        <rect x="9" y="9" width="3" height="1" fill="#c82020"></rect>
+        <rect x="8" y="10" width="3" height="1" fill="#c82020"></rect>
+        <rect x="8" y="11" width="2" height="1" fill="#c82020"></rect>
+        <rect x="8" y="12" width="1" height="1" fill="#c82020"></rect>
+        <!-- highlights (top-left light) -->
+        <rect x="2" y="4" width="3" height="1" fill="#ff8080"></rect>
+        <rect x="1" y="5" width="4" height="1" fill="#ff8080"></rect>
+        <rect x="2" y="6" width="2" height="1" fill="#ff8080"></rect>
+        <!-- specular -->
+        <rect x="2" y="4" width="2" height="1" fill="#ffb0b0"></rect>
+        <rect x="2" y="5" width="1" height="1" fill="#ffd0d0"></rect>
+        <rect x="3" y="5" width="1" height="1" fill="#ffb0b0"></rect>
+      </g>
+    </symbol>
+
+    <!-- ==================== CONTROLLER (32x16) SNES-style ==================== -->
+    <symbol id="controller" viewBox="0 0 32 16">
+      <g shape-rendering="crispEdges">
+        <!-- outline -->
+        <rect x="3" y="2" width="26" height="1" fill="#2a2015"></rect>
+        <rect x="2" y="3" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="29" y="3" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="1" y="4" width="1" height="7" fill="#2a2015"></rect>
+        <rect x="30" y="4" width="1" height="7" fill="#2a2015"></rect>
+        <rect x="2" y="11" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="29" y="11" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="3" y="12" width="4" height="1" fill="#2a2015"></rect>
+        <rect x="25" y="12" width="4" height="1" fill="#2a2015"></rect>
+        <rect x="3" y="13" width="2" height="1" fill="#2a2015"></rect>
+        <rect x="27" y="13" width="2" height="1" fill="#2a2015"></rect>
+        <rect x="7" y="12" width="18" height="1" fill="#2a2015"></rect>
+        <!-- shoulder buttons L/R (top purple bumps) -->
+        <rect x="3" y="1" width="4" height="1" fill="#2a2015"></rect>
+        <rect x="25" y="1" width="4" height="1" fill="#2a2015"></rect>
+        <rect x="3" y="2" width="4" height="1" fill="#a8408c"></rect>
+        <rect x="25" y="2" width="4" height="1" fill="#a8408c"></rect>
+
+        <!-- body base (SNES cream/grey) -->
+        <rect x="2" y="4" width="28" height="8" fill="#d9c7a7"></rect>
+        <!-- top highlight -->
+        <rect x="2" y="3" width="28" height="1" fill="#f5e6d3"></rect>
+        <rect x="3" y="4" width="26" height="1" fill="#f5e6d3"></rect>
+        <!-- bottom shadow -->
+        <rect x="2" y="10" width="28" height="2" fill="#b5a085"></rect>
+        <rect x="2" y="11" width="28" height="1" fill="#8a7560"></rect>
+        <rect x="7" y="12" width="18" height="1" fill="#b5a085"></rect>
+
+        <!-- D-PAD (left side, plus shape) -->
+        <rect x="6" y="5" width="2" height="1" fill="#2a2015"></rect>
+        <rect x="5" y="6" width="4" height="3" fill="#2a2015"></rect>
+        <rect x="6" y="9" width="2" height="1" fill="#2a2015"></rect>
+        <!-- d-pad highlights -->
+        <rect x="6" y="5" width="1" height="1" fill="#5a5a5a"></rect>
+        <rect x="5" y="6" width="1" height="1" fill="#5a5a5a"></rect>
+        <rect x="6" y="6" width="1" height="1" fill="#5a5a5a"></rect>
+
+        <!-- START/SELECT (tilted pill buttons) -->
+        <rect x="12" y="8" width="3" height="1" fill="#2a2015"></rect>
+        <rect x="16" y="8" width="3" height="1" fill="#2a2015"></rect>
+        <rect x="12" y="8" width="3" height="1" fill="#8a8a8a"></rect>
+        <rect x="16" y="8" width="3" height="1" fill="#8a8a8a"></rect>
+        <rect x="12" y="8" width="2" height="1" fill="#a8a8a8"></rect>
+        <rect x="16" y="8" width="2" height="1" fill="#a8a8a8"></rect>
+
+        <!-- face buttons diamond: Y(green left), X(blue top), B(red bottom), A(yellow right) -->
+        <!-- X (top blue) -->
+        <rect x="25" y="4" width="2" height="2" fill="#3a5a8a"></rect>
+        <rect x="25" y="4" width="1" height="1" fill="#5a78a8"></rect>
+        <rect x="26" y="5" width="1" height="1" fill="#2d4a7a"></rect>
+        <!-- Y (left green) -->
+        <rect x="22" y="6" width="2" height="2" fill="#4a9a5a"></rect>
+        <rect x="22" y="6" width="1" height="1" fill="#6ab878"></rect>
+        <rect x="23" y="7" width="1" height="1" fill="#2a7a3a"></rect>
+        <!-- A (right yellow/orange) -->
+        <rect x="28" y="6" width="2" height="2" fill="#ff3b3b"></rect>
+        <rect x="28" y="6" width="1" height="1" fill="#ff8080"></rect>
+        <rect x="29" y="7" width="1" height="1" fill="#c82020"></rect>
+        <!-- B (bottom red) -->
+        <rect x="25" y="8" width="2" height="2" fill="#f4c430"></rect>
+        <rect x="25" y="8" width="1" height="1" fill="#ffe168"></rect>
+        <rect x="26" y="9" width="1" height="1" fill="#c89205"></rect>
+      </g>
+    </symbol>
+
+    <!-- ==================== WRENCH (20x20) ==================== -->
+    <!-- ==================== HAMMER (20x20) — claw hammer ==================== -->
+    <symbol id="hammer" viewBox="0 0 20 20">
+      <g shape-rendering="crispEdges">
+        <!-- head outline -->
+        <rect x="4" y="1" width="11" height="1" fill="#2a2015"></rect>
+        <rect x="3" y="2" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="15" y="2" width="1" height="5" fill="#2a2015"></rect>
+        <rect x="3" y="6" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="2" y="3" width="1" height="3" fill="#2a2015"></rect>
+        <!-- claw notch on left -->
+        <rect x="4" y="7" width="1" height="2" fill="#2a2015"></rect>
+        <rect x="5" y="8" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="6" y="7" width="1" height="2" fill="#2a2015"></rect>
+        <!-- head metal fill -->
+        <rect x="3" y="2" width="12" height="5" fill="#b0b0b0"></rect>
+        <rect x="4" y="7" width="3" height="1" fill="#b0b0b0"></rect>
+        <!-- head top highlight -->
+        <rect x="4" y="2" width="10" height="1" fill="#e8e8e8"></rect>
+        <rect x="3" y="3" width="11" height="1" fill="#d0d0d0"></rect>
+        <!-- head shadow (right + bottom) -->
+        <rect x="14" y="3" width="1" height="4" fill="#7a7a7a"></rect>
+        <rect x="13" y="6" width="2" height="1" fill="#8a8a8a"></rect>
+        <rect x="3" y="6" width="11" height="1" fill="#8a8a8a"></rect>
+        <!-- claw fill -->
+        <rect x="5" y="7" width="1" height="1" fill="#8a8a8a"></rect>
+        <!-- head face seam -->
+        <rect x="11" y="3" width="1" height="3" fill="#9a9a9a"></rect>
+
+        <!-- handle (vertical wood, slight diagonal feel) -->
+        <rect x="8" y="7" width="1" height="11" fill="#2a2015"></rect>
+        <rect x="11" y="7" width="1" height="11" fill="#2a2015"></rect>
+        <rect x="9" y="7" width="2" height="11" fill="#8a6540"></rect>
+        <rect x="9" y="7" width="1" height="11" fill="#b8925a"></rect>
+        <rect x="10" y="7" width="1" height="11" fill="#5a3a28"></rect>
+        <!-- wood grain marks -->
+        <rect x="9" y="10" width="1" height="1" fill="#5a3a28"></rect>
+        <rect x="10" y="13" width="1" height="1" fill="#3a2418"></rect>
+        <rect x="9" y="15" width="1" height="1" fill="#5a3a28"></rect>
+        <!-- bottom cap -->
+        <rect x="7" y="18" width="5" height="1" fill="#2a2015"></rect>
+        <rect x="8" y="18" width="3" height="1" fill="#5a3a28"></rect>
+      </g>
+    </symbol>
+
+    <!-- ==================== ROCKET (16x24) ==================== -->
+    <symbol id="rocket" viewBox="0 0 16 24">
+      <g shape-rendering="crispEdges">
+        <!-- nose -->
+        <rect x="7" y="0" width="2" height="1" fill="#2a2015"></rect>
+        <rect x="6" y="1" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="9" y="1" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="7" y="1" width="2" height="1" fill="#ff3b3b"></rect>
+        <rect x="5" y="2" width="1" height="2" fill="#2a2015"></rect>
+        <rect x="10" y="2" width="1" height="2" fill="#2a2015"></rect>
+        <rect x="6" y="2" width="4" height="2" fill="#ff3b3b"></rect>
+        <rect x="6" y="2" width="1" height="2" fill="#ff8080"></rect>
+        <rect x="9" y="2" width="1" height="2" fill="#c82020"></rect>
+        <!-- body outline -->
+        <rect x="4" y="4" width="1" height="11" fill="#2a2015"></rect>
+        <rect x="11" y="4" width="1" height="11" fill="#2a2015"></rect>
+        <!-- body fill (white metal) -->
+        <rect x="5" y="4" width="6" height="11" fill="#e8e8e8"></rect>
+        <rect x="5" y="4" width="1" height="11" fill="#ffffff"></rect>
+        <rect x="10" y="4" width="1" height="11" fill="#a8a8a8"></rect>
+        <!-- window -->
+        <rect x="6" y="6" width="4" height="4" fill="#2a2015"></rect>
+        <rect x="7" y="7" width="2" height="2" fill="#8fe2ef"></rect>
+        <rect x="7" y="7" width="1" height="1" fill="#ffffff"></rect>
+        <!-- red band -->
+        <rect x="4" y="11" width="8" height="1" fill="#2a2015"></rect>
+        <rect x="5" y="12" width="6" height="1" fill="#ff3b3b"></rect>
+        <rect x="4" y="13" width="8" height="1" fill="#2a2015"></rect>
+        <!-- fins -->
+        <rect x="2" y="13" width="2" height="4" fill="#2a2015"></rect>
+        <rect x="12" y="13" width="2" height="4" fill="#2a2015"></rect>
+        <rect x="3" y="13" width="1" height="3" fill="#ff3b3b"></rect>
+        <rect x="12" y="13" width="1" height="3" fill="#ff3b3b"></rect>
+        <rect x="2" y="17" width="3" height="1" fill="#2a2015"></rect>
+        <rect x="11" y="17" width="3" height="1" fill="#2a2015"></rect>
+        <!-- nozzle -->
+        <rect x="5" y="15" width="6" height="1" fill="#2a2015"></rect>
+        <rect x="6" y="16" width="4" height="2" fill="#5a5a5a"></rect>
+        <rect x="6" y="16" width="4" height="1" fill="#8a8a8a"></rect>
+        <!-- flame trail -->
+        <rect x="6" y="18" width="4" height="1" fill="#ffe168"></rect>
+        <rect x="7" y="19" width="2" height="2" fill="#ff8833"></rect>
+        <rect x="7" y="19" width="1" height="1" fill="#ffe168"></rect>
+        <rect x="7" y="21" width="2" height="1" fill="#ff3b3b"></rect>
+        <rect x="8" y="22" width="1" height="2" fill="#ff8833"></rect>
+      </g>
+    </symbol>
+
+    <!-- ==================== GAMEBOY (20x32) — handheld ==================== -->
+    <symbol id="gameboy" viewBox="0 0 20 32">
+      <g shape-rendering="crispEdges">
+        <!-- body outline -->
+        <rect x="2" y="0" width="16" height="1" fill="#2a2015"></rect>
+        <rect x="1" y="1" width="1" height="29" fill="#2a2015"></rect>
+        <rect x="18" y="1" width="1" height="29" fill="#2a2015"></rect>
+        <rect x="2" y="30" width="16" height="1" fill="#2a2015"></rect>
+        <!-- gray case -->
+        <rect x="2" y="1" width="16" height="29" fill="#c9c2b0"></rect>
+        <rect x="2" y="1" width="16" height="1" fill="#e0d8c0"></rect>
+        <rect x="2" y="1" width="1" height="29" fill="#e0d8c0"></rect>
+        <rect x="17" y="2" width="1" height="28" fill="#9a8f78"></rect>
+        <rect x="3" y="29" width="14" height="1" fill="#9a8f78"></rect>
+        <!-- screen bezel -->
+        <rect x="3" y="3" width="14" height="13" fill="#5a5a5a"></rect>
+        <rect x="3" y="3" width="14" height="1" fill="#3a3a3a"></rect>
+        <rect x="16" y="3" width="1" height="13" fill="#3a3a3a"></rect>
+        <!-- screen (classic green LCD) -->
+        <rect x="5" y="5" width="10" height="9" fill="#9bbc0f"></rect>
+        <rect x="5" y="5" width="10" height="1" fill="#7a9a08"></rect>
+        <rect x="5" y="13" width="10" height="1" fill="#5a8a08"></rect>
+        <!-- pixels on screen -->
+        <rect x="6" y="7" width="2" height="2" fill="#306230"></rect>
+        <rect x="9" y="7" width="3" height="1" fill="#306230"></rect>
+        <rect x="11" y="9" width="2" height="2" fill="#0f380f"></rect>
+        <rect x="6" y="11" width="2" height="1" fill="#306230"></rect>
+        <!-- power LED -->
+        <rect x="4" y="17" width="1" height="1" fill="#ff3b3b"></rect>
+        <!-- d-pad -->
+        <rect x="5" y="20" width="3" height="1" fill="#2a2015"></rect>
+        <rect x="4" y="21" width="5" height="3" fill="#2a2015"></rect>
+        <rect x="5" y="24" width="3" height="1" fill="#2a2015"></rect>
+        <rect x="6" y="22" width="1" height="1" fill="#5a5a5a"></rect>
+        <!-- A B buttons (maroon) -->
+        <rect x="11" y="22" width="2" height="2" fill="#a01060"></rect>
+        <rect x="14" y="21" width="2" height="2" fill="#a01060"></rect>
+        <rect x="11" y="22" width="1" height="1" fill="#d040a0"></rect>
+        <rect x="14" y="21" width="1" height="1" fill="#d040a0"></rect>
+        <!-- start/select pills -->
+        <rect x="7" y="27" width="3" height="1" fill="#5a5a5a"></rect>
+        <rect x="11" y="27" width="3" height="1" fill="#5a5a5a"></rect>
+      </g>
+    </symbol>
+
+    <!-- ==================== FIRE (16x20) — pixel flame, Twemoji-inspired ==================== -->
+    <symbol id="fire" viewBox="0 0 16 20">
+      <g shape-rendering="crispEdges">
+        <!-- detached ember at the very top -->
+        <rect x="9" y="0" width="1" height="1" fill="#2a2015"></rect>
+        <!-- ===== full silhouette painted with dark outline color ===== -->
+        <!-- thin asymmetric tip leans slightly right -->
+        <rect x="8" y="2" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="7" y="3" width="2" height="1" fill="#2a2015"></rect>
+        <rect x="7" y="4" width="3" height="1" fill="#2a2015"></rect>
+        <rect x="6" y="5" width="4" height="1" fill="#2a2015"></rect>
+        <rect x="5" y="6" width="5" height="1" fill="#2a2015"></rect>
+        <rect x="5" y="7" width="6" height="1" fill="#2a2015"></rect>
+        <!-- right-side curl / notch (the classic flame swoosh) -->
+        <rect x="4" y="8" width="5" height="1" fill="#2a2015"></rect>
+        <rect x="10" y="8" width="2" height="1" fill="#2a2015"></rect>
+        <rect x="4" y="9" width="4" height="1" fill="#2a2015"></rect>
+        <rect x="10" y="9" width="2" height="1" fill="#2a2015"></rect>
+        <!-- body widens -->
+        <rect x="3" y="10" width="5" height="1" fill="#2a2015"></rect>
+        <rect x="9" y="10" width="3" height="1" fill="#2a2015"></rect>
+        <rect x="3" y="11" width="9" height="1" fill="#2a2015"></rect>
+        <rect x="2" y="12" width="11" height="1" fill="#2a2015"></rect>
+        <rect x="2" y="13" width="11" height="1" fill="#2a2015"></rect>
+        <!-- rounded wide bulb -->
+        <rect x="1" y="14" width="13" height="1" fill="#2a2015"></rect>
+        <rect x="1" y="15" width="13" height="1" fill="#2a2015"></rect>
+        <rect x="1" y="16" width="13" height="1" fill="#2a2015"></rect>
+        <rect x="2" y="17" width="11" height="1" fill="#2a2015"></rect>
+        <rect x="3" y="18" width="9" height="1" fill="#2a2015"></rect>
+
+        <!-- ===== outer red fill (interior, 1px inside outline) ===== -->
+        <rect x="8" y="4" width="1" height="1" fill="#ff3b3b"></rect>
+        <rect x="7" y="5" width="2" height="1" fill="#ff3b3b"></rect>
+        <rect x="6" y="6" width="3" height="1" fill="#ff3b3b"></rect>
+        <rect x="6" y="7" width="4" height="1" fill="#ff3b3b"></rect>
+        <rect x="5" y="8" width="3" height="1" fill="#ff3b3b"></rect>
+        <rect x="5" y="9" width="2" height="1" fill="#ff3b3b"></rect>
+        <rect x="4" y="10" width="3" height="1" fill="#ff3b3b"></rect>
+        <rect x="10" y="10" width="1" height="1" fill="#ff3b3b"></rect>
+        <rect x="4" y="11" width="7" height="1" fill="#ff3b3b"></rect>
+        <rect x="3" y="12" width="9" height="1" fill="#ff3b3b"></rect>
+        <rect x="3" y="13" width="9" height="1" fill="#ff3b3b"></rect>
+        <rect x="2" y="14" width="11" height="1" fill="#ff3b3b"></rect>
+        <rect x="2" y="15" width="11" height="1" fill="#ff3b3b"></rect>
+        <rect x="2" y="16" width="11" height="1" fill="#ff3b3b"></rect>
+        <rect x="3" y="17" width="9" height="1" fill="#ff3b3b"></rect>
+
+        <!-- ===== middle orange (shrink one pixel further) ===== -->
+        <rect x="7" y="6" width="2" height="1" fill="#ff8833"></rect>
+        <rect x="6" y="7" width="3" height="1" fill="#ff8833"></rect>
+        <rect x="6" y="8" width="2" height="1" fill="#ff8833"></rect>
+        <rect x="5" y="9" width="1" height="1" fill="#ff8833"></rect>
+        <rect x="5" y="10" width="2" height="1" fill="#ff8833"></rect>
+        <rect x="5" y="11" width="6" height="1" fill="#ff8833"></rect>
+        <rect x="4" y="12" width="8" height="1" fill="#ff8833"></rect>
+        <rect x="4" y="13" width="8" height="1" fill="#ff8833"></rect>
+        <rect x="3" y="14" width="10" height="1" fill="#ff8833"></rect>
+        <rect x="3" y="15" width="10" height="1" fill="#ff8833"></rect>
+        <rect x="3" y="16" width="10" height="1" fill="#ff8833"></rect>
+        <rect x="4" y="17" width="7" height="1" fill="#ff8833"></rect>
+
+        <!-- ===== inner yellow heart ===== -->
+        <rect x="7" y="8" width="1" height="1" fill="#ffe168"></rect>
+        <rect x="6" y="10" width="1" height="1" fill="#ffe168"></rect>
+        <rect x="6" y="11" width="4" height="1" fill="#ffe168"></rect>
+        <rect x="5" y="12" width="6" height="1" fill="#ffe168"></rect>
+        <rect x="5" y="13" width="6" height="1" fill="#ffe168"></rect>
+        <rect x="4" y="14" width="8" height="1" fill="#ffe168"></rect>
+        <rect x="4" y="15" width="8" height="1" fill="#ffe168"></rect>
+        <rect x="4" y="16" width="8" height="1" fill="#ffe168"></rect>
+        <rect x="5" y="17" width="5" height="1" fill="#ffe168"></rect>
+
+        <!-- ===== light yellow highlight on left (cool/hot side) ===== -->
+        <rect x="5" y="13" width="2" height="1" fill="#fff3a8"></rect>
+        <rect x="4" y="14" width="3" height="1" fill="#fff3a8"></rect>
+        <rect x="4" y="15" width="2" height="1" fill="#fff3a8"></rect>
+
+        <!-- ===== white-hot core ===== -->
+        <rect x="6" y="14" width="2" height="1" fill="#ffffff"></rect>
+        <rect x="6" y="15" width="1" height="1" fill="#ffffff"></rect>
+      </g>
+    </symbol>
+
+    <!-- ==================== FRIES (20x20) — red box of fries ==================== -->
+    <symbol id="fries" viewBox="0 0 20 20">
+      <g shape-rendering="crispEdges">
+        <!-- fry sticks (yellow) -->
+        <rect x="5" y="2" width="2" height="9" fill="#2a2015"></rect>
+        <rect x="6" y="2" width="1" height="9" fill="#ffe168"></rect>
+        <rect x="6" y="2" width="1" height="1" fill="#fff3a8"></rect>
+        <rect x="8" y="0" width="2" height="11" fill="#2a2015"></rect>
+        <rect x="9" y="0" width="1" height="11" fill="#ffe168"></rect>
+        <rect x="9" y="0" width="1" height="1" fill="#fff3a8"></rect>
+        <rect x="11" y="3" width="2" height="8" fill="#2a2015"></rect>
+        <rect x="12" y="3" width="1" height="8" fill="#ffe168"></rect>
+        <rect x="12" y="3" width="1" height="1" fill="#fff3a8"></rect>
+        <rect x="14" y="1" width="2" height="10" fill="#2a2015"></rect>
+        <rect x="15" y="1" width="1" height="10" fill="#ffe168"></rect>
+        <rect x="15" y="1" width="1" height="1" fill="#fff3a8"></rect>
+        <!-- box (red) -->
+        <rect x="2" y="10" width="16" height="1" fill="#2a2015"></rect>
+        <rect x="2" y="11" width="1" height="7" fill="#2a2015"></rect>
+        <rect x="17" y="11" width="1" height="7" fill="#2a2015"></rect>
+        <rect x="3" y="18" width="14" height="1" fill="#2a2015"></rect>
+        <rect x="3" y="11" width="14" height="7" fill="#ff3b3b"></rect>
+        <rect x="3" y="11" width="14" height="1" fill="#ff8080"></rect>
+        <rect x="3" y="17" width="14" height="1" fill="#c82020"></rect>
+        <rect x="16" y="11" width="1" height="7" fill="#c82020"></rect>
+        <!-- yellow chevron stripes -->
+        <rect x="5" y="13" width="2" height="3" fill="#ffe168"></rect>
+        <rect x="9" y="13" width="2" height="3" fill="#ffe168"></rect>
+        <rect x="13" y="13" width="2" height="3" fill="#ffe168"></rect>
+        <rect x="5" y="13" width="2" height="1" fill="#fff3a8"></rect>
+        <rect x="9" y="13" width="2" height="1" fill="#fff3a8"></rect>
+        <rect x="13" y="13" width="2" height="1" fill="#fff3a8"></rect>
+      </g>
+    </symbol>
+
+    <!-- ==================== BURGER (20x16) ==================== -->
+    <symbol id="burger" viewBox="0 0 20 16">
+      <g shape-rendering="crispEdges">
+        <!-- top bun outline -->
+        <rect x="5" y="1" width="10" height="1" fill="#2a2015"></rect>
+        <rect x="3" y="2" width="2" height="1" fill="#2a2015"></rect>
+        <rect x="15" y="2" width="2" height="1" fill="#2a2015"></rect>
+        <rect x="2" y="3" width="1" height="2" fill="#2a2015"></rect>
+        <rect x="17" y="3" width="1" height="2" fill="#2a2015"></rect>
+        <rect x="1" y="5" width="1" height="2" fill="#2a2015"></rect>
+        <rect x="18" y="5" width="1" height="2" fill="#2a2015"></rect>
+        <!-- top bun fill -->
+        <rect x="5" y="2" width="10" height="1" fill="#c89263"></rect>
+        <rect x="3" y="3" width="14" height="2" fill="#c89263"></rect>
+        <rect x="2" y="5" width="16" height="2" fill="#c89263"></rect>
+        <!-- bun highlight -->
+        <rect x="5" y="2" width="6" height="1" fill="#e8b886"></rect>
+        <rect x="3" y="3" width="8" height="1" fill="#e8b886"></rect>
+        <rect x="2" y="5" width="6" height="1" fill="#e8b886"></rect>
+        <!-- bun shadow -->
+        <rect x="2" y="6" width="16" height="1" fill="#a06a3a"></rect>
+        <!-- sesame seeds -->
+        <rect x="6" y="4" width="1" height="1" fill="#fff3a8"></rect>
+        <rect x="9" y="3" width="1" height="1" fill="#fff3a8"></rect>
+        <rect x="12" y="4" width="1" height="1" fill="#fff3a8"></rect>
+        <rect x="14" y="3" width="1" height="1" fill="#fff3a8"></rect>
+        <!-- lettuce wave -->
+        <rect x="1" y="7" width="18" height="1" fill="#2a2015"></rect>
+        <rect x="1" y="8" width="18" height="1" fill="#4a9a5a"></rect>
+        <rect x="2" y="8" width="2" height="1" fill="#6ab878"></rect>
+        <rect x="6" y="8" width="2" height="1" fill="#6ab878"></rect>
+        <rect x="10" y="8" width="2" height="1" fill="#6ab878"></rect>
+        <rect x="14" y="8" width="2" height="1" fill="#6ab878"></rect>
+        <!-- cheese -->
+        <rect x="0" y="9" width="20" height="1" fill="#2a2015"></rect>
+        <rect x="1" y="9" width="18" height="1" fill="#ffe168"></rect>
+        <rect x="0" y="10" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="19" y="10" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="1" y="10" width="18" height="1" fill="#ffe168"></rect>
+        <!-- patty -->
+        <rect x="1" y="11" width="18" height="2" fill="#2a2015"></rect>
+        <rect x="2" y="11" width="16" height="2" fill="#7a4520"></rect>
+        <rect x="2" y="11" width="16" height="1" fill="#9a5530"></rect>
+        <!-- bottom bun -->
+        <rect x="2" y="13" width="16" height="1" fill="#2a2015"></rect>
+        <rect x="2" y="14" width="16" height="1" fill="#c89263"></rect>
+        <rect x="3" y="15" width="14" height="1" fill="#2a2015"></rect>
+        <rect x="3" y="14" width="6" height="1" fill="#e8b886"></rect>
+      </g>
+    </symbol>
+
+    <!-- ==================== ZAP (16x20) — pixel lightning bolt ==================== -->
+    <symbol id="zap" viewBox="0 0 16 20">
+      <g shape-rendering="crispEdges">
+        <!-- top half outline -->
+        <rect x="8" y="0" width="5" height="1" fill="#2a2015"></rect>
+        <rect x="7" y="1" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="13" y="1" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="6" y="2" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="12" y="2" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="5" y="3" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="11" y="3" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="4" y="4" width="1" height="2" fill="#2a2015"></rect>
+        <rect x="10" y="4" width="1" height="2" fill="#2a2015"></rect>
+        <rect x="3" y="6" width="1" height="2" fill="#2a2015"></rect>
+        <rect x="9" y="6" width="1" height="2" fill="#2a2015"></rect>
+        <rect x="2" y="8" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="13" y="8" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="3" y="9" width="11" height="1" fill="#2a2015"></rect>
+        <!-- bottom half outline -->
+        <rect x="9" y="10" width="1" height="2" fill="#2a2015"></rect>
+        <rect x="8" y="12" width="1" height="2" fill="#2a2015"></rect>
+        <rect x="7" y="14" width="1" height="2" fill="#2a2015"></rect>
+        <rect x="6" y="16" width="1" height="2" fill="#2a2015"></rect>
+        <rect x="5" y="18" width="2" height="1" fill="#2a2015"></rect>
+        <!-- yellow fill (top arrow shape) -->
+        <rect x="8" y="1" width="5" height="1" fill="#ffe168"></rect>
+        <rect x="7" y="2" width="5" height="1" fill="#ffe168"></rect>
+        <rect x="6" y="3" width="5" height="1" fill="#ffe168"></rect>
+        <rect x="5" y="4" width="5" height="2" fill="#ffe168"></rect>
+        <rect x="4" y="6" width="5" height="2" fill="#ffe168"></rect>
+        <rect x="3" y="8" width="10" height="1" fill="#ffe168"></rect>
+        <!-- yellow bottom tail -->
+        <rect x="7" y="10" width="2" height="2" fill="#ffe168"></rect>
+        <rect x="6" y="12" width="2" height="2" fill="#ffe168"></rect>
+        <rect x="5" y="14" width="2" height="2" fill="#ffe168"></rect>
+        <rect x="4" y="16" width="2" height="2" fill="#ffe168"></rect>
+        <!-- white highlights -->
+        <rect x="8" y="1" width="3" height="1" fill="#fff3a8"></rect>
+        <rect x="7" y="2" width="2" height="1" fill="#fff3a8"></rect>
+        <rect x="5" y="4" width="2" height="1" fill="#fff3a8"></rect>
+        <rect x="4" y="16" width="1" height="2" fill="#fff3a8"></rect>
+        <!-- orange shadows -->
+        <rect x="11" y="2" width="1" height="1" fill="#ff8833"></rect>
+        <rect x="9" y="4" width="1" height="2" fill="#ff8833"></rect>
+        <rect x="8" y="6" width="1" height="2" fill="#ff8833"></rect>
+        <rect x="11" y="8" width="2" height="1" fill="#ff8833"></rect>
+        <rect x="8" y="10" width="1" height="2" fill="#ff8833"></rect>
+        <rect x="7" y="12" width="1" height="2" fill="#ff8833"></rect>
+      </g>
+    </symbol>
+
+    <!-- ==================== LAPTOP (32x24) ==================== -->
+    <symbol id="laptop" viewBox="0 0 32 24">
+      <g shape-rendering="crispEdges">
+        <!-- lid outline -->
+        <rect x="4" y="1" width="24" height="1" fill="#2a2015"></rect>
+        <rect x="3" y="2" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="28" y="2" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="2" y="3" width="1" height="14" fill="#2a2015"></rect>
+        <rect x="29" y="3" width="1" height="14" fill="#2a2015"></rect>
+        <!-- lid back (metallic grey) -->
+        <rect x="3" y="2" width="25" height="15" fill="#8a8a8a"></rect>
+        <rect x="3" y="2" width="25" height="1" fill="#b0b0b0"></rect>
+        <rect x="3" y="3" width="25" height="1" fill="#a8a8a8"></rect>
+        <!-- right side shadow -->
+        <rect x="27" y="3" width="1" height="14" fill="#5a5a5a"></rect>
+        <rect x="26" y="16" width="2" height="1" fill="#5a5a5a"></rect>
+
+        <!-- screen bezel (black frame) -->
+        <rect x="4" y="3" width="23" height="1" fill="#1a1a1a"></rect>
+        <rect x="4" y="3" width="1" height="12" fill="#1a1a1a"></rect>
+        <rect x="26" y="3" width="1" height="12" fill="#1a1a1a"></rect>
+        <rect x="4" y="15" width="23" height="1" fill="#1a1a1a"></rect>
+
+        <!-- screen content -->
+        <rect x="5" y="4" width="21" height="11" fill="#1a1a1a"></rect>
+        <!-- code editor style (dark blue bg) -->
+        <rect x="5" y="4" width="21" height="11" fill="#2a1746"></rect>
+        <!-- syntax lines (simulated code) -->
+        <rect x="6" y="5" width="1" height="1" fill="#4a9a5a"></rect>
+        <rect x="7" y="5" width="3" height="1" fill="#8fe2ef"></rect>
+        <rect x="11" y="5" width="5" height="1" fill="#f5e6d3"></rect>
+        <rect x="6" y="7" width="1" height="1" fill="#4a9a5a"></rect>
+        <rect x="7" y="7" width="2" height="1" fill="#ff6b9d"></rect>
+        <rect x="10" y="7" width="6" height="1" fill="#ffe168"></rect>
+        <rect x="17" y="7" width="3" height="1" fill="#f5e6d3"></rect>
+        <rect x="6" y="9" width="1" height="1" fill="#4a9a5a"></rect>
+        <rect x="8" y="9" width="4" height="1" fill="#8fe2ef"></rect>
+        <rect x="13" y="9" width="4" height="1" fill="#ffe168"></rect>
+        <rect x="6" y="11" width="1" height="1" fill="#4a9a5a"></rect>
+        <rect x="7" y="11" width="2" height="1" fill="#ff6b9d"></rect>
+        <rect x="10" y="11" width="8" height="1" fill="#f5e6d3"></rect>
+        <rect x="6" y="13" width="1" height="1" fill="#4a9a5a"></rect>
+        <rect x="8" y="13" width="3" height="1" fill="#ffe168"></rect>
+        <rect x="12" y="13" width="2" height="1" fill="#8fe2ef"></rect>
+        <!-- cursor (blinking rect) -->
+        <rect x="20" y="13" width="1" height="1" fill="#ffe168"></rect>
+        <!-- screen glare (top-left specular) -->
+        <rect x="5" y="4" width="4" height="1" fill="#5a4a8a"></rect>
+        <rect x="5" y="4" width="1" height="6" fill="#5a4a8a"></rect>
+
+        <!-- webcam dot -->
+        <rect x="15" y="3" width="1" height="1" fill="#8a8a8a"></rect>
+
+        <!-- base/keyboard -->
+        <rect x="0" y="17" width="32" height="1" fill="#2a2015"></rect>
+        <rect x="1" y="18" width="30" height="3" fill="#8a8a8a"></rect>
+        <rect x="1" y="18" width="30" height="1" fill="#b0b0b0"></rect>
+        <rect x="1" y="20" width="30" height="1" fill="#5a5a5a"></rect>
+        <rect x="0" y="21" width="32" height="1" fill="#2a2015"></rect>
+        <!-- trackpad hint -->
+        <rect x="13" y="19" width="6" height="1" fill="#5a5a5a"></rect>
+        <rect x="13" y="19" width="6" height="1" fill="#3a3a3a"></rect>
+        <!-- apple logo hint on lid (if turned around) - we'll add glowing dot -->
+        <rect x="15" y="9" width="2" height="2" fill="#c89205"></rect>
+        <rect x="15" y="9" width="1" height="1" fill="#ffe168"></rect>
+      </g>
+    </symbol>
+
+    <!-- ==================== 3D PRINTER (32x32) Prusa-style ==================== -->
+    <symbol id="printer3d" viewBox="0 0 32 32">
+      <g shape-rendering="crispEdges">
+        <!-- outer frame verticals -->
+        <rect x="2" y="1" width="2" height="25" fill="#2a2015"></rect>
+        <rect x="28" y="1" width="2" height="25" fill="#2a2015"></rect>
+        <rect x="4" y="1" width="24" height="2" fill="#2a2015"></rect>
+        <!-- frame highlights -->
+        <rect x="2" y="1" width="1" height="25" fill="#5a5a5a"></rect>
+        <rect x="28" y="1" width="1" height="25" fill="#3a3a3a"></rect>
+        <rect x="4" y="1" width="24" height="1" fill="#5a5a5a"></rect>
+
+        <!-- top cross bar + filament spool -->
+        <rect x="5" y="3" width="22" height="2" fill="#b0b0b0"></rect>
+        <rect x="5" y="3" width="22" height="1" fill="#d0d0d0"></rect>
+        <rect x="5" y="4" width="22" height="1" fill="#8a8a8a"></rect>
+
+        <!-- filament spool (red) on side -->
+        <rect x="6" y="6" width="5" height="4" fill="#ff3b3b"></rect>
+        <rect x="6" y="6" width="5" height="1" fill="#ff8080"></rect>
+        <rect x="6" y="9" width="5" height="1" fill="#c82020"></rect>
+        <rect x="6" y="6" width="1" height="4" fill="#ff8080"></rect>
+        <rect x="10" y="6" width="1" height="4" fill="#c82020"></rect>
+        <!-- spool center hole -->
+        <rect x="8" y="7" width="1" height="2" fill="#1a1a1a"></rect>
+        <!-- filament line going to extruder -->
+        <rect x="9" y="10" width="1" height="3" fill="#ff3b3b"></rect>
+
+        <!-- X-carriage gantry -->
+        <rect x="5" y="12" width="22" height="3" fill="#5a5a5a"></rect>
+        <rect x="5" y="12" width="22" height="1" fill="#8a8a8a"></rect>
+        <rect x="5" y="14" width="22" height="1" fill="#3a3a3a"></rect>
+        <!-- linear rod highlight -->
+        <rect x="5" y="13" width="22" height="1" fill="#a8a8a8"></rect>
+
+        <!-- extruder head -->
+        <rect x="12" y="15" width="7" height="5" fill="#2a2015"></rect>
+        <rect x="13" y="16" width="5" height="3" fill="#5a5a5a"></rect>
+        <rect x="13" y="16" width="5" height="1" fill="#8a8a8a"></rect>
+        <rect x="14" y="17" width="3" height="1" fill="#b0b0b0"></rect>
+        <!-- hot end (orange glow) -->
+        <rect x="15" y="19" width="2" height="2" fill="#ff8833"></rect>
+        <rect x="15" y="19" width="1" height="1" fill="#ffe168"></rect>
+        <rect x="16" y="20" width="1" height="1" fill="#c82020"></rect>
+        <!-- fan vent on extruder -->
+        <rect x="13" y="17" width="1" height="1" fill="#1a1a1a"></rect>
+        <rect x="17" y="17" width="1" height="1" fill="#1a1a1a"></rect>
+
+        <!-- print being printed (orange cube with layers) -->
+        <rect x="12" y="21" width="7" height="4" fill="#ff8833"></rect>
+        <rect x="12" y="21" width="7" height="1" fill="#ffaa55"></rect>
+        <rect x="12" y="22" width="7" height="1" fill="#ff8833"></rect>
+        <rect x="12" y="23" width="7" height="1" fill="#cc6622"></rect>
+        <rect x="12" y="24" width="7" height="1" fill="#8a4011"></rect>
+        <!-- layer lines on print -->
+        <rect x="13" y="22" width="1" height="1" fill="#ffaa55"></rect>
+        <rect x="15" y="22" width="1" height="1" fill="#ffaa55"></rect>
+        <rect x="17" y="22" width="1" height="1" fill="#ffaa55"></rect>
+
+        <!-- heated bed -->
+        <rect x="4" y="25" width="24" height="2" fill="#2a2015"></rect>
+        <rect x="4" y="25" width="24" height="1" fill="#5a5a5a"></rect>
+        <rect x="4" y="26" width="24" height="1" fill="#3a3a3a"></rect>
+        <!-- bed heat glow under print -->
+        <rect x="11" y="25" width="9" height="1" fill="#8a4011"></rect>
+
+        <!-- base -->
+        <rect x="0" y="28" width="32" height="3" fill="#2a2015"></rect>
+        <rect x="1" y="29" width="30" height="1" fill="#5a5a5a"></rect>
+        <rect x="1" y="29" width="30" height="1" fill="#3a3a3a"></rect>
+
+        <!-- LCD screen -->
+        <rect x="19" y="27" width="8" height="2" fill="#4a9a5a"></rect>
+        <rect x="19" y="27" width="8" height="1" fill="#6ab878"></rect>
+        <rect x="20" y="28" width="2" height="1" fill="#ffe168"></rect>
+        <rect x="23" y="28" width="3" height="1" fill="#8fe2ef"></rect>
+
+        <!-- knob -->
+        <rect x="27" y="27" width="2" height="2" fill="#1a1a1a"></rect>
+        <rect x="27" y="27" width="1" height="1" fill="#5a5a5a"></rect>
+      </g>
+    </symbol>
+
+    <!-- ==================== POTION (16x24) — red ==================== -->
+    <symbol id="potion" viewBox="0 0 16 24">
+      <g shape-rendering="crispEdges">
+        <!-- cork -->
+        <rect x="5" y="0" width="6" height="1" fill="#2a2015"></rect>
+        <rect x="4" y="1" width="1" height="3" fill="#2a2015"></rect>
+        <rect x="11" y="1" width="1" height="3" fill="#2a2015"></rect>
+        <rect x="5" y="4" width="6" height="1" fill="#2a2015"></rect>
+        <rect x="5" y="1" width="6" height="3" fill="#8a6540"></rect>
+        <rect x="5" y="1" width="6" height="1" fill="#b8925a"></rect>
+        <rect x="10" y="2" width="1" height="2" fill="#5a3a28"></rect>
+
+        <!-- neck -->
+        <rect x="5" y="5" width="1" height="2" fill="#2a2015"></rect>
+        <rect x="10" y="5" width="1" height="2" fill="#2a2015"></rect>
+        <rect x="6" y="5" width="4" height="2" fill="#d9c7a7"></rect>
+        <rect x="6" y="5" width="1" height="2" fill="#f5e6d3"></rect>
+        <rect x="9" y="5" width="1" height="2" fill="#b5a085"></rect>
+
+        <!-- bottle glass outline -->
+        <rect x="4" y="7" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="11" y="7" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="3" y="8" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="12" y="8" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="2" y="9" width="1" height="2" fill="#2a2015"></rect>
+        <rect x="13" y="9" width="1" height="2" fill="#2a2015"></rect>
+        <rect x="1" y="11" width="1" height="9" fill="#2a2015"></rect>
+        <rect x="14" y="11" width="1" height="9" fill="#2a2015"></rect>
+        <rect x="2" y="20" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="13" y="20" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="3" y="21" width="10" height="1" fill="#2a2015"></rect>
+
+        <!-- glass interior (behind liquid, shows as lighter rim) -->
+        <rect x="5" y="7" width="6" height="1" fill="#ff3b3b"></rect>
+        <rect x="4" y="8" width="8" height="1" fill="#ff3b3b"></rect>
+        <rect x="3" y="9" width="10" height="2" fill="#ff3b3b"></rect>
+        <rect x="2" y="11" width="12" height="9" fill="#ff3b3b"></rect>
+        <rect x="3" y="20" width="10" height="1" fill="#ff3b3b"></rect>
+
+        <!-- liquid highlight (tall vertical strip) -->
+        <rect x="3" y="11" width="2" height="8" fill="#ff8080"></rect>
+        <rect x="3" y="11" width="1" height="8" fill="#ffb0b0"></rect>
+        <rect x="3" y="14" width="1" height="1" fill="#ffd0d0"></rect>
+        <!-- top of liquid shimmer -->
+        <rect x="5" y="7" width="3" height="1" fill="#ff8080"></rect>
+        <rect x="4" y="9" width="2" height="1" fill="#ff8080"></rect>
+
+        <!-- liquid deep shadow (right side) -->
+        <rect x="12" y="11" width="2" height="9" fill="#c82020"></rect>
+        <rect x="13" y="11" width="1" height="9" fill="#a01010"></rect>
+        <rect x="3" y="19" width="10" height="1" fill="#a01010"></rect>
+
+        <!-- bubbles rising -->
+        <rect x="8" y="13" width="1" height="1" fill="#ffe168"></rect>
+        <rect x="10" y="16" width="1" height="1" fill="#ffe168"></rect>
+        <rect x="6" y="18" width="1" height="1" fill="#ffe168"></rect>
+        <rect x="11" y="18" width="1" height="1" fill="#fff3a8"></rect>
+        <!-- gold sparkles -->
+        <rect x="9" y="11" width="1" height="1" fill="#fff3a8"></rect>
+      </g>
+    </symbol>
+
+    <!-- ==================== PIXMAP (64x48) — Pokémon-style Usaquén map ==================== -->
+    <!-- Layout: La Rana Dorada (golden bar) on LEFT, Parque Fundacional de Usaquén on RIGHT,
+         separated by Carrera 6a. Calle 119 top, Calle 118 bottom. -->
+    <symbol id="pixmap" viewBox="0 0 64 48">
+      <g shape-rendering="crispEdges">
+        <!-- ================= BASE: SIDEWALK CONCRETE ================= -->
+        <rect x="0" y="0" width="64" height="48" fill="#d9c7a7"></rect>
+        <!-- sidewalk speckle texture -->
+        <rect x="4" y="7" width="1" height="1" fill="#c9b88a"></rect>
+        <rect x="18" y="9" width="1" height="1" fill="#c9b88a"></rect>
+        <rect x="25" y="36" width="1" height="1" fill="#c9b88a"></rect>
+        <rect x="12" y="34" width="1" height="1" fill="#c9b88a"></rect>
+
+        <!-- ================= CALLE 119 (top horizontal road) ================= -->
+        <rect x="0" y="0" width="64" height="6" fill="#5a5a5a"></rect>
+        <rect x="0" y="0" width="64" height="1" fill="#8a8a8a"></rect>
+        <rect x="0" y="5" width="64" height="1" fill="#3a3a3a"></rect>
+        <rect x="0" y="6" width="64" height="1" fill="#8a7a5a"></rect>
+        <!-- yellow dashes -->
+        <rect x="2" y="2" width="4" height="1" fill="#f4c430"></rect>
+        <rect x="10" y="2" width="4" height="1" fill="#f4c430"></rect>
+        <rect x="18" y="2" width="4" height="1" fill="#f4c430"></rect>
+        <rect x="36" y="2" width="4" height="1" fill="#f4c430"></rect>
+        <rect x="44" y="2" width="4" height="1" fill="#f4c430"></rect>
+        <rect x="52" y="2" width="4" height="1" fill="#f4c430"></rect>
+
+        <!-- ================= CALLE 118 (bottom horizontal road) ================= -->
+        <rect x="0" y="42" width="64" height="6" fill="#5a5a5a"></rect>
+        <rect x="0" y="42" width="64" height="1" fill="#8a8a8a"></rect>
+        <rect x="0" y="47" width="64" height="1" fill="#3a3a3a"></rect>
+        <rect x="0" y="41" width="64" height="1" fill="#8a7a5a"></rect>
+        <!-- yellow dashes -->
+        <rect x="2" y="44" width="4" height="1" fill="#f4c430"></rect>
+        <rect x="10" y="44" width="4" height="1" fill="#f4c430"></rect>
+        <rect x="18" y="44" width="4" height="1" fill="#f4c430"></rect>
+        <rect x="36" y="44" width="4" height="1" fill="#f4c430"></rect>
+        <rect x="44" y="44" width="4" height="1" fill="#f4c430"></rect>
+        <rect x="52" y="44" width="4" height="1" fill="#f4c430"></rect>
+
+        <!-- ================= CARRERA 6A (vertical middle road) ================= -->
+        <rect x="29" y="6" width="6" height="36" fill="#5a5a5a"></rect>
+        <rect x="29" y="6" width="1" height="36" fill="#8a8a8a"></rect>
+        <rect x="34" y="6" width="1" height="36" fill="#3a3a3a"></rect>
+        <rect x="28" y="6" width="1" height="36" fill="#8a7a5a"></rect>
+        <rect x="35" y="6" width="1" height="36" fill="#8a7a5a"></rect>
+        <!-- yellow dashes (vertical center) -->
+        <rect x="31" y="8" width="1" height="3" fill="#f4c430"></rect>
+        <rect x="31" y="14" width="1" height="3" fill="#f4c430"></rect>
+        <rect x="31" y="20" width="1" height="3" fill="#f4c430"></rect>
+        <rect x="31" y="26" width="1" height="3" fill="#f4c430"></rect>
+        <rect x="31" y="32" width="1" height="3" fill="#f4c430"></rect>
+        <rect x="31" y="38" width="1" height="3" fill="#f4c430"></rect>
+
+        <!-- ===================== PARK (Parque Fundacional de Usaquén) ===================== -->
+        <!-- Park area: x=36-62, y=7-40 -->
+        <!-- Grass base -->
+        <rect x="36" y="7" width="27" height="34" fill="#3ba04a"></rect>
+        <!-- Grass edge band (lighter top) -->
+        <rect x="36" y="7" width="27" height="1" fill="#5ec66a"></rect>
+        <rect x="36" y="40" width="27" height="1" fill="#1e6030"></rect>
+        <rect x="36" y="7" width="1" height="34" fill="#5ec66a"></rect>
+        <rect x="62" y="7" width="1" height="34" fill="#1e6030"></rect>
+        <!-- Grass texture speckles -->
+        <rect x="40" y="10" width="1" height="1" fill="#2a7645"></rect>
+        <rect x="48" y="12" width="1" height="1" fill="#2a7645"></rect>
+        <rect x="55" y="9" width="1" height="1" fill="#2a7645"></rect>
+        <rect x="42" y="17" width="1" height="1" fill="#5ec66a"></rect>
+        <rect x="51" y="15" width="1" height="1" fill="#5ec66a"></rect>
+        <rect x="38" y="25" width="1" height="1" fill="#2a7645"></rect>
+        <rect x="44" y="33" width="1" height="1" fill="#5ec66a"></rect>
+        <rect x="58" y="35" width="1" height="1" fill="#2a7645"></rect>
+        <rect x="60" y="22" width="1" height="1" fill="#5ec66a"></rect>
+        <rect x="52" y="37" width="1" height="1" fill="#2a7645"></rect>
+
+        <!-- Park diagonal path (dirt) — meandering cross shape -->
+        <!-- horizontal main path at y=23 -->
+        <rect x="36" y="23" width="27" height="2" fill="#d4b070"></rect>
+        <rect x="36" y="23" width="27" height="1" fill="#e8c890"></rect>
+        <rect x="36" y="24" width="27" height="1" fill="#b89050"></rect>
+        <!-- vertical path junction (center of park, meets main path) -->
+        <rect x="48" y="7" width="3" height="34" fill="#d4b070"></rect>
+        <rect x="48" y="7" width="1" height="34" fill="#e8c890"></rect>
+        <rect x="50" y="7" width="1" height="34" fill="#b89050"></rect>
+        <!-- path junction highlight -->
+        <rect x="48" y="23" width="3" height="2" fill="#e8c890"></rect>
+
+        <!-- Trees (Pokemon-style bushy clumps) -->
+        <!-- tree top-left -->
+        <rect x="38" y="10" width="4" height="4" fill="#1e5631"></rect>
+        <rect x="39" y="9" width="3" height="1" fill="#1e5631"></rect>
+        <rect x="38" y="10" width="4" height="1" fill="#4a9a5a"></rect>
+        <rect x="39" y="9" width="2" height="1" fill="#4a9a5a"></rect>
+        <rect x="38" y="13" width="4" height="1" fill="#0a3018"></rect>
+        <rect x="39" y="10" width="1" height="1" fill="#6ab878"></rect>
+        <!-- trunk -->
+        <rect x="39" y="14" width="2" height="1" fill="#5a3a28"></rect>
+
+        <!-- tree top-right -->
+        <rect x="57" y="10" width="4" height="4" fill="#1e5631"></rect>
+        <rect x="58" y="9" width="3" height="1" fill="#1e5631"></rect>
+        <rect x="57" y="10" width="4" height="1" fill="#4a9a5a"></rect>
+        <rect x="58" y="9" width="2" height="1" fill="#4a9a5a"></rect>
+        <rect x="57" y="13" width="4" height="1" fill="#0a3018"></rect>
+        <rect x="58" y="10" width="1" height="1" fill="#6ab878"></rect>
+        <rect x="58" y="14" width="2" height="1" fill="#5a3a28"></rect>
+
+        <!-- tree middle-right (between path intersections) -->
+        <rect x="53" y="28" width="4" height="4" fill="#1e5631"></rect>
+        <rect x="54" y="27" width="3" height="1" fill="#1e5631"></rect>
+        <rect x="53" y="28" width="4" height="1" fill="#4a9a5a"></rect>
+        <rect x="53" y="31" width="4" height="1" fill="#0a3018"></rect>
+        <rect x="54" y="28" width="1" height="1" fill="#6ab878"></rect>
+        <rect x="54" y="32" width="2" height="1" fill="#5a3a28"></rect>
+
+        <!-- tree bottom-left -->
+        <rect x="38" y="35" width="4" height="4" fill="#1e5631"></rect>
+        <rect x="39" y="34" width="3" height="1" fill="#1e5631"></rect>
+        <rect x="38" y="35" width="4" height="1" fill="#4a9a5a"></rect>
+        <rect x="38" y="38" width="4" height="1" fill="#0a3018"></rect>
+        <rect x="39" y="35" width="1" height="1" fill="#6ab878"></rect>
+        <rect x="39" y="39" width="2" height="1" fill="#5a3a28"></rect>
+
+        <!-- tree bottom-right -->
+        <rect x="57" y="35" width="4" height="4" fill="#1e5631"></rect>
+        <rect x="58" y="34" width="3" height="1" fill="#1e5631"></rect>
+        <rect x="57" y="35" width="4" height="1" fill="#4a9a5a"></rect>
+        <rect x="57" y="38" width="4" height="1" fill="#0a3018"></rect>
+        <rect x="58" y="35" width="1" height="1" fill="#6ab878"></rect>
+        <rect x="58" y="39" width="2" height="1" fill="#5a3a28"></rect>
+
+        <!-- Gazebo (center of park, at path intersection) -->
+        <rect x="45" y="18" width="9" height="1" fill="#ff3b3b"></rect>
+        <rect x="44" y="19" width="11" height="2" fill="#ff3b3b"></rect>
+        <rect x="44" y="19" width="11" height="1" fill="#ff8080"></rect>
+        <rect x="45" y="21" width="9" height="1" fill="#c82020"></rect>
+        <!-- gazebo base walls (tan stone) -->
+        <rect x="46" y="22" width="7" height="2" fill="#e8c890"></rect>
+        <rect x="46" y="22" width="1" height="2" fill="#c9a060"></rect>
+        <rect x="52" y="22" width="1" height="2" fill="#8a6540"></rect>
+        <rect x="46" y="23" width="7" height="1" fill="#c9a060"></rect>
+        <!-- flag on top -->
+        <rect x="49" y="17" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="49" y="16" width="1" height="1" fill="#2a2015"></rect>
+
+        <!-- ===================== LA RANA DORADA BLOCK (LEFT SIDE) ===================== -->
+        <!-- Zone: x=1-27, y=7-40. Base sidewalk already there. -->
+        <!-- Sidewalk pattern lines to suggest pavement -->
+        <rect x="1" y="12" width="27" height="1" fill="#c9b88a"></rect>
+        <rect x="1" y="24" width="27" height="1" fill="#c9b88a"></rect>
+        <rect x="1" y="36" width="27" height="1" fill="#c9b88a"></rect>
+
+        <!-- Small gray building (top-left neighbor) -->
+        <rect x="2" y="8" width="8" height="8" fill="#8a8a8a"></rect>
+        <rect x="2" y="8" width="8" height="2" fill="#6a6a6a"></rect>
+        <rect x="2" y="8" width="8" height="1" fill="#a8a8a8"></rect>
+        <rect x="2" y="15" width="8" height="1" fill="#3a3a3a"></rect>
+        <rect x="2" y="8" width="1" height="8" fill="#a8a8a8"></rect>
+        <rect x="9" y="8" width="1" height="8" fill="#5a5a5a"></rect>
+        <!-- windows -->
+        <rect x="3" y="11" width="2" height="2" fill="#8fe2ef"></rect>
+        <rect x="7" y="11" width="2" height="2" fill="#8fe2ef"></rect>
+        <rect x="3" y="11" width="1" height="1" fill="#c8f4fa"></rect>
+        <rect x="7" y="11" width="1" height="1" fill="#c8f4fa"></rect>
+
+        <!-- Small pink café (bottom-left neighbor) -->
+        <rect x="2" y="33" width="8" height="8" fill="#a8408c"></rect>
+        <rect x="2" y="33" width="8" height="2" fill="#c060a8"></rect>
+        <rect x="2" y="33" width="8" height="1" fill="#e880c0"></rect>
+        <rect x="2" y="40" width="8" height="1" fill="#4a1040"></rect>
+        <rect x="2" y="33" width="1" height="8" fill="#c060a8"></rect>
+        <rect x="9" y="33" width="1" height="8" fill="#7a2a64"></rect>
+        <!-- awning stripes -->
+        <rect x="3" y="35" width="1" height="1" fill="#ff3b3b"></rect>
+        <rect x="5" y="35" width="1" height="1" fill="#fff8e4"></rect>
+        <rect x="7" y="35" width="1" height="1" fill="#ff3b3b"></rect>
+        <!-- door -->
+        <rect x="5" y="38" width="2" height="3" fill="#5a3a28"></rect>
+        <rect x="5" y="38" width="2" height="1" fill="#8a6540"></rect>
+
+        <!-- ========== LA RANA DORADA (CENTERPIECE) ========== -->
+        <!-- Positioned right next to the park across Carrera 6a. x=12-27, y=14-33 -->
+        <!-- Building base walls (cream tan) -->
+        <rect x="12" y="22" width="16" height="11" fill="#fff0c0"></rect>
+        <!-- Wall shadows -->
+        <rect x="12" y="22" width="1" height="11" fill="#e8c890"></rect>
+        <rect x="27" y="22" width="1" height="11" fill="#b89050"></rect>
+        <rect x="12" y="32" width="16" height="1" fill="#b89050"></rect>
+
+        <!-- Golden pitched roof -->
+        <!-- roof outline (dark) -->
+        <rect x="11" y="21" width="18" height="1" fill="#15100a"></rect>
+        <rect x="11" y="20" width="18" height="1" fill="#c89205"></rect>
+        <!-- roof layer by layer -->
+        <rect x="12" y="18" width="16" height="2" fill="#f4c430"></rect>
+        <rect x="13" y="16" width="14" height="2" fill="#f4c430"></rect>
+        <rect x="14" y="14" width="12" height="2" fill="#f4c430"></rect>
+        <!-- roof highlights (left side/top) -->
+        <rect x="14" y="14" width="12" height="1" fill="#ffe168"></rect>
+        <rect x="13" y="16" width="1" height="2" fill="#ffe168"></rect>
+        <rect x="12" y="18" width="1" height="2" fill="#ffe168"></rect>
+        <rect x="14" y="14" width="2" height="1" fill="#fff3a8"></rect>
+        <!-- roof shadows (right side) -->
+        <rect x="25" y="14" width="1" height="2" fill="#c89205"></rect>
+        <rect x="26" y="16" width="1" height="2" fill="#c89205"></rect>
+        <rect x="27" y="18" width="1" height="2" fill="#c89205"></rect>
+        <rect x="26" y="15" width="1" height="1" fill="#8a6408"></rect>
+        <rect x="27" y="17" width="1" height="1" fill="#8a6408"></rect>
+        <!-- roof peak detail -->
+        <rect x="19" y="13" width="2" height="1" fill="#ffe168"></rect>
+        <rect x="19" y="14" width="2" height="1" fill="#fff3a8"></rect>
+        <!-- roof edge outline -->
+        <rect x="14" y="13" width="1" height="1" fill="#15100a"></rect>
+        <rect x="25" y="13" width="1" height="1" fill="#15100a"></rect>
+        <rect x="13" y="15" width="1" height="1" fill="#15100a"></rect>
+        <rect x="26" y="14" width="1" height="1" fill="#15100a"></rect>
+        <rect x="12" y="17" width="1" height="1" fill="#15100a"></rect>
+        <rect x="27" y="16" width="1" height="1" fill="#15100a"></rect>
+        <rect x="11" y="19" width="1" height="1" fill="#15100a"></rect>
+        <rect x="28" y="18" width="1" height="1" fill="#15100a"></rect>
+        <rect x="28" y="19" width="1" height="2" fill="#15100a"></rect>
+        <rect x="10" y="20" width="1" height="1" fill="#15100a"></rect>
+
+        <!-- Wall outline -->
+        <rect x="11" y="22" width="1" height="11" fill="#15100a"></rect>
+        <rect x="28" y="22" width="1" height="11" fill="#15100a"></rect>
+        <rect x="11" y="33" width="18" height="1" fill="#15100a"></rect>
+
+        <!-- La Rana sign (golden circle on wall with mini frog face) -->
+        <!-- sign background -->
+        <rect x="16" y="23" width="8" height="5" fill="#c89205"></rect>
+        <rect x="17" y="22" width="6" height="1" fill="#c89205"></rect>
+        <rect x="17" y="28" width="6" height="1" fill="#c89205"></rect>
+        <!-- sign inner gold -->
+        <rect x="17" y="23" width="6" height="5" fill="#f4c430"></rect>
+        <rect x="17" y="23" width="6" height="1" fill="#ffe168"></rect>
+        <!-- mini frog face on sign -->
+        <!-- frog eyes (two dots) -->
+        <rect x="18" y="24" width="1" height="1" fill="#15100a"></rect>
+        <rect x="21" y="24" width="1" height="1" fill="#15100a"></rect>
+        <!-- frog mouth (happy curve) -->
+        <rect x="18" y="26" width="1" height="1" fill="#15100a"></rect>
+        <rect x="19" y="27" width="3" height="1" fill="#15100a"></rect>
+        <rect x="21" y="26" width="1" height="1" fill="#15100a"></rect>
+        <!-- sign outline -->
+        <rect x="16" y="23" width="1" height="5" fill="#15100a"></rect>
+        <rect x="23" y="23" width="1" height="5" fill="#15100a"></rect>
+        <rect x="16" y="22" width="1" height="1" fill="#15100a"></rect>
+        <rect x="23" y="22" width="1" height="1" fill="#15100a"></rect>
+        <rect x="17" y="21" width="6" height="1" fill="#15100a"></rect>
+        <rect x="16" y="28" width="1" height="1" fill="#15100a"></rect>
+        <rect x="23" y="28" width="1" height="1" fill="#15100a"></rect>
+        <rect x="17" y="29" width="6" height="1" fill="#15100a"></rect>
+
+        <!-- Door (dark wood) -->
+        <rect x="13" y="29" width="3" height="4" fill="#5a3a28"></rect>
+        <rect x="13" y="29" width="3" height="1" fill="#8a6540"></rect>
+        <rect x="13" y="29" width="1" height="4" fill="#8a6540"></rect>
+        <rect x="15" y="29" width="1" height="4" fill="#3a2418"></rect>
+        <rect x="15" y="31" width="1" height="1" fill="#f4c430"></rect>
+        <!-- Side door/window -->
+        <rect x="24" y="29" width="3" height="4" fill="#5a3a28"></rect>
+        <rect x="24" y="29" width="3" height="1" fill="#8a6540"></rect>
+        <rect x="24" y="29" width="1" height="4" fill="#8a6540"></rect>
+        <rect x="26" y="29" width="1" height="4" fill="#3a2418"></rect>
+        <rect x="26" y="31" width="1" height="1" fill="#f4c430"></rect>
+
+        <!-- ========== POKEMON-STYLE LOCATION MARKER (above Rana) ========== -->
+        <!-- shadow below -->
+        <rect x="18" y="12" width="4" height="1" fill="#15100a" opacity="0.3"
+        ></rect>
+        <!-- pin body (balloon red) -->
+        <!-- outline -->
+        <rect x="17" y="6" width="6" height="1" fill="#15100a"></rect>
+        <rect x="16" y="7" width="1" height="1" fill="#15100a"></rect>
+        <rect x="23" y="7" width="1" height="1" fill="#15100a"></rect>
+        <rect x="15" y="8" width="1" height="3" fill="#15100a"></rect>
+        <rect x="24" y="8" width="1" height="3" fill="#15100a"></rect>
+        <rect x="16" y="11" width="1" height="1" fill="#15100a"></rect>
+        <rect x="23" y="11" width="1" height="1" fill="#15100a"></rect>
+        <rect x="17" y="12" width="1" height="1" fill="#15100a"></rect>
+        <rect x="22" y="12" width="1" height="1" fill="#15100a"></rect>
+        <rect x="18" y="13" width="1" height="1" fill="#15100a"></rect>
+        <rect x="21" y="13" width="1" height="1" fill="#15100a"></rect>
+        <rect x="19" y="14" width="2" height="1" fill="#15100a"></rect>
+        <!-- pin red fill -->
+        <rect x="17" y="7" width="6" height="1" fill="#ff3b3b"></rect>
+        <rect x="16" y="8" width="8" height="3" fill="#ff3b3b"></rect>
+        <rect x="17" y="11" width="6" height="1" fill="#ff3b3b"></rect>
+        <rect x="18" y="12" width="4" height="1" fill="#ff3b3b"></rect>
+        <rect x="19" y="13" width="2" height="1" fill="#ff3b3b"></rect>
+        <!-- pin highlights -->
+        <rect x="17" y="7" width="2" height="1" fill="#ff8080"></rect>
+        <rect x="16" y="8" width="1" height="2" fill="#ff8080"></rect>
+        <rect x="17" y="8" width="1" height="1" fill="#ffb0b0"></rect>
+        <!-- pin right shadow -->
+        <rect x="22" y="8" width="2" height="3" fill="#c82020"></rect>
+        <rect x="22" y="11" width="1" height="1" fill="#c82020"></rect>
+        <!-- pin white dot (center) -->
+        <rect x="19" y="8" width="2" height="2" fill="#fff8e4"></rect>
+        <rect x="19" y="8" width="1" height="1" fill="#ffffff"></rect>
+        <rect x="20" y="9" width="1" height="1" fill="#d9c7a7"></rect>
+      </g>
+    </symbol>
+  </defs>
+</svg>

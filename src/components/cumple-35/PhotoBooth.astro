@@ -1,0 +1,349 @@
+---
+// 5.9 Foto-cabina pixelada — camera or upload → pixelation filter
+---
+
+<section class="booth">
+  <h2 class="section-heading">&gt; FOTO-CABINA PIXELADA</h2>
+
+  <div class="panel">
+    <div class="tabs" role="tablist">
+      <button
+        type="button"
+        class="tab active"
+        data-tab="camera"
+        role="tab"
+        aria-selected="true">📷 USAR CÁMARA</button
+      >
+      <button
+        type="button"
+        class="tab"
+        data-tab="upload"
+        role="tab"
+        aria-selected="false">📤 SUBIR FOTO</button
+      >
+    </div>
+
+    <div class="stage">
+      <video id="booth-video" playsinline muted autoplay hidden></video>
+      <canvas id="booth-canvas" width="320" height="320"></canvas>
+      <div class="frame" aria-hidden="true"></div>
+      <div id="booth-empty" class="empty">Pulsa un botón para empezar</div>
+    </div>
+
+    <div class="controls">
+      <div class="group group-camera">
+        <button type="button" class="btn" id="btn-start-cam"
+          >▶ ABRIR CÁMARA</button
+        >
+        <button type="button" class="btn btn-gold" id="btn-snap" disabled
+          >📸 CAPTURAR</button
+        >
+      </div>
+      <div class="group group-upload" hidden>
+        <label class="btn" for="booth-file">📤 ELEGIR ARCHIVO</label>
+        <input type="file" id="booth-file" accept="image/*" hidden />
+      </div>
+      <div class="group group-post" hidden>
+        <button type="button" class="btn" id="btn-redo">↻ OTRA VEZ</button>
+        <button type="button" class="btn btn-gold" id="btn-download"
+          >📥 DESCARGAR</button
+        >
+        <button type="button" class="btn" id="btn-share" hidden
+          >📲 COMPARTIR</button
+        >
+      </div>
+    </div>
+
+    <p class="hint">
+      Pixelación 16-bit automática. ¡Golden Frog Stamp incluido!
+    </p>
+  </div>
+</section>
+
+<style>
+  .tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .tab {
+    flex: 1;
+    padding: 10px 12px;
+    background: var(--bg-deep);
+    color: var(--cream);
+    border: 3px solid var(--cream);
+    font-family: "Press Start 2P", monospace;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+  }
+  .tab.active {
+    background: var(--gold);
+    color: var(--ink);
+    border-color: var(--ink);
+    box-shadow: inset 2px 2px 0 0 var(--ink);
+  }
+
+  .stage {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    max-width: 360px;
+    margin: 0 auto;
+    background: var(--bg-deep);
+    border: 3px solid var(--cream);
+  }
+  .stage video,
+  .stage canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+  }
+  .stage video[hidden] {
+    display: none;
+  }
+  .stage .empty {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--cream);
+    font-family: "Press Start 2P", monospace;
+    font-size: 10px;
+    text-align: center;
+    padding: 24px;
+    opacity: 0.6;
+  }
+  .frame {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border: 8px solid transparent;
+    box-shadow:
+      inset 0 0 0 3px var(--gold),
+      inset 0 0 0 6px var(--ink),
+      inset 0 0 0 10px var(--gold);
+  }
+
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 18px;
+  }
+  .group {
+    display: contents;
+  }
+  .group[hidden] {
+    display: none;
+  }
+  .hint {
+    margin: 14px 0 0;
+    text-align: center;
+    font-family: "VT323", monospace;
+    font-size: 18px;
+    opacity: 0.7;
+  }
+</style>
+
+<script>
+  const tabs = document.querySelectorAll<HTMLButtonElement>(".booth .tab");
+  const groupCam = document.querySelector<HTMLElement>(".group-camera");
+  const groupUp = document.querySelector<HTMLElement>(".group-upload");
+  const groupPost = document.querySelector<HTMLElement>(".group-post");
+  const video = document.getElementById(
+    "booth-video"
+  ) as HTMLVideoElement | null;
+  const canvas = document.getElementById(
+    "booth-canvas"
+  ) as HTMLCanvasElement | null;
+  const emptyEl = document.getElementById("booth-empty");
+  const btnStart = document.getElementById(
+    "btn-start-cam"
+  ) as HTMLButtonElement | null;
+  const btnSnap = document.getElementById(
+    "btn-snap"
+  ) as HTMLButtonElement | null;
+  const fileInput = document.getElementById(
+    "booth-file"
+  ) as HTMLInputElement | null;
+  const btnRedo = document.getElementById(
+    "btn-redo"
+  ) as HTMLButtonElement | null;
+  const btnDownload = document.getElementById(
+    "btn-download"
+  ) as HTMLButtonElement | null;
+  const btnShare = document.getElementById(
+    "btn-share"
+  ) as HTMLButtonElement | null;
+  const ctx = canvas?.getContext("2d") ?? null;
+  if (ctx) ctx.imageSmoothingEnabled = false;
+
+  let stream: MediaStream | null = null;
+  let mode: "camera" | "upload" = "camera";
+  let hasShot = false;
+
+  function show(el: HTMLElement | null | undefined, show: boolean) {
+    if (!el) return;
+    if (show) el.removeAttribute("hidden");
+    else el.setAttribute("hidden", "");
+  }
+
+  function setMode(next: "camera" | "upload") {
+    mode = next;
+    tabs.forEach(t => {
+      const active = t.dataset.tab === next;
+      t.classList.toggle("active", active);
+      t.setAttribute("aria-selected", active ? "true" : "false");
+    });
+    show(groupCam, next === "camera" && !hasShot);
+    show(groupUp, next === "upload" && !hasShot);
+    if (next === "upload") stopCam();
+  }
+  tabs.forEach(t =>
+    t.addEventListener("click", () => setMode(t.dataset.tab as any))
+  );
+
+  async function startCam() {
+    if (!video) return;
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: "user" },
+        audio: false,
+      });
+      video.srcObject = stream;
+      video.hidden = false;
+      if (emptyEl) emptyEl.style.display = "none";
+      await video.play();
+      if (btnSnap) btnSnap.disabled = false;
+    } catch (err) {
+      alert("No pudimos abrir la cámara. Prueba subiendo una foto.");
+    }
+  }
+  function stopCam() {
+    if (stream) {
+      stream.getTracks().forEach(t => t.stop());
+      stream = null;
+    }
+    if (video) {
+      video.srcObject = null;
+      video.hidden = true;
+    }
+    if (btnSnap) btnSnap.disabled = true;
+  }
+
+  function pixelateFromSource(src: CanvasImageSource, sw: number, sh: number) {
+    if (!canvas || !ctx) return;
+    const SIZE = canvas.width; // 320x320 square
+    const PIXEL = 80; // low-res buffer for pixelation
+    const off = document.createElement("canvas");
+    off.width = PIXEL;
+    off.height = PIXEL;
+    const offCtx = off.getContext("2d")!;
+    offCtx.imageSmoothingEnabled = false;
+
+    // cover-fit into PIXEL square
+    const scale = Math.max(PIXEL / sw, PIXEL / sh);
+    const dw = sw * scale;
+    const dh = sh * scale;
+    const dx = (PIXEL - dw) / 2;
+    const dy = (PIXEL - dh) / 2;
+    offCtx.drawImage(src, 0, 0, sw, sh, dx, dy, dw, dh);
+
+    ctx.imageSmoothingEnabled = false;
+    ctx.clearRect(0, 0, SIZE, SIZE);
+    ctx.drawImage(off, 0, 0, PIXEL, PIXEL, 0, 0, SIZE, SIZE);
+
+    // Golden frog stamp bottom-right
+    const stamp = new Image();
+    stamp.onload = () => {
+      const ss = 64;
+      ctx.globalAlpha = 0.9;
+      ctx.drawImage(stamp, SIZE - ss - 12, SIZE - ss - 12, ss, ss);
+      ctx.globalAlpha = 1;
+    };
+    // inline SVG sprite → data URL (use the frog symbol)
+    stamp.src =
+      "data:image/svg+xml;utf8," +
+      encodeURIComponent(
+        `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'>
+          <use href='#frog' xlink:href='#frog'/>
+        </svg>`
+      );
+  }
+
+  btnStart?.addEventListener("click", startCam);
+
+  btnSnap?.addEventListener("click", () => {
+    if (!video || !canvas) return;
+    const vw = video.videoWidth || 640;
+    const vh = video.videoHeight || 480;
+    pixelateFromSource(video, vw, vh);
+    hasShot = true;
+    show(groupCam, false);
+    show(groupUp, false);
+    show(groupPost, true);
+    stopCam();
+    if (emptyEl) emptyEl.style.display = "none";
+    if (typeof navigator.canShare === "function") show(btnShare, true);
+  });
+
+  fileInput?.addEventListener("change", () => {
+    const file = fileInput.files?.[0];
+    if (!file) return;
+    const img = new Image();
+    img.onload = () => {
+      if (!canvas) return;
+      pixelateFromSource(img, img.naturalWidth, img.naturalHeight);
+      hasShot = true;
+      show(groupCam, false);
+      show(groupUp, false);
+      show(groupPost, true);
+      if (emptyEl) emptyEl.style.display = "none";
+      if (typeof navigator.canShare === "function") show(btnShare, true);
+      URL.revokeObjectURL(img.src);
+    };
+    img.src = URL.createObjectURL(file);
+  });
+
+  btnRedo?.addEventListener("click", () => {
+    if (ctx && canvas) ctx.clearRect(0, 0, canvas.width, canvas.height);
+    hasShot = false;
+    if (emptyEl) emptyEl.style.display = "flex";
+    show(groupPost, false);
+    setMode(mode);
+  });
+
+  btnDownload?.addEventListener("click", () => {
+    if (!canvas) return;
+    canvas.toBlob(blob => {
+      if (!blob) return;
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "cumple-35-pixel.png";
+      a.click();
+      URL.revokeObjectURL(url);
+    }, "image/png");
+  });
+
+  btnShare?.addEventListener("click", async () => {
+    if (!canvas || typeof navigator.canShare !== "function") return;
+    canvas.toBlob(async blob => {
+      if (!blob) return;
+      const file = new File([blob], "cumple-35-pixel.png", {
+        type: "image/png",
+      });
+      try {
+        await navigator.share({ files: [file], title: "¡Salo cumple 35!" });
+      } catch {}
+    }, "image/png");
+  });
+
+  // default: camera mode
+  setMode("camera");
+</script>

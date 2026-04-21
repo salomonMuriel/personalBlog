@@ -1,0 +1,270 @@
+---
+import "@fontsource/press-start-2p/400.css";
+import "@fontsource/vt323/400.css";
+import Sprites from "@components/cumple-35/Sprites.astro";
+import GlobalFX from "@components/cumple-35/GlobalFX.astro";
+import { SITE } from "@config";
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const canonical = new URL("/experimentos/cumple-35/", SITE.website).toString();
+const ogImage = new URL("/cumple-35/og.png", SITE.website).toString();
+---
+
+<!doctype html>
+<html lang="es" class="cumple-html">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#1a0b2e" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="robots" content="noindex" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content="es_CO" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body class="cumple-root">
+    <Sprites />
+    <GlobalFX />
+    <main id="cumple-main">
+      <slot />
+    </main>
+
+    <style is:global>
+      :root.cumple-html,
+      body.cumple-root {
+        --bg-deep: #1a0b2e;
+        --bg-mid: #2a1746;
+        --bg-panel: #3d1f5e;
+        --gold: #f4c430;
+        --gold-dark: #c89205;
+        --gold-light: #ffe168;
+        --cream: #f5e6d3;
+        --pond: #4a9a5a;
+        --pond-dark: #1e5631;
+        --red: #ff3b3b;
+        --pink: #ff6b9d;
+        --cyan: #4dd4e7;
+        --cork: #c89968;
+        --cork-dark: #8b6841;
+        --cork-deep: #5e4428;
+        --paper: #fff8e4;
+        --ink: #2a2015;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html.cumple-html {
+        background: var(--bg-deep);
+        image-rendering: pixelated;
+        image-rendering: -moz-crisp-edges;
+        image-rendering: crisp-edges;
+      }
+
+      body.cumple-root {
+        margin: 0;
+        min-height: 100svh;
+        background: var(--bg-deep);
+        color: var(--cream);
+        font-family: "VT323", monospace;
+        font-size: 22px;
+        line-height: 1.35;
+        overflow-x: hidden;
+        position: relative;
+        -webkit-font-smoothing: none;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      body.cumple-root svg,
+      body.cumple-root img,
+      body.cumple-root canvas {
+        image-rendering: pixelated;
+      }
+
+      body.cumple-root h1,
+      body.cumple-root h2,
+      body.cumple-root h3,
+      body.cumple-root .display,
+      body.cumple-root button,
+      body.cumple-root .label {
+        font-family: "Press Start 2P", "VT323", monospace;
+        letter-spacing: 0.02em;
+      }
+
+      body.cumple-root a {
+        color: var(--cyan);
+        text-decoration: underline;
+        text-underline-offset: 4px;
+      }
+      body.cumple-root a:hover {
+        color: var(--gold-light);
+      }
+
+      #cumple-main {
+        position: relative;
+        z-index: 1;
+        max-width: 760px;
+        margin: 0 auto;
+        padding: 56px 20px;
+      }
+
+      @media (max-width: 480px) {
+        #cumple-main {
+          padding: 32px 16px;
+        }
+        body.cumple-root {
+          font-size: 20px;
+        }
+      }
+
+      .cumple-root .panel {
+        background: var(--bg-panel);
+        border: 4px solid var(--cream);
+        box-shadow:
+          0 0 0 4px var(--ink),
+          8px 8px 0 0 var(--gold-dark);
+        padding: 24px;
+        margin-bottom: 40px;
+        position: relative;
+      }
+
+      .cumple-root .panel-gold {
+        background: var(--gold);
+        color: var(--ink);
+        border-color: var(--ink);
+        box-shadow:
+          0 0 0 4px var(--gold-dark),
+          8px 8px 0 0 var(--ink);
+      }
+
+      .cumple-root .section-heading {
+        font-size: clamp(18px, 4vw, 26px);
+        color: var(--gold);
+        margin: 48px 0 20px;
+        text-shadow: 2px 2px 0 var(--ink);
+      }
+
+      .cumple-root .micro {
+        font-family: "Press Start 2P", monospace;
+        font-size: 10px;
+        color: var(--cyan);
+        letter-spacing: 0.1em;
+      }
+
+      .cumple-root .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 14px 20px;
+        font-family: "Press Start 2P", monospace;
+        font-size: 12px;
+        background: var(--red);
+        color: var(--cream);
+        border: 4px solid var(--ink);
+        box-shadow: 4px 4px 0 0 var(--ink);
+        cursor: pointer;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        transition:
+          transform 80ms linear,
+          box-shadow 80ms linear;
+      }
+      .cumple-root .btn:active {
+        transform: translate(4px, 4px);
+        box-shadow: 0 0 0 0 var(--ink);
+      }
+      .cumple-root .btn-gold {
+        background: var(--gold);
+        color: var(--ink);
+      }
+      .cumple-root .btn[disabled] {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
+      .cumple-root .input,
+      .cumple-root .textarea {
+        width: 100%;
+        background: var(--bg-deep);
+        color: var(--cream);
+        border: 3px solid var(--cream);
+        padding: 10px 12px;
+        font-family: "VT323", monospace;
+        font-size: 20px;
+        outline: none;
+        transition:
+          border-color 120ms linear,
+          box-shadow 120ms linear;
+      }
+      .cumple-root .input:focus,
+      .cumple-root .textarea:focus {
+        border-color: var(--gold);
+        box-shadow: 0 0 0 3px rgba(244, 196, 48, 0.35);
+      }
+
+      .cumple-root .pill-group {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .cumple-root .pill {
+        position: relative;
+        cursor: pointer;
+      }
+      .cumple-root .pill input {
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+      }
+      .cumple-root .pill span {
+        display: inline-block;
+        padding: 8px 14px;
+        font-family: "Press Start 2P", monospace;
+        font-size: 10px;
+        background: var(--bg-deep);
+        color: var(--cream);
+        border: 3px solid var(--cream);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .cumple-root .pill input:checked + span {
+        background: var(--gold);
+        color: var(--ink);
+        border-color: var(--ink);
+        box-shadow: inset 2px 2px 0 0 var(--ink);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </body>
+</html>
