@@ -22,6 +22,7 @@ export interface ConfirmedGuest {
 
 export async function getConfirmed(): Promise<{
   count: number;
+  maybeCount: number;
   names: string[];
   guests: ConfirmedGuest[];
 }> {
@@ -43,6 +44,10 @@ export async function getConfirmed(): Promise<{
     (acc, r) => (r.attending === "yes" ? acc + 1 + (r.plusOne ? 1 : 0) : acc),
     0
   );
+  const maybeCount = rows.reduce(
+    (acc, r) => (r.attending === "maybe" ? acc + 1 + (r.plusOne ? 1 : 0) : acc),
+    0
+  );
   const names = rows.map(r => r.name.trim());
   const guests: ConfirmedGuest[] = rows.map(r => ({
     id: r.id,
@@ -50,7 +55,7 @@ export async function getConfirmed(): Promise<{
     hasSelfie: !!r.selfie,
     maybe: r.attending === "maybe",
   }));
-  return { count, names, guests };
+  return { count, maybeCount, names, guests };
 }
 
 export async function insertRsvp(input: RsvpInsert): Promise<number> {

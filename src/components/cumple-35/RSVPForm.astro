@@ -1230,6 +1230,7 @@
       new CustomEvent("rsvp:confirmed", {
         detail: {
           count: rsvpData.count,
+          maybeCount: rsvpData.maybeCount,
           names: rsvpData.names,
           guests: rsvpData.guests,
         },
@@ -1272,6 +1273,7 @@
                 new CustomEvent("rsvp:confirmed", {
                   detail: {
                     count: c.count,
+                    maybeCount: c.maybeCount,
                     names: c.names,
                     guests: c.guests,
                   },

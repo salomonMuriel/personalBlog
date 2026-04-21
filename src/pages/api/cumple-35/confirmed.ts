@@ -15,9 +15,12 @@ export const GET: APIRoute = async () => {
     });
   } catch (err) {
     console.error("confirmed read failed", err);
-    return new Response(JSON.stringify({ count: 0, names: [] }), {
-      status: 500,
-      headers: { "Content-Type": "application/json" },
-    });
+    return new Response(
+      JSON.stringify({ count: 0, maybeCount: 0, names: [], guests: [] }),
+      {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
   }
 };

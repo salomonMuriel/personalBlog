@@ -32,6 +32,7 @@ const MAPS_URL = "https://maps.app.goo.gl/krJCM93AZrA8PmbT9";
         <span class="tack tack-red" aria-hidden="true"></span>
         <h3 class="pin-title">JUGADORES CONFIRMADOS</h3>
         <p class="count" id="cork-count">--</p>
+        <p class="count-maybe" id="cork-maybe" hidden></p>
       </article>
 
       <article class="pin pin-list">
@@ -189,6 +190,14 @@ const MAPS_URL = "https://maps.app.goo.gl/krJCM93AZrA8PmbT9";
     text-shadow: 3px 3px 0 var(--gold-dark);
     line-height: 1;
   }
+  .count-maybe {
+    margin: 6px 0 0;
+    font-family: "Press Start 2P", monospace;
+    font-size: 10px;
+    color: var(--ink);
+    text-align: center;
+    letter-spacing: 0.04em;
+  }
 
   .names {
     list-style: none;
@@ -260,6 +269,7 @@ const MAPS_URL = "https://maps.app.goo.gl/krJCM93AZrA8PmbT9";
 
 <script>
   const countEl = document.getElementById("cork-count");
+  const maybeEl = document.getElementById("cork-maybe");
   const namesEl = document.getElementById("cork-names");
 
   type Guest = {
@@ -269,8 +279,17 @@ const MAPS_URL = "https://maps.app.goo.gl/krJCM93AZrA8PmbT9";
     maybe?: boolean;
   };
 
-  function render(count: number, guests: Guest[]) {
+  function render(count: number, maybeCount: number, guests: Guest[]) {
     if (countEl) countEl.textContent = String(count);
+    if (maybeEl) {
+      if (maybeCount > 0) {
+        maybeEl.textContent = `+${maybeCount} tal vez`;
+        maybeEl.hidden = false;
+      } else {
+        maybeEl.textContent = "";
+        maybeEl.hidden = true;
+      }
+    }
     if (!namesEl) return;
     namesEl.innerHTML = "";
     if (!guests.length) {
@@ -319,7 +338,11 @@ const MAPS_URL = "https://maps.app.goo.gl/krJCM93AZrA8PmbT9";
       });
       if (!res.ok) throw new Error("status " + res.status);
       const data = await res.json();
-      render(data.count ?? 0, Array.isArray(data.guests) ? data.guests : []);
+      render(
+        data.count ?? 0,
+        data.maybeCount ?? 0,
+        Array.isArray(data.guests) ? data.guests : []
+      );
     } catch (err) {
       if (countEl) countEl.textContent = "—";
       if (namesEl) {
@@ -331,9 +354,9 @@ const MAPS_URL = "https://maps.app.goo.gl/krJCM93AZrA8PmbT9";
   load();
 
   window.addEventListener("rsvp:confirmed", ((e: CustomEvent) => {
-    const { count, guests } = e.detail ?? {};
+    const { count, maybeCount, guests } = e.detail ?? {};
     if (typeof count === "number" && Array.isArray(guests)) {
-      render(count, guests);
+      render(count, typeof maybeCount === "number" ? maybeCount : 0, guests);
     } else {
       load();
     }
