@@ -8,6 +8,13 @@
       "when": 1776722984901,
       "tag": "0000_shocking_rage",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1776784905158,
+      "tag": "0001_misty_stardust",
+      "breakpoints": true
     }
   ]
 }

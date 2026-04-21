@@ -1,22 +1,12 @@
 ---
-// 5.12 RSVP form — POSTs to /api/cumple-35/rsvp, dispatches rsvp:confirmed for corkboard refresh
+// 5.12 RSVP form — POSTs to /api/cumple-35/rsvp, dispatches rsvp:confirmed for corkboard refresh.
+// Includes optional photo-booth: capture/upload a photo, server calls OpenAI
+// image-edits to render it as 16-bit pixel art, result is submitted with the RSVP.
 ---
 
 <section class="rsvp">
   <h2 class="section-heading">&gt; CONFIRMA</h2>
   <form id="rsvp-form" class="panel form" novalidate>
-    <label class="field">
-      <span class="lbl">NOMBRE</span>
-      <input
-        class="input"
-        name="name"
-        type="text"
-        required
-        maxlength="60"
-        autocomplete="name"
-      />
-    </label>
-
     <fieldset class="field">
       <legend class="lbl">¿VIENES?</legend>
       <div class="pill-group">
@@ -38,7 +28,7 @@
       </div>
     </fieldset>
 
-    <fieldset class="field">
+    <fieldset class="field" id="plusone-field">
       <legend class="lbl">¿TRAES +1?</legend>
       <div class="pill-group">
         <label class="pill"
@@ -55,6 +45,20 @@
     </fieldset>
 
     <label class="field">
+      <span class="lbl" id="name-label">TU NOMBRE</span>
+      <input
+        class="input"
+        name="name"
+        id="name-input"
+        type="text"
+        required
+        maxlength="60"
+        autocomplete="name"
+        placeholder="Tu nombre"
+      />
+    </label>
+
+    <label class="field">
       <span class="lbl">MENSAJE (opcional)</span>
       <textarea
         class="textarea"
@@ -63,6 +67,161 @@
         maxlength="500"
         placeholder="Un chiste malo, una profecía, lo que sea..."></textarea>
     </label>
+
+    <!-- Optional pixel-art selfie -->
+    <fieldset class="field booth-field">
+      <legend class="lbl">SELFIE PIXEL-ART (opcional)</legend>
+
+      <button type="button" class="btn booth-cta" id="booth-open">
+        📸 SACAR MI SELFIE PIXEL-ART
+      </button>
+
+      <div class="booth" id="booth" hidden>
+        <div class="booth-tabs" role="tablist">
+          <button
+            type="button"
+            class="tab active"
+            data-tab="camera"
+            role="tab"
+            aria-selected="true">📷 CÁMARA</button
+          >
+          <button
+            type="button"
+            class="tab"
+            data-tab="upload"
+            role="tab"
+            aria-selected="false">📤 SUBIR DE TU PC</button
+          >
+        </div>
+
+        <div class="stage">
+          <video id="booth-video" playsinline muted autoplay hidden></video>
+          <canvas id="booth-canvas" width="320" height="320"></canvas>
+          <img id="booth-preview" alt="" hidden />
+          <div class="frame" aria-hidden="true"></div>
+          <div id="booth-empty" class="empty">Pulsa un botón para empezar</div>
+          <div id="booth-busy" class="busy" hidden>
+            <div class="spin" aria-hidden="true"></div>
+            <span>PIXELANDO... (10-20s)</span>
+          </div>
+        </div>
+
+        <div class="controls">
+          <div class="group group-camera">
+            <button type="button" class="btn" id="btn-start-cam"
+              >▶ ABRIR CÁMARA</button
+            >
+            <button
+              type="button"
+              class="btn btn-gold"
+              id="btn-snap"
+              disabled
+              hidden>📸 CAPTURAR</button
+            >
+          </div>
+          <div class="group group-upload" hidden>
+            <label class="btn" for="booth-file">📤 ELEGIR ARCHIVO</label>
+            <input type="file" id="booth-file" accept="image/*" hidden />
+          </div>
+          <div class="group group-style" hidden>
+            <div class="style-picker">
+              <label class="lbl" for="booth-style">ESTILO</label>
+              <select id="booth-style" class="input style-select">
+                <option value="">Sin estilo (default)</option>
+                <optgroup label="Franquicias 16-bit">
+                  <option value="franchise:pokemon-trainer"
+                    >Pokémon (trainer card)</option
+                  >
+                  <option value="franchise:super-mario-world"
+                    >Super Mario World</option
+                  >
+                  <option value="franchise:zelda-link-past"
+                    >Zelda: A Link to the Past</option
+                  >
+                  <option value="franchise:sonic-classic"
+                    >Sonic the Hedgehog</option
+                  >
+                  <option value="franchise:donkey-kong-country"
+                    >Donkey Kong Country</option
+                  >
+                  <option value="franchise:street-fighter-2"
+                    >Street Fighter II</option
+                  >
+                  <option value="franchise:mega-man-x">Mega Man X</option>
+                  <option value="franchise:kirby-super-star"
+                    >Kirby Super Star</option
+                  >
+                  <option value="franchise:final-fantasy-6"
+                    >Final Fantasy VI</option
+                  >
+                  <option value="franchise:chrono-trigger"
+                    >Chrono Trigger</option
+                  >
+                  <option value="franchise:super-metroid">Super Metroid</option>
+                  <option value="franchise:castlevania-4"
+                    >Super Castlevania IV</option
+                  >
+                  <option value="franchise:secret-of-mana"
+                    >Secret of Mana</option
+                  >
+                  <option value="franchise:earthbound">EarthBound</option>
+                  <option value="franchise:golden-axe">Golden Axe</option>
+                </optgroup>
+                <optgroup label="Clases D&D">
+                  <option value="dnd:fighter">Guerrero</option>
+                  <option value="dnd:wizard">Mago</option>
+                  <option value="dnd:rogue">Rogue</option>
+                  <option value="dnd:cleric">Clérigo</option>
+                  <option value="dnd:paladin">Paladín</option>
+                  <option value="dnd:ranger">Explorador</option>
+                  <option value="dnd:bard">Bardo</option>
+                  <option value="dnd:barbarian">Bárbaro</option>
+                  <option value="dnd:druid">Druida</option>
+                  <option value="dnd:monk">Monje</option>
+                  <option value="dnd:sorcerer">Hechicero</option>
+                  <option value="dnd:warlock">Brujo</option>
+                </optgroup>
+                <option value="custom">Personalizado...</option>
+              </select>
+              <textarea
+                class="textarea style-custom"
+                id="booth-style-custom"
+                rows="2"
+                maxlength="200"
+                placeholder="Describe el estilo que quieras..."
+                hidden></textarea>
+            </div>
+            <div class="style-actions">
+              <button type="button" class="btn" id="btn-retake">↻ OTRA</button>
+              <button type="button" class="btn btn-gold" id="btn-generate"
+                >▶ GENERAR</button
+              >
+            </div>
+          </div>
+          <div class="group group-post" hidden>
+            <button type="button" class="btn" id="btn-redo">↻ OTRA</button>
+            <button type="button" class="btn btn-gold" id="btn-download"
+              >📥 DESCARGAR</button
+            >
+            <button type="button" class="btn booth-remove" id="btn-discard"
+              >✕ QUITAR SELFIE</button
+            >
+          </div>
+        </div>
+
+        <p class="hint" id="booth-hint">
+          Tu foto se envía a OpenAI para estilizarla. Nunca se guarda en crudo.
+        </p>
+        <p class="hint plus-one-hint" id="booth-plus-one-hint" hidden>
+          👥 Como vienen dos, asegúrate de que ambos salgan en la foto.
+        </p>
+        <p class="hint confirmed-hint" id="booth-confirmed-hint" hidden>
+          ✓ Esta selfie se enviará con tu RSVP.
+        </p>
+      </div>
+
+      <input type="hidden" name="selfie" id="selfie-data" />
+    </fieldset>
 
     <div class="submit-row">
       <button type="submit" class="btn btn-gold" id="rsvp-submit">
@@ -74,6 +233,29 @@
 
     <p id="rsvp-msg" class="feedback" hidden></p>
   </form>
+
+  <div id="rsvp-summary" class="panel summary" hidden>
+    <p class="summary-badge" id="sum-badge">✓ CONFIRMADO</p>
+
+    <div class="summary-avatar">
+      <div class="avatar-pending" id="sum-avatar-pending" hidden>
+        <div class="spin" aria-hidden="true"></div>
+        <p class="pending-text">
+          Generando tu mascota pixel-art...<br />
+          <strong>¡No cierres la página!</strong>
+        </p>
+      </div>
+      <img id="sum-avatar-img" alt="Tu avatar" hidden />
+    </div>
+
+    <h3 class="summary-name" id="sum-name"></h3>
+    <p class="summary-status" id="sum-status"></p>
+    <p class="summary-message" id="sum-message" hidden></p>
+
+    <button type="button" class="btn btn-gold" id="sum-download" hidden
+      >📥 DESCARGAR AVATAR</button
+    >
+  </div>
 </section>
 
 <style>
@@ -112,6 +294,276 @@
   .feedback.err {
     color: var(--red);
   }
+
+  /* Photo booth */
+  .booth [hidden],
+  .booth-field [hidden] {
+    display: none !important;
+  }
+  .booth-cta {
+    display: block;
+    width: 100%;
+    background: var(--bg-deep);
+    color: var(--cream);
+    border-color: var(--cream);
+  }
+  .booth {
+    margin-top: 14px;
+  }
+  .booth-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .booth-tabs .tab {
+    flex: 1;
+    padding: 8px 10px;
+    background: var(--bg-deep);
+    color: var(--cream);
+    border: 3px solid var(--cream);
+    font-family: "Press Start 2P", monospace;
+    font-size: 9px;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+  }
+  .booth-tabs .tab.active {
+    background: var(--gold);
+    color: var(--ink);
+    border-color: var(--ink);
+    box-shadow: inset 2px 2px 0 0 var(--ink);
+  }
+  .stage {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    max-width: 320px;
+    margin: 0 auto;
+    background: var(--bg-deep);
+    border: 3px solid var(--cream);
+  }
+  .stage video,
+  .stage canvas,
+  .stage img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+  }
+  .stage video[hidden],
+  .stage img[hidden] {
+    display: none;
+  }
+  .stage .empty {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--cream);
+    font-family: "Press Start 2P", monospace;
+    font-size: 10px;
+    text-align: center;
+    padding: 24px;
+    opacity: 0.6;
+  }
+  .stage .busy {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    background: rgba(26, 11, 46, 0.85);
+    color: var(--gold);
+    font-family: "Press Start 2P", monospace;
+    font-size: 10px;
+    text-align: center;
+    padding: 16px;
+    z-index: 2;
+  }
+  .stage .busy .spin {
+    width: 24px;
+    height: 24px;
+    border: 3px solid var(--cream);
+    border-top-color: var(--gold);
+    border-radius: 50%;
+    animation: booth-spin 1s linear infinite;
+  }
+  @keyframes booth-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  .frame {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border: 6px solid transparent;
+    box-shadow:
+      inset 0 0 0 2px var(--gold),
+      inset 0 0 0 4px var(--ink),
+      inset 0 0 0 7px var(--gold);
+  }
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 14px;
+  }
+  .group {
+    display: contents;
+  }
+  .group[hidden] {
+    display: none;
+  }
+  .group-style {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+  .style-picker {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .style-picker .lbl {
+    margin: 0;
+  }
+  .style-select {
+    font-family: "VT323", monospace;
+    font-size: 18px;
+    padding: 8px 10px;
+  }
+  .style-custom {
+    margin-top: 6px;
+  }
+  .style-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .hint {
+    margin: 10px 0 0;
+    text-align: center;
+    font-family: "VT323", monospace;
+    font-size: 16px;
+    opacity: 0.7;
+  }
+
+  .booth-remove {
+    background: transparent;
+    color: var(--red);
+  }
+  .confirmed-hint {
+    color: var(--gold-light);
+    opacity: 1;
+  }
+  .plus-one-hint {
+    color: var(--cyan);
+    opacity: 1;
+  }
+
+  /* Summary card (shown after submit) */
+  #rsvp-summary[hidden],
+  #rsvp-form[hidden],
+  .summary [hidden],
+  .summary-avatar [hidden] {
+    display: none !important;
+  }
+  .summary {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+  .summary-badge {
+    margin: 0;
+    font-family: "Press Start 2P", monospace;
+    font-size: 14px;
+    color: var(--gold-light);
+    letter-spacing: 0.12em;
+  }
+  .summary-avatar {
+    position: relative;
+    width: 160px;
+    height: 160px;
+    background: var(--bg-deep);
+    border: 4px solid var(--gold);
+    box-shadow:
+      0 0 0 3px var(--ink),
+      5px 5px 0 0 var(--gold-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .summary-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    image-rendering: pixelated;
+    display: block;
+  }
+  .avatar-pending {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 12px;
+    color: var(--cream);
+    text-align: center;
+  }
+  .avatar-pending .spin {
+    width: 28px;
+    height: 28px;
+    border: 3px solid var(--cream);
+    border-top-color: var(--gold);
+    border-radius: 50%;
+    animation: booth-spin 1s linear infinite;
+  }
+  .avatar-pending .pending-text {
+    margin: 0;
+    font-family: "VT323", monospace;
+    font-size: 14px;
+    line-height: 1.25;
+    color: var(--cream);
+  }
+  .avatar-pending .pending-text strong {
+    font-family: "Press Start 2P", monospace;
+    font-size: 9px;
+    color: var(--gold-light);
+    letter-spacing: 0.08em;
+  }
+  .summary-name {
+    margin: 0;
+    font-family: "Press Start 2P", monospace;
+    font-size: 16px;
+    color: var(--gold);
+    text-shadow: 2px 2px 0 var(--ink);
+  }
+  .summary-status {
+    margin: 0;
+    font-family: "VT323", monospace;
+    font-size: 22px;
+    color: var(--cream);
+  }
+  .summary-message {
+    margin: 0;
+    padding: 10px 14px;
+    background: var(--bg-deep);
+    border: 2px solid var(--cream);
+    font-family: "VT323", monospace;
+    font-size: 20px;
+    color: var(--cream);
+    max-width: 440px;
+  }
 </style>
 
 <script>
@@ -124,6 +576,65 @@
   const lBusy = btn?.querySelector<HTMLElement>(".label-busy");
   const lDone = btn?.querySelector<HTMLElement>(".label-done");
 
+  // ---------- Dynamic name label + +1 visibility ----------
+  const nameLabelEl = document.getElementById("name-label");
+  const nameInputEl = document.getElementById(
+    "name-input"
+  ) as HTMLInputElement | null;
+  const plusOneField = document.getElementById("plusone-field");
+  const boothPlusOneHint = document.getElementById("booth-plus-one-hint");
+
+  function updateFormLayout() {
+    if (!form || !nameLabelEl || !nameInputEl) return;
+    const fd = new FormData(form);
+    const attending = String(fd.get("attending") || "yes");
+
+    // If not coming, there is no +1 to bring — hide the fieldset and force false.
+    if (plusOneField) {
+      if (attending === "no") {
+        plusOneField.setAttribute("hidden", "");
+        const solo = form.querySelector<HTMLInputElement>(
+          'input[name="plusOne"][value="false"]'
+        );
+        if (solo) solo.checked = true;
+      } else {
+        plusOneField.removeAttribute("hidden");
+      }
+    }
+
+    const plural =
+      attending !== "no" &&
+      String(new FormData(form).get("plusOne")) === "true";
+    if (plural) {
+      nameLabelEl.textContent =
+        attending === "yes" ? "SUS NOMBRES" : "TU NOMBRE Y EL DE +1";
+      nameInputEl.placeholder = "Ej: Salo y Nata";
+    } else {
+      nameLabelEl.textContent = "TU NOMBRE";
+      nameInputEl.placeholder = "Tu nombre";
+    }
+
+    if (boothPlusOneHint) {
+      if (plural) boothPlusOneHint.removeAttribute("hidden");
+      else boothPlusOneHint.setAttribute("hidden", "");
+    }
+  }
+
+  function isMultiple(): boolean {
+    if (!form) return false;
+    const fd = new FormData(form);
+    const attending = String(fd.get("attending") || "yes");
+    if (attending === "no") return false;
+    return String(fd.get("plusOne")) === "true";
+  }
+
+  form
+    ?.querySelectorAll<HTMLInputElement>(
+      'input[name="attending"], input[name="plusOne"]'
+    )
+    .forEach(el => el.addEventListener("change", updateFormLayout));
+  updateFormLayout();
+
   function setMsg(text: string, kind: "ok" | "err") {
     if (!msg) return;
     msg.hidden = false;
@@ -132,15 +643,435 @@
     msg.classList.add(kind);
   }
 
+  // ---------- Photo booth ----------
+  const boothCta = document.getElementById(
+    "booth-open"
+  ) as HTMLButtonElement | null;
+  const booth = document.getElementById("booth");
+  const boothHint = document.getElementById("booth-hint");
+  const boothConfirmedHint = document.getElementById("booth-confirmed-hint");
+  const btnDiscard = document.getElementById(
+    "btn-discard"
+  ) as HTMLButtonElement | null;
+  const selfieInput = document.getElementById(
+    "selfie-data"
+  ) as HTMLInputElement | null;
+
+  const tabs = document.querySelectorAll<HTMLButtonElement>(".booth .tab");
+  const groupCam = document.querySelector<HTMLElement>(".booth .group-camera");
+  const groupUp = document.querySelector<HTMLElement>(".booth .group-upload");
+  const groupStyle = document.querySelector<HTMLElement>(".booth .group-style");
+  const groupPost = document.querySelector<HTMLElement>(".booth .group-post");
+  const styleSelect = document.getElementById(
+    "booth-style"
+  ) as HTMLSelectElement | null;
+  const styleCustom = document.getElementById(
+    "booth-style-custom"
+  ) as HTMLTextAreaElement | null;
+  const btnRetake = document.getElementById(
+    "btn-retake"
+  ) as HTMLButtonElement | null;
+  const btnGenerate = document.getElementById(
+    "btn-generate"
+  ) as HTMLButtonElement | null;
+  const video = document.getElementById(
+    "booth-video"
+  ) as HTMLVideoElement | null;
+  const canvas = document.getElementById(
+    "booth-canvas"
+  ) as HTMLCanvasElement | null;
+  const previewImg = document.getElementById(
+    "booth-preview"
+  ) as HTMLImageElement | null;
+  const emptyEl = document.getElementById("booth-empty");
+  const busyEl = document.getElementById("booth-busy");
+  const btnStart = document.getElementById(
+    "btn-start-cam"
+  ) as HTMLButtonElement | null;
+  const btnSnap = document.getElementById(
+    "btn-snap"
+  ) as HTMLButtonElement | null;
+  const fileInput = document.getElementById(
+    "booth-file"
+  ) as HTMLInputElement | null;
+  const btnRedo = document.getElementById(
+    "btn-redo"
+  ) as HTMLButtonElement | null;
+
+  let stream: MediaStream | null = null;
+  let mode: "camera" | "upload" = "camera";
+  let pendingPng: Blob | null = null; // the raw photo (before OpenAI)
+  let pixelatedDataUrl: string | null = null; // after OpenAI
+
+  function show(el: Element | null | undefined, v: boolean) {
+    if (!el) return;
+    if (v) (el as HTMLElement).removeAttribute("hidden");
+    else (el as HTMLElement).setAttribute("hidden", "");
+  }
+
+  function resetStage() {
+    pendingPng = null;
+    pixelatedDataUrl = null;
+    if (selfieInput) selfieInput.value = "";
+    if (previewImg) {
+      previewImg.hidden = true;
+      previewImg.src = "";
+    }
+    if (canvas) {
+      const ctx = canvas.getContext("2d");
+      ctx?.clearRect(0, 0, canvas.width, canvas.height);
+    }
+    show(groupStyle, false);
+    show(groupPost, false);
+    show(emptyEl, true);
+    show(boothHint, true);
+    show(boothConfirmedHint, false);
+  }
+
+  function setMode(next: "camera" | "upload") {
+    mode = next;
+    tabs.forEach(t => {
+      const active = t.dataset.tab === next;
+      t.classList.toggle("active", active);
+      t.setAttribute("aria-selected", active ? "true" : "false");
+    });
+    const idle = !pendingPng && !pixelatedDataUrl;
+    show(groupCam, next === "camera" && idle);
+    show(groupUp, next === "upload" && idle);
+    if (next === "upload") stopCam();
+  }
+
+  function currentStyle(): string {
+    const sel = styleSelect?.value ?? "";
+    if (sel === "custom") {
+      const text = (styleCustom?.value ?? "").trim();
+      return text ? `custom:${text}` : "";
+    }
+    return sel;
+  }
+
+  styleSelect?.addEventListener("change", () => {
+    const isCustom = styleSelect.value === "custom";
+    if (styleCustom) {
+      if (isCustom) styleCustom.removeAttribute("hidden");
+      else styleCustom.setAttribute("hidden", "");
+    }
+  });
+  tabs.forEach(t =>
+    t.addEventListener("click", () => setMode(t.dataset.tab as any))
+  );
+
+  boothCta?.addEventListener("click", () => {
+    show(boothCta, false);
+    show(booth, true);
+    setMode("camera");
+  });
+
+  async function startCam() {
+    if (!video) return;
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: "user" },
+        audio: false,
+      });
+      video.srcObject = stream;
+      video.hidden = false;
+      if (emptyEl) (emptyEl as HTMLElement).style.display = "none";
+      await video.play();
+      if (btnSnap) btnSnap.disabled = false;
+      show(btnStart, false);
+      show(btnSnap, true);
+    } catch {
+      alert("No pudimos abrir la cámara. Prueba subiendo una foto.");
+    }
+  }
+  function stopCam() {
+    if (stream) {
+      stream.getTracks().forEach(t => t.stop());
+      stream = null;
+    }
+    if (video) {
+      video.srcObject = null;
+      video.hidden = true;
+    }
+    if (btnSnap) btnSnap.disabled = true;
+    show(btnStart, true);
+    show(btnSnap, false);
+  }
+
+  btnStart?.addEventListener("click", startCam);
+
+  async function captureFromVideo(): Promise<Blob | null> {
+    if (!video || !canvas) return null;
+    const vw = video.videoWidth || 640;
+    const vh = video.videoHeight || 480;
+    const side = Math.min(vw, vh);
+    const sx = (vw - side) / 2;
+    const sy = (vh - side) / 2;
+    canvas.width = side;
+    canvas.height = side;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return null;
+    ctx.drawImage(video, sx, sy, side, side, 0, 0, side, side);
+    return await new Promise(resolve =>
+      canvas.toBlob(resolve, "image/jpeg", 0.9)
+    );
+  }
+
+  async function drawBlobToCanvas(blob: Blob): Promise<void> {
+    if (!canvas) return;
+    const img = new Image();
+    const url = URL.createObjectURL(blob);
+    await new Promise<void>((resolve, reject) => {
+      img.onload = () => resolve();
+      img.onerror = reject;
+      img.src = url;
+    });
+    const side = Math.min(img.naturalWidth, img.naturalHeight);
+    const sx = (img.naturalWidth - side) / 2;
+    const sy = (img.naturalHeight - side) / 2;
+    canvas.width = side;
+    canvas.height = side;
+    const ctx = canvas.getContext("2d");
+    ctx?.drawImage(img, sx, sy, side, side, 0, 0, side, side);
+    URL.revokeObjectURL(url);
+  }
+
+  function enterStyleStage() {
+    if (emptyEl) (emptyEl as HTMLElement).style.display = "none";
+    if (previewImg) {
+      previewImg.hidden = true;
+      previewImg.src = "";
+    }
+    show(groupCam, false);
+    show(groupUp, false);
+    show(groupPost, false);
+    show(groupStyle, true);
+  }
+
+  async function callPixelize(blob: Blob) {
+    show(busyEl, true);
+    try {
+      const fd = new FormData();
+      fd.append("image", blob, "photo.jpg");
+      fd.append("style", currentStyle());
+      fd.append("multiple", isMultiple() ? "true" : "false");
+      const res = await fetch("/api/cumple-35/pixelize", {
+        method: "POST",
+        body: fd,
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data.ok) {
+        throw new Error(data?.error || `Error ${res.status}`);
+      }
+      pixelatedDataUrl = data.dataUrl as string;
+      if (selfieInput) selfieInput.value = pixelatedDataUrl;
+      if (previewImg) {
+        previewImg.src = pixelatedDataUrl;
+        previewImg.hidden = false;
+      }
+      if (video) video.hidden = true;
+      if (emptyEl) (emptyEl as HTMLElement).style.display = "none";
+      show(groupCam, false);
+      show(groupUp, false);
+      show(groupStyle, false);
+      show(groupPost, true);
+      show(boothHint, false);
+      show(boothConfirmedHint, true);
+      (window as any).__cumpleSfx?.coin?.();
+    } catch (err: any) {
+      alert(err?.message || "No pude pixelar la foto.");
+    } finally {
+      show(busyEl, false);
+    }
+  }
+
+  btnSnap?.addEventListener("click", async () => {
+    const blob = await captureFromVideo();
+    if (!blob) return;
+    pendingPng = blob;
+    stopCam();
+    enterStyleStage();
+  });
+
+  fileInput?.addEventListener("change", async () => {
+    const file = fileInput.files?.[0];
+    if (!file) return;
+    pendingPng = file;
+    try {
+      await drawBlobToCanvas(file);
+    } catch {
+      alert("No pude leer esa imagen.");
+      pendingPng = null;
+      return;
+    }
+    enterStyleStage();
+  });
+
+  btnRetake?.addEventListener("click", () => {
+    resetStage();
+    setMode(mode);
+  });
+
+  btnGenerate?.addEventListener("click", async () => {
+    if (!pendingPng) return;
+    await callPixelize(pendingPng);
+  });
+
+  btnRedo?.addEventListener("click", () => {
+    // After generation: allow trying again with same photo + different style.
+    pixelatedDataUrl = null;
+    if (selfieInput) selfieInput.value = "";
+    if (previewImg) {
+      previewImg.hidden = true;
+      previewImg.src = "";
+    }
+    show(groupPost, false);
+    show(boothHint, true);
+    show(boothConfirmedHint, false);
+    if (pendingPng) enterStyleStage();
+    else {
+      resetStage();
+      setMode(mode);
+    }
+  });
+
+  btnDiscard?.addEventListener("click", () => {
+    resetStage();
+    stopCam();
+    show(booth, false);
+    show(boothCta, true);
+  });
+
+  const btnDownload = document.getElementById(
+    "btn-download"
+  ) as HTMLButtonElement | null;
+  btnDownload?.addEventListener("click", () => {
+    if (!pixelatedDataUrl) return;
+    const a = document.createElement("a");
+    a.href = pixelatedDataUrl;
+    a.download = "cumple-35-selfie.png";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  });
+
+  // ---------- Summary / post-submit swap ----------
+  const summary = document.getElementById("rsvp-summary");
+  const sumBadge = document.getElementById("sum-badge");
+  const sumName = document.getElementById("sum-name");
+  const sumStatus = document.getElementById("sum-status");
+  const sumMessage = document.getElementById("sum-message");
+  const sumAvatar = document.querySelector(
+    ".summary-avatar"
+  ) as HTMLElement | null;
+  const sumPending = document.getElementById("sum-avatar-pending");
+  const sumImg = document.getElementById(
+    "sum-avatar-img"
+  ) as HTMLImageElement | null;
+  const sumDownload = document.getElementById(
+    "sum-download"
+  ) as HTMLButtonElement | null;
+
+  function statusText(
+    attending: string,
+    _plusOne: boolean,
+    plural: boolean
+  ): string {
+    if (attending === "yes") {
+      return plural ? "Sí vamos 🎉" : "Sí voy 🎉";
+    }
+    if (attending === "maybe") {
+      return plural ? "Tal vez vamos 🤔" : "Tal vez voy 🤔";
+    }
+    return plural ? "No vamos 😢" : "No voy 😢";
+  }
+
+  function showSummary(opts: {
+    name: string;
+    attending: string;
+    plusOne: boolean;
+    message: string;
+    selfieDataUrl: string | null;
+    pendingMascot: boolean;
+  }) {
+    if (!summary || !sumName || !sumStatus) return;
+
+    sumName.textContent = opts.name;
+    const plural = opts.plusOne && opts.attending !== "no";
+    sumStatus.textContent = statusText(opts.attending, opts.plusOne, plural);
+
+    if (sumBadge) {
+      if (opts.attending === "yes")
+        sumBadge.textContent = "🎉 ¡ALLÁ NOS VEMOS!";
+      else if (opts.attending === "maybe")
+        sumBadge.textContent = "🤞 ¡OJALÁ PODAMOS VERNOS!";
+      else sumBadge.textContent = "👋 ¡NOS VEMOS EN OTRA OCASIÓN!";
+    }
+
+    if (sumMessage) {
+      if (opts.message.trim()) {
+        sumMessage.textContent = `"${opts.message.trim()}"`;
+        sumMessage.removeAttribute("hidden");
+      } else {
+        sumMessage.setAttribute("hidden", "");
+      }
+    }
+
+    if (sumAvatar && sumImg && sumPending && sumDownload) {
+      if (opts.selfieDataUrl) {
+        sumImg.src = opts.selfieDataUrl;
+        sumImg.removeAttribute("hidden");
+        sumPending.setAttribute("hidden", "");
+        sumDownload.removeAttribute("hidden");
+        sumAvatar.removeAttribute("hidden");
+      } else if (opts.pendingMascot) {
+        sumImg.setAttribute("hidden", "");
+        sumPending.removeAttribute("hidden");
+        sumDownload.setAttribute("hidden", "");
+        sumAvatar.removeAttribute("hidden");
+      } else {
+        sumAvatar.setAttribute("hidden", "");
+        sumImg.setAttribute("hidden", "");
+        sumPending.setAttribute("hidden", "");
+        sumDownload.setAttribute("hidden", "");
+      }
+    }
+
+    form?.setAttribute("hidden", "");
+    summary.removeAttribute("hidden");
+  }
+
+  function fillMascot(dataUrl: string) {
+    if (!sumImg || !sumPending || !sumDownload) return;
+    sumImg.src = dataUrl;
+    sumImg.removeAttribute("hidden");
+    sumPending.setAttribute("hidden", "");
+    sumDownload.removeAttribute("hidden");
+  }
+
+  sumDownload?.addEventListener("click", () => {
+    if (!sumImg?.src) return;
+    const a = document.createElement("a");
+    a.href = sumImg.src;
+    a.download = "cumple-35-avatar.png";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  });
+
+  // ---------- Submit ----------
   form?.addEventListener("submit", async e => {
     e.preventDefault();
     if (!form || !btn || !lDef || !lBusy || !lDone) return;
     const fd = new FormData(form);
+    const selfie = String(fd.get("selfie") || "");
     const payload = {
       name: String(fd.get("name") || "").trim(),
       attending: String(fd.get("attending") || "yes"),
       plusOne: String(fd.get("plusOne")) === "true",
       message: String(fd.get("message") || ""),
+      ...(selfie ? { selfie } : {}),
     };
     if (payload.name.length < 1) {
       setMsg("Pon tu nombre, parce.", "err");
@@ -152,33 +1083,86 @@
     lBusy.hidden = false;
     lDone.hidden = true;
 
+    // Two-phase save: RSVP row is always written synchronously (fast — no
+    // OpenAI on the server). If the user didn't attach a selfie and is
+    // attending, we then kick off a best-effort mascot request; the RSVP
+    // is safe regardless of OpenAI latency, Vercel timeouts, or tab close.
+    let rsvpData: any = null;
     try {
       const res = await fetch("/api/cumple-35/rsvp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok || !data.ok) {
-        throw new Error(data.error || "Error del servidor");
+      rsvpData = await res.json().catch(() => ({}));
+      if (!res.ok || !rsvpData?.ok) {
+        throw new Error(rsvpData?.error || "Error del servidor");
       }
-
-      lBusy.hidden = true;
-      lDone.hidden = false;
-      setMsg("¡Listo! Nos vemos el 25. 🍺", "ok");
-      (window as any).__cumpleSfx?.coin?.();
-
-      // Notify corkboard to refresh / seed with fresh data
-      window.dispatchEvent(
-        new CustomEvent("rsvp:confirmed", {
-          detail: { count: data.count, names: data.names },
-        })
-      );
     } catch (err: any) {
       lBusy.hidden = true;
       lDef.hidden = false;
       btn.disabled = false;
       setMsg(err?.message || "Algo falló. Intenta de nuevo.", "err");
+      return;
+    }
+
+    (window as any).__cumpleSfx?.coin?.();
+    window.dispatchEvent(
+      new CustomEvent("rsvp:confirmed", {
+        detail: {
+          count: rsvpData.count,
+          names: rsvpData.names,
+          guests: rsvpData.guests,
+        },
+      })
+    );
+
+    // Swap form for read-only summary.
+    const pendingMascot = !!rsvpData.needsMascot;
+    showSummary({
+      name: payload.name,
+      attending: payload.attending,
+      plusOne: payload.plusOne,
+      message: payload.message,
+      selfieDataUrl: selfie || null,
+      pendingMascot,
+    });
+
+    // Kick off mascot generation in the background.
+    if (pendingMascot && rsvpData.id && rsvpData.mascotToken) {
+      fetch("/api/cumple-35/mascot", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: rsvpData.id,
+          mascotToken: rsvpData.mascotToken,
+          plusOne: payload.plusOne,
+        }),
+        keepalive: true,
+      })
+        .then(r => r.json().catch(() => ({})))
+        .then(m => {
+          if (!m?.ok || !m?.dataUrl) return;
+          fillMascot(m.dataUrl);
+          (window as any).__cumpleSfx?.coin?.();
+          // Also refresh corkboard so this row's selfie appears.
+          return fetch("/api/cumple-35/confirmed", { cache: "no-store" })
+            .then(r => r.json())
+            .then(c => {
+              window.dispatchEvent(
+                new CustomEvent("rsvp:confirmed", {
+                  detail: {
+                    count: c.count,
+                    names: c.names,
+                    guests: c.guests,
+                  },
+                })
+              );
+            });
+        })
+        .catch(() => {
+          // Non-fatal: RSVP is saved. No retry.
+        });
     }
   });
 </script>

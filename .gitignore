@@ -38,3 +38,4 @@ scripts/linkedin-test-*.json
 !.yarn/sdks
 !.yarn/versions
 .pnp.*
+.vercel

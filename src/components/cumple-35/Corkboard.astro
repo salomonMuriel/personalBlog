@@ -20,7 +20,7 @@ const MAPS_URL = "https://maps.app.goo.gl/krJCM93AZrA8PmbT9";
 
       <article class="pin pin-map">
         <span class="tack" aria-hidden="true"></span>
-        <h3 class="pin-title">MAPA</h3>
+        <h3 class="pin-title">MAPA (click para ver en Maps)</h3>
         <a
           href={MAPS_URL}
           target="_blank"
@@ -210,22 +210,49 @@ const MAPS_URL = "https://maps.app.goo.gl/krJCM93AZrA8PmbT9";
     list-style: none;
     padding: 0;
     margin: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px 10px;
-    font-family: "VT323", monospace;
-    font-size: 18px;
-    color: var(--ink);
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
   }
-  .names li {
-    padding: 2px 10px;
+  @media (min-width: 480px) {
+    .names {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  .names :global(li) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 8px;
     background: var(--gold-light);
     border: 2px solid var(--ink);
+    text-align: center;
   }
-  .names li.empty {
+  .names :global(li span) {
+    font-family: "VT323", monospace;
+    font-size: 20px;
+    color: var(--ink);
+    line-height: 1.1;
+    word-break: break-word;
+  }
+  .names :global(li img) {
+    width: 56px;
+    height: 56px;
+    object-fit: cover;
+    image-rendering: pixelated;
+    border: 2px solid var(--ink);
+    background: var(--bg-deep);
+  }
+  .names :global(li.empty) {
+    grid-column: 1 / -1;
+    display: block;
     background: transparent;
     border: none;
     opacity: 0.6;
+    font-family: "VT323", monospace;
+    font-size: 18px;
+    color: var(--ink);
   }
 </style>
 
@@ -236,22 +263,34 @@ const MAPS_URL = "https://maps.app.goo.gl/krJCM93AZrA8PmbT9";
   const namesEl = document.getElementById("cork-names");
   const calBtn = document.getElementById("add-cal-btn");
 
-  function render(count: number, names: string[]) {
+  type Guest = { id: number; name: string; hasSelfie: boolean };
+
+  function render(count: number, guests: Guest[]) {
     if (countEl) countEl.textContent = String(count);
-    if (namesEl) {
-      namesEl.innerHTML = "";
-      if (!names.length) {
-        const li = document.createElement("li");
-        li.className = "empty";
-        li.textContent = "Todavía nadie — ¡sé el primero!";
-        namesEl.appendChild(li);
-        return;
+    if (!namesEl) return;
+    namesEl.innerHTML = "";
+    if (!guests.length) {
+      const li = document.createElement("li");
+      li.className = "empty";
+      li.textContent = "Todavía nadie — ¡sé el primero!";
+      namesEl.appendChild(li);
+      return;
+    }
+    for (const g of guests) {
+      const li = document.createElement("li");
+      if (g.hasSelfie) {
+        li.classList.add("has-selfie");
+        const img = document.createElement("img");
+        img.src = `/api/cumple-35/selfie/${g.id}.png`;
+        img.alt = "";
+        img.loading = "lazy";
+        img.decoding = "async";
+        li.appendChild(img);
       }
-      for (const n of names) {
-        const li = document.createElement("li");
-        li.textContent = n;
-        namesEl.appendChild(li);
-      }
+      const span = document.createElement("span");
+      span.textContent = g.name;
+      li.appendChild(span);
+      namesEl.appendChild(li);
     }
   }
 
@@ -262,7 +301,7 @@ const MAPS_URL = "https://maps.app.goo.gl/krJCM93AZrA8PmbT9";
       });
       if (!res.ok) throw new Error("status " + res.status);
       const data = await res.json();
-      render(data.count ?? 0, Array.isArray(data.names) ? data.names : []);
+      render(data.count ?? 0, Array.isArray(data.guests) ? data.guests : []);
     } catch (err) {
       if (countEl) countEl.textContent = "—";
       if (namesEl) {
@@ -274,9 +313,9 @@ const MAPS_URL = "https://maps.app.goo.gl/krJCM93AZrA8PmbT9";
   load();
 
   window.addEventListener("rsvp:confirmed", ((e: CustomEvent) => {
-    const { count, names } = e.detail ?? {};
-    if (typeof count === "number" && Array.isArray(names)) {
-      render(count, names);
+    const { count, guests } = e.detail ?? {};
+    if (typeof count === "number" && Array.isArray(guests)) {
+      render(count, guests);
     } else {
       load();
     }

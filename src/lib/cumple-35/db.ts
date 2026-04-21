@@ -17,15 +17,24 @@ function firstName(full: string): string {
   return full.trim().split(/\s+/)[0];
 }
 
+export interface ConfirmedGuest {
+  id: number;
+  name: string;
+  hasSelfie: boolean;
+}
+
 export async function getConfirmed(): Promise<{
   count: number;
   names: string[];
+  guests: ConfirmedGuest[];
 }> {
   const db = getDb();
   const rows = await db
     .select({
+      id: rsvps.id,
       name: rsvps.name,
       plusOne: rsvps.plusOne,
+      selfie: rsvps.selfie,
       createdAt: rsvps.createdAt,
     })
     .from(rsvps)
@@ -34,12 +43,48 @@ export async function getConfirmed(): Promise<{
 
   const count = rows.reduce((acc, r) => acc + 1 + (r.plusOne ? 1 : 0), 0);
   const names = rows.map(r => firstName(r.name));
-  return { count, names };
+  const guests: ConfirmedGuest[] = rows.map(r => ({
+    id: r.id,
+    name: firstName(r.name),
+    hasSelfie: !!r.selfie,
+  }));
+  return { count, names, guests };
 }
 
-export async function insertRsvp(input: RsvpInsert): Promise<void> {
+export async function insertRsvp(input: RsvpInsert): Promise<number> {
   const db = getDb();
-  await db.insert(rsvps).values(input);
+  const [row] = await db
+    .insert(rsvps)
+    .values(input)
+    .returning({ id: rsvps.id });
+  return row.id;
+}
+
+export async function getSelfie(id: number): Promise<string | null> {
+  const db = getDb();
+  const rows = await db
+    .select({ selfie: rsvps.selfie })
+    .from(rsvps)
+    .where(eq(rsvps.id, id))
+    .limit(1);
+  return rows[0]?.selfie ?? null;
+}
+
+export async function setSelfieIfMissing(
+  id: number,
+  dataUrl: string
+): Promise<boolean> {
+  const db = getDb();
+  // Only update if selfie is still NULL and the row is < 15 minutes old.
+  // Guards against token reuse and retries overwriting a user-submitted selfie.
+  const result = await db
+    .update(rsvps)
+    .set({ selfie: dataUrl })
+    .where(
+      sql`${rsvps.id} = ${id} AND ${rsvps.selfie} IS NULL AND ${rsvps.createdAt} > NOW() - INTERVAL '15 minutes'`
+    )
+    .returning({ id: rsvps.id });
+  return result.length > 0;
 }
 
 export async function existsRecentFromIpHash(ipHash: string): Promise<boolean> {

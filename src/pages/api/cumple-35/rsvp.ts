@@ -6,6 +6,7 @@ import {
   getConfirmed,
 } from "../../../lib/cumple-35/db";
 import { validateRsvp } from "../../../lib/cumple-35/validation";
+import { signMascotToken } from "../../../lib/cumple-35/mascot-token";
 
 export const prerender = false;
 
@@ -41,16 +42,27 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
       return json({ ok: true, deduped: true, ...confirmed });
     }
 
-    await insertRsvp({
+    // Synchronous: just persist the row. If the user didn't attach a selfie,
+    // the mascot gets generated out-of-band via /api/cumple-35/mascot so the
+    // RSVP write is never gated on OpenAI latency or Vercel function timeouts.
+    const id = await insertRsvp({
       name: v.value.name,
       attending: v.value.attending,
       plusOne: v.value.plusOne,
       message: v.value.message,
+      selfie: v.value.selfie,
       ipHash,
     });
 
     const confirmed = await getConfirmed();
-    return json({ ok: true, ...confirmed });
+    const needsMascot = !v.value.selfie && v.value.attending === "yes";
+    return json({
+      ok: true,
+      id,
+      needsMascot,
+      mascotToken: needsMascot ? signMascotToken(id) : undefined,
+      ...confirmed,
+    });
   } catch (err) {
     console.error("rsvp insert failed", err);
     return json({ ok: false, error: "Error del servidor" }, 500);

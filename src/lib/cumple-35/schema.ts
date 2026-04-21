@@ -19,6 +19,7 @@ export const rsvps = pgTable(
     attending: attendingEnum("attending").notNull(),
     plusOne: boolean("plus_one").notNull().default(false),
     message: text("message"),
+    selfie: text("selfie"),
     createdAt: timestamp("created_at", { withTimezone: true })
       .notNull()
       .defaultNow(),

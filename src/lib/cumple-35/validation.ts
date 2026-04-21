@@ -5,6 +5,7 @@ export interface RsvpInput {
   attending: Attending;
   plusOne: boolean;
   message?: string;
+  selfie?: string;
 }
 
 export interface ValidationResult {
@@ -39,5 +40,16 @@ export function validateRsvp(body: unknown): ValidationResult {
     message = b.message.trim();
   }
 
-  return { ok: true, value: { name, attending, plusOne, message } };
+  let selfie: string | undefined;
+  if (b.selfie !== undefined && b.selfie !== null && b.selfie !== "") {
+    if (typeof b.selfie !== "string" || !b.selfie.startsWith("data:image/")) {
+      return { ok: false, error: "Selfie inválida" };
+    }
+    if (b.selfie.length > 800_000) {
+      return { ok: false, error: "Selfie muy grande" };
+    }
+    selfie = b.selfie;
+  }
+
+  return { ok: true, value: { name, attending, plusOne, message, selfie } };
 }

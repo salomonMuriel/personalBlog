@@ -76,6 +76,11 @@
     text-align: center;
     position: relative;
     padding: 40px 0;
+    isolation: isolate;
+  }
+  .hero > *:not(.float-item) {
+    position: relative;
+    z-index: 1;
   }
   .hero-eyebrow {
     margin: 0 0 20px;
@@ -202,6 +207,7 @@
 
   .float-item {
     position: absolute;
+    z-index: 0;
     animation: float 3.4s ease-in-out infinite;
   }
   .fi-beer {
@@ -248,15 +254,15 @@
     animation-delay: 0.7s;
   }
   .fi-laptop {
-    top: 16%;
-    left: 22%;
+    top: 62%;
+    left: 4%;
     width: 56px;
     height: 42px;
     animation-delay: 1.3s;
   }
   .fi-printer {
-    top: 14%;
-    right: 22%;
+    top: 60%;
+    right: 4%;
     width: 42px;
     height: 42px;
     animation-delay: 1.9s;
@@ -308,7 +314,7 @@
     }
     .fi-laptop,
     .fi-printer {
-      top: 22%;
+      top: 66%;
     }
   }
 </style>
