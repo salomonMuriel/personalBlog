@@ -425,6 +425,8 @@
   stage?.addEventListener("click", tap);
   stage?.addEventListener("keydown", e => {
     if (e.key === "Enter" || e.key === " ") {
+      const flappy = document.getElementById("flappy-modal");
+      if (flappy && !flappy.hidden) return;
       e.preventDefault();
       tap();
     }
