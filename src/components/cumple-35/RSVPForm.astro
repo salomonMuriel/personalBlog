@@ -4,7 +4,7 @@
 // image-edits to render it as 16-bit pixel art, result is submitted with the RSVP.
 ---
 
-<section class="rsvp">
+<section id="rsvp" class="rsvp">
   <h2 class="section-heading">&gt; CONFIRMA</h2>
   <form id="rsvp-form" class="panel form" novalidate>
     <fieldset class="field">
@@ -252,9 +252,14 @@
     <p class="summary-status" id="sum-status"></p>
     <p class="summary-message" id="sum-message" hidden></p>
 
-    <button type="button" class="btn btn-gold" id="sum-download" hidden
-      >📥 DESCARGAR AVATAR</button
-    >
+    <div class="summary-actions">
+      <button type="button" class="btn btn-gold" id="sum-add-cal" hidden
+        >📅 AGREGAR AL CALENDARIO</button
+      >
+      <button type="button" class="btn btn-gold" id="sum-download" hidden
+        >📥 DESCARGAR AVATAR</button
+      >
+    </div>
   </div>
 </section>
 
@@ -563,6 +568,15 @@
     font-size: 20px;
     color: var(--cream);
     max-width: 440px;
+  }
+  .summary-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+  }
+  .summary-actions [hidden] {
+    display: none !important;
   }
 </style>
 
@@ -972,6 +986,9 @@
   const sumDownload = document.getElementById(
     "sum-download"
   ) as HTMLButtonElement | null;
+  const sumAddCal = document.getElementById(
+    "sum-add-cal"
+  ) as HTMLButtonElement | null;
 
   function statusText(
     attending: string,
@@ -1038,6 +1055,14 @@
       }
     }
 
+    if (sumAddCal) {
+      if (opts.attending === "yes" || opts.attending === "maybe") {
+        sumAddCal.removeAttribute("hidden");
+      } else {
+        sumAddCal.setAttribute("hidden", "");
+      }
+    }
+
     form?.setAttribute("hidden", "");
     summary.removeAttribute("hidden");
   }
@@ -1049,6 +1074,12 @@
     sumPending.setAttribute("hidden", "");
     sumDownload.removeAttribute("hidden");
   }
+
+  sumAddCal?.addEventListener("click", async () => {
+    const { downloadIcs } = await import("../../lib/cumple-35/ics");
+    downloadIcs();
+    (window as any).__cumpleSfx?.coin?.();
+  });
 
   sumDownload?.addEventListener("click", () => {
     if (!sumImg?.src) return;

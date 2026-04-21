@@ -16,11 +16,6 @@ const MAPS_URL = "https://maps.app.goo.gl/krJCM93AZrA8PmbT9";
           ><br />
           Bogotá, Colombia
         </p>
-      </article>
-
-      <article class="pin pin-map">
-        <span class="tack" aria-hidden="true"></span>
-        <h3 class="pin-title">MAPA (click para ver en Maps)</h3>
         <a
           href={MAPS_URL}
           target="_blank"
@@ -45,13 +40,6 @@ const MAPS_URL = "https://maps.app.goo.gl/krJCM93AZrA8PmbT9";
         <ul class="names" id="cork-names">
           <li class="empty">Cargando...</li>
         </ul>
-      </article>
-
-      <article class="pin pin-cal">
-        <span class="tack tack-red" aria-hidden="true"></span>
-        <button type="button" class="btn btn-gold" id="add-cal-btn">
-          📅 AGREGAR AL CALENDARIO
-        </button>
       </article>
     </div>
   </div>
@@ -110,10 +98,6 @@ const MAPS_URL = "https://maps.app.goo.gl/krJCM93AZrA8PmbT9";
     .pin-list {
       grid-column: 1 / -1;
     }
-    .pin-cal {
-      grid-column: 1 / -1;
-      justify-self: center;
-    }
   }
 
   .pin {
@@ -128,14 +112,6 @@ const MAPS_URL = "https://maps.app.goo.gl/krJCM93AZrA8PmbT9";
   .pin:nth-child(even) {
     transform: rotate(1.4deg);
   }
-  .pin-cal {
-    background: transparent;
-    border: none;
-    box-shadow: none;
-    padding: 0;
-    transform: none;
-  }
-
   .tack {
     position: absolute;
     top: -10px;
@@ -189,7 +165,7 @@ const MAPS_URL = "https://maps.app.goo.gl/krJCM93AZrA8PmbT9";
   .map-svg {
     width: 100%;
     height: auto;
-    max-width: 320px;
+    max-width: 180px;
     display: block;
     margin: 0 auto;
     border: 3px solid var(--ink);
@@ -257,11 +233,8 @@ const MAPS_URL = "https://maps.app.goo.gl/krJCM93AZrA8PmbT9";
 </style>
 
 <script>
-  import { downloadIcs } from "../../lib/cumple-35/ics";
-
   const countEl = document.getElementById("cork-count");
   const namesEl = document.getElementById("cork-names");
-  const calBtn = document.getElementById("add-cal-btn");
 
   type Guest = { id: number; name: string; hasSelfie: boolean };
 
@@ -320,9 +293,4 @@ const MAPS_URL = "https://maps.app.goo.gl/krJCM93AZrA8PmbT9";
       load();
     }
   }) as EventListener);
-
-  calBtn?.addEventListener("click", () => {
-    downloadIcs();
-    (window as any).__cumpleSfx?.coin?.();
-  });
 </script>

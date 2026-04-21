@@ -1,0 +1,105 @@
+---
+// Floating bottom-left CTA that jumps to the #rsvp section.
+// Auto-hides once the RSVP section is in view.
+---
+
+<a href="#rsvp" id="jump-rsvp" class="jump-rsvp" aria-label="Ir a RSVP">
+  <span class="txt">IR A RSVP</span>
+  <span class="arrow" aria-hidden="true">▼</span>
+</a>
+
+<style>
+  .jump-rsvp {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    z-index: 50;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    background: var(--gold);
+    color: var(--ink);
+    border: 3px solid var(--ink);
+    box-shadow:
+      0 0 0 3px var(--gold-dark),
+      5px 5px 0 0 var(--ink);
+    font-family: "Press Start 2P", monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+      transform 120ms ease,
+      opacity 200ms ease;
+    animation: jump-bob 1.8s ease-in-out infinite;
+  }
+  .jump-rsvp:hover {
+    transform: translateY(-2px);
+  }
+  .jump-rsvp:active {
+    transform: translate(2px, 2px);
+    box-shadow:
+      0 0 0 3px var(--gold-dark),
+      2px 2px 0 0 var(--ink);
+  }
+  .jump-rsvp .arrow {
+    font-size: 12px;
+    color: var(--red);
+    animation: jump-arrow 1s steps(2, end) infinite;
+  }
+  .jump-rsvp.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(20px);
+  }
+  @keyframes jump-bob {
+    0%,
+    100% {
+      translate: 0 0;
+    }
+    50% {
+      translate: 0 -4px;
+    }
+  }
+  @keyframes jump-arrow {
+    50% {
+      opacity: 0.3;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .jump-rsvp,
+    .jump-rsvp .arrow {
+      animation: none;
+    }
+  }
+  @media (max-width: 480px) {
+    .jump-rsvp {
+      font-size: 9px;
+      padding: 8px 11px;
+      right: 10px;
+      bottom: 10px;
+    }
+  }
+</style>
+
+<script>
+  const btn = document.getElementById("jump-rsvp");
+  const target = document.getElementById("rsvp");
+  if (btn && target && "IntersectionObserver" in window) {
+    const io = new IntersectionObserver(
+      entries => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) btn.classList.add("is-hidden");
+          else btn.classList.remove("is-hidden");
+        }
+      },
+      { rootMargin: "0px 0px -40% 0px", threshold: 0 }
+    );
+    io.observe(target);
+  }
+
+  btn?.addEventListener("click", () => {
+    (window as any).__cumpleSfx?.coin?.();
+  });
+</script>

@@ -140,7 +140,7 @@
      layer so iOS Safari stops re-laying-out the button while scrolling. */
   .music-btn {
     position: fixed;
-    bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+    top: calc(20px + env(safe-area-inset-top, 0px));
     right: calc(20px + env(safe-area-inset-right, 0px));
     /* Above the scanlines overlay (9999) so the 1px-line pattern can't
        strobe on top of the button during scroll repaints on Android. */
