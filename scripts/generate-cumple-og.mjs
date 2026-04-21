@@ -145,19 +145,20 @@ const svg = `<?xml version="1.0" encoding="UTF-8"?>
   ${subText("★ PLAYER 1 READY ★", W / 2, 92, 18, C.cream)}
 
   <!-- main title -->
-  ${titleText("RSVP", W / 2, 210, 96)}
-  ${titleText("CUMPLE SALO", W / 2, 330, 56)}
+  ${titleText("RSVP", W / 2, 190, 88)}
+  ${titleText("CUMPLE SALO", W / 2, 288, 48)}
 
   <!-- divider row of hearts/pixels -->
-  <g transform="translate(${W / 2 - 140}, 372)">
+  <g transform="translate(${W / 2 - 140}, 320)">
     ${[0, 46, 92, 138, 184, 230].map(
       x => `<rect x="${x}" y="0" width="24" height="6" fill="${C.pink}"/>`
     ).join("")}
   </g>
 
-  <!-- subtitle -->
-  ${subText("25 ABR · 7PM · LA RANA DORADA", W / 2, 430, 20, C.goldLight)}
-  ${subText("&gt; PRESS START &lt;", W / 2, 478, 16, C.cyan)}
+  <!-- event details (3 lines) -->
+  ${subText("SÁB 25 ABR", W / 2, 388, 40, C.goldLight)}
+  ${subText("7:00 PM", W / 2, 444, 40, C.cream)}
+  ${subText("LA RANA DORADA", W / 2, 500, 40, C.goldLight)}
 
   <!-- big gold frog, left -->
   ${frogAt(70, 340, 7)}
