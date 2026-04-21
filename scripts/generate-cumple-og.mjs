@@ -155,16 +155,15 @@ const svg = `<?xml version="1.0" encoding="UTF-8"?>
     ).join("")}
   </g>
 
-  <!-- event details (3 lines) -->
-  ${subText("SÁB 25 ABR", W / 2, 388, 40, C.goldLight)}
-  ${subText("7:00 PM", W / 2, 444, 40, C.cream)}
-  ${subText("LA RANA DORADA", W / 2, 500, 40, C.goldLight)}
+  <!-- event details (2 lines) -->
+  ${subText("SAB 25 ABR · 7:00 PM", W / 2, 410, 38, C.goldLight)}
+  ${subText("LA RANA DORADA", W / 2, 478, 40, C.cream)}
 
   <!-- big gold frog, left -->
-  ${frogAt(70, 340, 7)}
+  ${frogAt(50, 370, 6)}
 
-  <!-- big beer mug, right (24x32 -> scale 7 = 168x224) -->
-  ${beerAt(950, 340, 7)}
+  <!-- big beer mug, right (24x32 -> scale 6 = 144x192) -->
+  ${beerAt(1020, 370, 6)}
 
   <!-- small floating beers/frogs across top corners -->
   ${beerAt(70, 30, 2.4)}
