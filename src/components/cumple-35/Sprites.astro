@@ -570,19 +570,22 @@
         <rect x="4" y="3" width="1" height="8" fill="#2a2015"></rect>
         <rect x="19" y="3" width="1" height="8" fill="#2a2015"></rect>
         <rect x="5" y="11" width="14" height="1" fill="#2a2015"></rect>
-        <!-- hair (straight dirty-blonde) -->
+        <!-- hair base (straight dirty-blonde) -->
         <rect x="6" y="2" width="12" height="1" fill="#8a6540"></rect>
         <rect x="5" y="3" width="14" height="4" fill="#b8925a"></rect>
-        <!-- hair darks -->
+        <!-- hair darks — top edge and bottom of hair band -->
         <rect x="5" y="3" width="14" height="1" fill="#8a6540"></rect>
         <rect x="5" y="6" width="14" height="1" fill="#8a6540"></rect>
-        <!-- hair highlights (straight strands) -->
-        <rect x="6" y="4" width="2" height="2" fill="#d4b070"></rect>
-        <rect x="10" y="4" width="2" height="2" fill="#d4b070"></rect>
-        <rect x="14" y="4" width="2" height="2" fill="#d4b070"></rect>
+        <!-- hair highlights (scattered 1x1 asymmetric, not evenly spaced tiles) -->
+        <rect x="6" y="4" width="1" height="1" fill="#d4b070"></rect>
+        <rect x="7" y="5" width="1" height="1" fill="#d4b070"></rect>
+        <rect x="9" y="4" width="2" height="1" fill="#d4b070"></rect>
+        <rect x="13" y="5" width="1" height="1" fill="#d4b070"></rect>
+        <rect x="15" y="4" width="1" height="1" fill="#d4b070"></rect>
+        <rect x="16" y="5" width="1" height="1" fill="#d4b070"></rect>
         <rect x="7" y="4" width="1" height="1" fill="#e8c890"></rect>
-        <rect x="11" y="4" width="1" height="1" fill="#e8c890"></rect>
-        <rect x="15" y="4" width="1" height="1" fill="#e8c890"></rect>
+        <rect x="10" y="5" width="1" height="1" fill="#e8c890"></rect>
+        <rect x="15" y="5" width="1" height="1" fill="#e8c890"></rect>
         <!-- hair bottom (covers sides of head) -->
         <rect x="5" y="7" width="2" height="4" fill="#8a6540"></rect>
         <rect x="17" y="7" width="2" height="4" fill="#8a6540"></rect>
@@ -594,22 +597,24 @@
         <rect x="7" y="7" width="10" height="1" fill="#f8d9b6"></rect>
         <!-- right shadow -->
         <rect x="16" y="8" width="1" height="3" fill="#d4a880"></rect>
-        <!-- happy closed eyes (^_^) -->
-        <rect x="8" y="8" width="1" height="1" fill="#2a2015"></rect>
-        <rect x="9" y="7" width="1" height="1" fill="#2a2015"></rect>
-        <rect x="10" y="8" width="1" height="1" fill="#2a2015"></rect>
-        <rect x="13" y="8" width="1" height="1" fill="#2a2015"></rect>
-        <rect x="14" y="7" width="1" height="1" fill="#2a2015"></rect>
-        <rect x="15" y="8" width="1" height="1" fill="#2a2015"></rect>
-        <!-- wide happy blush cheeks -->
-        <rect x="7" y="9" width="2" height="1" fill="#ff9bb8"></rect>
-        <rect x="15" y="9" width="2" height="1" fill="#ff9bb8"></rect>
-        <!-- big open smile w/ tooth -->
+        <!-- eyebrows -->
+        <rect x="8" y="7" width="2" height="1" fill="#8a6540"></rect>
+        <rect x="13" y="7" width="2" height="1" fill="#8a6540"></rect>
+        <!-- left eye: 2x1 white + 1x1 pupil -->
+        <rect x="8" y="8" width="2" height="1" fill="#ffffff"></rect>
+        <rect x="8" y="8" width="1" height="1" fill="#e8f4ff"></rect>
         <rect x="9" y="9" width="1" height="1" fill="#2a2015"></rect>
+        <!-- right eye: 2x1 white + 1x1 pupil -->
+        <rect x="13" y="8" width="2" height="1" fill="#ffffff"></rect>
+        <rect x="13" y="8" width="1" height="1" fill="#e8f4ff"></rect>
         <rect x="14" y="9" width="1" height="1" fill="#2a2015"></rect>
-        <rect x="10" y="10" width="4" height="1" fill="#2a2015"></rect>
-        <rect x="10" y="10" width="4" height="1" fill="#fff8e4"></rect>
-        <rect x="11" y="10" width="2" height="1" fill="#ff9bb8"></rect>
+        <!-- smile arc: corner lifts at y=9, flat bottom at y=10 -->
+        <rect x="9" y="9" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="13" y="9" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="10" y="10" width="3" height="1" fill="#2a2015"></rect>
+        <!-- cheek blush dots (below eyes, beside smile corners) -->
+        <rect x="7" y="10" width="1" height="1" fill="#ff9bb8"></rect>
+        <rect x="15" y="10" width="1" height="1" fill="#ff9bb8"></rect>
 
         <!-- ========== SHIRT (yellow) ========== -->
         <!-- outline -->
@@ -693,10 +698,10 @@
       </g>
     </symbol>
 
-    <!-- ==================== FRANCO (24x32) — wavy w/ front curl ==================== -->
+    <!-- ==================== FRANCO (24x32) — curly hair ==================== -->
     <symbol id="sprite-franco" viewBox="0 0 24 32">
       <g shape-rendering="crispEdges">
-        <!-- ========== HEAD w/ WAVY HAIR + CURL ========== -->
+        <!-- ========== HEAD w/ CURLY HAIR ========== -->
         <!-- head outline -->
         <rect x="6" y="1" width="12" height="1" fill="#2a2015"></rect>
         <rect x="5" y="2" width="1" height="1" fill="#2a2015"></rect>
@@ -704,30 +709,64 @@
         <rect x="4" y="3" width="1" height="8" fill="#2a2015"></rect>
         <rect x="19" y="3" width="1" height="8" fill="#2a2015"></rect>
         <rect x="5" y="11" width="14" height="1" fill="#2a2015"></rect>
-        <!-- wavy hair base -->
-        <rect x="6" y="2" width="12" height="1" fill="#8a6540"></rect>
-        <rect x="5" y="3" width="14" height="4" fill="#b8925a"></rect>
-        <rect x="5" y="3" width="14" height="2" fill="#8a6540"></rect>
-        <!-- wave bumps on top (staggered for wavy feel) -->
-        <rect x="5" y="2" width="2" height="1" fill="#8a6540"></rect>
+        <!-- curly hair: bumpy silhouette outline at top — dark outlines of curl bumps -->
+        <rect x="5" y="2" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="8" y="1" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="12" y="1" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="16" y="1" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="18" y="2" width="1" height="1" fill="#2a2015"></rect>
+        <!-- curl cluster A: left bump (x=6-8, y=1-3) -->
+        <rect x="6" y="2" width="2" height="1" fill="#8a6540"></rect>
+        <rect x="6" y="3" width="1" height="1" fill="#6a4a30"></rect>
+        <rect x="7" y="3" width="1" height="1" fill="#b8925a"></rect>
+        <rect x="6" y="2" width="1" height="1" fill="#b8925a"></rect>
+        <rect x="7" y="2" width="1" height="1" fill="#d4b070"></rect>
+        <!-- curl cluster B: centre-left bump (x=9-11, y=1-3) -->
         <rect x="9" y="2" width="2" height="1" fill="#8a6540"></rect>
-        <rect x="13" y="2" width="2" height="1" fill="#8a6540"></rect>
-        <rect x="17" y="2" width="2" height="1" fill="#8a6540"></rect>
-        <rect x="7" y="3" width="1" height="1" fill="#6a4a30"></rect>
-        <rect x="11" y="3" width="1" height="1" fill="#6a4a30"></rect>
-        <rect x="15" y="3" width="1" height="1" fill="#6a4a30"></rect>
-        <!-- hair highlights (wavy shine strands) -->
-        <rect x="6" y="5" width="2" height="1" fill="#d4b070"></rect>
-        <rect x="15" y="5" width="2" height="1" fill="#d4b070"></rect>
-        <rect x="6" y="5" width="1" height="1" fill="#e8c890"></rect>
-        <!-- the front curl (prominent swoosh over forehead) -->
-        <rect x="10" y="6" width="4" height="1" fill="#4a3018"></rect>
-        <rect x="9" y="7" width="2" height="2" fill="#6a4a30"></rect>
-        <rect x="13" y="7" width="2" height="2" fill="#6a4a30"></rect>
-        <rect x="10" y="7" width="1" height="1" fill="#8a6540"></rect>
-        <rect x="14" y="7" width="1" height="1" fill="#8a6540"></rect>
-        <rect x="11" y="8" width="3" height="1" fill="#4a3018"></rect>
-        <rect x="12" y="9" width="1" height="1" fill="#6a4a30"></rect>
+        <rect x="9" y="3" width="1" height="1" fill="#b8925a"></rect>
+        <rect x="10" y="3" width="1" height="1" fill="#6a4a30"></rect>
+        <rect x="10" y="2" width="1" height="1" fill="#d4b070"></rect>
+        <!-- curl cluster C: centre-right bump (x=12-14, y=1-3) -->
+        <rect x="12" y="2" width="2" height="1" fill="#8a6540"></rect>
+        <rect x="12" y="3" width="1" height="1" fill="#6a4a30"></rect>
+        <rect x="13" y="3" width="1" height="1" fill="#b8925a"></rect>
+        <rect x="13" y="2" width="1" height="1" fill="#e8c890"></rect>
+        <!-- curl cluster D: right bump (x=15-17, y=2-3) -->
+        <rect x="15" y="2" width="2" height="1" fill="#8a6540"></rect>
+        <rect x="15" y="3" width="1" height="1" fill="#b8925a"></rect>
+        <rect x="16" y="3" width="1" height="1" fill="#6a4a30"></rect>
+        <rect x="16" y="2" width="1" height="1" fill="#d4b070"></rect>
+        <!-- hair body fill (row 4-6): base behind curls -->
+        <rect x="5" y="4" width="14" height="3" fill="#b8925a"></rect>
+        <!-- curl loops in hair body — L-shaped arc clusters scattered across y=4-6 -->
+        <!-- left curl loop -->
+        <rect x="5" y="4" width="1" height="1" fill="#6a4a30"></rect>
+        <rect x="6" y="4" width="2" height="1" fill="#8a6540"></rect>
+        <rect x="6" y="5" width="1" height="1" fill="#6a4a30"></rect>
+        <rect x="7" y="5" width="1" height="1" fill="#d4b070"></rect>
+        <rect x="6" y="6" width="1" height="1" fill="#8a6540"></rect>
+        <!-- centre curl loop -->
+        <rect x="10" y="4" width="1" height="1" fill="#6a4a30"></rect>
+        <rect x="11" y="4" width="2" height="1" fill="#8a6540"></rect>
+        <rect x="11" y="5" width="1" height="1" fill="#e8c890"></rect>
+        <rect x="12" y="5" width="1" height="1" fill="#6a4a30"></rect>
+        <rect x="11" y="6" width="1" height="1" fill="#d4b070"></rect>
+        <rect x="12" y="6" width="1" height="1" fill="#8a6540"></rect>
+        <!-- right curl loop -->
+        <rect x="15" y="4" width="1" height="1" fill="#8a6540"></rect>
+        <rect x="16" y="4" width="2" height="1" fill="#6a4a30"></rect>
+        <rect x="16" y="5" width="1" height="1" fill="#d4b070"></rect>
+        <rect x="17" y="5" width="1" height="1" fill="#8a6540"></rect>
+        <rect x="15" y="6" width="1" height="1" fill="#6a4a30"></rect>
+        <rect x="16" y="6" width="1" height="1" fill="#b8925a"></rect>
+        <!-- forehead curl band — curly fringe hangs over forehead (y=7) -->
+        <rect x="7" y="7" width="10" height="1" fill="#8a6540"></rect>
+        <rect x="7" y="7" width="1" height="1" fill="#6a4a30"></rect>
+        <rect x="9" y="7" width="1" height="1" fill="#6a4a30"></rect>
+        <rect x="11" y="7" width="1" height="1" fill="#d4b070"></rect>
+        <rect x="13" y="7" width="1" height="1" fill="#6a4a30"></rect>
+        <rect x="15" y="7" width="1" height="1" fill="#d4b070"></rect>
+        <rect x="16" y="7" width="1" height="1" fill="#6a4a30"></rect>
         <!-- hair sides -->
         <rect x="5" y="7" width="2" height="4" fill="#8a6540"></rect>
         <rect x="17" y="7" width="2" height="4" fill="#8a6540"></rect>
@@ -738,22 +777,24 @@
         <rect x="7" y="7" width="10" height="4" fill="#f0c9a4"></rect>
         <rect x="7" y="7" width="10" height="1" fill="#f8d9b6"></rect>
         <rect x="16" y="8" width="1" height="3" fill="#d4a880"></rect>
-        <!-- happy closed eyes (^_^) -->
-        <rect x="8" y="8" width="1" height="1" fill="#2a2015"></rect>
-        <rect x="9" y="7" width="1" height="1" fill="#2a2015"></rect>
-        <rect x="10" y="8" width="1" height="1" fill="#2a2015"></rect>
-        <rect x="14" y="8" width="1" height="1" fill="#2a2015"></rect>
-        <rect x="15" y="7" width="1" height="1" fill="#2a2015"></rect>
-        <rect x="16" y="8" width="1" height="1" fill="#2a2015"></rect>
-        <!-- wide happy blush cheeks -->
-        <rect x="7" y="9" width="2" height="1" fill="#ff9bb8"></rect>
-        <rect x="15" y="9" width="2" height="1" fill="#ff9bb8"></rect>
-        <!-- big open smile with tooth -->
+        <!-- eyebrows (dark, above eyes) -->
+        <rect x="8" y="7" width="2" height="1" fill="#6a4a30"></rect>
+        <rect x="13" y="7" width="2" height="1" fill="#6a4a30"></rect>
+        <!-- left eye: 2x1 white + 1x1 pupil -->
+        <rect x="8" y="8" width="2" height="1" fill="#ffffff"></rect>
+        <rect x="8" y="8" width="1" height="1" fill="#e8f4ff"></rect>
         <rect x="9" y="9" width="1" height="1" fill="#2a2015"></rect>
+        <!-- right eye: 2x1 white + 1x1 pupil -->
+        <rect x="13" y="8" width="2" height="1" fill="#ffffff"></rect>
+        <rect x="13" y="8" width="1" height="1" fill="#e8f4ff"></rect>
         <rect x="14" y="9" width="1" height="1" fill="#2a2015"></rect>
-        <rect x="10" y="10" width="4" height="1" fill="#2a2015"></rect>
-        <rect x="10" y="10" width="4" height="1" fill="#fff8e4"></rect>
-        <rect x="11" y="10" width="2" height="1" fill="#ff9bb8"></rect>
+        <!-- smile arc: corner lifts at y=9, flat bottom at y=10 -->
+        <rect x="9" y="9" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="13" y="9" width="1" height="1" fill="#2a2015"></rect>
+        <rect x="10" y="10" width="3" height="1" fill="#2a2015"></rect>
+        <!-- cheek blush dots (below eyes, beside smile corners) -->
+        <rect x="7" y="10" width="1" height="1" fill="#ff9bb8"></rect>
+        <rect x="15" y="10" width="1" height="1" fill="#ff9bb8"></rect>
 
         <!-- ========== SHIRT (cyan) ========== -->
         <rect x="5" y="12" width="14" height="1" fill="#2a2015"></rect>
