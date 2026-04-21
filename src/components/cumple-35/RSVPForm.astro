@@ -861,6 +861,15 @@
     show(groupUp, false);
     show(groupPost, false);
     show(groupStyle, true);
+    // On small screens the newly-revealed style picker (and its GENERAR
+    // button) often falls below the fold. Pull it into view so the user
+    // can see the actions without hunting.
+    requestAnimationFrame(() => {
+      groupStyle?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    });
   }
 
   async function callPixelize(blob: Blob) {
