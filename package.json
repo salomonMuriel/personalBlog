@@ -20,7 +20,8 @@
     "sync-linkedin:backfill": "node scripts/sync-linkedin.mjs --backfill",
     "og:generate": "node scripts/generate-og-images.mjs",
     "og:generate:force": "node scripts/generate-og-images.mjs --force",
-    "og:clear": "rm -rf public/posts/"
+    "og:clear": "rm -rf public/posts/",
+    "og:cumple-35": "node scripts/generate-cumple-og.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.8",

@@ -22,9 +22,9 @@ const list = [
           <div class="icon">{a.icon}</div>
           <div class="name">{a.name}</div>
           {!a.unlocked && (
-            <div class="overlay">
+            <div class="corner">
               <span class="lock-ico">🔒</span>
-              <span class="prog">EN PROGRESO...</span>
+              <span class="prog">EN PROGRESO</span>
             </div>
           )}
         </div>
@@ -75,23 +75,25 @@ const list = [
     letter-spacing: 0.04em;
     line-height: 1.5;
   }
-  .overlay {
+  .corner {
     position: absolute;
-    inset: 0;
-    background: rgba(26, 11, 46, 0.8);
+    top: 6px;
+    right: 6px;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
     gap: 4px;
+    background: rgba(26, 11, 46, 0.9);
+    border: 2px solid var(--red);
+    padding: 3px 5px;
+    line-height: 1;
   }
   .lock-ico {
-    font-size: 20px;
+    font-size: 10px;
   }
   .prog {
     font-family: "Press Start 2P", monospace;
-    font-size: 8px;
+    font-size: 7px;
     color: var(--red);
-    letter-spacing: 0.08em;
+    letter-spacing: 0.06em;
   }
 </style>
