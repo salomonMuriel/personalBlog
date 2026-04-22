@@ -122,7 +122,9 @@
           <div class="group group-upload" hidden>
             <label class="btn" for="booth-file">📤 ELEGIR ARCHIVO</label>
             <input type="file" id="booth-file" accept="image/*" hidden />
-            <p class="upload-hint">Máximo 4MB.</p>
+            <p class="upload-hint">
+              Cualquier foto — la comprimimos antes de subir.
+            </p>
           </div>
           <div class="group group-style" hidden>
             <div class="style-picker">
@@ -860,23 +862,37 @@
     );
   }
 
-  async function drawBlobToCanvas(blob: Blob): Promise<void> {
-    if (!canvas) return;
+  // Decode the user's image, center-crop to a square, and downscale to at
+  // most 1024px per side, re-encoded as JPEG. The server normalizes to
+  // 1024x1024 anyway, so this keeps uploads tiny and avoids Vercel's ~4.5MB
+  // request body cap regardless of how huge the original photo is.
+  const MAX_UPLOAD_SIDE = 1024;
+  async function processUpload(blob: Blob): Promise<Blob | null> {
+    if (!canvas) return null;
     const img = new Image();
     const url = URL.createObjectURL(blob);
-    await new Promise<void>((resolve, reject) => {
-      img.onload = () => resolve();
-      img.onerror = reject;
-      img.src = url;
-    });
-    const side = Math.min(img.naturalWidth, img.naturalHeight);
-    const sx = (img.naturalWidth - side) / 2;
-    const sy = (img.naturalHeight - side) / 2;
-    canvas.width = side;
-    canvas.height = side;
+    try {
+      await new Promise<void>((resolve, reject) => {
+        img.onload = () => resolve();
+        img.onerror = () => reject(new Error("decode"));
+        img.src = url;
+      });
+    } finally {
+      URL.revokeObjectURL(url);
+    }
+    const srcSide = Math.min(img.naturalWidth, img.naturalHeight);
+    if (!srcSide) return null;
+    const sx = (img.naturalWidth - srcSide) / 2;
+    const sy = (img.naturalHeight - srcSide) / 2;
+    const outSide = Math.min(srcSide, MAX_UPLOAD_SIDE);
+    canvas.width = outSide;
+    canvas.height = outSide;
     const ctx = canvas.getContext("2d");
-    ctx?.drawImage(img, sx, sy, side, side, 0, 0, side, side);
-    URL.revokeObjectURL(url);
+    if (!ctx) return null;
+    ctx.drawImage(img, sx, sy, srcSide, srcSide, 0, 0, outSide, outSide);
+    return await new Promise(resolve =>
+      canvas.toBlob(resolve, "image/jpeg", 0.9)
+    );
   }
 
   function enterStyleStage() {
@@ -936,26 +952,21 @@
     enterStyleStage();
   });
 
-  const MAX_UPLOAD_BYTES = 4 * 1024 * 1024;
   fileInput?.addEventListener("change", async () => {
     const file = fileInput.files?.[0];
     if (!file) return;
-    if (file.size > MAX_UPLOAD_BYTES) {
-      const mb = (file.size / (1024 * 1024)).toFixed(1);
-      alert(
-        `Esa foto pesa ${mb}MB y el máximo es 4MB. Prueba con una imagen más pequeña.`
-      );
+    let compressed: Blob | null = null;
+    try {
+      compressed = await processUpload(file);
+    } catch {
+      compressed = null;
+    }
+    if (!compressed) {
+      alert("No pude leer esa imagen. Prueba con otra.");
       fileInput.value = "";
       return;
     }
-    pendingPng = file;
-    try {
-      await drawBlobToCanvas(file);
-    } catch {
-      alert("No pude leer esa imagen.");
-      pendingPng = null;
-      return;
-    }
+    pendingPng = compressed;
     enterStyleStage();
   });
 
