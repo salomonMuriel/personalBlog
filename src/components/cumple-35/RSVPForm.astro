@@ -122,6 +122,7 @@
           <div class="group group-upload" hidden>
             <label class="btn" for="booth-file">📤 ELEGIR ARCHIVO</label>
             <input type="file" id="booth-file" accept="image/*" hidden />
+            <p class="upload-hint">Máximo 4MB.</p>
           </div>
           <div class="group group-style" hidden>
             <div class="style-picker">
@@ -429,6 +430,15 @@
     flex-direction: column;
     gap: 10px;
     width: 100%;
+  }
+  .upload-hint {
+    flex-basis: 100%;
+    margin: 6px 0 0;
+    text-align: center;
+    font-family: "VT323", monospace;
+    font-size: 16px;
+    color: var(--cream);
+    opacity: 0.7;
   }
   .style-picker {
     display: flex;
@@ -926,9 +936,18 @@
     enterStyleStage();
   });
 
+  const MAX_UPLOAD_BYTES = 4 * 1024 * 1024;
   fileInput?.addEventListener("change", async () => {
     const file = fileInput.files?.[0];
     if (!file) return;
+    if (file.size > MAX_UPLOAD_BYTES) {
+      const mb = (file.size / (1024 * 1024)).toFixed(1);
+      alert(
+        `Esa foto pesa ${mb}MB y el máximo es 4MB. Prueba con una imagen más pequeña.`
+      );
+      fileInput.value = "";
+      return;
+    }
     pendingPng = file;
     try {
       await drawBlobToCanvas(file);

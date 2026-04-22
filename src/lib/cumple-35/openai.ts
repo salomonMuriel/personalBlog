@@ -156,6 +156,7 @@ export async function callEdit(
   form.append("prompt", prompt);
   form.append("n", "1");
   form.append("size", "1024x1024");
+  form.append("quality", "medium");
   form.append(
     "image",
     new Blob([new Uint8Array(sourcePng)], { type: "image/png" }),
@@ -205,6 +206,7 @@ export async function callGenerate(
         prompt,
         n: 1,
         size: "1024x1024",
+        quality: "medium",
       }),
     });
     const json = (await res.json()) as {

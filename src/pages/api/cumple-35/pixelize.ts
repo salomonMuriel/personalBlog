@@ -26,8 +26,8 @@ export const POST: APIRoute = async ({ request }) => {
   if (!(raw instanceof File) || raw.size === 0) {
     return json({ ok: false, error: "Falta la imagen" }, 400);
   }
-  if (raw.size > 8 * 1024 * 1024) {
-    return json({ ok: false, error: "Imagen muy grande (máx 8MB)" }, 413);
+  if (raw.size > 4 * 1024 * 1024) {
+    return json({ ok: false, error: "Imagen muy grande (máx 4MB)" }, 413);
   }
 
   const style = String(incoming.get("style") ?? "");
