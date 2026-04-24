@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perrenque le Gana a la Hoja de Vida — Colsubsidio</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --red: #CC2B2B;
+    --red-light: #F9EDED;
+    --red-mid: #E24B4A;
+    --dark: #111110;
+    --dark-2: #1E1E1C;
+    --mid: #444441;
+    --muted: #888780;
+    --light: #F5F4F0;
+    --white: #FFFFFF;
+    --border: #E2E0D8;
+    --accent: #CC2B2B;
+  }
+
+  html { font-size: 16px; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    color: var(--dark);
+    background: var(--white);
+    line-height: 1.6;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0;
+  }
+
+  /* ---- HERO ---- */
+  .hero {
+    background: var(--dark);
+    color: var(--white);
+    padding: 60px 60px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    background: var(--red);
+    opacity: 0.12;
+  }
+  .hero-eyebrow {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--red-mid);
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 54px;
+    font-weight: 800;
+    line-height: 1.0;
+    letter-spacing: -1px;
+    color: var(--white);
+    margin-bottom: 16px;
+  }
+  .hero h1 span { color: var(--red-mid); }
+  .hero-sub {
+    font-size: 17px;
+    font-weight: 300;
+    color: #BDBBB0;
+    max-width: 540px;
+    margin-bottom: 40px;
+    line-height: 1.6;
+  }
+  .hero-meta {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .hero-meta-item .label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #888780;
+    display: block;
+    margin-bottom: 3px;
+  }
+  .hero-meta-item .value {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--white);
+  }
+
+  /* ---- SECTIONS ---- */
+  .section {
+    padding: 52px 60px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section:last-child { border-bottom: none; }
+
+  .section-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 10px;
+  }
+  .section h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 30px;
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 20px;
+    color: var(--dark);
+  }
+  .section p {
+    font-size: 15.5px;
+    line-height: 1.75;
+    color: var(--mid);
+    margin-bottom: 16px;
+    max-width: 620px;
+  }
+  .section p:last-child { margin-bottom: 0; }
+
+  /* ---- PILLARS ---- */
+  .pillars {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 28px;
+  }
+  .pillar {
+    background: var(--light);
+    border-radius: 10px;
+    padding: 20px 22px;
+    border-left: 3px solid var(--red);
+  }
+  .pillar-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--red);
+    letter-spacing: 0.1em;
+    margin-bottom: 6px;
+  }
+  .pillar-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 6px;
+  }
+  .pillar-desc {
+    font-size: 13.5px;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+
+  /* ---- DIFFERENTIAL ---- */
+  .diff-box {
+    background: var(--dark);
+    color: var(--white);
+    border-radius: 12px;
+    padding: 32px 36px;
+    margin-top: 28px;
+  }
+  .diff-box h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+  .diff-box p {
+    font-size: 14.5px;
+    color: #BDBBB0;
+    max-width: 540px;
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+  .diff-steps {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    margin-top: 4px;
+  }
+  .diff-step {
+    background: rgba(255,255,255,0.06);
+    border-radius: 8px;
+    padding: 16px;
+    border-top: 2px solid var(--red-mid);
+  }
+  .diff-step-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--red-mid);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .diff-step-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+  .diff-step-desc {
+    font-size: 12.5px;
+    color: #888780;
+    line-height: 1.5;
+  }
+
+  /* ---- AGENDA ---- */
+  .agenda { margin-top: 32px; }
+  .agenda-block {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 0 20px;
+    margin-bottom: 0;
+  }
+  .agenda-block:last-child .agenda-content { border-bottom: none; }
+
+  .agenda-time {
+    padding: 24px 0 0;
+    text-align: right;
+  }
+  .agenda-time .time-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--dark);
+    display: block;
+  }
+  .agenda-time .dur-label {
+    font-size: 11px;
+    color: var(--muted);
+    display: block;
+    margin-top: 2px;
+  }
+
+  .agenda-connector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 20px;
+    padding-top: 28px;
+  }
+  .agenda-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--red);
+    flex-shrink: 0;
+  }
+  .agenda-line {
+    width: 2px;
+    flex: 1;
+    background: var(--border);
+    margin-top: 6px;
+  }
+
+  .agenda-content {
+    padding: 20px 0 32px;
+    border-bottom: 1px solid var(--border);
+  }
+  .agenda-phase {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 4px;
+  }
+  .agenda-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 10px;
+  }
+  .agenda-desc {
+    font-size: 14.5px;
+    color: var(--mid);
+    line-height: 1.7;
+    max-width: 520px;
+    margin-bottom: 12px;
+  }
+  .agenda-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .tag {
+    font-size: 11.5px;
+    background: var(--light);
+    color: var(--mid);
+    border-radius: 20px;
+    padding: 3px 10px;
+    font-weight: 400;
+  }
+  .tag.red {
+    background: var(--red-light);
+    color: var(--red);
+    font-weight: 500;
+  }
+
+  /* post-session block style */
+  .post-block {
+    background: var(--light);
+    border-radius: 10px;
+    padding: 22px 26px;
+    margin-top: 12px;
+    border-left: 3px solid var(--muted);
+  }
+  .post-block .post-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .post-block .post-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 8px;
+  }
+  .post-block p {
+    font-size: 14px;
+    color: var(--mid);
+    max-width: 540px;
+    margin-bottom: 10px;
+  }
+  .post-block p:last-child { margin-bottom: 0; }
+
+  /* ---- TAKEAWAYS ---- */
+  .takeaways-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px;
+    margin-top: 28px;
+  }
+  .takeaway-card {
+    background: var(--light);
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .takeaway-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 6px;
+  }
+  .takeaway-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+
+  /* ---- FACILITATOR ---- */
+  .facilitator-layout {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 32px;
+    align-items: start;
+    margin-top: 8px;
+  }
+  .facilitator-img {
+    width: 140px;
+    height: 140px;
+    border-radius: 10px;
+    background: var(--light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .facilitator-img img { width: 100%; height: 100%; object-fit: cover; }
+  .facilitator-role {
+    font-size: 13px;
+    color: var(--red);
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    margin-bottom: 14px;
+  }
+  .creds {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+  .cred {
+    font-size: 12.5px;
+    background: var(--light);
+    border-radius: 20px;
+    padding: 4px 12px;
+    color: var(--mid);
+  }
+
+  /* ---- INVESTMENT ---- */
+  .investment-box {
+    background: var(--dark);
+    border-radius: 12px;
+    padding: 40px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 32px;
+    margin-top: 8px;
+  }
+  .investment-left h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #888780;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .investment-amount {
+    font-family: 'Syne', sans-serif;
+    font-size: 46px;
+    font-weight: 800;
+    color: var(--white);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .investment-amount span {
+    font-size: 20px;
+    color: var(--red-mid);
+    vertical-align: top;
+    margin-top: 6px;
+    display: inline-block;
+  }
+  .investment-note {
+    font-size: 13px;
+    color: #888780;
+    max-width: 280px;
+    line-height: 1.55;
+  }
+  .investment-includes {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .inc-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .inc-check {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--red);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1px;
+  }
+  .inc-check::after {
+    content: '';
+    width: 7px; height: 4px;
+    border-left: 1.5px solid white;
+    border-bottom: 1.5px solid white;
+    transform: rotate(-45deg) translate(0px, -1px);
+    display: block;
+  }
+  .inc-text {
+    font-size: 13.5px;
+    color: #BDBBB0;
+    line-height: 1.5;
+  }
+
+  /* ---- FOOTER ---- */
+  .footer {
+    padding: 32px 60px;
+    text-align: center;
+    background: var(--light);
+  }
+  .footer p {
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .footer a {
+    color: var(--red);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  /* ---- QUOTE BLOCK ---- */
+  .quote-block {
+    border-left: 3px solid var(--red);
+    padding: 16px 24px;
+    margin: 24px 0;
+    background: var(--red-light);
+    border-radius: 0 8px 8px 0;
+  }
+  .quote-block p {
+    font-style: italic;
+    font-size: 15px;
+    color: var(--dark);
+    margin: 0;
+  }
+
+  @media (max-width: 680px) {
+    .hero { padding: 40px 28px 36px; }
+    .hero h1 { font-size: 36px; }
+    .section { padding: 36px 28px; }
+    .pillars, .diff-steps, .takeaways-grid { grid-template-columns: 1fr; }
+    .facilitator-layout { grid-template-columns: 1fr; }
+    .investment-box { flex-direction: column; padding: 28px; }
+    .agenda-block { grid-template-columns: 70px 1fr; }
+    .footer { padding: 24px 28px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">Charla Propuesta · Colsubsidio · Mayo 2026</div>
+  <h1><span>PERRENQUE</span><br>LE GANA A LA<br>HOJA DE VIDA.</h1>
+  <p class="hero-sub">Una charla práctica para personas en transición profesional — diagnóstico de los saboteadores que les están matando el perrenque, plan de 30 días personalizado para reactivarlo, y un companion digital que los acompaña después del evento.</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item">
+      <span class="label">Fecha</span>
+      <span class="value">Martes 12 de Mayo</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="label">Duración</span>
+      <span class="value">1h 40min</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="label">Participantes</span>
+      <span class="value">40 personas</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="label">Formato</span>
+      <span class="value">Presencial</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="label">Conferencista</span>
+      <span class="value">Salomón Muriel</span>
+    </div>
+  </div>
+</div>
+
+<!-- OVERVIEW -->
+<div class="section">
+  <div class="section-label">El contexto</div>
+  <h2>¿Para qué estamos aquí?</h2>
+  <p>El público de Colsubsidio en esta charla vive una misma realidad emocional desde dos ángulos distintos: hay quienes están sin trabajo y buscando, y hay quienes tienen un buen empleo pero quieren cambiar de carrera o de empresa. Los dos grupos enfrentan la misma incertidumbre, los mismos miedos y los mismos saboteadores internos.</p>
+  <p>El problema casi nunca es la hoja de vida, ni el mercado, ni la falta de oportunidades. Es el <strong>perrenque</strong> — esas ganas de hacer, de intentarlo otra vez, de moverse a pesar del miedo. Y el perrenque no se pierde por casualidad: tiene asesinos específicos adentro de cada cabeza. Esta charla los identifica, y deja a cada persona con un plan concreto para reactivarlo.</p>
+
+  <div class="quote-block">
+    <p>"No vine a darles consejos. Vine a mostrarles exactamente qué les está matando el perrenque y qué van a hacer al respecto los próximos 30 días."</p>
+  </div>
+</div>
+
+<!-- PILLARS -->
+<div class="section">
+  <div class="section-label">Metodología</div>
+  <h2>Los 4 pilares que guían todo</h2>
+  <p>Cada decisión de diseño en esta charla responde a una de estas cuatro premisas. Sin excepciones.</p>
+  <div class="pillars">
+    <div class="pillar">
+      <div class="pillar-num">PILAR 01</div>
+      <div class="pillar-title">Aprender haciendo</div>
+      <div class="pillar-desc">Todo es práctico. Si no pueden usarlo el lunes siguiente, no tiene cabida en la agenda.</div>
+    </div>
+    <div class="pillar">
+      <div class="pillar-num">PILAR 02</div>
+      <div class="pillar-title">Zero fluff</div>
+      <div class="pillar-desc">Sin charlas motivacionales vacías, sin diapositivas de relleno. Cada minuto debe poder justificarse con un resultado concreto.</div>
+    </div>
+    <div class="pillar">
+      <div class="pillar-num">PILAR 03</div>
+      <div class="pillar-title">Personalización</div>
+      <div class="pillar-desc">El plan de cada persona se ajusta a su saboteador específico. No hay un consejo único para 40 personas.</div>
+    </div>
+    <div class="pillar">
+      <div class="pillar-num">PILAR 04</div>
+      <div class="pillar-title">Vibe</div>
+      <div class="pillar-desc">Esto tiene que ser divertido. Si la sala no tiene energía, nada funciona. La dinámica está diseñada para que todos participen.</div>
+    </div>
+  </div>
+</div>
+
+<!-- DIFFERENTIAL -->
+<div class="section">
+  <div class="section-label">El diferencial</div>
+  <h2>Un companion digital que los acompaña 30 días</h2>
+  <p>La mayoría de las charlas terminan y se olvidan en una semana. Aquí no. Cada participante sale con acceso a un companion digital — una herramienta web, accesible desde el celular — que les sirve durante la charla como espejo y constructor de plan, y los acompaña los 30 días siguientes con recordatorios automáticos, recalibración del plan y soporte de IA.</p>
+  <p>El companion funciona de forma <strong>completamente automatizada</strong>. No requiere intervención humana posterior — ni del facilitador, ni del equipo de Colsubsidio. Se configura una vez, corre solo durante 30 días, y se archiva al final con un reporte agregado.</p>
+  <div class="diff-box">
+    <h3>Cómo funciona el companion</h3>
+    <p>Tres etapas que convierten una charla puntual en un cambio de comportamiento sostenido.</p>
+    <div class="diff-steps">
+      <div class="diff-step">
+        <div class="diff-step-num">01</div>
+        <div class="diff-step-title">Durante la charla</div>
+        <div class="diff-step-desc">Cada persona accede por QR. La herramienta recibe sus saboteadores y construye con ellos un plan de 30 días para reactivar el perrenque.</div>
+      </div>
+      <div class="diff-step">
+        <div class="diff-step-num">02</div>
+        <div class="diff-step-title">Seguimiento automático</div>
+        <div class="diff-step-desc">Días 7, 15 y 30: nudges automáticos por WhatsApp o email preguntando por avances. La IA responde si alguien contesta — sin intervención humana.</div>
+      </div>
+      <div class="diff-step">
+        <div class="diff-step-num">03</div>
+        <div class="diff-step-title">Reporte para Colsubsidio</div>
+        <div class="diff-step-desc">Al cumplir los 30 días, dashboard agregado anónimo: qué saboteadores predominaron, % de personas que completaron su plan, patrones del grupo.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AGENDA -->
+<div class="section">
+  <div class="section-label">La metodología</div>
+  <h2>Agenda de la charla</h2>
+  <p>1 hora 40 minutos divididos en tres movimientos: <strong>El espejo</strong> (verse a sí mismos), <strong>El diagnóstico</strong> (qué les está matando el perrenque) y <strong>La construcción</strong> (plan de 30 días para reactivarlo).</p>
+
+  <div class="agenda">
+
+    <!-- BLOCK 1 -->
+    <div class="agenda-block">
+      <div class="agenda-time">
+        <span class="time-label">00:00</span>
+        <span class="dur-label">10 min</span>
+      </div>
+      <div style="display:flex; gap:0;">
+        <div class="agenda-connector">
+          <div class="agenda-dot"></div>
+          <div class="agenda-line"></div>
+        </div>
+        <div class="agenda-content">
+          <div class="agenda-phase">Apertura</div>
+          <div class="agenda-title">El espejo anónimo</div>
+          <div class="agenda-desc">Cada participante responde 3 preguntas desde su celular: cuál es su mayor miedo ahora, qué creen que les falta, qué pasaría si nada cambia en 6 meses. Las respuestas se proyectan anónimas. La sala se ve a sí misma — y descubre que no está sola.</div>
+          <div class="agenda-tags">
+            <span class="tag">Anónimo</span>
+            <span class="tag">Alta energía</span>
+            <span class="tag">Rompe el hielo sin vergüenza</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOCK 2 -->
+    <div class="agenda-block">
+      <div class="agenda-time">
+        <span class="time-label">00:10</span>
+        <span class="dur-label">25 min</span>
+      </div>
+      <div style="display:flex; gap:0;">
+        <div class="agenda-connector">
+          <div class="agenda-dot"></div>
+          <div class="agenda-line"></div>
+        </div>
+        <div class="agenda-content">
+          <div class="agenda-phase">Movimiento 1 — La historia</div>
+          <div class="agenda-title">Perrenque: qué es y por qué le gana a todo</div>
+          <div class="agenda-desc">Storytelling con mis propias quiebras y ventas — 5 empresas, 2 que quebré, 2 que vendí. Lo que separó la versión mía que se hundió de la que construyó nunca fue talento, ni el CV, ni el mercado: fue perrenque. Las ganas de volver a empezar el lunes después de haberme caído el viernes. En este bloque desarmo qué es realmente el perrenque, cómo se ve en la práctica, y por qué es el músculo que más rinde en cualquier transición profesional.</div>
+          <div class="agenda-tags">
+            <span class="tag">Storytelling</span>
+            <span class="tag">Cicatrices reales</span>
+            <span class="tag">Sin teoría académica</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOCK 3 -->
+    <div class="agenda-block">
+      <div class="agenda-time">
+        <span class="time-label">00:35</span>
+        <span class="dur-label">5 min</span>
+      </div>
+      <div style="display:flex; gap:0;">
+        <div class="agenda-connector">
+          <div class="agenda-dot"></div>
+          <div class="agenda-line"></div>
+        </div>
+        <div class="agenda-content">
+          <div class="agenda-phase">Transición</div>
+          <div class="agenda-title">Activación del companion</div>
+          <div class="agenda-desc">QR en pantalla. Cada persona entra a su companion personalizado desde el celular. La sala queda lista para el diagnóstico.</div>
+          <div class="agenda-tags">
+            <span class="tag">QR</span>
+            <span class="tag">Mobile-first</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOCK 4 -->
+    <div class="agenda-block">
+      <div class="agenda-time">
+        <span class="time-label">00:40</span>
+        <span class="dur-label">25 min</span>
+      </div>
+      <div style="display:flex; gap:0;">
+        <div class="agenda-connector">
+          <div class="agenda-dot"></div>
+          <div class="agenda-line"></div>
+        </div>
+        <div class="agenda-content">
+          <div class="agenda-phase">Movimiento 2 — El diagnóstico</div>
+          <div class="agenda-title">Los asesinos del perrenque</div>
+          <div class="agenda-desc">Cada participante toma un test validado de 10 minutos que identifica los 2-3 saboteadores mentales que más le están matando el perrenque — patrones como el Juez interno, el Complaciente, el Evitador, el Hiperlogro, la Víctima, entre otros. Después, en grupos de 2, comparten cómo ese saboteador específico les está apagando las ganas de moverse en su búsqueda o en su transición ahora mismo. Es el momento donde la sala deja de generalizar y empieza a verse de verdad.</div>
+          <div class="agenda-tags">
+            <span class="tag">Test individual</span>
+            <span class="tag">Reflexión en parejas</span>
+            <span class="tag red">Diagnóstico real</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOCK 5 -->
+    <div class="agenda-block">
+      <div class="agenda-time">
+        <span class="time-label">01:05</span>
+        <span class="dur-label">25 min</span>
+      </div>
+      <div style="display:flex; gap:0;">
+        <div class="agenda-connector">
+          <div class="agenda-dot"></div>
+          <div class="agenda-line"></div>
+        </div>
+        <div class="agenda-content">
+          <div class="agenda-phase">Movimiento 3 — La construcción</div>
+          <div class="agenda-title">Plan de 30 días para reactivar el perrenque</div>
+          <div class="agenda-desc">Con el companion, cada persona co-crea un plan concreto: 3 acciones específicas para los próximos 30 días, con fechas y métricas. La IA recibe sus saboteadores como contexto y diseña el plan para neutralizar exactamente ese asesino del perrenque. Si tu top es Complaciente, tu plan incluye un ejercicio de "no" semanal. Si es Evitador, una acción incómoda obligatoria por semana. Si es Hiperlogro, descansos forzados. Personalizado de verdad.</div>
+          <div class="agenda-tags">
+            <span class="tag red">IA + saboteadores</span>
+            <span class="tag">Plan accionable</span>
+            <span class="tag">Métricas claras</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOCK 6 -->
+    <div class="agenda-block">
+      <div class="agenda-time">
+        <span class="time-label">01:30</span>
+        <span class="dur-label">10 min</span>
+      </div>
+      <div style="display:flex; gap:0;">
+        <div class="agenda-connector">
+          <div class="agenda-dot" style="background: var(--mid);"></div>
+          <div class="agenda-line" style="background: transparent;"></div>
+        </div>
+        <div class="agenda-content" style="border-bottom:none;">
+          <div class="agenda-phase">Cierre</div>
+          <div class="agenda-title">Muro de compromisos</div>
+          <div class="agenda-desc">Cada persona escribe su compromiso público en una pared digital compartida — visible para los 40, con nombre. Una acción específica que van a ejecutar en los próximos 7 días. Esta es la capa de accountability que diferencia una charla que se olvida de una que cambia trayectoria.</div>
+          <div class="agenda-tags">
+            <span class="tag">Accountability</span>
+            <span class="tag">Pared compartida</span>
+            <span class="tag">1 compromiso por persona</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- POST-SESSION -->
+  <div class="post-block">
+    <div class="post-label">Post-sesión · Próximos 30 días · Automatizado</div>
+    <div class="post-title">Seguimiento automático</div>
+    <p>Días 7, 15 y 30 después de la charla, el companion envía nudges automáticos por WhatsApp o email a cada participante: "¿Cómo va tu plan? ¿Qué obstáculo encontraste?" Si responden, la IA recalibra el plan en tiempo real.</p>
+    <p>Sin intervención humana. Sin trabajo adicional para el equipo de Colsubsidio ni para el facilitador. Al día 31, el sistema se archiva y entrega el reporte agregado anónimo a Colsubsidio.</p>
+  </div>
+</div>
+
+<!-- TAKEAWAYS -->
+<div class="section">
+  <div class="section-label">Lo que se llevan</div>
+  <h2>Resultados concretos para cada participante</h2>
+  <p>No saldrán con un cuaderno de apuntes. Saldrán con esto.</p>
+  <div class="takeaways-grid">
+    <div class="takeaway-card">
+      <div class="takeaway-title">Diagnóstico de saboteadores</div>
+      <div class="takeaway-desc">Claridad sobre los 2-3 patrones mentales que les están matando el perrenque ahora mismo.</div>
+    </div>
+    <div class="takeaway-card">
+      <div class="takeaway-title">Plan de 30 días personalizado</div>
+      <div class="takeaway-desc">3 acciones específicas, con fechas, diseñadas para reactivar el perrenque y neutralizar su saboteador dominante.</div>
+    </div>
+    <div class="takeaway-card">
+      <div class="takeaway-title">Companion por 30 días</div>
+      <div class="takeaway-desc">Acceso a la herramienta digital con recordatorios automáticos y recalibración del plan.</div>
+    </div>
+    <div class="takeaway-card">
+      <div class="takeaway-title">El marco del perrenque</div>
+      <div class="takeaway-desc">Entender qué es realmente el perrenque, cómo se entrena y cómo se protege en una transición profesional.</div>
+    </div>
+    <div class="takeaway-card">
+      <div class="takeaway-title">Compromiso público</div>
+      <div class="takeaway-desc">Una acción concreta para los próximos 7 días, visible para todo el grupo.</div>
+    </div>
+    <div class="takeaway-card">
+      <div class="takeaway-title">Comunidad de transición</div>
+      <div class="takeaway-desc">39 personas más con saboteadores y planes similares — la sensación de no estar solo.</div>
+    </div>
+  </div>
+</div>
+
+<!-- FACILITATOR -->
+<div class="section">
+  <div class="section-label">El conferencista</div>
+  <h2>Salomón Muriel</h2>
+  <div class="facilitator-layout">
+    <div style="display:flex; flex-direction:column; align-items:center; gap:10px;">
+      <div class="facilitator-img"><img src="/images/fotoSalo.jpeg" alt="Salomón Muriel" /></div>
+      <a href="https://www.linkedin.com/in/smuriel/" target="_blank" style="display:flex; align-items:center; gap:6px; font-size:12.5px; font-weight:500; color:#0A66C2; text-decoration:none;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="#0A66C2"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        /in/smuriel
+      </a>
+    </div>
+    <div>
+      <div class="facilitator-role">Emprendedor en Serie · Speaker · Fundador de Ignia</div>
+      <div class="creds">
+        <span class="cred">12+ años de experiencia</span>
+        <span class="cred">5 empresas fundadas</span>
+        <span class="cred">2 vendidas</span>
+        <span class="cred">Líder de equipos de IA &amp; Data</span>
+        <span class="cred">Fundador de Ignia</span>
+        <span class="cred">Speaker en conferencias tech</span>
+      </div>
+      <p style="font-size:14.5px; color: var(--mid); line-height:1.75; max-width:460px;">Con <strong>más de 12 años de experiencia en liderazgo, emprendimiento y tecnología</strong>, he fundado 5 empresas, liderado equipos de tecnología, IA y datos a escala, y hoy construyo Ignia — un nuevo modelo de educación superior. Hablo y facilito sobre perrenque, transiciones profesionales y la mentalidad maker aplicada a la vida.</p>
+      <p style="font-size:14.5px; color: var(--mid); line-height:1.75; max-width:460px; margin-top:10px;">Lo que traigo a esta charla no es teoría académica sino cicatrices reales: empresas que quebré, transiciones que viví, y los patrones que descubrí cuando todo funcionó. Esa es la diferencia que hace que las salas presten atención.</p>
+      <div style="margin-top:18px;">
+        <div style="font-size:10px; font-weight:500; letter-spacing:0.14em; text-transform:uppercase; color:var(--muted); margin-bottom:10px;">Han confiado en mí</div>
+        <div style="display:flex; flex-wrap:wrap; gap:7px;">
+          <span style="font-size:12px; background:var(--light); border-radius:20px; padding:4px 12px; color:var(--mid);">Colsubsidio</span>
+          <span style="font-size:12px; background:var(--light); border-radius:20px; padding:4px 12px; color:var(--mid);">Amarilo</span>
+          <span style="font-size:12px; background:var(--light); border-radius:20px; padding:4px 12px; color:var(--mid);">Halcyon</span>
+          <span style="font-size:12px; background:var(--light); border-radius:20px; padding:4px 12px; color:var(--mid);">Colombia Edtech</span>
+          <span style="font-size:12px; background:var(--light); border-radius:20px; padding:4px 12px; color:var(--mid);">EAFIT</span>
+          <span style="font-size:12px; background:var(--light); border-radius:20px; padding:4px 12px; color:var(--mid);">Universidad Católica</span>
+          <span style="font-size:12px; background:var(--light); border-radius:20px; padding:4px 12px; color:var(--mid);">EIA</span>
+          <span style="font-size:12px; background:var(--light); border-radius:20px; padding:4px 12px; color:var(--mid);">Universidad Externado</span>
+          <span style="font-size:12px; background:var(--light); border-radius:20px; padding:4px 12px; color:var(--mid);">PM Beers</span>
+          <span style="font-size:12px; background:var(--light); border-radius:20px; padding:4px 12px; color:var(--mid);">Landa Club</span>
+          <span style="font-size:12px; background:var(--light); border-radius:20px; padding:4px 12px; color:var(--mid);">Dr. Reddy's</span>
+          <span style="font-size:12px; background:var(--light); border-radius:20px; padding:4px 12px; color:var(--mid);">Correlation One</span>
+          <span style="font-size:12px; background:var(--light); border-radius:20px; padding:4px 12px; color:var(--muted); font-style:italic;">y más</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- INVESTMENT -->
+<div class="section">
+  <div class="section-label">Inversión</div>
+  <h2>Lo que incluye</h2>
+  <div class="investment-box">
+    <div class="investment-left">
+      <h3>Inversión total</h3>
+      <div class="investment-amount"><span>COP </span>2.500.000</div>
+      <div class="investment-note">Pago único. Incluye diseño, charla, companion digital y reporte agregado.</div>
+    </div>
+    <div class="investment-includes">
+      <div class="inc-item">
+        <div class="inc-check"></div>
+        <span class="inc-text">Diseño personalizado de la charla para el contexto de Colsubsidio</span>
+      </div>
+      <div class="inc-item">
+        <div class="inc-check"></div>
+        <span class="inc-text">Charla presencial completa (1h 40min)</span>
+      </div>
+      <div class="inc-item">
+        <div class="inc-check"></div>
+        <span class="inc-text">Construcción del companion digital con test de saboteadores integrado</span>
+      </div>
+      <div class="inc-item">
+        <div class="inc-check"></div>
+        <span class="inc-text">Seguimiento automático de 30 días — sin intervención humana</span>
+      </div>
+      <div class="inc-item">
+        <div class="inc-check"></div>
+        <span class="inc-text">Reporte agregado anónimo para Colsubsidio al cumplir el mes</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <p>Salomón Muriel · <a href="https://salomonmuriel.com">salomonmuriel.com</a> · <a href="https://wa.me/573132465100">WhatsApp</a></p>
+</div>
+
+</body>
+</html>
