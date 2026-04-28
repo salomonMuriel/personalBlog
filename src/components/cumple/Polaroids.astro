@@ -1,0 +1,90 @@
+---
+const polaroids: { caption: string; tilt: number }[] = [
+  { caption: "AIESEC era", tilt: -8 },
+  { caption: "Nata + yo", tilt: 5 },
+  { caption: "Franco & Luca", tilt: -3 },
+  { caption: "Modo empresa", tilt: 7 },
+  { caption: "Ignia crew", tilt: -12 },
+  { caption: "Cerveza time", tilt: 2 },
+];
+---
+
+<section class="polaroids" aria-label="Recuerdos">
+  <div class="panel__tab polaroids__tab">INVENTORY · MEMORIES</div>
+  <ul>
+    {
+      polaroids.map(p => (
+        <li class="polaroid" style={`--tilt:${p.tilt}deg`}>
+          <div class="polaroid__photo" aria-hidden="true" />
+          <span class="polaroid__caption">{p.caption}</span>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  .polaroids {
+    position: relative;
+    padding-top: 1rem;
+  }
+  .polaroids__tab {
+    position: relative;
+    display: inline-block;
+    top: 0;
+    left: 0;
+    margin-bottom: 0.75rem;
+  }
+  .polaroids ul {
+    list-style: none;
+    margin: 0;
+    padding: 1rem 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1.5rem 1rem;
+    place-items: center;
+  }
+  .polaroid {
+    --tilt: 0deg;
+    width: 150px;
+    padding: 10px 10px 28px;
+    background: #f4eeff;
+    color: #111;
+    transform: rotate(var(--tilt));
+    box-shadow: 6px 6px 0 0 rgba(0, 0, 0, 0.45);
+    transition: transform 0.2s ease;
+  }
+  .polaroid:hover {
+    transform: rotate(0deg) scale(1.05);
+    z-index: 3;
+  }
+  .polaroid__photo {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background: repeating-conic-gradient(
+        var(--magenta) 0% 25%,
+        var(--bg-2) 0% 50%
+      )
+      50% / 14px 14px;
+    image-rendering: pixelated;
+  }
+  .polaroid__caption {
+    display: block;
+    margin-top: 8px;
+    font-family: "Press Start 2P", monospace;
+    font-size: 0.55rem;
+    text-align: center;
+    color: #2a1a4a;
+    letter-spacing: 0.04em;
+  }
+  @media (max-width: 520px) {
+    .polaroids ul {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem 0.5rem;
+    }
+    .polaroid {
+      width: 100%;
+      max-width: 150px;
+    }
+  }
+</style>
