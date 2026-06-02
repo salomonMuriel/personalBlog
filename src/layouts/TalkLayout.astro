@@ -18,8 +18,8 @@ export interface Props {
 
 const { presentation, lang = defaultLang } = Astro.props;
 const { Content } = await render(presentation);
-const html_path = `../../talks/${presentation.id}.html`;
-const pdf_path = `../../talks/${presentation.id}.pdf`;
+const html_path = `/talks/${presentation.id}/${presentation.id}.html`;
+const pdf_path = `/talks/${presentation.id}/${presentation.id}.pdf`;
 ---
 
 <Layout title={`${SITE.title}`} lang={lang}>
