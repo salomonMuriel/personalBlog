@@ -1,0 +1,25 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//salomonmuriel//cumple35//ES
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VTIMEZONE
+TZID:America/Bogota
+BEGIN:STANDARD
+DTSTART:19700101T000000
+TZOFFSETFROM:-0500
+TZOFFSETTO:-0500
+TZNAME:COT
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+UID:cumple-salo-35@salomonmuriel.com
+DTSTAMP:20260420T000000Z
+DTSTART;TZID=America/Bogota:20260425T190000
+DTEND;TZID=America/Bogota:20260425T230000
+SUMMARY:Nivel 35 de Salo - Fiesta de cumple
+DESCRIPTION:Nos vemos en La Rana Dorada Usaquen. Cerveza fria\, risas\, polaroids y mucha mamera.
+LOCATION:La Rana Dorada Usaquen - Cra 6A #117-45\, Bogota
+URL:https://www.salomonmuriel.com/experimentos/cumple
+END:VEVENT
+END:VCALENDAR

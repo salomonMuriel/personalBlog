@@ -1,0 +1,50 @@
+---
+import PixelSprite from "./PixelSprite.astro";
+import { sprite } from "./sprite";
+
+const FROG = sprite(
+  [
+    "................",
+    "...GGG....GGG...",
+    "..GWWG...GWWG...",
+    "..GWBG...GWBG...",
+    ".GGGGGGGGGGGGG..",
+    "GGGGGGGGGGGGGGG.",
+    "GGGGGGGGGGGGGGG.",
+    "GGGGDDDDDDDGGGG.",
+    "GGGGGGGGGGGGGGG.",
+    ".GGGGGGGGGGGGG..",
+    ".GG.GGGGGGG.GG..",
+    ".GG..G...G..GG..",
+  ],
+  { G: "#ffd93d", D: "#6b4b00", W: "#ffffff", B: "#111110" }
+);
+---
+
+<div class="mascot">
+  <PixelSprite sprite={FROG} label="Rana Dorada" />
+</div>
+
+<style>
+  .mascot {
+    width: clamp(120px, 22vw, 180px);
+    aspect-ratio: 16 / 12;
+    image-rendering: pixelated;
+    filter: drop-shadow(4px 4px 0 rgba(0, 0, 0, 0.6));
+    animation: bob 2.4s ease-in-out infinite;
+  }
+  @keyframes bob {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-6px);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .mascot {
+      animation: none;
+    }
+  }
+</style>

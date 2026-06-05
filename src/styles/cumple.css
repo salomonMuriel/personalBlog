@@ -1,0 +1,140 @@
+/* Shared tokens + primitives for the /experimentos/cumple invite.
+   Loaded globally once from the page shell so every component can use
+   var(--gold), .panel, .btn, etc. without duplicating styles. */
+
+.arcade {
+  --bg: #1a0b2e;
+  --bg-2: #0b0920;
+  --gold: #ffd93d;
+  --gold-dim: #c9a827;
+  --ink: #f4eeff;
+  --ink-dim: #a3a0c9;
+  --magenta: #ff5ec4;
+  --green: #6bffb5;
+  --red: #ff5a5a;
+  --pixel: 4px;
+
+  position: relative;
+  min-height: 100svh;
+  padding: 0 1rem 3rem;
+  overflow-x: hidden;
+  background:
+    radial-gradient(2px 2px at 20% 30%, #fff 99%, transparent 100%),
+    radial-gradient(2px 2px at 70% 18%, #fff 99%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 45% 65%, #fff 99%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 85% 80%, #fff 99%, transparent 100%),
+    radial-gradient(1px 1px at 10% 90%, #fff 99%, transparent 100%),
+    radial-gradient(1px 1px at 55% 40%, #fff 99%, transparent 100%),
+    radial-gradient(1px 1px at 30% 10%, #fff 99%, transparent 100%),
+    linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+  background-attachment: fixed;
+  color: var(--ink);
+  font-family: "VT323", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 20px;
+  line-height: 1.5;
+}
+
+.scanlines {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.18) 0,
+    rgba(0, 0, 0, 0.18) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  mix-blend-mode: multiply;
+  z-index: 1;
+}
+
+.stage {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  margin: 0 auto;
+  padding-top: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+/* Panel primitive — every content section uses this frame */
+.panel {
+  position: relative;
+  background: rgba(11, 9, 32, 0.85);
+  border: var(--pixel) solid var(--gold);
+  padding: 1.75rem 1.25rem 1.25rem;
+  box-shadow:
+    0 0 0 var(--pixel) var(--bg-2),
+    8px 8px 0 0 rgba(255, 94, 196, 0.35);
+}
+.panel__tab {
+  position: absolute;
+  top: -14px;
+  left: 14px;
+  background: var(--gold);
+  color: var(--bg-2);
+  font-family: "Press Start 2P", monospace;
+  font-size: 0.6rem;
+  padding: 4px 10px;
+  letter-spacing: 0.08em;
+}
+.panel p,
+.panel dd,
+.panel dt,
+.panel li {
+  font-size: 1.15rem;
+}
+.panel strong {
+  color: var(--gold);
+}
+.panel a {
+  color: var(--green);
+  text-decoration: underline dotted;
+  text-underline-offset: 3px;
+}
+.panel a:hover {
+  color: var(--gold);
+}
+
+/* Button primitive */
+.btn {
+  font-family: "Press Start 2P", monospace;
+  font-size: 0.7rem;
+  padding: 0.85rem 1.1rem;
+  text-decoration: none !important;
+  letter-spacing: 0.05em;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: var(--pixel) solid var(--gold);
+  transition: transform 0.1s ease;
+}
+.btn:hover {
+  transform: translate(-2px, -2px);
+}
+.btn--primary {
+  background: var(--gold);
+  color: var(--bg-2) !important;
+  box-shadow: 6px 6px 0 0 var(--magenta);
+}
+.btn--secondary {
+  background: transparent;
+  color: var(--gold) !important;
+  box-shadow: 6px 6px 0 0 rgba(255, 217, 61, 0.3);
+}
+
+@media (max-width: 520px) {
+  .arcade {
+    padding: 0 0.75rem 2rem;
+  }
+  .stage {
+    gap: 1.75rem;
+    padding-top: 1.5rem;
+  }
+  .panel {
+    padding: 1.5rem 1rem 1rem;
+  }
+}

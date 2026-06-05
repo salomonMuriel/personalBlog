@@ -1,0 +1,49 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Hero from "@components/cumple/Hero.astro";
+import QuestBrief from "@components/cumple/QuestBrief.astro";
+import CharacterSheet from "@components/cumple/CharacterSheet.astro";
+import PartyCrew from "@components/cumple/PartyCrew.astro";
+import Achievements from "@components/cumple/Achievements.astro";
+import QuestLog from "@components/cumple/QuestLog.astro";
+import Polaroids from "@components/cumple/Polaroids.astro";
+import Rsvp from "@components/cumple/Rsvp.astro";
+import InviteFooter from "@components/cumple/InviteFooter.astro";
+import "@styles/cumple.css";
+
+const pageTitle = "Nivel 35 Desbloqueado · Salo";
+const pageDesc =
+  "Invitación oficial: el sábado 25 de abril celebramos los 35 de Salo en La Rana Dorada, Usaquén. ¿Listo para el boss fight?";
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDesc}
+  lang="es"
+  canonicalURL="https://www.salomonmuriel.com/experimentos/cumple"
+>
+  <Fragment slot="head">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap"
+      rel="stylesheet"
+    />
+    <meta name="robots" content="noindex,nofollow" />
+  </Fragment>
+
+  <main class="arcade">
+    <div class="scanlines" aria-hidden="true"></div>
+    <div class="stage">
+      <Hero />
+      <QuestBrief />
+      <CharacterSheet />
+      <PartyCrew />
+      <Achievements />
+      <QuestLog />
+      <Polaroids />
+      <Rsvp />
+      <InviteFooter />
+    </div>
+  </main>
+</Layout>
