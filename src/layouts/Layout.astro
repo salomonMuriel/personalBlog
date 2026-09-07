@@ -8,10 +8,13 @@ import Iconos from "@components/Iconos.astro";
 import RotuloParte from "@components/RotuloParte.astro";
 import SiteNav from "@components/SiteNav.astro";
 import Contacto from "@components/Contacto.astro";
-// Las dos caras que pintan el bloque de arriba. Se precargan para que el
-// título no aparezca con la fuente de respaldo y después salte.
+// Las cuatro caras que pintan por encima del pliegue. Sin precargarlas, el
+// texto sale con la fuente de respaldo, y cuando llegan cada bloque se
+// reajusta: eso vuelve a disparar el LCP y lo empuja más de un segundo.
 import archivo from "@fontsource-variable/archivo/files/archivo-latin-wdth-normal.woff2?url";
 import slab from "@fontsource/alfa-slab-one/files/alfa-slab-one-latin-400-normal.woff2?url";
+import mono from "@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-400-normal.woff2?url";
+import pen from "@fontsource-variable/caveat/files/caveat-latin-wght-normal.woff2?url";
 
 export interface Props {
   title: string;
@@ -73,6 +76,8 @@ const verificacionGoogle = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
       crossorigin
     />
     <link rel="preload" href={slab} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={mono} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={pen} as="font" type="font/woff2" crossorigin />
 
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />

@@ -39,7 +39,7 @@ queda como registro de decisiones; este archivo describe el estado actual.
 
 ```bash
 npm run dev              # servidor de desarrollo (--host)
-npm run build            # astro build + jampack
+npm run build            # astro build
 npm run build:quiet      # build silencioso
 npm run preview          # previsualizar el build
 npm run lint             # eslint
@@ -196,6 +196,11 @@ WhatsApp es el canal principal, así que la conversión se mide ahí.
   `Service` y `FAQPage` en la portada, `BreadcrumbList` en las secundarias.
 - `robots.txt` y `llms.txt` se generan (`src/pages/`). `llms.txt` se arma
   del mismo contenido que la página, así que no se desactualiza solo.
+
+No hay paso de post-procesamiento de imágenes: Astro ya emite WebP con
+`srcset`, Tailwind 4 quita el CSS muerto y Vercel comprime. Jampack se quitó
+porque corría después de que el adaptador ya había copiado los estáticos a
+`.vercel/output/static`, así que su trabajo nunca llegaba a producción.
 
 ## Presupuesto de rendimiento
 
