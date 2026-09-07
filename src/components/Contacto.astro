@@ -1,0 +1,161 @@
+---
+import { CONTACTO, wa } from "@config";
+import { routes, type Lang } from "@i18n/ui";
+import { t } from "@i18n/utils";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+
+const canales = [
+  {
+    n: "01",
+    label: t(lang, "contacto.wa"),
+    nota: CONTACTO.whatsappBonito,
+    href: wa(),
+    origen: "pie-whatsapp",
+    externo: true,
+  },
+  {
+    n: "02",
+    label: t(lang, "contacto.agendar"),
+    nota: t(lang, "contacto.agendarNota"),
+    href: CONTACTO.cal,
+    origen: "pie-agenda",
+    externo: true,
+  },
+  {
+    n: "03",
+    label: t(lang, "contacto.linkedin"),
+    nota: t(lang, "contacto.linkedinNota"),
+    href: CONTACTO.linkedin,
+    origen: "pie-linkedin",
+    externo: true,
+  },
+  {
+    n: "04",
+    label: t(lang, "contacto.correo"),
+    nota: CONTACTO.correo,
+    href: `mailto:${CONTACTO.correo}?subject=${encodeURIComponent(
+      lang === "es" ? "Orden de trabajo" : "Work order"
+    )}`,
+    origen: "pie-correo",
+    externo: false,
+  },
+];
+
+const anio = new Date().getFullYear();
+
+const a = (href: string, texto: string) =>
+  `<a href="${href}" class="border-b border-current transition-colors hover:text-white">${texto}</a>`;
+
+const otrasPaginas =
+  lang === "es"
+    ? `${a(routes.mentoria.es, "Mentoría")} para el que está arrancando, ${a(routes.charlas.es, "charlas")} si me quiere invitar a hablar, ${a(routes.sobreMi.es, "sobre mí")} si quiere saber con quién se va a meter y ${a(routes.ahora.es, "ahora")} para ver en qué ando esta temporada.`
+    : `${a(routes.mentoria.en, "Mentoring")} if you're just starting, ${a(routes.charlas.en, "talks")} if you want me on a stage, ${a(routes.sobreMi.en, "about")} if you want to know who you're getting into this with, and ${a(routes.ahora.en, "now")} for what I'm up to this season.`;
+---
+
+<section id="contacto" class="bg-panel text-panelfg">
+  <div class="hoja pb-[clamp(1.6rem,3vw,2.4rem)] pt-[clamp(2.6rem,6vw,4.6rem)]">
+    <div
+      class="grid grid-cols-1 items-end gap-[clamp(1.2rem,3vw,3rem)] lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]"
+    >
+      <h2
+        class="font-arch text-[clamp(3rem,13vw,7.4rem)] font-black uppercase leading-[.86] tracking-[-.03em] [font-stretch:70%]"
+      >
+        {t(lang, "contacto.titulo")}
+      </h2>
+      <p class="max-w-[44ch] text-[1.05rem] leading-[1.55] text-paneltxt">
+        {t(lang, "contacto.bajada")}
+      </p>
+    </div>
+  </div>
+
+  <div class="border-t border-panelborde">
+    {
+      canales.map((c, i) => (
+        <a
+          href={c.href}
+          target={c.externo ? "_blank" : undefined}
+          rel={c.externo ? "noopener" : undefined}
+          data-origen={c.origen}
+          class:list={[
+            "group flex items-center gap-4 px-[clamp(1.25rem,4vw,3.5rem)] py-[clamp(1.1rem,2.6vw,1.8rem)] transition-colors hover:bg-rojo2 hover:text-white sm:gap-7",
+            i < canales.length - 1 && "border-b border-panelborde2",
+          ]}
+        >
+          <span class="font-mono w-7 flex-none text-[10.5px] tracking-[.16em] text-panelnota group-hover:text-white/80">
+            {c.n}
+          </span>
+          <span class="font-arch min-w-0 flex-1 text-[clamp(1.5rem,6vw,3.2rem)] font-black uppercase leading-none tracking-[-.03em] [font-stretch:78%]">
+            {c.label}
+          </span>
+          <span class="font-mono hidden flex-none text-[11.5px] tracking-[.1em] text-panelnota group-hover:text-white/80 sm:block">
+            {c.nota}
+          </span>
+          <span
+            class="flex-none transition-transform duration-200 group-hover:translate-x-2"
+            aria-hidden="true"
+          >
+            <svg class="h-6 w-6 sm:h-8 sm:w-8">
+              <use href="#i-arw" />
+            </svg>
+          </span>
+        </a>
+      ))
+    }
+  </div>
+
+  <div class="hoja py-[clamp(2rem,4vw,3rem)]">
+    <div class="grid grid-cols-1 border-t border-panelborde md:grid-cols-3">
+      <div
+        class="border-b border-panelborde2 py-5 md:border-b-0 md:border-r md:pr-7"
+      >
+        <p
+          class="font-mono mb-2 text-[10.5px] uppercase tracking-[.18em] text-rojo3"
+        >
+          {t(lang, "pie.sinFormulario")}
+        </p>
+        <p class="text-[.95rem] leading-[1.5] text-paneltxt">
+          {t(lang, "pie.sinFormularioTxt")}
+        </p>
+      </div>
+      <div
+        class="border-b border-panelborde2 py-5 md:border-b-0 md:border-r md:px-7"
+      >
+        <p
+          class="font-mono mb-2 text-[10.5px] uppercase tracking-[.18em] text-rojo3"
+        >
+          {t(lang, "pie.sinEquipo")}
+        </p>
+        <p class="text-[.95rem] leading-[1.5] text-paneltxt">
+          {t(lang, "pie.sinEquipoTxt")}
+        </p>
+      </div>
+      <div class="py-5 md:pl-7">
+        <p
+          class="font-mono mb-2 text-[10.5px] uppercase tracking-[.18em] text-rojo3"
+        >
+          {t(lang, "pie.otras")}
+        </p>
+        <!-- set:html para que el subrayado no se coma los espacios de
+             alrededor: en JSX cada salto de línea entra dentro del <a>. -->
+        <p
+          class="text-[.95rem] leading-[1.5] text-paneltxt"
+          set:html={otrasPaginas}
+        />
+      </div>
+    </div>
+
+    <!-- panelnota y no el #75746e del diseño: a 10px ese gris queda en
+         3,7:1 sobre el panel y no pasa contraste. -->
+    <div
+      class="font-mono mt-8 flex flex-wrap gap-x-6 gap-y-2 text-[10px] uppercase tracking-[.16em] text-panelnota"
+    >
+      <span>© {anio} Salomón Muriel</span>
+      <span>{t(lang, "pie.coords")}</span>
+      <span class="text-rojo3">{t(lang, "pie.vigente")}</span>
+    </div>
+  </div>
+</section>

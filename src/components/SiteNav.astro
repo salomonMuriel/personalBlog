@@ -1,0 +1,132 @@
+---
+import { wa } from "@config";
+import { routes, type Lang } from "@i18n/ui";
+import { t, alternatePath } from "@i18n/utils";
+
+interface Props {
+  lang: Lang;
+  /** A dónde apunta el nombre: "#arriba" en el home, "/" en las demás. */
+  home: string;
+}
+const { lang, home } = Astro.props;
+
+const enlaces = [
+  { href: routes.mentoria[lang], label: t(lang, "nav.mentoria") },
+  { href: routes.charlas[lang], label: t(lang, "nav.charlas") },
+  { href: routes.sobreMi[lang], label: t(lang, "nav.sobreMi") },
+  { href: routes.ahora[lang], label: t(lang, "nav.ahora") },
+];
+
+const actual = Astro.url.pathname.endsWith("/")
+  ? Astro.url.pathname
+  : `${Astro.url.pathname}/`;
+
+const otro: Lang = lang === "es" ? "en" : "es";
+const otroHref = alternatePath(actual, otro);
+
+const saludo =
+  lang === "es"
+    ? "Hola Salomón, tengo una empresa de ___ y quiero contarle qué tengo montado."
+    : "Hi Salomón, I run a ___ business and I'd like to tell you what I have running.";
+---
+
+<header
+  id="nav"
+  class="sticky top-0 z-40 border-b border-transparent bg-papel/90 backdrop-blur-[10px] transition-[border-color,background-color] duration-300"
+>
+  <div class="hoja">
+    <div class="flex h-[60px] items-center gap-4">
+      <a
+        href={home}
+        class="font-mono mr-auto whitespace-nowrap text-[12.5px] font-semibold uppercase tracking-[.16em]"
+        >Salomón Muriel<span class="text-rojo2">.</span></a
+      >
+
+      <nav
+        class="hidden items-center gap-6 text-[14px] font-semibold md:flex"
+        aria-label={t(lang, "nav.paginas")}
+      >
+        {
+          enlaces.map(e => (
+            <a
+              href={e.href}
+              aria-current={actual === e.href ? "page" : undefined}
+              class:list={[
+                "border-b-[1.5px] pb-[3px] transition-colors hover:border-rojo hover:text-tinta",
+                actual === e.href
+                  ? "border-rojo text-tinta"
+                  : "border-transparent text-gris",
+              ]}
+            >
+              {e.label}
+            </a>
+          ))
+        }
+        <a
+          href={otroHref}
+          hreflang={otro}
+          class="font-mono border-b-[1.5px] border-transparent pb-[3px] text-[11px] uppercase tracking-[.14em] text-gris transition-colors hover:border-rojo hover:text-tinta"
+          >{t(lang, "lang.otro")}</a
+        >
+      </nav>
+
+      <a
+        href={wa(saludo)}
+        target="_blank"
+        rel="noopener"
+        data-origen="nav"
+        class="inline-flex items-center gap-2 whitespace-nowrap rounded bg-rojo2 px-3.5 py-2 text-[12.5px] font-semibold text-white transition-[background-color,transform] hover:bg-tinta active:translate-y-px"
+      >
+        {t(lang, "nav.escribirme")}<svg class="h-4 w-4" aria-hidden="true"
+          ><use href="#i-arw"></use></svg
+        >
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- Menú de páginas en móvil: el diseño esconde la navegación bajo md, así
+     que abajo del rótulo va una fila deslizable con las mismas cuatro. -->
+<nav
+  class="border-b border-linea bg-papel/90 backdrop-blur-[10px] md:hidden"
+  aria-label={t(lang, "nav.paginas")}
+>
+  <div class="barrita hoja flex gap-5 overflow-x-auto py-2.5">
+    {
+      enlaces.map(e => (
+        <a
+          href={e.href}
+          aria-current={actual === e.href ? "page" : undefined}
+          class:list={[
+            "font-mono whitespace-nowrap border-b-[1.5px] pb-[2px] text-[11px] uppercase tracking-[.14em] font-semibold",
+            actual === e.href
+              ? "border-rojo text-tinta"
+              : "border-transparent text-gris",
+          ]}
+        >
+          {e.label}
+        </a>
+      ))
+    }
+    <a
+      href={otroHref}
+      hreflang={otro}
+      class="font-mono ml-auto whitespace-nowrap border-b-[1.5px] border-transparent pb-[2px] text-[11px] uppercase tracking-[.14em] text-gris"
+      >{t(lang, "lang.otro")}</a
+    >
+  </div>
+</nav>
+
+<script>
+  // La barra sólo muestra su línea inferior cuando ya se despegó del tope.
+  const nav = document.getElementById("nav");
+  const centinela = document.getElementById("arriba");
+  if (nav && centinela && "IntersectionObserver" in window) {
+    new IntersectionObserver(
+      entradas => {
+        nav.classList.toggle("border-linea", !entradas[0].isIntersecting);
+      },
+      { rootMargin: "-90px 0px 0px 0px" }
+    ).observe(centinela);
+  }
+</script>

@@ -1,0 +1,22 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Ahora from "@components/paginas/Ahora.astro";
+import { breadcrumbLd } from "@utils/jsonld";
+import { routes } from "@i18n/ui";
+
+export const prerender = true;
+---
+
+<Layout
+  title="Ahora — Salomón Muriel"
+  description="En qué anda Salomón Muriel esta temporada: Ignia, la práctica de consultoría, los mellizos y lo que esté corriendo."
+  lang="es"
+  schemas={[
+    breadcrumbLd([
+      { name: "Inicio", url: routes.home.es },
+      { name: "Ahora", url: routes.ahora.es },
+    ]),
+  ]}
+>
+  <Ahora lang="es" />
+</Layout>

@@ -67,7 +67,10 @@ const srcBuf = readFileSync(srcPath);
 
 const sourcePng = await sharp(srcBuf)
   .rotate()
-  .resize(1024, 1024, { fit: "contain", background: { r: 0, g: 0, b: 0, alpha: 0 } })
+  .resize(1024, 1024, {
+    fit: "contain",
+    background: { r: 0, g: 0, b: 0, alpha: 0 },
+  })
   .png()
   .toBuffer();
 

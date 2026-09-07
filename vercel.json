@@ -1,0 +1,79 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    { "source": "/es", "destination": "/", "permanent": true },
+    { "source": "/es/", "destination": "/", "permanent": true },
+
+    { "source": "/es/about", "destination": "/sobre-mi/", "permanent": true },
+    { "source": "/es/about/", "destination": "/sobre-mi/", "permanent": true },
+    { "source": "/about", "destination": "/sobre-mi/", "permanent": true },
+    { "source": "/about/", "destination": "/sobre-mi/", "permanent": true },
+
+    { "source": "/es/now", "destination": "/ahora/", "permanent": true },
+    { "source": "/es/now/", "destination": "/ahora/", "permanent": true },
+    { "source": "/now", "destination": "/ahora/", "permanent": true },
+    { "source": "/now/", "destination": "/ahora/", "permanent": true },
+
+    { "source": "/es/before", "destination": "/ahora/", "permanent": true },
+    { "source": "/es/before/", "destination": "/ahora/", "permanent": true },
+    {
+      "source": "/es/before/:slug*",
+      "destination": "/ahora/",
+      "permanent": true
+    },
+    { "source": "/en/before", "destination": "/en/now/", "permanent": true },
+    { "source": "/en/before/", "destination": "/en/now/", "permanent": true },
+    {
+      "source": "/en/before/:slug*",
+      "destination": "/en/now/",
+      "permanent": true
+    },
+    { "source": "/before", "destination": "/ahora/", "permanent": true },
+    { "source": "/before/:slug*", "destination": "/ahora/", "permanent": true },
+
+    { "source": "/es/talks", "destination": "/charlas/", "permanent": true },
+    { "source": "/es/talks/", "destination": "/charlas/", "permanent": true },
+    {
+      "source": "/es/talks/:slug*",
+      "destination": "/charlas/",
+      "permanent": true
+    },
+    {
+      "source": "/en/talks/:slug+",
+      "destination": "/en/talks/",
+      "permanent": true
+    },
+    { "source": "/talks", "destination": "/charlas/", "permanent": true },
+
+    { "source": "/es/companies", "destination": "/", "permanent": true },
+    { "source": "/es/companies/", "destination": "/", "permanent": true },
+    { "source": "/en/companies", "destination": "/en/", "permanent": true },
+    { "source": "/en/companies/", "destination": "/en/", "permanent": true },
+    { "source": "/companies", "destination": "/", "permanent": true },
+    { "source": "/companies/", "destination": "/", "permanent": true }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+        }
+      ]
+    },
+    {
+      "source": "/keystatic/(.*)",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+    },
+    {
+      "source": "/prensa/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=86400" }]
+    }
+  ]
+}

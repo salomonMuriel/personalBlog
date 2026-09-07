@@ -25,21 +25,20 @@ function inlineLocalImageHrefs(svg) {
     (_match, urlPath) => {
       const filePath = resolve(root, "public" + urlPath);
       const buf = readFileSync(filePath);
-      const ext = urlPath.toLowerCase().endsWith(".jpg") || urlPath.toLowerCase().endsWith(".jpeg")
-        ? "image/jpeg"
-        : urlPath.toLowerCase().endsWith(".webp")
-          ? "image/webp"
-          : "image/png";
+      const ext =
+        urlPath.toLowerCase().endsWith(".jpg") ||
+        urlPath.toLowerCase().endsWith(".jpeg")
+          ? "image/jpeg"
+          : urlPath.toLowerCase().endsWith(".webp")
+            ? "image/webp"
+            : "image/png";
       return `href="data:${ext};base64,${buf.toString("base64")}"`;
     }
   );
 }
 
 function extractSymbolInner(id) {
-  const re = new RegExp(
-    `<symbol id="${id}"[^>]*>([\\s\\S]*?)<\\/symbol>`,
-    "m"
-  );
+  const re = new RegExp(`<symbol id="${id}"[^>]*>([\\s\\S]*?)<\\/symbol>`, "m");
   const m = spritesSrc.match(re);
   if (!m) throw new Error(`symbol #${id} not found`);
   return inlineLocalImageHrefs(m[1].replace(/<!--[\s\S]*?-->/g, "").trim());
@@ -173,9 +172,9 @@ const svg = `<?xml version="1.0" encoding="UTF-8"?>
 
   <!-- divider row of hearts/pixels -->
   <g transform="translate(${W / 2 - 140}, 320)">
-    ${[0, 46, 92, 138, 184, 230].map(
-      x => `<rect x="${x}" y="0" width="24" height="6" fill="${C.pink}"/>`
-    ).join("")}
+    ${[0, 46, 92, 138, 184, 230]
+      .map(x => `<rect x="${x}" y="0" width="24" height="6" fill="${C.pink}"/>`)
+      .join("")}
   </g>
 
   <!-- event details (2 lines) -->

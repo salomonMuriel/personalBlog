@@ -1,0 +1,155 @@
+---
+import { Image } from "astro:assets";
+import EncabezadoSeccion from "@components/EncabezadoSeccion.astro";
+import { wa } from "@config";
+import { copia } from "@data/landing";
+import { routes, type Lang } from "@i18n/ui";
+import { cupos, consultoriasLibres, fechaLarga } from "@utils/cupos";
+import chicago from "@assets/site/chicago.jpg";
+import marathon from "@assets/site/marathon.jpg";
+import bonfire from "@assets/site/bonfire.jpeg";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const c = copia(lang).cupos;
+
+const imagenes: Record<string, ImageMetadata> = { chicago, marathon, bonfire };
+
+const hayCupo = consultoriasLibres > 0;
+const numeros: Record<Lang, string[]> = {
+  es: ["cero", "uno", "dos", "tres", "cuatro", "cinco"],
+  en: ["zero", "one", "two", "three", "four", "five"],
+};
+const cuantos = numeros[lang][consultoriasLibres] ?? String(consultoriasLibres);
+const ctaTexto =
+  consultoriasLibres === 1 ? c.ctaUno : c.ctaVarios.replace("%n", cuantos);
+---
+
+<section
+  id="cupos"
+  class="border-y border-linea bg-papel2 py-[clamp(3.2rem,7vw,5.6rem)]"
+>
+  <div class="hoja">
+    <EncabezadoSeccion rotulo={c.rotulo} nota={c.nota} notaCh={42} />
+
+    <div
+      class="grid grid-cols-1 items-start gap-[clamp(1.5rem,4vw,3.5rem)] lg:grid-cols-[minmax(0,1fr)_minmax(0,1.25fr)]"
+    >
+      <div>
+        <h2
+          class="font-arch max-w-[16ch] text-[clamp(1.9rem,4.4vw,3.2rem)] font-extrabold leading-[1.03] tracking-[-.028em] [font-stretch:104%]"
+        >
+          {c.titulo}
+        </h2>
+        <p class="mt-5 max-w-[48ch] text-[1.06rem] leading-[1.6]">{c.p1}</p>
+        <p
+          class="mt-4 max-w-[48ch] text-[1.02rem] leading-[1.6] text-gris"
+          set:html={c.p2}
+        />
+        <p
+          class="font-mono mt-6 text-[10.5px] uppercase leading-[1.8] tracking-[.16em] text-gris"
+        >
+          {c.actualizado}
+          {fechaLarga(cupos.actualizado, lang)}
+        </p>
+
+        <p
+          class="font-mono mb-3 mt-7 text-[10.5px] uppercase tracking-[.18em] text-gris"
+        >
+          {c.fotosRotulo}
+        </p>
+        <div class="grid grid-cols-3 gap-[clamp(.6rem,1.4vw,.9rem)]">
+          {
+            c.fotos.map(f => (
+              <figure class="m-0">
+                <div class="rounded border border-linea bg-campo p-[6px]">
+                  <Image
+                    src={imagenes[f.clave]}
+                    widths={[160, 320]}
+                    sizes="(min-width:1024px) 150px, 30vw"
+                    loading="lazy"
+                    alt={f.alt}
+                    class="aspect-square h-auto w-full rounded-[1px] object-cover [filter:grayscale(.16)]"
+                  />
+                </div>
+                <figcaption class="font-mono mt-2 text-[9.5px] uppercase leading-[1.5] tracking-[.1em] text-gris">
+                  {f.pie}
+                </figcaption>
+              </figure>
+            ))
+          }
+        </div>
+      </div>
+
+      <div>
+        <div class="rounded border-[1.5px] border-linea2 bg-campo p-5 sm:p-6">
+          <div class="flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <p
+                class="font-arch text-[clamp(2.4rem,5.4vw,3.6rem)] font-black leading-none tabular-nums tracking-[-.05em] [font-stretch:84%]"
+              >
+                <span class="text-rojo2">{cupos.consultoriasOcupadas}</span>
+                {lang === "es" ? "de" : "of"}
+                {cupos.consultoriasTotal}
+              </p>
+              <p class="mt-1.5 text-[13.5px] text-gris">{c.ocupadas}</p>
+            </div>
+            <div
+              class="flex gap-[6px]"
+              role="img"
+              aria-label={c.ariaCupos
+                .replace("%s", String(cupos.consultoriasOcupadas))
+                .replace("%t", String(cupos.consultoriasTotal))}
+            >
+              {
+                Array.from({ length: cupos.consultoriasTotal }).map((_, i) => (
+                  <i
+                    class:list={[
+                      "block h-5 w-5 rounded border-[1.5px]",
+                      i < cupos.consultoriasOcupadas
+                        ? "border-tinta bg-tinta"
+                        : "border-linea2",
+                    ]}
+                  />
+                ))
+              }
+            </div>
+          </div>
+          <p
+            class="mt-5 border-t border-linea pt-5 text-[.96rem] leading-[1.55] text-gris"
+          >
+            {c.explicacion.replace("%t", String(cupos.consultoriasTotal))}
+          </p>
+
+          {
+            hayCupo ? (
+              <a
+                href={wa(c.ctaWa)}
+                target="_blank"
+                rel="noopener"
+                data-origen="cupos"
+                class="mt-5 inline-flex items-center gap-2.5 rounded bg-rojo2 px-5 py-3.5 text-[.95rem] font-bold text-white transition-[background-color,transform] hover:bg-tinta active:translate-y-px"
+              >
+                {ctaTexto}
+                <svg class="h-[18px] w-[18px] opacity-80" aria-hidden="true">
+                  <use href="#i-arw" />
+                </svg>
+              </a>
+            ) : (
+              <p class="font-mono mt-5 rounded border-[1.5px] border-dashed border-linea2 px-4 py-3.5 text-[10.5px] uppercase leading-[1.7] tracking-[.14em] text-gris">
+                {c.sinCupo}
+              </p>
+            )
+          }
+        </div>
+
+        <p
+          class="mt-5 max-w-[52ch] text-[.98rem] leading-[1.6] text-gris"
+          set:html={`${c.remateA}<a href="${routes.mentoria[lang]}" class="border-b-[1.5px] border-current font-semibold text-rojo2 transition-colors hover:text-tinta">${c.remateEnlace}</a>${c.remateB}`}
+        />
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,365 @@
+---
+import EncabezadoPagina from "@components/EncabezadoPagina.astro";
+import EncabezadoSeccion from "@components/EncabezadoSeccion.astro";
+import Faq from "@components/home/Faq.astro";
+import { wa, CONTACTO } from "@config";
+import { copiaMentoria } from "@data/mentoria";
+import { routes, type Lang } from "@i18n/ui";
+import { cupos, mentoriasLibres, fechaLarga } from "@utils/cupos";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const c = copiaMentoria(lang);
+
+const hayCupo = mentoriasLibres > 0;
+const numeros: Record<Lang, string[]> = {
+  es: ["cero", "uno", "dos", "tres", "cuatro", "cinco"],
+  en: ["zero", "one", "two", "three", "four", "five"],
+};
+const cuantos = numeros[lang][mentoriasLibres] ?? String(mentoriasLibres);
+const ctaTexto =
+  mentoriasLibres === 1
+    ? c.cupos.ctaUno
+    : c.cupos.ctaVarios.replace("%n", cuantos);
+---
+
+<EncabezadoPagina
+  rotulo={c.rotulo}
+  nota={c.nota}
+  titulo={c.titulo}
+  manuscrita={c.manuscrita}
+  bajada={c.bajada}
+  anchoTitulo="max-w-[16ch]"
+>
+  <!-- ficha del servicio -->
+  <dl
+    class="font-mono mt-[clamp(1.8rem,3.6vw,2.6rem)] grid max-w-[62rem] grid-cols-1 gap-x-10 text-[10.5px] uppercase tracking-[.13em] sm:grid-cols-2"
+  >
+    {
+      c.ficha.filas.map(([k, v]) => (
+        <div class="flex justify-between gap-4 border-b border-linea py-[9px]">
+          <dt class="text-gris">{k}</dt>
+          <dd class="text-right font-medium">{v}</dd>
+        </div>
+      ))
+    }
+  </dl>
+</EncabezadoPagina>
+
+<!-- ═══ CÓMO FUNCIONA ═══ -->
+<section class="py-[clamp(2.6rem,5.5vw,4.4rem)]">
+  <div class="hoja">
+    <EncabezadoSeccion rotulo={c.comoFunciona.rotulo} />
+    <h2
+      class="font-arch max-w-[22ch] text-[clamp(1.7rem,4vw,2.9rem)] font-extrabold leading-[1.05] tracking-[-.028em] [font-stretch:104%]"
+    >
+      {c.comoFunciona.titulo}
+    </h2>
+
+    <div
+      class="mt-[clamp(1.6rem,3.4vw,2.6rem)] grid grid-cols-1 gap-[clamp(1rem,2.4vw,1.6rem)] sm:grid-cols-2 lg:grid-cols-4"
+    >
+      {
+        c.comoFunciona.pasos.map(p => (
+          <div class="border-t-[2.5px] border-tinta pt-3.5">
+            <span class="font-mono block text-[10.5px] tracking-[.18em] text-rojo2">
+              {p.n}
+            </span>
+            <h3 class="font-arch mt-2 text-[1.14rem] font-bold leading-[1.15] tracking-[-.02em]">
+              {p.t}
+            </h3>
+            <p class="mt-2 text-[.96rem] leading-[1.55] text-gris">{p.d}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ═══ LA SEMANA ═══ -->
+<section
+  class="rayas border-y border-linea bg-papel2 py-[clamp(2.6rem,5.5vw,4.4rem)]"
+>
+  <div class="hoja">
+    <EncabezadoSeccion rotulo={c.semana.rotulo} />
+    <div
+      class="grid grid-cols-1 items-center gap-[clamp(1.5rem,4vw,3.5rem)] lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]"
+    >
+      <div>
+        <h2
+          class="font-arch max-w-[18ch] text-[clamp(1.7rem,4vw,2.9rem)] font-extrabold leading-[1.05] tracking-[-.028em] [font-stretch:104%]"
+        >
+          {c.semana.titulo}
+        </h2>
+        <p class="mt-4 max-w-[46ch] text-[1.02rem] leading-[1.6] text-gris">
+          {c.semana.texto}
+        </p>
+      </div>
+
+      <div class="overflow-hidden rounded bg-panel text-panelfg">
+        <div
+          class="font-mono flex flex-wrap items-baseline gap-3 border-b border-panelborde px-4 py-4 text-[10.5px] uppercase tracking-[.18em] text-panelnota sm:px-6"
+        >
+          <span>{c.semana.encabezado}</span><span
+            class="ml-auto font-semibold text-rojo3"
+            >{c.semana.responsable}</span
+          >
+        </div>
+        {
+          c.semana.tareas.map((t, i) => (
+            <div
+              class:list={[
+                "grid grid-cols-[1.35rem_1fr] items-start gap-3.5 px-4 py-3.5 sm:px-6",
+                i > 0 && "border-t border-panelborde2",
+              ]}
+            >
+              <span
+                class="mt-[2px] block h-[1.35rem] w-[1.35rem] rounded border-[1.6px] border-[#4a4c53]"
+                aria-hidden="true"
+              />
+              <span class="text-[1rem] leading-[1.35]">{t}</span>
+            </div>
+          ))
+        }
+        <div
+          class="flex flex-wrap items-baseline gap-x-4 gap-y-1 border-t border-panelborde px-4 py-4 sm:px-6"
+        >
+          <span
+            class="font-mono text-[12px] font-semibold uppercase tracking-[.14em] text-rojo3"
+            >{c.semana.pie}</span
+          >
+          <span class="text-[.95rem] leading-[1.4] text-[#8b8a83]"
+            >{c.semana.pieNota}</span
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- la regla -->
+    <div
+      class="mt-[clamp(2rem,4vw,3rem)] max-w-[62rem] rounded border-[1.5px] border-tinta"
+    >
+      <div
+        class="font-mono flex justify-between gap-3 border-b border-tinta bg-tinta px-4 py-3.5 text-[10.5px] uppercase tracking-[.18em] text-panelfg sm:px-5"
+      >
+        <span>{c.regla.rotulo}</span><span class="text-rojo3"
+          >{c.regla.aviso}</span
+        >
+      </div>
+      <p class="bg-campo px-4 py-5 text-[1.02rem] leading-[1.68] sm:px-5">
+        {c.regla.texto}
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ A QUIÉN LE SIRVE ═══ -->
+<section class="py-[clamp(2.6rem,5.5vw,4.4rem)]">
+  <div class="hoja">
+    <EncabezadoSeccion rotulo={c.paraQuien.rotulo} />
+    <h2
+      class="font-arch max-w-[20ch] text-[clamp(1.7rem,4vw,2.9rem)] font-extrabold leading-[1.05] tracking-[-.028em] [font-stretch:104%]"
+    >
+      {c.paraQuien.titulo}
+    </h2>
+
+    <div
+      class="mt-[clamp(1.6rem,3.4vw,2.6rem)] grid grid-cols-1 gap-[clamp(1.2rem,3vw,2.4rem)] md:grid-cols-2"
+    >
+      <div class="rounded border-[1.5px] border-linea2 bg-campo p-5 sm:p-6">
+        <p
+          class="font-mono mb-4 text-[10.5px] uppercase tracking-[.18em] text-tinta"
+        >
+          {c.paraQuien.si.t}
+        </p>
+        <ul class="space-y-3">
+          {
+            c.paraQuien.si.items.map(x => (
+              <li class="flex items-start gap-3">
+                <span class="mt-[3px] flex-none text-rojo2" aria-hidden="true">
+                  <svg class="h-[15px] w-[15px]">
+                    <use href="#i-check" />
+                  </svg>
+                </span>
+                <span class="text-[.98rem] leading-[1.5]">{x}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <div
+        class="rounded border-[1.5px] border-dashed border-linea2 p-5 sm:p-6"
+      >
+        <p
+          class="font-mono mb-4 text-[10.5px] uppercase tracking-[.18em] text-rojo2"
+        >
+          {c.paraQuien.no.t}
+        </p>
+        <ul class="space-y-3">
+          {
+            c.paraQuien.no.items.map(x => (
+              <li class="flex items-start gap-3">
+                <span class="mt-[3px] flex-none text-rojo2" aria-hidden="true">
+                  <svg class="h-[15px] w-[15px]">
+                    <use href="#i-x" />
+                  </svg>
+                </span>
+                <span class="text-[.98rem] leading-[1.5] text-gris">{x}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+
+    <p
+      class="mt-6 max-w-[58ch] text-[1.02rem] leading-[1.6] text-gris"
+      set:html={`${c.paraQuien.remateA}<a href="${routes.home[lang]}" class="border-b-[1.5px] border-current font-semibold text-rojo2 transition-colors hover:text-tinta">${c.paraQuien.remateEnlace}</a>${c.paraQuien.remateB}`}
+    />
+  </div>
+</section>
+
+<!-- ═══ ACTION LAB ═══ -->
+<section class="bg-panel py-[clamp(2.4rem,5vw,4rem)] text-panelfg">
+  <div class="hoja">
+    <div
+      class="grid grid-cols-1 items-end gap-[clamp(1.2rem,3vw,3rem)] lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]"
+    >
+      <div>
+        <p
+          class="font-mono mb-3 text-[10.5px] uppercase tracking-[.18em] text-rojo3"
+        >
+          {c.ignia.rotulo}
+        </p>
+        <h2
+          class="font-arch max-w-[22ch] text-[clamp(1.6rem,3.6vw,2.6rem)] font-extrabold leading-[1.06] tracking-[-.03em] [font-stretch:100%]"
+        >
+          {c.ignia.titulo}
+        </h2>
+        <p class="mt-4 max-w-[52ch] text-[1.02rem] leading-[1.6] text-paneltxt">
+          {c.ignia.texto}
+        </p>
+        <p class="mt-3 max-w-[52ch] text-[1.02rem] leading-[1.6]">
+          <b class="font-semibold">{c.ignia.remate}</b>
+        </p>
+      </div>
+      <a
+        href={c.ignia.url}
+        target="_blank"
+        rel="noopener"
+        data-origen="mentoria-action-lab"
+        class="inline-flex items-center justify-center gap-2.5 justify-self-start rounded border-[1.5px] border-[#3a3c43] px-5 py-3.5 text-[.95rem] font-semibold transition-[border-color,background-color] hover:border-panelfg hover:bg-[#1e1f24]"
+      >
+        {c.ignia.cta}<svg
+          class="h-[18px] w-[18px] opacity-80"
+          aria-hidden="true"><use href="#i-arw"></use></svg
+        >
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CUPOS ═══ -->
+<section
+  class="border-b border-linea bg-papel2 py-[clamp(2.6rem,5.5vw,4.4rem)]"
+>
+  <div class="hoja">
+    <EncabezadoSeccion
+      rotulo={c.cupos.rotulo}
+      nota={c.cupos.nota}
+      notaCh={42}
+    />
+
+    <div
+      class="max-w-[46rem] rounded border-[1.5px] border-linea2 bg-campo p-5 sm:p-6"
+    >
+      <div class="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <p
+            class="font-arch text-[clamp(2.4rem,5.4vw,3.6rem)] font-black leading-none tabular-nums tracking-[-.05em] [font-stretch:84%]"
+          >
+            <span class="text-rojo2">{cupos.mentoriasOcupadas}</span>
+            {lang === "es" ? "de" : "of"}
+            {cupos.mentoriasTotal}
+          </p>
+          <p class="mt-1.5 text-[13.5px] text-gris">{c.cupos.ocupadas}</p>
+        </div>
+        <div
+          class="flex gap-[6px]"
+          role="img"
+          aria-label={c.cupos.ariaCupos
+            .replace("%s", String(cupos.mentoriasOcupadas))
+            .replace("%t", String(cupos.mentoriasTotal))}
+        >
+          {
+            Array.from({ length: cupos.mentoriasTotal }).map((_, i) => (
+              <i
+                class:list={[
+                  "block h-5 w-5 rounded border-[1.5px]",
+                  i < cupos.mentoriasOcupadas
+                    ? "border-tinta bg-tinta"
+                    : "border-linea2",
+                ]}
+              />
+            ))
+          }
+        </div>
+      </div>
+      <p
+        class="mt-5 border-t border-linea pt-5 text-[.96rem] leading-[1.55] text-gris"
+      >
+        {c.cupos.explicacion.replace("%t", String(cupos.mentoriasTotal))}
+      </p>
+      <p
+        class="font-mono mt-3 text-[10.5px] uppercase leading-[1.8] tracking-[.16em] text-gris"
+      >
+        {c.cupos.actualizado}
+        {fechaLarga(cupos.actualizado, lang)}
+      </p>
+
+      {
+        hayCupo ? (
+          <>
+            <div class="mt-5 flex flex-wrap gap-3">
+              <a
+                href={wa(c.cupos.ctaWa)}
+                target="_blank"
+                rel="noopener"
+                data-origen="mentoria-cupos"
+                class="inline-flex items-center gap-2.5 rounded bg-rojo2 px-5 py-3.5 text-[.95rem] font-bold text-white transition-[background-color,transform] hover:bg-tinta active:translate-y-px"
+              >
+                {ctaTexto}
+                <svg class="h-[18px] w-[18px] opacity-80" aria-hidden="true">
+                  <use href="#i-arw" />
+                </svg>
+              </a>
+              <a
+                href={CONTACTO.calMentoria}
+                target="_blank"
+                rel="noopener"
+                data-origen="mentoria-agenda"
+                class="inline-flex items-center gap-2.5 rounded border-[1.5px] border-linea2 px-5 py-3.5 text-[.95rem] font-bold transition-[border-color,background-color,transform] hover:border-tinta hover:bg-papel2 active:translate-y-px"
+              >
+                <svg class="h-4 w-4 opacity-70" aria-hidden="true">
+                  <use href="#i-cal" />
+                </svg>
+                {lang === "es" ? "O agende una llamada" : "Or book a call"}
+              </a>
+            </div>
+            <p class="font-mono mt-4 text-[10px] uppercase leading-[1.7] tracking-[.12em] text-gris">
+              {c.cupos.plata}
+            </p>
+          </>
+        ) : (
+          <p class="font-mono mt-5 rounded border-[1.5px] border-dashed border-linea2 px-4 py-3.5 text-[10.5px] uppercase leading-[1.7] tracking-[.14em] text-gris">
+            {c.cupos.sinCupo}
+          </p>
+        )
+      }
+    </div>
+  </div>
+</section>
+
+<Faq lang={lang} preguntas={c.preguntas} />

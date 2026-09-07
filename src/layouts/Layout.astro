@@ -1,217 +1,288 @@
 ---
-import { LOCALE, SITE } from "@config";
-import "@fontsource-variable/dm-sans";
-import "@fontsource-variable/syne";
 import "@styles/base.css";
-import { ClientRouter } from "astro:transitions";
-import { Schema } from "astro-seo-schema";
-import { t, getLangTag } from "@i18n/utils";
-import type { Lang } from "@i18n/ui";
-import { defaultLang } from "@i18n/ui";
-
-const googleSiteVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
+import { SITE } from "@config";
+import { defaultLang, routes, type Lang } from "@i18n/ui";
+import { alternatePath, getLangTag } from "@i18n/utils";
+import { profilePageLd } from "@utils/jsonld";
+import Iconos from "@components/Iconos.astro";
+import RotuloParte from "@components/RotuloParte.astro";
+import SiteNav from "@components/SiteNav.astro";
+import Contacto from "@components/Contacto.astro";
+// Las dos caras que pintan el bloque de arriba. Se precargan para que el
+// título no aparezca con la fuente de respaldo y después salte.
+import archivo from "@fontsource-variable/archivo/files/archivo-latin-wdth-normal.woff2?url";
+import slab from "@fontsource/alfa-slab-one/files/alfa-slab-one-latin-400-normal.woff2?url";
 
 export interface Props {
-  title?: string;
-  author?: string;
-  description?: string;
-  ogImage?: string;
-  canonicalURL?: string;
-  pubDatetime?: Date;
-  modDatetime?: Date | null;
-  scrollSmooth?: boolean;
+  title: string;
+  description: string;
   lang?: Lang;
+  ogImage?: string;
+  /** JSON-LD extra de la página (Service, FAQPage, BreadcrumbList…). */
+  schemas?: unknown[];
+  /** El home ancla la navegación a #arriba; las demás páginas van a "/". */
+  navHome?: string;
+  noindex?: boolean;
 }
 
 const {
-  title = SITE.title,
-  author = SITE.author,
-  description = SITE.desc,
-  ogImage = SITE.ogImage,
-  canonicalURL = new URL(Astro.url.pathname, Astro.site).href,
-  pubDatetime,
-  modDatetime,
-  scrollSmooth = false,
+  title,
+  description,
   lang = defaultLang,
+  ogImage = SITE.ogImage,
+  schemas = [],
+  navHome,
+  noindex = false,
 } = Astro.props;
 
-const socialImageURL = new URL(
-  ogImage ?? SITE.ogImage ?? "og.png",
-  Astro.url.origin
-).href;
+const rutaActual = Astro.url.pathname;
+const canonical = new URL(rutaActual, SITE.website).href;
+const esUrl = new URL(alternatePath(rutaActual, "es"), SITE.website).href;
+const enUrl = new URL(alternatePath(rutaActual, "en"), SITE.website).href;
+const ogUrl = new URL(ogImage, SITE.website).href;
 
-const htmlLang = lang;
-const langTags = getLangTag(lang);
+const todos = [profilePageLd(lang, canonical), ...schemas];
+const gaId = "G-061B5QE8B1";
+const verificacionGoogle = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
 ---
 
 <!doctype html>
-<html lang={htmlLang} class={`${scrollSmooth && "scroll-smooth"}`}>
+<html lang={getLangTag(lang)}>
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content={SITE.author} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+    {
+      verificacionGoogle && (
+        <meta name="google-site-verification" content={verificacionGoogle} />
+      )
+    }
+
+    <link
+      rel="preload"
+      href={archivo}
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="preload" href={slab} as="font" type="font/woff2" crossorigin />
+
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="manifest" href="/site.webmanifest" />
-    <link rel="canonical" href={canonicalURL} />
     <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta name="theme-color" content="#F2F1ED" />
 
-    <!-- Alternate language links -->
-    <link
-      rel="alternate"
-      hreflang="en"
-      href={canonicalURL.replace(`/${lang}/`, "/en/")}
-    />
-    <link
-      rel="alternate"
-      hreflang="es"
-      href={canonicalURL.replace(`/${lang}/`, "/es/")}
-    />
-    <link
-      rel="alternate"
-      hreflang="x-default"
-      href={canonicalURL.replace(`/${lang}/`, "/en/")}
-    />
+    <link rel="alternate" hreflang="es" href={esUrl} />
+    <link rel="alternate" hreflang="en" href={enUrl} />
+    <link rel="alternate" hreflang="x-default" href={esUrl} />
 
-    <meta name="generator" content={Astro.generator} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE.author} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogUrl} />
+    <meta property="og:locale" content={lang === "es" ? "es_CO" : "en_US"} />
 
-    <Schema
-      item={{
-        "@context": "https://schema.org",
-        "@type": "ProfilePage",
-        "@id": SITE.website,
-        primaryImageOfPage: {
-          "@context": "https://schema.org",
-          "@type": "ImageObject",
-          contentUrl: SITE.ogImage,
-        },
-        mainEntity: {
-          "@context": "https://schema.org",
-          "@type": "Person",
-          name: SITE.author,
-          alternateName: "Luis Salomón Muriel Urbina",
-          description: t(lang, "seo.schemaDesc"),
-          disambiguatingDescription: t(lang, "seo.schemaDisambig"),
-          spouse: {
-            "@type": "Person",
-            name: "Natalia Rodríguez Triana",
-            url: "https://www.linkedin.com/in/nat-innovacion/",
-          },
-          alumniOf: {
-            "@type": "CollegeOrUniversity",
-            name: ["Universidad de los Andes"],
-            url: "https://uniandes.edu.co/",
-          },
-          knowsAbout: ["Entrepreneurship", "Technology", "Data Science"],
-          url: SITE.website,
-          image: SITE.website + SITE.ogImage,
-          jobTitle: "Tech Director - NPD",
-          worksFor: {
-            "@type": "Organization",
-            name: "R5",
-            url: "https://www.grupor5.com/",
-          },
-          birthDate: "1991-01-01",
-          birthPlace: {
-            "@type": "Place",
-            name: "Bogotá, Colombia",
-          },
-          sameAs: [
-            "https://www.linkedin.com/in/smuriel/",
-            "https://github.com/salomonMuriel",
-            "https://steamcommunity.com/id/salomonk/",
-          ],
-        },
-      }}
-    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogUrl} />
+
+    {
+      todos.map(s => (
+        <script
+          type="application/ld+json"
+          is:inline
+          set:html={JSON.stringify(s)}
+        />
+      ))
+    }
 
     <slot name="head" />
 
-    <!-- Google Tag Manager -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-061B5QE8B1"
-    ></script>
-    <script is:inline>
+    <link rel="preconnect" href="https://www.googletagmanager.com" />
+
+    <script is:inline define:vars={{ gaId }}>
+      // El shim de gtag queda listo de una vez, así que los clics que
+      // ocurran antes de que baje la librería se encolan y no se pierden.
+      // Los 160 kB de GA se piden cuando el navegador esté desocupado o al
+      // primer gesto del visitante: primero pinta la página, después mide.
       window.dataLayer = window.dataLayer || [];
       function gtag() {
         dataLayer.push(arguments);
       }
+      window.gtag = gtag;
       gtag("js", new Date());
-      gtag("config", "G-061B5QE8B1");
+      gtag("config", gaId);
+
+      var bajado = false;
+      function bajarGa() {
+        if (bajado) return;
+        bajado = true;
+        var s = document.createElement("script");
+        s.async = true;
+        s.src = "https://www.googletagmanager.com/gtag/js?id=" + gaId;
+        document.head.appendChild(s);
+      }
+      for (var i = 0, ev = ["pointerdown", "keydown", "scroll"]; i < 3; i++) {
+        addEventListener(ev[i], bajarGa, { once: true, passive: true });
+      }
+      if ("requestIdleCallback" in window) {
+        requestIdleCallback(bajarGa, { timeout: 4000 });
+      } else {
+        addEventListener("load", function () {
+          setTimeout(bajarGa, 1500);
+        });
+      }
     </script>
-    <!-- End Google Tag Manager -->
-
-    <!-- General Meta Tags -->
-    <title>{title}</title>
-    <meta name="title" content={title} />
-    <meta name="description" content={description} />
-    <meta name="author" content={author} />
-    <link rel="sitemap" href="/sitemap-index.xml" />
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonicalURL} />
-    <meta property="og:image" content={socialImageURL} />
-    <meta property="og:type" content="website" />
-    <meta property="og:locale" content={lang === "es" ? "es_CO" : "en_US"} />
-
-    <!-- Article Published/Modified time -->
-    {
-      pubDatetime && (
-        <meta
-          property="article:published_time"
-          content={pubDatetime.toISOString()}
-        />
-      )
-    }
-    {
-      modDatetime && (
-        <meta
-          property="article:modified_time"
-          content={modDatetime.toISOString()}
-        />
-      )
-    }
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content={canonicalURL} />
-    <meta property="twitter:title" content={title} />
-    <meta property="twitter:description" content={description} />
-    <meta property="twitter:image" content={socialImageURL} />
-
-    <meta name="theme-color" content="" />
-
-    {
-      googleSiteVerification && (
-        <meta
-          name="google-site-verification"
-          content={googleSiteVerification}
-        />
-      )
-    }
-
-    <!-- Cal.com embed — lazy loaded on first interaction -->
-    <script src="../scripts/cal-embed.ts"></script>
-
-    <ClientRouter />
   </head>
-  <body>
-    <script is:inline>
-      function applyTheme() {
-        const savedTheme = localStorage.getItem("theme");
-        const prefersDark = window.matchMedia(
-          "(prefers-color-scheme: dark)"
-        ).matches;
-        if (savedTheme) {
-          document.documentElement.setAttribute("data-theme", savedTheme);
-        } else if (prefersDark) {
-          document.documentElement.setAttribute("data-theme", "dark");
+
+  <body class="font-arch barrita text-[17px] leading-[1.55] antialiased">
+    <div class="grano" aria-hidden="true"></div>
+    <Iconos />
+
+    <a
+      href="#arriba"
+      class="sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-50 focus:rounded focus:bg-tinta focus:px-4 focus:py-2 focus:text-papel"
+    >
+      {lang === "es" ? "Saltar al contenido" : "Skip to content"}
+    </a>
+
+    <RotuloParte lang={lang} />
+    <SiteNav lang={lang} home={navHome ?? routes.home[lang]} />
+
+    <main id="arriba">
+      <slot />
+      <Contacto lang={lang} />
+    </main>
+
+    <script>
+      // Entrada escalonada + subrayado rojo de los renglones. Un solo
+      // observador para toda la página.
+      const objetivos = document.querySelectorAll("article, .observa, h2, .rv");
+      if ("IntersectionObserver" in window) {
+        const io = new IntersectionObserver(
+          entradas => {
+            for (const e of entradas) {
+              if (!e.isIntersecting) continue;
+              e.target.classList.add("visto");
+              io.unobserve(e.target);
+            }
+          },
+          { threshold: 0.22 }
+        );
+        objetivos.forEach(el => io.observe(el));
+      } else {
+        objetivos.forEach(el => el.classList.add("visto"));
+      }
+    </script>
+
+    <script>
+      // Analítica de conversión: WhatsApp es el canal principal, así que
+      // cada clic se reporta con el lugar de donde salió.
+      type Gtag = (...args: unknown[]) => void;
+      const enviar = (nombre: string, params: Record<string, unknown>) => {
+        const g = (window as unknown as { gtag?: Gtag }).gtag;
+        if (typeof g === "function") g(nombre, params);
+      };
+
+      document.addEventListener("click", ev => {
+        const t = ev.target;
+        if (!(t instanceof Element)) return;
+        const a = t.closest("a[href]");
+        if (!(a instanceof HTMLAnchorElement)) return;
+        const href = a.getAttribute("href") || "";
+        const origen = a.dataset.origen || "sin-marcar";
+
+        if (href.startsWith("https://wa.me/")) {
+          enviar("contacto_whatsapp", {
+            origen,
+            marcadas: a.dataset.marcadas || "",
+            puntaje: a.dataset.puntaje || "",
+            pagina: location.pathname,
+          });
+        } else if (href.includes("cal.com/")) {
+          enviar("contacto_agenda", { origen, pagina: location.pathname });
+        } else if (href.startsWith("mailto:")) {
+          enviar("contacto_correo", { origen, pagina: location.pathname });
+        } else if (href.includes("linkedin.com")) {
+          enviar("contacto_linkedin", { origen, pagina: location.pathname });
+        }
+      });
+    </script>
+
+    <script>
+      // Captura de UTM: se guarda la primera visita y se pega a los enlaces
+      // de WhatsApp, para saber qué campaña trajo la conversación.
+      const LLAVE = "sm_origen";
+      const CAMPOS = [
+        "utm_source",
+        "utm_medium",
+        "utm_campaign",
+        "utm_content",
+        "utm_term",
+      ];
+
+      function leerGuardado(): Record<string, string> | null {
+        try {
+          const raw = sessionStorage.getItem(LLAVE);
+          return raw ? JSON.parse(raw) : null;
+        } catch {
+          return null;
         }
       }
-      applyTheme();
-      document.addEventListener("astro:after-swap", applyTheme);
+
+      const params = new URLSearchParams(location.search);
+      const entrantes: Record<string, string> = {};
+      for (const c of CAMPOS) {
+        const v = params.get(c);
+        if (v) entrantes[c] = v;
+      }
+      if (!Object.keys(entrantes).length && document.referrer) {
+        try {
+          const ref = new URL(document.referrer);
+          if (ref.host !== location.host) entrantes.utm_source = ref.host;
+        } catch {
+          /* referrer inservible */
+        }
+      }
+
+      let origen = leerGuardado();
+      if (!origen && Object.keys(entrantes).length) {
+        origen = entrantes;
+        try {
+          sessionStorage.setItem(LLAVE, JSON.stringify(origen));
+        } catch {
+          /* sin almacenamiento: seguimos sin UTM */
+        }
+      }
+
+      if (origen) {
+        const etiqueta = [
+          origen.utm_source,
+          origen.utm_campaign,
+          origen.utm_content,
+        ]
+          .filter(Boolean)
+          .join(" / ");
+        if (etiqueta) {
+          document
+            .querySelectorAll<HTMLAnchorElement>('a[href^="https://wa.me/"]')
+            .forEach(a => {
+              a.dataset.utm = etiqueta;
+            });
+        }
+      }
     </script>
-    <slot />
   </body>
 </html>

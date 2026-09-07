@@ -1,0 +1,26 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Charlas from "@components/paginas/Charlas.astro";
+import { copiaCharlas } from "@data/charlas";
+import { breadcrumbLd } from "@utils/jsonld";
+import { routes } from "@i18n/ui";
+
+export const prerender = true;
+
+const c = copiaCharlas("en");
+---
+
+<Layout
+  title={c.meta.title}
+  description={c.meta.description}
+  lang="en"
+  ogImage="/en/og.png"
+  schemas={[
+    breadcrumbLd([
+      { name: "Home", url: routes.home.en },
+      { name: "Talks", url: routes.charlas.en },
+    ]),
+  ]}
+>
+  <Charlas lang="en" />
+</Layout>

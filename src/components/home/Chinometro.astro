@@ -1,0 +1,356 @@
+---
+import EncabezadoSeccion from "@components/EncabezadoSeccion.astro";
+import { CONTACTO, wa } from "@config";
+import { copia } from "@data/landing";
+import type { Lang } from "@i18n/ui";
+
+/**
+ * Hoja de chequeo + carátula. Todo el comportamiento vive en el <script>
+ * de abajo, en JS plano: no hay isla de React ni estado que persista.
+ * No guarda nada, no pide correo — lo único que produce es un mensaje de
+ * WhatsApp ya escrito, con lo marcado adentro.
+ */
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const c = copia(lang).chinometro;
+
+const waVacio = wa(c.waVacio);
+const textos = {
+  telefono: CONTACTO.whatsapp,
+  escala: c.escala,
+  esperando: c.esperando,
+  items: c.items,
+  waVacio: c.waVacio,
+  waEncabezado: c.waEncabezado,
+  waDe100: c.waDe100,
+  waMarque: c.waMarque,
+  waCierre: c.waCierre,
+  waProcedencia: c.waProcedencia,
+};
+---
+
+<section
+  id="chinometro"
+  class="rayas border-y border-linea bg-papel2 py-[clamp(3.2rem,7vw,5.6rem)]"
+>
+  <div class="hoja">
+    <EncabezadoSeccion rotulo={c.rotulo} nota={c.nota} notaCh={44} />
+
+    <h2
+      class="font-arch max-w-[18ch] text-[clamp(1.9rem,4.4vw,3.4rem)] font-extrabold leading-[1.03] tracking-[-.028em] [font-stretch:104%]"
+    >
+      {c.titulo}
+    </h2>
+    <p class="mt-4 max-w-[54ch] text-[1.05rem] leading-[1.55] text-gris">
+      {c.bajada}
+    </p>
+
+    <div
+      class="mt-[clamp(1.8rem,3.6vw,2.6rem)] grid grid-cols-1 items-start gap-[clamp(1.2rem,2.6vw,2rem)] lg:grid-cols-[minmax(0,1.28fr)_minmax(0,1fr)]"
+    >
+      <!-- hoja -->
+      <div
+        class="overflow-hidden rounded border-[1.5px] border-linea2 bg-campo"
+      >
+        <div
+          class="font-mono flex flex-wrap items-baseline gap-3 border-b border-linea px-4 py-3.5 text-[10.5px] uppercase tracking-[.18em] text-gris sm:px-5"
+        >
+          <span>{c.encabezadoHoja}</span>
+          <span class="ml-auto font-semibold text-rojo2">
+            <output id="marcadas">0</output>
+            {c.marcadasDe.replace("%s", String(c.sintomas.length))}
+          </span>
+        </div>
+
+        <div id="hoja">
+          {
+            c.sintomas.map((s, i) => (
+              <label class="reng flex cursor-pointer items-start gap-3.5 border-b border-linea px-4 py-3.5 transition-colors sm:px-5">
+                <input type="checkbox" class="casilla rounded" data-s={s} />
+                <span class="font-mono w-5 flex-none pt-[5px] text-[10.5px] text-gris">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span class="reng-t pt-[2px] text-[.98rem] leading-[1.4]">
+                  {s}
+                </span>
+              </label>
+            ))
+          }
+        </div>
+
+        <div
+          class="flex flex-wrap items-center gap-3 border-t border-linea px-4 py-3.5 sm:px-5"
+        >
+          <button
+            type="button"
+            id="limpiar"
+            class="font-mono inline-flex items-center gap-2 rounded border-[1.5px] border-linea2 px-3.5 py-2 text-[10.5px] font-medium uppercase tracking-[.14em] transition-[border-color,background-color,transform] hover:border-tinta hover:bg-papel2 active:translate-y-px"
+          >
+            <svg class="h-3.5 w-3.5" aria-hidden="true"
+              ><use href="#i-x"></use></svg
+            >{c.borrar}
+          </button>
+          <p class="text-[13px] leading-[1.4] text-gris">{c.estimado}</p>
+        </div>
+      </div>
+
+      <!-- lectura -->
+      <div class="lg:sticky lg:top-[76px]">
+        <div
+          class="overflow-hidden rounded border-t-[3px] border-rojo bg-panel text-panelfg shadow-[0_1px_0_rgba(22,23,26,.06),0_18px_40px_-26px_rgba(22,23,26,.75)]"
+        >
+          <div
+            class="font-mono flex items-baseline gap-3 border-b border-panelborde px-4 py-3.5 text-[10.5px] uppercase tracking-[.18em] text-panelnota sm:px-5"
+          >
+            <span>{c.lectura}</span><span
+              class="ml-auto font-semibold text-rojo3">{c.indice}</span
+            >
+          </div>
+
+          <div class="px-4 pb-4 pt-5 sm:px-5">
+            <svg
+              viewBox="0 0 300 182"
+              class="block h-auto w-full"
+              role="img"
+              aria-labelledby="tit-medidor"
+            >
+              <title id="tit-medidor">{c.caratula}</title>
+              <path
+                d="M30 150 A120 120 0 0 1 270 150"
+                fill="none"
+                stroke="#2c2e34"
+                stroke-width="15"></path>
+              <path
+                id="arco"
+                d="M30 150 A120 120 0 0 1 270 150"
+                fill="none"
+                stroke="#EA4B3E"
+                stroke-width="15"
+                stroke-dasharray="377"
+                stroke-dashoffset="377"
+                style="transition:stroke-dashoffset .55s cubic-bezier(.16,1,.3,1)"
+              ></path>
+              <g id="marcas" stroke="#5c5e66" stroke-width="1.6"></g>
+              <g id="aguja">
+                <line
+                  x1="150"
+                  y1="150"
+                  x2="150"
+                  y2="54"
+                  stroke="#ECEAE4"
+                  stroke-width="3"></line>
+                <polygon points="150,46 146.4,59 153.6,59" fill="#EA4B3E"
+                ></polygon>
+              </g>
+              <circle
+                cx="150"
+                cy="150"
+                r="8"
+                fill="#17181C"
+                stroke="#5c5e66"
+                stroke-width="2.5"></circle>
+              <text
+                x="30"
+                y="174"
+                fill="#8e8d86"
+                font-family="IBM Plex Mono, monospace"
+                font-size="10.5">0</text
+              >
+              <text
+                x="256"
+                y="174"
+                fill="#8e8d86"
+                font-family="IBM Plex Mono, monospace"
+                font-size="10.5">100</text
+              >
+            </svg>
+
+            <div
+              class="mt-1 flex items-end justify-between gap-3 border-t border-panelborde pt-3.5"
+            >
+              <output
+                id="puntaje"
+                class="font-arch text-[clamp(3.2rem,11vw,4.6rem)] font-black leading-[.82] tabular-nums tracking-[-.05em] [font-stretch:84%]"
+                >00</output
+              >
+              <span
+                class="font-mono pb-2 text-[10.5px] uppercase tracking-[.18em] text-panelnota"
+                >/ 100</span
+              >
+            </div>
+
+            <p
+              id="ver-titulo"
+              class="font-arch mt-3 text-[clamp(1.15rem,3.4vw,1.5rem)] font-extrabold leading-[1.06] tracking-[-.03em] [font-stretch:100%]"
+            >
+              {c.escala[0].t}
+            </p>
+            <p
+              id="ver-texto"
+              class="mt-2 text-[14.5px] leading-[1.5] text-paneltxt"
+            >
+              {c.escala[0].d}
+            </p>
+          </div>
+
+          <div
+            class="mx-4 mb-1 border-t border-panelborde bg-panelhondo sm:mx-5"
+          >
+            <div
+              class="font-mono flex justify-between gap-3 border-b border-panelborde px-3.5 py-2.5 text-[10px] uppercase tracking-[.18em] text-panelnota"
+            >
+              <span>{c.orden}</span><span id="conteo">0 {c.items[1]}</span>
+            </div>
+            <output
+              id="salida"
+              class="barrita font-mono block max-h-[9.5rem] overflow-y-auto whitespace-pre-wrap p-3.5 text-[10.5px] leading-[1.65] text-[#c9c7c0]"
+              >{c.esperando}</output
+            >
+          </div>
+          <div class="perfora perfora-panel mx-4 sm:mx-5" aria-hidden="true">
+          </div>
+
+          <div class="px-4 pb-5 pt-3 sm:px-5">
+            <a
+              id="wa"
+              href={waVacio}
+              target="_blank"
+              rel="noopener"
+              data-origen="chinometro"
+              class="flex items-center justify-center gap-2.5 rounded bg-rojo2 px-4 py-3.5 text-[.95rem] font-bold text-white transition-[background-color,color,transform] hover:bg-white hover:text-panel active:translate-y-px"
+            >
+              <svg class="h-[18px] w-[18px]" aria-hidden="true"
+                ><use href="#i-chat"></use></svg
+              >{c.ctaWa}
+            </a>
+            <p
+              class="font-mono mt-2.5 text-[10px] uppercase leading-[1.6] tracking-[.1em] text-panelnota"
+            >
+              {c.ctaWaNota}
+            </p>
+            <a
+              href={CONTACTO.calConsultoria}
+              target="_blank"
+              rel="noopener"
+              data-origen="chinometro-agenda"
+              class="mt-3 flex items-center justify-center gap-2.5 rounded border-[1.5px] border-[#3a3c43] px-4 py-3 text-[.9rem] font-semibold transition-[border-color,background-color] hover:border-panelfg hover:bg-[#1e1f24]"
+            >
+              <svg class="h-4 w-4 opacity-80" aria-hidden="true"
+                ><use href="#i-cal"></use></svg
+              >{c.ctaAgenda}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script define:vars={{ T: textos }} is:inline>
+  (function () {
+    "use strict";
+
+    var marcas = document.getElementById("marcas");
+    for (var t = 0; t <= 10; t++) {
+      var ang = Math.PI + (t / 10) * Math.PI,
+        r1 = 104,
+        r2 = t % 5 === 0 ? 88 : 96;
+      var ln = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      ln.setAttribute("x1", (150 + r1 * Math.cos(ang)).toFixed(1));
+      ln.setAttribute("y1", (150 + r1 * Math.sin(ang)).toFixed(1));
+      ln.setAttribute("x2", (150 + r2 * Math.cos(ang)).toFixed(1));
+      ln.setAttribute("y2", (150 + r2 * Math.sin(ang)).toFixed(1));
+      if (t % 5 === 0) ln.setAttribute("stroke", "#ECEAE4");
+      marcas.appendChild(ln);
+    }
+
+    var casillas = Array.prototype.slice.call(
+      document.querySelectorAll("#hoja .casilla")
+    );
+    var elPunt = document.getElementById("puntaje"),
+      elAguja = document.getElementById("aguja"),
+      elArco = document.getElementById("arco"),
+      elTit = document.getElementById("ver-titulo"),
+      elTxt = document.getElementById("ver-texto"),
+      elSal = document.getElementById("salida"),
+      elCon = document.getElementById("conteo"),
+      elWa = document.getElementById("wa"),
+      elMar = document.getElementById("marcadas");
+
+    function pintar() {
+      var puestas = casillas.filter(function (c) {
+        return c.checked;
+      });
+      var n = puestas.length,
+        p = Math.round((n / casillas.length) * 100);
+      var nivel = T.escala[0];
+      for (var i = 0; i < T.escala.length; i++) {
+        if (p >= T.escala[i].min) nivel = T.escala[i];
+      }
+
+      elPunt.textContent = ("0" + p).slice(-2);
+      elMar.textContent = n;
+      elAguja.style.transform = "rotate(" + (-90 + p * 1.8) + "deg)";
+      elArco.style.strokeDashoffset = String(377 - (377 * p) / 100);
+      elTit.textContent = nivel.t;
+      elTxt.textContent = nivel.d;
+      elCon.textContent = n + " " + (n === 1 ? T.items[0] : T.items[1]);
+
+      var texto;
+      if (n === 0) {
+        texto = T.esperando;
+        elWa.href =
+          "https://wa.me/" +
+          T.telefono +
+          "?text=" +
+          encodeURIComponent(T.waVacio);
+      } else {
+        var lineas = puestas
+          .map(function (c) {
+            return "• " + c.getAttribute("data-s");
+          })
+          .join("\n");
+        texto =
+          T.waEncabezado +
+          " " +
+          p +
+          " " +
+          T.waDe100 +
+          "\n\n" +
+          T.waMarque +
+          "\n" +
+          lineas +
+          "\n\n" +
+          T.waCierre;
+        // La procedencia de la visita viaja en el mensaje: es la única
+        // manera de saber qué campaña abrió la conversación.
+        if (elWa.dataset.utm)
+          texto += "\n\n(" + T.waProcedencia + " " + elWa.dataset.utm + ")";
+        elWa.href =
+          "https://wa.me/" + T.telefono + "?text=" + encodeURIComponent(texto);
+      }
+      // Lo que quedó marcado es la señal de calificación: se manda a GA4
+      // junto con el clic.
+      elWa.dataset.marcadas = puestas
+        .map(function (c) {
+          return casillas.indexOf(c) + 1;
+        })
+        .join(",");
+      elWa.dataset.puntaje = String(p);
+      elSal.textContent = texto;
+    }
+
+    casillas.forEach(function (c) {
+      c.addEventListener("change", pintar);
+    });
+    document.getElementById("limpiar").addEventListener("click", function () {
+      casillas.forEach(function (c) {
+        c.checked = false;
+      });
+      pintar();
+    });
+    pintar();
+  })();
+</script>

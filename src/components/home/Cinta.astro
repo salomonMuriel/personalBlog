@@ -1,0 +1,30 @@
+---
+import { copia } from "@data/landing";
+import type { Lang } from "@i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+// La cinta se anima -50%: la segunda copia es la que cierra el ciclo.
+const renglones = copia(lang).cinta;
+---
+
+<div class="cinta border-y border-tinta bg-tinta py-2.5 text-panelfg">
+  <div class="riel font-mono text-[11px] uppercase tracking-[.2em]">
+    {
+      renglones.map(r => (
+        <span class="px-7">
+          {r} <span class="text-rojo3">◆</span>
+        </span>
+      ))
+    }
+    {
+      renglones.map(r => (
+        <span class="px-7" aria-hidden="true">
+          {r} <span class="text-rojo3">◆</span>
+        </span>
+      ))
+    }
+  </div>
+</div>

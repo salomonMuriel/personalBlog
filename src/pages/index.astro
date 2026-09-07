@@ -1,21 +1,21 @@
 ---
-import HomePage from "@components/HomePage.astro";
-import { SITE } from "@config";
+import Layout from "@layouts/Layout.astro";
+import Landing from "@components/home/Landing.astro";
+import { copia } from "@data/landing";
+import { preguntasEs } from "@data/preguntas";
+import { servicioLd, faqLd } from "@utils/jsonld";
+
+export const prerender = true;
+
+const c = copia("es").meta;
 ---
 
-<HomePage lang="en" canonicalURL={new URL("/en/", SITE.website).href}>
-  <script is:inline slot="head">
-    (function () {
-      var s = localStorage.getItem("preferred-lang");
-      if (s === "es") {
-        location.replace("/es/");
-        return;
-      }
-      if (s) return;
-      var primary = (navigator.language || "").toLowerCase();
-      if (primary.indexOf("es") === 0) {
-        location.replace("/es/");
-      }
-    })();
-  </script>
-</HomePage>
+<Layout
+  title={c.title}
+  description={c.description}
+  lang="es"
+  navHome="#arriba"
+  schemas={[servicioLd("es"), faqLd(preguntasEs)]}
+>
+  <Landing lang="es" />
+</Layout>

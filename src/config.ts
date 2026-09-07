@@ -1,50 +1,25 @@
-import type { Site, SocialObjects } from "./types";
-
-export const SITE: Site = {
-  website: "https://www.salomonmuriel.com/", // replace this with your deployed domain
+export const SITE = {
+  website: "https://www.salomonmuriel.com",
   author: "Salomón Muriel",
-  desc: "Salomón's little corner of the internet.",
   title: "Salomón Muriel",
-  ogImage: undefined,
-  lightAndDarkMode: true,
-  postPerPage: 3,
-};
-
-export const LOCALE = {
-  lang: "en", // html lang code. Set this empty and default will be "en"
-  langTag: ["en-EN", "es-419"], // BCP 47 Language Tags. Set this empty [] to use the environment default
+  desc: "Le construyo software hecho a la medida de su empresa y de como ya trabaja, en vez de que le toque torcer la empresa para caber en un programa que compró.",
+  ogImage: "/og.png",
 } as const;
 
-export const LOGO_IMAGE = {
-  enable: false,
-  svg: true,
-  width: 216,
-  height: 46,
-};
+/** Un solo lugar para los canales de contacto: son la conversión del sitio. */
+export const CONTACTO = {
+  whatsapp: "573132465100",
+  whatsappBonito: "+57 313 246 5100",
+  cal: "https://cal.com/salomonmuriel",
+  calConsultoria: "https://cal.com/salomonmuriel/consultoria",
+  calMentoria: "https://cal.com/salomonmuriel/mentoria",
+  calCharla: "https://cal.com/salomonmuriel/charla",
+  linkedin: "https://www.linkedin.com/in/smuriel/",
+  correo: "salomon.muriel@gmail.com",
+} as const;
 
-export const SOCIALS: SocialObjects = [
-  {
-    name: "LinkedIn",
-    href: "https://www.linkedin.com/in/smuriel/",
-    linkTitle: `Let's connect on LinkedIn!`,
-    active: true,
-  },
-  {
-    name: "WhatsApp",
-    href: "https://wa.me/573132465100",
-    linkTitle: `Text me on WhatsApp`,
-    active: true,
-  },
-  {
-    name: "Mail",
-    href: "mailto:salomon.muriel@gmail.com",
-    linkTitle: `Shoot me an email`,
-    active: true,
-  },
-  {
-    name: "Github",
-    href: "https://github.com/salomonMuriel",
-    linkTitle: `Check out my Github`,
-    active: true,
-  },
-];
+/** Arma un enlace de WhatsApp con el mensaje ya escrito. */
+export function wa(texto?: string): string {
+  const base = `https://wa.me/${CONTACTO.whatsapp}`;
+  return texto ? `${base}?text=${encodeURIComponent(texto)}` : base;
+}

@@ -1,1 +1,0 @@
-ALTER TABLE "rsvps" ADD COLUMN "selfie" text;

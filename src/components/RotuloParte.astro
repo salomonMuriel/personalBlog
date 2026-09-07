@@ -1,0 +1,53 @@
+---
+import { t } from "@i18n/utils";
+import type { Lang } from "@i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+
+// La fecha se pinta en el servidor para que no haya salto al cargar; el
+// script la refresca a la fecha local de Bogotá del visitante.
+const fecha = new Intl.DateTimeFormat(lang === "es" ? "es-CO" : "en-GB", {
+  weekday: "long",
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+  timeZone: "America/Bogota",
+}).format(new Date());
+---
+
+<div class="bg-tinta text-panelfg">
+  <div class="hoja">
+    <div
+      class="font-mono flex h-9 items-center gap-x-5 overflow-hidden whitespace-nowrap text-[10.5px] uppercase tracking-[.19em]"
+    >
+      <span class="font-medium text-rojo3">{t(lang, "rotulo.parte")}</span>
+      <span class="hidden text-panelgris sm:inline"
+        >{t(lang, "rotulo.practica")}</span
+      >
+      <span class="hidden text-panelgris lg:inline"
+        >{t(lang, "rotulo.ciudad")}</span
+      >
+      <span class="ml-auto text-panelgris" id="fecha">{fecha}</span>
+    </div>
+  </div>
+</div>
+
+<script define:vars={{ lang }} is:inline>
+  try {
+    document.getElementById("fecha").textContent = new Intl.DateTimeFormat(
+      lang === "es" ? "es-CO" : "en-GB",
+      {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+        timeZone: "America/Bogota",
+      }
+    ).format(new Date());
+  } catch {
+    /* la fecha del servidor ya está puesta */
+  }
+</script>

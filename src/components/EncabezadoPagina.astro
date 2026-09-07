@@ -1,0 +1,57 @@
+---
+import EncabezadoSeccion from "@components/EncabezadoSeccion.astro";
+
+/**
+ * La cabecera de las páginas secundarias: mismo rótulo sobre regla gruesa
+ * del home, título grande, bajada y una nota manuscrita opcional.
+ */
+interface Props {
+  rotulo: string;
+  nota?: string;
+  titulo: string;
+  bajada?: string;
+  manuscrita?: string;
+  anchoTitulo?: string;
+}
+const {
+  rotulo,
+  nota,
+  titulo,
+  bajada,
+  manuscrita,
+  anchoTitulo = "max-w-[20ch]",
+} = Astro.props;
+---
+
+<section class="pb-[clamp(1.6rem,3vw,2.4rem)] pt-[clamp(2rem,4vw,3rem)]">
+  <div class="hoja">
+    <EncabezadoSeccion rotulo={rotulo} nota={nota} notaCh={42} />
+
+    <h1
+      class:list={[
+        "font-arch text-[clamp(2.1rem,5.4vw,4.2rem)] font-extrabold leading-[1.02] tracking-[-.03em] [font-stretch:104%]",
+        anchoTitulo,
+      ]}
+    >
+      {titulo}
+    </h1>
+
+    {
+      manuscrita && (
+        <p class="font-pen mt-4 -rotate-[1.2deg] text-[clamp(1.2rem,3.2vw,1.6rem)] leading-[1.2] text-rojo2 [transform-origin:left]">
+          {manuscrita}
+        </p>
+      )
+    }
+
+    {
+      bajada && (
+        <p class="mt-5 max-w-[58ch] text-[clamp(1.04rem,1.7vw,1.2rem)] leading-[1.5]">
+          {bajada}
+        </p>
+      )
+    }
+
+    <slot />
+  </div>
+</section>

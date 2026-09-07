@@ -1,176 +1,204 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+Guía para Claude Code (claude.ai/code) al trabajar en este repositorio.
 
-## Project Overview
+## Qué es este sitio
 
-Personal website and bilingual blog (English/Spanish) built with Astro 6 + Tailwind 4, serving as both a content site and consultancy landing page. Features blog posts (synced from LinkedIn), conference talks, business ideas, "now" updates, and static pages. Started from the AstroPaper template but has been heavily customized — the codebase diverges significantly from the original.
+La práctica personal de consultoría de Salomón Muriel: **le construye
+software a la medida a empresas colombianas tradicionales** que facturan
+menos de USD 2M al año y cuya operación es *chinomática* —parece
+automatizada, pero hay alguien haciéndola a mano—.
 
-## Development Commands
+Seis páginas de contenido casi estático, dos islas de interactividad en JS
+plano, y un objetivo único: que el visitante escriba por WhatsApp.
+
+El rebuild descrito en `REBUILD-PLAN.md` **ya está hecho**. Ese documento
+queda como registro de decisiones; este archivo describe el estado actual.
+
+## Restricciones duras — no violar
+
+- **Ningún precio, en ninguna forma**, y ningún comentario sobre no mostrar
+  precios. Silencio sobre plata.
+- **No hay blog**, ni feed de posts, ni grilla de artículos. Lo que escribe
+  va a LinkedIn.
+- **Español primero**, en español colombiano natural. El inglés es
+  secundario y es traducción.
+- **Ningún testimonio inventado.** Los tres de `direction-36.html` eran
+  marcador de posición y nunca se publicaron. La sección `Testimonios`
+  sencillamente no se renderiza mientras la colección esté vacía.
+- **Ignia** no aparece en el hero de la portada. Sí en la lista de lo
+  construido, en la explicación de capacidad y en las preguntas; y en
+  `/charlas`, donde las charlas se declaran mercadeo de la consultoría, la
+  mentoría e Ignia.
+- La palabra **«chinomático» nunca se explica ni se atribuye**: la página se
+  la enseña al lector con la entrada de diccionario del hero.
+- **La mentoría no compite con el Action Lab de Ignia.** `/mentoria` tiene
+  una sección dedicada que manda para allá a quien busque cohorte.
+
+## Comandos
 
 ```bash
-# Development server (with host flag for network access)
-npm run dev
+npm run dev              # servidor de desarrollo (--host)
+npm run build            # astro build + jampack
+npm run build:quiet      # build silencioso
+npm run preview          # previsualizar el build
+npm run lint             # eslint
+npm run format           # prettier
+npm run sync             # sincronizar tipos de colecciones
 
-# Production build (includes jampack optimization)
-npm run build
-
-# Quiet build (suppresses verbose output — useful in Claude context)
-npm run build:quiet
-
-# Preview production build
-npm run preview
-
-# Code quality
-npm run format        # Auto-format with Prettier
-npm run format:check  # Check formatting
-npm run lint          # ESLint check
-
-# Astro utilities
-npm run sync          # Sync Astro content collections
-
-# LinkedIn sync
-npm run sync-linkedin           # Pull latest LinkedIn posts and convert to MDX
-npm run sync-linkedin:backfill  # Backfill all historical posts
-
-# PDF generation (for proposals/presentations)
-npm run generate-pdf
+npm run check:redirects  # el mapa de cutover (200 / 301 / 410 / 404)
+node scripts/shots.mjs   # capturas a 375 y 1440 px + detector de desborde
 ```
 
-## Content Architecture
+`check:redirects` sin argumento corre contra `localhost:4321` y salta los
+301, que los sirve `vercel.json` y sólo existen en Vercel. Con una URL de
+deploy como argumento los verifica todos.
 
-### Content Collections
+## Stack
 
-Defined in `src/content.config.ts` using a factory pattern for bilingual schemas. Collections live in `src/content/`:
+Astro 6 + Tailwind 4 + Keystatic, desplegado en Vercel.
 
-- **blog/en/ + blog/es/** - Blog posts (bilingual MDX), exposed as `blog-en` and `blog-es` collections
-- **now/en/ + now/es/** - "Now" page updates (latest shown on homepage), exposed as `now-en` and `now-es`
-- **talks/en/ + talks/es/** - Conference/speaking engagements, exposed as `talks-en` and `talks-es`
-- **ideas/en/ + ideas/es/** - Business/project ideas, exposed as `ideas-en` and `ideas-es`
-- **pages/** - Static page content (About, Uses, Resources) as bilingual MDX using lang-suffixed filenames (e.g. `about-en.mdx`, `about-es.mdx`), single `pages` collection
+`output: "server"` existe **sólo** para que `/keystatic` se renderice bajo
+demanda. Toda página de contenido lleva `export const prerender = true`, así
+que el sitio público sigue siendo estático. Las rutas 410 son las otras
+funciones dinámicas.
 
-The factory function `localizedCollection()` creates `en`/`es` collection pairs automatically. Language separation is done by collection, not by a `lang` frontmatter field.
+React y `@astrojs/react` están instalados **únicamente** porque el admin de
+Keystatic es React. Ninguna página del sitio usa una isla.
 
-### Content Schema
+## Mapa de rutas
 
-Blog posts require the following frontmatter:
-- `title`: string
-- `description`: string
-- `pubDatetime`: Date
-- `modDatetime`: Date (optional)
-- `author`: string (defaults to site author)
-- `tags`: string[] (defaults to ["others"])
-- `featured`: boolean (optional)
-- `draft`: boolean (optional, excludes from production)
-- `ogImage`: string (optional, URL or path to image ≥1200x630px recommended)
-- `canonicalURL`: string (optional)
+| Español | Inglés | Componente |
+|---|---|---|
+| `/` | `/en/` | `components/home/Landing.astro` |
+| `/mentoria/` | `/en/mentoring/` | `components/paginas/Mentoria.astro` |
+| `/charlas/` | `/en/talks/` | `components/paginas/Charlas.astro` |
+| `/sobre-mi/` | `/en/about/` | `components/paginas/SobreMi.astro` |
+| `/ahora/` | `/en/now/` | `components/paginas/Ahora.astro` |
 
-### Content Filtering
+El mapa vive en `src/i18n/ui.ts` (`routes`). Las rutas **no** son paralelas
+—`/mentoria/` ↔ `/en/mentoring/`—, así que ese objeto es la única fuente de
+verdad para la navegación, el hreflang del `<head>` y el del sitemap
+(`astro.config.ts` lo usa en `serialize`). Si agrega una página, agréguela
+ahí primero.
 
-Posts are filtered by `src/utils/getPosts.ts`:
-- Excludes drafts
-- Language filtering is implicit — callers pass the appropriate lang-specific collection (e.g. `getLocalizedCollection(lang, "blog")` from `src/i18n/utils.ts`)
+## Dónde está la copia
 
-## Bilingual (i18n) System
+- **`src/data/landing.ts`** — toda la portada, en `es` y `en`. El español es
+  el de `design-directions/direction-36.html`, palabra por palabra: está
+  aprobado por el cliente y no se reescribe.
+- **`src/data/mentoria.ts`**, **`src/data/charlas.ts`** — igual, por página.
+- **`src/data/preguntas.ts`** — las ocho preguntas de la portada. Vive
+  aparte porque la página también las necesita para el JSON-LD `FAQPage`.
+- **`src/i18n/ui.ts`** — navegación, pie y contacto.
 
-- **Routing**: `src/pages/[lang]/` handles all bilingual routes; `src/pages/es/` provides Spanish-specific overrides where needed
-- **Root**: English served at `/` with client-side Spanish detection that soft-redirects to `/es/` for Spanish browsers
-- **Translation strings**: `src/i18n/ui.ts` (string map) + `src/i18n/utils.ts` (helpers)
-- **Language switcher**: `src/components/LanguageSwitcher.astro`
-- **Config**: `LOCALE.langTag` in `src/config.ts` sets supported BCP 47 tags
+Los componentes de `src/components/` sólo ponen estructura. Si va a cambiar
+texto, cámbielo en `src/data/`.
 
-## LinkedIn Sync
+## Contenido editable (Keystatic)
 
-- **Script**: `scripts/sync-linkedin.mjs` — fetches posts via LinkedIn API, translates with an LLM (OpenRouter), writes bilingual MDX pairs to `src/content/blog/`
-- **GitHub Action**: `.github/workflows/sync-linkedin.yml` — runs daily, commits new posts automatically
-- **Backfill**: Run with `--backfill` flag to process historical posts; `--no-translate` to skip LLM translation; `--download-images-only` to pre-download media
+`/keystatic` edita los mismos MDX/MD que lee Astro. No hay base de datos ni
+una segunda copia del contenido.
 
-## Site Configuration
+- En dev escribe archivos directamente. En producción abre un commit en
+  GitHub (variables en `.env.example`).
+- **`keystatic.config.ts` y `src/content.config.ts` tienen que coincidir.**
+  Un campo que no cuadre con el Zod rompe el build al siguiente deploy.
+- No ponga campos de fecha en `columns:` de una colección — el listado de
+  Keystatic revienta al renderizarlos.
 
-Site-wide settings in `src/config.ts`:
+Colecciones y singletons:
 
-```typescript
-SITE.website    // Deployed domain
-SITE.author     // Default author name
-SITE.desc       // Site description
-SITE.postPerPage  // Pagination limit (currently 3)
+| En Keystatic | En disco |
+|---|---|
+| Ahora (ES/EN) | `src/content/now/{es,en}/*.mdx` |
+| Charlas (ES/EN) | `src/content/talks/{es,en}/*.md` |
+| Testimonios (ES/EN) | `src/content/testimonios/{es,en}/*.md` (vacío a propósito) |
+| Sobre mí (ES/EN) | `src/content/pages/about-{es,en}.mdx` |
+| Cupos y capacidad | `src/content/settings/cupos.json` |
 
-LOCALE.lang     // Default html lang (e.g. "en")
-LOCALE.langTag  // Supported BCP 47 language tags (e.g. ["en-EN", "es-419"])
-```
+`cupos.json` es lo que mueve los contadores «2 de 4» de la portada y «3 de
+5» de mentoría, la fecha de actualización y —cuando se llena— el botón, que
+se reemplaza por un aviso. Se lee desde `src/utils/cupos.ts`.
 
-Social links configured in `SOCIALS` array (LinkedIn, WhatsApp, GitHub, etc.)
+El MDX de `/ahora` y `/sobre-mi` referencia imágenes de `/public`, no de
+`src/assets`, para que el editor de Keystatic las pueda mostrar y guardar
+sin romperlas. `src/utils/rehype-imagenes.ts` les pone `loading="lazy"` y el
+`width`/`height` real leído del archivo, que es lo que mantiene el CLS en 0.
 
-## Key Architecture Patterns
+## Sistema de diseño
 
-### Page Structure
-- **Dynamic routes**: `[lang]` prefix for all bilingual pages (e.g., `/[lang]/posts/[slug]/`)
-- **Pagination**: only tags pages use `[page].astro` at `/[lang]/tags/[tag]/[page].astro`
-- **Tag filtering**: `/[lang]/tags/[tag]/index.astro` and `/[lang]/tags/[tag]/[page].astro`
+`design-directions/direction-36.html` es la fuente visual. Los tokens viven
+en el bloque `@theme` de `src/styles/base.css`; las utilidades a mano
+—`.grano`, `.rayas`, `.pintado`, `.subraya`, `.casilla`, `.reng`,
+`.perfora`, `.cinta`/`.riel`, `.rv`, `.cable`, `.tog`, `.barra`— también.
+Esas clases *son* el diseño; no las reemplace por utilidades sueltas.
 
-### Layouts Hierarchy
-- `Layout.astro` - Base layout: SEO, meta tags, Google Analytics, Cal.com integration, schema markup
-- Specialized layouts: `PostDetails.astro`, `TalkLayout.astro`, `IdeasLayout.astro`, `NowLayout.astro`, `AboutLayout.astro`, `UsesLayout.astro`, `ResourcesLayout.astro`, `BeforeLayout.astro`
-- `Main.astro` - Wrapper for common page structure
+- Colores: `papel` `papel2` `campo` `tinta` `panel` `gris` `linea` `linea2`
+  `rojo` `rojo2` `rojo3`, más las cinco superficies del panel oscuro
+  (`panelborde`, `panelnota`, `paneltxt`, …).
+- Fuentes: `font-arch` (Archivo variable, **eje wdth** — por eso se importa
+  `wdth.css` y no `index.css`), `font-slab` (Alfa Slab One), `font-mono`
+  (IBM Plex Mono), `font-pen` (Caveat).
+- `@utility hoja` es el ancho de página + su margen, repetido en cada
+  sección.
 
-### Styling System
-- Tailwind CSS v4 with `@tailwindcss/vite` plugin
-- CSS custom properties for theming (`--color-text-base`, `--color-accent`, etc.)
-- Custom fonts via FontSource: DM Sans Variable (body), Syne (headings)
-- Typography plugin for markdown content
-- Dark/light theme toggle with custom dark-blue + coral palette
+Dos cuidados al escribir plantillas:
 
-### Special Features
-- **Schema markup** — ProfilePage + Person structured data (`Layout.astro`)
-- **Cal.com integration** — lazy-loaded scheduling widget
-- **LinkedIn sync** — automated daily post import with LLM translation
-- **Presentations** — Marp-based slides with PDF export via Puppeteer
-- **Reading time** — estimated on all post cards and detail pages
-- **View transitions** — Astro's ViewTransitions enabled
-- **RSS feed** — at `/rss.xml` (and `/es/rss.xml`)
-- **Sitemap** — auto-generated
-- **OG images** — site-level OG image at `/og.png`; per-post images at `/posts/${title-slug}.png` pre-generated into `public/posts/` (see Build Optimization)
-- **Explore dropdown** — nav groups Ideas, Resources, Stack
+1. **Espacios en blanco.** En Astro un salto de línea dentro de un `<a>` o
+   entre expresiones se vuelve un espacio: subrayados que se comen el
+   espacio siguiente, comas separadas del texto. Donde tres trozos van
+   pegados, use `set:html` (ya está hecho en `Danos`, `Montado`, `Contacto`,
+   `Cupos`).
+2. **El tablero de cajitas** (`TableroCajitas.astro`) dibuja los cables
+   midiendo `offsetLeft/offsetTop` de cada caja. Los `id`, el orden y los
+   `data-a`/`data-b`/`data-r` son un contrato con el script. Portado tal
+   cual de direction-36: no redibujar la geometría.
 
-## Utility Functions
+## Las dos islas interactivas
 
-Key utilities in `src/utils/`:
-- `getPosts.ts` — default export `getPosts(posts, options?)`: filters drafts, sorts by date, optional tag filter
-- `getUniqueTags.ts` — extracts unique tags from a post collection
-- `getReadingTime.ts` — estimates reading time
-- `slugify.ts` — URL-safe slugs (`slugifyStr`, `slugifyAll`)
-- `generateOgImages.tsx` — `generateOgImageForPost()` and `generateOgImageForSite()` via Satori
+Ambas en JS plano dentro de su `.astro`. Sin React, sin framework de islas.
 
-## Special Pages
+- **Chinómetro** (`components/home/Chinometro.astro`): diez casillas → un
+  puntaje de 0 a 100, aguja y arco SVG, y un mensaje de WhatsApp ya escrito
+  con lo que el visitante marcó. No pide correo ni guarda nada.
+- **Tablero de cajitas** (`components/home/TableroCajitas.astro`): el
+  diagrama de HOY vs CONECTADO. Es la sección favorita del cliente.
 
-- **Homepage** (`/`) — Hero, consultancy CTAs, Cal.com, latest "now" update, featured/recent posts. English at root, Spanish detection redirects to `/es/`
-- **/now** — Current life updates (latest from "now" collection)
-- **/before** — Previous "now" updates archive
-- **/talks** — Speaking engagements
-- **/ideas** — Business/project ideas
-- **/companies** — Company portfolio
-- **/resources** — Curated resources (local MDX content collection)
-- **/about** — About page (bilingual MDX from `pages/` collection)
-- **/uses** — Stack/tools page (bilingual MDX)
-- **/search** — Client-side search using Fuse.js
+## Instrumentación
 
-## Build Optimization
+WhatsApp es el canal principal, así que la conversión se mide ahí.
 
-Production builds:
-1. `astro build`
-2. Jampack post-processing (`@divriots/jampack`) — image optimization, asset compression (excludes `posts/` — OG images are pre-optimized)
-3. No PurgeCSS (removed; Tailwind 4 handles unused styles)
+- `Layout.astro` engancha un solo listener de clics y manda a GA4
+  `contacto_whatsapp`, `contacto_agenda`, `contacto_correo` y
+  `contacto_linkedin`. Cada enlace de contacto lleva `data-origen="…"`, que
+  es el que dice desde qué sección salió el clic.
+- El evento del chinómetro además lleva `marcadas` y `puntaje`: eso es la
+  señal de calificación del lead antes de que empiece la conversación.
+- Las UTM de la primera visita se guardan en `sessionStorage` y se pegan al
+  final del mensaje de WhatsApp del chinómetro.
+- La librería de GA4 (160 kB) se baja en `requestIdleCallback` o al primer
+  gesto; el shim de `gtag` queda listo de una vez para no perder eventos.
+- Cal.com: un tipo de evento por oferta en `src/config.ts` (`calConsultoria`,
+  `calMentoria`, `calCharla`).
 
-### OG Image Pre-generation
+## SEO y cutover
 
-Post OG images are pre-generated as static PNGs in `public/posts/` rather than rendered at build time via Satori/Resvg. This keeps builds fast (~35s) even with hundreds of posts.
+- `vercel.json` tiene los 301 de las páginas que sí sobreviven (`/about` →
+  `/sobre-mi/`, `/es/*` → raíz, etc.).
+- Todo lo retirado devuelve **410**, no 301: un redirect masivo hacia una
+  página que no tiene que ver se vuelve *soft 404* y se queda indexado
+  meses. Los 410 los sirven las rutas de `src/pages/**/[...ruta].ts` con
+  `src/utils/gone.ts`.
+- `public/sitemap-removed.xml` lista las ~500 URL retiradas para que Search
+  Console las recorra y las saque. **Bórrelo cuando GSC reporte cero.**
+- JSON-LD en `src/utils/jsonld.ts`: `ProfilePage` + `Person` en todas,
+  `Service` y `FAQPage` en la portada, `BreadcrumbList` en las secundarias.
+- `robots.txt` y `llms.txt` se generan (`src/pages/`). `llms.txt` se arma
+  del mismo contenido que la página, así que no se desactualiza solo.
 
-- **New posts**: OG images are generated automatically by `scripts/sync-linkedin.mjs` during the daily LinkedIn sync and committed alongside the MDX files.
-- **Template changes**: If you modify `src/utils/og-templates/post.tsx`, regenerate all images and commit:
-  ```bash
-  npm run og:generate:force   # regenerate all ~500 images
-  git add public/posts/
-  ```
-- **Missing images**: The build endpoint (`src/pages/posts/[slug].png.ts`) falls back to generating and caching any images not found in `public/posts/`.
-- **Clear cache**: `npm run og:clear` deletes `public/posts/` — next build regenerates everything via the fallback.
-- **Fonts**: OG image fonts (DM Sans 400, Syne 700) are bundled locally at `src/assets/fonts/og/` — no CDN calls at build time.
+## Presupuesto de rendimiento
+
+Lighthouse móvil con compresión: **95+ en las cuatro categorías, en las diez
+páginas**. Si baja de 95, lo primero que hay que mirar es el peso de las
+imágenes nuevas de `/public` y si algo volvió a bloquear el render.
