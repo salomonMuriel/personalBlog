@@ -11,10 +11,30 @@ import { config, collection, singleton, fields } from "@keystatic/core";
 
 const repo = "salomonMuriel/personalBlog";
 
+/**
+ * En local escribe archivos directamente; en producción abre un commit en
+ * GitHub a nombre de Salomón.
+ *
+ * `KEYSTATIC_GITHUB=true` fuerza el modo GitHub en desarrollo, y existe por
+ * una razón concreta: **la app de GitHub sólo se puede crear corriendo en
+ * local**. Keystatic tira 500 en la ruta `/api/keystatic/github/created-app`
+ * cuando `NODE_ENV !== "development"`, así que intentar el setup desde
+ * producción no funciona nunca — y sin esta variable tampoco funcionaba en
+ * local, porque acá el modo era siempre `local`. Era un callejón sin salida.
+ *
+ *   KEYSTATIC_GITHUB=true npm run dev   →  http://localhost:4321/keystatic
+ *
+ * En la pantalla de setup hay que llenar el campo de URL desplegada con
+ * https://www.salomonmuriel.com para que la app quede con el callback de
+ * producción además del de localhost. Al terminar, Keystatic escribe
+ * KEYSTATIC_GITHUB_CLIENT_ID y KEYSTATIC_GITHUB_CLIENT_SECRET en `.env`, y
+ * de ahí se suben a Vercel.
+ */
 const almacenamiento =
-  import.meta.env.DEV || process.env.KEYSTATIC_LOCAL === "true"
-    ? ({ kind: "local" } as const)
-    : ({ kind: "github", repo } as const);
+  process.env.KEYSTATIC_GITHUB === "true" ||
+  (!import.meta.env.DEV && process.env.KEYSTATIC_LOCAL !== "true")
+    ? ({ kind: "github", repo } as const)
+    : ({ kind: "local" } as const);
 
 // ── Charlas ──────────────────────────────────────────────
 function charlas(lang: "es" | "en") {
