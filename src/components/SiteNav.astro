@@ -119,14 +119,20 @@ const saludo =
 
 <script>
   // La barra sólo muestra su línea inferior cuando ya se despegó del tope.
+  // El centinela es el rótulo —los 36 px de arriba—, no <main>: main
+  // envuelve la página entera, así que siempre estaba intersecando y la
+  // línea no aparecía nunca.
+  //
+  // Y se cambia la clase, no se agrega: border-transparent va después de
+  // border-linea en el CSS que emite Tailwind, así que con las dos puestas
+  // gana la transparente y la línea seguiría sin verse.
   const nav = document.getElementById("nav");
-  const centinela = document.getElementById("arriba");
+  const centinela = document.getElementById("tope");
   if (nav && centinela && "IntersectionObserver" in window) {
-    new IntersectionObserver(
-      entradas => {
-        nav.classList.toggle("border-linea", !entradas[0].isIntersecting);
-      },
-      { rootMargin: "-90px 0px 0px 0px" }
-    ).observe(centinela);
+    new IntersectionObserver(entradas => {
+      const arriba = entradas[0].isIntersecting;
+      nav.classList.toggle("border-linea", !arriba);
+      nav.classList.toggle("border-transparent", arriba);
+    }).observe(centinela);
   }
 </script>

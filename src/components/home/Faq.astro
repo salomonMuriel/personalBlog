@@ -9,6 +9,13 @@ interface Props {
 }
 const { lang, preguntas } = Astro.props;
 const es = lang === "es";
+
+// La nota al margen dice cuántas son, y no siempre son ocho: la portada
+// trae ocho y mentoría cinco. El número sale de la lista.
+const letras = es
+  ? ["cero", "una", "dos", "tres", "cuatro", "cinco", "seis", "siete", "ocho"]
+  : ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight"];
+const cuantas = letras.at(preguntas.length) ?? String(preguntas.length);
 ---
 
 <section id="preguntas" class="py-[clamp(3.2rem,7vw,5.6rem)]">
@@ -16,8 +23,8 @@ const es = lang === "es";
     <EncabezadoSeccion
       rotulo={es ? "Consultas frecuentes" : "Frequently asked"}
       nota={es
-        ? "Las mismas ocho, en el mismo orden, casi siempre."
-        : "The same eight, in the same order, nearly always."}
+        ? `Las mismas ${cuantas}, en el mismo orden, casi siempre.`
+        : `The same ${cuantas}, in the same order, nearly always.`}
       notaCh={40}
     />
 
@@ -33,7 +40,7 @@ const es = lang === "es";
         <p class="mt-5 max-w-[38ch] text-[1.02rem] leading-[1.6] text-gris">
           {
             es
-              ? "Si su pregunta no está acá, escríbame y se la contesto yo."
+              ? "Si tu pregunta no está acá, escríbeme y te la contesto yo."
               : "If your question isn't here, write to me and I'll answer it myself."
           }
         </p>

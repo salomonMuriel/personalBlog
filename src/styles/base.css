@@ -88,7 +88,9 @@ html {
 html,
 body {
   max-width: 100%;
-  overflow-x: hidden;
+  /* clip y no hidden: hidden vuelve al body un contenedor de scroll y con
+     eso la barra sticky del encabezado deja de pegarse arriba. */
+  overflow-x: clip;
 }
 body {
   background: var(--papel);

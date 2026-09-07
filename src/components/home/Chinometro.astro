@@ -290,7 +290,7 @@ const textos = {
         if (p >= T.escala[i].min) nivel = T.escala[i];
       }
 
-      elPunt.textContent = ("0" + p).slice(-2);
+      elPunt.textContent = String(p).padStart(2, "0");
       elMar.textContent = n;
       elAguja.style.transform = "rotate(" + (-90 + p * 1.8) + "deg)";
       elArco.style.strokeDashoffset = String(377 - (377 * p) / 100);
