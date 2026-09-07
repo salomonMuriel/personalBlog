@@ -1,0 +1,458 @@
+---
+import { Image } from "astro:assets";
+import EncabezadoPagina from "@components/EncabezadoPagina.astro";
+import EncabezadoSeccion from "@components/EncabezadoSeccion.astro";
+import { wa, CONTACTO } from "@config";
+import { copiaCharlas } from "@data/charlas";
+import { getLocalizedCollection } from "@i18n/utils";
+import type { Lang } from "@i18n/ui";
+import fotoSalo from "@assets/site/fotoSalo.jpeg";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const c = copiaCharlas(lang);
+
+const todas = (await getLocalizedCollection(lang, "talks")).filter(
+  t => !t.data.draft
+);
+const orden = (a: (typeof todas)[number], b: (typeof todas)[number]) =>
+  b.data.pubDatetime.valueOf() - a.data.pubDatetime.valueOf();
+
+const vigentes = todas.filter(t => !t.data.retired).sort(orden);
+const retiradas = todas.filter(t => t.data.retired).sort(orden);
+
+const anio = (d: Date) => d.getUTCFullYear();
+/** Los PDF y las presentaciones viven en /public/talks/<slug>/. */
+const material = (slug: string, ext: "pdf" | "html") =>
+  `/talks/${slug}/${slug}.${ext}`;
+---
+
+<EncabezadoPagina
+  rotulo={c.rotulo}
+  nota={c.nota}
+  titulo={c.titulo}
+  manuscrita={c.manuscrita}
+  bajada={c.bajada}
+  anchoTitulo="max-w-[10ch]"
+>
+  <div
+    class="mt-[clamp(1.8rem,3.6vw,2.6rem)] max-w-[62rem] rounded border-[1.5px] border-tinta"
+  >
+    <div
+      class="font-mono border-b border-tinta bg-tinta px-4 py-3.5 text-[10.5px] uppercase tracking-[.18em] text-panelfg sm:px-5"
+    >
+      {c.franqueza.rotulo}
+    </div>
+    <div class="bg-campo px-4 py-5 sm:px-5">
+      <p class="text-[1.02rem] leading-[1.68]">{c.franqueza.texto}</p>
+      <p class="mt-3 text-[1.02rem] leading-[1.68]">
+        <b class="font-semibold">{c.franqueza.condicion}</b>
+      </p>
+    </div>
+  </div>
+</EncabezadoPagina>
+
+<!-- ═══ TEMAS ═══ -->
+<section class="py-[clamp(2.6rem,5.5vw,4.4rem)]">
+  <div class="hoja">
+    <EncabezadoSeccion rotulo={c.temas.rotulo} />
+    <h2
+      class="font-arch max-w-[20ch] text-[clamp(1.7rem,4vw,2.9rem)] font-extrabold leading-[1.05] tracking-[-.028em] [font-stretch:104%]"
+    >
+      {c.temas.titulo}
+    </h2>
+
+    <div class="mt-[clamp(1.6rem,3.4vw,2.6rem)] border-t border-linea">
+      {
+        c.temas.lista.map(t => (
+          <article class="grid grid-cols-1 gap-x-8 gap-y-2 border-b border-linea py-[clamp(1.2rem,2.4vw,1.8rem)] md:grid-cols-[4rem_minmax(0,1.5fr)_minmax(0,1fr)]">
+            <span class="font-mono text-[10.5px] uppercase tracking-[.16em] text-rojo2 md:pt-1.5">
+              {t.n}
+            </span>
+            <div>
+              <h3 class="font-arch max-w-[26ch] text-[clamp(1.2rem,2.4vw,1.6rem)] font-bold leading-[1.15] tracking-[-.025em] [font-stretch:100%]">
+                {t.t}
+              </h3>
+              <p class="mt-2 max-w-[46ch] text-[1rem] leading-[1.55] text-gris">
+                {t.d}
+              </p>
+            </div>
+            <p class="font-mono text-[10.5px] uppercase leading-[1.8] tracking-[.13em] text-gris md:pt-2">
+              {t.publico}
+            </p>
+          </article>
+        ))
+      }
+    </div>
+
+    <div class="mt-[clamp(1.6rem,3vw,2.2rem)] max-w-[54rem]">
+      <p
+        class="font-mono mb-3 text-[10.5px] uppercase tracking-[.18em] text-gris"
+      >
+        {c.temas.noRotulo}
+      </p>
+      <ul class="space-y-2.5">
+        {
+          c.temas.no.map(x => (
+            <li class="flex items-start gap-3">
+              <span class="mt-[3px] flex-none text-rojo2" aria-hidden="true">
+                <svg class="h-[15px] w-[15px]">
+                  <use href="#i-x" />
+                </svg>
+              </span>
+              <span class="text-[.98rem] leading-[1.5]">{x}</span>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="mt-3 max-w-[56ch] text-[.96rem] leading-[1.55] text-gris">
+        {c.temas.noNota}
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FORMATOS ═══ -->
+<section
+  class="border-y border-linea bg-papel2 py-[clamp(2.6rem,5.5vw,4.4rem)]"
+>
+  <div class="hoja">
+    <EncabezadoSeccion rotulo={c.formatos.rotulo} nota={c.formatos.nota} />
+    <h2
+      class="font-arch max-w-[20ch] text-[clamp(1.7rem,4vw,2.9rem)] font-extrabold leading-[1.05] tracking-[-.028em] [font-stretch:104%]"
+    >
+      {c.formatos.titulo}
+    </h2>
+
+    <div
+      class="mt-[clamp(1.6rem,3.4vw,2.6rem)] grid grid-cols-1 gap-[clamp(1rem,2.4vw,1.6rem)] sm:grid-cols-2 lg:grid-cols-4"
+    >
+      {
+        c.formatos.lista.map(f => (
+          <div class="rounded border-[1.5px] border-linea2 bg-campo p-5">
+            <h3 class="font-arch text-[1.14rem] font-bold leading-[1.15] tracking-[-.02em]">
+              {f.t}
+            </h3>
+            <p class="mt-2 text-[.96rem] leading-[1.55] text-gris">{f.d}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CHARLAS DADAS ═══ -->
+<section class="py-[clamp(2.6rem,5.5vw,4.4rem)]">
+  <div class="hoja">
+    <EncabezadoSeccion rotulo={c.hechas.rotulo} nota={c.hechas.nota} />
+    <h2
+      class="font-arch max-w-[20ch] text-[clamp(1.7rem,4vw,2.9rem)] font-extrabold leading-[1.05] tracking-[-.028em] [font-stretch:104%]"
+    >
+      {c.hechas.titulo}
+    </h2>
+
+    <div class="mt-[clamp(1.6rem,3.4vw,2.6rem)] border-t border-linea">
+      {
+        vigentes.map(t => (
+          <article class="grid grid-cols-1 gap-x-8 gap-y-3 border-b border-linea py-[clamp(1.2rem,2.4vw,1.8rem)] md:grid-cols-[5.5rem_minmax(0,1.6fr)_minmax(0,1fr)]">
+            <span class="font-mono text-[10.5px] uppercase tracking-[.16em] text-gris md:pt-2">
+              {anio(t.data.pubDatetime)}
+            </span>
+            <div>
+              <h3 class="font-arch max-w-[30ch] text-[clamp(1.15rem,2.2vw,1.45rem)] font-bold leading-[1.15] tracking-[-.025em] [font-stretch:100%]">
+                {t.data.title}
+              </h3>
+              <p class="mt-2 max-w-[56ch] text-[.96rem] leading-[1.55] text-gris">
+                {t.data.description}
+              </p>
+              {t.data.tags.length > 0 && (
+                <p class="font-mono mt-2.5 flex flex-wrap gap-x-3 gap-y-1 text-[9.5px] uppercase tracking-[.14em] text-gris">
+                  {t.data.tags.map(tag => (
+                    <span class="rounded border border-linea px-1.5 py-[3px]">
+                      {tag}
+                    </span>
+                  ))}
+                </p>
+              )}
+            </div>
+            <div class="flex flex-col items-start gap-2 md:pt-1">
+              {t.data.youtube && (
+                <a
+                  href={t.data.youtube}
+                  target="_blank"
+                  rel="noopener"
+                  data-origen="charlas-video"
+                  class="font-mono inline-flex items-center gap-2 rounded border-[1.5px] border-linea2 px-3 py-2 text-[10px] font-medium uppercase tracking-[.14em] transition-[border-color,background-color] hover:border-tinta hover:bg-papel2"
+                >
+                  <svg class="h-3.5 w-3.5" aria-hidden="true">
+                    <use href="#i-play" />
+                  </svg>
+                  {c.hechas.verVideo}
+                </a>
+              )}
+              {t.data.embed_html && (
+                <a
+                  href={material(t.id, "html")}
+                  target="_blank"
+                  rel="noopener"
+                  data-origen="charlas-deck"
+                  class="font-mono inline-flex items-center gap-2 rounded border-[1.5px] border-linea2 px-3 py-2 text-[10px] font-medium uppercase tracking-[.14em] transition-[border-color,background-color] hover:border-tinta hover:bg-papel2"
+                >
+                  <svg class="h-3.5 w-3.5" aria-hidden="true">
+                    <use href="#i-arw" />
+                  </svg>
+                  {c.hechas.verHtml}
+                </a>
+              )}
+              {t.data.pdf && (
+                <a
+                  href={material(t.id, "pdf")}
+                  target="_blank"
+                  rel="noopener"
+                  data-origen="charlas-pdf"
+                  class="font-mono inline-flex items-center gap-2 rounded border-[1.5px] border-linea2 px-3 py-2 text-[10px] font-medium uppercase tracking-[.14em] transition-[border-color,background-color] hover:border-tinta hover:bg-papel2"
+                >
+                  <svg class="h-3.5 w-3.5" aria-hidden="true">
+                    <use href="#i-arw" />
+                  </svg>
+                  {c.hechas.verPdf}
+                </a>
+              )}
+            </div>
+          </article>
+        ))
+      }
+    </div>
+
+    {
+      retiradas.length > 0 && (
+        <div class="mt-[clamp(1.6rem,3vw,2.2rem)] max-w-[62rem]">
+          <p class="font-mono mb-3 text-[10.5px] uppercase tracking-[.18em] text-gris">
+            {c.hechas.retiradasRotulo}
+          </p>
+          <ul class="space-y-1.5">
+            {retiradas.map(t => (
+              <li class="flex flex-wrap items-baseline gap-x-3 text-[.96rem] leading-[1.5] text-gris">
+                <span class="font-mono text-[10.5px] tracking-[.14em]">
+                  {anio(t.data.pubDatetime)}
+                </span>
+                <span>{t.data.title}</span>
+              </li>
+            ))}
+          </ul>
+          <p class="mt-3 max-w-[56ch] text-[.96rem] leading-[1.55] text-gris">
+            {c.hechas.retiradasNota}
+          </p>
+        </div>
+      )
+    }
+  </div>
+</section>
+
+<!-- ═══ DÓNDE ═══ -->
+<section
+  class="border-y border-linea bg-papel2 py-[clamp(2.2rem,4.5vw,3.4rem)]"
+>
+  <div class="hoja">
+    <EncabezadoSeccion rotulo={c.tarimas.rotulo} nota={c.tarimas.nota} />
+    <h2
+      class="font-arch max-w-[20ch] text-[clamp(1.5rem,3.4vw,2.4rem)] font-extrabold leading-[1.05] tracking-[-.028em] [font-stretch:104%]"
+    >
+      {c.tarimas.titulo}
+    </h2>
+    <ul class="mt-5 flex flex-wrap gap-2.5">
+      {
+        c.tarimas.lista.map(x => (
+          <li class="font-mono rounded border border-linea2 bg-campo px-3 py-2 text-[10.5px] uppercase tracking-[.13em]">
+            {x}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<!-- ═══ KIT ═══ -->
+<section class="py-[clamp(2.6rem,5.5vw,4.4rem)]">
+  <div class="hoja">
+    <EncabezadoSeccion rotulo={c.kit.rotulo} nota={c.kit.nota} />
+    <h2
+      class="font-arch max-w-[20ch] text-[clamp(1.7rem,4vw,2.9rem)] font-extrabold leading-[1.05] tracking-[-.028em] [font-stretch:104%]"
+    >
+      {c.kit.titulo}
+    </h2>
+
+    <div
+      class="mt-[clamp(1.6rem,3.4vw,2.6rem)] grid grid-cols-1 items-start gap-[clamp(1.2rem,3vw,2.4rem)] lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]"
+    >
+      <div class="space-y-[clamp(1rem,2.4vw,1.6rem)]">
+        {
+          [
+            {
+              t: c.kit.bioCortaT,
+              nota: c.kit.bioCortaNota,
+              texto: c.kit.bioCorta,
+              id: "bio-corta",
+            },
+            {
+              t: c.kit.bioLargaT,
+              nota: c.kit.bioLargaNota,
+              texto: c.kit.bioLarga,
+              id: "bio-larga",
+            },
+          ].map(b => (
+            <div class="overflow-hidden rounded border-[1.5px] border-linea2 bg-campo">
+              <div class="font-mono flex flex-wrap items-baseline gap-3 border-b border-linea px-4 py-3.5 text-[10.5px] uppercase tracking-[.18em] sm:px-5">
+                <span class="font-semibold">{b.t}</span>
+                <span class="text-gris">{b.nota}</span>
+                <button
+                  type="button"
+                  class="copiar ml-auto inline-flex items-center gap-2 rounded border-[1.5px] border-linea2 px-2.5 py-1.5 text-[10px] font-medium uppercase tracking-[.14em] transition-[border-color,background-color] hover:border-tinta hover:bg-papel2"
+                  data-copiar={b.id}
+                  data-etiqueta={c.kit.copiar}
+                  data-hecho={c.kit.copiado}
+                >
+                  {c.kit.copiar}
+                </button>
+              </div>
+              <p id={b.id} class="px-4 py-5 text-[1rem] leading-[1.6] sm:px-5">
+                {b.texto}
+              </p>
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="space-y-[clamp(1rem,2.4vw,1.6rem)]">
+        <figure
+          class="m-0 rounded border-[1.5px] border-linea2 bg-campo p-[9px]"
+        >
+          <Image
+            src={fotoSalo}
+            widths={[320, 640, 800]}
+            sizes="(min-width:1024px) 340px, 92vw"
+            loading="lazy"
+            alt={c.kit.fotoAlt}
+            class="h-auto w-full rounded-[1px]"
+          />
+          <figcaption class="px-1 pb-1 pt-3">
+            <p
+              class="font-mono text-[10px] uppercase leading-[1.6] tracking-[.13em] text-gris"
+            >
+              {c.kit.fotoNota}
+            </p>
+            <a
+              href="/prensa/salomon-muriel-retrato.jpg"
+              download
+              data-origen="charlas-foto"
+              class="font-mono mt-3 inline-flex items-center gap-2 rounded border-[1.5px] border-linea2 px-3 py-2 text-[10px] font-medium uppercase tracking-[.14em] transition-[border-color,background-color] hover:border-tinta hover:bg-papel2"
+            >
+              <svg class="h-3.5 w-3.5" aria-hidden="true"
+                ><use href="#i-abajo"></use></svg
+              >{c.kit.fotoDescargar}
+            </a>
+          </figcaption>
+        </figure>
+
+        <div class="rounded border-[1.5px] border-linea2 bg-campo">
+          <div
+            class="font-mono border-b border-linea px-4 py-3.5 text-[10.5px] font-semibold uppercase tracking-[.18em] sm:px-5"
+          >
+            {c.kit.datosT}
+          </div>
+          <dl
+            class="font-mono px-4 py-2 text-[10.5px] uppercase tracking-[.13em] sm:px-5"
+          >
+            {
+              c.kit.datos.map(([k, v], i) => (
+                <div
+                  class:list={[
+                    "flex justify-between gap-4 py-[9px]",
+                    i < c.kit.datos.length - 1 && "border-b border-linea",
+                  ]}
+                >
+                  <dt class="text-gris">{k}</dt>
+                  <dd class="text-right font-medium">{v}</dd>
+                </div>
+              ))
+            }
+          </dl>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section
+  class="border-t border-linea bg-papel2 py-[clamp(2.6rem,5.5vw,4.4rem)]"
+>
+  <div class="hoja">
+    <EncabezadoSeccion rotulo={c.cta.rotulo} />
+    <div
+      class="grid grid-cols-1 items-end gap-[clamp(1.2rem,3vw,3rem)] lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]"
+    >
+      <div>
+        <h2
+          class="font-arch max-w-[20ch] text-[clamp(1.7rem,4vw,2.9rem)] font-extrabold leading-[1.05] tracking-[-.028em] [font-stretch:104%]"
+        >
+          {c.cta.titulo}
+        </h2>
+        <p class="mt-4 max-w-[52ch] text-[1.02rem] leading-[1.6] text-gris">
+          {c.cta.texto}
+        </p>
+      </div>
+      <div class="flex flex-wrap gap-3">
+        <a
+          href={wa(c.cta.waTexto)}
+          target="_blank"
+          rel="noopener"
+          data-origen="charlas-cta"
+          class="inline-flex items-center gap-2.5 rounded bg-rojo2 px-5 py-3.5 text-[.95rem] font-bold text-white transition-[background-color,transform] hover:bg-tinta active:translate-y-px"
+        >
+          {c.cta.wa}<svg class="h-[18px] w-[18px] opacity-80" aria-hidden="true"
+            ><use href="#i-arw"></use></svg
+          >
+        </a>
+        <a
+          href={CONTACTO.calCharla}
+          target="_blank"
+          rel="noopener"
+          data-origen="charlas-agenda"
+          class="inline-flex items-center gap-2.5 rounded border-[1.5px] border-linea2 px-5 py-3.5 text-[.95rem] font-bold transition-[border-color,background-color,transform] hover:border-tinta hover:bg-papel2 active:translate-y-px"
+        >
+          <svg class="h-4 w-4 opacity-70" aria-hidden="true"
+            ><use href="#i-cal"></use></svg
+          >{c.cta.agenda}
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Copiar la bio al portapapeles: el organizador la necesita en el
+  // programa, no en un correo de ida y vuelta.
+  document.querySelectorAll<HTMLButtonElement>(".copiar").forEach(boton => {
+    boton.addEventListener("click", async () => {
+      const destino = document.getElementById(boton.dataset.copiar ?? "");
+      if (!destino) return;
+      try {
+        await navigator.clipboard.writeText(destino.textContent?.trim() ?? "");
+        boton.textContent = boton.dataset.hecho ?? "Copiado";
+        setTimeout(() => {
+          boton.textContent = boton.dataset.etiqueta ?? "Copiar";
+        }, 1800);
+      } catch {
+        // Sin permiso de portapapeles: que al menos quede seleccionada.
+        const rango = document.createRange();
+        rango.selectNodeContents(destino);
+        const sel = window.getSelection();
+        sel?.removeAllRanges();
+        sel?.addRange(rango);
+      }
+    });
+  });
+</script>

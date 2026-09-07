@@ -1,0 +1,64 @@
+---
+import EncabezadoSeccion from "@components/EncabezadoSeccion.astro";
+import { copia } from "@data/landing";
+import type { Lang } from "@i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const c = copia(lang).danos;
+---
+
+<section id="danos" class="py-[clamp(3.2rem,7vw,5.6rem)]">
+  <div class="hoja">
+    <EncabezadoSeccion rotulo={c.rotulo} nota={c.nota} notaCh={40} />
+
+    <h2
+      class="font-arch max-w-[20ch] text-[clamp(1.9rem,4.4vw,3.4rem)] font-extrabold leading-[1.03] tracking-[-.028em] [font-stretch:104%]"
+    >
+      {c.titulo}
+    </h2>
+
+    <div class="mt-[clamp(2rem,4vw,3rem)] border-t border-linea">
+      {
+        c.fallas.map(f => (
+          <article class="grid grid-cols-1 gap-x-8 gap-y-2 border-b border-linea py-[clamp(1.3rem,2.6vw,2rem)] md:grid-cols-[9.5rem_minmax(0,1.6fr)_minmax(0,1fr)]">
+            <div class="font-mono text-[10.5px] uppercase leading-[1.7] tracking-[.16em] text-gris">
+              <div class="text-rojo2">
+                {c.etiqueta} {f.n}
+              </div>
+              <div>{f.quien}</div>
+            </div>
+            {/* Sin saltos de línea entre los tres trozos: Astro los
+                convertiría en espacios y quedarían comas sueltas. */}
+            <p
+              class="font-arch max-w-[30ch] text-[clamp(1.25rem,2.6vw,1.85rem)] font-bold leading-[1.14] tracking-[-.028em] [font-stretch:98%]"
+              set:html={`${f.antes}<span class="subraya">${f.marcado}</span>${f.despues}`}
+            />
+            {f.manuscrita ? (
+              <p
+                class:list={[
+                  "font-pen text-[1.18rem] leading-[1.25] text-rojo2 md:pt-1.5",
+                  f.giro,
+                ]}
+              >
+                {f.nota}
+              </p>
+            ) : (
+              <p class="text-[14px] leading-[1.5] text-gris md:pt-2">
+                {f.nota}
+              </p>
+            )}
+          </article>
+        ))
+      }
+    </div>
+
+    <p
+      class="mt-[clamp(1.6rem,3vw,2.4rem)] max-w-[56ch] text-[1.05rem] leading-[1.55] text-gris"
+    >
+      {c.cierre}
+    </p>
+  </div>
+</section>

@@ -1,0 +1,41 @@
+---
+import Hero from "@components/home/Hero.astro";
+import Cinta from "@components/home/Cinta.astro";
+import Danos from "@components/home/Danos.astro";
+import Chinometro from "@components/home/Chinometro.astro";
+import TableroCajitas from "@components/home/TableroCajitas.astro";
+import BandaEjecucion from "@components/home/BandaEjecucion.astro";
+import PorQue from "@components/home/PorQue.astro";
+import Programa from "@components/home/Programa.astro";
+import Entrega from "@components/home/Entrega.astro";
+import Montado from "@components/home/Montado.astro";
+import Testimonios from "@components/home/Testimonios.astro";
+import Cupos from "@components/home/Cupos.astro";
+import Faq from "@components/home/Faq.astro";
+import { preguntasEs, preguntasEn } from "@data/preguntas";
+import type { Lang } from "@i18n/ui";
+
+/**
+ * El orden de las secciones de direction-36, en un solo lugar, para que
+ * `/` y `/en/` no puedan desincronizarse.
+ */
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const preguntas = lang === "es" ? preguntasEs : preguntasEn;
+---
+
+<Hero lang={lang} />
+<Cinta lang={lang} />
+<Danos lang={lang} />
+<Chinometro lang={lang} />
+<TableroCajitas lang={lang} />
+<BandaEjecucion lang={lang} />
+<PorQue lang={lang} />
+<Programa lang={lang} />
+<Entrega lang={lang} />
+<Montado lang={lang} />
+<Testimonios lang={lang} />
+<Cupos lang={lang} />
+<Faq lang={lang} preguntas={preguntas} />

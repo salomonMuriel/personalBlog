@@ -1,145 +1,85 @@
 ---
-import { SITE } from "@config";
 import Layout from "@layouts/Layout.astro";
-import Header from "@components/Header.astro";
-import Footer from "@components/Footer.astro";
-import LinkButton from "@components/LinkButton.astro";
+import { routes } from "@i18n/ui";
+
+export const prerender = true;
+
+const paginas = [
+  { href: routes.home.es, es: "Consultoría", en: "Consulting" },
+  { href: routes.mentoria.es, es: "Mentoría", en: "Mentoring" },
+  { href: routes.charlas.es, es: "Charlas", en: "Talks" },
+  { href: routes.sobreMi.es, es: "Sobre mí", en: "About" },
+  { href: routes.ahora.es, es: "Ahora", en: "Now" },
+];
 ---
 
-<Layout title={`404 Not Found | ${SITE.title}`}>
-  <Header />
-
-  <main id="main-content">
-    <div class="not-found-wrapper">
-      <h1 aria-label="404 Not Found">404</h1>
-      <span aria-hidden="true" class="shrug">¯\_(ツ)_/¯</span>
-      <p id="not-found-text">This page wandered off somewhere.</p>
-
-      <div class="mt-8 flex flex-col items-center gap-4 sm:flex-row">
-        <LinkButton
-          href="/en/"
-          id="go-home-link"
-          className="text-lg underline decoration-dashed underline-offset-8"
+<Layout
+  title="Página no encontrada — Salomón Muriel"
+  description="Esta página no existe. Acá está lo que sí."
+  lang="es"
+  noindex
+>
+  <section class="py-[clamp(3.2rem,7vw,5.6rem)]">
+    <div class="hoja">
+      <div
+        class="mb-[clamp(1.8rem,3.6vw,2.8rem)] flex flex-col gap-x-6 gap-y-1 border-t-[2.5px] border-tinta pt-3 sm:flex-row sm:items-baseline"
+      >
+        <span
+          class="font-mono whitespace-nowrap text-[11px] font-semibold uppercase tracking-[.2em]"
+          >Error 404</span
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="mr-1 inline-block h-5 w-5"
-          >
-            <path
-              d="M5 12h14M5 12l6-6M5 12l6 6"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              fill="none"></path>
-          </svg>
-          <span id="go-home-text">Go Home</span>
-        </LinkButton>
-
-        <LinkButton
-          href="/en/search/"
-          id="search-link"
-          className="text-lg underline decoration-dashed underline-offset-8"
+        <span
+          class="max-w-[40ch] text-[13px] leading-[1.35] text-gris sm:ml-auto sm:text-right"
+          >El enlace se rompió o la página se retiró.</span
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="mr-1 inline-block h-5 w-5"
-          >
-            <path
-              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              fill="none"></path>
-          </svg>
-          <span id="search-text">Search</span>
-        </LinkButton>
       </div>
 
-      <div class="mt-10 text-center">
-        <p class="mb-3 text-sm opacity-60" id="check-out-text">
-          Or check out these:
-        </p>
-        <div class="flex flex-wrap justify-center gap-3" id="quick-links">
-          <a href="/en/posts/" class="quick-link">Blog</a>
-          <a href="/en/talks/" class="quick-link">Talks</a>
-          <a href="/en/now/" class="quick-link">Now</a>
-          <a href="/en/companies/" class="quick-link">Companies</a>
-        </div>
-      </div>
+      <h1
+        class="font-arch max-w-[16ch] text-[clamp(2.4rem,7vw,4.4rem)] font-black uppercase leading-[.9] tracking-[-.02em] [font-stretch:70%]"
+      >
+        Acá no hay nada
+      </h1>
+      <p
+        class="font-pen mt-4 -rotate-[1.2deg] text-[clamp(1.2rem,3.2vw,1.6rem)] leading-[1.2] text-rojo2"
+      >
+        pero abajo sí
+      </p>
+
+      <ul class="mt-8 max-w-[34rem] border-t border-linea">
+        {
+          paginas.map((p, i) => (
+            <li>
+              <a
+                href={p.href}
+                class="group flex items-center gap-4 border-b border-linea py-4 transition-colors hover:bg-papel2"
+              >
+                <span class="font-mono w-7 flex-none text-[10.5px] tracking-[.16em] text-gris">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span class="font-arch flex-1 text-[1.2rem] font-bold tracking-[-.02em]">
+                  {p.es}
+                </span>
+                <span
+                  class="flex-none text-rojo2 transition-transform duration-200 group-hover:translate-x-1.5"
+                  aria-hidden="true"
+                >
+                  <svg class="h-5 w-5">
+                    <use href="#i-arw" />
+                  </svg>
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <p
+        class="font-mono mt-6 text-[10.5px] uppercase leading-[1.9] tracking-[.13em] text-gris"
+      >
+        English · <a href="/en/" class="border-b border-current"
+          >go to the English site</a
+        >
+      </p>
     </div>
-  </main>
-
-  <Footer />
+  </section>
 </Layout>
-
-<style>
-  @reference "../styles/base.css";
-  #main-content {
-    @apply mx-auto flex max-w-4xl flex-1 items-center justify-center px-4;
-  }
-  .not-found-wrapper {
-    @apply mb-14 flex flex-col items-center justify-center;
-  }
-  .not-found-wrapper h1 {
-    @apply text-9xl font-bold text-skin-accent;
-  }
-  .shrug {
-    @apply text-2xl;
-  }
-  .not-found-wrapper > p {
-    @apply mt-4 text-2xl sm:text-3xl;
-  }
-  .quick-link {
-    @apply rounded-lg border border-skin-accent/30 px-4 py-2 text-sm text-skin-accent
-      transition-colors hover:bg-skin-accent/10;
-  }
-</style>
-
-<script is:inline>
-  // Detect language from URL or browser
-  var path = window.location.pathname;
-  var isSpanish =
-    path.startsWith("/es/") ||
-    (!path.startsWith("/en/") &&
-      navigator.language.toLowerCase().startsWith("es"));
-
-  var langPrefix = isSpanish ? "/es" : "/en";
-
-  if (isSpanish) {
-    var text = document.getElementById("not-found-text");
-    if (text) text.textContent = "Esta página se fue a algún lado.";
-
-    var homeText = document.getElementById("go-home-text");
-    if (homeText) homeText.textContent = "Inicio";
-
-    var searchText = document.getElementById("search-text");
-    if (searchText) searchText.textContent = "Buscar";
-
-    var checkOut = document.getElementById("check-out-text");
-    if (checkOut) checkOut.textContent = "O revisa estos:";
-  }
-
-  // Update all links with correct language prefix
-  var homeLink = document.getElementById("go-home-link");
-  if (homeLink) homeLink.setAttribute("href", langPrefix + "/");
-
-  var searchLink = document.getElementById("search-link");
-  if (searchLink) searchLink.setAttribute("href", langPrefix + "/search/");
-
-  var quickLinks = document.getElementById("quick-links");
-  if (quickLinks) {
-    var links = quickLinks.querySelectorAll("a");
-    var routes = [
-      { path: "/posts/", esLabel: "Blog" },
-      { path: "/talks/", esLabel: "Charlas" },
-      { path: "/now/", esLabel: "Ahora" },
-      { path: "/companies/", esLabel: "Empresas" },
-    ];
-    links.forEach(function (link, i) {
-      link.setAttribute("href", langPrefix + routes[i].path);
-      if (isSpanish) link.textContent = routes[i].esLabel;
-    });
-  }
-</script>

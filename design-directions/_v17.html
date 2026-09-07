@@ -1,0 +1,17 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+html,body{margin:0;background:#222;}
+#f{width:1440px;height:8600px;border:0;transform:scale(var(--s,0.3549));transform-origin:0 0;display:block}
+body{width:calc(1440px * var(--s,0.3549));}
+</style></head><body>
+<iframe id="f" src="direction-17.html"></iframe>
+<script>
+const q=new URLSearchParams(location.search);
+const w=parseFloat(q.get('w')||'1440');
+const h=parseFloat(q.get('h')||'8600');
+const s=parseFloat(q.get('s')||'0.3549');
+const f=document.getElementById('f');
+f.style.width=w+'px'; f.style.height=h+'px';
+document.documentElement.style.setProperty('--s',s);
+document.body.style.width=(w*s)+'px';
+</script>
+</body></html>

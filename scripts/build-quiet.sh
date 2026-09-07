@@ -1,16 +1,12 @@
 #!/usr/bin/env bash
-# Quiet build script - suppresses per-file/route output, shows errors and final summary only.
-# Useful when running from Claude Code to avoid flooding context with 200KB of route listings.
+# Build sin el listado de rutas. Útil dentro de Claude Code, donde el
+# volcado completo se come el contexto sin aportar nada.
 
 set -eo pipefail
 
-echo "=== Astro Build ==="
-astro_output=$(npx astro build 2>&1) || {
-    echo "$astro_output" | grep -E "ERROR|error" >&2
+echo "=== Astro build ==="
+salida=$(npx astro build 2>&1) || {
+    echo "$salida" | grep -Ei "error" >&2
     exit 1
 }
-echo "$astro_output" | grep -E "\[build\]|\[vite\]" | grep -v "Skipping"
-
-echo ""
-echo "=== Jampack Optimization ==="
-npx jampack ./dist --exclude "posts/**" 2>&1 | tail -20
+echo "$salida" | grep -E "\[build\]|\[vite\]|\[@astrojs" | grep -v "Skipping"

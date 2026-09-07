@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>Direcciones · salomonmuriel.com</title>
+<style>
+:root{color-scheme:dark;--bg:#111214;--rail:#191b1e;--line:#2a2d31;--tx:#e7e7e4;--dim:#8d9096;--acc:#e2643c}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--tx);font:13px/1.4 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;display:flex;overflow:hidden}
+#rail{width:250px;flex:none;background:var(--rail);border-right:1px solid var(--line);display:flex;flex-direction:column}
+#rail h1{font-size:12px;letter-spacing:.02em;margin:0;padding:12px 14px;border-bottom:1px solid var(--line);color:var(--dim);font-weight:600}
+#list{overflow-y:auto;flex:1;padding-bottom:8px}
+.wv{font-size:10.5px;color:var(--dim);padding:12px 14px 5px;letter-spacing:.06em;text-transform:uppercase}
+.wv small{display:block;text-transform:none;letter-spacing:0;opacity:.65;margin-top:2px;font-size:10px}
+a.it{display:block;padding:7px 14px;color:var(--tx);text-decoration:none;border-left:2px solid transparent;cursor:pointer}
+a.it:hover{background:#1f2226}
+a.it.on{background:#232629;border-left-color:var(--acc)}
+a.it b{font-weight:600;font-size:12.5px;display:block}
+a.it span{color:var(--dim);font-size:10.5px}
+#main{flex:1;display:flex;flex-direction:column;min-width:0}
+#bar{height:38px;flex:none;display:flex;align-items:center;gap:14px;padding:0 14px;border-bottom:1px solid var(--line);background:var(--rail);font-size:12px}
+#bar #now{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#bar .k{color:var(--dim);margin-left:auto;white-space:nowrap;font-size:11px}
+kbd{background:#2b2e33;border:1px solid #3a3e44;border-radius:3px;padding:1px 5px;font:inherit;font-size:10.5px}
+#bar a{color:var(--acc);text-decoration:none}
+#stage{flex:1;background:#0b0c0d;display:flex;justify-content:center;overflow:hidden}
+iframe{border:0;width:100%;height:100%;background:#fff}
+body.mob iframe{width:390px;box-shadow:0 0 0 1px var(--line)}
+#empty{margin:auto;color:var(--dim)}
+</style></head><body>
+<div id="rail"><h1>Direcciones de diseño</h1><div id="list"></div></div>
+<div id="main">
+  <div id="bar"><span id="now">—</span>
+    <span class="k"><kbd>&larr;</kbd><kbd>&rarr;</kbd> cambiar · <kbd>m</kbd> móvil · <a id="tab" href="#" target="_blank">abrir en pestaña &rarr;</a></span>
+  </div>
+  <div id="stage"><div id="empty">Selecciona una direcci&oacute;n</div></div>
+</div>
+<script>
+const ITEMS=[{"n": 1, "file": "direction-1.html", "title": "Salomón Muriel · Estrategia y tecnología a la medida", "wave": "Ola 1", "label": "El Historial", "theme": "claro*", "lines": 1341}, {"n": 2, "file": "direction-2.html", "title": "Salomón Muriel · Estrategia y tecnología a la medida", "wave": "Ola 1", "label": "El Parte de la Semana", "theme": "claro*", "lines": 1203}, {"n": 3, "file": "direction-3.html", "title": "Salomón Muriel · Estrategia y herramientas hechas a la medida", "wave": "Ola 1", "label": "El Taller", "theme": "claro*", "lines": 1225}, {"n": 4, "file": "direction-4.html", "title": "Salomón Muriel. Yo armo la estrategia y yo mismo construyo la herramienta.", "wave": "Ola 1", "label": "La Carta", "theme": "claro*", "lines": 1137}, {"n": 5, "file": "direction-5.html", "title": "Salomón Muriel", "wave": "Ola 2", "label": "El Expediente", "theme": "claro", "lines": 855}, {"n": 6, "file": "direction-6.html", "title": "Salomón Muriel", "wave": "Ola 2", "label": "La cuenta", "theme": "claro", "lines": 1106}, {"n": 7, "file": "direction-7.html", "title": "Salomón Muriel", "wave": "Ola 2", "label": "El mensaje ya escrito", "theme": "claro", "lines": 1212}, {"n": 8, "file": "direction-8.html", "title": "Salomón Muriel | Antes de contratarme, hagamos el diagnóstico", "wave": "Ola 2", "label": "El Diagnóstico", "theme": "oscuro", "lines": 943}, {"n": 9, "file": "direction-9.html", "title": "Salomón Muriel | La herramienta que le falta, se la construyo yo", "wave": "Ola 2", "label": "El Diagnóstico (instrumento)", "theme": "oscuro", "lines": 1089}, {"n": 10, "file": "direction-10.html", "title": "Salomón Muriel", "wave": "Ola 2", "label": "El filtro", "theme": "oscuro", "lines": 1153}, {"n": 11, "file": "direction-11.html", "title": "Salomón Muriel", "wave": "Ola 3", "label": "Schwartz · consciencia + mecanismo", "theme": "claro", "lines": 1126}, {"n": 12, "file": "direction-12.html", "title": "Salomón Muriel · Software hecho para su negocio", "wave": "Ola 3", "label": "Dunford · Sales Pitch", "theme": "oscuro", "lines": 1077}, {"n": 13, "file": "direction-13.html", "title": "Salomón Muriel | Tu empresa deja de hacer todo a mano", "wave": "Ola 3", "label": "StoryBrand SB7", "theme": "claro", "lines": 949}, {"n": 14, "file": "direction-14.html", "title": "Salomón Muriel · Consultoría para empresas que funcionan a mano", "wave": "Ola 3", "label": "Jobs To Be Done · 4 fuerzas", "theme": "oscuro", "lines": 895}, {"n": 15, "file": "direction-15.html", "title": "Salomón Muriel · Consultoría", "wave": "Ola 4", "label": "VSL · Chinomático", "theme": "oscuro", "lines": 849}, {"n": 16, "file": "direction-16.html", "title": "Su empresa no está automatizada. Está chinomatizada.", "wave": "Ola 4", "label": "Carta de venta larga", "theme": "claro", "lines": 1154}, {"n": 17, "file": "direction-17.html", "title": "Salomón Muriel, consultoría", "wave": "Ola 4", "label": "Embudo de aplicación", "theme": "oscuro", "lines": 1327}, {"n": 18, "file": "direction-18.html", "title": "Un Proceso Menos | Salomón Muriel", "wave": "Ola 4", "label": "Servicio productizado", "theme": "claro", "lines": 1102}, {"n": 19, "file": "direction-19.html", "title": "Diagnóstico de trabajo manual | Salomón Muriel", "wave": "Ola 4", "label": "Diagnóstico gratuito", "theme": "claro", "lines": 787}, {"n": 20, "file": "direction-20.html", "title": "Salomón Muriel", "wave": "Ola 4", "label": "Caso de estudio", "theme": "oscuro", "lines": 938}, {"n": 21, "file": "direction-21.html", "title": "Salomón Muriel — El tablero", "wave": "Ola 5", "label": "impeccable · libre", "theme": "—", "lines": 1282}, {"n": 22, "file": "direction-22.html", "title": "Salomón Muriel — Taller de operaciones. Su empresa no está automatizada, está chinomática.", "wave": "Ola 5", "label": "ui-ux-pro-max · libre", "theme": "—", "lines": 1242}, {"n": 23, "file": "direction-23.html", "title": "CHINOMÁTICO — Hoja técnica SM-01 · Salomón Muriel", "wave": "Ola 5", "label": "brutalist · libre", "theme": "—", "lines": 1164}, {"n": 24, "file": "direction-24.html", "title": "Salomón Muriel — Chinomático", "wave": "Ola 5", "label": "minimalist · libre", "theme": "—", "lines": 985}, {"n": 25, "file": "direction-25.html", "title": "Salomón Muriel — Su empresa no está automatizada", "wave": "Ola 5", "label": "impeccable · VSL", "theme": "—", "lines": 1144}, {"n": 26, "file": "direction-26.html", "title": "Expediente Chinomático — Salomón Muriel", "wave": "Ola 5", "label": "ui-ux-pro-max · StoryBrand", "theme": "—", "lines": 979}, {"n": 27, "file": "direction-27.html", "title": "Salomón Muriel | El chinómetro", "wave": "Ola 5", "label": "taste · Schwartz", "theme": "—", "lines": 873}, {"n": 28, "file": "direction-28.html", "title": "Salomón Muriel | Carta abierta a un dueño de empresa", "wave": "Ola 5", "label": "taste · carta directa", "theme": "—", "lines": 1009}, {"n": 29, "file": "direction-29.html", "title": "Salomón Muriel — Su empresa está chinomatizada", "wave": "Ola 6", "label": "BAB · con testimonios", "theme": "—", "lines": 1347}, {"n": 30, "file": "direction-30.html", "title": "CONSOLA SM/09 — Diagnóstico de operación manual · Salomón Muriel", "wave": "Ola 7", "label": "brutalist v2", "theme": "—", "lines": 2058}, {"n": 31, "file": "direction-31.html", "title": "CHINOMÁTICO — Edición única · Salomón Muriel", "wave": "Ola 7", "label": "impeccable v2", "theme": "—", "lines": 1805}, {"n": 32, "file": "direction-32.html", "title": "Chinomático · Tablero de operación — Salomón Muriel", "wave": "Ola 7", "label": "ui-ux-pro-max v2", "theme": "—", "lines": 1788}, {"n": 33, "file": "direction-33.html", "title": "Su sistema tiene nombre propio · Salomón Muriel, Bogotá", "wave": "Ola 7", "label": "taste v2", "theme": "—", "lines": 1711}, {"n": 34, "file": "direction-34.html", "title": "Se arregla lo chinomático — Salomón Muriel, Bogotá", "wave": "Ola 7", "label": "minimalist v2", "theme": "—", "lines": 1499}, {"n": 35, "file": "direction-35.html", "title": "CHINOMÁTICO — Consola SM/09 · Salomón Muriel, consultoría", "wave": "Ola 8", "label": "30 refinada · tema propio", "theme": "—", "lines": 2328}, {"n": 36, "file": "direction-36.html", "title": "Se arregla lo chinomático — Salomón Muriel, Bogotá", "wave": "Ola 8", "label": "30 refinada · tema de 'Parte'", "theme": "—", "lines": 1592}], WD={"Ola 1": "Estructura compartida (sesgada por mí)", "Ola 2": "Estructura propia, semillas mías", "Ola 3": "Marcos de copy probados", "Ola 4": "Arquetipos de embudo", "Ola 5": "Sin guía · una skill distinta c/u", "Ola 6": "Before-After-Bridge · espacios de testimonio", "Ola 7": "Chinomático v2 · con tus correcciones", "Ola 8": "Solo consultoría · tus correcciones detalladas"};
+let i=0;
+const list=document.getElementById('list'), stage=document.getElementById('stage');
+let last=null;
+ITEMS.forEach((it,ix)=>{
+  if(it.wave!==last){last=it.wave;
+    const h=document.createElement('div');h.className='wv';
+    h.innerHTML=it.wave+'<small>'+(WD[it.wave]||'')+'</small>';list.appendChild(h);}
+  const a=document.createElement('a');a.className='it';a.dataset.ix=ix;
+  a.innerHTML='<b>'+it.n+'. '+it.label+'</b><span>'+it.theme+' · '+it.lines+' líneas</span>';
+  a.onclick=e=>{e.preventDefault();show(ix)};list.appendChild(a);
+});
+function show(ix){
+  i=ix; const it=ITEMS[i];
+  document.querySelectorAll('a.it').forEach(el=>el.classList.toggle('on',+el.dataset.ix===i));
+  stage.innerHTML='';
+  const f=document.createElement('iframe');f.src=it.file;stage.appendChild(f);
+  document.getElementById('now').textContent=it.n+'. '+it.label+' — '+it.title;
+  document.getElementById('tab').href=it.file;
+  const on=document.querySelector('a.it.on'); if(on) on.scrollIntoView({block:'nearest'});
+}
+addEventListener('keydown',e=>{
+  if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
+  if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();show((i+1)%ITEMS.length)}
+  else if(e.key==='ArrowLeft'){e.preventDefault();show((i-1+ITEMS.length)%ITEMS.length)}
+  else if(e.key==='m'){document.body.classList.toggle('mob')}
+  else if(/^[0-9]$/.test(e.key)){const n=e.key==='0'?10:+e.key;const ix=ITEMS.findIndex(x=>x.n===n);if(ix>=0)show(ix)}
+});
+if(ITEMS.length)show(0);
+</script></body></html>

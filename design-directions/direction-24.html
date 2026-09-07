@@ -1,0 +1,985 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Salomón Muriel — Chinomático</title>
+<meta name="description" content="Su empresa parece automatizada. Adentro hay alguien pasándolo todo a mano. Consultoría y mentoría de Salomón Muriel, Bogotá.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        bone:   '#F7F6F3',
+        paper:  '#FFFFFF',
+        ink:    '#141414',
+        ink2:   '#2F3437',
+        mute:   '#787774',
+        faint:  '#9C9A95',
+        rule:   '#E7E4DE',
+        rule2:  '#D9D5CD',
+        red:    '#9F2F2D',
+        pred:   '#FDEBEC',
+        pblue:  '#E1F3FE',
+        pgreen: '#EDF3EC',
+        pyell:  '#FBF3DB',
+        tred:   '#9F2F2D',
+        tblue:  '#1F6C9F',
+        tgreen: '#346538',
+        tyell:  '#956400'
+      },
+      fontFamily: {
+        sans:  ['Archivo','Helvetica Neue','Helvetica','Arial','sans-serif'],
+        serif: ['Instrument Serif','Georgia','Times New Roman','serif'],
+        mono:  ['JetBrains Mono','ui-monospace','SFMono-Regular','Menlo','monospace']
+      },
+      maxWidth: { shell: '1120px' }
+    }
+  }
+}
+</script>
+
+<style>
+  html { scroll-behavior: smooth; }
+  html, body { overflow-x: hidden; max-width: 100%; }
+  body {
+    background-color: #F7F6F3;
+    color: #2F3437;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* ── papel: grano cálido + luz difusa ───────────────────────── */
+  .grain, .glow { position: fixed; inset: 0; pointer-events: none; }
+  .grain {
+    z-index: 60; opacity: .035; mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .glow { z-index: 0; }
+  .glow::before, .glow::after {
+    content:''; position:absolute; border-radius:50%;
+    filter: blur(60px);
+  }
+  .glow::before {
+    width: 780px; height: 780px; top: -18%; right: -14%;
+    background: radial-gradient(circle, rgba(159,47,45,.055), rgba(159,47,45,0) 68%);
+    animation: drift 34s ease-in-out infinite alternate;
+  }
+  .glow::after {
+    width: 900px; height: 900px; bottom: -22%; left: -18%;
+    background: radial-gradient(circle, rgba(120,110,80,.06), rgba(120,110,80,0) 68%);
+    animation: drift 46s ease-in-out infinite alternate-reverse;
+  }
+  @keyframes drift {
+    from { transform: translate3d(0,0,0) scale(1); }
+    to   { transform: translate3d(-4%, 5%, 0) scale(1.12); }
+  }
+
+  /* ── línea roja de margen (el cuaderno) ─────────────────────── */
+  .margin-rule {
+    position: fixed; top: 0; bottom: 0; left: 15px; width: 1px;
+    background: rgba(159,47,45,.26); z-index: 40; pointer-events: none;
+  }
+  @media (min-width: 1024px) { .margin-rule { left: 103px; background: rgba(159,47,45,.3); } }
+
+  /* ── reveal ─────────────────────────────────────────────────── */
+  [data-rv] {
+    opacity: 0; transform: translateY(14px);
+    transition: opacity .78s cubic-bezier(.16,1,.3,1) var(--d,0ms),
+                transform .78s cubic-bezier(.16,1,.3,1) var(--d,0ms);
+  }
+  [data-rv].in { opacity: 1; transform: none; }
+  .drawline { transform: scaleX(0); transform-origin: left; transition: transform 1s cubic-bezier(.16,1,.3,1) var(--d,0ms); }
+  .drawline.in { transform: scaleX(1); }
+  @media (prefers-reduced-motion: reduce) {
+    [data-rv], .drawline { opacity:1 !important; transform:none !important; transition:none !important; }
+    .glow::before, .glow::after { animation: none; }
+    html { scroll-behavior: auto; }
+  }
+
+  /* ── subrayado a mano bajo "chino" ──────────────────────────── */
+  .underink { position: relative; white-space: nowrap; }
+  .underink::after {
+    content:''; position:absolute; left:-.02em; right:-.02em; bottom:.17em; height:2px;
+    background: rgba(159,47,45,.55);
+    transform: scaleX(0); transform-origin:left;
+    transition: transform 1.1s cubic-bezier(.16,1,.3,1) .75s;
+  }
+  .underink.in::after { transform: scaleX(1); }
+
+  /* ── renglones ──────────────────────────────────────────────── */
+  .row { border-bottom: 1px solid #E7E4DE; }
+  .row:first-child { border-top: 1px solid #E7E4DE; }
+
+  /* checkbox dibujado */
+  .box { width:19px; height:19px; border:1px solid #C9C5BC; border-radius:3px; background:#fff; position:relative; flex:none; transition: border-color .2s, background .2s; }
+  .box::after {
+    content:''; position:absolute; left:6px; top:2px; width:5px; height:10px;
+    border:solid #141414; border-width:0 1.8px 1.8px 0; transform: rotate(45deg) scale(.4); opacity:0;
+    transition: opacity .18s ease, transform .22s cubic-bezier(.16,1,.3,1);
+  }
+  .cbx:checked + .box { border-color:#141414; }
+  .cbx:checked + .box::after { opacity:1; transform: rotate(45deg) scale(1); }
+  .cbx:focus-visible + .box { outline:2px solid #9F2F2D; outline-offset:2px; }
+  label.dx { cursor:pointer; }
+  label.dx:hover .box { border-color:#8b877e; }
+  label.dx .dx-t { transition: color .2s; }
+  .cbx:checked ~ .dx-body .dx-t { color:#141414; }
+  .cbx:checked ~ .dx-body .dx-n { color:#9F2F2D; }
+
+  /* acordeón */
+  .acc-body { display:grid; grid-template-rows:0fr; transition: grid-template-rows .5s cubic-bezier(.16,1,.3,1); }
+  .acc-body > div { overflow:hidden; }
+  .acc.open .acc-body { grid-template-rows:1fr; }
+  .acc .pm-v { transition: transform .35s cubic-bezier(.16,1,.3,1), opacity .3s; }
+  .acc.open .pm-v { transform: scaleY(0); opacity:0; }
+  .acc .logo { filter: grayscale(1) contrast(1.05) opacity(.62); transition: filter .35s ease; }
+  .acc:hover .logo, .acc.open .logo { filter: grayscale(0) contrast(1) opacity(1); }
+
+  /* foto */
+  .photo { filter: grayscale(.35) sepia(.1) contrast(1.02); }
+
+  .kbdx { font-variant-numeric: tabular-nums; }
+  .num { font-variant-numeric: tabular-nums; }
+
+  /* rail */
+  .rail-i { color:#9C9A95; transition: color .3s; position:relative; }
+  .rail-i.on { color:#141414; }
+  .rail-i::before {
+    content:''; position:absolute; left:-13px; top:50%; width:8px; height:1px; background:#9F2F2D;
+    transform: scaleX(0); transform-origin:left; transition: transform .35s cubic-bezier(.16,1,.3,1);
+  }
+  .rail-i.on::before { transform: scaleX(1); }
+
+  .strike { text-decoration: line-through; text-decoration-color: rgba(159,47,45,.5); text-decoration-thickness: 1.5px; }
+
+  section[id] { scroll-margin-top: 76px; }
+  @media (min-width:1024px){ section[id]{ scroll-margin-top: 40px; } }
+
+  .fab { transform: translateY(14px); opacity:0; pointer-events:none; transition: all .45s cubic-bezier(.16,1,.3,1); }
+  .fab.on { transform:none; opacity:1; pointer-events:auto; }
+</style>
+</head>
+
+<body class="font-sans antialiased">
+
+<div class="glow" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+<div class="margin-rule" aria-hidden="true"></div>
+
+<!-- ══════════ RAIL LATERAL (desktop) ══════════ -->
+<nav aria-label="Índice" class="hidden lg:flex fixed left-0 top-0 bottom-0 w-[104px] z-50 flex-col items-center justify-between py-9 select-none">
+  <a href="#f00" class="font-mono text-[11px] tracking-[.18em] text-ink leading-none text-center">S<br>M</a>
+
+  <ol class="flex flex-col gap-[13px] font-mono text-[10px] tracking-[.14em]">
+    <li><a href="#f00" data-rail="f00" class="rail-i on block">00</a></li>
+    <li><a href="#f01" data-rail="f01" class="rail-i block">01</a></li>
+    <li><a href="#f02" data-rail="f02" class="rail-i block">02</a></li>
+    <li><a href="#f03" data-rail="f03" class="rail-i block">03</a></li>
+    <li><a href="#f04" data-rail="f04" class="rail-i block">04</a></li>
+    <li><a href="#f05" data-rail="f05" class="rail-i block">05</a></li>
+    <li><a href="#f06" data-rail="f06" class="rail-i block">06</a></li>
+    <li><a href="#f07" data-rail="f07" class="rail-i block">07</a></li>
+    <li><a href="#f08" data-rail="f08" class="rail-i block">08</a></li>
+  </ol>
+
+  <div class="font-mono text-[9px] tracking-[.16em] text-faint" style="writing-mode:vertical-rl; transform:rotate(180deg)">BOGOTÁ · CO</div>
+</nav>
+
+<!-- ══════════ BARRA MÓVIL ══════════ -->
+<div class="lg:hidden sticky top-0 z-50 border-b border-rule bg-bone/88 backdrop-blur-md">
+  <div class="pl-[30px] pr-4 h-[52px] flex items-center justify-between">
+    <span class="font-mono text-[10px] tracking-[.16em] text-ink2">SALOMÓN MURIEL</span>
+    <a id="mobWa" href="https://wa.me/573132465100" target="_blank" rel="noopener"
+       class="font-mono text-[10px] tracking-[.14em] bg-ink text-white px-3 py-[7px] rounded-[5px] active:scale-[.97] transition">WHATSAPP</a>
+  </div>
+</div>
+
+<div class="lg:pl-[104px]">
+<main class="relative z-10">
+
+<!-- ══════════════════ FOLIO 00 · PORTADA ══════════════════ -->
+<section id="f00" class="px-5 sm:px-8 lg:px-12 pt-12 sm:pt-16 lg:pt-20 pb-16 sm:pb-24">
+  <div class="max-w-shell mx-auto">
+
+    <div class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 font-mono text-[10px] sm:text-[10.5px] tracking-[.16em] text-mute" data-rv>
+      <span>FOLIO 00 · PORTADA</span>
+      <span class="text-ink">2 CUPOS DE CONSULTORÍA &nbsp;·&nbsp; 2 DE MENTORÍA</span>
+    </div>
+    <div class="h-px bg-rule2 mt-3 drawline" data-line></div>
+
+    <div class="mt-9 sm:mt-12 grid grid-cols-1 lg:grid-cols-12 gap-x-10 gap-y-12">
+
+      <!-- titular -->
+      <div class="lg:col-span-8 flex flex-col">
+        <h1 class="font-serif text-ink leading-[.95] tracking-[-.028em]
+                   text-[clamp(2.45rem,10.5vw,4.1rem)] lg:text-[clamp(3.4rem,5.4vw,5.1rem)]">
+          <span class="block" data-rv style="--d:60ms">Parece automatizado.</span>
+          <span class="block" data-rv style="--d:180ms">Adentro hay un <span class="underink" data-underink>chino</span></span>
+          <span class="block" data-rv style="--d:300ms">pasándolo todo a mano.</span>
+        </h1>
+
+        <p class="mt-8 sm:mt-9 max-w-[46ch] text-[16.5px] sm:text-[17.5px] leading-[1.62] text-ink2" data-rv style="--d:400ms">
+          Le dicen “el sistema”. En realidad es un muchacho copiando pedidos de WhatsApp a un Excel
+          a las siete de la noche. Yo le armo la estrategia y le construyo la herramienta —yo mismo,
+          no un equipo de gente que usted nunca conoce.
+        </p>
+
+        <div class="mt-9 flex flex-col sm:flex-row gap-3 sm:items-center" data-rv style="--d:480ms">
+          <a href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20vi%20su%20p%C3%A1gina%20y%20quiero%20contarle%20c%C3%B3mo%20est%C3%A1%20operando%20mi%20empresa."
+             target="_blank" rel="noopener"
+             class="inline-flex items-center justify-center gap-2.5 bg-ink text-white text-[14px] font-medium
+                    px-6 py-[15px] rounded-[5px] hover:bg-[#333] active:scale-[.985] transition">
+            Cuénteme por WhatsApp
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="square"/></svg>
+          </a>
+          <a href="#f01" class="inline-flex items-center justify-center text-[14px] font-medium text-ink2
+                    px-6 py-[15px] rounded-[5px] border border-rule2 bg-paper hover:border-ink/30 transition">
+            Primero quiero ver si me pasa
+          </a>
+        </div>
+
+        <a href="#f01" class="hidden lg:flex mt-auto pt-20 items-center gap-5 group" data-rv style="--d:600ms">
+          <span class="font-mono text-[10px] tracking-[.16em] text-mute group-hover:text-ink transition-colors">
+            FOLIO 01 · OCHO RENGLONES. MARQUE LOS QUE LE SUENEN
+          </span>
+          <span class="h-px flex-1 bg-rule"></span>
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true" class="text-mute transition-transform duration-300 group-hover:translate-y-1"><path d="M8 3v9M4 8.5l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="square"/></svg>
+        </a>
+      </div>
+
+      <!-- columna derecha: retrato + entrada de diccionario -->
+      <aside class="lg:col-span-4 flex flex-col gap-8" data-rv style="--d:560ms">
+        <figure class="max-w-[240px] lg:max-w-none">
+          <div class="border border-rule bg-paper p-[7px] rounded-[8px]">
+            <img src="assets/fotoSalo.jpeg" alt="Retrato de Salomón Muriel" class="photo w-full aspect-square object-cover rounded-[4px]" loading="eager" width="600" height="600">
+          </div>
+          <figcaption class="mt-2.5 font-mono text-[10px] leading-[1.6] tracking-[.06em] text-mute">
+            SALOMÓN MURIEL, BOGOTÁ.<br>QUINTA EMPRESA. DOS VENDIDAS, DOS QUEBRADAS.
+          </figcaption>
+        </figure>
+
+        <div class="border border-rule bg-paper rounded-[8px] p-6">
+          <p class="font-serif text-[27px] leading-none text-ink tracking-[-.02em]">chinomático, ca</p>
+          <p class="mt-2 font-mono text-[10px] tracking-[.14em] text-red">ADJ. · BOGOTÁ, COLOMBIA</p>
+          <div class="h-px bg-rule my-4"></div>
+          <ol class="space-y-3 text-[13.5px] leading-[1.6] text-ink2">
+            <li class="flex gap-2.5"><span class="font-mono text-[11px] text-faint pt-[3px]">1.</span><span>Dicho de un proceso: que parece automatizado, pero lo sostiene una persona a punta de copiar y pegar.</span></li>
+            <li class="flex gap-2.5"><span class="font-mono text-[11px] text-faint pt-[3px]">2.</span><span>Automatización a punta de gente.</span></li>
+          </ol>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ FOLIO 01 · DIAGNÓSTICO ══════════════════ -->
+<section id="f01" class="px-5 sm:px-8 lg:px-12 py-16 sm:py-24 border-t border-rule bg-paper/55">
+  <div class="max-w-shell mx-auto">
+
+    <div class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 font-mono text-[10px] tracking-[.16em] text-mute" data-rv>
+      <span>FOLIO 01 · RECONOCIMIENTO</span>
+      <span>OCHO RENGLONES</span>
+    </div>
+    <div class="h-px bg-rule2 mt-3 drawline" data-line></div>
+
+    <div class="mt-10 grid grid-cols-1 lg:grid-cols-[1fr_330px] gap-x-12 gap-y-10 items-start">
+
+      <!-- lista -->
+      <div>
+        <h2 class="font-serif text-ink leading-[1.02] tracking-[-.025em] text-[clamp(2rem,7vw,2.6rem)] lg:text-[2.9rem]" data-rv>
+          Marque lo que le suene.
+        </h2>
+        <p class="mt-4 max-w-[52ch] text-[15.5px] leading-[1.62] text-ink2" data-rv style="--d:80ms">
+          No es un test ni le pido el correo. Lo que marque se convierte en el mensaje que me manda
+          por WhatsApp, ya escrito. Así no tiene que pensar por dónde arrancar.
+        </p>
+
+        <div class="mt-9" id="dxList" data-rv style="--d:140ms">
+          <!-- filas inyectadas por JS -->
+        </div>
+
+        <p class="mt-5 font-mono text-[10.5px] tracking-[.1em] text-faint">
+          NADIE MARCA CERO. YO TAMPOCO.
+        </p>
+      </div>
+
+      <!-- lectura -->
+      <aside class="lg:sticky lg:top-8 self-start" data-rv style="--d:200ms">
+        <div class="border border-rule bg-paper rounded-[8px] overflow-hidden">
+          <div class="px-6 pt-6 pb-5">
+            <p class="font-mono text-[10px] tracking-[.16em] text-mute">LECTURA</p>
+            <p class="mt-3 font-serif leading-none text-ink num" id="dxCount" style="font-size:clamp(3.2rem,12vw,4.2rem)">0<span class="text-faint">/8</span></p>
+            <p class="mt-4 text-[14.5px] leading-[1.6] text-ink2 min-h-[4.6em]" id="dxVerdict">
+              Marque lo que le suene. Nadie tiene cero, y el que dice que sí, no ha mirado.
+            </p>
+          </div>
+
+          <div class="h-px bg-rule"></div>
+
+          <div class="p-6 pt-5 space-y-3">
+            <a id="dxSend" href="https://wa.me/573132465100" target="_blank" rel="noopener"
+               class="w-full inline-flex items-center justify-between gap-3 bg-ink text-white text-[13.5px] font-medium
+                      px-5 py-[14px] rounded-[5px] hover:bg-[#333] active:scale-[.985] transition
+                      opacity-45 pointer-events-none">
+              <span id="dxSendLabel">Marque al menos uno</span>
+              <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="square"/></svg>
+            </a>
+            <a href="https://cal.com/salomonmuriel" target="_blank" rel="noopener"
+               class="w-full inline-flex items-center justify-center text-[13.5px] font-medium text-ink2
+                      px-5 py-[13px] rounded-[5px] border border-rule2 hover:border-ink/30 transition">
+              O agendamos 30 minutos
+            </a>
+            <p class="font-mono text-[9.5px] leading-[1.7] tracking-[.08em] text-faint pt-1">
+              NO GUARDO NADA DE ESTO. LA LISTA SE ARMA EN SU CELULAR Y SE VA DERECHO AL CHAT.
+            </p>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ FOLIO 02 · QUIÉN ══════════════════ -->
+<section id="f02" class="px-5 sm:px-8 lg:px-12 py-16 sm:py-24 border-t border-rule">
+  <div class="max-w-shell mx-auto">
+
+    <div class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 font-mono text-[10px] tracking-[.16em] text-mute" data-rv>
+      <span>FOLIO 02 · QUIÉN FIRMA ESTO</span>
+      <span>35 AÑOS</span>
+    </div>
+    <div class="h-px bg-rule2 mt-3 drawline" data-line></div>
+
+    <div class="mt-10 grid grid-cols-1 lg:grid-cols-12 gap-x-12 gap-y-10">
+
+      <div class="lg:col-span-7 order-2 lg:order-1">
+        <h2 class="font-serif text-ink leading-[1.04] tracking-[-.025em] text-[clamp(1.9rem,6.5vw,2.5rem)] lg:text-[2.7rem]" data-rv>
+          Llevo trece años arrancando empresas. Dos las vendí, dos se me quebraron.
+        </h2>
+
+        <div class="mt-6 space-y-5 max-w-[58ch] text-[15.5px] leading-[1.65] text-ink2" data-rv style="--d:80ms">
+          <p>
+            Mi papá fue empresario. Mi abuelo también. En mi casa nunca se habló de conseguir
+            un buen puesto: se hablaba de cómo se sostiene un negocio en un mes malo.
+          </p>
+          <p>
+            No soy consultor de carrera. Soy alguien que ha operado —hasta 40 personas a cargo en R5,
+            hasta 15 en empresas mías— y que aprendió a construir porque no había con qué pagarle a nadie
+            para que lo hiciera. Esa es exactamente la razón por la que le sirvo a usted: entiendo el
+            problema del dueño y además meto las manos.
+          </p>
+          <p>
+            Hoy dirijo Ignia, un modelo nuevo de educación superior. Esta página es aparte:
+            es mi práctica personal, y por eso los cupos son contados.
+          </p>
+        </div>
+
+        <figure class="mt-9 border-l-2 border-red/40 pl-5 sm:pl-6" data-rv style="--d:140ms">
+          <blockquote class="font-serif italic text-ink text-[clamp(1.35rem,5vw,1.75rem)] leading-[1.28] tracking-[-.015em]">
+            “Building systems that work for people using them, and getting stuff off the ground.”
+          </blockquote>
+          <figcaption class="mt-3 font-mono text-[10px] tracking-[.12em] text-mute leading-[1.7]">
+            LO ESCRIBO EN INGLÉS PORQUE ASÍ LO APRENDÍ:<br>JUGANDO EN LÍNEA, NO EN UN CURSO.
+          </figcaption>
+        </figure>
+      </div>
+
+      <div class="lg:col-span-5 order-1 lg:order-2" data-rv style="--d:100ms">
+        <div class="border border-rule bg-paper p-[7px] rounded-[8px]">
+          <img src="assets/salo_oscar.webp" alt="Salomón Muriel presentando Finco junto a su cofundador" class="photo w-full object-cover rounded-[4px]" width="900" height="560">
+        </div>
+        <p class="mt-2.5 font-mono text-[10px] leading-[1.65] tracking-[.06em] text-mute">
+          FINCO, EL DÍA QUE MOSTRAMOS EL PRODUCTO EN PÚBLICO.<br>TERMINÓ VENDIDA A 5× LO INVERTIDO.
+        </p>
+
+        <dl class="mt-8 border-t border-rule">
+          <div class="row flex items-baseline justify-between gap-4 py-[13px]"><dt class="font-mono text-[10px] tracking-[.13em] text-mute">EMPRESAS</dt><dd class="text-[14px] text-ink">5, contando la de hoy</dd></div>
+          <div class="row flex items-baseline justify-between gap-4 py-[13px]"><dt class="font-mono text-[10px] tracking-[.13em] text-mute">SALIDAS</dt><dd class="text-[14px] text-ink">2 ventas</dd></div>
+          <div class="row flex items-baseline justify-between gap-4 py-[13px]"><dt class="font-mono text-[10px] tracking-[.13em] text-mute">QUIEBRAS</dt><dd class="text-[14px] text-ink">2, sin maquillar</dd></div>
+          <div class="row flex items-baseline justify-between gap-4 py-[13px]"><dt class="font-mono text-[10px] tracking-[.13em] text-mute">MENTOREADOS</dt><dd class="text-[14px] text-ink">7 hasta hoy</dd></div>
+          <div class="row flex items-baseline justify-between gap-4 py-[13px]"><dt class="font-mono text-[10px] tracking-[.13em] text-mute">EQUIPO MAYOR</dt><dd class="text-[14px] text-ink">40 personas</dd></div>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ FOLIO 03 · HISTORIAL ══════════════════ -->
+<section id="f03" class="px-5 sm:px-8 lg:px-12 py-16 sm:py-24 border-t border-rule bg-paper/55">
+  <div class="max-w-shell mx-auto">
+
+    <div class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 font-mono text-[10px] tracking-[.16em] text-mute" data-rv>
+      <span>FOLIO 03 · HISTORIAL</span>
+      <span>TOQUE UN RENGLÓN PARA ABRIRLO</span>
+    </div>
+    <div class="h-px bg-rule2 mt-3 drawline" data-line></div>
+
+    <h2 class="mt-9 font-serif text-ink leading-[1.02] tracking-[-.025em] text-[clamp(2rem,7vw,2.6rem)] lg:text-[2.9rem] max-w-[16ch]" data-rv>
+      El libro completo, incluidas las páginas feas.
+    </h2>
+
+    <div class="mt-9 border-t border-rule" id="hist" data-rv style="--d:80ms">
+      <!-- filas inyectadas -->
+    </div>
+
+    <div class="mt-8 grid grid-cols-1 lg:grid-cols-12 gap-x-12 gap-y-6" data-rv style="--d:120ms">
+      <p class="lg:col-span-7 text-[15.5px] leading-[1.65] text-ink2">
+        Le muestro las dos que se quebraron a propósito. De El Palomo aprendí lo que cuesta de verdad
+        conseguir un cliente. De Beriblock aprendí a preguntar quién paga antes de construir.
+        Esas dos lecciones son las que hacen que hoy no le queme la plata a nadie.
+      </p>
+      <p class="lg:col-span-5 font-mono text-[11px] leading-[1.85] tracking-[.04em] text-mute border-l border-rule pl-5">
+        ANTES DE TODO ESTO: R5.<br>
+        ~40 PERSONAS A CARGO. CONSTRUÍ EL PIPELINE DE DATOS COMPLETO Y EL SISTEMA DE MODELACIÓN DE RIESGO.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ FOLIO 04 · RENGLONES LIBRES ══════════════════ -->
+<section id="f04" class="px-5 sm:px-8 lg:px-12 py-16 sm:py-24 border-t border-rule">
+  <div class="max-w-shell mx-auto">
+
+    <div class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 font-mono text-[10px] tracking-[.16em] text-mute" data-rv>
+      <span>FOLIO 04 · CAPACIDAD</span>
+      <span class="text-ink">4 RENGLONES LIBRES EN TOTAL</span>
+    </div>
+    <div class="h-px bg-rule2 mt-3 drawline" data-line></div>
+
+    <div class="mt-9 grid grid-cols-1 lg:grid-cols-12 gap-x-12 gap-y-4 items-end" data-rv>
+      <h2 class="lg:col-span-7 font-serif text-ink leading-[1.02] tracking-[-.025em] text-[clamp(2rem,7vw,2.6rem)] lg:text-[2.9rem]">
+        Trabajo con nueve personas a la vez. Ni una más.
+      </h2>
+      <p class="lg:col-span-5 text-[15px] leading-[1.62] text-ink2">
+        No es escasez de vitrina: es que yo mismo construyo. Cuando el renglón se llena, se llenó.
+        Estos son los que hay hoy.
+      </p>
+    </div>
+
+    <div class="mt-11 grid grid-cols-1 lg:grid-cols-2 gap-x-10 gap-y-12">
+
+      <!-- CONSULTORÍA -->
+      <div data-rv>
+        <div class="flex items-baseline justify-between gap-4">
+          <h3 class="font-serif text-[1.65rem] text-ink tracking-[-.02em]">Consultoría</h3>
+          <span class="font-mono text-[10px] tracking-[.14em] text-tgreen bg-pgreen px-2.5 py-1 rounded-full">2 LIBRES DE 4</span>
+        </div>
+        <p class="mt-4 text-[15px] leading-[1.65] text-ink2 max-w-[46ch]">
+          Estrategia de cero a uno y adopción de tecnología. Yo defino qué hay que hacer y yo mismo
+          construyo la herramienta. Hoy me apoyo fuerte en IA: desarrollo con IA y agentes que se
+          encargan de trabajo que ni siquiera es programar.
+        </p>
+        <p class="mt-3 font-mono text-[10.5px] tracking-[.1em] text-mute">
+          PARA: EMPRESA COLOMBIANA DE 5 A 40 PERSONAS. ROPA, RESTAURANTES, RETAIL, DISTRIBUCIÓN, IMPORTACIÓN, SERVICIOS.
+        </p>
+        <div class="mt-7 border-t border-rule" data-slots data-kind="consultoría" data-total="4" data-taken="2"></div>
+      </div>
+
+      <!-- MENTORÍA -->
+      <div data-rv style="--d:100ms">
+        <div class="flex items-baseline justify-between gap-4">
+          <h3 class="font-serif text-[1.65rem] text-ink tracking-[-.02em]">Mentoría</h3>
+          <span class="font-mono text-[10px] tracking-[.14em] text-tgreen bg-pgreen px-2.5 py-1 rounded-full">2 LIBRES DE 5</span>
+        </div>
+        <p class="mt-4 text-[15px] leading-[1.65] text-ink2 max-w-[46ch]">
+          Para el que está arrancando. Nos vemos, le dejo tareas prácticas para la semana y la semana
+          siguiente revisamos qué pasó. Van siete personas hasta hoy: empresas, startups y también ONG.
+        </p>
+        <p class="mt-3 font-mono text-[10.5px] tracking-[.1em] text-mute">
+          PARA: EL QUE ESTÁ EMPEZANDO Y NECESITA QUE ALGUIEN LE EXIJA.
+        </p>
+        <div class="mt-7 border-t border-rule" data-slots data-kind="mentoría" data-total="5" data-taken="3"></div>
+      </div>
+    </div>
+
+    <figure class="mt-14 border-t border-rule pt-10" data-rv>
+      <blockquote class="font-serif text-ink text-[clamp(1.6rem,6.5vw,2.4rem)] leading-[1.18] tracking-[-.02em] max-w-[22ch]">
+        “Trabajar conmigo significa que las cosas pasan, así toque a las malas.”
+      </blockquote>
+      <figcaption class="mt-4 font-mono text-[10px] tracking-[.14em] text-mute">SALOMÓN MURIEL, SOBRE SU MÉTODO</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ══════════════════ FOLIO 05 · MÉTODO ══════════════════ -->
+<section id="f05" class="px-5 sm:px-8 lg:px-12 py-16 sm:py-24 border-t border-rule bg-paper/55">
+  <div class="max-w-shell mx-auto">
+
+    <div class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 font-mono text-[10px] tracking-[.16em] text-mute" data-rv>
+      <span>FOLIO 05 · CÓMO SE VE POR DENTRO</span>
+      <span>SIN PRESENTACIONES DE 60 LÁMINAS</span>
+    </div>
+    <div class="h-px bg-rule2 mt-3 drawline" data-line></div>
+
+    <h2 class="mt-9 font-serif text-ink leading-[1.02] tracking-[-.025em] text-[clamp(2rem,7vw,2.6rem)] lg:text-[2.9rem] max-w-[18ch]" data-rv>
+      No le dejo un informe. Le dejo la herramienta prendida.
+    </h2>
+
+    <ol class="mt-10 border-t border-rule">
+      <li class="row py-7 grid grid-cols-1 sm:grid-cols-[92px_1fr] gap-y-2 gap-x-6" data-rv>
+        <span class="font-mono text-[10.5px] tracking-[.14em] text-red pt-1">SEMANA 0</span>
+        <div>
+          <h3 class="font-serif text-[1.45rem] text-ink tracking-[-.02em] leading-tight">Me siento con el que hace el trabajo</h3>
+          <p class="mt-2 text-[15px] leading-[1.62] text-ink2 max-w-[58ch]">No con el gerente: con la persona que abre el Excel todos los días. Ahí está el proceso real, no el del organigrama.</p>
+        </div>
+      </li>
+      <li class="row py-7 grid grid-cols-1 sm:grid-cols-[92px_1fr] gap-y-2 gap-x-6" data-rv style="--d:70ms">
+        <span class="font-mono text-[10.5px] tracking-[.14em] text-red pt-1">SEMANA 1</span>
+        <div>
+          <h3 class="font-serif text-[1.45rem] text-ink tracking-[-.02em] leading-tight">Le digo cuál es el renglón que más duele</h3>
+          <p class="mt-2 text-[15px] leading-[1.62] text-ink2 max-w-[58ch]">Uno solo, por escrito, en una página. Si no estamos de acuerdo ahí, no seguimos y no perdimos tres meses.</p>
+        </div>
+      </li>
+      <li class="row py-7 grid grid-cols-1 sm:grid-cols-[92px_1fr] gap-y-2 gap-x-6" data-rv style="--d:140ms">
+        <span class="font-mono text-[10.5px] tracking-[.14em] text-red pt-1">SEM. 2–6</span>
+        <div>
+          <h3 class="font-serif text-[1.45rem] text-ink tracking-[-.02em] leading-tight">Construyo</h3>
+          <p class="mt-2 text-[15px] leading-[1.62] text-ink2 max-w-[58ch]">Con IA, con agentes, con lo que sirva. Usted ve algo funcionando temprano, no una maqueta bonita. Y lo prueba la persona que lo va a usar.</p>
+        </div>
+      </li>
+      <li class="row py-7 grid grid-cols-1 sm:grid-cols-[92px_1fr] gap-y-2 gap-x-6" data-rv style="--d:210ms">
+        <span class="font-mono text-[10.5px] tracking-[.14em] text-red pt-1">AL FINAL</span>
+        <div>
+          <h3 class="font-serif text-[1.45rem] text-ink tracking-[-.02em] leading-tight">Le enseño a su gente a arreglarlo sin mí</h3>
+          <p class="mt-2 text-[15px] leading-[1.62] text-ink2 max-w-[58ch]">Si al año siguiente todavía depende de mí para que ande, entonces no sirvió. Eso es justo lo que le pasó con el software que compró.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ══════════════════ FOLIO 06 · LO QUE NO HAGO ══════════════════ -->
+<section id="f06" class="px-5 sm:px-8 lg:px-12 py-16 sm:py-24 border-t border-rule">
+  <div class="max-w-shell mx-auto">
+
+    <div class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 font-mono text-[10px] tracking-[.16em] text-mute" data-rv>
+      <span>FOLIO 06 · TACHADO</span>
+      <span>ANTES DE QUE PIERDA EL TIEMPO</span>
+    </div>
+    <div class="h-px bg-rule2 mt-3 drawline" data-line></div>
+
+    <div class="mt-10 grid grid-cols-1 lg:grid-cols-12 gap-x-12 gap-y-9">
+      <h2 class="lg:col-span-5 font-serif text-ink leading-[1.02] tracking-[-.025em] text-[clamp(2rem,7vw,2.6rem)] lg:text-[2.9rem]" data-rv>
+        Lo que no hago, para que no me escriba en vano.
+      </h2>
+
+      <div class="lg:col-span-7" data-rv style="--d:90ms">
+        <ul class="border-t border-rule">
+          <li class="row py-5">
+            <p class="strike text-[16px] leading-[1.55] text-mute">Escalar una empresa más allá de unos USD 5 millones al año.</p>
+            <p class="mt-1.5 text-[14px] leading-[1.6] text-ink2">Nunca lo he hecho. No lo voy a fingir con usted.</p>
+          </li>
+          <li class="row py-5">
+            <p class="strike text-[16px] leading-[1.55] text-mute">Deep tech, o investigación donde toque inventar algo que no existe.</p>
+            <p class="mt-1.5 text-[14px] leading-[1.6] text-ink2">Yo armo cosas con lo que ya existe. Ese es otro oficio.</p>
+          </li>
+          <li class="row py-5">
+            <p class="strike text-[16px] leading-[1.55] text-mute">Charlas de ciencia de datos o de cultura organizacional.</p>
+            <p class="mt-1.5 text-[14px] leading-[1.6] text-ink2">Me las piden y las devuelvo. Hablo de lo que he hecho.</p>
+          </li>
+          <li class="row py-5">
+            <p class="strike text-[16px] leading-[1.55] text-mute">Consultoría bajo la marca Ignia.</p>
+            <p class="mt-1.5 text-[14px] leading-[1.6] text-ink2">Ignia es mi empresa; esto es mi práctica personal. Son cosas separadas.</p>
+          </li>
+        </ul>
+        <p class="mt-6 text-[15px] leading-[1.62] text-ink2 max-w-[52ch]">
+          Si lo suyo está en esta lista, escríbame igual: le paso el contacto de alguien que sí lo hace.
+          Prefiero eso a cobrarle por aprender.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ FOLIO 07 · CHARLAS ══════════════════ -->
+<section id="f07" class="px-5 sm:px-8 lg:px-12 py-16 sm:py-24 border-t border-rule bg-paper/55">
+  <div class="max-w-shell mx-auto">
+
+    <div class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 font-mono text-[10px] tracking-[.16em] text-mute" data-rv>
+      <span>FOLIO 07 · CHARLAS</span>
+      <span>NO ES UN PRODUCTO</span>
+    </div>
+    <div class="h-px bg-rule2 mt-3 drawline" data-line></div>
+
+    <div class="mt-10 grid grid-cols-1 lg:grid-cols-12 gap-x-12 gap-y-9 items-start">
+
+      <div class="lg:col-span-5 order-2 lg:order-1" data-rv>
+        <h2 class="font-serif text-ink leading-[1.04] tracking-[-.025em] text-[clamp(1.9rem,6.5vw,2.4rem)] lg:text-[2.6rem]">
+          Las charlas no se las vendo. Son la forma en que la gente me conoce.
+        </h2>
+        <p class="mt-5 text-[15.5px] leading-[1.65] text-ink2 max-w-[46ch]">
+          Me han llamado conferencias, empresas y universidades. Voy, cuento lo que me ha funcionado
+          y lo que no, y de ahí sale el resto. Si su gremio o su empresa quiere una, escríbame.
+        </p>
+
+        <div class="mt-6 flex flex-wrap gap-2">
+          <span class="font-mono text-[10px] tracking-[.1em] uppercase bg-pblue text-tblue px-2.5 py-1 rounded-full">Adopción de tecnología</span>
+          <span class="font-mono text-[10px] tracking-[.1em] uppercase bg-pyell text-tyell px-2.5 py-1 rounded-full">IA en la práctica</span>
+          <span class="font-mono text-[10px] tracking-[.1em] uppercase bg-pgreen text-tgreen px-2.5 py-1 rounded-full">Emprendimiento</span>
+          <span class="font-mono text-[10px] tracking-[.1em] uppercase bg-pred text-tred px-2.5 py-1 rounded-full">Mentalidad</span>
+          <span class="font-mono text-[10px] tracking-[.1em] uppercase bg-pblue text-tblue px-2.5 py-1 rounded-full">Vida y trabajo</span>
+        </div>
+
+        <a href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20quiero%20invitarlo%20a%20dar%20una%20charla."
+           target="_blank" rel="noopener"
+           class="mt-7 inline-flex items-center gap-2.5 text-[14px] font-medium text-ink border-b border-ink/25 pb-1 hover:border-ink transition">
+          Invitarlo a una charla
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="square"/></svg>
+        </a>
+      </div>
+
+      <div class="lg:col-span-7 order-1 lg:order-2" data-rv style="--d:90ms">
+        <div class="border border-rule bg-paper rounded-[8px] p-[7px]">
+          <div class="rounded-[4px] overflow-hidden bg-ink" style="aspect-ratio:16/9">
+            <iframe class="w-full h-full block"
+              src="https://www.youtube-nocookie.com/embed/F9t9f5Et_04"
+              title="Negocios Aburridos e Innovación — podcast Ventaja"
+              loading="lazy" referrerpolicy="strict-origin-when-cross-origin"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen></iframe>
+          </div>
+        </div>
+        <p class="mt-2.5 font-mono text-[10px] leading-[1.65] tracking-[.06em] text-mute">
+          “NEGOCIOS ABURRIDOS E INNOVACIÓN” — PODCAST VENTAJA.<br>
+          POR QUÉ LA PLATA ESTÁ EN LOS NEGOCIOS QUE NADIE QUIERE MONTAR.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ FOLIO 08 · FIRMA ══════════════════ -->
+<section id="f08" class="px-5 sm:px-8 lg:px-12 py-16 sm:py-24 border-t border-rule">
+  <div class="max-w-shell mx-auto">
+
+    <div class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 font-mono text-[10px] tracking-[.16em] text-mute" data-rv>
+      <span>FOLIO 08 · FIRMA</span>
+      <span>FIN DEL CUADERNO</span>
+    </div>
+    <div class="h-px bg-rule2 mt-3 drawline" data-line></div>
+
+    <h2 class="mt-10 font-serif text-ink leading-[.98] tracking-[-.028em] text-[clamp(2.3rem,9vw,3.6rem)] lg:text-[4.4rem] max-w-[16ch]" data-rv>
+      Si llegó hasta acá, ya sabe si le sirvo.
+    </h2>
+
+    <div class="mt-11 grid grid-cols-1 lg:grid-cols-12 gap-x-10 gap-y-8 items-stretch">
+
+      <!-- puerta principal -->
+      <a href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20le%20escribo%20desde%20su%20p%C3%A1gina.%20Le%20cuento%20qu%C3%A9%20est%C3%A1%20pasando%20en%20mi%20empresa%3A"
+         target="_blank" rel="noopener"
+         class="lg:col-span-7 group border border-rule bg-paper rounded-[8px] p-8 sm:p-10 flex flex-col justify-between
+                hover:border-ink/25 transition-[border-color,box-shadow] duration-200"
+         style="box-shadow:0 0 0 rgba(0,0,0,0)"
+         onmouseover="this.style.boxShadow='0 2px 8px rgba(0,0,0,.04)'" onmouseout="this.style.boxShadow='0 0 0 rgba(0,0,0,0)'"
+         data-rv>
+        <div>
+          <p class="font-mono text-[10px] tracking-[.16em] text-red">LA VÍA RÁPIDA</p>
+          <p class="mt-4 font-serif text-ink text-[clamp(1.8rem,7vw,2.6rem)] leading-[1.05] tracking-[-.025em]">
+            Escríbame por WhatsApp
+          </p>
+          <p class="mt-4 text-[15.5px] leading-[1.62] text-ink2 max-w-[40ch]">
+            Cuénteme en dos líneas qué hace su empresa y qué parte le está costando gente.
+            Contesto yo. Si no le sirvo, se lo digo de una y le ahorro la reunión.
+          </p>
+        </div>
+        <div class="mt-8 flex items-center gap-3 text-[14px] font-medium text-ink">
+          <span class="font-mono text-[13px] tracking-[.04em]">+57 313 246 5100</span>
+          <span class="h-px flex-1 bg-rule"></span>
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true" class="transition-transform duration-200 group-hover:translate-x-1"><path d="M3 8h9M8.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="square"/></svg>
+        </div>
+      </a>
+
+      <!-- puertas secundarias -->
+      <div class="lg:col-span-5 flex flex-col" data-rv style="--d:90ms">
+        <div class="border-t border-rule">
+          <a href="https://cal.com/salomonmuriel" target="_blank" rel="noopener" class="row group flex items-start gap-4 py-6">
+            <span class="font-mono text-[10px] tracking-[.14em] text-faint pt-1.5 w-[54px] flex-none">30 MIN</span>
+            <span class="flex-1">
+              <span class="block text-[16px] font-medium text-ink">Agendar en Cal.com</span>
+              <span class="block mt-1 text-[14px] leading-[1.55] text-ink2">Sin presentación ni propuesta. Me cuenta y le digo qué haría yo.</span>
+            </span>
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true" class="mt-1.5 text-mute transition-transform duration-200 group-hover:translate-x-1"><path d="M3 8h9M8.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="square"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/in/smuriel/" target="_blank" rel="noopener" class="row group flex items-start gap-4 py-6">
+            <span class="font-mono text-[10px] tracking-[.14em] text-faint pt-1.5 w-[54px] flex-none">LEER</span>
+            <span class="flex-1">
+              <span class="block text-[16px] font-medium text-ink">LinkedIn</span>
+              <span class="block mt-1 text-[14px] leading-[1.55] text-ink2">No tengo blog. Escribo allá, casi siempre sobre lo que estoy construyendo esta semana.</span>
+            </span>
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true" class="mt-1.5 text-mute transition-transform duration-200 group-hover:translate-x-1"><path d="M3 8h9M8.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="square"/></svg>
+          </a>
+          <a href="mailto:salomon.muriel@gmail.com" class="row group flex items-start gap-4 py-6">
+            <span class="font-mono text-[10px] tracking-[.14em] text-faint pt-1.5 w-[54px] flex-none">FORMAL</span>
+            <span class="flex-1">
+              <span class="block text-[16px] font-medium text-ink">Correo</span>
+              <span class="block mt-1 text-[14px] leading-[1.55] text-ink2 break-all">salomon.muriel@gmail.com</span>
+            </span>
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true" class="mt-1.5 text-mute transition-transform duration-200 group-hover:translate-x-1"><path d="M3 8h9M8.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="square"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ COLOFÓN ══════════════════ -->
+<footer class="px-5 sm:px-8 lg:px-12 py-14 border-t border-rule bg-paper/70">
+  <div class="max-w-shell mx-auto">
+
+    <p class="font-mono text-[10px] tracking-[.16em] text-mute" data-rv>COLOFÓN · NOTAS AL MARGEN</p>
+
+    <div class="mt-7 grid grid-cols-1 lg:grid-cols-12 gap-x-10 gap-y-8 items-start">
+
+      <div class="lg:col-span-3" data-rv>
+        <div class="border border-rule bg-paper p-[6px] rounded-[8px] max-w-[210px]">
+          <img src="assets/marathon.jpg" alt="Salomón Muriel con la medalla al terminar la media maratón de Bogotá" class="photo w-full aspect-square object-cover rounded-[4px]" width="600" height="600">
+        </div>
+        <p class="mt-2.5 font-mono text-[10px] leading-[1.65] tracking-[.06em] text-mute">MEDIA MARATÓN DE BOGOTÁ. 2 H 10 MIN.</p>
+      </div>
+
+      <ul class="lg:col-span-9 grid grid-cols-1 sm:grid-cols-2 gap-x-10 border-t border-rule" data-rv style="--d:80ms">
+        <li class="row py-[13px] flex gap-4 text-[13.5px] leading-[1.5]"><span class="font-mono text-[10px] tracking-[.12em] text-faint w-[68px] flex-none pt-[3px]">CASA</span><span class="text-ink2">Casado. Mellizos de cuatro años: Franco y Luca.</span></li>
+        <li class="row py-[13px] flex gap-4 text-[13.5px] leading-[1.5]"><span class="font-mono text-[10px] tracking-[.12em] text-faint w-[68px] flex-none pt-[3px]">INGLÉS</span><span class="text-ink2">Lo aprendí jugando en línea, no en un instituto.</span></li>
+        <li class="row py-[13px] flex gap-4 text-[13.5px] leading-[1.5]"><span class="font-mono text-[10px] tracking-[.12em] text-faint w-[68px] flex-none pt-[3px]">TALLER</span><span class="text-ink2">Rack de herramientas e impresora 3D. Arreglo lo que se dañe en la casa.</span></li>
+        <li class="row py-[13px] flex gap-4 text-[13.5px] leading-[1.5]"><span class="font-mono text-[10px] tracking-[.12em] text-faint w-[68px] flex-none pt-[3px]">CUMPLE</span><span class="text-ink2">Lo celebro en una fecha que no es la real. A propósito.</span></li>
+        <li class="row py-[13px] flex gap-4 text-[13.5px] leading-[1.5]"><span class="font-mono text-[10px] tracking-[.12em] text-faint w-[68px] flex-none pt-[3px]">MEDIDOR</span><span class="text-ink2">En mi sitio publico un medidor de felicidad. Sí, en serio.</span></li>
+        <li class="row py-[13px] flex gap-4 text-[13.5px] leading-[1.5]"><span class="font-mono text-[10px] tracking-[.12em] text-faint w-[68px] flex-none pt-[3px]">HERENCIA</span><span class="text-ink2">Papá empresario. Abuelo empresario. Tercera generación arriesgando.</span></li>
+      </ul>
+    </div>
+
+    <div class="h-px bg-rule mt-12 mb-6"></div>
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 font-mono text-[10px] tracking-[.14em] text-faint">
+      <span>SALOMÓN MURIEL · BOGOTÁ, COLOMBIA · PRÁCTICA PERSONAL</span>
+      <span class="flex flex-wrap gap-x-5 gap-y-1">
+        <a href="https://wa.me/573132465100" target="_blank" rel="noopener" class="hover:text-ink transition">WHATSAPP</a>
+        <a href="https://cal.com/salomonmuriel" target="_blank" rel="noopener" class="hover:text-ink transition">CAL.COM</a>
+        <a href="https://www.linkedin.com/in/smuriel/" target="_blank" rel="noopener" class="hover:text-ink transition">LINKEDIN</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+</main>
+</div>
+
+<!-- botón flotante (desktop) -->
+<a id="fab" href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20le%20escribo%20desde%20su%20p%C3%A1gina."
+   target="_blank" rel="noopener"
+   class="fab hidden lg:inline-flex fixed bottom-7 right-7 z-50 items-center gap-2.5 bg-ink text-white
+          text-[13px] font-medium px-5 py-[13px] rounded-[5px] hover:bg-[#333] active:scale-[.985]">
+  Hablemos
+  <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="square"/></svg>
+</a>
+
+<script>
+(function(){
+  'use strict';
+  var WA = 'https://wa.me/573132465100';
+
+  /* ─────────── FOLIO 01 · renglones del diagnóstico ─────────── */
+  var DX = [
+    { t:'Los pedidos llegan por WhatsApp y alguien los pasa a mano a un Excel.', k:'PEDIDOS' },
+    { t:'Cada lunes se va media mañana cuadrando el inventario.',                k:'INVENTARIO' },
+    { t:'Las facturas se hacen una por una, copiando datos de otro lado.',       k:'FACTURACIÓN' },
+    { t:'Para saber cuánto se vendió ayer toca preguntarle a alguien.',          k:'REPORTES' },
+    { t:'Hay tres archivos con el mismo dato y ninguno cuadra.',                 k:'DATOS' },
+    { t:'Compraron un software caro y el equipo siguió usando el Excel.',        k:'SOFTWARE' },
+    { t:'Si esa persona se enferma, ese proceso se para en seco.',               k:'DEPENDENCIA' },
+    { t:'Nadie ha vuelto a mirar cómo se hace eso desde hace años.',             k:'PROCESO' }
+  ];
+
+  var VERDICTS = [
+    'Marque lo que le suene. Nadie tiene cero, y el que dice que sí, no ha mirado.',
+    'Poquito. Eso se arregla en un par de tardes, y probablemente sin mí.',
+    'Poquito. Eso se arregla en un par de tardes, y probablemente sin mí.',
+    'Ahí ya hay horas de su gente atrapadas en algo que una máquina hace sola.',
+    'Ahí ya hay horas de su gente atrapadas en algo que una máquina hace sola.',
+    'Usted no tiene un problema de software. Tiene un problema de proceso.',
+    'Usted no tiene un problema de software. Tiene un problema de proceso.',
+    'Su empresa la está sosteniendo la memoria de dos o tres personas. Eso es frágil.',
+    'Su empresa la está sosteniendo la memoria de dos o tres personas. Eso es frágil.'
+  ];
+
+  var list = document.getElementById('dxList');
+  if (list) {
+    var html = '';
+    for (var i = 0; i < DX.length; i++) {
+      html +=
+      '<label class="dx row flex items-center gap-4 py-[15px] sm:py-[17px]">' +
+        '<input type="checkbox" class="cbx sr-only peer" data-dx="' + i + '">' +
+        '<span class="box" aria-hidden="true"></span>' +
+        '<span class="dx-body flex-1 flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-x-6 gap-y-1">' +
+          '<span class="dx-t text-[15px] sm:text-[15.5px] leading-[1.45] text-ink2 pr-2">' + DX[i].t + '</span>' +
+          '<span class="dx-n font-mono text-[9.5px] tracking-[.14em] text-faint flex-none">' + DX[i].k + '</span>' +
+        '</span>' +
+      '</label>';
+    }
+    list.innerHTML = html;
+  }
+
+  var elCount   = document.getElementById('dxCount');
+  var elVerdict = document.getElementById('dxVerdict');
+  var elSend    = document.getElementById('dxSend');
+  var elLabel   = document.getElementById('dxSendLabel');
+
+  function refresh() {
+    var boxes = document.querySelectorAll('.cbx');
+    var picked = [], n = 0;
+    for (var i = 0; i < boxes.length; i++) {
+      if (boxes[i].checked) { n++; picked.push(DX[+boxes[i].dataset.dx].t); }
+    }
+
+    if (elCount) {
+      elCount.innerHTML = n + '<span class="text-faint">/8</span>';
+      elCount.animate(
+        [{transform:'translateY(5px)', opacity:.35}, {transform:'none', opacity:1}],
+        {duration:340, easing:'cubic-bezier(.16,1,.3,1)'}
+      );
+    }
+    if (elVerdict) elVerdict.textContent = VERDICTS[n];
+
+    if (!elSend) return;
+    if (n === 0) {
+      elSend.classList.add('opacity-45','pointer-events-none');
+      elSend.setAttribute('href', WA);
+      if (elLabel) elLabel.textContent = 'Marque al menos uno';
+    } else {
+      elSend.classList.remove('opacity-45','pointer-events-none');
+      var msg = 'Hola Salomón, vengo de su página.\n' +
+                'De los ocho renglones marqué ' + n + ':\n\n';
+      for (var j = 0; j < picked.length; j++) msg += '• ' + picked[j] + '\n';
+      msg += '\nMi empresa se dedica a ______ y somos ______ personas.';
+      elSend.setAttribute('href', WA + '?text=' + encodeURIComponent(msg));
+      if (elLabel) elLabel.textContent = n === 1 ? 'Mandarle este renglón' : 'Mandarle estos ' + n + ' renglones';
+    }
+  }
+  document.addEventListener('change', function(e){
+    if (e.target && e.target.classList && e.target.classList.contains('cbx')) refresh();
+  });
+  refresh();
+
+  /* ─────────── FOLIO 03 · historial ─────────── */
+  var HIST = [
+    { y:'2025 —',    n:'Ignia',       w:'Un modelo nuevo de educación superior',
+      s:'ACTIVA', c:'bg-pblue text-tblue', logo:'assets/ignia.png',
+      d:'Lanzamos en junio de 2025 y fuimos rentables desde el primer día: USD 150.000 de ingreso recurrente en el primer año, unos 30 fellows en la primera cohorte del Action Lab y un equipo de cinco. El CRM, el sitio y la plataforma de comunidad los construí yo.' },
+    { y:'2019—2022', n:'Finco',       w:'Valoración de inmuebles con datos e IA para Latinoamérica',
+      s:'VENDIDA', c:'bg-pgreen text-tgreen', logo:'assets/finco.png',
+      d:'Llegamos a 100.000 reportes al año. La vendimos a RED Atlas por cerca de USD 1,5 millones: cinco veces lo que habíamos invertido.' },
+    { y:'2018—2019', n:'Beriblock',   w:'Autenticación de pagarés con blockchain',
+      s:'QUEBRÓ', c:'bg-pred text-tred', logo:'assets/beriblock.png',
+      d:'La tecnología funcionaba. El problema es que nunca encontramos a quién le dolía lo suficiente como para pagar. Cerramos en un año. Hoy pregunto quién paga antes de construir nada.' },
+    { y:'2017—2019', n:'PrestaGente', w:'Créditos de libranza entre personas',
+      s:'VENDIDA', c:'bg-pgreen text-tgreen', logo:'assets/prestagente.png',
+      d:'La vendimos a Taurus Capital por alrededor de USD 1 millón. Sigue operando hoy, con otros dueños.' },
+    { y:'2016—2017', n:'El Palomo',   w:'Flores por suscripción',
+      s:'FRACASÓ', c:'bg-pred text-tred', logo:'assets/elpalomo.png',
+      d:'Un fracaso espectacular, de los que se cuentan. Ahí aprendí de verdad cuánto cuesta conseguir un cliente y por qué un negocio bonito no es lo mismo que un negocio.' }
+  ];
+
+  var hist = document.getElementById('hist');
+  if (hist) {
+    var h = '';
+    for (var k = 0; k < HIST.length; k++) {
+      var it = HIST[k];
+      h +=
+      '<div class="acc row">' +
+        '<button type="button" class="w-full text-left py-6 flex items-center gap-4 sm:gap-6 group" aria-expanded="false">' +
+          '<span class="font-mono text-[10px] tracking-[.1em] text-faint w-[74px] sm:w-[86px] flex-none">' + it.y + '</span>' +
+          '<img src="' + it.logo + '" alt="Logo de ' + it.n + '" class="logo h-6 sm:h-7 w-[58px] sm:w-[76px] object-contain object-left flex-none">' +
+          '<span class="flex-1 min-w-0">' +
+            '<span class="block font-serif text-[1.35rem] sm:text-[1.55rem] text-ink tracking-[-.02em] leading-tight">' + it.n + '</span>' +
+            '<span class="block mt-0.5 text-[13.5px] leading-[1.45] text-mute">' + it.w + '</span>' +
+          '</span>' +
+          '<span class="font-mono text-[9.5px] tracking-[.13em] px-2.5 py-1 rounded-full flex-none hidden sm:inline ' + it.c + '">' + it.s + '</span>' +
+          '<span class="relative w-3.5 h-3.5 flex-none text-mute" aria-hidden="true">' +
+            '<span class="absolute left-0 top-1/2 w-3.5 h-px bg-current -translate-y-1/2"></span>' +
+            '<span class="pm-v absolute top-0 left-1/2 h-3.5 w-px bg-current -translate-x-1/2"></span>' +
+          '</span>' +
+        '</button>' +
+        '<div class="acc-body"><div>' +
+          '<div class="pb-7 pl-0 sm:pl-[110px] flex flex-col gap-3">' +
+            '<span class="font-mono text-[9.5px] tracking-[.13em] px-2.5 py-1 rounded-full self-start sm:hidden ' + it.c + '">' + it.s + '</span>' +
+            '<p class="text-[15px] leading-[1.65] text-ink2 max-w-[62ch]">' + it.d + '</p>' +
+          '</div>' +
+        '</div></div>' +
+      '</div>';
+    }
+    hist.innerHTML = h;
+
+    hist.addEventListener('click', function(e){
+      var btn = e.target.closest('button');
+      if (!btn) return;
+      var acc = btn.parentElement;
+      var open = acc.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  }
+
+  /* ─────────── FOLIO 04 · renglones de capacidad ─────────── */
+  document.querySelectorAll('[data-slots]').forEach(function(host){
+    var total = +host.dataset.total, taken = +host.dataset.taken, kind = host.dataset.kind;
+    var s = '';
+    for (var i = 1; i <= total; i++) {
+      var occupied = i <= taken;
+      var nn = i < 10 ? '0' + i : '' + i;
+      if (occupied) {
+        s += '<div class="row flex items-center gap-4 py-[15px] opacity-45">' +
+               '<span class="font-mono text-[10px] tracking-[.12em] text-faint w-[26px] flex-none">' + nn + '</span>' +
+               '<span class="flex-1 h-px bg-rule2"></span>' +
+               '<span class="font-mono text-[10px] tracking-[.14em] text-mute flex-none">OCUPADO</span>' +
+             '</div>';
+      } else {
+        var txt = 'Hola Salomón, vi que le queda un cupo de ' + kind + '. Quiero contarle mi caso.';
+        s += '<a href="' + WA + '?text=' + encodeURIComponent(txt) + '" target="_blank" rel="noopener" ' +
+             'class="row group flex items-center gap-4 py-[15px] hover:bg-pyell/50 transition-colors -mx-2 px-2">' +
+               '<span class="font-mono text-[10px] tracking-[.12em] text-red w-[26px] flex-none">' + nn + '</span>' +
+               '<span class="flex-1 text-[15px] font-medium text-ink">Este renglón está libre</span>' +
+               '<span class="font-mono text-[10px] tracking-[.14em] text-ink flex-none flex items-center gap-2">TÓMELO' +
+                 '<svg width="12" height="12" viewBox="0 0 16 16" fill="none" class="transition-transform duration-200 group-hover:translate-x-1"><path d="M3 8h9M8.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="square"/></svg>' +
+               '</span>' +
+             '</a>';
+      }
+    }
+    host.innerHTML = s;
+  });
+
+  /* ─────────── reveal ─────────── */
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -6% 0px' });
+
+  document.querySelectorAll('[data-rv], [data-line], [data-underink]').forEach(function(el){ io.observe(el); });
+
+  /* ─────────── rail activo ─────────── */
+  var links = {};
+  document.querySelectorAll('[data-rail]').forEach(function(a){ links[a.dataset.rail] = a; });
+  var railIO = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if (!en.isIntersecting) return;
+      for (var id in links) links[id].classList.remove('on');
+      if (links[en.target.id]) links[en.target.id].classList.add('on');
+    });
+  }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+  document.querySelectorAll('section[id]').forEach(function(s){ railIO.observe(s); });
+
+  /* ─────────── botón flotante ─────────── */
+  var fab = document.getElementById('fab');
+  var hero = document.getElementById('f00');
+  if (fab && hero) {
+    new IntersectionObserver(function(entries){
+      fab.classList.toggle('on', !entries[0].isIntersecting);
+    }, { threshold: 0 }).observe(hero);
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,223 +1,580 @@
-@import "tailwindcss";
-@plugin "@tailwindcss/typography";
+@import "tailwindcss" source(none);
 
-/* Register custom dark mode selector so dark: prefix uses data-theme attribute */
-@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+/* Sólo `src/`: `design-directions/` guarda las 36 exploraciones y, si
+   Tailwind las escanea, se lleva al CSS cientos de utilidades muertas. */
+@source "../../src/**/*.{astro,ts,tsx,js,mdx,md}";
 
+/* ── Fuentes ────────────────────────────────────────────────
+   Archivo needs the wdth axis: the display type is set at
+   font-stretch 62–125%. `wdth.css` ships wght 100–900 *and*
+   font-stretch 62%–125% in one file.                          */
+@import "@fontsource-variable/archivo/wdth.css";
+@import "@fontsource/alfa-slab-one/400.css";
+@import "@fontsource/ibm-plex-mono/400.css";
+@import "@fontsource/ibm-plex-mono/500.css";
+@import "@fontsource/ibm-plex-mono/600.css";
+@import "@fontsource-variable/caveat/wght.css";
+
+/* ── Tokens (de direction-36) ─────────────────────────────── */
 @theme {
-  /* Skin colors — resolved from CSS variables for theme toggling */
-  --color-skin-fill: var(--color-fill);
-  --color-skin-accent: var(--color-accent);
-  --color-skin-base: var(--color-text-base);
-  --color-skin-inverted: var(--color-fill);
-  --color-skin-card: var(--color-card);
-  --color-skin-card-muted: var(--color-card-muted);
-  --color-skin-line: var(--color-border);
+  --color-papel: #f2f1ed;
+  --color-papel2: #e9e8e2;
+  --color-campo: #ffffff;
+  --color-tinta: #16171a;
+  --color-panel: #17181c;
+  --color-panelfg: #eceae4;
+  --color-panelgris: #9a988f;
+  --color-gris: #65665f;
+  --color-linea: #cfcdc4;
+  --color-linea2: #a8a69c;
+  --color-rojo: #d8332a;
+  --color-rojo2: #b3251d;
+  --color-rojo3: #ea4b3e;
 
-  /* Fonts */
-  --font-text: "DM Sans Variable", sans-serif;
-  --font-hs: "Syne Variable", sans-serif;
+  /* Superficies del panel oscuro: las tres únicas que el diseño repite. */
+  --color-panelborde: #2c2e34;
+  --color-panelborde2: #232529;
+  --color-panelnota: #8e8d86;
+  --color-paneltxt: #b0aea6;
+  --color-panelhondo: #101115;
 
-  /* Screens */
-  --breakpoint-sm: 640px;
+  --font-arch: "Archivo Variable", Archivo, "Helvetica Neue", Arial, sans-serif;
+  --font-slab: "Alfa Slab One", Rockwell, Georgia, serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-pen: "Caveat Variable", Caveat, "Segoe Script", cursive;
 
-  /* Animations */
-  --animate-slide-in-out-l: slideL 4s ease-in-out forwards;
-  --animate-slide-in-out-r: slideR 4s ease-in-out forwards;
+  --container-medida: 66ch;
+  --container-nota: 19rem;
+  --container-hoja: 1320px;
+
+  --radius-DEFAULT: 2px;
+  --radius-none: 0;
 }
 
-@keyframes slideL {
-  0% { left: 0; transform: translateX(-100%); }
-  50% { transform: translateX(120%); }
-  100% { transform: translateX(-100%); }
+/* Tailwind 4 has no `gridTemplateColumns` extension key; the 16-column
+   carta de tiempos gets a plain utility instead. */
+@utility grid-cols-16 {
+  grid-template-columns: repeat(16, minmax(0, 1fr));
 }
 
-@keyframes slideR {
-  0% { right: 0; transform: translateX(100%); }
-  50% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
+/* Ancho de la hoja + su margen, repetido en cada sección. */
+@utility hoja {
+  margin-inline: auto;
+  max-width: 1320px;
+  padding-inline: clamp(1.25rem, 4vw, 3.5rem);
 }
 
-/* ===== Light theme (default) ===== */
 :root {
-  --color-fill: #ffffff;
-  --color-accent: #cc2b2b;
-  --color-text-base: #111110;
-  --color-card: #f5f4f0;
-  --color-card-muted: #e2e0d8;
-  --color-border: #e2e0d8;
+  --papel: #f2f1ed;
+  --papel2: #e9e8e2;
+  --campo: #ffffff;
+  --tinta: #16171a;
+  --panel: #17181c;
+  --panelfg: #eceae4;
+  --gris: #65665f;
+  --linea: #cfcdc4;
+  --linea2: #a8a69c;
+  --rojo: #d8332a;
+  --rojo2: #b3251d;
+  --rojo3: #ea4b3e;
 }
 
-/* ===== Dark theme ===== */
-[data-theme="dark"] {
-  --color-fill: #00224f;
-  --color-accent: #ff6f59;
-  --color-text-base: #e8e9eb;
-  --color-card: #001b3f;
-  --color-card-muted: #0c0e4f;
-  --color-border: #ff6f59;
+html {
+  color-scheme: light;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: 84px;
+}
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+body {
+  background: var(--papel);
+  color: var(--tinta);
+  font-synthesis-weight: none;
+}
+img {
+  max-width: 100%;
+  display: block;
 }
 
-@layer base {
-  #sun-svg,
-  html[data-theme="dark"] #moon-svg {
-    display: none;
-  }
-  #moon-svg,
-  html[data-theme="dark"] #sun-svg {
-    display: block;
-  }
-  body {
-    @apply flex min-h-[100svh] flex-col bg-skin-fill font-text text-skin-base
-    selection:bg-skin-accent/70 selection:text-skin-inverted;
-  }
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-hs font-normal;
-  }
-  p, ul, li {
-    @apply text-xl
-  }
-  section,
-  footer {
-    @apply mx-auto max-w-4xl px-4;
-  }
-  a {
-    @apply outline-2 outline-offset-1 outline-skin-fill
-    focus-visible:no-underline focus-visible:outline-dashed;
-  }
-  svg {
-    @apply inline-block h-6 w-6 fill-skin-base group-hover:fill-skin-accent;
-  }
-  svg.icon-tabler {
-    @apply inline-block h-6 w-6 scale-150 fill-transparent
-    stroke-current stroke-2 opacity-90 group-hover:fill-transparent;
-  }
+/* ── superficies de papel ── */
+.grano {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='170' height='170'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.86' numOctaves='2' stitchTiles='stitch'/></filter><rect width='170' height='170' filter='url(%23n)' opacity='0.42'/></svg>");
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  pointer-events: none;
+  opacity: 0.1;
+  mix-blend-mode: multiply;
+}
+.rayas {
+  background-image: linear-gradient(
+    to bottom,
+    transparent 0 27px,
+    rgba(22, 23, 26, 0.055) 27px 28px
+  );
+  background-size: 100% 28px;
+}
 
-  img + em {
-    @apply block text-center text-skin-base;
-  }
+/* ── letra de rotulista: relleno papel, doble sombra dura ── */
+.pintado {
+  color: var(--papel);
+  -webkit-text-stroke: 0.022em var(--tinta);
+  paint-order: stroke fill;
+  text-shadow:
+    0.042em 0.042em 0 var(--rojo),
+    0.068em 0.068em 0 var(--tinta);
+}
+.hueco {
+  color: transparent;
+  -webkit-text-stroke: 0.03em var(--linea2);
+}
 
-  blockquote > p {
-    @apply before:!content-none after:!content-none;
-  }
+/* ── superficies de navegador ── */
+::selection {
+  background: var(--rojo);
+  color: #fff;
+}
+:focus-visible {
+  outline: 2.5px solid var(--rojo);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+input,
+textarea {
+  caret-color: var(--rojo);
+}
+.barrita {
+  scrollbar-width: thin;
+  scrollbar-color: var(--linea2) transparent;
+}
+.barrita::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+.barrita::-webkit-scrollbar-track {
+  background: transparent;
+}
+.barrita::-webkit-scrollbar-thumb {
+  background: var(--linea2);
+  border: 3px solid var(--papel);
+  border-radius: 9px;
+}
+.barrita::-webkit-scrollbar-thumb:hover {
+  background: var(--gris);
+}
 
-  /* ===== scrollbar ===== */
+/* ── marcador rojo bajo los renglones del parte ── */
+.subraya {
+  position: relative;
+  display: inline;
+  background-image: linear-gradient(var(--rojo), var(--rojo));
+  background-repeat: no-repeat;
+  background-position: 0 88%;
+  background-size: 0% 0.13em;
+  transition: background-size 0.72s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.visto .subraya {
+  background-size: 100% 0.13em;
+}
+
+/* ── entrada escalonada ── */
+.rv {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.6s ease,
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: calc(var(--i, 0) * 70ms);
+}
+.visto.rv,
+.visto .rv {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── letrero corrido ── */
+.cinta {
+  overflow: hidden;
+}
+.riel {
+  display: flex;
+  width: max-content;
+  animation: correr 46s linear infinite;
+}
+@keyframes correr {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ── tiquete perforado ── */
+.perfora {
+  height: 9px;
+  background-image: radial-gradient(
+    circle at 50% 0,
+    var(--papel) 0 4.2px,
+    transparent 4.4px
+  );
+  background-size: 12px 12px;
+  background-repeat: repeat-x;
+}
+.perfora-panel {
+  background-image: radial-gradient(
+    circle at 50% 0,
+    var(--papel2) 0 4.2px,
+    transparent 4.4px
+  );
+}
+
+/* ── casillas del chinómetro (hoja de chequeo) ── */
+.casilla {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 1.4rem;
+  height: 1.4rem;
+  flex: none;
+  margin: 0.1rem 0 0;
+  border: 1.6px solid var(--linea2);
+  background: var(--campo);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition:
+    background-color 0.16s,
+    border-color 0.16s;
+}
+.casilla::after {
+  content: "";
+  width: 0.72rem;
+  height: 0.72rem;
+  background: #fff;
+  opacity: 0;
+  transform: scale(0.4) rotate(-8deg);
+  transition:
+    opacity 0.16s,
+    transform 0.24s cubic-bezier(0.2, 1.6, 0.4, 1);
+  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'><path d='M4 12.6l5.2 5.2L20 6.4'/></svg>")
+    center/contain no-repeat;
+  mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'><path d='M4 12.6l5.2 5.2L20 6.4'/></svg>")
+    center/contain no-repeat;
+}
+.casilla:hover {
+  border-color: var(--rojo);
+}
+.casilla:checked {
+  background: var(--rojo);
+  border-color: var(--rojo);
+}
+.casilla:checked::after {
+  opacity: 1;
+  transform: scale(1) rotate(-8deg);
+}
+.reng:has(.casilla:checked) {
+  background: rgba(216, 51, 42, 0.055);
+}
+.reng:hover {
+  background: rgba(22, 23, 26, 0.028);
+}
+.reng:has(.casilla:checked) .reng-t {
+  color: var(--gris);
+  text-decoration: line-through;
+  text-decoration-color: var(--rojo);
+  text-decoration-thickness: 1.6px;
+  text-decoration-skip-ink: none;
+}
+
+/* ── aguja ── */
+#aguja {
+  transform-box: view-box;
+  transform-origin: 150px 150px;
+  transition: transform 0.55s cubic-bezier(0.34, 1.32, 0.64, 1);
+}
+
+/* ── el tablero de cajitas ── */
+#cables {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+}
+.cable {
+  fill: none;
+  stroke-width: 1.7;
+  stroke-linecap: square;
+  transition:
+    stroke 0.45s ease,
+    opacity 0.35s ease;
+}
+[data-estado="hoy"] .cable {
+  stroke: var(--rojo);
+  stroke-dasharray: 6 6;
+  animation: marcha 1.6s linear infinite;
+  marker-end: url(#pta-hoy);
+}
+[data-estado="queda"] .cable {
+  stroke: var(--tinta);
+  stroke-dasharray: none;
+  animation: none;
+  marker-end: url(#pta-queda);
+}
+@keyframes marcha {
+  to {
+    stroke-dashoffset: -24;
+  }
+}
+[data-estado="queda"] .cable[data-muere="1"] {
+  opacity: 0;
+}
+[data-estado="queda"] .enlace[data-muere="1"] {
+  opacity: 0;
+  pointer-events: none;
+}
+.caja {
+  transition:
+    opacity 0.4s ease,
+    border-color 0.4s ease,
+    background-color 0.4s ease;
+}
+[data-estado="queda"] .caja[data-apaga="1"] {
+  opacity: 0.42;
+}
+[data-estado="hoy"] .solo-queda {
+  display: none;
+}
+[data-estado="queda"] .solo-hoy {
+  display: none;
+}
+
+/* ── preguntas ── */
+details > summary {
+  list-style: none;
+  cursor: pointer;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}
+details[open] .cruz {
+  transform: rotate(45deg);
+}
+.cruz {
+  transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+}
+details[open] .resp {
+  animation: aparece 0.3s ease both;
+}
+@keyframes aparece {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ── rótulos y flechas del tablero ── */
+[data-estado="hoy"] .chip {
+  color: var(--rojo2);
+  border-color: rgba(179, 37, 29, 0.4);
+}
+[data-estado="queda"] .chip {
+  color: var(--gris);
+  border-color: var(--linea);
+}
+[data-estado="hoy"] .flechita {
+  color: var(--rojo);
+}
+[data-estado="queda"] .flechita {
+  color: var(--tinta);
+}
+.enlace:not(.hidden) {
+  display: block;
+}
+@media (min-width: 1024px) {
+  .enlace .chip {
+    box-shadow: 0 0 0 3px var(--papel);
+  }
+}
+
+/* ── interruptor del tablero ── */
+.tog {
+  background: transparent;
+  color: var(--gris);
+}
+.tog[aria-pressed="true"] {
+  background: var(--tinta);
+  color: var(--papel);
+}
+.tog[aria-pressed="false"]:hover {
+  background: var(--papel2);
+  color: var(--tinta);
+}
+
+/* ── barras del programa de obra ── */
+.barra {
+  transform-origin: 0 50%;
+  transform: scaleX(0.02);
+  opacity: 0;
+}
+.observa.visto .barra {
+  transform: none;
+  opacity: 1;
+  transition:
+    transform 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.4s ease;
+}
+.observa.visto .b2 {
+  transition-delay: 0.14s;
+}
+.observa.visto .b3 {
+  transition-delay: 0.28s;
+}
+
+/* ── prosa (páginas que vienen de MDX) ── */
+.prosa > * + * {
+  margin-top: 1.15em;
+}
+.prosa h2 {
+  font-family: var(--font-arch);
+  font-weight: 800;
+  font-stretch: 104%;
+  letter-spacing: -0.028em;
+  line-height: 1.08;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  margin-top: 2.2em;
+}
+.prosa h3 {
+  font-family: var(--font-arch);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  font-size: clamp(1.12rem, 2.2vw, 1.35rem);
+  margin-top: 1.9em;
+}
+.prosa p,
+.prosa li {
+  font-size: 1.04rem;
+  line-height: 1.65;
+}
+.prosa a {
+  color: var(--rojo2);
+  font-weight: 600;
+  border-bottom: 1.5px solid currentColor;
+}
+.prosa a:hover {
+  color: var(--tinta);
+}
+.prosa ul {
+  list-style: none;
+  padding-left: 0;
+}
+.prosa ul > li {
+  position: relative;
+  padding-left: 1.35rem;
+  margin-top: 0.55em;
+}
+.prosa ul > li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 0.42rem;
+  height: 1.5px;
+  background: var(--rojo);
+}
+.prosa ol {
+  padding-left: 1.35rem;
+}
+.prosa ol > li {
+  margin-top: 0.55em;
+}
+.prosa blockquote {
+  border-left: 3px solid var(--rojo);
+  padding-left: 1.1rem;
+  color: var(--gris);
+}
+.prosa img,
+.prosa video {
+  border: 1px solid var(--linea);
+  background: var(--campo);
+  padding: 8px;
+  border-radius: 2px;
+}
+.prosa figcaption {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--gris);
+  margin-top: 0.6rem;
+}
+/* La fecha de última actualización: primer párrafo en cursiva del About. */
+.prosa > p:first-child > em:only-child {
+  font-family: var(--font-mono);
+  font-style: normal;
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gris);
+}
+
+.prosa hr {
+  border: 0;
+  border-top: 1px solid var(--linea);
+  margin: 2.4em 0;
+}
+.prosa code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--papel2);
+  padding: 0.12em 0.32em;
+  border: 1px solid var(--linea);
+}
+.prosa pre {
+  padding: 1rem;
+  overflow-x: auto;
+  border: 1px solid var(--linea);
+}
+.prosa pre code {
+  border: 0;
+  background: transparent;
+  padding: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .barra {
+    transform: none;
+    opacity: 1;
+  }
+  .riel {
+    animation: none;
+  }
+  .rv {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .subraya {
+    background-size: 100% 0.13em;
+    transition: none;
+  }
+  [data-estado="hoy"] .cable {
+    animation: none;
+  }
+  #aguja {
+    transition: none;
+  }
   html {
-    overflow-y: scroll;
+    scroll-behavior: auto;
   }
-
-  ::-webkit-scrollbar {
-    @apply w-3;
-  }
-
-  ::-webkit-scrollbar-track {
-    @apply bg-skin-fill;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    @apply bg-skin-card;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    @apply bg-skin-card-muted;
-  }
-
-  code,
-  blockquote {
-    word-wrap: break-word;
-  }
-
-  pre > code {
-    white-space: pre;
-  }
-}
-
-/* ===== Typography / Prose ===== */
-@layer typography {
-  .prose {
-    @apply prose-headings:!mb-3 prose-headings:!text-skin-accent
-    prose-p:!text-skin-base
-    prose-a:!text-skin-base prose-a:!decoration-dashed prose-a:underline-offset-8
-    hover:prose-a:text-skin-accent
-    prose-figcaption:!text-skin-base prose-figcaption:opacity-70
-    prose-strong:!text-skin-base
-
-    prose-ol:!text-skin-base
-    prose-ul:overflow-x-clip prose-ul:!text-skin-base prose-li:marker:!text-skin-accent
-    prose-table:text-skin-base prose-th:border
-    prose-th:border-skin-line prose-td:border
-    prose-td:border-skin-line
-    prose-hr:!border-skin-line
-  }
-  .prose a {
-    @apply break-words hover:!text-skin-accent;
-  }
-  .prose thead th:first-child,
-  tbody td:first-child,
-  tfoot td:first-child {
-    padding-left: 0.5714286em;
-  }
-  .prose h2#table-of-contents {
-    @apply mb-2;
-  }
-  .prose details {
-    @apply inline-block cursor-pointer select-none text-skin-base;
-  }
-  .prose summary {
-    @apply focus-outline;
-  }
-  .prose h2#table-of-contents + p {
-    @apply hidden;
-  }
-
-  .prose blockquote {
-    @apply rounded-r-lg rounded-l-sm bg-skin-card pl-6 pr-6 pt-2 pb-2 !border-l-skin-accent;
-  }
-
-  .prose code {
-    @apply rounded p-1 before:!content-none after:!content-none text-skin-accent font-normal;
-  }
-
-  .prose img {
-    @apply !my-2 mx-auto border-2 border-skin-line hover:outline hover:outline-2 hover:outline-skin-fill;
-    @apply max-w-[70%];
-  }
-}
-
-@utility display-none {
-  @apply hidden;
-}
-
-@utility focus-outline {
-  @apply outline-2 outline-offset-1 outline-skin-fill focus-visible:no-underline focus-visible:outline-dashed;
-}
-
-/* ===== Footnotes ===== */
-
-.prose sup::after {
-  content: '✚';
-}
-
-.prose input[type=checkbox] ~ span {
-    @apply hidden
-}
-
-.prose input[type=checkbox]:checked ~ span {
-    @apply block text-base text-skin-base cursor-default pl-8
-}
-
-.prose input[type=checkbox]{
-  @apply hidden
-}
-
-.prose input[type=checkbox] ~ label {
-    @apply inline cursor-pointer text-skin-accent underline-offset-1 underline
-}
-
-.prose input[type=checkbox] ~ label:hover {
-    @apply underline-offset-4 text-2xl
-}
-
-.prose input[type=checkbox]:checked ~ label {
-
 }

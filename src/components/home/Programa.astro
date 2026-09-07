@@ -1,0 +1,160 @@
+---
+import EncabezadoSeccion from "@components/EncabezadoSeccion.astro";
+import { copia } from "@data/landing";
+import type { Lang } from "@i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const c = copia(lang).programa;
+
+const barras = [
+  { clase: "bg-linea text-tinta", col: "1 / span 2", extra: "" },
+  { clase: "bg-rojo2 text-white", col: "2 / span 2", extra: "b2" },
+  { clase: "bg-panel text-panelfg", col: "4 / span 13", extra: "b3" },
+];
+---
+
+<section
+  id="programa"
+  class="border-y border-linea bg-papel2 py-[clamp(3.2rem,7vw,5.6rem)]"
+>
+  <div class="hoja">
+    <EncabezadoSeccion rotulo={c.rotulo} nota={c.nota} notaCh={42} />
+
+    <h2
+      class="font-arch max-w-[24ch] text-[clamp(1.9rem,4.4vw,3.4rem)] font-extrabold leading-[1.03] tracking-[-.028em] [font-stretch:104%]"
+    >
+      {c.titulo}
+    </h2>
+
+    <!-- carta de tiempos -->
+    <div class="observa mt-[clamp(1.8rem,3.6vw,2.8rem)]">
+      <div class="hidden md:block">
+        <div
+          class="mb-3 grid grid-cols-16 border-b border-linea pb-1.5"
+          aria-hidden="true"
+        >
+          <span class="font-mono relative text-[10.5px] text-gris">S1</span>
+          <span></span><span></span>
+          <span class="font-mono text-[10.5px] text-gris">S4</span>
+          <span></span><span></span><span></span>
+          <span class="font-mono text-[10.5px] text-gris">S8</span>
+          <span></span><span></span><span></span>
+          <span class="font-mono text-[10.5px] text-gris">S12</span>
+          <span></span><span></span><span></span>
+          <span class="font-mono text-right text-[10.5px] text-gris">S16</span>
+        </div>
+        <div class="grid gap-[6px]">
+          {
+            barras.map((b, i) => (
+              <div class="grid grid-cols-16">
+                <div
+                  class:list={[
+                    "barra font-mono truncate rounded px-3 py-2.5 text-[11px] font-semibold uppercase tracking-[.05em]",
+                    b.clase,
+                    b.extra,
+                  ]}
+                  style={`grid-column:${b.col}`}
+                >
+                  {c.barras[i]}
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+
+      <div
+        class="mt-6 grid grid-cols-1 gap-[clamp(1.2rem,2.6vw,2rem)] md:mt-8 md:grid-cols-3"
+      >
+        {
+          c.etapas.map(e => (
+            <div class="border-l-2 border-rojo pl-4 md:border-l-0 md:pl-0">
+              <span class="font-mono mb-2 block text-[10.5px] uppercase tracking-[.18em] text-rojo2">
+                {e.cuando}
+              </span>
+              <h3 class="font-arch text-[1.1rem] font-bold leading-[1.15] tracking-[-.02em]">
+                {e.titulo}
+              </h3>
+              <p class="mt-2 text-[.96rem] leading-[1.55] text-gris">
+                {e.texto}
+              </p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <!-- bitácora -->
+    <div
+      class="mt-[clamp(2.4rem,5vw,4rem)] grid grid-cols-1 items-center gap-[clamp(1.5rem,4vw,3.5rem)] lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]"
+    >
+      <div>
+        <h3
+          class="font-arch max-w-[20ch] text-[clamp(1.3rem,2.6vw,1.95rem)] font-extrabold leading-[1.1] tracking-[-.028em] [font-stretch:100%]"
+        >
+          {c.bitacoraTitulo}
+        </h3>
+        <p class="mt-4 max-w-[46ch] text-[1.02rem] leading-[1.6] text-gris">
+          {c.bitacoraTexto}
+        </p>
+        <p
+          class="font-mono mt-5 text-[10.5px] uppercase leading-[1.8] tracking-[.16em] text-gris"
+        >
+          {c.bitacoraPie}
+        </p>
+      </div>
+
+      <div class="overflow-hidden rounded bg-panel text-panelfg">
+        <div
+          class="font-mono flex flex-wrap items-baseline gap-3 border-b border-panelborde px-4 py-4 text-[10.5px] uppercase tracking-[.18em] text-panelnota sm:px-6"
+        >
+          <span>{c.bitacoraEncabezado}</span><span
+            class="ml-auto font-semibold text-rojo3"
+            >{c.bitacoraResponsable}</span
+          >
+        </div>
+        <div>
+          {
+            c.bitacora.map(([dia, tarea], i) => (
+              <div
+                class:list={[
+                  "grid grid-cols-[3.1rem_1.35rem_1fr] items-start gap-3.5 px-4 py-3.5 sm:px-6",
+                  i > 0 && "border-t border-panelborde2",
+                ]}
+              >
+                <span class="font-mono pt-[3px] text-[11px] tracking-[.14em] text-panelnota">
+                  {dia}
+                </span>
+                <span
+                  class="mt-[1px] grid h-[1.35rem] w-[1.35rem] place-items-center rounded bg-rojo2 text-white"
+                  aria-hidden="true"
+                >
+                  <svg class="h-3.5 w-3.5">
+                    <use href="#i-check" />
+                  </svg>
+                </span>
+                <span class="text-[1rem] leading-[1.35] text-[#8b8a83] line-through decoration-rojo3 decoration-2 [text-decoration-skip-ink:none]">
+                  {tarea}
+                </span>
+              </div>
+            ))
+          }
+        </div>
+        <div
+          class="flex flex-wrap items-baseline gap-x-4 gap-y-1 border-t border-panelborde px-4 py-4 sm:px-6"
+        >
+          <span
+            class="font-mono text-[12px] font-semibold uppercase tracking-[.14em] text-rojo3"
+            >{c.bitacoraHechas}</span
+          >
+          <span class="text-[.95rem] leading-[1.4] text-[#8b8a83]"
+            >{c.bitacoraNinguna}</span
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

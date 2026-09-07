@@ -1,0 +1,14 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+html,body{margin:0;padding:0;background:#888}
+#w{width:1440px;transform:scale(0.3472);transform-origin:top left}
+iframe{width:1440px;height:12000px;border:0;display:block}
+</style></head><body>
+<div id="w"><iframe id="f" src="direction-19.html"></iframe></div>
+<script>
+document.getElementById('f').addEventListener('load',function(){
+  try{var d=this.contentDocument;d.querySelectorAll('[data-reveal]').forEach(function(e){e.classList.add('is-in')});
+  var h=d.documentElement.scrollHeight; this.style.height=h+'px';
+  document.body.style.height=(h*0.3472)+'px';}catch(e){}
+});
+</script>
+</body></html>

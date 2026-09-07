@@ -1,43 +1,58 @@
 import { defineConfig } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
-import remarkToc from "remark-toc";
-import remarkCollapse from "remark-collapse";
 import sitemap from "@astrojs/sitemap";
-import { SITE } from "./src/config";
 import mdx from "@astrojs/mdx";
+import react from "@astrojs/react";
 import vercel from "@astrojs/vercel";
+import keystatic from "@keystatic/astro";
+import { SITE } from "./src/config";
+import { rehypeImagenes } from "./src/utils/rehype-imagenes";
+import { rehypeCuentas } from "./src/utils/rehype-cuentas";
+import { routes } from "./src/i18n/ui";
+
+/**
+ * hreflang del sitemap. Las rutas no son paralelas (`/mentoria/` ↔
+ * `/en/mentoring/`), así que la opción `i18n` del plugin no las puede
+ * emparejar sola: se arman desde el mismo mapa que usa el sitio.
+ */
+const pares = Object.values(routes).map(r => ({
+  es: new URL(r.es, SITE.website).href,
+  en: new URL(r.en, SITE.website).href,
+}));
 
 // https://astro.build/config
 export default defineConfig({
   site: SITE.website,
-  output: "static",
-  adapter: vercel({
-    // @astrojs/vercel bundles all SSR routes into a single function and does
-    // NOT honor per-file `export const maxDuration`. Must be set globally
-    // here. OpenAI gpt-image-1.5 edits/generations used by
-    // /api/cumple-35/pixelize and /api/cumple-35/mascot can take 30-90s;
-    // without this, Vercel's gateway returns 504. Requires a plan that
-    // permits this duration (Hobby caps at 60, Pro at 300).
-    maxDuration: 300,
-  }),
+  // `server` only so that /keystatic (the CMS admin) can render on demand.
+  // Every content page sets `export const prerender = true`, so the public
+  // site is still fully static — see REBUILD-PLAN.md, Phase 3.
+  output: "server",
+  adapter: vercel(),
   integrations: [
     sitemap({
-      filter: page => page !== "https://www.salomonmuriel.com/",
+      // /keystatic is an admin surface, and the 410 routes exist only to be
+      // crawled out of the index — neither belongs in the sitemap.
+      filter: page =>
+        !page.includes("/keystatic") &&
+        !page.includes("/posts/") &&
+        !page.includes("/tags/"),
+      serialize(item) {
+        const par = pares.find(p => p.es === item.url || p.en === item.url);
+        if (par) {
+          item.links = [
+            { url: par.es, lang: "es-CO" },
+            { url: par.en, lang: "en" },
+          ];
+        }
+        return item;
+      },
     }),
     mdx(),
-    // purgecss removed — Tailwind v4 has built-in CSS tree-shaking,
-    // making purgecss redundant. It was also stripping valid TW v4 styles.
+    react(),
+    keystatic(),
   ],
   markdown: {
-    remarkPlugins: [
-      remarkToc,
-      [
-        remarkCollapse,
-        {
-          test: "Table of contents",
-        },
-      ],
-    ],
+    rehypePlugins: [rehypeImagenes, rehypeCuentas],
     shikiConfig: {
       theme: "one-dark-pro",
       wrap: true,
@@ -50,16 +65,11 @@ export default defineConfig({
     },
   },
   i18n: {
-    defaultLocale: "en",
-    locales: ["en", "es"],
+    defaultLocale: "es",
+    locales: ["es", "en"],
     routing: {
-      prefixDefaultLocale: true,
+      prefixDefaultLocale: false,
       redirectToDefaultLocale: false,
-    },
-  },
-  experimental: {
-    queuedRendering: {
-      enabled: true,
     },
   },
 });

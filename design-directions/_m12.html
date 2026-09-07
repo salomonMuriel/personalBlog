@@ -1,0 +1,16 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+html,body{margin:0;background:#333;height:100%}
+iframe{width:375px;height:2400px;border:0;display:block;margin:0 auto;background:#131110}
+</style></head><body>
+<iframe id="f" src="direction-12.html"></iframe>
+<script>
+const f=document.getElementById('f');
+f.addEventListener('load',()=>{
+  const d=f.contentDocument;
+  d.querySelectorAll('.rv').forEach(e=>{e.classList.add('in');e.style.transition='none'});
+  window.probe=()=>{const w=f.contentWindow.innerWidth,sw=d.documentElement.scrollWidth;
+    let o=[];d.querySelectorAll('body *').forEach(el=>{const r=el.getBoundingClientRect();
+      if(r.right>w+1.5 && !el.closest('.strip')) o.push(el.tagName+'.'+(el.className||''));});
+    return JSON.stringify({w,sw,o:[...new Set(o)].slice(0,15)});};
+});
+</script></body></html>

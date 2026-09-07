@@ -1,0 +1,1242 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Salomón Muriel — Taller de operaciones. Su empresa no está automatizada, está chinomática.</title>
+<meta name="description" content="Destrabo negocios colombianos que parecen automatizados pero los hace un muchacho a mano. Consultoría de 0 a 1 y tecnología que la gente sí usa. Cupo contado.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        negro:  '#0B0E0C',
+        panel:  '#131A16',
+        panel2: '#1B2620',
+        metal:  '#2A3730',
+        linea:  '#3A4A41',
+        crema:  '#EDE9DC',
+        gris:   '#A6B3A9',
+        humo:   '#7E8C82',
+        amarillo:'#F5C518',
+        rojo:   '#E85539',
+        ambar:  '#FFB03A',
+        led:    '#7BE8A6',
+        papel:  '#E7E2D2'
+      },
+      fontFamily: {
+        disp: ['"Big Shoulders Display"','"Arial Narrow"','Impact','sans-serif'],
+        mono: ['"IBM Plex Mono"','ui-monospace','SFMono-Regular','monospace'],
+        sans: ['"Work Sans"','system-ui','-apple-system','sans-serif']
+      }
+    }
+  }
+}
+</script>
+
+<style>
+  html{scroll-behavior:smooth;overflow-x:hidden}
+  body{background:#0B0E0C}
+
+  /* ---- materiales ---- */
+  .metalico{
+    background-image:
+      linear-gradient(180deg, rgba(255,255,255,.055), rgba(0,0,0,.22)),
+      repeating-linear-gradient(90deg, rgba(255,255,255,.020) 0 2px, rgba(0,0,0,0) 2px 5px);
+  }
+  .riveted{
+    background-image:
+      radial-gradient(circle at 11px 11px, rgba(255,255,255,.30) 0 1.4px, rgba(0,0,0,.62) 2.1px 3.3px, rgba(0,0,0,0) 3.8px),
+      radial-gradient(circle at calc(100% - 11px) 11px, rgba(255,255,255,.30) 0 1.4px, rgba(0,0,0,.62) 2.1px 3.3px, rgba(0,0,0,0) 3.8px),
+      radial-gradient(circle at 11px calc(100% - 11px), rgba(255,255,255,.30) 0 1.4px, rgba(0,0,0,.62) 2.1px 3.3px, rgba(0,0,0,0) 3.8px),
+      radial-gradient(circle at calc(100% - 11px) calc(100% - 11px), rgba(255,255,255,.30) 0 1.4px, rgba(0,0,0,.62) 2.1px 3.3px, rgba(0,0,0,0) 3.8px),
+      linear-gradient(180deg, rgba(255,255,255,.05), rgba(0,0,0,.20));
+  }
+  .hazard{background-image:repeating-linear-gradient(135deg,#F5C518 0 16px,#0B0E0C 16px 32px)}
+  .hazard-rojo{background-image:repeating-linear-gradient(135deg,#E85539 0 16px,#0B0E0C 16px 32px)}
+  .rejilla{
+    background-image:
+      linear-gradient(rgba(166,179,169,.09) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(166,179,169,.09) 1px, transparent 1px);
+    background-size:44px 44px;
+  }
+  .perforado{
+    background-image:radial-gradient(circle at center, rgba(0,0,0,.55) 0 2.2px, rgba(255,255,255,.03) 2.6px 3.4px, transparent 3.6px);
+    background-size:12px 12px;
+  }
+
+  /* grano de película sobre todo — quita el brillo digital */
+  body::after{
+    content:'';position:fixed;inset:0;pointer-events:none;z-index:70;opacity:.055;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size:260px 260px;
+  }
+
+  /* ---- sello de caucho ---- */
+  .sello{
+    display:inline-block;border:2.5px solid currentColor;padding:.18rem .5rem .1rem;
+    font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:.62rem;letter-spacing:.16em;
+    text-transform:uppercase;transform:rotate(-4.5deg);border-radius:2px;opacity:.92;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);
+  }
+
+  /* ---- pantalla LED ---- */
+  .led{
+    text-shadow:0 0 12px rgba(255,176,58,.55), 0 0 3px rgba(255,176,58,.85);
+    font-variant-numeric:tabular-nums;
+  }
+  .visor{
+    background:
+      radial-gradient(120% 140% at 50% 0%, rgba(255,176,58,.09), transparent 60%),
+      #080B09;
+    box-shadow:inset 0 3px 14px rgba(0,0,0,.9), inset 0 0 0 1px rgba(255,176,58,.14);
+  }
+
+  /* ---- palanca / switch ---- */
+  .palanca{width:52px;height:30px;flex:0 0 52px;position:relative;border-radius:3px;
+    background:#0A0E0B;box-shadow:inset 0 2px 7px rgba(0,0,0,.9), inset 0 0 0 1px #35443B;transition:box-shadow .18s}
+  .palanca i{
+    position:absolute;top:3px;left:3px;width:22px;height:24px;border-radius:2px;
+    background:linear-gradient(180deg,#5E6E63,#28332C);
+    box-shadow:0 1px 0 rgba(255,255,255,.22) inset, 0 3px 6px rgba(0,0,0,.6);
+    transition:transform .16s cubic-bezier(.3,1.6,.5,1), background .16s;
+  }
+  [aria-checked="true"] .palanca i{transform:translateX(24px);background:linear-gradient(180deg,#FFD84D,#C79A05)}
+  [aria-checked="true"] .palanca{box-shadow:inset 0 2px 7px rgba(0,0,0,.9), inset 0 0 0 1px #7A6A18}
+  .testigo{width:9px;height:9px;border-radius:99px;background:#2A3730;box-shadow:inset 0 0 0 1px #0A0E0B;transition:.2s}
+  [aria-checked="true"] .testigo{background:#E85539;box-shadow:0 0 10px rgba(232,85,57,.85), inset 0 0 0 1px rgba(0,0,0,.4)}
+
+  /* ---- aguja ---- */
+  #aguja{transform-box:view-box;transform-origin:160px 150px;
+    transition:transform 950ms cubic-bezier(.18,1.35,.35,1)}
+
+  /* ---- marquesina ---- */
+  @keyframes corre{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  .corre{animation:corre 38s linear infinite;will-change:transform}
+
+  @keyframes parpadeo{0%,92%{opacity:1}94%,97%{opacity:.35}100%{opacity:1}}
+  .parpadea{animation:parpadeo 4.5s ease-in-out infinite}
+
+  /* ---- revelado ---- */
+  .js [data-rev]{opacity:0;transform:translateY(20px)}
+  .js [data-rev].on{opacity:1;transform:none;transition:opacity .6s ease, transform .6s cubic-bezier(.2,.8,.3,1)}
+
+  /* ---- foco visible siempre ---- */
+  :where(a,button,input,textarea,[role="switch"]):focus-visible{
+    outline:3px solid #F5C518;outline-offset:3px;border-radius:2px;
+  }
+  ::selection{background:#F5C518;color:#0B0E0C}
+
+  .col-papel input::placeholder,.col-papel textarea::placeholder{color:#12180F;opacity:.6}
+
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;
+      transition-duration:.001ms !important;scroll-behavior:auto !important}
+  }
+</style>
+</head>
+
+<body class="bg-negro text-crema font-sans antialiased pb-[84px] md:pb-0">
+<script>document.documentElement.classList.add('js')</script>
+
+<a href="#orden" class="sr-only focus:not-sr-only focus:fixed focus:z-[80] focus:top-3 focus:left-3 focus:bg-amarillo focus:text-negro focus:px-4 focus:py-3 focus:font-mono focus:text-sm">Saltar a la orden de trabajo</a>
+
+<!-- ══════════ RIEL SUPERIOR ══════════ -->
+<header class="sticky top-0 z-50 border-b border-linea/70 bg-negro/92 backdrop-blur-sm">
+  <div class="mx-auto flex max-w-[1240px] items-center gap-4 px-4 py-2.5 sm:px-6">
+    <a href="#top" class="flex min-h-[44px] items-center gap-2.5">
+      <span class="grid h-8 w-8 place-items-center border-2 border-amarillo font-disp text-[1.1rem] font-extrabold leading-none text-amarillo">SM</span>
+      <span class="hidden font-mono text-[.66rem] uppercase leading-[1.35] tracking-[.13em] text-gris sm:block">
+        Salomón Muriel<br><span class="text-humo">Taller de operaciones · Bogotá</span>
+      </span>
+    </a>
+    <nav aria-label="Módulos" class="ml-auto hidden items-center gap-5 font-mono text-[.68rem] uppercase tracking-[.13em] text-gris lg:flex">
+      <a href="#diagnostico" class="py-2 transition-colors hover:text-amarillo">01 Diagnóstico</a>
+      <a href="#taller" class="py-2 transition-colors hover:text-amarillo">02 Qué hago</a>
+      <a href="#bitacora" class="py-2 transition-colors hover:text-amarillo">03 Bitácora</a>
+      <a href="#limites" class="py-2 transition-colors hover:text-amarillo">04 Límites</a>
+    </nav>
+    <a href="https://wa.me/573132465100" target="_blank" rel="noopener"
+       class="ml-auto flex min-h-[44px] items-center gap-2 bg-amarillo px-3.5 font-mono text-[.7rem] font-semibold uppercase tracking-[.1em] text-negro transition-transform hover:-translate-y-[2px] active:translate-y-0 lg:ml-0">
+      <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.28-1.38a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm5.8 14.16c-.25.69-1.44 1.32-1.98 1.37-.53.05-1.02.24-3.44-.72-2.89-1.14-4.72-4.11-4.86-4.3-.14-.19-1.16-1.54-1.16-2.94s.73-2.09.99-2.37c.26-.29.57-.36.76-.36.19 0 .38 0 .55.01.18.01.41-.07.65.49.25.6.83 2.07.9 2.22.07.15.12.32.02.51-.09.19-.14.31-.28.48-.14.16-.29.36-.42.49-.14.14-.28.29-.12.57.16.28.72 1.18 1.54 1.91 1.06.94 1.95 1.23 2.23 1.37.28.14.44.12.6-.07.16-.19.69-.81.88-1.09.19-.28.37-.23.62-.14.25.09 1.6.75 1.87.89.28.14.46.21.53.32.07.12.07.66-.18 1.35Z"/></svg>
+      Escribirle
+    </a>
+  </div>
+  <div class="hazard h-[5px] opacity-70"></div>
+</header>
+
+<!-- ══════════ 00 · PLACA DE FABRICANTE ══════════ -->
+<section id="top" class="relative overflow-hidden border-b-2 border-metal">
+  <div class="rejilla pointer-events-none absolute inset-0 opacity-60"></div>
+  <div class="pointer-events-none absolute -right-40 -top-40 h-[520px] w-[520px] rounded-full bg-amarillo/[.055] blur-3xl"></div>
+
+  <div class="relative mx-auto grid max-w-[1240px] gap-12 px-4 pb-16 pt-14 sm:px-6 lg:grid-cols-[1.22fr_.78fr] lg:gap-14 lg:pb-24 lg:pt-20">
+
+    <div>
+      <p class="mb-6 font-mono text-[.66rem] uppercase leading-[1.5] tracking-[.14em] sm:tracking-[.2em]">
+        <span class="flex items-center gap-2.5 text-amarillo">
+          <span class="inline-block h-2 w-2 shrink-0 bg-led parpadea" aria-hidden="true"></span>
+          Práctica personal · Bogotá, Colombia
+        </span>
+        <span class="mt-1.5 block pl-[18px] text-gris">Cupo abierto: 2 consultorías · 2 mentorías</span>
+      </p>
+
+      <h1 class="font-disp text-[clamp(3rem,10.5vw,7.4rem)] font-black uppercase leading-[.92] tracking-[-.01em]">
+        Su empresa<br>no está<br>automatizada.<br>
+        <span class="relative inline-block text-amarillo">Está chinomática.
+          <span class="absolute -bottom-1 left-0 h-[6px] w-full bg-amarillo/25" aria-hidden="true"></span>
+        </span>
+      </h1>
+
+      <div class="mt-8 max-w-[54ch] space-y-4 text-[1.02rem] leading-[1.65] text-crema/85 sm:text-[1.09rem]">
+        <p>
+          <b class="text-crema">Chinomático</b>, adjetivo: que parece automatizado, pero en realidad hay
+          un muchacho haciéndolo a mano. Facturas que alguien pasa a Excel. El mismo WhatsApp respondido
+          cuarenta veces al día. Un software carísimo que nadie abre.
+        </p>
+        <p class="text-crema">
+          Yo destrabo eso. Defino la estrategia <i>y</i> yo mismo armo la herramienta. No se lo paso a un
+          tercero ni le entrego un PowerPoint con recomendaciones.
+        </p>
+      </div>
+
+      <div class="mt-9 flex flex-wrap gap-3">
+        <a href="#diagnostico"
+           class="group inline-flex min-h-[52px] items-center gap-3 border-2 border-amarillo bg-amarillo px-6 font-mono text-[.78rem] font-semibold uppercase tracking-[.12em] text-negro transition-transform hover:-translate-y-[3px] active:translate-y-0">
+          Medir mi negocio
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+        </a>
+        <a href="https://cal.com/salomonmuriel" target="_blank" rel="noopener"
+           class="inline-flex min-h-[52px] items-center gap-3 border-2 border-linea px-6 font-mono text-[.78rem] font-semibold uppercase tracking-[.12em] text-crema transition-colors hover:border-amarillo hover:text-amarillo">
+          Agendar 30 minutos
+        </a>
+      </div>
+
+      <p class="mt-5 font-mono text-[.7rem] leading-relaxed text-gris">
+        Sin cotización previa. Sin formulario de seis pantallas. Contesto yo.
+      </p>
+    </div>
+
+    <!-- placa de identificación -->
+    <aside class="relative self-start" data-rev>
+      <div class="riveted metalico border-2 border-metal bg-panel2 p-3.5 shadow-[0_28px_60px_-24px_rgba(0,0,0,.95)]">
+        <p class="mb-3 border-b border-linea/70 pb-2 text-center font-mono text-[.6rem] uppercase tracking-[.28em] text-gris">
+          Placa de identificación
+        </p>
+
+        <div class="relative mb-3 overflow-hidden border border-linea/80 bg-negro">
+          <img src="assets/fotoSalo.jpeg" alt="Salomón Muriel, retrato" width="800" height="800"
+               class="aspect-[4/3] w-full object-cover object-[center_22%] contrast-[1.06] saturate-[.92]">
+          <span class="absolute bottom-2 left-2 bg-negro/85 px-2 py-1 font-mono text-[.58rem] uppercase tracking-[.16em] text-amarillo">Operario en turno</span>
+        </div>
+
+        <dl class="font-mono text-[.68rem] leading-none">
+          <div class="flex items-baseline justify-between gap-3 border-b border-linea/45 py-2">
+            <dt class="uppercase tracking-[.12em] text-gris">Nombre</dt><dd class="text-right text-crema">Salomón Muriel</dd>
+          </div>
+          <div class="flex items-baseline justify-between gap-3 border-b border-linea/45 py-2">
+            <dt class="uppercase tracking-[.12em] text-gris">Planta</dt><dd class="text-right text-crema">Bogotá, Colombia</dd>
+          </div>
+          <div class="flex items-baseline justify-between gap-3 border-b border-linea/45 py-2">
+            <dt class="uppercase tracking-[.12em] text-gris">En servicio</dt><dd class="text-right text-crema">Desde 2016</dd>
+          </div>
+          <div class="flex items-baseline justify-between gap-3 border-b border-linea/45 py-2">
+            <dt class="uppercase tracking-[.12em] text-gris">Empresas</dt><dd class="text-right text-crema">5 propias</dd>
+          </div>
+          <div class="flex items-baseline justify-between gap-3 border-b border-linea/45 py-2">
+            <dt class="uppercase tracking-[.12em] text-gris">Historial</dt><dd class="text-right text-crema">2 vendidas · 2 quebradas · 1 andando</dd>
+          </div>
+          <div class="flex items-baseline justify-between gap-3 py-2">
+            <dt class="uppercase tracking-[.12em] text-gris">Especialidad</dt><dd class="text-right text-amarillo">Sacar cosas del papel</dd>
+          </div>
+        </dl>
+      </div>
+
+      <p class="mt-3 text-center font-mono text-[.58rem] uppercase tracking-[.22em] text-humo">
+        Serie 05 · Fabricado en Colombia
+      </p>
+    </aside>
+  </div>
+</section>
+
+<!-- ══════════ MARQUESINA ══════════ -->
+<div class="overflow-hidden border-y-2 border-metal bg-panel py-3" aria-hidden="true">
+  <div class="corre flex w-max">
+    <div class="flex shrink-0 items-center font-disp text-[1.5rem] font-bold uppercase tracking-wide text-crema/40 sm:text-[1.9rem]">
+      <span class="px-6">Chinomático</span><span class="text-amarillo">◆</span>
+      <span class="px-6">Parece automatizado</span><span class="text-amarillo">◆</span>
+      <span class="px-6">Pero lo hace un muchacho a mano</span><span class="text-amarillo">◆</span>
+      <span class="px-6">Automatización a punta de gente</span><span class="text-amarillo">◆</span>
+      <span class="px-6">Chinomático</span><span class="text-amarillo">◆</span>
+      <span class="px-6">Parece automatizado</span><span class="text-amarillo">◆</span>
+      <span class="px-6">Pero lo hace un muchacho a mano</span><span class="text-amarillo">◆</span>
+      <span class="px-6">Automatización a punta de gente</span><span class="text-amarillo">◆</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ 01 · EL CHINÓMETRO ══════════ -->
+<section id="diagnostico" class="relative border-b-2 border-metal bg-panel">
+  <div class="mx-auto max-w-[1240px] px-4 py-16 sm:px-6 lg:py-24">
+
+    <header class="mb-10 lg:mb-14" data-rev>
+      <p class="mb-3 font-mono text-[.68rem] uppercase tracking-[.24em] text-amarillo">Módulo 01 — Diagnóstico</p>
+      <h2 class="max-w-[16ch] font-disp text-[clamp(2.4rem,6.6vw,4.6rem)] font-extrabold uppercase leading-[.93]">
+        El chinómetro
+      </h2>
+      <p class="mt-5 max-w-[58ch] text-[1rem] leading-[1.65] text-crema/80">
+        Baje las palancas de lo que de verdad pasa en su empresa. La aguja le muestra, más o menos,
+        cuántas horas-persona al mes se le están yendo en trabajo que una máquina debería estar haciendo sola.
+      </p>
+    </header>
+
+    <div class="grid gap-8 lg:grid-cols-[1fr_minmax(340px,430px)] lg:gap-12">
+
+      <!-- tablero de palancas -->
+      <div class="riveted metalico border-2 border-metal bg-panel2 p-4 sm:p-6" data-rev>
+        <p class="mb-4 flex items-center gap-3 border-b border-linea/70 pb-3 font-mono text-[.62rem] uppercase tracking-[.22em] text-gris">
+          <span class="perforado h-3 w-8 border border-linea/60" aria-hidden="true"></span>
+          Tablero de entrada — marque lo que aplique
+        </p>
+        <div id="palancas" class="divide-y divide-linea/40"></div>
+
+        <div class="mt-5 flex flex-wrap items-center gap-3 border-t-2 border-dashed border-linea/60 pt-5">
+          <button type="button" id="limpiar"
+            class="min-h-[44px] border border-linea px-4 font-mono text-[.68rem] uppercase tracking-[.12em] text-gris transition-colors hover:border-rojo hover:text-rojo">
+            Bajar todas
+          </button>
+          <p class="font-mono text-[.66rem] leading-relaxed text-humo">Nadie ve esto. No se guarda ni se manda a ningún lado.</p>
+        </div>
+      </div>
+
+      <!-- medidor -->
+      <div class="riveted metalico self-start border-2 border-metal bg-panel2 p-4 sm:p-5" data-rev>
+        <p class="mb-2 text-center font-mono text-[.6rem] uppercase tracking-[.26em] text-gris">Horas-persona / mes</p>
+
+        <svg viewBox="0 0 320 232" class="w-full" role="img" id="svgMedidor" aria-label="Medidor en cero. Sin lectura.">
+          <defs>
+            <radialGradient id="vidrio" cx="50%" cy="18%" r="80%">
+              <stop offset="0%" stop-color="#ffffff" stop-opacity=".07"/>
+              <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <g id="bandas" fill="none" stroke-width="13" stroke-linecap="butt"></g>
+          <g id="marcas" stroke="#A6B3A9"></g>
+          <g id="numeros" fill="#8E9B92" font-family="IBM Plex Mono, monospace" font-size="10" text-anchor="middle"></g>
+
+          <text x="160" y="200" text-anchor="middle" fill="#7E8C82" font-family="IBM Plex Mono, monospace" font-size="9" letter-spacing="2.6">CHINÓMETRO</text>
+          <text x="160" y="214" text-anchor="middle" fill="#5C6B61" font-family="IBM Plex Mono, monospace" font-size="7.2" letter-spacing="1.6">MOD. SM-01 · BOGOTÁ</text>
+
+          <g id="aguja">
+            <polygon points="160,44 164.6,150 155.4,150" fill="#E85539"/>
+            <polygon points="160,150 166,168 154,168" fill="#7A2E20"/>
+          </g>
+          <circle cx="160" cy="150" r="11" fill="#1B2620" stroke="#3A4A41" stroke-width="2"/>
+          <circle cx="160" cy="150" r="3.4" fill="#A6B3A9"/>
+          <rect x="30" y="16" width="260" height="150" fill="url(#vidrio)" pointer-events="none"/>
+        </svg>
+
+        <div class="visor mt-3 flex flex-wrap items-end justify-between gap-x-3 gap-y-2 px-4 py-3">
+          <div>
+            <span id="lectura" class="led font-mono text-[2.9rem] font-semibold leading-none text-ambar">000</span>
+            <span class="ml-1 font-mono text-[.7rem] uppercase tracking-[.1em] text-ambar/75">h/mes</span>
+          </div>
+          <div class="text-right">
+            <span class="block font-mono text-[.55rem] uppercase tracking-[.18em] text-ambar/70">Equivale a</span>
+            <span id="equivale" class="led block font-mono text-[.82rem] text-ambar">—</span>
+          </div>
+        </div>
+
+        <div id="veredicto" aria-live="polite"
+             class="mt-3 border-l-4 border-linea bg-negro/45 px-4 py-3.5 transition-colors">
+          <p id="ver-titulo" class="font-disp text-[1.5rem] font-extrabold uppercase leading-none tracking-wide text-gris">Sin lectura</p>
+          <p id="ver-texto" class="mt-1.5 text-[.9rem] leading-snug text-crema/70">Baje al menos una palanca para que la aguja se mueva.</p>
+        </div>
+
+        <a href="#orden" id="irOrden"
+           class="mt-3 flex min-h-[48px] items-center justify-center gap-2 border-2 border-linea font-mono text-[.72rem] uppercase tracking-[.12em] text-gris transition-colors hover:border-amarillo hover:text-amarillo">
+          Mandarle este diagnóstico
+        </a>
+
+        <p class="mt-3 font-mono text-[.6rem] leading-relaxed text-humo">
+          Estimado grueso, no auditoría. Sirve para ver el tamaño del hueco, no para cerrar el mes.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 02 · QUÉ SALE DE ESTE TALLER ══════════ -->
+<section id="taller" class="border-b-2 border-metal bg-negro">
+  <div class="mx-auto max-w-[1240px] px-4 py-16 sm:px-6 lg:py-24">
+
+    <header class="mb-10 max-w-[62ch] lg:mb-14" data-rev>
+      <p class="mb-3 font-mono text-[.68rem] uppercase tracking-[.24em] text-amarillo">Módulo 02 — Salidas</p>
+      <h2 class="font-disp text-[clamp(2.4rem,6.6vw,4.6rem)] font-extrabold uppercase leading-[.93]">
+        Qué sale de este taller
+      </h2>
+      <p class="mt-5 text-[1rem] leading-[1.65] text-crema/80">
+        Mi trabajo principal hoy es <b class="text-crema">Ignia</b>, la escuela que fundé en 2025. Esto de acá lo hago
+        aparte, con las manos que me quedan libres. Por eso el cupo es contado y cuando se llena, se llena.
+      </p>
+    </header>
+
+    <div class="grid gap-6 lg:grid-cols-2">
+
+      <!-- SALIDA 01 -->
+      <article class="riveted metalico flex min-w-0 flex-col border-2 border-metal bg-panel p-5 sm:p-7" data-rev>
+        <div class="mb-5 flex items-start justify-between gap-4 border-b-2 border-dashed border-linea/60 pb-4">
+          <div>
+            <p class="font-mono text-[.62rem] uppercase tracking-[.22em] text-gris">Salida 01</p>
+            <h3 class="mt-1 font-disp text-[clamp(2rem,5vw,2.9rem)] font-extrabold uppercase leading-none text-amarillo">Consultoría</h3>
+          </div>
+          <svg viewBox="0 0 24 24" width="38" height="38" fill="none" stroke="#F5C518" stroke-width="1.6" aria-hidden="true" class="shrink-0 opacity-70">
+            <path d="M14.7 6.3a4.5 4.5 0 0 0 5.9 5.9L15.4 17.4a3 3 0 1 1-4.2-4.2l3.5-6.9Z"/><path d="M10.5 12.8 4.2 6.5a1.5 1.5 0 0 1 0-2.1l.2-.2a1.5 1.5 0 0 1 2.1 0l6.3 6.3"/>
+          </svg>
+        </div>
+
+        <p class="font-disp text-[1.5rem] font-bold uppercase leading-[1.02] text-crema">
+          De 0 a 1, y tecnología que la gente sí usa.
+        </p>
+
+        <div class="mt-4 space-y-3.5 text-[.96rem] leading-[1.62] text-crema/78">
+          <p>
+            Entro, entiendo cómo funciona el negocio de verdad —no como dice el manual—, acordamos qué toca
+            cambiar y <b class="text-crema">yo mismo construyo la herramienta</b>. Del diagnóstico al software
+            funcionando, la misma persona.
+          </p>
+          <p>
+            Hoy trabajo apoyado en inteligencia artificial: desarrollo con IA y agentes que además hacen trabajo
+            que no es programar. Lo que antes era un proyecto de seis meses hoy sale en semanas.
+          </p>
+        </div>
+
+        <div class="mt-5 border border-linea/60 bg-negro/45 p-4">
+          <p class="mb-2 font-mono text-[.6rem] uppercase tracking-[.2em] text-gris">Para quién es</p>
+          <p class="text-[.9rem] leading-[1.55] text-crema/80">
+            Dueños de empresas colombianas de ropa, restaurantes, retail, distribución, importación y servicios.
+            Entre 5 y 40 empleados. Sin equipo técnico y sin ganas de montarlo. Normalmente ya compraron un
+            software caro que nadie usa — eso no es culpa suya.
+          </p>
+        </div>
+
+        <div class="mt-auto pt-6">
+          <div class="mb-4 flex flex-wrap items-center justify-between gap-x-4 gap-y-3 border-t border-linea/60 pt-4">
+            <p class="font-mono text-[.62rem] uppercase tracking-[.18em] text-gris">Capacidad</p>
+            <div class="flex flex-wrap items-center gap-1.5" role="img" aria-label="2 de 4 cupos libres">
+              <span class="h-4 w-7 border border-linea bg-rojo/85"></span>
+              <span class="h-4 w-7 border border-linea bg-rojo/85"></span>
+              <span class="h-4 w-7 border border-amarillo bg-amarillo"></span>
+              <span class="h-4 w-7 border border-amarillo bg-amarillo"></span>
+              <span class="ml-1 font-mono text-[.66rem] text-amarillo">2 libres de 4</span>
+            </div>
+          </div>
+          <button type="button" data-pide="Destrabar mi operación (consultoría)"
+            class="flex min-h-[52px] w-full items-center justify-center gap-2 bg-amarillo px-5 font-mono text-[.76rem] font-semibold uppercase tracking-[.12em] text-negro transition-transform hover:-translate-y-[3px] active:translate-y-0">
+            Quiero destrabar mi operación
+          </button>
+        </div>
+      </article>
+
+      <!-- SALIDA 02 -->
+      <article class="riveted metalico flex min-w-0 flex-col border-2 border-metal bg-panel p-5 sm:p-7" data-rev>
+        <div class="mb-5 flex items-start justify-between gap-4 border-b-2 border-dashed border-linea/60 pb-4">
+          <div>
+            <p class="font-mono text-[.62rem] uppercase tracking-[.22em] text-gris">Salida 02</p>
+            <h3 class="mt-1 font-disp text-[clamp(2rem,5vw,2.9rem)] font-extrabold uppercase leading-none text-amarillo">Mentoría</h3>
+          </div>
+          <svg viewBox="0 0 24 24" width="38" height="38" fill="none" stroke="#F5C518" stroke-width="1.6" aria-hidden="true" class="shrink-0 opacity-70">
+            <path d="M3 6h7a3 3 0 0 1 3 3v11a2.5 2.5 0 0 0-2.5-2.5H3Z"/><path d="M21 6h-7a3 3 0 0 0-3 3v11a2.5 2.5 0 0 1 2.5-2.5H21Z"/>
+          </svg>
+        </div>
+
+        <p class="font-disp text-[1.5rem] font-bold uppercase leading-[1.02] text-crema">
+          Para el que está arrancando y necesita que las cosas pasen.
+        </p>
+
+        <div class="mt-4 space-y-3.5 text-[.96rem] leading-[1.62] text-crema/78">
+          <p>
+            Nos vemos cada semana. Usted sale con tareas concretas y la siguiente semana las revisamos.
+            No es un café ni una charla de motivación.
+          </p>
+          <blockquote class="border-l-4 border-amarillo pl-4 font-disp text-[1.35rem] font-bold uppercase leading-[1.05] text-crema">
+            “Trabajar conmigo significa que las cosas pasan, así toque a las malas.”
+          </blockquote>
+        </div>
+
+        <div class="mt-5 border border-linea/60 bg-negro/45 p-4">
+          <p class="mb-2 font-mono text-[.6rem] uppercase tracking-[.2em] text-gris">Para quién es</p>
+          <p class="text-[.9rem] leading-[1.55] text-crema/80">
+            Cualquiera que esté arrancando: fundadores, ONG, proyectos que llevan meses atascados en la idea.
+            Van 7 mentoreados hasta hoy.
+          </p>
+        </div>
+
+        <div class="mt-auto pt-6">
+          <div class="mb-4 flex flex-wrap items-center justify-between gap-x-4 gap-y-3 border-t border-linea/60 pt-4">
+            <p class="font-mono text-[.62rem] uppercase tracking-[.18em] text-gris">Capacidad</p>
+            <div class="flex flex-wrap items-center gap-1.5" role="img" aria-label="2 de 5 cupos libres">
+              <span class="h-4 w-5 border border-linea bg-rojo/85"></span>
+              <span class="h-4 w-5 border border-linea bg-rojo/85"></span>
+              <span class="h-4 w-5 border border-linea bg-rojo/85"></span>
+              <span class="h-4 w-5 border border-amarillo bg-amarillo"></span>
+              <span class="h-4 w-5 border border-amarillo bg-amarillo"></span>
+              <span class="ml-1 font-mono text-[.66rem] text-amarillo">2 libres de 5</span>
+            </div>
+          </div>
+          <button type="button" data-pide="Mentoría semanal"
+            class="flex min-h-[52px] w-full items-center justify-center gap-2 border-2 border-amarillo px-5 font-mono text-[.76rem] font-semibold uppercase tracking-[.12em] text-amarillo transition-colors hover:bg-amarillo hover:text-negro">
+            Quiero mentoría
+          </button>
+        </div>
+      </article>
+    </div>
+
+    <!-- SUBPRODUCTO -->
+    <article class="riveted metalico mt-6 border-2 border-dashed border-linea bg-panel/60 p-5 sm:p-7" data-rev>
+      <div class="grid gap-7 lg:grid-cols-[1fr_1.05fr] lg:gap-10">
+        <div class="flex flex-col">
+          <p class="mb-3 inline-flex w-fit items-center gap-2 bg-linea/40 px-2.5 py-1.5 font-mono text-[.6rem] uppercase tracking-[.2em] text-gris">
+            Subproducto — no es un producto
+          </p>
+          <h3 class="font-disp text-[clamp(1.9rem,4.6vw,2.9rem)] font-extrabold uppercase leading-none">Charlas</h3>
+          <div class="mt-4 space-y-3.5 text-[.96rem] leading-[1.62] text-crema/78">
+            <p>
+              Esto no se lo vendo como servicio. Es publicidad de lo de arriba y lo digo sin pena.
+              Me han contratado conferencias, empresas y universidades.
+            </p>
+            <p>
+              Hablo de adopción de tecnología e IA, de emprender, de mentalidad y de cómo cuadrar el trabajo con
+              la vida. Lo hago porque después de verme hablar una hora usted ya sabe si quiere trabajar conmigo o no.
+            </p>
+          </div>
+          <div class="mt-auto pt-6">
+            <button type="button" data-pide="Invitarlo a dar una charla"
+              class="flex min-h-[48px] w-full items-center justify-center border-2 border-linea px-5 font-mono text-[.74rem] uppercase tracking-[.12em] text-crema transition-colors hover:border-amarillo hover:text-amarillo sm:w-auto sm:px-8">
+              Invitarme a hablar
+            </button>
+          </div>
+        </div>
+
+        <figure class="m-0">
+          <div id="video" class="relative overflow-hidden border-2 border-metal bg-negro">
+            <button type="button" id="playVideo" class="group block w-full cursor-pointer">
+              <img src="https://img.youtube.com/vi/F9t9f5Et_04/maxresdefault.jpg"
+                   onerror="this.onerror=null;this.src='https://img.youtube.com/vi/F9t9f5Et_04/hqdefault.jpg'"
+                   alt="Salomón Muriel en el podcast Ventaja hablando de negocios aburridos e innovación"
+                   width="1280" height="720"
+                   class="aspect-video w-full object-cover opacity-80 transition-opacity group-hover:opacity-100">
+              <span class="absolute inset-0 grid place-items-center">
+                <span class="grid h-16 w-16 place-items-center border-2 border-amarillo bg-negro/75 transition-transform group-hover:scale-110">
+                  <svg viewBox="0 0 24 24" width="24" height="24" fill="#F5C518" aria-hidden="true"><path d="M8 5.5v13l11-6.5-11-6.5Z"/></svg>
+                </span>
+              </span>
+              <span class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-negro to-transparent px-4 pb-3 pt-10 text-left font-mono text-[.68rem] uppercase tracking-[.12em] text-crema">
+                Reproducir · “Negocios aburridos e innovación”
+              </span>
+            </button>
+          </div>
+          <figcaption class="mt-2.5 font-mono text-[.64rem] leading-relaxed text-humo">
+            Podcast Ventaja · YouTube. Al darle play se carga el reproductor de YouTube.
+          </figcaption>
+        </figure>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ══════════ 03 · BITÁCORA ══════════ -->
+<section id="bitacora" class="border-b-2 border-metal bg-panel">
+  <div class="mx-auto max-w-[1240px] px-4 py-16 sm:px-6 lg:py-24">
+
+    <header class="mb-10 max-w-[62ch] lg:mb-14" data-rev>
+      <p class="mb-3 font-mono text-[.68rem] uppercase tracking-[.24em] text-amarillo">Módulo 03 — Bitácora</p>
+      <h2 class="font-disp text-[clamp(2.4rem,6.6vw,4.6rem)] font-extrabold uppercase leading-[.93]">
+        Hoja de vida<br>de la máquina
+      </h2>
+      <p class="mt-5 text-[1rem] leading-[1.65] text-crema/80">
+        Cinco empresas propias. Dos vendidas, dos enterradas, una andando.
+        Le pongo las dos que se murieron primero, porque son las que le dicen más de mí.
+      </p>
+    </header>
+
+    <div class="riveted metalico overflow-hidden border-2 border-metal bg-panel2" data-rev>
+      <div class="hidden grid-cols-[110px_88px_1fr_150px] gap-5 border-b-2 border-linea px-6 py-3 font-mono text-[.6rem] uppercase tracking-[.18em] text-gris md:grid">
+        <span>Periodo</span><span>Marca</span><span>Registro de operación</span><span class="text-right">Estado final</span>
+      </div>
+
+      <!-- IGNIA -->
+      <div class="grid gap-4 border-b border-linea/50 px-5 py-6 sm:px-6 md:grid-cols-[110px_88px_1fr_150px] md:items-start md:gap-5">
+        <p class="font-mono text-[.72rem] uppercase tracking-[.1em] text-amarillo">2025 → hoy</p>
+        <div class="w-[76px] bg-crema p-2 md:w-full"><img src="assets/ignia.png" alt="Logo de Ignia" width="200" height="130" class="h-auto w-full"></div>
+        <div>
+          <h3 class="font-disp text-[1.7rem] font-extrabold uppercase leading-none">Ignia</h3>
+          <p class="mt-2 max-w-[62ch] text-[.94rem] leading-[1.58] text-crema/78">
+            Un modelo nuevo de educación superior. Salió en junio de 2025 y fue rentable desde el primer día:
+            USD 150.000 de ingreso recurrente en el primer año y ~30 fellows en la primera cohorte del Action Lab.
+            Somos cinco. El CRM, el sitio y la plataforma de comunidad los construí yo.
+          </p>
+        </div>
+        <div class="md:text-right"><span class="sello text-led">Andando</span></div>
+      </div>
+
+      <!-- FINCO -->
+      <div class="grid gap-4 border-b border-linea/50 px-5 py-6 sm:px-6 md:grid-cols-[110px_88px_1fr_150px] md:items-start md:gap-5">
+        <p class="font-mono text-[.72rem] uppercase tracking-[.1em] text-gris">2019 — 2022</p>
+        <div class="w-[76px] bg-crema p-2 md:w-full"><img src="assets/finco.png" alt="Logo de Finco" width="200" height="200" class="h-auto w-full"></div>
+        <div>
+          <h3 class="font-disp text-[1.7rem] font-extrabold uppercase leading-none">Finco</h3>
+          <p class="mt-2 max-w-[62ch] text-[.94rem] leading-[1.58] text-crema/78">
+            Valoración de inmuebles con datos e inteligencia artificial para Latinoamérica.
+            100.000 reportes al año. La vendimos a RED Atlas por cerca de USD 1.5 millones: cinco veces lo invertido.
+          </p>
+        </div>
+        <div class="md:text-right"><span class="sello text-amarillo">Vendida 5×</span></div>
+      </div>
+
+      <!-- BERIBLOCK -->
+      <div class="grid gap-4 border-b border-linea/50 px-5 py-6 sm:px-6 md:grid-cols-[110px_88px_1fr_150px] md:items-start md:gap-5">
+        <p class="font-mono text-[.72rem] uppercase tracking-[.1em] text-gris">2018 — 2019</p>
+        <div class="w-[76px] bg-crema p-2 md:w-full"><img src="assets/beriblock.png" alt="Logo de Beriblock" width="200" height="240" class="h-auto w-full"></div>
+        <div>
+          <h3 class="font-disp text-[1.7rem] font-extrabold uppercase leading-none">Beriblock</h3>
+          <p class="mt-2 max-w-[62ch] text-[.94rem] leading-[1.58] text-crema/78">
+            Autenticación de pagarés con blockchain. Buena tecnología, mercado que no existía.
+            No pegó y la cerramos.
+          </p>
+        </div>
+        <div class="md:text-right"><span class="sello text-rojo">Quebró</span></div>
+      </div>
+
+      <!-- PRESTAGENTE -->
+      <div class="grid gap-4 border-b border-linea/50 px-5 py-6 sm:px-6 md:grid-cols-[110px_88px_1fr_150px] md:items-start md:gap-5">
+        <p class="font-mono text-[.72rem] uppercase tracking-[.1em] text-gris">2017 — 2019</p>
+        <div class="w-[76px] bg-crema p-2 md:w-full"><img src="assets/prestagente.png" alt="Logo de PrestaGente" width="200" height="190" class="h-auto w-full"></div>
+        <div>
+          <h3 class="font-disp text-[1.7rem] font-extrabold uppercase leading-none">PrestaGente</h3>
+          <p class="mt-2 max-w-[62ch] text-[.94rem] leading-[1.58] text-crema/78">
+            Libranza entre personas. La vendimos a Taurus Capital por cerca de USD 1 millón
+            y sigue operando hoy, sin mí. Que una cosa siga andando cuando uno se va también es un resultado.
+          </p>
+        </div>
+        <div class="md:text-right"><span class="sello text-amarillo">Vendida</span></div>
+      </div>
+
+      <!-- EL PALOMO -->
+      <div class="grid gap-4 border-b border-linea/50 px-5 py-6 sm:px-6 md:grid-cols-[110px_88px_1fr_150px] md:items-start md:gap-5">
+        <p class="font-mono text-[.72rem] uppercase tracking-[.1em] text-gris">2016 — 2017</p>
+        <div class="w-[76px] bg-crema p-2 md:w-full"><img src="assets/elpalomo.png" alt="Logo de El Palomo" width="120" height="120" class="h-auto w-full"></div>
+        <div>
+          <h3 class="font-disp text-[1.7rem] font-extrabold uppercase leading-none">El Palomo</h3>
+          <p class="mt-2 max-w-[62ch] text-[.94rem] leading-[1.58] text-crema/78">
+            Flores por suscripción. Fracasó espectacularmente. La primera empresa siempre se paga con plata
+            y con vergüenza; yo pagué las dos y sigo contando el cuento.
+          </p>
+        </div>
+        <div class="md:text-right"><span class="sello text-rojo">Fracasó</span></div>
+      </div>
+
+      <!-- R5 -->
+      <div class="grid gap-4 bg-negro/35 px-5 py-6 sm:px-6 md:grid-cols-[110px_88px_1fr_150px] md:items-start md:gap-5">
+        <p class="font-mono text-[.72rem] uppercase tracking-[.1em] text-gris">Antes</p>
+        <div class="grid h-[52px] w-[76px] place-items-center border border-linea font-mono text-[.62rem] uppercase tracking-[.14em] text-gris md:w-full">R5</div>
+        <div>
+          <h3 class="font-disp text-[1.7rem] font-extrabold uppercase leading-none text-crema/85">R5 — antes de ser dueño</h3>
+          <p class="mt-2 max-w-[62ch] text-[.94rem] leading-[1.58] text-crema/78">
+            Dirigí cerca de 40 personas, armé el pipeline de datos completo y el sistema de modelación de riesgo.
+            En mis propias empresas he manejado hasta 15.
+          </p>
+        </div>
+        <div class="md:text-right"><span class="sello text-gris">Empleo</span></div>
+      </div>
+    </div>
+
+    <p class="mt-6 max-w-[62ch] font-mono text-[.74rem] leading-[1.7] text-gris" data-rev>
+      Mi papá y mi abuelo también fueron empresarios. Esto en mi casa se hereda como se hereda un oficio:
+      viéndolo hacer en la mesa del comedor.
+    </p>
+  </div>
+</section>
+
+<!-- ══════════ 04 · LÍMITES DE OPERACIÓN ══════════ -->
+<section id="limites" class="border-b-2 border-metal bg-negro">
+  <div class="hazard-rojo h-[14px]" aria-hidden="true"></div>
+
+  <div class="mx-auto max-w-[1240px] px-4 py-16 sm:px-6 lg:py-24">
+    <header class="mb-10 grid gap-6 lg:grid-cols-[1fr_.85fr] lg:items-end lg:gap-14" data-rev>
+      <div>
+        <p class="mb-3 flex items-center gap-2.5 font-mono text-[.68rem] uppercase tracking-[.24em] text-rojo">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 3 1.8 20.5h20.4L12 3Z"/><path d="M12 10v4.5" stroke-linecap="round"/><circle cx="12" cy="17.6" r=".2" stroke-width="2.4"/></svg>
+          Módulo 04 — Límites de operación
+        </p>
+        <h2 class="font-disp text-[clamp(2.4rem,6.6vw,4.6rem)] font-extrabold uppercase leading-[.93]">
+          Lo que <span class="text-rojo">no</span><br>hago
+        </h2>
+      </div>
+      <p class="text-[1rem] leading-[1.65] text-crema/80">
+        Toda máquina tiene un rango de operación. Fuera de este yo no le sirvo, y prefiero decírselo
+        de una y no después de que me pague.
+      </p>
+    </header>
+
+    <ul class="grid gap-px border-2 border-metal bg-metal sm:grid-cols-2" data-rev>
+      <li class="metalico flex gap-4 bg-panel p-5 sm:p-6">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#E85539" stroke-width="2.6" stroke-linecap="square" class="mt-0.5 shrink-0" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19"/></svg>
+        <p class="text-[.98rem] leading-[1.55] text-crema/85"><b class="text-crema">No sé escalar más allá de unos USD 5 millones al año.</b> De ahí para arriba usted necesita a otra persona y yo se lo digo de frente.</p>
+      </li>
+      <li class="metalico flex gap-4 bg-panel p-5 sm:p-6">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#E85539" stroke-width="2.6" stroke-linecap="square" class="mt-0.5 shrink-0" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19"/></svg>
+        <p class="text-[.98rem] leading-[1.55] text-crema/85"><b class="text-crema">No hago charlas de ciencia de datos ni de cultura organizacional.</b> Hay gente que las hace mucho mejor que yo.</p>
+      </li>
+      <li class="metalico flex gap-4 bg-panel p-5 sm:p-6">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#E85539" stroke-width="2.6" stroke-linecap="square" class="mt-0.5 shrink-0" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19"/></svg>
+        <p class="text-[.98rem] leading-[1.55] text-crema/85"><b class="text-crema">No trabajo con deep tech ni con investigación.</b> Si el proyecto necesita inventar algo que todavía no existe, no soy yo.</p>
+      </li>
+      <li class="metalico flex gap-4 bg-panel p-5 sm:p-6">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#E85539" stroke-width="2.6" stroke-linecap="square" class="mt-0.5 shrink-0" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19"/></svg>
+        <p class="text-[.98rem] leading-[1.55] text-crema/85"><b class="text-crema">No consulto bajo la marca Ignia.</b> Esto es mi práctica personal: a mi nombre, con mi cara y con mi número.</p>
+      </li>
+      <li class="metalico flex gap-4 bg-panel p-5 sm:p-6">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#E85539" stroke-width="2.6" stroke-linecap="square" class="mt-0.5 shrink-0" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19"/></svg>
+        <p class="text-[.98rem] leading-[1.55] text-crema/85"><b class="text-crema">No tengo testimonios publicados.</b> Puedo conseguirlos, pero hoy no los tengo. Inventarlos, jamás. Hable con la bitácora de arriba.</p>
+      </li>
+      <li class="metalico flex gap-4 bg-panel p-5 sm:p-6">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#E85539" stroke-width="2.6" stroke-linecap="square" class="mt-0.5 shrink-0" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19"/></svg>
+        <p class="text-[.98rem] leading-[1.55] text-crema/85"><b class="text-crema">No recibo más de lo que cabe.</b> Cuatro consultorías y cinco mentorías es el tope. Si está lleno, se lo digo y no le vendo humo.</p>
+      </li>
+    </ul>
+  </div>
+
+  <div class="hazard-rojo h-[14px]" aria-hidden="true"></div>
+</section>
+
+<!-- ══════════ 05 · EL OPERARIO ══════════ -->
+<section id="operario" class="border-b-2 border-metal bg-panel">
+  <div class="mx-auto max-w-[1240px] px-4 py-16 sm:px-6 lg:py-24">
+
+    <p class="mb-3 font-mono text-[.68rem] uppercase tracking-[.24em] text-amarillo" data-rev>Módulo 05 — El operario</p>
+
+    <blockquote class="mb-12 max-w-[20ch] font-disp text-[clamp(2.5rem,7.6vw,5.6rem)] font-black uppercase leading-[.93]" data-rev>
+      Armo sistemas que la gente <span class="text-amarillo">sí</span> usa,<br>y saco cosas del papel.
+    </blockquote>
+
+    <div class="grid gap-8 lg:grid-cols-[minmax(0,380px)_1fr] lg:gap-14">
+
+      <!-- collage -->
+      <div class="grid grid-cols-2 gap-3 self-start" data-rev>
+        <figure class="col-span-2 m-0 border-2 border-metal">
+          <img src="assets/marathon.jpg" alt="Salomón mostrando la medalla al terminar la media maratón de Bogotá" width="600" height="600" class="aspect-[4/3] w-full object-cover object-top">
+          <figcaption class="bg-negro px-3 py-2 font-mono text-[.6rem] uppercase tracking-[.14em] text-gris">Media maratón · 2:10 · dorsal 15154</figcaption>
+        </figure>
+        <figure class="m-0 border-2 border-metal">
+          <img src="assets/salo_oscar.webp" alt="Salomón presentando la plataforma de Finco junto a su socio" width="527" height="330" class="aspect-square w-full object-cover">
+          <figcaption class="bg-negro px-2.5 py-2 font-mono text-[.55rem] uppercase tracking-[.12em] text-gris">Finco, en vivo</figcaption>
+        </figure>
+        <figure class="m-0 border-2 border-metal">
+          <img src="assets/bonfire.jpeg" alt="Fogata de noche en el campo" width="600" height="600" class="aspect-square w-full object-cover">
+          <figcaption class="bg-negro px-2.5 py-2 font-mono text-[.55rem] uppercase tracking-[.12em] text-gris">Apagar el teléfono</figcaption>
+        </figure>
+      </div>
+
+      <!-- ficha humana -->
+      <div class="riveted metalico border-2 border-metal bg-panel2 p-5 sm:p-7" data-rev>
+        <p class="mb-5 border-b border-linea/70 pb-3 font-mono text-[.62rem] uppercase tracking-[.22em] text-gris">
+          Ficha técnica — parte humana
+        </p>
+
+        <div class="space-y-5 text-[1rem] leading-[1.62] text-crema/85">
+          <p><b class="text-crema">35 años, Bogotá.</b> Casado, con mellizos de cuatro: Franco y Luca. Ellos son la razón por la que trabajo rápido y no de noche.</p>
+          <p>Aprendí inglés jugando en línea, no en un instituto. Todavía creo que las cosas se aprenden usándolas.</p>
+          <p>Corrí una media maratón en <b class="text-crema">2 horas 10</b>. No soy rápido. Termino, que es distinto y para el negocio sirve más.</p>
+          <p>En la casa tengo un rack de herramientas y una impresora 3D. Me gusta que las cosas se puedan abrir y arreglar — el software que le entrego es igual.</p>
+          <p>Publico un <b class="text-crema">medidor de felicidad</b> en mi sitio personal. Sí: me gustan los medidores. Ya se habrá dado cuenta arriba.</p>
+          <p>Celebro el cumpleaños en una fecha distinta a la de verdad, a propósito. No todo tiene que ser como viene por defecto.</p>
+        </div>
+
+        <div class="mt-7 grid gap-px border border-linea/70 bg-linea/70 sm:grid-cols-3">
+          <div class="bg-panel2 px-4 py-4">
+            <p class="font-disp text-[2.1rem] font-extrabold leading-none text-amarillo">5</p>
+            <p class="mt-1 font-mono text-[.6rem] uppercase leading-snug tracking-[.14em] text-gris">Empresas propias</p>
+          </div>
+          <div class="bg-panel2 px-4 py-4">
+            <p class="font-disp text-[2.1rem] font-extrabold leading-none text-amarillo">40</p>
+            <p class="mt-1 font-mono text-[.6rem] uppercase leading-snug tracking-[.14em] text-gris">Personas a cargo, máximo</p>
+          </div>
+          <div class="bg-panel2 px-4 py-4">
+            <p class="font-disp text-[2.1rem] font-extrabold leading-none text-amarillo">7</p>
+            <p class="mt-1 font-mono text-[.6rem] uppercase leading-snug tracking-[.14em] text-gris">Mentoreados hasta hoy</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 06 · ORDEN DE TRABAJO ══════════ -->
+<section id="orden" class="col-papel border-b-2 border-metal bg-papel text-[#12180F]">
+  <div class="hazard h-[14px]" aria-hidden="true"></div>
+
+  <div class="mx-auto max-w-[1240px] px-4 py-16 sm:px-6 lg:py-24">
+
+    <header class="mb-9 grid gap-5 lg:grid-cols-[1fr_.8fr] lg:items-end lg:gap-14">
+      <div>
+        <p class="mb-3 font-mono text-[.68rem] uppercase tracking-[.24em] text-[#12180F]/72">Módulo 06 — Orden de trabajo</p>
+        <h2 class="font-disp text-[clamp(2.4rem,6.6vw,4.6rem)] font-extrabold uppercase leading-[.93]">
+          Llene esto y<br>llega a mi WhatsApp
+        </h2>
+      </div>
+      <p class="text-[1rem] leading-[1.65] text-[#12180F]/78">
+        Nada es obligatorio. Entre más me cuente, mejor le contesto. Y le contesto yo —
+        no un bot, no una agencia, no un muchacho.
+      </p>
+    </header>
+
+    <div class="grid gap-6 lg:grid-cols-[1fr_minmax(320px,420px)] lg:gap-10">
+
+      <!-- formulario -->
+      <form id="formOrden" class="border-2 border-[#12180F]/70 bg-[#F2EEE1] p-5 sm:p-7" novalidate>
+        <div class="mb-6 flex flex-wrap items-center justify-between gap-3 border-b-2 border-dashed border-[#12180F]/30 pb-4">
+          <p class="font-mono text-[.62rem] uppercase tracking-[.2em] text-[#12180F]/68">Formato SM-06 · original</p>
+          <p class="font-mono text-[.62rem] uppercase tracking-[.2em] text-[#12180F]/68">No. <span id="folio">—</span></p>
+        </div>
+
+        <fieldset class="mb-6 border-0 p-0">
+          <legend class="mb-3 font-mono text-[.66rem] uppercase tracking-[.16em] text-[#12180F]/70">1 · ¿Qué necesita?</legend>
+          <div class="grid gap-2.5 sm:grid-cols-3" id="servicios" role="group" aria-label="Tipo de trabajo">
+            <button type="button" data-serv="Destrabar mi operación (consultoría)" aria-pressed="false"
+              class="serv min-h-[56px] border-2 border-[#12180F]/35 bg-white/55 px-3 py-3 text-left font-mono text-[.72rem] uppercase leading-tight tracking-[.06em] transition-colors hover:border-[#12180F]">
+              Destrabar<br>mi operación
+            </button>
+            <button type="button" data-serv="Mentoría semanal" aria-pressed="false"
+              class="serv min-h-[56px] border-2 border-[#12180F]/35 bg-white/55 px-3 py-3 text-left font-mono text-[.72rem] uppercase leading-tight tracking-[.06em] transition-colors hover:border-[#12180F]">
+              Mentoría<br>semanal
+            </button>
+            <button type="button" data-serv="Invitarlo a dar una charla" aria-pressed="false"
+              class="serv min-h-[56px] border-2 border-[#12180F]/35 bg-white/55 px-3 py-3 text-left font-mono text-[.72rem] uppercase leading-tight tracking-[.06em] transition-colors hover:border-[#12180F]">
+              Invitarlo<br>a una charla
+            </button>
+          </div>
+        </fieldset>
+
+        <div class="mb-5 grid gap-5 sm:grid-cols-2">
+          <div>
+            <label for="nombre" class="mb-2 block font-mono text-[.66rem] uppercase tracking-[.16em] text-[#12180F]/70">2 · Su nombre</label>
+            <input id="nombre" name="nombre" type="text" autocomplete="name" placeholder="Ej. Marcela Ramírez"
+              class="min-h-[50px] w-full border-2 border-[#12180F]/35 bg-white/70 px-3.5 text-[.98rem] text-[#12180F] outline-none transition-colors focus:border-[#12180F]">
+          </div>
+          <div>
+            <label for="empresa" class="mb-2 block font-mono text-[.66rem] uppercase tracking-[.16em] text-[#12180F]/70">3 · Su empresa y a qué se dedica</label>
+            <input id="empresa" name="empresa" type="text" autocomplete="organization" placeholder="Ej. Distribuidora El Roble, ferretería"
+              class="min-h-[50px] w-full border-2 border-[#12180F]/35 bg-white/70 px-3.5 text-[.98rem] text-[#12180F] outline-none transition-colors focus:border-[#12180F]">
+          </div>
+        </div>
+
+        <div class="mb-5">
+          <label for="detalle" class="mb-2 block font-mono text-[.66rem] uppercase tracking-[.16em] text-[#12180F]/70">4 · ¿Qué se le está trabando?</label>
+          <textarea id="detalle" name="detalle" rows="4" placeholder="Cuente sin tecnicismos. Ej: tenemos dos personas metiendo pedidos de WhatsApp a un Excel y se nos pierden."
+            class="w-full resize-y border-2 border-[#12180F]/35 bg-white/70 p-3.5 text-[.98rem] leading-[1.55] text-[#12180F] outline-none transition-colors focus:border-[#12180F]"></textarea>
+        </div>
+
+        <label id="cajaDiag" class="mb-6 flex cursor-pointer items-start gap-3 border-2 border-dashed border-[#12180F]/30 bg-white/40 p-4">
+          <input id="incluirDiag" type="checkbox" checked class="mt-0.5 h-5 w-5 shrink-0 accent-[#12180F]">
+          <span class="text-[.9rem] leading-[1.5] text-[#12180F]/80">
+            Adjuntar mi lectura del chinómetro:
+            <b id="resumenDiag" class="text-[#12180F]">todavía no he medido nada</b>.
+          </span>
+        </label>
+
+        <a id="btnWA" href="https://wa.me/573132465100" target="_blank" rel="noopener"
+           class="flex min-h-[62px] w-full items-center justify-center gap-3 border-2 border-[#12180F] bg-[#12180F] px-6 font-mono text-[.84rem] font-semibold uppercase tracking-[.12em] text-papel transition-transform hover:-translate-y-[3px] active:translate-y-0">
+          <svg viewBox="0 0 24 24" width="19" height="19" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.28-1.38a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm5.8 14.16c-.25.69-1.44 1.32-1.98 1.37-.53.05-1.02.24-3.44-.72-2.89-1.14-4.72-4.11-4.86-4.3-.14-.19-1.16-1.54-1.16-2.94s.73-2.09.99-2.37c.26-.29.57-.36.76-.36.19 0 .38 0 .55.01.18.01.41-.07.65.49.25.6.83 2.07.9 2.22.07.15.12.32.02.51-.09.19-.14.31-.28.48-.14.16-.29.36-.42.49-.14.14-.28.29-.12.57.16.28.72 1.18 1.54 1.91 1.06.94 1.95 1.23 2.23 1.37.28.14.44.12.6-.07.16-.19.69-.81.88-1.09.19-.28.37-.23.62-.14.25.09 1.6.75 1.87.89.28.14.46.21.53.32.07.12.07.66-.18 1.35Z"/></svg>
+          Abrir WhatsApp con esto
+        </a>
+        <p class="mt-3 font-mono text-[.64rem] leading-relaxed text-[#12180F]/68">
+          Se abre WhatsApp con el mensaje ya escrito. Usted lo lee, lo corrige si quiere, y le da enviar.
+        </p>
+      </form>
+
+      <!-- copia carbón + otros canales -->
+      <aside class="self-start">
+        <div class="border-2 border-[#12180F]/70 bg-[#D9D3C0] p-5">
+          <p class="mb-3 flex items-center justify-between border-b border-[#12180F]/25 pb-2 font-mono text-[.6rem] uppercase tracking-[.2em] text-[#12180F]/72">
+            <span>Copia carbón</span><span>Vista previa</span>
+          </p>
+          <pre id="previa" class="max-h-[340px] overflow-auto whitespace-pre-wrap break-words font-mono text-[.78rem] leading-[1.62] text-[#12180F]"></pre>
+        </div>
+
+        <p class="mt-7 font-mono text-[.62rem] uppercase tracking-[.2em] text-[#12180F]/68">O por donde prefiera</p>
+        <div class="mt-3 grid gap-2.5">
+          <a href="https://cal.com/salomonmuriel" target="_blank" rel="noopener"
+             class="flex min-h-[52px] items-center justify-between gap-3 border-2 border-[#12180F]/35 bg-[#F2EEE1] px-4 font-mono text-[.74rem] uppercase tracking-[.08em] transition-colors hover:border-[#12180F] hover:bg-white">
+            <span>Agendar 30 minutos</span>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/in/smuriel/" target="_blank" rel="noopener"
+             class="flex min-h-[52px] items-center justify-between gap-3 border-2 border-[#12180F]/35 bg-[#F2EEE1] px-4 font-mono text-[.74rem] uppercase tracking-[.08em] transition-colors hover:border-[#12180F] hover:bg-white">
+            <span>LinkedIn — ahí escribo</span>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="mailto:salomon.muriel@gmail.com"
+             class="flex min-h-[52px] items-center justify-between gap-3 border-2 border-[#12180F]/35 bg-[#F2EEE1] px-4 font-mono text-[.74rem] uppercase tracking-[.08em] transition-colors hover:border-[#12180F] hover:bg-white">
+            <span>Correo, a la antigua</span>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+
+        <p class="mt-6 text-[.88rem] leading-[1.55] text-[#12180F]/70">
+          Si su empresa factura más de USD 5 millones al año, mejor escríbame igual y le recomiendo a alguien.
+          Prefiero mandarlo bien que cobrarle mal.
+        </p>
+      </aside>
+    </div>
+  </div>
+
+  <div class="hazard h-[14px]" aria-hidden="true"></div>
+</section>
+
+<!-- ══════════ PIE ══════════ -->
+<footer class="bg-negro">
+  <div class="mx-auto max-w-[1240px] px-4 py-12 sm:px-6">
+    <div class="grid gap-8 md:grid-cols-[1fr_auto] md:items-end">
+      <div>
+        <p class="font-disp text-[clamp(2rem,5.5vw,3.4rem)] font-extrabold uppercase leading-[.98]">
+          Salomón Muriel<br><span class="text-humo">Práctica personal · Bogotá</span>
+        </p>
+        <p class="mt-4 max-w-[52ch] font-mono text-[.72rem] leading-[1.75] text-gris">
+          Esta página la armé yo mismo, igual que el CRM de Ignia, el sitio y la plataforma de comunidad.
+          Si le entrego algo, es porque yo lo puedo levantar.
+        </p>
+      </div>
+      <ul class="flex flex-wrap gap-x-6 gap-y-2 font-mono text-[.72rem] uppercase tracking-[.12em] text-gris">
+        <li><a href="https://wa.me/573132465100" target="_blank" rel="noopener" class="inline-block py-2 transition-colors hover:text-amarillo">WhatsApp</a></li>
+        <li><a href="https://cal.com/salomonmuriel" target="_blank" rel="noopener" class="inline-block py-2 transition-colors hover:text-amarillo">Calendario</a></li>
+        <li><a href="https://www.linkedin.com/in/smuriel/" target="_blank" rel="noopener" class="inline-block py-2 transition-colors hover:text-amarillo">LinkedIn</a></li>
+        <li><a href="mailto:salomon.muriel@gmail.com" class="inline-block py-2 transition-colors hover:text-amarillo">Correo</a></li>
+      </ul>
+    </div>
+    <p class="mt-10 border-t border-linea/50 pt-5 font-mono text-[.62rem] uppercase tracking-[.16em] text-humo">
+      Sin precios en esta página, a propósito. Cada negocio se cotiza mirándolo. · MMXXVI
+    </p>
+  </div>
+</footer>
+
+<!-- barra móvil -->
+<div id="barraMovil" class="fixed bottom-0 left-0 right-0 z-[60] translate-y-full border-t-2 border-amarillo bg-negro/95 backdrop-blur-sm transition-transform duration-300 md:hidden"
+     style="padding-bottom:env(safe-area-inset-bottom)">
+  <div class="flex items-stretch gap-2 p-2.5">
+    <a href="https://wa.me/573132465100" target="_blank" rel="noopener"
+       class="flex min-h-[50px] flex-1 items-center justify-center gap-2 bg-amarillo font-mono text-[.75rem] font-semibold uppercase tracking-[.1em] text-negro">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.28-1.38a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm5.8 14.16c-.25.69-1.44 1.32-1.98 1.37-.53.05-1.02.24-3.44-.72-2.89-1.14-4.72-4.11-4.86-4.3-.14-.19-1.16-1.54-1.16-2.94s.73-2.09.99-2.37c.26-.29.57-.36.76-.36.19 0 .38 0 .55.01.18.01.41-.07.65.49.25.6.83 2.07.9 2.22.07.15.12.32.02.51-.09.19-.14.31-.28.48-.14.16-.29.36-.42.49-.14.14-.28.29-.12.57.16.28.72 1.18 1.54 1.91 1.06.94 1.95 1.23 2.23 1.37.28.14.44.12.6-.07.16-.19.69-.81.88-1.09.19-.28.37-.23.62-.14.25.09 1.6.75 1.87.89.28.14.46.21.53.32.07.12.07.66-.18 1.35Z"/></svg>
+      Escribirle ya
+    </a>
+    <a href="#orden" class="flex min-h-[50px] items-center justify-center border-2 border-linea px-4 font-mono text-[.75rem] uppercase tracking-[.1em] text-crema">
+      Orden
+    </a>
+  </div>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ─────────── 01 · CHINÓMETRO ─────────── */
+  var PALANCAS = [
+    {h:22, corto:'facturas o pedidos que alguien pasa a mano',
+     txt:'Alguien pasa facturas, pedidos o remisiones a Excel a mano.'},
+    {h:30, corto:'el mismo WhatsApp respondido decenas de veces',
+     txt:'El mismo WhatsApp se responde treinta o cuarenta veces al día.'},
+    {h:16, corto:'el inventario se cuadra a mano',
+     txt:'El inventario lo cuadra una persona los domingos.'},
+    {h:12, corto:'software caro que nadie abre',
+     txt:'Pagamos un software caro que casi nadie abre.'},
+    {h:10, corto:'los informes se arman copiando y pegando',
+     txt:'El informe del mes se arma copiando y pegando.'},
+    {h:18, corto:'todo depende de una sola persona',
+     txt:'Si esa persona se enferma, el negocio se para.'}
+  ];
+  var MAX = 120;
+  var A0 = -120, A1 = 120;
+  var estado = PALANCAS.map(function(){ return false; });
+
+  var cont = document.getElementById('palancas');
+  PALANCAS.forEach(function(p, i){
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.setAttribute('role','switch');
+    b.setAttribute('aria-checked','false');
+    b.dataset.i = i;
+    b.className = 'group flex w-full cursor-pointer items-center gap-4 py-3.5 text-left transition-colors hover:bg-negro/25';
+    b.innerHTML =
+      '<span class="palanca"><i></i></span>' +
+      '<span class="flex-1 text-[.96rem] leading-[1.4] text-crema/85 group-hover:text-crema">' + p.txt + '</span>' +
+      '<span class="hidden shrink-0 font-mono text-[.68rem] text-gris sm:block">+' + p.h + ' h</span>' +
+      '<span class="testigo shrink-0" aria-hidden="true"></span>';
+    b.addEventListener('click', function(){
+      estado[i] = !estado[i];
+      b.setAttribute('aria-checked', estado[i] ? 'true' : 'false');
+      actualizar();
+    });
+    cont.appendChild(b);
+  });
+
+  /* dial */
+  function polar(cx, cy, r, deg){
+    var a = (deg - 90) * Math.PI / 180;
+    return [cx + r * Math.cos(a), cy + r * Math.sin(a)];
+  }
+  function arco(cx, cy, r, d0, d1){
+    var p0 = polar(cx, cy, r, d0), p1 = polar(cx, cy, r, d1);
+    var grande = Math.abs(d1 - d0) > 180 ? 1 : 0;
+    return 'M' + p0[0].toFixed(2) + ' ' + p0[1].toFixed(2) + ' A' + r + ' ' + r + ' 0 ' + grande + ' 1 ' + p1[0].toFixed(2) + ' ' + p1[1].toFixed(2);
+  }
+  function ang(v){ return A0 + (Math.min(v, MAX) / MAX) * (A1 - A0); }
+
+  var NS = 'http://www.w3.org/2000/svg';
+  var CX = 160, CY = 150, R = 118;
+
+  var BANDAS = [
+    {de:0,   a:26,  color:'#3F6B4E'},
+    {de:26,  a:56,  color:'#8E8321'},
+    {de:56,  a:86,  color:'#C08320'},
+    {de:86,  a:120, color:'#A83A24'}
+  ];
+  var gB = document.getElementById('bandas');
+  BANDAS.forEach(function(b){
+    var p = document.createElementNS(NS, 'path');
+    p.setAttribute('d', arco(CX, CY, R - 8, ang(b.de), ang(b.a)));
+    p.setAttribute('stroke', b.color);
+    p.setAttribute('opacity', '.5');
+    gB.appendChild(p);
+  });
+
+  var gM = document.getElementById('marcas'), gN = document.getElementById('numeros');
+  for (var v = 0; v <= MAX; v += 5){
+    var mayor = (v % 20 === 0);
+    var a = ang(v);
+    var pa = polar(CX, CY, R - 18, a), pb = polar(CX, CY, R - (mayor ? 32 : 26), a);
+    var ln = document.createElementNS(NS, 'line');
+    ln.setAttribute('x1', pa[0].toFixed(2)); ln.setAttribute('y1', pa[1].toFixed(2));
+    ln.setAttribute('x2', pb[0].toFixed(2)); ln.setAttribute('y2', pb[1].toFixed(2));
+    ln.setAttribute('stroke-width', mayor ? '2.4' : '1');
+    ln.setAttribute('opacity', mayor ? '.9' : '.45');
+    gM.appendChild(ln);
+    if (mayor){
+      var pn = polar(CX, CY, R - 45, a);
+      var t = document.createElementNS(NS, 'text');
+      t.setAttribute('x', pn[0].toFixed(2)); t.setAttribute('y', (pn[1] + 3.6).toFixed(2));
+      t.textContent = v;
+      gN.appendChild(t);
+    }
+  }
+
+  var aguja    = document.getElementById('aguja');
+  var lectura  = document.getElementById('lectura');
+  var equivale = document.getElementById('equivale');
+  var verTit   = document.getElementById('ver-titulo');
+  var verTxt   = document.getElementById('ver-texto');
+  var caja     = document.getElementById('veredicto');
+  var svgMed   = document.getElementById('svgMedidor');
+  var resumen  = document.getElementById('resumenDiag');
+
+  var NIVELES = [
+    {min:0,  t:'Sin lectura', c:'#A6B3A9', b:'#3A4A41',
+     d:'Baje al menos una palanca para que la aguja se mueva.'},
+    {min:1,  t:'Leve',        c:'#7BE8A6', b:'#3F6B4E',
+     d:'Todavía se aguanta. Pero eso no se queda quieto: crece con las ventas.'},
+    {min:26, t:'Se está trabando', c:'#F5C518', b:'#8E8321',
+     d:'Ya hay por lo menos una persona amarrada a un proceso que debería ser automático.'},
+    {min:56, t:'Chinomático', c:'#FFB03A', b:'#C08320',
+     d:'Está pagando sueldos por trabajo de máquina. Eso es plata y es gente aburrida.'},
+    {min:86, t:'Crítico',     c:'#E85539', b:'#A83A24',
+     d:'Su negocio depende de que nadie se enferme, renuncie ni se vaya de vacaciones.'}
+  ];
+  function nivel(v){
+    var n = NIVELES[0];
+    for (var i = 0; i < NIVELES.length; i++) if (v >= NIVELES[i].min) n = NIVELES[i];
+    return n;
+  }
+
+  var mostrado = 0, rafId = null;
+  function animarNumero(destino){
+    if (reduce){ mostrado = destino; lectura.textContent = ('00' + destino).slice(-3); return; }
+    if (rafId) cancelAnimationFrame(rafId);
+    clearTimeout(animarNumero._t);
+    animarNumero._t = setTimeout(function(){
+      if (mostrado !== destino){ mostrado = destino; lectura.textContent = ('00' + destino).slice(-3); }
+    }, 820);
+    var ini = mostrado, t0 = performance.now(), dur = 700;
+    (function paso(t){
+      var k = Math.min(1, (t - t0) / dur);
+      var e = 1 - Math.pow(1 - k, 3);
+      mostrado = Math.round(ini + (destino - ini) * e);
+      lectura.textContent = ('00' + mostrado).slice(-3);
+      if (k < 1) rafId = requestAnimationFrame(paso);
+    })(t0);
+  }
+
+  function actualizar(){
+    var total = 0, marcados = [];
+    estado.forEach(function(on, i){
+      if (on){ total += PALANCAS[i].h; marcados.push(PALANCAS[i].corto); }
+    });
+    var n = nivel(total);
+
+    aguja.style.transform = 'rotate(' + ang(total).toFixed(2) + 'deg)';
+    animarNumero(total);
+
+    if (total === 0){
+      equivale.textContent = '—';
+    } else {
+      var dias = (total / 8).toFixed(total < 16 ? 1 : 0);
+      equivale.textContent = dias + ' días de trabajo';
+    }
+
+    verTit.textContent = n.t;
+    verTit.style.color = n.c;
+    verTxt.textContent = n.d;
+    caja.style.borderLeftColor = n.b;
+    svgMed.setAttribute('aria-label', 'Medidor en ' + total + ' horas-persona al mes. Nivel: ' + n.t + '. ' + n.d);
+
+    window.__diag = { total: total, nivel: n.t, marcados: marcados };
+    resumen.textContent = total === 0
+      ? 'todavía no he medido nada'
+      : total + ' horas-persona/mes — ' + n.t.toLowerCase();
+    componer();
+  }
+
+  document.getElementById('limpiar').addEventListener('click', function(){
+    estado = estado.map(function(){ return false; });
+    Array.prototype.forEach.call(cont.children, function(b){ b.setAttribute('aria-checked','false'); });
+    actualizar();
+  });
+
+  /* ─────────── 06 · ORDEN DE TRABAJO ─────────── */
+  var servicio = '';
+  var previa   = document.getElementById('previa');
+  var btnWA    = document.getElementById('btnWA');
+  var inNombre = document.getElementById('nombre');
+  var inEmpr   = document.getElementById('empresa');
+  var inDet    = document.getElementById('detalle');
+  var incluir  = document.getElementById('incluirDiag');
+
+  function pintarServicios(){
+    document.querySelectorAll('.serv').forEach(function(b){
+      var on = b.dataset.serv === servicio;
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      b.classList.toggle('bg-[#12180F]', on);
+      b.classList.toggle('text-papel', on);
+      b.classList.toggle('border-[#12180F]', on);
+      b.classList.toggle('bg-white/55', !on);
+    });
+  }
+
+  function componer(){
+    var d = window.__diag || { total:0, nivel:'', marcados:[] };
+    var L = [];
+    var quien = inNombre.value.trim();
+    var emp   = inEmpr.value.trim();
+    var saludo = 'Hola Salomón.';
+    if (quien && emp)      saludo += ' Soy ' + quien + ', de ' + emp + '.';
+    else if (quien)        saludo += ' Soy ' + quien + '.';
+    else if (emp)          saludo += ' Le escribo de ' + emp + '.';
+    L.push(saludo);
+    L.push('');
+    L.push('Le escribo por: ' + (servicio || 'todavía no sé bien cuál de las dos cosas'));
+    if (inDet.value.trim()){
+      L.push('');
+      L.push('Lo que se me está trabando:');
+      L.push(inDet.value.trim());
+    }
+    if (incluir.checked && d.total > 0){
+      L.push('');
+      L.push('Chinómetro: ' + d.total + ' horas-persona/mes (' + d.nivel.toLowerCase() + ').');
+      L.push('Marqué: ' + d.marcados.join('; ') + '.');
+    }
+    L.push('');
+    L.push('¿Cuándo hablamos?');
+    var msg = L.join('\n');
+    previa.textContent = msg;
+    btnWA.href = 'https://wa.me/573132465100?text=' + encodeURIComponent(msg);
+  }
+
+  document.querySelectorAll('.serv').forEach(function(b){
+    b.addEventListener('click', function(){
+      servicio = (servicio === b.dataset.serv) ? '' : b.dataset.serv;
+      pintarServicios();
+      componer();
+    });
+  });
+  [inNombre, inEmpr, inDet].forEach(function(el){ el.addEventListener('input', componer); });
+  incluir.addEventListener('change', componer);
+
+  /* botones de las secciones que preseleccionan y bajan */
+  document.querySelectorAll('[data-pide]').forEach(function(b){
+    b.addEventListener('click', function(){
+      servicio = b.dataset.pide;
+      pintarServicios();
+      componer();
+      document.getElementById('orden').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+      setTimeout(function(){ inNombre.focus({ preventScroll:true }); }, reduce ? 0 : 700);
+    });
+  });
+
+  /* folio: un número que se ve serio y no lo es */
+  var hoy = new Date();
+  document.getElementById('folio').textContent =
+    String(hoy.getFullYear()).slice(2) + String(hoy.getMonth()+1).padStart(2,'0') +
+    '-' + String(Math.floor(Math.random()*900)+100);
+
+  /* ─────────── VIDEO ─────────── */
+  var play = document.getElementById('playVideo');
+  play.addEventListener('click', function(){
+    var caja = document.getElementById('video');
+    caja.innerHTML = '<iframe class="aspect-video w-full" src="https://www.youtube-nocookie.com/embed/F9t9f5Et_04?autoplay=1" title="Negocios aburridos e innovación — Salomón Muriel en el podcast Ventaja" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
+  });
+
+  /* ─────────── REVELADO ─────────── */
+  var rev = document.querySelectorAll('[data-rev]');
+  if ('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(ent){
+      ent.forEach(function(e){
+        if (e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: .06 });
+    rev.forEach(function(el, i){
+      el.style.transitionDelay = Math.min(i % 3, 2) * 70 + 'ms';
+      io.observe(el);
+    });
+  } else {
+    rev.forEach(function(el){ el.classList.add('on'); });
+  }
+
+  /* ─────────── BARRA MÓVIL ─────────── */
+  var barra = document.getElementById('barraMovil');
+  var seccionOrden = document.getElementById('orden');
+  function pintarBarra(){
+    var r = seccionOrden.getBoundingClientRect();
+    var enOrden = r.top < window.innerHeight * 0.65 && r.bottom > 0;
+    var visible = window.scrollY > 620 && !enOrden;
+    barra.style.transform = visible ? 'translateY(0)' : 'translateY(100%)';
+  }
+  var tick = false;
+  window.addEventListener('scroll', function(){
+    if (tick) return;
+    tick = true;
+    requestAnimationFrame(function(){ pintarBarra(); tick = false; });
+  }, { passive:true });
+
+  /* arranque */
+  actualizar();
+  pintarServicios();
+  pintarBarra();
+})();
+</script>
+</body>
+</html>

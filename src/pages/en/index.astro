@@ -1,0 +1,22 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Landing from "@components/home/Landing.astro";
+import { copia } from "@data/landing";
+import { preguntasEn } from "@data/preguntas";
+import { servicioLd, faqLd } from "@utils/jsonld";
+
+export const prerender = true;
+
+const c = copia("en").meta;
+---
+
+<Layout
+  title={c.title}
+  description={c.description}
+  lang="en"
+  ogImage="/en/og.png"
+  navHome="#arriba"
+  schemas={[servicioLd("en"), faqLd(preguntasEn)]}
+>
+  <Landing lang="en" />
+</Layout>

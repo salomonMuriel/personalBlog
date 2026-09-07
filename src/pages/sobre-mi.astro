@@ -1,0 +1,22 @@
+---
+import Layout from "@layouts/Layout.astro";
+import SobreMi from "@components/paginas/SobreMi.astro";
+import { breadcrumbLd } from "@utils/jsonld";
+import { routes } from "@i18n/ui";
+
+export const prerender = true;
+---
+
+<Layout
+  title="Sobre mí — Salomón Muriel"
+  description="Quién es Salomón Muriel: cinco empresas, dos vendidas, dos quebradas, mellizos, una media maratón y una impresora 3D. Bogotá, Colombia."
+  lang="es"
+  schemas={[
+    breadcrumbLd([
+      { name: "Inicio", url: routes.home.es },
+      { name: "Sobre mí", url: routes.sobreMi.es },
+    ]),
+  ]}
+>
+  <SobreMi lang="es" />
+</Layout>

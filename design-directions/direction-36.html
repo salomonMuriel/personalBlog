@@ -1,0 +1,1592 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Se arregla lo chinomático — Salomón Muriel, Bogotá</title>
+<meta name="description" content="Le construyo software hecho a la medida de su empresa y de como ya trabaja, en vez de que le toque torcer la empresa para caber en un programa que compró. Sin cobro mensual por usuario. Consultoría, Bogotá.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Archivo:wdth,wght@62..125,400..900&family=Caveat:wght@500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        papel:  '#F2F1ED',
+        papel2: '#E9E8E2',
+        campo:  '#FFFFFF',
+        tinta:  '#16171A',
+        panel:  '#17181C',
+        panelfg:'#ECEAE4',
+        panelgris:'#9A988F',
+        gris:   '#65665F',
+        linea:  '#CFCDC4',
+        linea2: '#A8A69C',
+        rojo:   '#D8332A',
+        rojo2:  '#B3251D',
+        rojo3:  '#EA4B3E'
+      },
+      fontFamily: {
+        arch: ['Archivo','Helvetica Neue','Arial','sans-serif'],
+        slab: ['"Alfa Slab One"','Rockwell','Georgia','serif'],
+        mono: ['"IBM Plex Mono"','ui-monospace','SFMono-Regular','Menlo','monospace'],
+        pen:  ['Caveat','"Segoe Script"','cursive']
+      },
+      maxWidth: { medida: '66ch', nota: '19rem' },
+      gridTemplateColumns: { '16': 'repeat(16, minmax(0,1fr))' },
+      borderRadius: { DEFAULT: '2px', none: '0' }
+    }
+  }
+}
+</script>
+<style>
+  :root{
+    --papel:#F2F1ED; --papel2:#E9E8E2; --campo:#FFFFFF;
+    --tinta:#16171A; --panel:#17181C; --panelfg:#ECEAE4;
+    --gris:#65665F; --linea:#CFCDC4; --linea2:#A8A69C;
+    --rojo:#D8332A; --rojo2:#B3251D; --rojo3:#EA4B3E;
+  }
+  html{ color-scheme:light; scroll-behavior:smooth; -webkit-text-size-adjust:100%; scroll-padding-top:84px; }
+  html,body{ max-width:100%; overflow-x:hidden; }
+  body{ background:var(--papel); color:var(--tinta); font-synthesis-weight:none; }
+  img{ max-width:100%; display:block; }
+
+  /* ── superficies de papel ── */
+  .grano{
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='170' height='170'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.86' numOctaves='2' stitchTiles='stitch'/></filter><rect width='170' height='170' filter='url(%23n)' opacity='0.42'/></svg>");
+    position:fixed; inset:0; z-index:70; pointer-events:none; opacity:.1; mix-blend-mode:multiply;
+  }
+  .rayas{
+    background-image:linear-gradient(to bottom, transparent 0 27px, rgba(22,23,26,.055) 27px 28px);
+    background-size:100% 28px;
+  }
+
+  /* ── letra de rotulista: relleno papel, doble sombra dura ── */
+  .pintado{
+    color:var(--papel);
+    -webkit-text-stroke:.022em var(--tinta);
+    paint-order:stroke fill;
+    text-shadow:.042em .042em 0 var(--rojo), .068em .068em 0 var(--tinta);
+  }
+  .hueco{ color:transparent; -webkit-text-stroke:.03em var(--linea2); }
+
+  /* ── superficies de navegador ── */
+  ::selection{ background:var(--rojo); color:#fff; }
+  :focus-visible{ outline:2.5px solid var(--rojo); outline-offset:3px; border-radius:2px; }
+  input,textarea{ caret-color:var(--rojo); }
+  .barrita{ scrollbar-width:thin; scrollbar-color:var(--linea2) transparent; }
+  .barrita::-webkit-scrollbar{ width:9px; height:9px; }
+  .barrita::-webkit-scrollbar-track{ background:transparent; }
+  .barrita::-webkit-scrollbar-thumb{ background:var(--linea2); border:3px solid var(--papel); border-radius:9px; }
+  .barrita::-webkit-scrollbar-thumb:hover{ background:var(--gris); }
+
+  /* ── marcador rojo bajo los renglones del parte ── */
+  .subraya{ position:relative; display:inline; background-image:linear-gradient(var(--rojo),var(--rojo));
+    background-repeat:no-repeat; background-position:0 88%; background-size:0% .13em;
+    transition:background-size .72s cubic-bezier(.16,1,.3,1); }
+  .visto .subraya{ background-size:100% .13em; }
+
+  /* ── entrada escalonada ── */
+  .rv{ opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .7s cubic-bezier(.16,1,.3,1); transition-delay:calc(var(--i,0) * 70ms); }
+  .visto.rv, .visto .rv{ opacity:1; transform:none; }
+
+  /* ── letrero corrido ── */
+  .cinta{ overflow:hidden; }
+  .riel{ display:flex; width:max-content; animation:correr 46s linear infinite; }
+  @keyframes correr{ from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+  /* ── tiquete perforado ── */
+  .perfora{ height:9px; background-image:radial-gradient(circle at 50% 0, var(--papel) 0 4.2px, transparent 4.4px); background-size:12px 12px; background-repeat:repeat-x; }
+  .perfora-panel{ background-image:radial-gradient(circle at 50% 0, var(--papel2) 0 4.2px, transparent 4.4px); }
+
+  /* ── casillas del chinómetro (hoja de chequeo) ── */
+  .casilla{ appearance:none; -webkit-appearance:none; width:1.4rem; height:1.4rem; flex:none; margin:.1rem 0 0;
+    border:1.6px solid var(--linea2); background:var(--campo); display:grid; place-items:center; cursor:pointer;
+    transition:background-color .16s, border-color .16s; }
+  .casilla::after{ content:""; width:.72rem; height:.72rem; background:#fff; opacity:0; transform:scale(.4) rotate(-8deg);
+    transition:opacity .16s, transform .24s cubic-bezier(.2,1.6,.4,1);
+    -webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'><path d='M4 12.6l5.2 5.2L20 6.4'/></svg>") center/contain no-repeat;
+    mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'><path d='M4 12.6l5.2 5.2L20 6.4'/></svg>") center/contain no-repeat; }
+  .casilla:hover{ border-color:var(--rojo); }
+  .casilla:checked{ background:var(--rojo); border-color:var(--rojo); }
+  .casilla:checked::after{ opacity:1; transform:scale(1) rotate(-8deg); }
+  .reng:has(.casilla:checked){ background:rgba(216,51,42,.055); }
+  .reng:hover{ background:rgba(22,23,26,.028); }
+  .reng:has(.casilla:checked) .reng-t{ color:var(--gris); text-decoration:line-through; text-decoration-color:var(--rojo); text-decoration-thickness:1.6px; text-decoration-skip-ink:none; }
+
+  /* ── aguja ── */
+  #aguja{ transform-box:view-box; transform-origin:150px 150px; transition:transform .55s cubic-bezier(.34,1.32,.64,1); }
+
+  /* ── el tablero de cajitas ── */
+  #cables{ position:absolute; inset:0; width:100%; height:100%; pointer-events:none; overflow:visible; }
+  .cable{ fill:none; stroke-width:1.7; stroke-linecap:square; transition:stroke .45s ease, opacity .35s ease; }
+  [data-estado="hoy"] .cable{ stroke:var(--rojo); stroke-dasharray:6 6; animation:marcha 1.6s linear infinite; marker-end:url(#pta-hoy); }
+  [data-estado="queda"] .cable{ stroke:var(--tinta); stroke-dasharray:none; animation:none; marker-end:url(#pta-queda); }
+  @keyframes marcha{ to{ stroke-dashoffset:-24; } }
+  [data-estado="queda"] .cable[data-muere="1"]{ opacity:0; }
+  [data-estado="queda"] .enlace[data-muere="1"]{ opacity:0; pointer-events:none; }
+  .caja{ transition:opacity .4s ease, border-color .4s ease, background-color .4s ease; }
+  [data-estado="queda"] .caja[data-apaga="1"]{ opacity:.42; }
+  [data-estado="hoy"] .solo-queda{ display:none; }
+  [data-estado="queda"] .solo-hoy{ display:none; }
+
+  /* ── preguntas ── */
+  details > summary{ list-style:none; cursor:pointer; }
+  details > summary::-webkit-details-marker{ display:none; }
+  details[open] .cruz{ transform:rotate(45deg); }
+  .cruz{ transition:transform .24s cubic-bezier(.16,1,.3,1); }
+  details[open] .resp{ animation:aparece .3s ease both; }
+  @keyframes aparece{ from{opacity:0; transform:translateY(-5px)} to{opacity:1; transform:none} }
+
+
+  /* ── rótulos y flechas del tablero ── */
+  [data-estado="hoy"] .chip{ color:var(--rojo2); border-color:rgba(179,37,29,.4); }
+  [data-estado="queda"] .chip{ color:var(--gris); border-color:var(--linea); }
+  [data-estado="hoy"] .flechita{ color:var(--rojo); }
+  [data-estado="queda"] .flechita{ color:var(--tinta); }
+  .enlace:not(.hidden){ display:block; }
+  @media (min-width:1024px){ .enlace .chip{ box-shadow:0 0 0 3px var(--papel); } }
+
+  /* ── interruptor del tablero ── */
+  .tog{ background:transparent; color:var(--gris); }
+  .tog[aria-pressed="true"]{ background:var(--tinta); color:var(--papel); }
+  .tog[aria-pressed="false"]:hover{ background:var(--papel2); color:var(--tinta); }
+
+  /* ── barras del programa de obra ── */
+  .barra{ transform-origin:0 50%; transform:scaleX(.02); opacity:0; }
+  .observa.visto .barra{ transform:none; opacity:1;
+    transition:transform .75s cubic-bezier(.16,1,.3,1), opacity .4s ease; }
+  .observa.visto .b2{ transition-delay:.14s; }
+  .observa.visto .b3{ transition-delay:.28s; }
+
+  @media (prefers-reduced-motion:reduce){
+    .barra{ transform:none; opacity:1; }
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .riel{ animation:none; }
+    .rv{ opacity:1; transform:none; transition:none; }
+    .subraya{ background-size:100% .13em; transition:none; }
+    [data-estado="hoy"] .cable{ animation:none; }
+    #aguja{ transition:none; }
+    html{ scroll-behavior:auto; }
+  }
+</style>
+</head>
+
+<body class="font-arch antialiased text-[17px] leading-[1.55] barrita">
+<div class="grano" aria-hidden="true"></div>
+
+<svg width="0" height="0" class="hidden" aria-hidden="true"><defs>
+  <symbol id="i-arw" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15"/><path d="M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-abajo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v15"/><path d="M6 13l6 6 6-6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.6l5.2 5.2L20 6.4"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></symbol>
+  <symbol id="i-mas" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 5v14"/><path d="M5 12h14"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5h16v11H9.5L5 20.5v-4H4z"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5.5" width="17" height="15"/><path d="M3.5 10h17"/><path d="M8 3.5v4M16 3.5v4"/></symbol>
+  <symbol id="i-red" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="17" height="17"/><path d="M8 10.5v6"/><path d="M8 7.4v.1"/><path d="M12.5 16.5v-6"/><path d="M12.5 13c0-1.6 1-2.6 2.3-2.6s2.2 1 2.2 2.6v3.5"/></symbol>
+  <symbol id="i-sobre" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5.5" width="18" height="13"/><path d="M3 7l9 6.5L21 7"/></symbol>
+  <symbol id="i-vuelta" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6v5.5a4 4 0 0 1-4 4H5"/><path d="M9 11.5l-4 4 4 4"/></symbol>
+</defs></svg>
+
+<!-- ═══════════ RÓTULO DEL PARTE ═══════════ -->
+<div class="bg-tinta text-panelfg">
+  <div class="mx-auto max-w-[1320px] px-[clamp(1.25rem,4vw,3.5rem)]">
+    <div class="flex items-center gap-x-5 h-9 font-mono text-[10.5px] tracking-[.19em] uppercase overflow-hidden whitespace-nowrap">
+      <span class="text-rojo3 font-medium">Parte de operación</span>
+      <span class="hidden sm:inline text-panelgris">Práctica personal de Salomón Muriel</span>
+      <span class="hidden lg:inline text-panelgris">Bogotá, Colombia</span>
+      <span class="ml-auto text-panelgris" id="fecha">—</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ NAVEGACIÓN ═══════════ -->
+<header id="nav" class="sticky top-0 z-40 bg-papel/90 backdrop-blur-[10px] border-b border-transparent transition-[border-color,background-color] duration-300">
+  <div class="mx-auto max-w-[1320px] px-[clamp(1.25rem,4vw,3.5rem)]">
+    <div class="flex items-center gap-4 h-[60px]">
+      <a href="#arriba" class="font-mono text-[12.5px] font-semibold tracking-[.16em] uppercase mr-auto whitespace-nowrap">Salomón Muriel<span class="text-rojo2">.</span></a>
+
+      <nav class="hidden md:flex items-center gap-6 text-[14px] font-semibold" aria-label="Páginas">
+        <a href="/mentoria" class="text-gris hover:text-tinta border-b-[1.5px] border-transparent hover:border-rojo pb-[3px] transition-colors">Mentoría</a>
+        <a href="/charlas" class="text-gris hover:text-tinta border-b-[1.5px] border-transparent hover:border-rojo pb-[3px] transition-colors">Charlas</a>
+        <a href="/sobre-mi" class="text-gris hover:text-tinta border-b-[1.5px] border-transparent hover:border-rojo pb-[3px] transition-colors">Sobre mí</a>
+        <a href="/ahora" class="text-gris hover:text-tinta border-b-[1.5px] border-transparent hover:border-rojo pb-[3px] transition-colors">Ahora</a>
+      </nav>
+
+      <a href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20tengo%20una%20empresa%20de%20___%20y%20quiero%20contarle%20qu%C3%A9%20tengo%20montado."
+         target="_blank" rel="noopener"
+         class="inline-flex items-center gap-2 bg-rojo2 text-white font-semibold text-[12.5px] px-3.5 py-2 rounded hover:bg-tinta active:translate-y-px transition-[background-color,transform] whitespace-nowrap">
+        Escribirme<svg class="w-4 h-4" aria-hidden="true"><use href="#i-arw"/></svg>
+      </a>
+    </div>
+  </div>
+</header>
+
+<main id="arriba">
+
+<!-- ═══════════ ENTRADA ═══════════ -->
+<section class="pt-[clamp(1.5rem,3.2vw,2.4rem)] pb-[clamp(2rem,4vw,3.4rem)]">
+  <div class="mx-auto max-w-[1320px] px-[clamp(1.25rem,4vw,3.5rem)]">
+
+    <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,300px)] gap-x-[clamp(1.8rem,4vw,3.5rem)] gap-y-8 items-start">
+
+      <div class="min-w-0">
+        <h1>
+          <span class="block font-arch font-black uppercase [font-stretch:62%] [font-variation-settings:'wdth'_62,'wght'_900] tracking-[.005em] leading-[.84] text-[clamp(2.9rem,9.2vw,5.8rem)]">Se arregla</span>
+          <span class="block font-slab uppercase pintado leading-[.98] tracking-[-.012em] text-[clamp(1.7rem,5.3vw,3.35rem)] mt-3 sm:mt-4">Lo chinomático</span>
+        </h1>
+
+        <p class="font-pen text-rojo2 text-[clamp(1.2rem,3.2vw,1.6rem)] leading-[1.2] mt-4 -rotate-[1.4deg] origin-left">
+          sin cambiarle la empresa entera, una cajita a la vez
+        </p>
+
+        <p class="text-[clamp(1.06rem,1.7vw,1.26rem)] leading-[1.45] max-w-[50ch] mt-5">
+          Le construyo software hecho a la medida de su empresa y de como ya trabaja,
+          en vez de que a usted le toque torcer la empresa para caber en un programa que compró.
+        </p>
+
+        <!-- entrada de diccionario -->
+        <div class="mt-5 bg-campo border border-linea rounded max-w-[40rem] shadow-[0_1px_0_rgba(22,23,26,.05),0_16px_36px_-28px_rgba(22,23,26,.55)]">
+          <div class="px-5 sm:px-6 pt-4 pb-4">
+            <p class="font-slab text-[clamp(1.35rem,4.2vw,1.9rem)] leading-none">chi·no·má·ti·co, ca</p>
+            <p class="font-mono text-[10.5px] tracking-[.2em] uppercase text-gris mt-2">adj.</p>
+            <ol class="mt-3.5 space-y-2.5 text-[.98rem] leading-[1.45] max-w-[46ch]">
+              <li class="flex gap-3"><span class="font-slab text-rojo2 text-[.82rem] leading-[1.75] flex-none">1.</span><span>Dicho de un proceso: que <b class="font-bold">parece</b> automatizado, pero hay alguien haciéndolo a mano.</span></li>
+              <li class="flex gap-3"><span class="font-slab text-rojo2 text-[.82rem] leading-[1.75] flex-none">2.</span><span>Dicho de dos sistemas: que no se hablan, y alguien los pega copiando y pegando.</span></li>
+              <li class="flex gap-3"><span class="font-slab text-rojo2 text-[.82rem] leading-[1.75] flex-none">3.</span><span>Dicho de un programa: el que le vendieron carísimo y hoy nadie abre.</span></li>
+              <li class="flex gap-3"><span class="font-slab text-rojo2 text-[.82rem] leading-[1.75] flex-none">4.</span><span>Dicho de una empresa: la suya, probablemente.</span></li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap gap-3 mt-6">
+          <a href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20tengo%20una%20empresa%20de%20___%20y%20quiero%20contarle%20qu%C3%A9%20tengo%20montado."
+             target="_blank" rel="noopener"
+             class="inline-flex items-center gap-2.5 bg-rojo2 text-white font-bold text-[.97rem] px-5 py-3.5 rounded hover:bg-tinta active:translate-y-px transition-[background-color,transform]">
+            Cuénteme qué tiene montado<svg class="w-[18px] h-[18px] opacity-80" aria-hidden="true"><use href="#i-arw"/></svg>
+          </a>
+          <a href="#cajitas"
+             class="inline-flex items-center gap-2.5 border-[1.5px] border-linea2 font-bold text-[.97rem] px-5 py-3.5 rounded hover:border-tinta hover:bg-papel2 active:translate-y-px transition-[border-color,background-color,transform]">
+            Ver el sistema de cajitas<svg class="w-[18px] h-[18px] opacity-70" aria-hidden="true"><use href="#i-abajo"/></svg>
+          </a>
+        </div>
+
+        <p class="font-mono text-[10.5px] tracking-[.13em] uppercase text-gris mt-4 leading-[1.9]">
+          Software propio · Sin cobro mensual por usuario · Usted lo puede cambiar después
+        </p>
+      </div>
+
+      <!-- el que atiende -->
+      <aside class="relative max-w-[230px] sm:max-w-[260px] lg:max-w-none lg:mt-2">
+        <span class="hidden lg:block absolute -left-[11px] top-3 bottom-3 w-[3px] bg-rojo" aria-hidden="true"></span>
+        <div class="bg-campo border border-linea rounded p-[9px]">
+          <img src="assets/fotoSalo.jpeg" width="800" height="800" alt="Retrato de Salomón Muriel, de abrigo verde y brazos cruzados, sobre fondo oscuro"
+               class="w-full h-auto aspect-[4/5] object-cover object-[50%_16%] rounded-[1px] [filter:grayscale(.14)_contrast(1.05)]">
+        </div>
+        <dl class="mt-3 font-mono text-[10.5px] tracking-[.13em] uppercase">
+          <div class="flex justify-between gap-3 py-[7px] border-b border-linea"><dt class="text-gris">Quién atiende</dt><dd class="font-medium">Salomón</dd></div>
+          <div class="flex justify-between gap-3 py-[7px] border-b border-linea"><dt class="text-gris">Dónde</dt><dd class="font-medium">Bogotá</dd></div>
+          <div class="flex justify-between gap-3 py-[7px] border-b border-linea"><dt class="text-gris">Empresas</dt><dd class="font-medium">5 · va la quinta</dd></div>
+          <div class="flex justify-between gap-3 py-[7px]"><dt class="text-gris">Quién contesta</dt><dd class="font-medium text-rojo2">También Salomón</dd></div>
+        </dl>
+        <p class="text-[14px] leading-[1.5] text-gris mt-4">
+          El que le contesta el WhatsApp y el que escribe el código son el mismo. Por eso alcanzo para pocos.
+        </p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ CINTA ═══════════ -->
+<div class="cinta bg-tinta text-panelfg py-2.5 border-y border-tinta">
+  <div class="riel font-mono text-[11px] tracking-[.2em] uppercase">
+    <span class="px-7">Lo que dice un Excel no es lo que dice el otro <span class="text-rojo3">◆</span></span>
+    <span class="px-7">La misma información, metida dos veces <span class="text-rojo3">◆</span></span>
+    <span class="px-7">Un CRM carísimo que se usa a medias <span class="text-rojo3">◆</span></span>
+    <span class="px-7">Sistemas que no se hablan <span class="text-rojo3">◆</span></span>
+    <span class="px-7">Alguien en la mitad, copiando y pegando <span class="text-rojo3">◆</span></span>
+    <span class="px-7" aria-hidden="true">Lo que dice un Excel no es lo que dice el otro <span class="text-rojo3">◆</span></span>
+    <span class="px-7" aria-hidden="true">La misma información, metida dos veces <span class="text-rojo3">◆</span></span>
+    <span class="px-7" aria-hidden="true">Un CRM carísimo que se usa a medias <span class="text-rojo3">◆</span></span>
+    <span class="px-7" aria-hidden="true">Sistemas que no se hablan <span class="text-rojo3">◆</span></span>
+    <span class="px-7" aria-hidden="true">Alguien en la mitad, copiando y pegando <span class="text-rojo3">◆</span></span>
+  </div>
+</div>
+
+<!-- ═══════════ EL PARTE DE DAÑOS ═══════════ -->
+<section id="danos" class="py-[clamp(3.2rem,7vw,5.6rem)]">
+  <div class="mx-auto max-w-[1320px] px-[clamp(1.25rem,4vw,3.5rem)]">
+
+    <div class="flex flex-col sm:flex-row sm:items-baseline gap-x-6 gap-y-1 border-t-[2.5px] border-tinta pt-3 mb-[clamp(1.8rem,3.6vw,2.8rem)]">
+      <span class="font-mono text-[11px] tracking-[.2em] uppercase font-semibold whitespace-nowrap">Registro de fallas</span>
+      <span class="sm:ml-auto sm:text-right text-[13px] leading-[1.35] text-gris max-w-[40ch]">Los mismos siete renglones, en empresas que no se conocen entre sí.</span>
+    </div>
+
+    <h2 class="font-arch font-extrabold [font-stretch:104%] tracking-[-.028em] leading-[1.03] text-[clamp(1.9rem,4.4vw,3.4rem)] max-w-[20ch]">
+      Lo que me reportan, casi siempre lo mismo
+    </h2>
+
+    <div class="mt-[clamp(2rem,4vw,3rem)] border-t border-linea">
+
+      <article class="grid grid-cols-1 md:grid-cols-[9.5rem_minmax(0,1.6fr)_minmax(0,1fr)] gap-x-8 gap-y-2 py-[clamp(1.3rem,2.6vw,2rem)] border-b border-linea">
+        <div class="font-mono text-[10.5px] tracking-[.16em] uppercase text-gris leading-[1.7]">
+          <div class="text-rojo2">Falla 01</div><div>Lo reporta el dueño</div>
+        </div>
+        <p class="font-arch font-bold [font-stretch:98%] tracking-[-.028em] leading-[1.14] text-[clamp(1.25rem,2.6vw,1.85rem)] max-w-[30ch]">
+          <span class="subraya">Lo que dice el Excel</span> no es lo mismo que dice el programa que compró.
+        </p>
+        <p class="font-pen text-rojo2 text-[1.18rem] leading-[1.25] md:pt-1.5 -rotate-[.8deg]">y cuando no cuadran, gana el que hable más duro en la reunión</p>
+      </article>
+
+      <article class="grid grid-cols-1 md:grid-cols-[9.5rem_minmax(0,1.6fr)_minmax(0,1fr)] gap-x-8 gap-y-2 py-[clamp(1.3rem,2.6vw,2rem)] border-b border-linea">
+        <div class="font-mono text-[10.5px] tracking-[.16em] uppercase text-gris leading-[1.7]">
+          <div class="text-rojo2">Falla 02</div><div>Nadie lo reporta</div>
+        </div>
+        <p class="font-arch font-bold [font-stretch:98%] tracking-[-.028em] leading-[1.14] text-[clamp(1.25rem,2.6vw,1.85rem)] max-w-[30ch]">
+          Alguien montó un sistema nuevo que <span class="subraya">nadie usa</span> y que tiene datos de hace ocho meses.
+        </p>
+        <p class="text-[14px] leading-[1.5] text-gris md:pt-2">Se quedó a medio llenar y nadie lo dice, porque montarlo costó trabajo.</p>
+      </article>
+
+      <article class="grid grid-cols-1 md:grid-cols-[9.5rem_minmax(0,1.6fr)_minmax(0,1fr)] gap-x-8 gap-y-2 py-[clamp(1.3rem,2.6vw,2rem)] border-b border-linea">
+        <div class="font-mono text-[10.5px] tracking-[.16em] uppercase text-gris leading-[1.7]">
+          <div class="text-rojo2">Falla 03</div><div>Lo reporta quien lo hace</div>
+        </div>
+        <p class="font-arch font-bold [font-stretch:98%] tracking-[-.028em] leading-[1.14] text-[clamp(1.25rem,2.6vw,1.85rem)] max-w-[30ch]">
+          La gente tiene que meter <span class="subraya">lo mismo dos veces</span>, en dos partes.
+        </p>
+        <p class="font-pen text-rojo2 text-[1.18rem] leading-[1.25] md:pt-1.5 rotate-[.6deg]">las cajitas no están conectadas, y el que lo sufre es el que digita</p>
+      </article>
+
+      <article class="grid grid-cols-1 md:grid-cols-[9.5rem_minmax(0,1.6fr)_minmax(0,1fr)] gap-x-8 gap-y-2 py-[clamp(1.3rem,2.6vw,2rem)] border-b border-linea">
+        <div class="font-mono text-[10.5px] tracking-[.16em] uppercase text-gris leading-[1.7]">
+          <div class="text-rojo2">Falla 04</div><div>Lo reporta contabilidad</div>
+        </div>
+        <p class="font-arch font-bold [font-stretch:98%] tracking-[-.028em] leading-[1.14] text-[clamp(1.25rem,2.6vw,1.85rem)] max-w-[30ch]">
+          No hay <span class="subraya">una sola fuente de verdad</span>: para saber cuánto se vendió ayer toca preguntarle a alguien.
+        </p>
+        <p class="text-[14px] leading-[1.5] text-gris md:pt-2">El número está en tres lados y ninguno cuadra con el otro.</p>
+      </article>
+
+      <article class="grid grid-cols-1 md:grid-cols-[9.5rem_minmax(0,1.6fr)_minmax(0,1fr)] gap-x-8 gap-y-2 py-[clamp(1.3rem,2.6vw,2rem)] border-b border-linea">
+        <div class="font-mono text-[10.5px] tracking-[.16em] uppercase text-gris leading-[1.7]">
+          <div class="text-rojo2">Falla 05</div><div>Lo reporta el dueño</div>
+        </div>
+        <p class="font-arch font-bold [font-stretch:98%] tracking-[-.028em] leading-[1.14] text-[clamp(1.25rem,2.6vw,1.85rem)] max-w-[30ch]">
+          Le vendieron <span class="subraya">carísimo</span> un programa que por dentro es una lista, un botón y un correo.
+        </p>
+        <p class="text-[14px] leading-[1.5] text-gris md:pt-2">Casi siempre viene inflado de módulos que su empresa nunca va a abrir.</p>
+      </article>
+
+      <article class="grid grid-cols-1 md:grid-cols-[9.5rem_minmax(0,1.6fr)_minmax(0,1fr)] gap-x-8 gap-y-2 py-[clamp(1.3rem,2.6vw,2rem)] border-b border-linea">
+        <div class="font-mono text-[10.5px] tracking-[.16em] uppercase text-gris leading-[1.7]">
+          <div class="text-rojo2">Falla 06</div><div>No lo reporta nadie</div>
+        </div>
+        <p class="font-arch font-bold [font-stretch:98%] tracking-[-.028em] leading-[1.14] text-[clamp(1.25rem,2.6vw,1.85rem)] max-w-[30ch]">
+          El proceso <span class="subraya">parece automático</span> y en realidad hay alguien haciéndolo a mano, todos los días.
+        </p>
+        <p class="font-pen text-rojo2 text-[1.18rem] leading-[1.25] md:pt-1.5 -rotate-[1deg]">y lo hace bien, por eso nadie se ha dado cuenta</p>
+      </article>
+
+      <article class="grid grid-cols-1 md:grid-cols-[9.5rem_minmax(0,1.6fr)_minmax(0,1fr)] gap-x-8 gap-y-2 py-[clamp(1.3rem,2.6vw,2rem)] border-b border-linea">
+        <div class="font-mono text-[10.5px] tracking-[.16em] uppercase text-gris leading-[1.7]">
+          <div class="text-rojo2">Falla 07</div><div>Se reporta tarde</div>
+        </div>
+        <p class="font-arch font-bold [font-stretch:98%] tracking-[-.028em] leading-[1.14] text-[clamp(1.25rem,2.6vw,1.85rem)] max-w-[30ch]">
+          Si esa persona se enferma, se para. Si renuncia, <span class="subraya">se lleva el proceso puesto</span>.
+        </p>
+        <p class="text-[14px] leading-[1.5] text-gris md:pt-2">Y el que llega aprende de oídas, de otro que también aprendió de oídas.</p>
+      </article>
+    </div>
+
+    <p class="mt-[clamp(1.6rem,3vw,2.4rem)] text-[1.05rem] leading-[1.55] text-gris max-w-[56ch]">
+      Si nada de esto le sonó, probablemente no le sirvo, y prefiero decírselo acá y no en la cuarta reunión.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════ EL CHINÓMETRO ═══════════ -->
+<section id="chinometro" class="py-[clamp(3.2rem,7vw,5.6rem)] bg-papel2 border-y border-linea rayas">
+  <div class="mx-auto max-w-[1320px] px-[clamp(1.25rem,4vw,3.5rem)]">
+
+    <div class="flex flex-col sm:flex-row sm:items-baseline gap-x-6 gap-y-1 border-t-[2.5px] border-tinta pt-3 mb-[clamp(1.8rem,3.6vw,2.8rem)]">
+      <span class="font-mono text-[11px] tracking-[.2em] uppercase font-semibold whitespace-nowrap">Hoja de chequeo</span>
+      <span class="sm:ml-auto sm:text-right text-[13px] leading-[1.35] text-gris max-w-[44ch]">No pide correo ni guarda nada. Al final le escribe el mensaje y usted decide si me lo manda.</span>
+    </div>
+
+    <h2 class="font-arch font-extrabold [font-stretch:104%] tracking-[-.028em] leading-[1.03] text-[clamp(1.9rem,4.4vw,3.4rem)] max-w-[18ch]">
+      El chinómetro
+    </h2>
+    <p class="text-[1.05rem] leading-[1.55] text-gris max-w-[54ch] mt-4">
+      Diez renglones. Marque los que reconozca en su empresa.
+    </p>
+
+    <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1.28fr)_minmax(0,1fr)] gap-[clamp(1.2rem,2.6vw,2rem)] mt-[clamp(1.8rem,3.6vw,2.6rem)] items-start">
+
+      <!-- hoja -->
+      <div class="bg-campo border-[1.5px] border-linea2 rounded overflow-hidden">
+        <div class="flex items-baseline gap-3 flex-wrap px-4 sm:px-5 py-3.5 border-b border-linea font-mono text-[10.5px] tracking-[.18em] uppercase text-gris">
+          <span>Síntomas reportados</span>
+          <span class="ml-auto font-semibold text-rojo2"><output id="marcadas">0</output> de 10 marcadas</span>
+        </div>
+        <div id="hoja"></div>
+        <div class="px-4 sm:px-5 py-3.5 border-t border-linea flex flex-wrap gap-3 items-center">
+          <button type="button" id="limpiar" class="inline-flex items-center gap-2 border-[1.5px] border-linea2 rounded font-mono text-[10.5px] tracking-[.14em] uppercase font-medium px-3.5 py-2 hover:border-tinta hover:bg-papel2 active:translate-y-px transition-[border-color,background-color,transform]">
+            <svg class="w-3.5 h-3.5" aria-hidden="true"><use href="#i-x"/></svg>Borrar marcas
+          </button>
+          <p class="text-[13px] leading-[1.4] text-gris">Es un estimado, no una auditoría.</p>
+        </div>
+      </div>
+
+      <!-- lectura -->
+      <div class="lg:sticky lg:top-[76px]">
+        <div class="bg-panel text-panelfg rounded overflow-hidden border-t-[3px] border-rojo shadow-[0_1px_0_rgba(22,23,26,.06),0_18px_40px_-26px_rgba(22,23,26,.75)]">
+          <div class="flex items-baseline gap-3 px-4 sm:px-5 py-3.5 border-b border-[#2c2e34] font-mono text-[10.5px] tracking-[.18em] uppercase text-[#8e8d86]">
+            <span>Lectura</span><span class="ml-auto text-rojo3 font-semibold">Índice chinomático</span>
+          </div>
+
+          <div class="px-4 sm:px-5 pt-5 pb-4">
+            <svg viewBox="0 0 300 182" class="w-full h-auto block" role="img" aria-labelledby="tit-medidor">
+              <title id="tit-medidor">Carátula del chinómetro</title>
+              <path d="M30 150 A120 120 0 0 1 270 150" fill="none" stroke="#2c2e34" stroke-width="15"/>
+              <path id="arco" d="M30 150 A120 120 0 0 1 270 150" fill="none" stroke="#EA4B3E" stroke-width="15"
+                    stroke-dasharray="377" stroke-dashoffset="377" style="transition:stroke-dashoffset .55s cubic-bezier(.16,1,.3,1)"/>
+              <g id="marcas" stroke="#5c5e66" stroke-width="1.6"></g>
+              <g id="aguja">
+                <line x1="150" y1="150" x2="150" y2="54" stroke="#ECEAE4" stroke-width="3"/>
+                <polygon points="150,46 146.4,59 153.6,59" fill="#EA4B3E"/>
+              </g>
+              <circle cx="150" cy="150" r="8" fill="#17181C" stroke="#5c5e66" stroke-width="2.5"/>
+              <text x="30" y="174" fill="#8e8d86" font-family="IBM Plex Mono, monospace" font-size="10.5">0</text>
+              <text x="256" y="174" fill="#8e8d86" font-family="IBM Plex Mono, monospace" font-size="10.5">100</text>
+            </svg>
+
+            <div class="flex items-end justify-between gap-3 mt-1 pt-3.5 border-t border-[#2c2e34]">
+              <output id="puntaje" class="font-arch font-black [font-stretch:84%] tracking-[-.05em] leading-[.82] text-[clamp(3.2rem,11vw,4.6rem)] tabular-nums">00</output>
+              <span class="font-mono text-[10.5px] tracking-[.18em] uppercase text-[#8e8d86] pb-2">/ 100</span>
+            </div>
+
+            <p id="ver-titulo" class="font-arch font-extrabold [font-stretch:100%] tracking-[-.03em] leading-[1.06] text-[clamp(1.15rem,3.4vw,1.5rem)] mt-3">Sin medir todavía</p>
+            <p id="ver-texto" class="text-[14.5px] leading-[1.5] text-[#b0aea6] mt-2">El aparato no funciona en blanco: marque los renglones que reconozca.</p>
+          </div>
+
+          <div class="mx-4 sm:mx-5 mb-1 bg-[#101115] border-t border-[#2c2e34]">
+            <div class="px-3.5 py-2.5 border-b border-[#2c2e34] font-mono text-[10px] tracking-[.18em] uppercase text-[#8e8d86] flex justify-between gap-3">
+              <span>Orden de trabajo — borrador</span><span id="conteo">0 ítems</span>
+            </div>
+            <output id="salida" class="barrita block font-mono text-[10.5px] leading-[1.65] p-3.5 whitespace-pre-wrap max-h-[9.5rem] overflow-y-auto text-[#c9c7c0]">Esperando marcación…</output>
+          </div>
+          <div class="perfora perfora-panel mx-4 sm:mx-5" aria-hidden="true"></div>
+
+          <div class="px-4 sm:px-5 pt-3 pb-5">
+            <a id="wa" href="https://wa.me/573132465100" target="_blank" rel="noopener"
+               class="flex items-center justify-center gap-2.5 bg-rojo2 text-white font-bold text-[.95rem] px-4 py-3.5 rounded hover:bg-white hover:text-panel active:translate-y-px transition-[background-color,color,transform]">
+              <svg class="w-[18px] h-[18px]" aria-hidden="true"><use href="#i-chat"/></svg>Mandarme esto por WhatsApp
+            </a>
+            <p class="font-mono text-[10px] leading-[1.6] tracking-[.1em] uppercase text-[#8e8d86] mt-2.5">
+              Se abre WhatsApp con el texto ya escrito. Usted lo corrige y lo manda. Contesto yo.
+            </p>
+            <a href="https://cal.com/salomonmuriel" target="_blank" rel="noopener"
+               class="flex items-center justify-center gap-2.5 border-[1.5px] border-[#3a3c43] font-semibold text-[.9rem] px-4 py-3 rounded mt-3 hover:border-panelfg hover:bg-[#1e1f24] transition-[border-color,background-color]">
+              <svg class="w-4 h-4 opacity-80" aria-hidden="true"><use href="#i-cal"/></svg>O agende cuarenta y cinco minutos
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ EL SISTEMA DE CAJITAS ═══════════ -->
+<section id="cajitas" class="py-[clamp(3.2rem,7vw,5.6rem)]">
+  <div class="mx-auto max-w-[1320px] px-[clamp(1.25rem,4vw,3.5rem)]">
+
+    <div class="flex flex-col sm:flex-row sm:items-baseline gap-x-6 gap-y-1 border-t-[2.5px] border-tinta pt-3 mb-[clamp(1.8rem,3.6vw,2.8rem)]">
+      <span class="font-mono text-[11px] tracking-[.2em] uppercase font-semibold whitespace-nowrap">Cómo le explico mi trabajo</span>
+      <span class="sm:ml-auto sm:text-right text-[13px] leading-[1.35] text-gris max-w-[42ch]">Si se lleva una sola cosa de esta página, que sea esta.</span>
+    </div>
+
+    <h2 class="font-arch font-extrabold [font-stretch:104%] tracking-[-.028em] leading-[1.03] text-[clamp(1.9rem,4.4vw,3.4rem)] max-w-[20ch]">
+      Una empresa es un sistema de cajitas
+    </h2>
+
+    <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-x-[clamp(1.5rem,4vw,3.5rem)] gap-y-4 mt-5">
+      <p class="text-[1.02rem] leading-[1.6] text-gris max-w-[54ch]">
+        Mercadeo manda tráfico a la página y a WhatsApp. Eso genera leads para ventas. Ventas le devuelve
+        información a mercadeo y le abre trabajo a operaciones y a administración. Cada una de esas es una
+        cajita, y cada cajita tiene su propio sistema.
+      </p>
+      <p class="text-[1.02rem] leading-[1.6] text-gris max-w-[54ch]">
+        <b class="text-tinta font-semibold">Yo construyo esas cajitas y las conecto.</b> El CRM que necesita
+        su proceso de ventas, el sistema con el que trabaja operaciones, la facturación de administración:
+        le construyo el que le falte, hecho a la medida de como ya trabaja, y lo dejo hablando con los de al lado.
+      </p>
+    </div>
+
+    <!-- interruptor -->
+    <div class="flex flex-wrap items-center gap-3 mt-[clamp(1.8rem,3.6vw,2.6rem)]">
+      <div class="inline-flex border-[1.5px] border-tinta rounded overflow-hidden" role="group" aria-label="Estado del sistema">
+        <button type="button" id="btn-hoy" aria-pressed="true"
+          class="tog font-mono text-[10.5px] tracking-[.16em] uppercase font-semibold px-4 py-2.5 transition-colors">Como está hoy</button>
+        <button type="button" id="btn-queda" aria-pressed="false"
+          class="tog font-mono text-[10.5px] tracking-[.16em] uppercase font-semibold px-4 py-2.5 border-l-[1.5px] border-tinta transition-colors">Como queda</button>
+      </div>
+      <p class="font-mono text-[10.5px] tracking-[.12em] uppercase text-gris flex items-center gap-4 flex-wrap">
+        <span class="inline-flex items-center gap-2"><span class="inline-block w-7 h-0 border-t-[1.7px] border-dashed border-rojo" aria-hidden="true"></span>Paso manual</span>
+        <span class="inline-flex items-center gap-2"><span class="inline-block w-7 h-0 border-t-[1.7px] border-tinta" aria-hidden="true"></span>Conectado</span>
+      </p>
+    </div>
+
+    <div id="tablero-wrap" data-estado="hoy" class="mt-6">
+
+      <div id="tablero" class="relative flex flex-col gap-4 lg:grid lg:grid-cols-4 lg:gap-x-[clamp(86px,6.6vw,130px)] lg:gap-y-[54px] lg:pb-[64px] lg:items-start">
+        <svg id="cables" aria-hidden="true"></svg>
+
+        <!-- MERCADEO -->
+        <article id="c-mercadeo" class="caja relative z-10 bg-campo border-[1.5px] border-linea2 rounded p-4 lg:[grid-area:2_/_1]">
+          <div class="flex items-start justify-between gap-2">
+            <p class="font-arch font-extrabold [font-stretch:100%] tracking-[-.025em] text-[1.14rem] leading-none">Mercadeo</p>
+            <span class="solo-queda font-mono text-[9.5px] tracking-[.1em] uppercase text-rojo2 border border-rojo2 rounded px-1.5 py-[3px] flex-none">5.ª</span>
+          </div>
+          <p class="font-mono text-[9.5px] tracking-[.16em] uppercase text-gris mt-2">Por el canal que sea</p>
+          <p class="solo-hoy text-[13.5px] leading-[1.45] text-gris mt-2.5">Un gestor de campañas por un lado y una hoja de cálculo por otro.</p>
+          <p class="solo-queda text-[13.5px] leading-[1.45] text-gris mt-2.5">El mismo gestor de campañas. Ahora sí sabe qué campaña trajo la venta.</p>
+        </article>
+
+        <div class="enlace lg:absolute lg:z-20 lg:-translate-x-1/2 lg:-translate-y-1/2" data-a="c-mercadeo" data-b="c-web" data-r="h"
+             data-hoy="El formulario le llega por correo a alguien" data-queda="El lead entra solo">
+          <span class="flechita lg:hidden inline-block align-middle mr-2" aria-hidden="true"><svg class="w-4 h-4"><use href="#i-abajo"/></svg></span><span class="chip font-mono text-[10px] leading-[1.35] tracking-[.05em] uppercase bg-papel lg:inline-block lg:text-center lg:max-w-[132px] lg:px-1.5 lg:py-1 lg:border lg:rounded"></span>
+        </div>
+        <div class="enlace lg:absolute lg:z-20 lg:-translate-x-1/2 lg:-translate-y-1/2" data-a="c-mercadeo" data-b="c-chat" data-r="h"
+             data-hoy="La campaña manda al chat y ahí se queda" data-queda="El chat también deja el lead adentro">
+          <span class="flechita lg:hidden inline-block align-middle mr-2" aria-hidden="true"><svg class="w-4 h-4"><use href="#i-abajo"/></svg></span><span class="chip font-mono text-[10px] leading-[1.35] tracking-[.05em] uppercase bg-papel lg:inline-block lg:text-center lg:max-w-[132px] lg:px-1.5 lg:py-1 lg:border lg:rounded"></span>
+        </div>
+
+        <!-- PÁGINA WEB + WHATSAPP -->
+        <div class="grid grid-cols-2 gap-3 lg:contents">
+          <article id="c-web" class="caja relative z-10 bg-campo border-[1.5px] border-linea2 rounded p-4 lg:[grid-area:1_/_2]">
+            <div class="flex items-start justify-between gap-2">
+              <p class="font-arch font-extrabold [font-stretch:100%] tracking-[-.025em] text-[1.14rem] leading-none">Página web</p>
+              <span class="solo-queda font-mono text-[9.5px] tracking-[.1em] uppercase text-rojo2 border border-rojo2 rounded px-1.5 py-[3px] flex-none">4.ª</span>
+            </div>
+            <p class="font-mono text-[9.5px] tracking-[.16em] uppercase text-gris mt-2">El sitio</p>
+            <p class="solo-hoy text-[13.5px] leading-[1.45] text-gris mt-2.5">Sistema aparte, de otro proveedor, que le manda correos a alguien.</p>
+            <p class="solo-queda text-[13.5px] leading-[1.45] text-gris mt-2.5">Sigue siendo su página. Lo que entra por ahí ya cae donde tiene que caer.</p>
+          </article>
+
+          <article id="c-chat" class="caja relative z-10 bg-campo border-[1.5px] border-linea2 rounded p-4 lg:[grid-area:3_/_2]">
+            <div class="flex items-start justify-between gap-2">
+              <p class="font-arch font-extrabold [font-stretch:100%] tracking-[-.025em] text-[1.14rem] leading-none">WhatsApp</p>
+              <span class="solo-queda font-mono text-[9.5px] tracking-[.1em] uppercase text-rojo2 border border-rojo2 rounded px-1.5 py-[3px] flex-none">4.ª</span>
+            </div>
+            <p class="font-mono text-[9.5px] tracking-[.16em] uppercase text-gris mt-2">El chat</p>
+            <p class="solo-hoy text-[13.5px] leading-[1.45] text-gris mt-2.5">El teléfono de una persona. Si esa persona no está, no hay nadie.</p>
+            <p class="solo-queda text-[13.5px] leading-[1.45] text-gris mt-2.5">Lo que se habla por el chat queda registrado sin que nadie lo transcriba.</p>
+          </article>
+        </div>
+
+        <div class="enlace lg:absolute lg:z-20 lg:-translate-x-1/2 lg:-translate-y-1/2" data-a="c-web" data-b="c-ventas" data-r="h"
+             data-hoy="Alguien copia el correo al CRM" data-queda="Sin que nadie copie nada">
+          <span class="flechita lg:hidden inline-block align-middle mr-2" aria-hidden="true"><svg class="w-4 h-4"><use href="#i-abajo"/></svg></span><span class="chip font-mono text-[10px] leading-[1.35] tracking-[.05em] uppercase bg-papel lg:inline-block lg:text-center lg:max-w-[132px] lg:px-1.5 lg:py-1 lg:border lg:rounded"></span>
+        </div>
+        <div class="enlace lg:absolute lg:z-20 lg:-translate-x-1/2 lg:-translate-y-1/2" data-a="c-chat" data-b="c-ventas" data-r="h"
+             data-hoy="Alguien transcribe la conversación" data-queda="Sin que nadie transcriba">
+          <span class="flechita lg:hidden inline-block align-middle mr-2" aria-hidden="true"><svg class="w-4 h-4"><use href="#i-abajo"/></svg></span><span class="chip font-mono text-[10px] leading-[1.35] tracking-[.05em] uppercase bg-papel lg:inline-block lg:text-center lg:max-w-[132px] lg:px-1.5 lg:py-1 lg:border lg:rounded"></span>
+        </div>
+
+        <!-- VENTAS -->
+        <article id="c-ventas" class="caja relative z-10 bg-campo border-[1.5px] border-tinta rounded p-4 lg:[grid-area:2_/_3] shadow-[0_1px_0_rgba(22,23,26,.06),0_14px_30px_-24px_rgba(22,23,26,.6)]">
+          <div class="flex items-start justify-between gap-2">
+            <p class="font-arch font-extrabold [font-stretch:100%] tracking-[-.025em] text-[1.14rem] leading-none">Ventas</p>
+            <span class="solo-queda font-mono text-[9.5px] tracking-[.1em] uppercase text-white bg-rojo2 rounded px-1.5 py-[3px] flex-none">1.ª</span>
+          </div>
+          <p class="font-mono text-[9.5px] tracking-[.16em] uppercase text-gris mt-2">Los leads</p>
+          <p class="solo-hoy text-[13.5px] leading-[1.45] text-gris mt-2.5">Un CRM caro que se usa a medias, porque llenarlo es doble trabajo.</p>
+          <p class="solo-queda text-[13.5px] leading-[1.45] text-gris mt-2.5">El CRM que le construyo para su proceso de ventas. Llenarlo dejó de ser trabajo extra.</p>
+        </article>
+
+        <div class="enlace lg:absolute lg:z-20 lg:-translate-x-1/2 lg:-translate-y-1/2" data-a="c-ventas" data-b="c-ops" data-r="h"
+             data-hoy="Se avisa por un chat interno" data-queda="La venta abre el trabajo sola">
+          <span class="flechita lg:hidden inline-block align-middle mr-2" aria-hidden="true"><svg class="w-4 h-4"><use href="#i-abajo"/></svg></span><span class="chip font-mono text-[10px] leading-[1.35] tracking-[.05em] uppercase bg-papel lg:inline-block lg:text-center lg:max-w-[132px] lg:px-1.5 lg:py-1 lg:border lg:rounded"></span>
+        </div>
+
+        <!-- OPERACIONES -->
+        <article id="c-ops" class="caja relative z-10 bg-campo border-[1.5px] border-linea2 rounded p-4 lg:[grid-area:1_/_4]">
+          <div class="flex items-start justify-between gap-2">
+            <p class="font-arch font-extrabold [font-stretch:100%] tracking-[-.025em] text-[1.14rem] leading-none">Operaciones</p>
+            <span class="solo-queda font-mono text-[9.5px] tracking-[.1em] uppercase text-rojo2 border border-rojo2 rounded px-1.5 py-[3px] flex-none">2.ª</span>
+          </div>
+          <p class="font-mono text-[9.5px] tracking-[.16em] uppercase text-gris mt-2">El trabajo</p>
+          <p class="solo-hoy text-[13.5px] leading-[1.45] text-gris mt-2.5">Un Excel que solo entiende una persona.</p>
+          <p class="solo-queda text-[13.5px] leading-[1.45] text-gris mt-2.5">El sistema de operación que le construyo. El trabajo se abre solo al cerrar la venta.</p>
+        </article>
+
+        <div class="enlace lg:absolute lg:z-20 lg:-translate-x-1/2 lg:-translate-y-1/2" data-a="c-ops" data-b="c-opsdos" data-r="v" data-muere="1"
+             data-hoy="Los mismos datos, otra vez" data-queda="">
+          <span class="flechita lg:hidden inline-block align-middle mr-2" aria-hidden="true"><svg class="w-4 h-4"><use href="#i-abajo"/></svg></span><span class="chip font-mono text-[10px] leading-[1.35] tracking-[.05em] uppercase bg-papel lg:inline-block lg:text-center lg:max-w-[132px] lg:px-1.5 lg:py-1 lg:border lg:rounded"></span>
+        </div>
+
+        <article id="c-opsdos" data-apaga="1" class="caja relative z-10 bg-campo border-[1.5px] border-dashed border-rojo2 rounded p-4 lg:[grid-area:2_/_4]">
+          <div class="flex items-start justify-between gap-2">
+            <p class="font-arch font-extrabold [font-stretch:100%] tracking-[-.025em] text-[1.14rem] leading-none">Operaciones<br class="hidden sm:block"> <span class="text-gris font-bold">(la otra)</span></p>
+            <span class="solo-queda font-mono text-[9.5px] tracking-[.1em] uppercase text-gris border border-linea2 rounded px-1.5 py-[3px] flex-none">Apagada</span>
+          </div>
+          <p class="solo-hoy font-mono text-[9.5px] tracking-[.16em] uppercase text-rojo2 mt-2">Dos cajitas para el mismo trabajo</p>
+          <p class="solo-queda font-mono text-[9.5px] tracking-[.16em] uppercase text-gris mt-2">Ya no hace falta</p>
+          <p class="solo-hoy text-[13.5px] leading-[1.45] text-gris mt-2.5">El Notion que montaron, con datos de hace ocho meses. Y les toca llenar los dos.</p>
+          <p class="solo-queda text-[13.5px] leading-[1.45] text-gris mt-2.5">El trabajo vive en una sola. Lo que servía de la otra se pasó antes de apagarla.</p>
+        </article>
+
+        <div class="enlace lg:absolute lg:z-20 lg:-translate-x-1/2 lg:-translate-y-1/2" data-a="c-ventas" data-b="c-admin" data-r="h"
+             data-hoy="La factura se hace a mano" data-queda="La factura sale sola">
+          <span class="flechita lg:hidden inline-block align-middle mr-2" aria-hidden="true"><svg class="w-4 h-4"><use href="#i-abajo"/></svg></span><span class="chip font-mono text-[10px] leading-[1.35] tracking-[.05em] uppercase bg-papel lg:inline-block lg:text-center lg:max-w-[132px] lg:px-1.5 lg:py-1 lg:border lg:rounded"></span>
+        </div>
+
+        <!-- ADMINISTRACIÓN -->
+        <article id="c-admin" class="caja relative z-10 bg-campo border-[1.5px] border-linea2 rounded p-4 lg:[grid-area:3_/_4]">
+          <div class="flex items-start justify-between gap-2">
+            <p class="font-arch font-extrabold [font-stretch:100%] tracking-[-.025em] text-[1.14rem] leading-none">Administración</p>
+            <span class="solo-queda font-mono text-[9.5px] tracking-[.1em] uppercase text-rojo2 border border-rojo2 rounded px-1.5 py-[3px] flex-none">3.ª</span>
+          </div>
+          <p class="font-mono text-[9.5px] tracking-[.16em] uppercase text-gris mt-2">Facturación y soportes</p>
+          <p class="solo-hoy text-[13.5px] leading-[1.45] text-gris mt-2.5">Otro Excel. Y la factura se hace a mano, una por una.</p>
+          <p class="solo-queda text-[13.5px] leading-[1.45] text-gris mt-2.5">La factura sale sola de la venta, con los datos ya adentro.</p>
+        </article>
+
+        <!-- retorno (solo escritorio: se dibuja por debajo del tablero) -->
+        <div class="enlace hidden lg:block lg:absolute lg:z-20 lg:-translate-x-1/2 lg:-translate-y-1/2" data-a="c-ventas" data-b="c-mercadeo" data-r="under"
+             data-hoy="Nadie devuelve el dato" data-queda="Cada venta le dice a mercadeo de dónde vino">
+          <span class="chip font-mono text-[10px] leading-[1.35] tracking-[.05em] uppercase bg-papel inline-block text-center max-w-[160px] px-1.5 py-1 border rounded"></span>
+        </div>
+      </div>
+
+      <!-- retorno en móvil -->
+      <div class="lg:hidden flex items-start gap-2.5 mt-4 border-t border-linea pt-4">
+        <span class="flechita flex-none mt-[1px]" aria-hidden="true"><svg class="w-[18px] h-[18px]"><use href="#i-vuelta"/></svg></span>
+        <p class="text-[13.5px] leading-[1.45]"><b class="font-bold">Y de vuelta a mercadeo:</b>
+          <span class="solo-hoy text-gris">hoy nadie devuelve el dato, así que mercadeo no sabe qué campaña trajo la venta.</span>
+          <span class="solo-queda text-gris">cada venta le dice a mercadeo de dónde vino.</span>
+        </p>
+      </div>
+
+      <!-- fuente de verdad -->
+      <div class="mt-4 lg:mt-2">
+        <div class="solo-hoy border-[1.5px] border-dashed border-rojo2 rounded p-4 sm:px-5 sm:py-4">
+          <p class="font-mono text-[10px] tracking-[.18em] uppercase text-rojo2">No hay una sola fuente de verdad</p>
+          <p class="text-[.98rem] leading-[1.5] mt-2 max-w-[70ch]">Hay tres versiones del mismo dato y ninguna cuadra con la otra. Para saber cuál sirve, toca preguntarle a alguien.</p>
+        </div>
+        <div class="solo-queda bg-panel text-panelfg rounded p-4 sm:px-5 sm:py-4 border-t-[3px] border-rojo">
+          <p class="font-mono text-[10px] tracking-[.18em] uppercase text-rojo3">Una sola fuente de verdad</p>
+          <p class="text-[.98rem] leading-[1.5] mt-2 max-w-[70ch] text-[#c9c7c0]">El dato vive en un solo lugar. Cuando alguien pregunta cuánto se vendió ayer, todos miran el mismo número.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] gap-x-[clamp(1.5rem,4vw,3.5rem)] gap-y-5 mt-[clamp(2rem,4vw,3rem)] border-t border-linea pt-[clamp(1.4rem,3vw,2.2rem)]">
+      <div>
+        <p class="font-arch font-bold [font-stretch:98%] tracking-[-.028em] leading-[1.18] text-[clamp(1.2rem,2.4vw,1.6rem)] max-w-[30ch]">
+          Construyo la cajita y la dejo conectada <b class="text-rojo2">antes</b> de pasar a la siguiente.
+        </p>
+        <p class="text-[1.02rem] leading-[1.6] text-gris max-w-[58ch] mt-4">
+          Lo chinomático aparece en la mitad: alguien saca el dato de una cajita y lo mete en la otra, todos
+          los días. Cuando la conexión queda hecha, ese muchacho deja de copiar y pegar y se pone a atender
+          clientes, que es para lo que usted lo contrató.
+        </p>
+        <p class="text-[1.02rem] leading-[1.6] text-gris max-w-[58ch] mt-3">
+          Los numeritos rojos son el orden de un caso típico. El orden real lo decidimos usted y yo, mirando
+          dónde le duele más.
+        </p>
+      </div>
+      <p class="font-pen text-rojo2 text-[clamp(1.3rem,3vw,1.65rem)] leading-[1.25] lg:pt-2 -rotate-[1deg] max-w-nota">
+        si dos cajitas quedan pegadas con una persona en la mitad, quedaron chinomáticas
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ BANDA: EJECUCIÓN ═══════════ -->
+<section class="bg-panel text-panelfg py-[clamp(2.6rem,6vw,4.6rem)]">
+  <div class="mx-auto max-w-[1320px] px-[clamp(1.25rem,4vw,3.5rem)]">
+    <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] gap-[clamp(1.2rem,3vw,3rem)] items-end">
+      <h2 class="font-arch font-extrabold [font-stretch:100%] tracking-[-.032em] leading-[1.04] text-[clamp(1.8rem,4.4vw,3.4rem)] max-w-[19ch]">
+        Software suyo, hecho para su empresa.
+      </h2>
+      <div>
+        <p class="text-[1.05rem] leading-[1.55] text-[#b0aea6] max-w-[46ch]">
+          La herramienta la construyo a la medida de sus procesos. El código queda a nombre de su empresa
+          y no le queda un cobro mensual por usuario. Antes de bajarme le enseño a su gente a cambiarlo
+          sin llamarme.
+        </p>
+        <p class="font-mono text-[10.5px] tracking-[.18em] uppercase text-rojo3 mt-4">Qué le construyo</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ POR QUÉ CONMIGO SÍ PASA ═══════════ -->
+<section id="porque" class="py-[clamp(3.2rem,7vw,5.6rem)]">
+  <div class="mx-auto max-w-[1320px] px-[clamp(1.25rem,4vw,3.5rem)]">
+
+    <div class="flex flex-col sm:flex-row sm:items-baseline gap-x-6 gap-y-1 border-t-[2.5px] border-tinta pt-3 mb-[clamp(1.8rem,3.6vw,2.8rem)]">
+      <span class="font-mono text-[11px] tracking-[.2em] uppercase font-semibold whitespace-nowrap">Diagnóstico diferencial</span>
+      <span class="sm:ml-auto sm:text-right text-[13px] leading-[1.35] text-gris max-w-[40ch]">Tres diferencias de cómo está armado el trabajo.</span>
+    </div>
+
+    <h2 class="font-arch font-extrabold [font-stretch:104%] tracking-[-.028em] leading-[1.03] text-[clamp(1.9rem,4.4vw,3.4rem)] max-w-[24ch]">
+      Por qué conmigo sí pasa
+    </h2>
+
+    <div class="mt-[clamp(2.2rem,4.5vw,3.4rem)] space-y-[clamp(2rem,4vw,3rem)]">
+
+      <div class="grid grid-cols-1 lg:grid-cols-[3.6rem_minmax(0,1fr)_minmax(0,14rem)] gap-x-8 gap-y-3">
+        <span class="font-slab text-rojo text-[3.1rem] leading-[.78] -rotate-[5deg] block select-none" aria-hidden="true">1</span>
+        <div class="max-w-medida">
+          <h3 class="font-arch font-bold [font-stretch:100%] tracking-[-.028em] text-[clamp(1.28rem,2.6vw,1.6rem)] leading-[1.1]">Una sola cabeza.</h3>
+          <p class="mt-3 text-[1.04rem] leading-[1.65] text-gris">
+            La estrategia y la herramienta las hace la misma persona: yo. No hay un consultor que entrega la
+            presentación bonita y después un proveedor que la interpreta a su manera.
+            <b class="text-tinta font-semibold">Lo que decidimos el lunes lo estoy construyendo el martes.</b>
+          </p>
+        </div>
+        <p class="font-pen text-rojo2 text-[1.2rem] leading-[1.3] lg:pt-3 -rotate-[1deg]">por eso los cupos son cuatro y no cuarenta</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-[3.6rem_minmax(0,1fr)_minmax(0,14rem)] gap-x-8 gap-y-3">
+        <span class="font-slab text-rojo text-[3.1rem] leading-[.78] rotate-[4deg] block select-none" aria-hidden="true">2</span>
+        <div class="max-w-medida">
+          <h3 class="font-arch font-bold [font-stretch:100%] tracking-[-.028em] text-[clamp(1.28rem,2.6vw,1.6rem)] leading-[1.1]">Le construyo software a la medida, y rápido.</h3>
+          <p class="mt-3 text-[1.04rem] leading-[1.65] text-gris">
+            Le construyo la herramienta que su empresa necesita, hecha para su manera de trabajar, y la dejo
+            andando rápido. Trabajo apoyado en agentes de inteligencia artificial, no subcontratando.
+          </p>
+          <p class="mt-3 text-[1.04rem] leading-[1.65] text-gris">
+            Y no solo para programar: <b class="text-tinta font-semibold">le enseño a su gente a usar esos mismos agentes</b>
+            para el trabajo de oficina que hoy hacen a mano.
+          </p>
+        </div>
+        <p class="font-pen text-rojo2 text-[1.2rem] leading-[1.3] lg:pt-3 rotate-[1deg]">esto cambió de verdad hace poco. no es la misma conversación de hace tres años</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-[3.6rem_minmax(0,1fr)_minmax(0,14rem)] gap-x-8 gap-y-3">
+        <span class="font-slab text-rojo text-[3.1rem] leading-[.78] -rotate-[3deg] block select-none" aria-hidden="true">3</span>
+        <div class="max-w-medida">
+          <h3 class="font-arch font-bold [font-stretch:100%] tracking-[-.028em] text-[clamp(1.28rem,2.6vw,1.6rem)] leading-[1.1]">El software se le acomoda a la empresa, no la empresa al software.</h3>
+          <p class="mt-3 text-[1.04rem] leading-[1.65] text-gris">
+            Casi siempre pasa al revés: usted compra algo hecho para otra empresa y después le toca torcer a su
+            gente para que le sirva. Yo primero miro cómo se hace hoy de verdad, no como dice el manual, y
+            construyo encima de eso.
+          </p>
+          <p class="mt-3 text-[1.04rem] leading-[1.65] text-gris">
+            <b class="text-tinta font-semibold">Por eso la gente lo abre el lunes sin que usted tenga que estar encima.</b>
+          </p>
+        </div>
+        <p class="font-pen text-rojo2 text-[1.2rem] leading-[1.3] lg:pt-3 -rotate-[1deg]">la primera semana me siento con quien lo va a usar</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ EL PROGRAMA ═══════════ -->
+<section id="programa" class="py-[clamp(3.2rem,7vw,5.6rem)] bg-papel2 border-y border-linea">
+  <div class="mx-auto max-w-[1320px] px-[clamp(1.25rem,4vw,3.5rem)]">
+
+    <div class="flex flex-col sm:flex-row sm:items-baseline gap-x-6 gap-y-1 border-t-[2.5px] border-tinta pt-3 mb-[clamp(1.8rem,3.6vw,2.8rem)]">
+      <span class="font-mono text-[11px] tracking-[.2em] uppercase font-semibold whitespace-nowrap">Programa de obra · 16 semanas</span>
+      <span class="sm:ml-auto sm:text-right text-[13px] leading-[1.35] text-gris max-w-[42ch]">El trabajo lo hago yo. Usted escribe un mensaje y el resto corre por mi cuenta.</span>
+    </div>
+
+    <h2 class="font-arch font-extrabold [font-stretch:104%] tracking-[-.028em] leading-[1.03] text-[clamp(1.9rem,4.4vw,3.4rem)] max-w-[24ch]">
+      Qué pasa si trabajamos juntos
+    </h2>
+
+    <!-- carta de tiempos -->
+    <div class="mt-[clamp(1.8rem,3.6vw,2.8rem)] observa">
+      <div class="hidden md:block">
+        <div class="grid grid-cols-16 border-b border-linea pb-1.5 mb-3" aria-hidden="true">
+          <span class="font-mono text-[10.5px] text-gris relative">S1</span><span></span><span></span>
+          <span class="font-mono text-[10.5px] text-gris">S4</span><span></span><span></span><span></span>
+          <span class="font-mono text-[10.5px] text-gris">S8</span><span></span><span></span><span></span>
+          <span class="font-mono text-[10.5px] text-gris">S12</span><span></span><span></span><span></span>
+          <span class="font-mono text-[10.5px] text-gris text-right">S16</span>
+        </div>
+        <div class="grid gap-[6px]">
+          <div class="grid grid-cols-16"><div class="barra rounded bg-linea text-tinta font-mono text-[11px] tracking-[.05em] uppercase font-semibold px-3 py-2.5 truncate" style="grid-column:1 / span 2">Entender</div></div>
+          <div class="grid grid-cols-16"><div class="barra b2 rounded bg-rojo2 text-white font-mono text-[11px] tracking-[.05em] uppercase font-semibold px-3 py-2.5 truncate" style="grid-column:2 / span 2">Diagnóstico</div></div>
+          <div class="grid grid-cols-16"><div class="barra b3 rounded bg-panel text-panelfg font-mono text-[11px] tracking-[.05em] uppercase font-semibold px-3 py-2.5 truncate" style="grid-column:4 / span 13">Construir · una cajita a la vez</div></div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-[clamp(1.2rem,2.6vw,2rem)] mt-6 md:mt-8">
+        <div class="border-l-2 border-rojo pl-4 md:border-l-0 md:pl-0">
+          <span class="block font-mono text-[10.5px] tracking-[.18em] uppercase text-rojo2 mb-2">Semanas 1 a 2</span>
+          <h3 class="font-arch font-bold tracking-[-.02em] text-[1.1rem] leading-[1.15]">Entender la operación</h3>
+          <p class="mt-2 text-[.96rem] leading-[1.55] text-gris">Hablo con la gente que la ejecuta, no solo con usted, y miro cómo se hace de verdad.</p>
+        </div>
+        <div class="border-l-2 border-rojo pl-4 md:border-l-0 md:pl-0">
+          <span class="block font-mono text-[10.5px] tracking-[.18em] uppercase text-rojo2 mb-2">Semanas 2 a 3</span>
+          <h3 class="font-arch font-bold tracking-[-.02em] text-[1.1rem] leading-[1.15]">Diagnóstico</h3>
+          <p class="mt-2 text-[.96rem] leading-[1.55] text-gris">Un plan corto, el cuello de botella que vale la pena atacar primero y una primera cosa ya funcionando. Si no le aporta, ahí paramos.</p>
+        </div>
+        <div class="border-l-2 border-rojo pl-4 md:border-l-0 md:pl-0">
+          <span class="block font-mono text-[10.5px] tracking-[.18em] uppercase text-rojo2 mb-2">Semanas 4 a 16</span>
+          <h3 class="font-arch font-bold tracking-[-.02em] text-[1.1rem] leading-[1.15]">Construir</h3>
+          <p class="mt-2 text-[.96rem] leading-[1.55] text-gris">Construyo la herramienta, el CRM y las conexiones entre cajitas. Termina con su equipo usándolo.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- bitácora -->
+    <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] gap-[clamp(1.5rem,4vw,3.5rem)] items-center mt-[clamp(2.4rem,5vw,4rem)]">
+      <div>
+        <h3 class="font-arch font-extrabold [font-stretch:100%] tracking-[-.028em] text-[clamp(1.3rem,2.6vw,1.95rem)] leading-[1.1] max-w-[20ch]">
+          Una semana cualquiera del diagnóstico
+        </h3>
+        <p class="mt-4 text-[1.02rem] leading-[1.6] text-gris max-w-[46ch]">
+          Esto es lo que hago yo mientras usted sigue atendiendo su negocio. No le pido que llene formatos
+          ni le quito el día a su equipo.
+        </p>
+        <p class="font-mono text-[10.5px] tracking-[.16em] uppercase text-gris mt-5 leading-[1.8]">Bitácora de campo · Responsable: Salomón</p>
+      </div>
+
+      <div class="bg-panel text-panelfg rounded overflow-hidden">
+        <div class="flex items-baseline gap-3 flex-wrap px-4 sm:px-6 py-4 border-b border-[#2c2e34] font-mono text-[10.5px] tracking-[.18em] uppercase text-[#8e8d86]">
+          <span>Bitácora — semana 2</span><span class="ml-auto font-semibold text-rojo3">Responsable: Salomón</span>
+        </div>
+        <div>
+          <div class="grid grid-cols-[3.1rem_1.35rem_1fr] items-start gap-3.5 px-4 sm:px-6 py-3.5">
+            <span class="font-mono text-[11px] tracking-[.14em] text-[#8e8d86] pt-[3px]">LUN</span>
+            <span class="w-[1.35rem] h-[1.35rem] rounded bg-rojo2 text-white grid place-items-center mt-[1px]" aria-hidden="true"><svg class="w-3.5 h-3.5"><use href="#i-check"/></svg></span>
+            <span class="text-[1rem] leading-[1.35] text-[#8b8a83] line-through decoration-rojo3 decoration-2 [text-decoration-skip-ink:none]">Entrevistar a seis personas del equipo, no solo al dueño</span>
+          </div>
+          <div class="grid grid-cols-[3.1rem_1.35rem_1fr] items-start gap-3.5 px-4 sm:px-6 py-3.5 border-t border-[#232529]">
+            <span class="font-mono text-[11px] tracking-[.14em] text-[#8e8d86] pt-[3px]">MAR</span>
+            <span class="w-[1.35rem] h-[1.35rem] rounded bg-rojo2 text-white grid place-items-center mt-[1px]" aria-hidden="true"><svg class="w-3.5 h-3.5"><use href="#i-check"/></svg></span>
+            <span class="text-[1rem] leading-[1.35] text-[#8b8a83] line-through decoration-rojo3 decoration-2 [text-decoration-skip-ink:none]">Sentarme un día entero en la operación a mirar cómo se hace de verdad</span>
+          </div>
+          <div class="grid grid-cols-[3.1rem_1.35rem_1fr] items-start gap-3.5 px-4 sm:px-6 py-3.5 border-t border-[#232529]">
+            <span class="font-mono text-[11px] tracking-[.14em] text-[#8e8d86] pt-[3px]">MIÉ</span>
+            <span class="w-[1.35rem] h-[1.35rem] rounded bg-rojo2 text-white grid place-items-center mt-[1px]" aria-hidden="true"><svg class="w-3.5 h-3.5"><use href="#i-check"/></svg></span>
+            <span class="text-[1rem] leading-[1.35] text-[#8b8a83] line-through decoration-rojo3 decoration-2 [text-decoration-skip-ink:none]">Dibujar las cajitas que ya existen y marcar dónde hay alguien pegándolas a mano</span>
+          </div>
+          <div class="grid grid-cols-[3.1rem_1.35rem_1fr] items-start gap-3.5 px-4 sm:px-6 py-3.5 border-t border-[#232529]">
+            <span class="font-mono text-[11px] tracking-[.14em] text-[#8e8d86] pt-[3px]">JUE</span>
+            <span class="w-[1.35rem] h-[1.35rem] rounded bg-rojo2 text-white grid place-items-center mt-[1px]" aria-hidden="true"><svg class="w-3.5 h-3.5"><use href="#i-check"/></svg></span>
+            <span class="text-[1rem] leading-[1.35] text-[#8b8a83] line-through decoration-rojo3 decoration-2 [text-decoration-skip-ink:none]">Escribir el cuello de botella en una frase que quepa en un mensaje</span>
+          </div>
+          <div class="grid grid-cols-[3.1rem_1.35rem_1fr] items-start gap-3.5 px-4 sm:px-6 py-3.5 border-t border-[#232529]">
+            <span class="font-mono text-[11px] tracking-[.14em] text-[#8e8d86] pt-[3px]">VIE</span>
+            <span class="w-[1.35rem] h-[1.35rem] rounded bg-rojo2 text-white grid place-items-center mt-[1px]" aria-hidden="true"><svg class="w-3.5 h-3.5"><use href="#i-check"/></svg></span>
+            <span class="text-[1rem] leading-[1.35] text-[#8b8a83] line-through decoration-rojo3 decoration-2 [text-decoration-skip-ink:none]">Dejar prendida la primera conexión entre dos cajitas, ese mismo viernes</span>
+          </div>
+        </div>
+        <div class="flex flex-wrap gap-x-4 gap-y-1 items-baseline px-4 sm:px-6 py-4 border-t border-[#2c2e34]">
+          <span class="font-mono text-[12px] tracking-[.14em] uppercase font-semibold text-rojo3">5 de 5 hechas</span>
+          <span class="text-[.95rem] leading-[1.4] text-[#8b8a83]">Ninguna le tocó a usted.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ QUÉ LE QUEDA ═══════════ -->
+<section id="entrega" class="py-[clamp(3.2rem,7vw,5.6rem)]">
+  <div class="mx-auto max-w-[1320px] px-[clamp(1.25rem,4vw,3.5rem)]">
+
+    <div class="flex flex-col sm:flex-row sm:items-baseline gap-x-6 gap-y-1 border-t-[2.5px] border-tinta pt-3 mb-[clamp(1.8rem,3.6vw,2.8rem)]">
+      <span class="font-mono text-[11px] tracking-[.2em] uppercase font-semibold whitespace-nowrap">Lista de empaque</span>
+      <span class="sm:ml-auto sm:text-right text-[13px] leading-[1.35] text-gris max-w-[40ch]">Siete renglones que se entregan y se firman, uno por uno.</span>
+    </div>
+
+    <h2 class="font-arch font-extrabold [font-stretch:104%] tracking-[-.028em] leading-[1.03] text-[clamp(1.9rem,4.4vw,3.4rem)] max-w-[20ch]">
+      Qué le queda cuando yo me bajo
+    </h2>
+    <p class="text-[1.05rem] leading-[1.55] text-gris max-w-[58ch] mt-4">
+      Algo prendido, con sus datos adentro, que su gente ya está usando el día que yo me bajo.
+    </p>
+
+    <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)] gap-[clamp(1.5rem,3.5vw,3rem)] mt-[clamp(1.8rem,3.6vw,2.8rem)] items-start">
+
+      <!-- va en la caja -->
+      <div class="bg-campo border-[1.5px] border-linea2 rounded overflow-hidden">
+        <div class="px-4 sm:px-5 py-3.5 border-b border-linea font-mono text-[10.5px] tracking-[.18em] uppercase flex justify-between gap-3">
+          <span class="font-semibold">Va en la caja</span><span class="text-gris">07 renglones</span>
+        </div>
+
+        <div class="grid grid-cols-[2.4rem_1fr] gap-x-3 px-4 sm:px-5 py-4 border-b border-linea">
+          <span class="font-mono text-[10.5px] text-rojo2 pt-[3px]">01</span>
+          <div><p class="font-arch font-bold tracking-[-.02em] text-[1.06rem] leading-[1.15]">La herramienta funcionando</p>
+          <p class="text-[.94rem] leading-[1.5] text-gris mt-1.5">Con sus datos reales cargados, no de ejemplo. El día de la entrega ya se está usando.</p></div>
+        </div>
+
+        <div class="grid grid-cols-[2.4rem_1fr] gap-x-3 px-4 sm:px-5 py-4 border-b border-linea bg-[rgba(216,51,42,.045)]">
+          <span class="font-mono text-[10.5px] text-rojo2 pt-[3px]">02</span>
+          <div><p class="font-arch font-bold tracking-[-.02em] text-[1.06rem] leading-[1.15]">El código, a nombre de la empresa</p>
+          <p class="text-[.94rem] leading-[1.5] text-gris mt-1.5">El repositorio queda a nombre de su empresa, no mío. Si mañana quiere trabajar con otra persona, se lo lleva completo.</p></div>
+        </div>
+
+        <div class="grid grid-cols-[2.4rem_1fr] gap-x-3 px-4 sm:px-5 py-4 border-b border-linea bg-[rgba(216,51,42,.045)]">
+          <span class="font-mono text-[10.5px] text-rojo2 pt-[3px]">03</span>
+          <div><p class="font-arch font-bold tracking-[-.02em] text-[1.06rem] leading-[1.15]">Le enseño a cambiarlo sin mí, con inteligencia artificial</p>
+          <p class="text-[.94rem] leading-[1.5] text-gris mt-1.5">Antes de bajarme me siento con usted y con su gente a enseñarles cómo pedirle un cambio a la inteligencia artificial y cómo dejarlo andando. Para mover un botón no tiene que llamarme.</p></div>
+        </div>
+
+        <div class="grid grid-cols-[2.4rem_1fr] gap-x-3 px-4 sm:px-5 py-4 border-b border-linea">
+          <span class="font-mono text-[10.5px] text-rojo2 pt-[3px]">04</span>
+          <div><p class="font-arch font-bold tracking-[-.02em] text-[1.06rem] leading-[1.15]">Su gente entrenada</p>
+          <p class="text-[.94rem] leading-[1.5] text-gris mt-1.5">Y la grabación del entrenamiento, para el que entre a trabajar dentro de seis meses.</p></div>
+        </div>
+
+        <div class="grid grid-cols-[2.4rem_1fr] gap-x-3 px-4 sm:px-5 py-4 border-b border-linea">
+          <span class="font-mono text-[10.5px] text-rojo2 pt-[3px]">05</span>
+          <div><p class="font-arch font-bold tracking-[-.02em] text-[1.06rem] leading-[1.15]">Las cuentas, las claves y los accesos</p>
+          <p class="text-[.94rem] leading-[1.5] text-gris mt-1.5">Todo a nombre de la empresa. Ni un dominio ni un usuario queda a nombre mío.</p></div>
+        </div>
+
+        <div class="grid grid-cols-[2.4rem_1fr] gap-x-3 px-4 sm:px-5 py-4 border-b border-linea">
+          <span class="font-mono text-[10.5px] text-rojo2 pt-[3px]">06</span>
+          <div><p class="font-arch font-bold tracking-[-.02em] text-[1.06rem] leading-[1.15]">El proceso en una hoja, y el tiempo medido</p>
+          <p class="text-[.94rem] leading-[1.5] text-gris mt-1.5">Qué quedó automático y qué quedó manual a propósito. Cronometramos el proceso al entrar y al salir, y le entrego el número.</p></div>
+        </div>
+
+        <div class="grid grid-cols-[2.4rem_1fr] gap-x-3 px-4 sm:px-5 py-4">
+          <span class="font-mono text-[10.5px] text-rojo2 pt-[3px]">07</span>
+          <div><p class="font-arch font-bold tracking-[-.02em] text-[1.06rem] leading-[1.15]">Dos revisiones y mi WhatsApp</p>
+          <p class="text-[.94rem] leading-[1.5] text-gris mt-1.5">Al mes y a los dos meses, para ajustar lo que se haya torcido con el uso real. Me escribe a mí, no a una mesa de ayuda.</p></div>
+        </div>
+      </div>
+
+      <!-- la letra menuda -->
+      <div>
+        <div class="border-[1.5px] border-tinta rounded">
+          <div class="px-4 sm:px-5 py-3.5 border-b border-tinta bg-tinta text-panelfg font-mono text-[10.5px] tracking-[.18em] uppercase flex justify-between gap-3">
+            <span>La letra menuda, en grande</span><span class="text-rojo3">Léala ahora</span>
+          </div>
+          <p class="px-4 sm:px-5 py-5 text-[1.02rem] leading-[1.68]">
+            Y lo que <b class="font-bold">no</b>: no le cambio la empresa entera, es un proceso a la vez. No le armo
+            el equipo de tecnología, no le vendo licencias de nada y no le queda un cobro mensual por usuario.
+            Si lo que necesita ya existe y funciona, se lo digo y no se lo construyo.
+          </p>
+        </div>
+
+        <p class="font-pen text-rojo2 text-[clamp(1.25rem,3vw,1.6rem)] leading-[1.25] mt-6 -rotate-[1.2deg]">
+          un proceso a la vez, y cuando ese quede hablamos del segundo
+        </p>
+
+        <div class="mt-7 border-t border-linea pt-5">
+          <p class="font-mono text-[10.5px] tracking-[.18em] uppercase text-gris mb-3">Tampoco hago</p>
+          <ul class="space-y-2.5">
+            <li class="flex gap-3 items-start"><span class="text-rojo2 flex-none mt-[3px]" aria-hidden="true"><svg class="w-[15px] h-[15px]"><use href="#i-x"/></svg></span><span class="text-[.96rem] leading-[1.5]">Escalar una empresa más allá de cierto tamaño. No lo sé hacer.</span></li>
+            <li class="flex gap-3 items-start"><span class="text-rojo2 flex-none mt-[3px]" aria-hidden="true"><svg class="w-[15px] h-[15px]"><use href="#i-x"/></svg></span><span class="text-[.96rem] leading-[1.5]">Inventar tecnología que todavía no existe. Ni investigación, ni patentes.</span></li>
+            <li class="flex gap-3 items-start"><span class="text-rojo2 flex-none mt-[3px]" aria-hidden="true"><svg class="w-[15px] h-[15px]"><use href="#i-x"/></svg></span><span class="text-[.96rem] leading-[1.5]">Documentos de ochenta páginas para mostrarle a la junta. Hay gente que lo hace mejor que yo.</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ LO QUE HE MONTADO ═══════════ -->
+<section id="montado" class="py-[clamp(3.2rem,7vw,5.6rem)] bg-papel2 border-y border-linea">
+  <div class="mx-auto max-w-[1320px] px-[clamp(1.25rem,4vw,3.5rem)]">
+
+    <div class="flex flex-col sm:flex-row sm:items-baseline gap-x-6 gap-y-1 border-t-[2.5px] border-tinta pt-3 mb-[clamp(1.8rem,3.6vw,2.8rem)]">
+      <span class="font-mono text-[11px] tracking-[.2em] uppercase font-semibold whitespace-nowrap">Historial</span>
+      <span class="sm:ml-auto sm:text-right text-[13px] leading-[1.35] text-gris max-w-[42ch]">Los fracasos también están en la tabla.</span>
+    </div>
+
+    <h2 class="font-arch font-extrabold [font-stretch:104%] tracking-[-.028em] leading-[1.03] text-[clamp(1.9rem,4.4vw,3.4rem)] max-w-[20ch]">
+      Lo que he montado con mis propias manos
+    </h2>
+
+    <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.12fr)] gap-[clamp(1.5rem,4vw,3.5rem)] items-start mt-[clamp(1.8rem,3.6vw,2.8rem)]">
+
+      <figure class="m-0">
+        <div class="bg-campo border border-linea rounded p-[9px]">
+          <img src="assets/salo_oscar.webp" width="1052" height="662" loading="lazy" decoding="async"
+               alt="Salomón Muriel mostrando la plataforma de Finco en una feria, junto a un compañero de equipo"
+               class="w-full h-auto rounded-[1px] [filter:grayscale(.18)_contrast(1.04)]">
+        </div>
+        <figcaption class="mt-3 text-[13.5px] leading-[1.45] text-gris">La herramienta de valoración que estoy mostrando ahí la construimos nosotros.</figcaption>
+      </figure>
+
+      <div class="border-t border-linea">
+        <article class="grid grid-cols-[54px_minmax(0,1fr)] gap-4 items-start py-4 border-b border-linea">
+          <div class="w-[54px] h-[54px] bg-white border border-linea rounded grid place-items-center p-2"><img src="assets/ignia.png" alt="Logotipo de Ignia" loading="lazy" class="w-full h-full object-contain"></div>
+          <div>
+            <p class="font-arch font-extrabold tracking-[-.02em] text-[1.14rem] leading-none">Ignia <span class="font-mono text-[10.5px] font-normal tracking-[.1em] text-gris ml-1">Hoy</span></p>
+            <p class="mt-1.5 text-[.95rem] leading-[1.5] text-gris max-w-[46ch]">Un modelo nuevo de educación superior. Le construí la página web, el sistema con el que se operan los cursos, el CRM y el portal de comunidad.</p>
+          </div>
+        </article>
+
+        <article class="grid grid-cols-[54px_minmax(0,1fr)] gap-4 items-start py-4 border-b border-linea">
+          <div class="w-[54px] h-[54px] bg-white border border-linea rounded grid place-items-center p-2"><img src="assets/finco.png" alt="Logotipo de Finco" loading="lazy" class="w-full h-full object-contain"></div>
+          <div>
+            <p class="font-arch font-extrabold tracking-[-.02em] text-[1.14rem] leading-none">Finco <span class="font-mono text-[10.5px] font-normal tracking-[.1em] text-gris ml-1">2019 — 2022</span></p>
+            <p class="mt-1.5 text-[.95rem] leading-[1.5] text-gris max-w-[46ch]">Valoración inmobiliaria con datos e inteligencia artificial para toda Latinoamérica. Cien mil reportes al año. <b class="text-tinta font-semibold">Vendida a RED Atlas.</b></p>
+          </div>
+        </article>
+
+        <article class="grid grid-cols-[54px_minmax(0,1fr)] gap-4 items-start py-4 border-b border-linea">
+          <div class="w-[54px] h-[54px] bg-white border border-linea rounded grid place-items-center p-2"><img src="assets/prestagente.png" alt="Logotipo de PrestaGente" loading="lazy" class="w-full h-full object-contain"></div>
+          <div>
+            <p class="font-arch font-extrabold tracking-[-.02em] text-[1.14rem] leading-none">PrestaGente <span class="font-mono text-[10.5px] font-normal tracking-[.1em] text-gris ml-1">2017 — 2019</span></p>
+            <p class="mt-1.5 text-[.95rem] leading-[1.5] text-gris max-w-[46ch]">Libranza entre personas. <b class="text-tinta font-semibold">Vendida a Taurus Capital</b> y todavía opera, sin mí.</p>
+          </div>
+        </article>
+
+        <article class="grid grid-cols-[54px_minmax(0,1fr)] gap-4 items-start py-4 border-b border-linea">
+          <div class="w-[54px] h-[54px] bg-white border border-linea rounded grid place-items-center p-2"><img src="assets/beriblock.png" alt="Logotipo de Beriblock" loading="lazy" class="w-full h-full object-contain"></div>
+          <div>
+            <p class="font-arch font-extrabold tracking-[-.02em] text-[1.14rem] leading-none">Beriblock <span class="font-mono text-[10.5px] font-normal tracking-[.1em] text-gris ml-1">2018 — 2019</span></p>
+            <p class="mt-1.5 text-[.95rem] leading-[1.5] text-gris max-w-[46ch]">Autenticación de pagarés con blockchain. <b class="text-rojo2 font-semibold">Quebró.</b> Tecnología bonita, mercado que no existía.</p>
+          </div>
+        </article>
+
+        <article class="grid grid-cols-[54px_minmax(0,1fr)] gap-4 items-start py-4 border-b border-linea">
+          <div class="w-[54px] h-[54px] bg-white border border-linea rounded grid place-items-center p-2"><img src="assets/elpalomo.png" alt="Logotipo de El Palomo" loading="lazy" class="w-full h-full object-contain"></div>
+          <div>
+            <p class="font-arch font-extrabold tracking-[-.02em] text-[1.14rem] leading-none">El Palomo <span class="font-mono text-[10.5px] font-normal tracking-[.1em] text-gris ml-1">2016 — 2017</span></p>
+            <p class="mt-1.5 text-[.95rem] leading-[1.5] text-gris max-w-[46ch]">Flores por suscripción. <b class="text-rojo2 font-semibold">Fracasó de manera espectacular.</b> La historia se la cuento en la llamada.</p>
+          </div>
+        </article>
+
+        <article class="grid grid-cols-[54px_minmax(0,1fr)] gap-4 items-start py-4 border-b border-linea">
+          <div class="w-[54px] h-[54px] bg-white border border-linea rounded grid place-items-center font-mono text-[13px] font-semibold">R5</div>
+          <div>
+            <p class="font-arch font-extrabold tracking-[-.02em] text-[1.14rem] leading-none">R5 <span class="font-mono text-[10.5px] font-normal tracking-[.1em] text-gris ml-1">Como empleado</span></p>
+            <p class="mt-1.5 text-[.95rem] leading-[1.5] text-gris max-w-[46ch]">Dirigí unas cuarenta personas. Construí el pipeline de datos completo y el sistema de modelación de riesgo.</p>
+          </div>
+        </article>
+
+        <p class="mt-5 text-[1.02rem] leading-[1.6] max-w-[52ch]">
+          La primera de la lista es la que me ocupa de lunes a viernes. De esa hablo
+          <a href="#cupos" class="font-semibold text-rojo2 border-b-[1.5px] border-current hover:text-tinta transition-colors">más abajo</a>,
+          cuando le explique por qué hay tan pocos cupos.
+        </p>
+        <p class="mt-3 text-[.96rem] leading-[1.55] text-gris max-w-[52ch]">
+          Mi papá y mi abuelo también fueron empresarios. Es lo único que hemos sabido hacer.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLACEHOLDER: testimonios inventados, reemplazar antes de publicar -->
+<section id="voces" class="py-[clamp(3.2rem,7vw,5.6rem)]">
+  <div class="mx-auto max-w-[1320px] px-[clamp(1.25rem,4vw,3.5rem)]">
+
+    <div class="flex flex-col sm:flex-row sm:items-baseline gap-x-6 gap-y-1 border-t-[2.5px] border-tinta pt-3 mb-[clamp(1.8rem,3.6vw,2.8rem)]">
+      <span class="font-mono text-[11px] tracking-[.2em] uppercase font-semibold whitespace-nowrap">Lo que dicen</span>
+      <span class="sm:ml-auto sm:text-right text-[13px] leading-[1.35] text-gris max-w-[42ch]">Tres dueños contando qué cambió.</span>
+    </div>
+
+    <h2 class="font-arch font-extrabold [font-stretch:104%] tracking-[-.028em] leading-[1.03] text-[clamp(1.9rem,4.4vw,3.4rem)] max-w-[18ch]">
+      Lo que dice la gente con la que ya trabajé
+    </h2>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-[clamp(1rem,2.4vw,1.6rem)] mt-[clamp(1.8rem,3.6vw,2.8rem)]">
+
+      <figure class="m-0 bg-campo border border-linea rounded p-5 sm:p-6 flex flex-col">
+        <span class="font-slab text-rojo text-[2.4rem] leading-[.6] block select-none" aria-hidden="true">“</span>
+        <blockquote class="mt-4 text-[1rem] leading-[1.6] flex-1">
+          Teníamos los pedidos en WhatsApp, el inventario en un Excel que solo movía Yeimy y un CRM que nadie
+          abría. Salomón se sentó tres días con Yeimy a mirar cómo lo hacía de verdad. Hoy el pedido entra por
+          WhatsApp y aparece solo en el inventario. Yeimy dejó de transcribir y ahora está atendiendo clientes.
+        </blockquote>
+        <figcaption class="mt-5 pt-4 border-t border-linea flex items-center gap-3">
+          <span class="w-10 h-10 rounded bg-papel2 border border-linea grid place-items-center font-mono text-[12px] font-semibold text-gris flex-none" aria-hidden="true">MU</span>
+          <span class="font-mono text-[10.5px] tracking-[.13em] uppercase leading-[1.6]">
+            <b class="block text-rojo2 font-semibold">Marcela Uribe</b>
+            <span class="text-gris">Gerente · Distribuidora Aliar · Bogotá</span>
+          </span>
+        </figcaption>
+      </figure>
+
+      <figure class="m-0 bg-campo border border-linea rounded p-5 sm:p-6 flex flex-col">
+        <span class="font-slab text-rojo text-[2.4rem] leading-[.6] block select-none" aria-hidden="true">“</span>
+        <blockquote class="mt-4 text-[1rem] leading-[1.6] flex-1">
+          Me daba miedo que llegara alguien de corbata a cambiarle la manera de trabajar a toda la cocina.
+          Pasó lo contrario: la herramienta se acomodó a como ya trabajábamos. La primera semana ni siquiera
+          habló conmigo, habló con los muchachos. En la entrega me dejó el código a nombre de la empresa y me
+          enseñó a pedirle cambios yo mismo con inteligencia artificial. Ya le hice dos sin llamarlo.
+        </blockquote>
+        <figcaption class="mt-5 pt-4 border-t border-linea flex items-center gap-3">
+          <span class="w-10 h-10 rounded bg-papel2 border border-linea grid place-items-center font-mono text-[12px] font-semibold text-gris flex-none" aria-hidden="true">AO</span>
+          <span class="font-mono text-[10.5px] tracking-[.13em] uppercase leading-[1.6]">
+            <b class="block text-rojo2 font-semibold">Andrés Felipe Ocampo</b>
+            <span class="text-gris">Dueño · Cocina Bárbara, 3 restaurantes · Medellín</span>
+          </span>
+        </figcaption>
+      </figure>
+
+      <figure class="m-0 bg-campo border border-linea rounded p-5 sm:p-6 flex flex-col">
+        <span class="font-slab text-rojo text-[2.4rem] leading-[.6] block select-none" aria-hidden="true">“</span>
+        <blockquote class="mt-4 text-[1rem] leading-[1.6] flex-1">
+          Teníamos dos Excel de producción que decían cosas distintas. Yo pensé que el problema era la gente;
+          era que las dos cosas no se hablaban. Salomón arregló primero una sola parte, el recibo de tela y la
+          entrada a producción, y la dejó conectada antes de tocar lo siguiente. Hoy hay un solo número y todos
+          miramos el mismo. Vamos por el segundo proceso.
+        </blockquote>
+        <figcaption class="mt-5 pt-4 border-t border-linea flex items-center gap-3">
+          <span class="w-10 h-10 rounded bg-papel2 border border-linea grid place-items-center font-mono text-[12px] font-semibold text-gris flex-none" aria-hidden="true">CR</span>
+          <span class="font-mono text-[10.5px] tracking-[.13em] uppercase leading-[1.6]">
+            <b class="block text-rojo2 font-semibold">Claudia Restrepo</b>
+            <span class="text-gris">Socia · Textiles Monserrate · Bogotá</span>
+          </span>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ CUPOS ═══════════ -->
+<section id="cupos" class="py-[clamp(3.2rem,7vw,5.6rem)] bg-papel2 border-y border-linea">
+  <div class="mx-auto max-w-[1320px] px-[clamp(1.25rem,4vw,3.5rem)]">
+
+    <div class="flex flex-col sm:flex-row sm:items-baseline gap-x-6 gap-y-1 border-t-[2.5px] border-tinta pt-3 mb-[clamp(1.8rem,3.6vw,2.8rem)]">
+      <span class="font-mono text-[11px] tracking-[.2em] uppercase font-semibold whitespace-nowrap">Capacidad instalada</span>
+      <span class="sm:ml-auto sm:text-right text-[13px] leading-[1.35] text-gris max-w-[42ch]">Números reales de hoy. Cuando se llenan, quito el botón.</span>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.25fr)] gap-[clamp(1.5rem,4vw,3.5rem)] items-start">
+      <div>
+        <h2 class="font-arch font-extrabold [font-stretch:104%] tracking-[-.028em] leading-[1.03] text-[clamp(1.9rem,4.4vw,3.2rem)] max-w-[16ch]">
+          Por qué hay tan pocos cupos
+        </h2>
+        <p class="text-[1.06rem] leading-[1.6] mt-5 max-w-[48ch]">
+          Porque esto no es mi trabajo principal y no quiero que lo sea. De lunes a viernes estoy construyendo
+          Ignia, que es mi empresa. Tengo dos mellizos de cuatro años y salgo a correr.
+        </p>
+        <p class="text-[1.02rem] leading-[1.6] text-gris mt-4 max-w-[48ch]">
+          <b class="text-tinta font-semibold">Prefiero atender pocos y atenderlos bien.</b>
+        </p>
+        <p class="font-mono text-[10.5px] tracking-[.16em] uppercase text-gris mt-6 leading-[1.8]">Actualizado el 6 de septiembre de 2026</p>
+
+        <p class="font-mono text-[10.5px] tracking-[.18em] uppercase text-gris mt-7 mb-3">Lo que ocupa el resto del tiempo</p>
+        <div class="grid grid-cols-3 gap-[clamp(.6rem,1.4vw,.9rem)]">
+          <figure class="m-0">
+            <div class="bg-campo border border-linea rounded p-[6px]"><img src="assets/chicago.jpg" width="300" height="400" loading="lazy" alt="Salomón con uno de sus hijos en hombros, frente a una torre en Chicago" class="w-full h-auto aspect-square object-cover rounded-[1px] [filter:grayscale(.16)]"></div>
+            <figcaption class="mt-2 font-mono text-[9.5px] tracking-[.1em] uppercase text-gris leading-[1.5]">Franco y Luca, en hombros</figcaption>
+          </figure>
+          <figure class="m-0">
+            <div class="bg-campo border border-linea rounded p-[6px]"><img src="assets/marathon.jpg" width="600" height="600" loading="lazy" alt="Salomón mostrando la medalla al terminar la media maratón de Bogotá" class="w-full h-auto aspect-square object-cover rounded-[1px] [filter:grayscale(.16)]"></div>
+            <figcaption class="mt-2 font-mono text-[9.5px] tracking-[.1em] uppercase text-gris leading-[1.5]">Media maratón · 2:10</figcaption>
+          </figure>
+          <figure class="m-0">
+            <div class="bg-campo border border-linea rounded p-[6px]"><img src="assets/bonfire.jpeg" width="600" height="600" loading="lazy" alt="Fogata encendida al anochecer, fuera de la ciudad" class="w-full h-auto aspect-square object-cover rounded-[1px] [filter:grayscale(.16)]"></div>
+            <figcaption class="mt-2 font-mono text-[9.5px] tracking-[.1em] uppercase text-gris leading-[1.5]">Donde se piensan las cosas</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div>
+        <div class="bg-campo border-[1.5px] border-linea2 rounded p-5 sm:p-6">
+          <div class="flex items-end justify-between gap-4 flex-wrap">
+            <div>
+              <p class="font-arch font-black [font-stretch:84%] tracking-[-.05em] leading-none text-[clamp(2.4rem,5.4vw,3.6rem)] tabular-nums"><span class="text-rojo2">2</span> de 4</p>
+              <p class="text-[13.5px] text-gris mt-1.5">consultorías ocupadas al tiempo</p>
+            </div>
+            <div class="flex gap-[6px]" role="img" aria-label="Dos de cuatro cupos de consultoría ocupados">
+              <i class="w-5 h-5 rounded bg-tinta border-[1.5px] border-tinta block"></i>
+              <i class="w-5 h-5 rounded bg-tinta border-[1.5px] border-tinta block"></i>
+              <i class="w-5 h-5 rounded border-[1.5px] border-linea2 block"></i>
+              <i class="w-5 h-5 rounded border-[1.5px] border-linea2 block"></i>
+            </div>
+          </div>
+          <p class="text-[.96rem] leading-[1.55] text-gris mt-5 pt-5 border-t border-linea">
+            Máximo cuatro al tiempo, porque construyo yo. Los dos ocupados son de gente real; no pongo sus
+            nombres hasta que ellos me digan que sí.
+          </p>
+          <a href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20vi%20que%20hay%20un%20cupo%20de%20consultor%C3%ADa%20libre%20y%20quiero%20contarle%20mi%20caso."
+             target="_blank" rel="noopener"
+             class="inline-flex items-center gap-2.5 bg-rojo2 text-white font-bold text-[.95rem] px-5 py-3.5 rounded mt-5 hover:bg-tinta active:translate-y-px transition-[background-color,transform]">
+            Tomar uno de los dos que quedan<svg class="w-[18px] h-[18px] opacity-80" aria-hidden="true"><use href="#i-arw"/></svg>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ PREGUNTAS ═══════════ -->
+<section id="preguntas" class="py-[clamp(3.2rem,7vw,5.6rem)]">
+  <div class="mx-auto max-w-[1320px] px-[clamp(1.25rem,4vw,3.5rem)]">
+
+    <div class="flex flex-col sm:flex-row sm:items-baseline gap-x-6 gap-y-1 border-t-[2.5px] border-tinta pt-3 mb-[clamp(1.8rem,3.6vw,2.8rem)]">
+      <span class="font-mono text-[11px] tracking-[.2em] uppercase font-semibold whitespace-nowrap">Consultas frecuentes</span>
+      <span class="sm:ml-auto sm:text-right text-[13px] leading-[1.35] text-gris max-w-[40ch]">Las mismas ocho, en el mismo orden, casi siempre.</span>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,.55fr)_minmax(0,1fr)] gap-[clamp(1.5rem,4vw,3.5rem)] items-start">
+      <div>
+        <h2 class="font-arch font-extrabold [font-stretch:104%] tracking-[-.028em] leading-[1.03] text-[clamp(1.9rem,4.4vw,3.2rem)] max-w-[14ch]">
+          Lo que siempre me preguntan
+        </h2>
+        <p class="text-[1.02rem] leading-[1.6] text-gris mt-5 max-w-[38ch]">
+          Si su pregunta no está acá, escríbame y se la contesto yo.
+        </p>
+      </div>
+
+      <div>
+        <details class="border-t border-linea">
+          <summary class="flex items-start gap-4 py-[1.05rem] pr-2">
+            <span class="font-arch font-bold tracking-[-.015em] text-[clamp(1rem,1.7vw,1.14rem)] leading-[1.3] flex-1">Es que yo de tecnología no sé nada.</span>
+            <span class="cruz text-rojo2 flex-none mt-[3px]" aria-hidden="true"><svg class="w-[18px] h-[18px]"><use href="#i-mas"/></svg></span>
+          </summary>
+          <p class="resp pr-6 pb-5 text-[1rem] leading-[1.65] text-gris max-w-medida">
+            Perfecto. La mitad de mi trabajo es traducir; si algo no se entiende es culpa mía. Mis clientes
+            son marcas de ropa, restaurantes, distribuidoras, importadores y empresas de servicios.
+          </p>
+        </details>
+
+        <details class="border-t border-linea">
+          <summary class="flex items-start gap-4 py-[1.05rem] pr-2">
+            <span class="font-arch font-bold tracking-[-.015em] text-[clamp(1rem,1.7vw,1.14rem)] leading-[1.3] flex-1">¿Lo que me va a entregar es una presentación?</span>
+            <span class="cruz text-rojo2 flex-none mt-[3px]" aria-hidden="true"><svg class="w-[18px] h-[18px]"><use href="#i-mas"/></svg></span>
+          </summary>
+          <p class="resp pr-6 pb-5 text-[1rem] leading-[1.65] text-gris max-w-medida">
+            No. Le entrego algo funcionando y en producción, su equipo capacitado para usarlo y la decisión
+            estratégica escrita en dos páginas, en español y sin jerga.
+          </p>
+        </details>
+
+        <details class="border-t border-linea">
+          <summary class="flex items-start gap-4 py-[1.05rem] pr-2">
+            <span class="font-arch font-bold tracking-[-.015em] text-[clamp(1rem,1.7vw,1.14rem)] leading-[1.3] flex-1">Ya compré un software carísimo. ¿Toca botarlo?</span>
+            <span class="cruz text-rojo2 flex-none mt-[3px]" aria-hidden="true"><svg class="w-[18px] h-[18px]"><use href="#i-mas"/></svg></span>
+          </summary>
+          <p class="resp pr-6 pb-5 text-[1rem] leading-[1.65] text-gris max-w-medida">
+            Casi nunca. Primero miro qué de lo que ya tiene sirve y por qué la gente no lo abre. Muchas veces
+            el programa está bien, pero desconectado del resto, y por eso llenarlo es doble trabajo.
+          </p>
+        </details>
+
+        <details class="border-t border-linea">
+          <summary class="flex items-start gap-4 py-[1.05rem] pr-2">
+            <span class="font-arch font-bold tracking-[-.015em] text-[clamp(1rem,1.7vw,1.14rem)] leading-[1.3] flex-1">Tenemos un Notion y un Excel que dicen cosas distintas. ¿Con cuál nos quedamos?</span>
+            <span class="cruz text-rojo2 flex-none mt-[3px]" aria-hidden="true"><svg class="w-[18px] h-[18px]"><use href="#i-mas"/></svg></span>
+          </summary>
+          <p class="resp pr-6 pb-5 text-[1rem] leading-[1.65] text-gris max-w-medida">
+            Con uno solo, siempre. Miramos cuál usa la gente de verdad, pasamos lo que sirve del otro y
+            apagamos el que sobra. Mientras existan los dos, alguien va a tener que llenar los dos y se va
+            a equivocar.
+          </p>
+        </details>
+
+        <details class="border-t border-linea">
+          <summary class="flex items-start gap-4 py-[1.05rem] pr-2">
+            <span class="font-arch font-bold tracking-[-.015em] text-[clamp(1rem,1.7vw,1.14rem)] leading-[1.3] flex-1">¿Mi empresa es muy chiquita para esto?</span>
+            <span class="cruz text-rojo2 flex-none mt-[3px]" aria-hidden="true"><svg class="w-[18px] h-[18px]"><use href="#i-mas"/></svg></span>
+          </summary>
+          <p class="resp pr-6 pb-5 text-[1rem] leading-[1.65] text-gris max-w-medida">
+            Si ya vende y tiene entre cinco y cuarenta personas, está justo en el punto donde más sirvo.
+            Donde no sirvo es cuando la empresa ya está grande y lo que necesita es escalarla mucho más.
+          </p>
+        </details>
+
+        <details class="border-t border-linea">
+          <summary class="flex items-start gap-4 py-[1.05rem] pr-2">
+            <span class="font-arch font-bold tracking-[-.015em] text-[clamp(1rem,1.7vw,1.14rem)] leading-[1.3] flex-1">¿Y después, cuando quiera cambiar algo?</span>
+            <span class="cruz text-rojo2 flex-none mt-[3px]" aria-hidden="true"><svg class="w-[18px] h-[18px]"><use href="#i-mas"/></svg></span>
+          </summary>
+          <p class="resp pr-6 pb-5 text-[1rem] leading-[1.65] text-gris max-w-medida">
+            El código queda a nombre de su empresa y antes de bajarme les enseño a modificarlo con inteligencia
+            artificial: cómo pedir el cambio y cómo dejarlo andando. No quiero quedar de portero de su
+            herramienta.
+          </p>
+        </details>
+
+        <details class="border-t border-linea">
+          <summary class="flex items-start gap-4 py-[1.05rem] pr-2">
+            <span class="font-arch font-bold tracking-[-.015em] text-[clamp(1rem,1.7vw,1.14rem)] leading-[1.3] flex-1">¿De dónde saca el tiempo para esto?</span>
+            <span class="cruz text-rojo2 flex-none mt-[3px]" aria-hidden="true"><svg class="w-[18px] h-[18px]"><use href="#i-mas"/></svg></span>
+          </summary>
+          <p class="resp pr-6 pb-5 text-[1rem] leading-[1.65] text-gris max-w-medida">
+            De lunes a viernes construyo Ignia, que es mi empresa. Tengo dos mellizos de cuatro años y no
+            trabajo los domingos. Por eso solo tomo cuatro consultorías al tiempo.
+          </p>
+        </details>
+
+        <details class="border-t border-b border-linea">
+          <summary class="flex items-start gap-4 py-[1.05rem] pr-2">
+            <span class="font-arch font-bold tracking-[-.015em] text-[clamp(1rem,1.7vw,1.14rem)] leading-[1.3] flex-1">¿Y si usted no me sirve?</span>
+            <span class="cruz text-rojo2 flex-none mt-[3px]" aria-hidden="true"><svg class="w-[18px] h-[18px]"><use href="#i-mas"/></svg></span>
+          </summary>
+          <p class="resp pr-6 pb-5 text-[1rem] leading-[1.65] text-gris max-w-medida">
+            Se lo digo en la primera llamada y le digo a quién llamar. Llevo suficientes años en esto para
+            conocer a la gente que hace bien lo que yo no hago.
+          </p>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ ESCRÍBAME ═══════════ -->
+<section id="contacto" class="bg-panel text-panelfg">
+
+  <div class="mx-auto max-w-[1320px] px-[clamp(1.25rem,4vw,3.5rem)] pt-[clamp(2.6rem,6vw,4.6rem)] pb-[clamp(1.6rem,3vw,2.4rem)]">
+    <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] gap-[clamp(1.2rem,3vw,3rem)] items-end">
+      <h2 class="font-arch font-black uppercase [font-stretch:70%] tracking-[-.03em] leading-[.86] text-[clamp(3rem,13vw,7.4rem)]">Escríbame</h2>
+      <p class="text-[1.05rem] leading-[1.55] text-[#b0aea6] max-w-[44ch]">
+        Escoja por dónde le queda más cómodo. Cuénteme qué tiene montado y le digo si le sirvo.
+      </p>
+    </div>
+  </div>
+
+  <div class="border-t border-[#2c2e34]">
+    <a href="https://wa.me/573132465100" target="_blank" rel="noopener"
+       class="canal group flex items-center gap-4 sm:gap-7 px-[clamp(1.25rem,4vw,3.5rem)] py-[clamp(1.1rem,2.6vw,1.8rem)] border-b border-[#232529] hover:bg-rojo2 hover:text-white transition-colors">
+      <span class="font-mono text-[10.5px] tracking-[.16em] text-[#8e8d86] group-hover:text-white/80 w-7 flex-none">01</span>
+      <span class="font-arch font-black uppercase [font-stretch:78%] tracking-[-.03em] text-[clamp(1.5rem,6vw,3.2rem)] leading-none flex-1 min-w-0">WhatsApp</span>
+      <span class="hidden sm:block font-mono text-[11.5px] tracking-[.1em] text-[#8e8d86] group-hover:text-white/80 flex-none">+57 313 246 5100</span>
+      <span class="flex-none transition-transform duration-200 group-hover:translate-x-2" aria-hidden="true"><svg class="w-6 h-6 sm:w-8 sm:h-8"><use href="#i-arw"/></svg></span>
+    </a>
+    <a href="https://cal.com/salomonmuriel" target="_blank" rel="noopener"
+       class="canal group flex items-center gap-4 sm:gap-7 px-[clamp(1.25rem,4vw,3.5rem)] py-[clamp(1.1rem,2.6vw,1.8rem)] border-b border-[#232529] hover:bg-rojo2 hover:text-white transition-colors">
+      <span class="font-mono text-[10.5px] tracking-[.16em] text-[#8e8d86] group-hover:text-white/80 w-7 flex-none">02</span>
+      <span class="font-arch font-black uppercase [font-stretch:78%] tracking-[-.03em] text-[clamp(1.5rem,6vw,3.2rem)] leading-none flex-1 min-w-0">Agendar</span>
+      <span class="hidden sm:block font-mono text-[11.5px] tracking-[.1em] text-[#8e8d86] group-hover:text-white/80 flex-none">cal.com/salomonmuriel</span>
+      <span class="flex-none transition-transform duration-200 group-hover:translate-x-2" aria-hidden="true"><svg class="w-6 h-6 sm:w-8 sm:h-8"><use href="#i-arw"/></svg></span>
+    </a>
+    <a href="https://www.linkedin.com/in/smuriel/" target="_blank" rel="noopener"
+       class="canal group flex items-center gap-4 sm:gap-7 px-[clamp(1.25rem,4vw,3.5rem)] py-[clamp(1.1rem,2.6vw,1.8rem)] border-b border-[#232529] hover:bg-rojo2 hover:text-white transition-colors">
+      <span class="font-mono text-[10.5px] tracking-[.16em] text-[#8e8d86] group-hover:text-white/80 w-7 flex-none">03</span>
+      <span class="font-arch font-black uppercase [font-stretch:78%] tracking-[-.03em] text-[clamp(1.5rem,6vw,3.2rem)] leading-none flex-1 min-w-0">LinkedIn</span>
+      <span class="hidden sm:block font-mono text-[11.5px] tracking-[.1em] text-[#8e8d86] group-hover:text-white/80 flex-none">Ahí escribo · no tengo blog</span>
+      <span class="flex-none transition-transform duration-200 group-hover:translate-x-2" aria-hidden="true"><svg class="w-6 h-6 sm:w-8 sm:h-8"><use href="#i-arw"/></svg></span>
+    </a>
+    <a href="mailto:salomon.muriel@gmail.com?subject=Orden%20de%20trabajo"
+       class="canal group flex items-center gap-4 sm:gap-7 px-[clamp(1.25rem,4vw,3.5rem)] py-[clamp(1.1rem,2.6vw,1.8rem)] hover:bg-rojo2 hover:text-white transition-colors">
+      <span class="font-mono text-[10.5px] tracking-[.16em] text-[#8e8d86] group-hover:text-white/80 w-7 flex-none">04</span>
+      <span class="font-arch font-black uppercase [font-stretch:78%] tracking-[-.03em] text-[clamp(1.5rem,6vw,3.2rem)] leading-none flex-1 min-w-0">Correo</span>
+      <span class="hidden sm:block font-mono text-[11.5px] tracking-[.1em] text-[#8e8d86] group-hover:text-white/80 flex-none">salomon.muriel@gmail.com</span>
+      <span class="flex-none transition-transform duration-200 group-hover:translate-x-2" aria-hidden="true"><svg class="w-6 h-6 sm:w-8 sm:h-8"><use href="#i-arw"/></svg></span>
+    </a>
+  </div>
+
+  <div class="mx-auto max-w-[1320px] px-[clamp(1.25rem,4vw,3.5rem)] py-[clamp(2rem,4vw,3rem)]">
+    <div class="grid grid-cols-1 md:grid-cols-3 border-t border-[#2c2e34]">
+      <div class="py-5 md:pr-7 border-b md:border-b-0 md:border-r border-[#232529]">
+        <p class="font-mono text-[10.5px] tracking-[.18em] uppercase text-rojo3 mb-2">Sin formulario</p>
+        <p class="text-[.95rem] leading-[1.5] text-[#b0aea6]">No hay campos que llenar. Un mensaje suyo, una respuesta mía.</p>
+      </div>
+      <div class="py-5 md:px-7 border-b md:border-b-0 md:border-r border-[#232529]">
+        <p class="font-mono text-[10.5px] tracking-[.18em] uppercase text-rojo3 mb-2">Sin equipo detrás</p>
+        <p class="text-[.95rem] leading-[1.5] text-[#b0aea6]">El que contesta y el que construye soy yo. Por eso los cupos son los que son.</p>
+      </div>
+      <div class="py-5 md:pl-7">
+        <p class="font-mono text-[10.5px] tracking-[.18em] uppercase text-rojo3 mb-2">Otras páginas</p>
+        <p class="text-[.95rem] leading-[1.5] text-[#b0aea6]">
+          <a href="/mentoria" class="border-b border-current hover:text-white transition-colors">Mentoría</a> para el que está arrancando,
+          <a href="/charlas" class="border-b border-current hover:text-white transition-colors">charlas</a> si me quiere invitar a hablar,
+          <a href="/sobre-mi" class="border-b border-current hover:text-white transition-colors">sobre mí</a> si quiere saber con quién se va a meter y
+          <a href="/ahora" class="border-b border-current hover:text-white transition-colors">ahora</a> para ver en qué ando esta temporada.
+        </p>
+      </div>
+    </div>
+
+    <div class="flex flex-wrap gap-x-6 gap-y-2 font-mono text-[10px] tracking-[.16em] uppercase text-[#75746e] mt-8">
+      <span>© 2026 Salomón Muriel</span>
+      <span>Parte 36 · rev. 2026.09</span>
+      <span>Bogotá · 4°42′N 74°04′W</span>
+      <span class="text-rojo3">Documento vigente</span>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<script>
+(function(){
+  'use strict';
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ── fecha del parte ── */
+  try{
+    var f = new Intl.DateTimeFormat('es-CO',{weekday:'long',day:'numeric',month:'long',year:'numeric',timeZone:'America/Bogota'}).format(new Date());
+    document.getElementById('fecha').textContent = f;
+  }catch(e){ document.getElementById('fecha').textContent = 'Bogotá'; }
+
+  /* ── barra pegada ── */
+  var nav = document.getElementById('nav'), centinela = document.getElementById('arriba');
+  if(centinela && 'IntersectionObserver' in window){
+    new IntersectionObserver(function(en){
+      nav.classList.toggle('border-linea', !en[0].isIntersecting);
+    },{rootMargin:'-90px 0px 0px 0px'}).observe(centinela);
+  }
+
+  /* ── entradas ── */
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(ens){
+      ens.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('visto'); io.unobserve(en.target); } });
+    },{threshold:.22});
+    document.querySelectorAll('article, .observa, h2').forEach(function(el){ io.observe(el); });
+  }else{
+    document.querySelectorAll('article, .observa, h2').forEach(function(el){ el.classList.add('visto'); });
+  }
+
+  /* ══════════════ EL CHINÓMETRO ══════════════ */
+  var SINTOMAS = [
+    'Los pedidos llegan por WhatsApp y alguien los pasa a mano a un Excel.',
+    'Hay dos sistemas que dicen cosas distintas sobre lo mismo.',
+    'Alguien tiene que meter la misma información en dos lados.',
+    'Nos vendieron un programa carísimo y hoy casi nadie lo abre.',
+    'Hay un archivo que solo una persona sabe mover.',
+    'Para saber cuánto vendimos ayer toca preguntarle a alguien.',
+    'La facturación se arma a mano, una por una.',
+    'Alguien arma el mismo informe todos los lunes, copiando y pegando.',
+    'Montamos un sistema nuevo y la gente siguió trabajando en el viejo.',
+    'Cuando alguien renuncia, se va con el proceso adentro.'
+  ];
+  var hoja = document.getElementById('hoja');
+  SINTOMAS.forEach(function(s,i){
+    var lab = document.createElement('label');
+    lab.className = 'reng flex gap-3.5 items-start px-4 sm:px-5 py-3.5 border-b border-linea cursor-pointer transition-colors';
+    lab.innerHTML = '<input type="checkbox" class="casilla rounded">' +
+      '<span class="font-mono text-[10.5px] text-gris pt-[5px] w-5 flex-none">' + ('0'+(i+1)).slice(-2) + '</span>' +
+      '<span class="reng-t text-[.98rem] leading-[1.4] pt-[2px]">' + s + '</span>';
+    lab.querySelector('input').setAttribute('data-s', s);
+    hoja.appendChild(lab);
+  });
+
+  var marcas = document.getElementById('marcas');
+  for(var t=0;t<=10;t++){
+    var ang = Math.PI + (t/10)*Math.PI, r1=104, r2=(t%5===0)?88:96;
+    var ln = document.createElementNS('http://www.w3.org/2000/svg','line');
+    ln.setAttribute('x1',(150+r1*Math.cos(ang)).toFixed(1)); ln.setAttribute('y1',(150+r1*Math.sin(ang)).toFixed(1));
+    ln.setAttribute('x2',(150+r2*Math.cos(ang)).toFixed(1)); ln.setAttribute('y2',(150+r2*Math.sin(ang)).toFixed(1));
+    if(t%5===0) ln.setAttribute('stroke','#ECEAE4');
+    marcas.appendChild(ln);
+  }
+
+  var casillas = Array.prototype.slice.call(document.querySelectorAll('.casilla'));
+  var elPunt = document.getElementById('puntaje'), elAguja = document.getElementById('aguja'),
+      elArco = document.getElementById('arco'), elTit = document.getElementById('ver-titulo'),
+      elTxt = document.getElementById('ver-texto'), elSal = document.getElementById('salida'),
+      elCon = document.getElementById('conteo'), elWa = document.getElementById('wa'),
+      elMar = document.getElementById('marcadas');
+
+  var ESCALA = [
+    {min:0,  t:'Sin medir todavía', d:'El aparato no funciona en blanco: marque los renglones que reconozca.'},
+    {min:10, t:'Chinomático leve',  d:'Hay trabajo a mano, pero todavía está descansado. Se arregla rápido.'},
+    {min:30, t:'Chinomático moderado', d:'Su empresa ya depende de la memoria de alguien y de que dos sistemas cuadren por buena voluntad.'},
+    {min:60, t:'Chinomático alto',  d:'Buena parte de su operación es alguien pegando cajitas a mano. Cuando esa persona se va, se le va el proceso.'},
+    {min:90, t:'Chinomático crítico', d:'Su operación se sostiene en un acuerdo tácito entre dos personas y un chat. Escríbame hoy.'}
+  ];
+
+  function pintar(){
+    var puestas = casillas.filter(function(c){ return c.checked; });
+    var n = puestas.length, p = Math.round(n/casillas.length*100);
+    var nivel = ESCALA[0];
+    for(var i=0;i<ESCALA.length;i++){ if(p >= ESCALA[i].min) nivel = ESCALA[i]; }
+
+    elPunt.textContent = ('0'+p).slice(-2);
+    elMar.textContent = n;
+    elAguja.style.transform = 'rotate(' + (-90 + p*1.8) + 'deg)';
+    elArco.style.strokeDashoffset = String(377 - (377 * p / 100));
+    elTit.textContent = nivel.t;
+    elTxt.textContent = nivel.d;
+    elCon.textContent = n + (n === 1 ? ' ítem' : ' ítems');
+
+    var texto;
+    if(n === 0){
+      texto = 'Esperando marcación…';
+      elWa.href = 'https://wa.me/573132465100?text=' + encodeURIComponent('Hola Salomón, entré a su página y quiero contarle cómo está mi operación.');
+    }else{
+      var lineas = puestas.map(function(c){ return '• ' + c.getAttribute('data-s'); }).join('\n');
+      texto = 'Hola Salomón. Llené el chinómetro de su página y me dio ' + p + ' de 100.\n\nEsto fue lo que marqué:\n' + lineas + '\n\nMi empresa es de ____ y somos ____ personas.';
+      elWa.href = 'https://wa.me/573132465100?text=' + encodeURIComponent(texto);
+    }
+    elSal.textContent = texto;
+  }
+  casillas.forEach(function(c){ c.addEventListener('change', pintar); });
+  document.getElementById('limpiar').addEventListener('click', function(){
+    casillas.forEach(function(c){ c.checked = false; }); pintar();
+  });
+  pintar();
+
+  /* ══════════════ EL TABLERO DE CAJITAS ══════════════ */
+  var envoltura = document.getElementById('tablero-wrap'),
+      tablero = document.getElementById('tablero'),
+      cables = document.getElementById('cables'),
+      enlaces = Array.prototype.slice.call(tablero.querySelectorAll('.enlace')),
+      NS = 'http://www.w3.org/2000/svg',
+      anchoGrande = window.matchMedia('(min-width: 1024px)');
+
+  function caja(id){
+    var el = document.getElementById(id);
+    return { x:el.offsetLeft, y:el.offsetTop, w:el.offsetWidth, h:el.offsetHeight,
+             cx:el.offsetLeft + el.offsetWidth/2, cy:el.offsetTop + el.offsetHeight/2,
+             r:el.offsetLeft + el.offsetWidth, b:el.offsetTop + el.offsetHeight };
+  }
+
+  function ruta(A, B, tipo, H){
+    if(tipo === 'v'){
+      var my = (A.b + B.y)/2;
+      return { d:'M '+A.cx+' '+A.b+' V '+my+' H '+B.cx+' V '+B.y, x:(A.cx+B.cx)/2, y:my };
+    }
+    if(tipo === 'under'){
+      var ly = H - 20;
+      return { d:'M '+A.cx+' '+A.b+' V '+ly+' H '+B.cx+' V '+B.b, x:(A.cx+B.cx)/2, y:ly };
+    }
+    var mx = (A.r + B.x)/2;
+    return { d:'M '+A.r+' '+A.cy+' H '+mx+' V '+B.cy+' H '+B.x, x:mx, y:(A.cy+B.cy)/2 };
+  }
+
+  function dibujar(){
+    if(!anchoGrande.matches){ cables.innerHTML = ''; enlaces.forEach(function(e){ e.style.left = e.style.top = ''; }); return; }
+    var W = tablero.offsetWidth, H = tablero.offsetHeight;
+    cables.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+    cables.setAttribute('width', W); cables.setAttribute('height', H);
+    cables.innerHTML =
+      '<defs>' +
+      '<marker id="pta-hoy" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0.5 1 L9 5 L0.5 9 Z" fill="#D8332A"/></marker>' +
+      '<marker id="pta-queda" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0.5 1 L9 5 L0.5 9 Z" fill="#16171A"/></marker>' +
+      '</defs>';
+    enlaces.forEach(function(e){
+      var A = caja(e.getAttribute('data-a')), B = caja(e.getAttribute('data-b'));
+      var r = ruta(A, B, e.getAttribute('data-r'), H);
+      var path = document.createElementNS(NS,'path');
+      path.setAttribute('class','cable');
+      path.setAttribute('d', r.d);
+      if(e.getAttribute('data-muere')) path.setAttribute('data-muere','1');
+      cables.appendChild(path);
+      e.style.left = r.x + 'px';
+      e.style.top  = r.y + 'px';
+    });
+  }
+
+  function rotular(){
+    var estado = envoltura.getAttribute('data-estado');
+    enlaces.forEach(function(e){
+      e.querySelector('.chip').textContent = e.getAttribute(estado === 'hoy' ? 'data-hoy' : 'data-queda') || '';
+    });
+  }
+
+  var bh = document.getElementById('btn-hoy'), bq = document.getElementById('btn-queda');
+  function estado(v){
+    envoltura.setAttribute('data-estado', v);
+    bh.setAttribute('aria-pressed', String(v === 'hoy'));
+    bq.setAttribute('aria-pressed', String(v === 'queda'));
+    rotular();
+    requestAnimationFrame(dibujar);
+  }
+  bh.addEventListener('click', function(){ estado('hoy'); });
+  bq.addEventListener('click', function(){ estado('queda'); });
+
+  rotular(); dibujar();
+  var pausa;
+  window.addEventListener('resize', function(){ clearTimeout(pausa); pausa = setTimeout(dibujar, 120); });
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(dibujar);
+  window.addEventListener('load', dibujar);
+})();
+</script>
+
+</body>
+</html>

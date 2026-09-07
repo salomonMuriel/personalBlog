@@ -1,16 +1,21 @@
-# Ignore everything
+# Ignorar todo…
 /*
 
-# Except these files & folders
+# …menos esto
 !/src
-!/public
-!/.github
+!/scripts
 !tsconfig.json
 !astro.config.ts
+!keystatic.config.ts
+!vercel.json
 !package.json
 !.prettierrc
-!.eslintrc.js
 !README.md
+!CLAUDE.md
+!REBUILD-PLAN.md
+
+# Las 36 exploraciones de diseño quedan tal como se escribieron.
+design-directions/
 
 *.mdx
 *.md

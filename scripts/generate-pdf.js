@@ -1,8 +1,8 @@
-import puppeteer from 'puppeteer';
-import { PDFDocument } from 'pdf-lib';
-import fs from 'fs/promises';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import puppeteer from "puppeteer";
+import { PDFDocument } from "pdf-lib";
+import fs from "fs/promises";
+import path from "path";
+import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -13,7 +13,7 @@ const VIEWPORT_HEIGHT = 1080;
 const ANIMATION_WAIT = 1000; // Wait 1 second for animations to settle
 
 async function generatePDF() {
-  console.log('🚀 Starting PDF generation...');
+  console.log("🚀 Starting PDF generation...");
   console.log(`📐 Resolution: ${VIEWPORT_WIDTH}x${VIEWPORT_HEIGHT}`);
   console.log(`📄 Total slides: ${TOTAL_SLIDES}\n`);
 
@@ -29,7 +29,7 @@ async function generatePDF() {
   const page = await browser.newPage();
 
   // Load the presentation
-  const htmlPath = `file://${path.join(__dirname, '../../presentation/index.html')}`;
+  const htmlPath = `file://${path.join(__dirname, "../../presentation/index.html")}`;
   console.log(`📂 Loading presentation from: ${htmlPath}`);
   await page.goto(htmlPath, { waitForNetworkIdle: true });
 
@@ -42,7 +42,7 @@ async function generatePDF() {
   await page.reload({ waitForNetworkIdle: true });
   await new Promise(resolve => setTimeout(resolve, 1000)); // Wait for initial load
 
-  console.log('\n📸 Capturing slides...\n');
+  console.log("\n📸 Capturing slides...\n");
 
   const screenshots = [];
 
@@ -55,7 +55,7 @@ async function generatePDF() {
 
     // Capture screenshot
     const screenshot = await page.screenshot({
-      type: 'png',
+      type: "png",
       clip: {
         x: 0,
         y: 0,
@@ -68,15 +68,15 @@ async function generatePDF() {
 
     // Navigate to next slide (unless it's the last one)
     if (i < TOTAL_SLIDES - 1) {
-      await page.keyboard.press('ArrowRight');
+      await page.keyboard.press("ArrowRight");
     }
   }
 
   await browser.close();
-  console.log('\n✅ All slides captured!\n');
+  console.log("\n✅ All slides captured!\n");
 
   // Create PDF
-  console.log('📝 Generating PDF...');
+  console.log("📝 Generating PDF...");
   const pdfDoc = await PDFDocument.create();
 
   for (let i = 0; i < screenshots.length; i++) {
@@ -98,7 +98,10 @@ async function generatePDF() {
 
   // Save PDF directly to website public directory
   const pdfBytes = await pdfDoc.save();
-  const outputPath = path.join(__dirname, '../public/talks/confnodo/confnodo.pdf');
+  const outputPath = path.join(
+    __dirname,
+    "../public/talks/confnodo/confnodo.pdf"
+  );
   await fs.writeFile(outputPath, pdfBytes);
 
   console.log(`\n✨ PDF generated successfully!`);
@@ -107,7 +110,7 @@ async function generatePDF() {
 }
 
 // Run the script
-generatePDF().catch((error) => {
-  console.error('❌ Error generating PDF:', error);
+generatePDF().catch(error => {
+  console.error("❌ Error generating PDF:", error);
   process.exit(1);
 });

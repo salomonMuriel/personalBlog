@@ -1,0 +1,115 @@
+---
+import EncabezadoSeccion from "@components/EncabezadoSeccion.astro";
+import { copia } from "@data/landing";
+import type { Lang } from "@i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const c = copia(lang).entrega;
+---
+
+<section id="entrega" class="py-[clamp(3.2rem,7vw,5.6rem)]">
+  <div class="hoja">
+    <EncabezadoSeccion rotulo={c.rotulo} nota={c.nota} notaCh={40} />
+
+    <h2
+      class="font-arch max-w-[20ch] text-[clamp(1.9rem,4.4vw,3.4rem)] font-extrabold leading-[1.03] tracking-[-.028em] [font-stretch:104%]"
+    >
+      {c.titulo}
+    </h2>
+    <p class="mt-4 max-w-[58ch] text-[1.05rem] leading-[1.55] text-gris">
+      {c.bajada}
+    </p>
+
+    <div
+      class="mt-[clamp(1.8rem,3.6vw,2.8rem)] grid grid-cols-1 items-start gap-[clamp(1.5rem,3.5vw,3rem)] lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)]"
+    >
+      <!-- va en la caja -->
+      <div
+        class="overflow-hidden rounded border-[1.5px] border-linea2 bg-campo"
+      >
+        <div
+          class="font-mono flex justify-between gap-3 border-b border-linea px-4 py-3.5 text-[10.5px] uppercase tracking-[.18em] sm:px-5"
+        >
+          <span class="font-semibold">{c.cajaTitulo}</span><span
+            class="text-gris">{c.cajaConteo}</span
+          >
+        </div>
+
+        {
+          c.renglones.map((r, i) => (
+            <div
+              class:list={[
+                "grid grid-cols-[2.4rem_1fr] gap-x-3 px-4 py-4 sm:px-5",
+                i < c.renglones.length - 1 && "border-b border-linea",
+                r.resaltado && "bg-[rgba(216,51,42,.045)]",
+              ]}
+            >
+              <span class="font-mono pt-[3px] text-[10.5px] text-rojo2">
+                {r.n}
+              </span>
+              <div>
+                <p class="font-arch text-[1.06rem] font-bold leading-[1.15] tracking-[-.02em]">
+                  {r.t}
+                </p>
+                <p class="mt-1.5 text-[.94rem] leading-[1.5] text-gris">
+                  {r.d}
+                </p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+
+      <!-- la letra menuda -->
+      <div>
+        <div class="rounded border-[1.5px] border-tinta">
+          <div
+            class="font-mono flex justify-between gap-3 border-b border-tinta bg-tinta px-4 py-3.5 text-[10.5px] uppercase tracking-[.18em] text-panelfg sm:px-5"
+          >
+            <span>{c.menudaTitulo}</span><span class="text-rojo3"
+              >{c.menudaAviso}</span
+            >
+          </div>
+          <p
+            class="px-4 py-5 text-[1.02rem] leading-[1.68] sm:px-5"
+            set:html={c.menuda}
+          />
+        </div>
+
+        <p
+          class="font-pen mt-6 -rotate-[1.2deg] text-[clamp(1.25rem,3vw,1.6rem)] leading-[1.25] text-rojo2"
+        >
+          {c.manuscrita}
+        </p>
+
+        <div class="mt-7 border-t border-linea pt-5">
+          <p
+            class="font-mono mb-3 text-[10.5px] uppercase tracking-[.18em] text-gris"
+          >
+            {c.tampocoTitulo}
+          </p>
+          <ul class="space-y-2.5">
+            {
+              c.tampoco.map(x => (
+                <li class="flex items-start gap-3">
+                  <span
+                    class="mt-[3px] flex-none text-rojo2"
+                    aria-hidden="true"
+                  >
+                    <svg class="h-[15px] w-[15px]">
+                      <use href="#i-x" />
+                    </svg>
+                  </span>
+                  <span class="text-[.96rem] leading-[1.5]">{x}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,27 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Mentoria from "@components/paginas/Mentoria.astro";
+import { copiaMentoria } from "@data/mentoria";
+import { faqLd, breadcrumbLd } from "@utils/jsonld";
+import { routes } from "@i18n/ui";
+
+export const prerender = true;
+
+const c = copiaMentoria("en");
+---
+
+<Layout
+  title={c.meta.title}
+  description={c.meta.description}
+  lang="en"
+  ogImage="/en/og.png"
+  schemas={[
+    faqLd([...c.preguntas]),
+    breadcrumbLd([
+      { name: "Home", url: routes.home.en },
+      { name: "Mentoring", url: routes.mentoria.en },
+    ]),
+  ]}
+>
+  <Mentoria lang="en" />
+</Layout>

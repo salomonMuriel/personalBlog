@@ -1,0 +1,1102 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Un Proceso Menos | Salomón Muriel</title>
+<meta name="description" content="Ocho semanas. Un proceso de su empresa deja de hacerse a mano. Yo lo diagnostico, yo mismo construyo la herramienta y su gente la usa antes de que yo salga. Alcance fijo y precio fijo, acordados antes de empezar.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('js');</script>
+<style>
+/* ============================================================
+   DIRECTION 18 - Servicio productizado
+   Theme: LIGHT ONLY (committed, no prefers-color-scheme block)
+   Palette: cold blue-grey ground + near-black ink + one deep
+            teal accent. Industrial spec-sheet, not warm craft.
+   Radius system: 2px on everything. Documented, uniform.
+   ============================================================ */
+
+:root{
+  color-scheme: light;
+
+  --paper:      #EDEFF1;
+  --paper-hi:   #F8F9FA;
+  --paper-deep: #E1E5E8;
+  --paper-sunk: #D8DDE1;
+
+  --ink:        #12171B;
+  --ink-soft:   #495359;
+  --ink-faint:  #6A757C;
+
+  --line:       #CBD3D8;
+  --line-soft:  #DDE2E6;
+
+  --accent:      #0A6C7A;
+  --accent-deep: #07535E;
+  --accent-tint: #DCE9EB;
+  --accent-line: #A9C9CE;
+
+  --fd: "Space Grotesk", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  --fb: "Manrope", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  --fm: "DM Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --r: 2px;
+  --pad-y: clamp(68px, 8.5vw, 128px);
+  --gut: 24px;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+
+html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
+@media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } }
+
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--fb);
+  font-size:17px;
+  line-height:1.62;
+  font-weight:400;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+img{ max-width:100%; display:block; }
+a{ color:inherit; }
+
+::selection{ background:var(--accent); color:#fff; }
+
+:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:3px;
+}
+
+/* ---------- layout primitives ---------- */
+.wrap{ width:100%; max-width:1260px; margin:0 auto; padding:0 var(--gut); }
+.sec{ padding:var(--pad-y) 0; position:relative; }
+.sec--tight{ padding:clamp(52px,6vw,88px) 0; }
+.rule{ height:1px; background:var(--line); border:0; margin:0; }
+
+h1,h2,h3,h4{ font-family:var(--fd); font-weight:700; margin:0; letter-spacing:-0.028em; }
+h1{ font-size:clamp(34px, 4.6vw, 54px); line-height:1.06; }
+h2{ font-size:clamp(27px, 3.3vw, 42px); line-height:1.09; }
+h3{ font-size:clamp(19px, 1.5vw, 22px); line-height:1.22; letter-spacing:-0.02em; }
+p{ margin:0; }
+
+.lead{ font-size:clamp(17px,1.35vw,19.5px); line-height:1.58; color:var(--ink-soft); }
+.body{ color:var(--ink-soft); }
+.meas{ max-width:62ch; }
+.meas-s{ max-width:52ch; }
+
+.kicker{
+  font-family:var(--fm); font-size:11.5px; font-weight:500;
+  text-transform:uppercase; letter-spacing:0.19em; color:var(--accent-deep);
+}
+.mono{ font-family:var(--fm); font-variant-numeric:tabular-nums; }
+.num{ font-family:var(--fm); font-variant-numeric:tabular-nums; letter-spacing:-0.01em; }
+
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:10px;
+  font-family:var(--fb); font-size:15.5px; font-weight:600; line-height:1;
+  padding:16px 26px; border-radius:var(--r); border:1px solid transparent;
+  text-decoration:none; white-space:nowrap; cursor:pointer;
+  transition:background .22s cubic-bezier(.16,1,.3,1), color .22s, border-color .22s, transform .18s;
+}
+.btn-1{ background:var(--accent); color:#fff; }
+.btn-1:hover{ background:var(--accent-deep); }
+.btn-1:active{ transform:translateY(1px); }
+.btn-2{ background:transparent; color:var(--ink); border-color:#12171B85; }
+.btn-2:hover{ border-color:var(--ink); background:#12171B0a; }
+.btn-2:active{ transform:translateY(1px); }
+.btn-sm{ padding:11px 17px; font-size:14px; }
+.btn-arrow{ font-family:var(--fm); font-size:14px; opacity:.75; }
+
+.cta-row{ display:flex; flex-wrap:wrap; gap:12px; }
+
+/* ---------- nav ---------- */
+.nav{
+  position:sticky; top:0; z-index:50;
+  background:#EDEFF1f2;
+  -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.nav-in{
+  height:68px; display:flex; align-items:center; justify-content:space-between; gap:24px;
+}
+.brand{
+  font-family:var(--fd); font-weight:700; font-size:16.5px; letter-spacing:-0.02em;
+  text-decoration:none; white-space:nowrap;
+}
+.brand span{ color:var(--ink-faint); font-weight:500; }
+.nav-links{ display:flex; align-items:center; gap:26px; }
+.nav-links a{
+  font-size:14.5px; color:var(--ink-soft); text-decoration:none; white-space:nowrap;
+  transition:color .18s;
+}
+.nav-links a:hover{ color:var(--accent-deep); }
+@media (max-width:1000px){ .nav-links{ display:none; } }
+@media (max-width:600px){
+  :root{ --gut:18px; }
+  .nav-in{ height:60px; gap:12px; }
+  .brand{ font-size:15px; }
+  .brand span{ display:none; }
+  .nav .btn-sm{ padding:10px 13px; font-size:13px; }
+}
+@media (max-width:360px){
+  .brand{ font-size:0; }
+  .brand::before{ content:"SM"; font-size:15px; letter-spacing:0; }
+}
+
+/* ---------- hero ---------- */
+.hero{ padding-top:clamp(46px,6vw,86px); padding-bottom:clamp(44px,5vw,70px); }
+.hero-grid{
+  display:grid; grid-template-columns:1.16fr 0.84fr; gap:clamp(32px,5vw,72px); align-items:start;
+}
+.hero-kick{ display:flex; align-items:center; gap:14px; margin-bottom:22px; }
+.hero-kick .bar{ width:44px; height:2px; background:var(--accent); flex:none; }
+.hero h1{ max-width:24ch; }
+.hero .lead{ margin-top:22px; max-width:46ch; }
+.hero .cta-row{ margin-top:32px; }
+.hero-fig{
+  position:relative; background:var(--paper-deep);
+  border:1px solid var(--line); border-radius:var(--r); overflow:hidden;
+}
+.hero-fig img{ width:100%; aspect-ratio:4/4.6; object-fit:cover; object-position:50% 22%; }
+.hero-fig::after{
+  content:""; position:absolute; left:0; right:0; bottom:0; height:3px; background:var(--accent);
+}
+@media (max-width:880px){
+  .hero-grid{ grid-template-columns:1fr; gap:34px; }
+  .hero-fig{ max-width:420px; }
+  .hero h1{ max-width:20ch; }
+}
+
+/* ---------- spec band ---------- */
+.spec{
+  border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+  background:var(--paper-hi);
+}
+.spec-grid{ display:grid; grid-template-columns:repeat(4,1fr); }
+.spec-cell{ padding:30px 30px 32px; border-left:1px solid var(--line-soft); }
+.spec-cell:first-child{ border-left:0; padding-left:0; }
+.spec-cell:last-child{ padding-right:0; }
+.spec-k{ font-family:var(--fm); font-size:12.5px; color:var(--ink-faint); }
+.spec-v{
+  font-family:var(--fd); font-weight:700; font-size:clamp(24px,2.4vw,32px);
+  letter-spacing:-0.03em; line-height:1.1; margin:10px 0 9px;
+}
+.spec-n{ font-size:14.5px; color:var(--ink-soft); line-height:1.45; }
+.spec-cell--hot .spec-v{ color:var(--accent-deep); }
+@media (max-width:860px){
+  .spec-grid{ grid-template-columns:1fr 1fr; }
+  .spec-cell{ padding:24px 20px; }
+  .spec-cell:nth-child(odd){ border-left:0; padding-left:0; }
+  .spec-cell:nth-child(n+3){ border-top:1px solid var(--line-soft); }
+}
+@media (max-width:470px){
+  .spec-grid{ grid-template-columns:1fr; }
+  .spec-cell{ border-left:0; padding-left:0; padding-right:0; }
+  .spec-cell+.spec-cell{ border-top:1px solid var(--line-soft); }
+}
+
+/* ---------- section header ---------- */
+.head{ max-width:56ch; }
+.head h2 + p{ margin-top:18px; }
+
+/* ---------- symptom rail ---------- */
+.rail-outer{ margin-top:44px; }
+.rail{
+  display:grid; grid-auto-flow:column; grid-auto-columns:302px; gap:18px;
+  overflow-x:auto; overscroll-behavior-x:contain;
+  scroll-snap-type:x mandatory; padding-bottom:14px;
+  scrollbar-width:thin; scrollbar-color:var(--line) transparent;
+}
+.rail::-webkit-scrollbar{ height:6px; }
+.rail::-webkit-scrollbar-thumb{ background:var(--line); border-radius:99px; }
+.card-s{ scroll-snap-align:start; }
+.card-s figure{ margin:0; background:var(--paper-deep); border-radius:var(--r); overflow:hidden; border:1px solid var(--line-soft); }
+.card-s img{ width:100%; aspect-ratio:4/3; object-fit:cover; filter:grayscale(1) contrast(1.05); transition:filter .35s ease; }
+.card-s:hover img{ filter:grayscale(0.15) contrast(1); }
+.card-s p{ margin-top:15px; font-size:16px; line-height:1.5; }
+.card-s .idx{ font-family:var(--fm); font-size:12px; color:var(--accent-deep); display:block; margin-bottom:7px; }
+@media (max-width:600px){ .rail{ grid-auto-columns:74vw; } }
+
+.after-rail{
+  margin-top:38px; padding-top:26px; border-top:1px solid var(--line);
+  font-family:var(--fd); font-weight:500; font-size:clamp(18px,1.8vw,23px);
+  line-height:1.35; letter-spacing:-0.02em; max-width:46ch;
+}
+
+/* ---------- includes list ---------- */
+.inc{ margin-top:48px; display:grid; grid-template-columns:1fr 1fr; gap:0 clamp(30px,5vw,70px); }
+.inc-item{ display:grid; grid-template-columns:44px 1fr; gap:16px; padding:22px 0; border-top:1px solid var(--line); }
+.inc-item .n{ font-family:var(--fm); font-size:13px; color:var(--accent-deep); padding-top:3px; }
+.inc-item h3{ margin-bottom:7px; }
+.inc-item p{ font-size:15.5px; color:var(--ink-soft); line-height:1.5; }
+@media (max-width:820px){ .inc{ grid-template-columns:1fr; } }
+
+/* ---------- exclusions ---------- */
+.excl-sec{ background:var(--paper-deep); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+.excl{ margin-top:44px; display:grid; grid-template-columns:1fr 1fr; gap:clamp(26px,3.4vw,48px); }
+.excl-item{
+  background:var(--paper-hi); border:1px solid var(--line-soft); border-left:3px solid var(--ink);
+  border-radius:var(--r); padding:22px 24px;
+}
+.excl-item strong{
+  display:block; font-family:var(--fd); font-weight:700; font-size:17.5px;
+  letter-spacing:-0.02em; margin-bottom:8px;
+}
+.excl-item p{ font-size:15.5px; color:var(--ink-soft); line-height:1.5; }
+.excl-item--last{ grid-column:1/-1; border-left-color:var(--accent); }
+@media (max-width:820px){ .excl{ grid-template-columns:1fr; } }
+
+/* ---------- gantt ---------- */
+.gantt{ margin-top:46px; }
+.gantt-ruler{
+  display:grid; grid-template-columns:150px minmax(200px,320px) 1fr;
+  gap:0 clamp(20px,2.6vw,36px); align-items:end; padding-bottom:9px;
+}
+.ruler-track{ display:grid; grid-template-columns:repeat(8,1fr); gap:3px; }
+.ruler-track span{
+  font-family:var(--fm); font-size:11px; color:var(--ink-faint); text-align:center;
+}
+.ruler-note{ font-family:var(--fm); font-size:11.5px; color:var(--ink-faint); }
+
+.phase{
+  display:grid; grid-template-columns:150px minmax(200px,320px) 1fr;
+  gap:0 clamp(20px,2.6vw,36px); align-items:start;
+  padding:24px 0; border-top:1px solid var(--line);
+}
+.phase-when{ font-family:var(--fm); font-size:13.5px; color:var(--ink); padding-top:2px; }
+.phase-track{ display:grid; grid-template-columns:repeat(8,1fr); gap:3px; margin-top:4px; }
+.phase-track i{ height:26px; background:var(--paper-deep); border-radius:1px; display:block; }
+.phase-track i.on{ background:var(--accent); }
+.phase-track i.on-strong{ background:var(--accent-deep); }
+.phase-body h3{ margin-bottom:9px; }
+.phase-body p{ font-size:15.8px; color:var(--ink-soft); line-height:1.52; max-width:56ch; }
+.phase-out{
+  margin-top:13px; font-size:14.8px; display:flex; gap:9px; align-items:baseline;
+}
+.phase-out b{ font-family:var(--fm); font-weight:500; font-size:12.5px; color:var(--accent-deep); white-space:nowrap; }
+.phase-out span{ color:var(--ink); }
+
+.after-gantt{
+  margin-top:0; border-top:1px solid var(--line); padding-top:30px;
+  display:grid; grid-template-columns:150px 1fr; gap:0 clamp(20px,2.6vw,36px);
+}
+.checkins{ display:flex; flex-wrap:wrap; gap:14px; }
+.checkin{
+  border:1px solid var(--accent-line); background:var(--accent-tint);
+  border-radius:var(--r); padding:14px 18px; max-width:300px;
+}
+.checkin b{ font-family:var(--fm); font-weight:500; font-size:12.5px; color:var(--accent-deep); display:block; margin-bottom:5px; }
+.checkin span{ font-size:15px; color:var(--ink); line-height:1.45; display:block; }
+@media (max-width:900px){
+  .gantt-ruler{ display:none; }
+  .phase{ grid-template-columns:1fr; gap:14px; padding:26px 0; }
+  .phase-track{ margin-top:0; }
+  .after-gantt{ grid-template-columns:1fr; }
+}
+
+/* ---------- price section ---------- */
+.price-sec{ background:var(--accent-tint); border-top:1px solid var(--accent-line); border-bottom:1px solid var(--accent-line); }
+.price-grid{ display:grid; grid-template-columns:0.9fr 1.1fr; gap:clamp(30px,5vw,76px); align-items:start; }
+.rules{ display:grid; gap:0; }
+.rule-item{ display:grid; grid-template-columns:40px 1fr; gap:14px; padding:20px 0; border-top:1px solid var(--accent-line); }
+.rule-item:first-child{ border-top:0; padding-top:0; }
+.rule-item .n{ font-family:var(--fm); font-size:13px; color:var(--accent-deep); padding-top:4px; }
+.rule-item p{ font-size:16px; line-height:1.52; color:var(--ink); }
+.price-close{
+  margin-top:28px; padding:22px 24px; background:var(--paper-hi);
+  border:1px solid var(--accent-line); border-radius:var(--r);
+}
+.price-close p{ font-size:16px; line-height:1.5; }
+.price-grid .cta-row{ margin-top:26px; }
+@media (max-width:860px){ .price-grid{ grid-template-columns:1fr; } }
+
+/* ---------- proof bento ---------- */
+.bento{ margin-top:46px; display:grid; grid-template-columns:repeat(12,1fr); gap:16px; }
+.tile{ border:1px solid var(--line); border-radius:var(--r); padding:26px; background:var(--paper-hi); }
+.tile-a{ grid-column:span 7; background:var(--accent-tint); border-color:var(--accent-line); }
+.tile-b{ grid-column:span 5; padding:0; overflow:hidden; background:var(--paper-deep); }
+.tile-b img{ width:100%; height:100%; min-height:250px; object-fit:cover; }
+.tile-c{ grid-column:span 4; }
+.tile-d{ grid-column:span 4; }
+.tile-e{ grid-column:span 4; }
+.tile-f{ grid-column:span 12; background:var(--paper-sunk); border-color:var(--line); }
+.logo-row{ display:flex; align-items:center; gap:14px; margin-bottom:18px; }
+.logo-box{
+  width:52px; height:52px; background:#fff; border:1px solid var(--line-soft);
+  border-radius:var(--r); display:flex; align-items:center; justify-content:center; flex:none; padding:8px;
+}
+.logo-box img{ max-height:100%; max-width:100%; object-fit:contain; }
+.tile h3{ margin-bottom:12px; }
+.tile p{ font-size:15.5px; color:var(--ink-soft); line-height:1.52; }
+.tile p + p{ margin-top:10px; }
+.stat-line{ font-family:var(--fd); font-weight:700; font-size:clamp(21px,2vw,27px); letter-spacing:-0.03em; line-height:1.15; color:var(--ink); margin-bottom:11px; }
+.tile-a .stat-line{ color:var(--accent-deep); }
+.fail-grid{ display:grid; grid-template-columns:auto 1fr; gap:22px; align-items:center; }
+.fail-logos{ display:flex; gap:12px; }
+@media (max-width:940px){
+  .tile-a,.tile-b{ grid-column:span 12; }
+  .tile-c,.tile-d,.tile-e{ grid-column:span 6; }
+  .tile-b img{ min-height:220px; }
+}
+@media (max-width:640px){
+  .tile-c,.tile-d,.tile-e{ grid-column:span 12; }
+  .fail-grid{ grid-template-columns:1fr; align-items:start; }
+}
+
+/* ---------- video ---------- */
+.video-grid{ display:grid; grid-template-columns:0.72fr 1.28fr; gap:clamp(28px,4vw,56px); align-items:center; }
+.video-frame{
+  position:relative; width:100%; aspect-ratio:16/9; background:var(--ink);
+  border:1px solid var(--line); border-radius:var(--r); overflow:hidden;
+}
+.video-frame iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+@media (max-width:860px){ .video-grid{ grid-template-columns:1fr; } }
+
+/* ---------- testimonial slot ---------- */
+.testi-grid{ display:grid; grid-template-columns:1.05fr 0.95fr; gap:clamp(28px,4vw,60px); align-items:stretch; }
+.testi-slot{
+  border:1px dashed var(--line); border-radius:var(--r); background:var(--paper-hi);
+  display:flex; flex-direction:column; justify-content:center; gap:10px;
+  padding:38px 32px; min-height:240px;
+}
+.testi-slot .lbl{ font-family:var(--fm); font-size:12.5px; color:var(--ink-faint); }
+.testi-slot .ph{
+  height:11px; background:var(--paper-sunk); border-radius:1px;
+}
+.testi-slot .ph.w1{ width:92%; } .testi-slot .ph.w2{ width:78%; } .testi-slot .ph.w3{ width:54%; }
+.testi-slot .who{ margin-top:12px; font-size:14px; color:var(--ink-faint); }
+.testi-grid .cta-row{ margin-top:24px; }
+@media (max-width:820px){ .testi-grid{ grid-template-columns:1fr; } }
+
+/* ---------- about ---------- */
+.about-grid{ display:grid; grid-template-columns:0.8fr 1.2fr; gap:clamp(30px,5vw,64px); align-items:start; }
+.about-fig{ border:1px solid var(--line); border-radius:var(--r); overflow:hidden; background:var(--paper-deep); }
+.about-fig img{ width:100%; aspect-ratio:1/1; object-fit:cover; }
+.pull{
+  margin:26px 0; padding-left:22px; border-left:3px solid var(--accent);
+  font-family:var(--fd); font-weight:500; font-size:clamp(19px,1.9vw,24px);
+  line-height:1.32; letter-spacing:-0.02em; color:var(--ink);
+}
+.pull cite{ display:block; margin-top:11px; font-family:var(--fb); font-style:normal; font-size:14.5px; font-weight:500; color:var(--ink-faint); letter-spacing:0; }
+.stats{ display:grid; grid-template-columns:repeat(4,1fr); gap:0; margin-top:30px; border-top:1px solid var(--line); }
+.stat{ padding:20px 18px 4px 0; }
+.stat b{ display:block; font-family:var(--fd); font-weight:700; font-size:clamp(22px,2.1vw,29px); letter-spacing:-0.03em; line-height:1.1; }
+.stat span{ display:block; margin-top:6px; font-size:13.8px; color:var(--ink-faint); line-height:1.4; }
+@media (max-width:820px){
+  .about-grid{ grid-template-columns:1fr; }
+  .about-fig{ max-width:330px; }
+  .stats{ grid-template-columns:1fr 1fr; }
+}
+
+/* ---------- faq ---------- */
+.faq{ margin-top:42px; border-top:1px solid var(--line); }
+details{ border-bottom:1px solid var(--line); }
+summary{
+  list-style:none; cursor:pointer; padding:21px 44px 21px 0; position:relative;
+  font-family:var(--fd); font-weight:600; font-size:clamp(16.5px,1.4vw,19px);
+  letter-spacing:-0.018em; line-height:1.35; color:var(--ink);
+  transition:color .18s;
+}
+summary::-webkit-details-marker{ display:none; }
+summary:hover{ color:var(--accent-deep); }
+summary::after{
+  content:"+"; position:absolute; right:6px; top:19px;
+  font-family:var(--fm); font-size:19px; color:var(--accent-deep); line-height:1.4;
+  transform-origin:50% 55%;
+  transition:transform .22s cubic-bezier(.16,1,.3,1);
+}
+details[open] summary::after{ transform:rotate(45deg); }
+details .ans{ padding:0 0 24px; max-width:66ch; font-size:16px; color:var(--ink-soft); line-height:1.55; }
+details .ans p + p{ margin-top:11px; }
+
+/* ---------- aside (mentoria) ---------- */
+.aside-sec{ background:var(--paper-deep); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+.aside-grid{ display:grid; grid-template-columns:auto 1fr; gap:clamp(22px,3vw,44px); align-items:start; }
+.aside-tag{ font-family:var(--fm); font-size:12.5px; color:var(--ink-faint); padding-top:5px; white-space:nowrap; }
+.aside-grid h3{ margin-bottom:12px; font-size:clamp(18px,1.6vw,22px); }
+.aside-grid p{ font-size:16px; color:var(--ink-soft); line-height:1.55; max-width:62ch; }
+.aside-grid p + p{ margin-top:10px; }
+.inline-link{ color:var(--accent-deep); text-decoration:underline; text-underline-offset:3px; text-decoration-thickness:1px; font-weight:600; }
+.inline-link:hover{ color:var(--accent); }
+@media (max-width:700px){ .aside-grid{ grid-template-columns:1fr; } }
+
+/* ---------- start ---------- */
+.start-grid{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(30px,5vw,72px); align-items:start; }
+.steps{ margin-top:8px; }
+.step{ display:grid; grid-template-columns:44px 1fr; gap:16px; padding:22px 0; border-top:1px solid var(--line); }
+.step .n{ font-family:var(--fm); font-size:13px; color:var(--accent-deep); padding-top:3px; }
+.step h3{ margin-bottom:7px; }
+.step p{ font-size:15.5px; color:var(--ink-soft); line-height:1.5; }
+.cupos{
+  border:1px solid var(--line); border-radius:var(--r); background:var(--paper-hi); padding:26px;
+}
+.cupos-top{ display:flex; align-items:baseline; gap:12px; margin-bottom:16px; }
+.cupos-num{ font-family:var(--fd); font-weight:700; font-size:clamp(30px,3.4vw,44px); letter-spacing:-0.035em; line-height:1; color:var(--accent-deep); }
+.cupos-lbl{ font-family:var(--fm); font-size:12.5px; color:var(--ink-faint); }
+.slots{ display:grid; grid-template-columns:repeat(4,1fr); gap:6px; margin-bottom:18px; }
+.slots i{ height:8px; background:var(--paper-sunk); border-radius:1px; display:block; }
+.slots i.taken{ background:var(--accent-deep); }
+.cupos p{ font-size:15.5px; color:var(--ink-soft); line-height:1.5; }
+.cupos .cta-row{ margin-top:22px; }
+@media (max-width:860px){ .start-grid{ grid-template-columns:1fr; } }
+
+/* ---------- footer ---------- */
+.foot{ border-top:1px solid var(--line); background:var(--paper-hi); padding:52px 0 44px; }
+.foot-grid{ display:grid; grid-template-columns:1.2fr 0.8fr; gap:36px; align-items:start; }
+.foot-brand{ font-family:var(--fd); font-weight:700; font-size:19px; letter-spacing:-0.025em; }
+.foot p{ margin-top:12px; font-size:15px; color:var(--ink-soft); line-height:1.55; max-width:52ch; }
+.foot-links{ display:flex; flex-wrap:wrap; gap:10px 26px; }
+.foot-links a{ font-size:15px; color:var(--ink-soft); text-decoration:none; }
+.foot-links a:hover{ color:var(--accent-deep); }
+.foot-bottom{
+  margin-top:38px; padding-top:20px; border-top:1px solid var(--line-soft);
+  display:flex; flex-wrap:wrap; gap:10px 24px; justify-content:space-between;
+  font-family:var(--fm); font-size:12.5px; color:var(--ink-faint);
+}
+@media (max-width:760px){ .foot-grid{ grid-template-columns:1fr; } }
+
+/* ---------- reveal motion (MOTION_INTENSITY 4) ---------- */
+.js .rv{ opacity:0; transform:translateY(16px); }
+.js .rv.in{
+  opacity:1; transform:none;
+  transition:opacity .62s cubic-bezier(.16,1,.3,1), transform .62s cubic-bezier(.16,1,.3,1);
+}
+@media (prefers-reduced-motion: reduce){
+  .js .rv{ opacity:1 !important; transform:none !important; transition:none !important; }
+  .card-s img{ transition:none; }
+  .btn{ transition:none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ========================= NAV ========================= -->
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top">Salomón Muriel <span>/ Un Proceso Menos</span></a>
+    <nav class="nav-links" aria-label="Secciones">
+      <a href="#producto">Qué recibe</a>
+      <a href="#semanas">Las ocho semanas</a>
+      <a href="#numero">El número</a>
+      <a href="#construido">Lo que he construido</a>
+    </nav>
+    <a class="btn btn-1 btn-sm" href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20quiero%20saber%20si%20Un%20Proceso%20Menos%20aplica%20para%20mi%20empresa.">Escríbame por WhatsApp</a>
+  </div>
+</header>
+
+<!-- ========================= HERO ========================= -->
+<main id="top">
+<section class="sec hero">
+  <div class="wrap hero-grid">
+    <div class="rv">
+      <div class="hero-kick">
+        <span class="bar" aria-hidden="true"></span>
+        <span class="kicker">Un Proceso Menos</span>
+      </div>
+      <h1>Ese proceso que hacen a mano, se lo quito.</h1>
+      <p class="lead">Ocho semanas. Yo lo diagnostico, yo mismo construyo la herramienta, y su gente la usa antes de que yo salga.</p>
+      <div class="cta-row">
+        <a class="btn btn-1" href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20quiero%20saber%20si%20Un%20Proceso%20Menos%20aplica%20para%20mi%20empresa.">Escríbame por WhatsApp</a>
+        <a class="btn btn-2" href="https://cal.com/salomonmuriel">Agendar los 30 minutos</a>
+      </div>
+    </div>
+    <div class="hero-fig rv">
+      <img src="assets/fotoSalo.jpeg" alt="Salomón Muriel, de saco verde y brazos cruzados, sobre fondo oscuro." width="800" height="920">
+    </div>
+  </div>
+</section>
+
+<!-- ========================= FICHA RAPIDA ========================= -->
+<section class="spec">
+  <div class="wrap">
+    <div class="spec-grid">
+      <div class="spec-cell rv">
+        <div class="spec-k">Duración</div>
+        <div class="spec-v num">8 semanas</div>
+        <p class="spec-n">Con fecha de entrega acordada antes de empezar.</p>
+      </div>
+      <div class="spec-cell rv">
+        <div class="spec-k">Alcance</div>
+        <div class="spec-v num">1 proceso</div>
+        <p class="spec-n">El que más le duele. Queda por escrito antes de arrancar.</p>
+      </div>
+      <div class="spec-cell spec-cell--hot rv">
+        <div class="spec-k">Precio</div>
+        <div class="spec-v">Fijo</div>
+        <p class="spec-n">Un solo número por todo el proyecto. No cobro por hora.</p>
+      </div>
+      <div class="spec-cell rv">
+        <div class="spec-k">Cupos</div>
+        <div class="spec-v num">2 de 4</div>
+        <p class="spec-n">Hoy tengo dos proyectos andando. Quedan dos cupos.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= RECONOCIMIENTO ========================= -->
+<section class="sec" id="chinomatico">
+  <div class="wrap">
+    <div class="head rv">
+      <h2>Si su empresa funciona chinomática, esto es para usted.</h2>
+      <p class="lead">Chinomático: parece automático, pero en realidad hay un chino haciéndolo a mano, todos los días, a la misma hora.</p>
+    </div>
+
+    <div class="rail-outer rv">
+      <div class="rail" role="list" aria-label="Señales de trabajo manual">
+        <article class="card-s" role="listitem">
+          <figure><img src="https://picsum.photos/seed/pedidos-whatsapp-mostrador/600/450" alt="Persona anotando pedidos en un mostrador." loading="lazy"></figure>
+          <p><span class="idx">01</span>Alguien pasa los pedidos del WhatsApp al Excel, uno por uno, todos los días.</p>
+        </article>
+        <article class="card-s" role="listitem">
+          <figure><img src="https://picsum.photos/seed/bodega-inventario-cajas/600/450" alt="Estantes de bodega con cajas apiladas." loading="lazy"></figure>
+          <p><span class="idx">02</span>Hay una persona que es el sistema. Si se enferma o sale a vacaciones, la empresa se frena.</p>
+        </article>
+        <article class="card-s" role="listitem">
+          <figure><img src="https://picsum.photos/seed/informe-lunes-papeles/600/450" alt="Papeles y reportes impresos sobre un escritorio." loading="lazy"></figure>
+          <p><span class="idx">03</span>El mismo informe se vuelve a armar a mano todos los lunes, con los mismos datos.</p>
+        </article>
+        <article class="card-s" role="listitem">
+          <figure><img src="https://picsum.photos/seed/cocina-comandas-restaurante/600/450" alt="Cocina de restaurante en plena operación." loading="lazy"></figure>
+          <p><span class="idx">04</span>El inventario de verdad solo lo tiene una persona en la cabeza, y no está escrito en ninguna parte.</p>
+        </article>
+        <article class="card-s" role="listitem">
+          <figure><img src="https://picsum.photos/seed/hojas-de-calculo-pantalla/600/450" alt="Hoja de cálculo abierta en la pantalla de un computador." loading="lazy"></figure>
+          <p><span class="idx">05</span>Hay tres archivos que deberían cuadrar entre sí y nunca cuadran.</p>
+        </article>
+        <article class="card-s" role="listitem">
+          <figure><img src="https://picsum.photos/seed/software-caro-sin-usar/600/450" alt="Computador encendido y sin usar en una oficina." loading="lazy"></figure>
+          <p><span class="idx">06</span>Ya compraron un software caro que nadie abre, y ahora nadie quiere hablar del tema.</p>
+        </article>
+      </div>
+    </div>
+
+    <p class="after-rail rv">Usted ya sabe cuál es. Es el que menciona cuando alguien le pregunta por qué no se ha ido de vacaciones.</p>
+  </div>
+</section>
+
+<!-- ========================= QUE RECIBE ========================= -->
+<section class="sec" id="producto">
+  <div class="wrap">
+    <div class="head rv">
+      <h2>Qué le queda cuando yo salgo.</h2>
+      <p class="lead">No es un informe. Es algo prendido, con los datos de verdad de su empresa adentro, que su gente ya está usando.</p>
+    </div>
+
+    <div class="inc">
+      <div class="inc-item rv">
+        <span class="n">01</span>
+        <div>
+          <h3>La herramienta funcionando</h3>
+          <p>Con sus datos reales cargados, no con datos de ejemplo. El día de la entrega ya se está usando para trabajar.</p>
+        </div>
+      </div>
+      <div class="inc-item rv">
+        <span class="n">02</span>
+        <div>
+          <h3>El proceso en una página</h3>
+          <p>Qué quedó automático, qué quedó manual a propósito, y por qué. Una hoja, no un documento de sesenta.</p>
+        </div>
+      </div>
+      <div class="inc-item rv">
+        <span class="n">03</span>
+        <div>
+          <h3>Su gente entrenada</h3>
+          <p>Y la grabación del entrenamiento, para el que entre a trabajar dentro de seis meses.</p>
+        </div>
+      </div>
+      <div class="inc-item rv">
+        <span class="n">04</span>
+        <div>
+          <h3>Todo a nombre suyo</h3>
+          <p>El código, las cuentas, las claves y los accesos quedan de la empresa. Nada queda a nombre mío.</p>
+        </div>
+      </div>
+      <div class="inc-item rv">
+        <span class="n">05</span>
+        <div>
+          <h3>El tiempo ahorrado, medido</h3>
+          <p>Cronometramos el proceso antes y después. Le entrego el número, no la sensación de que mejoró.</p>
+        </div>
+      </div>
+      <div class="inc-item rv">
+        <span class="n">06</span>
+        <div>
+          <h3>Dos revisiones incluidas</h3>
+          <p>Al mes y a los dos meses de haber entregado. Ahí se ajusta lo que se haya torcido con el uso real.</p>
+        </div>
+      </div>
+      <div class="inc-item rv">
+        <span class="n">07</span>
+        <div>
+          <h3>Mi WhatsApp directo</h3>
+          <p>Durante las ocho semanas me escribe a mí. No hay ejecutivo de cuenta ni mesa de ayuda de por medio.</p>
+        </div>
+      </div>
+      <div class="inc-item rv">
+        <span class="n">08</span>
+        <div>
+          <h3>Yo, en su oficina</h3>
+          <p>El que llega a mirar cómo trabaja su gente soy yo. No mando a nadie a hacerlo por mí.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= QUE NO INCLUYE ========================= -->
+<section class="sec excl-sec">
+  <div class="wrap">
+    <div class="head rv">
+      <h2>Lo que no le voy a hacer.</h2>
+      <p class="lead">Prefiero decirlo aquí y no en la cuarta reunión, cuando ya perdimos los dos el tiempo.</p>
+    </div>
+
+    <div class="excl">
+      <div class="excl-item rv">
+        <strong>No es cambiar toda la empresa</strong>
+        <p>Es un proceso. Uno. Si lo que quiere es cambiarlo todo de una, no soy yo y no le voy a decir que sí.</p>
+      </div>
+      <div class="excl-item rv">
+        <strong>No hay presentación bonita</strong>
+        <p>No entrego sesenta diapositivas. Si lo que necesita es un documento para mostrarle a la junta, hay gente que lo hace mejor que yo.</p>
+      </div>
+      <div class="excl-item rv">
+        <strong>No le armo el equipo de tecnología</strong>
+        <p>No contrato ni selecciono gente por usted. Le puedo decir qué perfil buscar, pero hasta ahí.</p>
+      </div>
+      <div class="excl-item rv">
+        <strong>No hay soporte permanente</strong>
+        <p>Después de las dos revisiones incluidas, si quiere que le siga pendiente, se acuerda aparte. No queda amarrado a mí.</p>
+      </div>
+      <div class="excl-item rv">
+        <strong>No le vendo licencias de nada</strong>
+        <p>No me gano comisión de ningún software. Si lo que necesita ya existe y cuesta treinta dólares al mes, se lo digo y no se lo construyo.</p>
+      </div>
+      <div class="excl-item rv">
+        <strong>No invento tecnología nueva</strong>
+        <p>Si su negocio depende de investigar o de inventar algo que todavía no existe, ese no es mi oficio.</p>
+      </div>
+      <div class="excl-item excl-item--last rv">
+        <strong>Y no trabajo con empresas grandes</strong>
+        <p>Esto está hecho para empresas de menos de cinco mil millones de pesos al año. Si la suya ya factura mucho más que eso, no sé cómo se maneja una empresa de ese tamaño, y prefiero decírselo antes que cobrarle por averiguarlo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= LAS OCHO SEMANAS ========================= -->
+<section class="sec" id="semanas">
+  <div class="wrap">
+    <div class="head rv">
+      <h2>Las ocho semanas, tal como pasan.</h2>
+      <p class="lead">Esta parte no cambia de un cliente a otro. Lo único que cambia es qué proceso metemos adentro.</p>
+    </div>
+
+    <div class="gantt">
+      <div class="gantt-ruler rv" aria-hidden="true">
+        <div class="ruler-note">Semana</div>
+        <div class="ruler-track">
+          <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span>
+        </div>
+        <div></div>
+      </div>
+
+      <div class="phase rv">
+        <div class="phase-when mono">Semanas 1 y 2</div>
+        <div class="phase-track" role="img" aria-label="Ocupa las semanas 1 y 2 de 8">
+          <i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i>
+        </div>
+        <div class="phase-body">
+          <h3>Miro cómo trabajan hoy</h3>
+          <p>Me siento al lado de la persona que hace el trabajo, con cronómetro. No pregunto cómo debería ser el proceso: miro cómo es de verdad, con los apuros y los atajos incluidos.</p>
+          <p class="phase-out"><b>Al final</b><span>El proceso dibujado tal como pasa hoy, con los tiempos reales de cada paso.</span></p>
+        </div>
+      </div>
+
+      <div class="phase rv">
+        <div class="phase-when mono">Semanas 3 y 4</div>
+        <div class="phase-track" role="img" aria-label="Ocupa las semanas 3 y 4 de 8">
+          <i></i><i></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i>
+        </div>
+        <div class="phase-body">
+          <h3>Decidimos qué se automatiza y qué no</h3>
+          <p>Nos sentamos usted y yo. Hay pasos que no vale la pena automatizar y se lo digo. De ahí sale una hoja con el alcance firmado: lo que no entre en esa hoja, no entra.</p>
+          <p class="phase-out"><b>Al final</b><span>El alcance por escrito y la fecha exacta de entrega.</span></p>
+        </div>
+      </div>
+
+      <div class="phase rv">
+        <div class="phase-when mono">Semanas 5, 6 y 7</div>
+        <div class="phase-track" role="img" aria-label="Ocupa las semanas 5, 6 y 7 de 8">
+          <i></i><i></i><i></i><i></i><i class="on-strong"></i><i class="on-strong"></i><i class="on-strong"></i><i></i>
+        </div>
+        <div class="phase-body">
+          <h3>Construyo la herramienta</h3>
+          <p>Yo escribo el programa, apoyado en inteligencia artificial, que es lo que permite que una sola persona entregue en semanas lo que antes pedía un equipo y un trimestre. Cada viernes le muestro lo que va: si algo no sirve, se cambia esa semana y no al final.</p>
+          <p class="phase-out"><b>Al final</b><span>La herramienta andando con los datos de su empresa.</span></p>
+        </div>
+      </div>
+
+      <div class="phase rv">
+        <div class="phase-when mono">Semana 8</div>
+        <div class="phase-track" role="img" aria-label="Ocupa la semana 8 de 8">
+          <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="on"></i>
+        </div>
+        <div class="phase-body">
+          <h3>Su gente la usa y yo salgo</h3>
+          <p>El entrenamiento no es una charla: su gente hace el trabajo del día dentro de la herramienta, conmigo al lado. Lo que se atore ahí se arregla ahí mismo. Después le entrego las claves y me voy.</p>
+          <p class="phase-out"><b>Al final</b><span>Todo a nombre de la empresa y el equipo trabajando sin mí.</span></p>
+        </div>
+      </div>
+
+      <div class="after-gantt rv">
+        <div class="phase-when mono">Después</div>
+        <div class="checkins">
+          <div class="checkin">
+            <b>Día 30</b>
+            <span>Primera revisión incluida. Ya pasó un cierre de mes completo con la herramienta.</span>
+          </div>
+          <div class="checkin">
+            <b>Día 60</b>
+            <span>Segunda revisión incluida. Aquí se ve si el equipo la adoptó de verdad o volvió al Excel.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= EL NUMERO ========================= -->
+<section class="sec price-sec" id="numero">
+  <div class="wrap price-grid">
+    <div class="rv">
+      <h2>De dónde sale el número.</h2>
+      <p class="lead" style="margin-top:18px;">Un producto sin precio a la vista se ve raro, y lo sé. Le explico por qué no está en esta página y cómo se define en la primera llamada.</p>
+    </div>
+    <div class="rv">
+      <div class="rules">
+        <div class="rule-item">
+          <span class="n">01</span>
+          <p>Depende de una sola cosa: cuánto trabajo manual hay que quitar. Un proceso que se come seis horas a la semana no cuesta lo mismo que uno que se come cuarenta.</p>
+        </div>
+        <div class="rule-item">
+          <span class="n">02</span>
+          <p>Se lo digo en la primera llamada, no en la quinta. Treinta minutos y usted ya sabe el número. Sin propuesta de veinte páginas de por medio.</p>
+        </div>
+        <div class="rule-item">
+          <span class="n">03</span>
+          <p>Es un solo número por todo el proyecto, acordado antes de empezar. No cobro por hora, ni por reunión, ni por correo. Si me demoro más de las ocho semanas, ese problema es mío y no suyo.</p>
+        </div>
+        <div class="rule-item">
+          <span class="n">04</span>
+          <p>Se paga en tres partes: al arrancar, a la mitad y el día de la entrega.</p>
+        </div>
+      </div>
+
+      <div class="price-close">
+        <p>Y si en esos treinta minutos me doy cuenta de que usted no necesita esto, se lo digo y ahí queda. No le cobro por decirle que no.</p>
+      </div>
+
+      <div class="cta-row">
+        <a class="btn btn-1" href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20quiero%20saber%20el%20n%C3%BAmero%20de%20Un%20Proceso%20Menos%20para%20mi%20empresa.">Escríbame por WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= PRUEBA ========================= -->
+<section class="sec" id="construido">
+  <div class="wrap">
+    <div class="head rv">
+      <h2>Lo que he construido y lo que se me cayó.</h2>
+      <p class="lead">No tengo un portafolio de clientes de consultoría para mostrarle todavía. Tengo mis propias empresas, que es donde puse la plata.</p>
+    </div>
+
+    <div class="bento">
+      <div class="tile tile-a rv">
+        <div class="logo-row">
+          <span class="logo-box"><img src="assets/ignia.png" alt="Ignia"></span>
+        </div>
+        <p class="stat-line">USD 150.000 en el primer año, rentable desde el primer mes.</p>
+        <p>Arrancó en junio de 2025. Somos cinco personas y la primera cohorte tuvo cerca de treinta participantes.</p>
+        <p>El CRM, la página y la plataforma de comunidad los construí yo. Es mi trabajo principal hoy, y es la razón por la que esta práctica de consultoría tiene cupos contados.</p>
+      </div>
+
+      <div class="tile tile-b rv">
+        <img src="assets/salo_oscar.webp" alt="Salomón Muriel y su socio mostrando el producto de Finco en un computador portátil." loading="lazy">
+      </div>
+
+      <div class="tile tile-c rv">
+        <div class="logo-row">
+          <span class="logo-box"><img src="assets/finco.png" alt="Finco"></span>
+        </div>
+        <p class="stat-line">100.000 reportes al año.</p>
+        <p>Vendida en cinco veces lo invertido, cerca de USD 1,5 millones. El producto lo construimos nosotros mismos.</p>
+      </div>
+
+      <div class="tile tile-d rv">
+        <div class="logo-row">
+          <span class="logo-box"><img src="assets/prestagente.png" alt="PrestaGente"></span>
+        </div>
+        <p class="stat-line">Vendida en cerca de USD 1 millón.</p>
+        <p>Préstamos entre conocidos. Otra empresa que arrancó de cero y terminó vendida.</p>
+      </div>
+
+      <div class="tile tile-e rv">
+        <p class="stat-line">40 personas a cargo en R5.</p>
+        <p>Ahí armé el pipeline de datos completo y el sistema de modelos de riesgo. En mis propias empresas he tenido hasta quince personas a cargo.</p>
+      </div>
+
+      <div class="tile tile-f rv">
+        <div class="fail-grid">
+          <div class="fail-logos">
+            <span class="logo-box"><img src="assets/beriblock.png" alt="Beriblock"></span>
+            <span class="logo-box"><img src="assets/elpalomo.png" alt="El Palomo"></span>
+          </div>
+          <div>
+            <h3>Y las que no funcionaron</h3>
+            <p>Beriblock quebró. El Palomo fracasó feo. Las pongo aquí porque el que solo le muestra las que le salieron bien le está escondiendo la mitad del oficio, y porque de esas dos aprendí a distinguir rápido cuándo un negocio no va a levantar.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= VIDEO ========================= -->
+<section class="sec sec--tight" style="background:var(--paper-hi);border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
+  <div class="wrap video-grid">
+    <div class="rv">
+      <h2>Si prefiere oírme antes de escribirme.</h2>
+      <p class="lead" style="margin-top:16px;">Cuarenta minutos en el pódcast Ventaja, hablando de negocios aburridos y de qué es innovar de verdad.</p>
+      <p class="body" style="margin-top:14px;font-size:15.5px;">Si su empresa es de las aburridas (ropa, comida, distribución, retail, servicios), es exactamente de las que me gustan.</p>
+    </div>
+    <div class="video-frame rv">
+      <iframe src="https://www.youtube-nocookie.com/embed/F9t9f5Et_04" title="Negocios aburridos e innovación, con Salomón Muriel en el pódcast Ventaja" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= TESTIMONIOS (honesto) ========================= -->
+<section class="sec">
+  <div class="wrap testi-grid">
+    <div class="rv">
+      <h2>Todavía no tengo testimonios escritos.</h2>
+      <p class="lead" style="margin-top:18px;">He trabajado con unas siete personas en mentoría y con varios clientes de consultoría. No les he pedido que escriban nada, y no voy a inventar frases para llenar este espacio.</p>
+      <p class="body" style="margin-top:14px;">Mientras tanto le ofrezco algo mejor que una frase entre comillas: pídame el teléfono de un cliente y llámelo usted. Le paso el contacto sin filtro y sin avisarle qué decir.</p>
+      <div class="cta-row">
+        <a class="btn btn-2" href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20quiero%20el%20tel%C3%A9fono%20de%20un%20cliente%20suyo%20para%20llamarlo.">Pídame un teléfono</a>
+      </div>
+    </div>
+    <!-- TODO: reemplazar este bloque por 2 o 3 testimonios reales cuando lleguen. -->
+    <div class="testi-slot rv">
+      <span class="lbl">Espacio reservado</span>
+      <span class="ph w1" aria-hidden="true"></span>
+      <span class="ph w2" aria-hidden="true"></span>
+      <span class="ph w3" aria-hidden="true"></span>
+      <span class="who">Aquí van dos o tres testimonios de clientes, con nombre y empresa, apenas los tenga por escrito.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= QUIEN ========================= -->
+<section class="sec" style="background:var(--paper-hi);border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
+  <div class="wrap about-grid">
+    <div class="about-fig rv">
+      <img src="assets/salomon.jpg" alt="Salomón Muriel al aire libre, con chaqueta azul." loading="lazy">
+    </div>
+    <div class="rv">
+      <h2>Quién le va a hacer el trabajo.</h2>
+      <p class="lead" style="margin-top:18px;">Soy Salomón Muriel. He fundado empresas, he vendido dos y he quebrado otras. No soy consultor de diapositivas: la herramienta la escribo yo.</p>
+
+      <p class="pull">Lo mío es armar sistemas que le funcionen a la gente que los usa, y sacar las cosas del papel.
+        <cite>Salomón Muriel</cite>
+      </p>
+
+      <p class="body">Esta es mi práctica personal, aparte de mi trabajo en Ignia. Aquí no hay agencia, ni socios, ni equipo junior: el que llega a su oficina y el que escribe el programa soy la misma persona. Por eso solo puedo tener cuatro proyectos al tiempo.</p>
+
+      <div class="stats">
+        <div class="stat"><b class="num">2</b><span>empresas vendidas</span></div>
+        <div class="stat"><b class="num">2</b><span>empresas quebradas</span></div>
+        <div class="stat"><b class="num">40</b><span>personas a cargo en R5</span></div>
+        <div class="stat"><b class="num">15</b><span>personas a cargo en sus propias empresas</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= PREGUNTAS ========================= -->
+<section class="sec">
+  <div class="wrap">
+    <div class="head rv">
+      <h2>Lo que siempre me preguntan.</h2>
+    </div>
+
+    <div class="faq rv">
+      <details>
+        <summary>Ya compramos un software caro y nadie lo usa. ¿Esto no va a terminar igual?</summary>
+        <div class="ans">
+          <p>Casi siempre ese software no se usa porque se compró antes de mirar cómo trabaja la gente. Por eso las dos primeras semanas son de mirar y no de construir.</p>
+          <p>Y si resulta que lo que ya compraron sí sirve y solo está mal montado, se lo digo y montamos eso bien, en vez de construir algo nuevo. Le sale más barato y a mí me da lo mismo.</p>
+        </div>
+      </details>
+      <details>
+        <summary>¿Tiene que ser presencial?</summary>
+        <div class="ans">
+          <p>Las dos primeras semanas sí, al menos unos días. El trabajo manual no se entiende por videollamada: hay que ver la bodega, el mostrador o la cocina. El resto se puede hacer a distancia, con la revisión de los viernes.</p>
+        </div>
+      </details>
+      <details>
+        <summary>¿Y si la herramienta se daña después de que usted salga?</summary>
+        <div class="ans">
+          <p>Todo queda a nombre de la empresa y documentado, y hay dos revisiones incluidas, al mes y a los dos meses. Si después quiere que le siga pendiente, lo acordamos aparte.</p>
+          <p>La idea no es que quede dependiendo de mí. Si en un año quiere que otra persona le siga el trabajo, tiene todo lo que necesita para entregárselo.</p>
+        </div>
+      </details>
+      <details>
+        <summary>Mi gente es mayor y no es muy de computadores.</summary>
+        <div class="ans">
+          <p>Mejor. Las herramientas que hago se prueban con la persona que las va a usar, no con el gerente. Si su almacenista no la puede usar el primer día, está mal hecha y la arreglo yo.</p>
+        </div>
+      </details>
+      <details>
+        <summary>¿Esto es con inteligencia artificial?</summary>
+        <div class="ans">
+          <p>Donde sirve, sí, y es lo que me permite entregar en ocho semanas. Pero la inteligencia artificial no es el producto: el producto es que su gente deje de hacer el trabajo a mano.</p>
+          <p>A veces eso se resuelve con IA y a veces con una tabla bien hecha y un botón. No le voy a meter IA para poder decir que le metí IA.</p>
+        </div>
+      </details>
+      <details>
+        <summary>¿Firmamos acuerdo de confidencialidad?</summary>
+        <div class="ans">
+          <p>Sí, sin problema, y me parece bien que lo pida. Voy a ver sus números, sus clientes y su forma de trabajar.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= MENTORIA (aparte) ========================= -->
+<section class="sec sec--tight aside-sec">
+  <div class="wrap aside-grid">
+    <div class="aside-tag">Si todavía es muy temprano</div>
+    <div>
+      <h3>¿Y si todavía no tengo ni la empresa andando?</h3>
+      <p>Entonces esto no es lo suyo, y no le voy a vender ocho semanas de construcción para un proceso que todavía no existe.</p>
+      <p>Para ese momento trabajo uno a uno con personas que están empezando: tareas prácticas cada semana y seguimiento, hasta que las cosas pasen. Es trabajo individual, cuesta bastante menos que esto, y es otra conversación. <a class="inline-link" href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20estoy%20empezando%20y%20quiero%20saber%20de%20la%20mentor%C3%ADa%20uno%20a%20uno.">Escríbame y le cuento</a>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= COMO SE ARRANCA ========================= -->
+<section class="sec" id="empezar">
+  <div class="wrap">
+    <div class="head rv">
+      <h2>Cómo se arranca.</h2>
+      <p class="lead">Tres pasos. El primero le toma dos minutos y no lo compromete a nada.</p>
+    </div>
+
+    <div class="start-grid" style="margin-top:44px;">
+      <div class="steps rv">
+        <div class="step">
+          <span class="n">01</span>
+          <div>
+            <h3>Me escribe y me cuenta qué se hace a mano</h3>
+            <p>Dos líneas por WhatsApp bastan. No necesito un documento ni una reunión previa para entender el problema.</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="n">02</span>
+          <div>
+            <h3>Hablamos treinta minutos</h3>
+            <p>Ahí le digo tres cosas: si le sirvo, cuál sería el proceso que atacaríamos, y cuál es el número. Si no le sirvo, también se lo digo ahí.</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="n">03</span>
+          <div>
+            <h3>Firmamos el alcance y empiezo</h3>
+            <p>Una hoja con qué entra, qué no entra, cuánto cuesta y qué día se entrega. Arranco el lunes siguiente.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="cupos rv">
+        <div class="cupos-top">
+          <span class="cupos-num num">2 de 4</span>
+          <span class="cupos-lbl">cupos ocupados</span>
+        </div>
+        <div class="slots" role="img" aria-label="Dos de cuatro cupos ocupados">
+          <i class="taken"></i><i class="taken"></i><i></i><i></i>
+        </div>
+        <p>Esto no es un truco de página web. Como cada proyecto lo hago yo y tengo mi trabajo en Ignia, el máximo real son cuatro al tiempo. Hoy tengo dos andando.</p>
+        <p style="margin-top:10px;">Cuando se llenen, este número va a decir cuatro de cuatro y no le voy a decir que sí.</p>
+        <div class="cta-row">
+          <a class="btn btn-1" href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n.%20Esto%20es%20lo%20que%20hoy%20hacemos%20a%20mano%20en%20mi%20empresa%3A%20">Escríbame por WhatsApp</a>
+          <a class="btn btn-2" href="https://cal.com/salomonmuriel">Agendar los 30 minutos</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ========================= FOOTER ========================= -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand">Salomón Muriel</div>
+        <p>Práctica personal de consultoría. Estrategia y la herramienta construida, para empresas colombianas que todavía hacen a mano lo que ya podría hacerse solo.</p>
+        <p>También doy charlas en empresas, universidades y eventos, sobre tecnología, inteligencia artificial y emprendimiento. Si le interesa una, escríbame por el mismo lado.</p>
+      </div>
+      <div>
+        <div class="foot-links">
+          <a href="#producto">Qué recibe</a>
+          <a href="#semanas">Las ocho semanas</a>
+          <a href="#numero">El número</a>
+          <a href="#construido">Lo que he construido</a>
+          <a href="#empezar">Cómo se arranca</a>
+          <a href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20le%20escribo%20desde%20su%20p%C3%A1gina.">WhatsApp</a>
+          <a href="https://cal.com/salomonmuriel">Agenda</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>Un Proceso Menos</span>
+      <span>Colombia</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var nodes = document.querySelectorAll('.rv');
+  if (reduce.matches || !('IntersectionObserver' in window)) {
+    for (var i=0;i<nodes.length;i++) nodes[i].classList.add('in');
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+  nodes.forEach(function(n, i){
+    n.style.transitionDelay = (Math.min(i % 5, 4) * 55) + 'ms';
+    io.observe(n);
+  });
+})();
+</script>
+
+</body>
+</html>

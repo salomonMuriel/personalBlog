@@ -1,0 +1,1144 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Salomón Muriel — Su empresa no está automatizada</title>
+<meta name="description" content="Carta para el dueño de una empresa colombiana que factura menos de dos millones de dólares al año. Estrategia y herramientas construidas por una sola mano.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  corePlugins: { preflight: true },
+  theme: {
+    extend: {
+      colors: {
+        panel:   '#141715',
+        panelA:  '#121614',
+        panelB:  '#171B19',
+        seam:    '#080A09',
+        bezel:   '#3A403C',
+        steel:   '#8C9291',
+        steeldk: '#5A625E',
+        bone:    '#D8DCD7',
+        mute:    '#98A29C',
+        plate:   '#D9D8CF',
+        plateink:'#14171A',
+        platemute:'#4E5551',
+        amber:   '#F2A81C',
+        hazard:  '#FF6A13',
+        run:     '#3ED18A',
+        fault:   '#FF4B39'
+      },
+      fontFamily: {
+        disp: ['Archivo', 'system-ui', 'sans-serif'],
+        sans: ['"IBM Plex Sans"', 'system-ui', 'sans-serif'],
+        mono: ['"IBM Plex Mono"', 'ui-monospace', 'monospace']
+      },
+      maxWidth: { rack: '78rem', prose: '62ch' }
+    }
+  }
+}
+</script>
+<style>
+  html { background:#141715; scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
+  html, body { overflow-x:hidden; max-width:100%; }
+  body { background:#141715; color:#D8DCD7; font-family:"IBM Plex Sans", system-ui, sans-serif; }
+  @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } }
+
+  /* ---------- browser surfaces ---------- */
+  ::selection { background:#FF6A13; color:#0A0C0B; }
+  ::-moz-selection { background:#FF6A13; color:#0A0C0B; }
+  * { caret-color:#F2A81C; }
+  :focus-visible { outline:2px solid #FF6A13; outline-offset:3px; border-radius:2px; }
+  html { scrollbar-color:#3A403C #0B0E0C; scrollbar-width:thin; }
+  ::-webkit-scrollbar { width:11px; height:11px; }
+  ::-webkit-scrollbar-track { background:#0B0E0C; }
+  ::-webkit-scrollbar-thumb { background:#333935; border:2px solid #0B0E0C; border-radius:6px; }
+  ::-webkit-scrollbar-thumb:hover { background:#4A524D; }
+  a { text-underline-offset:4px; text-decoration-thickness:1px; }
+  .tnum { font-variant-numeric: tabular-nums; font-feature-settings:"tnum" 1; }
+
+  /* ---------- type ---------- */
+  .plate-type { font-family:Archivo, sans-serif; font-variation-settings:'wdth' 86,'wght' 640; text-transform:uppercase; letter-spacing:.15em; }
+  .head       { font-family:Archivo, sans-serif; font-variation-settings:'wdth' 76,'wght' 780; letter-spacing:-.026em; line-height:.96; }
+  .head-cond  { font-family:Archivo, sans-serif; font-variation-settings:'wdth' 64,'wght' 840; letter-spacing:-.038em; line-height:.9;  text-transform:uppercase; }
+  .head-wide  { font-family:Archivo, sans-serif; font-variation-settings:'wdth' 108,'wght' 560; letter-spacing:.02em; }
+  .lede { font-size:1.0625rem; line-height:1.68; }
+  @media (min-width:768px){ .lede{ font-size:1.125rem; line-height:1.7; } }
+
+  /* ---------- panel materials ---------- */
+  .metal {
+    background-image:
+      repeating-linear-gradient(90deg, rgba(255,255,255,.014) 0 1px, transparent 1px 3px),
+      radial-gradient(120% 80% at 50% -10%, rgba(255,255,255,.045), transparent 60%);
+  }
+  #grain { position:fixed; inset:0; z-index:60; pointer-events:none; opacity:.28; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size:180px 180px; }
+  .hazardband { height:7px;
+    background-image:repeating-linear-gradient(135deg, #FF6A13 0 12px, #0A0C0B 12px 24px);
+    box-shadow:inset 0 -1px 0 rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.08); }
+
+  .seamline { border-top:3px solid #080A09; box-shadow:inset 0 1px 0 rgba(255,255,255,.055); }
+
+  .screw { width:10px; height:10px; border-radius:50%; flex:none;
+    background:radial-gradient(circle at 32% 28%, #9aa19c, #4a514d 55%, #262b28 100%);
+    box-shadow:inset 0 0 0 1px rgba(0,0,0,.62), 0 1px 0 rgba(255,255,255,.07); position:relative; }
+  .screw::after { content:""; position:absolute; inset:0; margin:auto; width:6px; height:1.6px; background:#12150f; border-radius:1px;
+    transform:rotate(var(--r,26deg)); box-shadow:0 1px 0 rgba(255,255,255,.09); }
+
+  /* engraved plate (dark phenolic, white core) */
+  .engraved { background:linear-gradient(180deg,#0E110F,#0A0D0B); color:#C6CCC6;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.09), inset 0 -1px 0 rgba(0,0,0,.8), 0 1px 0 rgba(255,255,255,.05);
+    border-radius:2px; }
+  .engraved-lite { background:linear-gradient(180deg,#D9D8CF,#C9C8BE); color:#14171A;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.75), inset 0 -1px 0 rgba(0,0,0,.28), 0 1px 2px rgba(0,0,0,.45); border-radius:2px; }
+
+  /* pilot lamps */
+  .lamp { --c:#F2A81C; width:16px; height:16px; border-radius:50%; flex:none; display:inline-block;
+    background:radial-gradient(circle at 36% 30%, color-mix(in srgb, var(--c) 45%, #ffffff), var(--c) 52%, color-mix(in srgb, var(--c) 62%, #000) 100%);
+    box-shadow:0 0 0 2px #0B0E0C, 0 0 0 3.5px #4B524E, 0 0 13px 1px color-mix(in srgb, var(--c) 62%, transparent), inset 0 -2px 3px rgba(0,0,0,.45);
+    transition:background .25s ease, box-shadow .25s ease; }
+  .lamp.off { background:radial-gradient(circle at 36% 30%, #363C38, #212623 62%, #161A18);
+    box-shadow:0 0 0 2px #0B0E0C, 0 0 0 3.5px #3E443F, inset 0 -2px 3px rgba(0,0,0,.6); }
+  .lamp.lg { width:26px; height:26px; }
+  .lamp.xl { width:46px; height:46px; box-shadow:0 0 0 3px #0B0E0C, 0 0 0 5px #545B56, 0 0 34px 4px color-mix(in srgb, var(--c) 55%, transparent), inset 0 -4px 7px rgba(0,0,0,.45); }
+  .lamp.xl.off { box-shadow:0 0 0 3px #0B0E0C, 0 0 0 5px #454B47, inset 0 -4px 7px rgba(0,0,0,.6); }
+  @keyframes flick { 0%,96%,100%{opacity:1} 97%{opacity:.72} 98.5%{opacity:.93} }
+  .flick { animation:flick 7.5s linear infinite; }
+
+  /* toggle switch */
+  .sw { width:36px; height:56px; border-radius:4px; flex:none; position:relative; cursor:pointer; padding:0; border:0;
+    background:linear-gradient(180deg,#262B28,#141815);
+    box-shadow:inset 0 0 0 1px #464C48, inset 0 2px 5px rgba(0,0,0,.65), 0 1px 0 rgba(255,255,255,.05); }
+  .sw .slot { position:absolute; left:50%; top:8px; bottom:8px; width:8px; margin-left:-4px; border-radius:4px;
+    background:#0A0D0B; box-shadow:inset 0 2px 4px rgba(0,0,0,.9); }
+  .sw .bat { position:absolute; left:50%; width:16px; height:22px; margin-left:-8px; border-radius:5px; top:6px;
+    background:linear-gradient(180deg,#CBD1CC,#8A918C 45%,#565D58 70%,#3A403C);
+    box-shadow:0 2px 4px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.5);
+    transform:translateY(22px); transition:transform .16s cubic-bezier(.22,.9,.28,1.1); }
+  .sw[data-pos="up"] .bat { transform:translateY(0); }
+  .sw:active .bat { filter:brightness(1.12); }
+
+  /* LOTO tag */
+  .loto { transform-origin:50% 6px; animation:sway 6.5s ease-in-out infinite; }
+  @keyframes sway { 0%,100%{ transform:rotate(-3.2deg) } 50%{ transform:rotate(2.4deg) } }
+
+  /* guarded cover */
+  .guard { transform-origin:50% 0%; transform:rotateX(0deg); transition:transform .85s cubic-bezier(.16,1,.3,1), opacity .35s ease .45s, visibility 0s linear .85s; }
+  .guard.open { transform:rotateX(-104deg); opacity:0; visibility:hidden; }
+
+  /* connectors for the wiring schematic */
+  .wire-h { position:relative; }
+  .wire-h::after { content:""; position:absolute; top:50%; right:-26px; width:26px; height:2px; background:#5A625E; }
+  .wire-v::after { content:""; position:absolute; left:26px; bottom:-24px; width:2px; height:24px; background:#5A625E; }
+  .plate-logo { filter:grayscale(1) contrast(2.3); }
+
+  .ruled > * + * { border-top:1px solid rgba(140,146,145,.16); }
+
+  @media (prefers-reduced-motion: reduce){
+    .loto, .flick { animation:none !important; }
+    .guard { transition:none; }
+    .sw .bat { transition:none; }
+  }
+</style>
+</head>
+<body class="font-sans antialiased">
+
+<div id="grain" aria-hidden="true"></div>
+
+<a href="#m11" class="sr-only focus:not-sr-only focus:fixed focus:z-[80] focus:top-3 focus:left-3 focus:bg-hazard focus:text-[#0A0C0B] focus:px-4 focus:py-2 focus:plate-type focus:text-[.7rem]">Saltar al final y escribir</a>
+
+<div class="hazardband" aria-hidden="true"></div>
+
+<!-- ===================== CABECERA / PLACA DE FABRICANTE ===================== -->
+<header class="bg-panelA metal border-b-[3px] border-seam">
+  <div class="mx-auto max-w-rack px-5 sm:px-8 lg:px-14 py-4 flex flex-wrap items-center gap-x-6 gap-y-3 justify-between">
+    <div class="flex items-center gap-3">
+      <span class="screw" style="--r:14deg"></span>
+      <span class="plate-type text-[.66rem] sm:text-[.72rem] text-steel">Muriel · práctica independiente</span>
+      <span class="hidden sm:inline text-steeldk">/</span>
+      <span class="hidden sm:inline plate-type text-[.66rem] text-steeldk">Bogotá D.C.</span>
+    </div>
+
+    <!-- plano de taller: la secuencia dibujada como especificación -->
+    <div class="hidden sm:flex items-end gap-[3px]" aria-hidden="true">
+      <span class="font-mono text-[.6rem] text-steeldk mr-2 pb-[2px] tracking-widest">SEC. ARRANQUE</span>
+      <span class="block w-[3px] h-[7px] bg-steeldk"></span><span class="block w-[3px] h-[11px] bg-steeldk"></span>
+      <span class="block w-[3px] h-[7px] bg-steeldk"></span><span class="block w-[3px] h-[11px] bg-steeldk"></span>
+      <span class="block w-[3px] h-[7px] bg-steeldk"></span><span class="block w-[3px] h-[15px] bg-steel"></span>
+      <span class="block w-[3px] h-[7px] bg-steeldk"></span><span class="block w-[3px] h-[11px] bg-steeldk"></span>
+      <span class="block w-[3px] h-[7px] bg-steeldk"></span><span class="block w-[3px] h-[11px] bg-steeldk"></span>
+      <span class="block w-[3px] h-[7px] bg-steeldk"></span>
+      <span class="font-mono text-[.6rem] text-steeldk ml-2 pb-[2px] tracking-widest">M-01 → M-11</span>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <span class="font-mono text-[.66rem] text-steeldk tracking-widest">TABLERO 01</span>
+      <span class="screw" style="--r:-38deg"></span>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== RIEL DE SECUENCIA (escritorio) ===================== -->
+<aside id="rail" class="hidden xl:flex fixed left-0 top-0 bottom-0 z-40 w-16 flex-col items-center justify-center gap-0 bg-panelA metal border-r-[3px] border-seam" aria-hidden="true">
+  <div class="absolute top-8 left-1/2 -translate-x-1/2 whitespace-nowrap plate-type text-[.6rem] text-steeldk" style="writing-mode:vertical-rl">Secuencia de arranque</div>
+  <div id="railLamps" class="flex flex-col gap-5 py-10"></div>
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3">
+    <span class="screw" style="--r:8deg"></span>
+  </div>
+</aside>
+
+<main id="rack" class="xl:pl-16 pb-[104px] sm:pb-[86px]">
+
+<!-- ===================== M-01 · ENERGÍA ===================== -->
+<section id="m01" data-mod="1" data-tag="M-01" data-name="Energía" class="mod bg-panelB metal relative overflow-clip">
+  <div class="mx-auto max-w-rack px-5 sm:px-8 lg:px-14">
+
+    <!-- cabecera de módulo -->
+    <div class="flex items-center gap-3 sm:gap-4 py-3 border-b border-[rgba(140,146,145,.16)]">
+      <span class="screw" style="--r:22deg"></span>
+      <span class="engraved plate-type text-[.62rem] px-2.5 py-1">M-01</span>
+      <span class="plate-type text-[.62rem] text-steeldk">Energía</span>
+      <span class="ml-auto lamp lg flick" style="--c:#F2A81C"></span>
+    </div>
+
+    <div class="grid lg:grid-cols-12 gap-10 lg:gap-14 pt-14 sm:pt-20 lg:pt-24 pb-16 sm:pb-24">
+
+      <div class="lg:col-span-7">
+        <h1 class="head text-[clamp(2.35rem,8.6vw,6rem)] text-[#F2F4F0]">
+          Su empresa no<br>está automatizada.
+        </h1>
+        <p class="head-cond text-[clamp(1.9rem,7vw,4.5rem)] text-[#B4BAB4] mt-4 sm:mt-6">
+          Hay una persona<br>haciéndolo a mano.
+        </p>
+
+        <div class="mt-10 sm:mt-12 max-w-prose lede text-bone">
+          <p>Esta es una carta para el dueño de una empresa colombiana que factura menos de dos millones de dólares al año. Ropa, comida, retail, distribución, importación, servicios. Entre cinco y cuarenta empleados. Que ya compró un software caro y su gente sigue trabajando en WhatsApp y en Excel.</p>
+          <p class="mt-5 text-mute">Se lee en orden, como se arranca un tablero: un módulo a la vez. Al final hay un botón. No antes.</p>
+        </div>
+      </div>
+
+      <!-- sub-panel de estado: el gancho hecho hardware -->
+      <div class="lg:col-span-5">
+        <div class="engraved p-1 max-w-[26rem]">
+          <div class="bg-[#101310] metal border border-[#2B312D] p-5 sm:p-7">
+            <div class="flex items-center justify-between mb-6">
+              <span class="plate-type text-[.6rem] text-steeldk">Estado de operación</span>
+              <div class="flex gap-2"><span class="screw" style="--r:44deg"></span><span class="screw" style="--r:-12deg"></span></div>
+            </div>
+
+            <div class="flex items-center gap-5 py-5 border-b border-[rgba(140,146,145,.18)]">
+              <span class="lamp xl off"></span>
+              <div>
+                <div class="engraved plate-type text-[.72rem] px-3 py-1.5 inline-block">Automático</div>
+                <p class="font-mono text-[.72rem] text-steeldk mt-2 tracking-wider">SIN ENERGÍA · 0 procesos</p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-5 py-5">
+              <span class="lamp xl flick" style="--c:#F2A81C"></span>
+              <div>
+                <div class="engraved-lite plate-type text-[.72rem] px-3 py-1.5 inline-block">Manual</div>
+                <p class="font-mono text-[.72rem] text-amber mt-2 tracking-wider">EN OPERACIÓN · todo</p>
+              </div>
+            </div>
+
+            <p class="text-[.82rem] text-mute leading-relaxed mt-4 pt-4 border-t border-[rgba(140,146,145,.18)]">
+              Así está su empresa hoy. El piloto de arriba es el que usted cree que tiene. El de abajo es el que está prendido.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===================== M-02 · CALIFICACIÓN ===================== -->
+<section id="m02" data-mod="2" data-tag="M-02" data-name="Calificación" class="mod bg-panelA metal seamline relative overflow-clip">
+  <div class="mx-auto max-w-rack px-5 sm:px-8 lg:px-14">
+    <div class="flex items-center gap-3 sm:gap-4 py-3 border-b border-[rgba(140,146,145,.16)]">
+      <span class="screw" style="--r:-30deg"></span>
+      <span class="engraved plate-type text-[.62rem] px-2.5 py-1">M-02</span>
+      <span class="plate-type text-[.62rem] text-steeldk">Calificación</span>
+      <span class="ml-auto lamp off"></span>
+    </div>
+
+    <div class="pt-14 sm:pt-20 pb-16 sm:pb-24">
+      <h2 class="head text-[clamp(1.9rem,5.2vw,3.5rem)] text-[#F2F4F0] max-w-[20ch]">Esta carta no es para todos.</h2>
+      <p class="lede text-mute max-w-prose mt-6">Prefiero que se vaya ahora y no después de una reunión de una hora. Léalo con calma:</p>
+
+      <div class="grid md:grid-cols-2 gap-6 lg:gap-8 mt-12">
+
+        <div class="engraved p-1">
+          <div class="bg-[#111511] border border-[#2B312D] h-full">
+            <div class="flex items-center gap-3 px-5 py-3 border-b border-[rgba(140,146,145,.2)]">
+              <span class="lamp" style="--c:#3ED18A"></span>
+              <span class="plate-type text-[.66rem] text-[#3ED18A]">Siga leyendo si</span>
+            </div>
+            <ul class="ruled px-5">
+              <li class="flex gap-4 py-4"><svg class="w-5 h-5 flex-none mt-[3px] text-[#3ED18A]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="square"><path d="M4 12.5 9.5 18 20 6"/></svg><span class="text-[.95rem] leading-relaxed">Factura menos de dos millones de dólares al año y crecer, para usted, todavía significa contratar más gente.</span></li>
+              <li class="flex gap-4 py-4"><svg class="w-5 h-5 flex-none mt-[3px] text-[#3ED18A]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="square"><path d="M4 12.5 9.5 18 20 6"/></svg><span class="text-[.95rem] leading-relaxed">Su negocio no es «tech» y usted no es técnico, y le da rabia que se lo recuerden.</span></li>
+              <li class="flex gap-4 py-4"><svg class="w-5 h-5 flex-none mt-[3px] text-[#3ED18A]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="square"><path d="M4 12.5 9.5 18 20 6"/></svg><span class="text-[.95rem] leading-relaxed">Ya pagó un software con implementación incluida y su equipo lo rodeó por WhatsApp.</span></li>
+              <li class="flex gap-4 py-4"><svg class="w-5 h-5 flex-none mt-[3px] text-[#3ED18A]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="square"><path d="M4 12.5 9.5 18 20 6"/></svg><span class="text-[.95rem] leading-relaxed">Está arrancando algo —empresa, ONG, lo que sea— y necesita que pase, no que se planee otra vez.</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="engraved p-1">
+          <div class="bg-[#111511] border border-[#2B312D] h-full">
+            <div class="flex items-center gap-3 px-5 py-3 border-b border-[rgba(140,146,145,.2)]">
+              <span class="lamp" style="--c:#FF4B39"></span>
+              <span class="plate-type text-[.66rem] text-fault">Cierre esta página si</span>
+            </div>
+            <ul class="ruled px-5">
+              <li class="flex gap-4 py-4"><svg class="w-5 h-5 flex-none mt-[3px] text-fault" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="square"><path d="M6 6l12 12M18 6 6 18"/></svg><span class="text-[.95rem] leading-relaxed">Necesita escalar de cinco millones de dólares para arriba. No sé hacer eso y no voy a fingir que sí.</span></li>
+              <li class="flex gap-4 py-4"><svg class="w-5 h-5 flex-none mt-[3px] text-fault" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="square"><path d="M6 6l12 12M18 6 6 18"/></svg><span class="text-[.95rem] leading-relaxed">Su proyecto es deep tech o investigación: hay que inventar algo que hoy no existe.</span></li>
+              <li class="flex gap-4 py-4"><svg class="w-5 h-5 flex-none mt-[3px] text-fault" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="square"><path d="M6 6l12 12M18 6 6 18"/></svg><span class="text-[.95rem] leading-relaxed">Quiere una charla de ciencia de datos o de cultura organizacional. Esas no las doy.</span></li>
+              <li class="flex gap-4 py-4"><svg class="w-5 h-5 flex-none mt-[3px] text-fault" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="square"><path d="M6 6l12 12M18 6 6 18"/></svg><span class="text-[.95rem] leading-relaxed">Busca a alguien que le entregue un diagnóstico bonito y se vaya. Yo me quedo a construirlo.</span></li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== M-03 · DIAGNÓSTICO ===================== -->
+<section id="m03" data-mod="3" data-tag="M-03" data-name="Diagnóstico" class="mod bg-panelB metal seamline relative overflow-clip">
+  <div class="mx-auto max-w-rack px-5 sm:px-8 lg:px-14">
+    <div class="flex items-center gap-3 sm:gap-4 py-3 border-b border-[rgba(140,146,145,.16)]">
+      <span class="screw" style="--r:16deg"></span>
+      <span class="engraved plate-type text-[.62rem] px-2.5 py-1">M-03</span>
+      <span class="plate-type text-[.62rem] text-steeldk">Diagnóstico</span>
+      <span class="ml-auto lamp off"></span>
+    </div>
+
+    <div class="pt-14 sm:pt-20 pb-16 sm:pb-24">
+      <h2 class="head-cond text-[clamp(2.4rem,10vw,6rem)] text-[#F2F4F0]">Chinomático</h2>
+      <p class="lede text-bone max-w-prose mt-7">
+        Es la palabra que uso para lo que me encuentro casi siempre. <strong class="text-[#F2F4F0] font-semibold">Parece automatizado, pero hay un chino —un muchacho— haciéndolo a mano.</strong>
+      </p>
+      <p class="lede text-mute max-w-prose mt-5">
+        El pedido entra por WhatsApp y alguien lo copia al Excel. El Excel se lo pasa a otro que lo mete al sistema. El sistema saca un reporte que nadie abre porque ya se lo sabían. Automatización a punta de gente. Funciona, sí. Hasta que esa persona se enferma, se va, o se equivoca un jueves a las seis de la tarde.
+      </p>
+
+      <!-- COMPONENTE: TABLERO CHINOMÁTICO -->
+      <div class="mt-14 engraved p-1">
+        <div class="bg-[#0F1210] border border-[#2B312D]">
+          <div class="flex flex-wrap items-center gap-x-4 gap-y-2 px-5 py-3 border-b border-[rgba(140,146,145,.2)]">
+            <span class="plate-type text-[.66rem] text-steel">Tablero de procesos · estado real</span>
+            <span class="ml-auto font-mono text-[.68rem] text-steeldk tracking-widest">INTENTOS <span id="tryCount" class="tnum text-amber">00</span></span>
+          </div>
+
+          <p class="px-5 pt-5 text-[.9rem] text-mute leading-relaxed max-w-prose">
+            Súbale el interruptor a cualquiera de estos cinco procesos y póngalo en automático.
+          </p>
+
+          <div id="chino" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-px bg-[rgba(140,146,145,.16)] mt-5 border-t border-[rgba(140,146,145,.16)]"></div>
+
+          <div class="px-5 py-5 border-t border-[rgba(140,146,145,.2)] flex flex-wrap items-center gap-4">
+            <div id="diagPlate" class="engraved-lite plate-type text-[.68rem] px-3 py-2 opacity-0 transition-opacity duration-500">Diagnóstico completo — el problema no es el software</div>
+            <p class="text-[.85rem] text-steeldk">Puede intentarlo las veces que quiera. Así es todos los días.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== M-04 · FUERA DE SERVICIO ===================== -->
+<section id="m04" data-mod="4" data-tag="M-04" data-name="Fuera de servicio" class="mod bg-panelA metal seamline relative overflow-clip">
+  <div class="mx-auto max-w-rack px-5 sm:px-8 lg:px-14">
+    <div class="flex items-center gap-3 sm:gap-4 py-3 border-b border-[rgba(140,146,145,.16)]">
+      <span class="screw" style="--r:-8deg"></span>
+      <span class="engraved plate-type text-[.62rem] px-2.5 py-1">M-04</span>
+      <span class="plate-type text-[.62rem] text-steeldk">Fuera de servicio</span>
+      <span class="ml-auto lamp off"></span>
+    </div>
+
+    <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 pt-14 sm:pt-20 pb-16 sm:pb-24 items-start">
+      <div class="lg:col-span-7">
+        <h2 class="head text-[clamp(1.9rem,5.2vw,3.5rem)] text-[#F2F4F0] max-w-[18ch]">Usted ya compró la solución. Está ahí, apagada.</h2>
+        <div class="lede max-w-prose mt-7 space-y-5">
+          <p>Casi siempre me encuentro lo mismo: un software que costó plata, que se implementó con consultores de corbata, con módulos que nadie volvió a abrir después del tercer mes.</p>
+          <p class="text-mute">No falló el software. Falló que nadie le preguntó al que lo iba a usar. Un sistema que no cabe en el día de la persona que lo opera no se usa: se rodea. Y rodearlo cuesta exactamente lo mismo que hacerlo a mano, más la mensualidad.</p>
+          <p><strong class="text-[#F2F4F0] font-semibold">La pregunta no es qué software comprar.</strong> Es qué hace su gente todos los días, cuánto de eso es copiar y pegar, y cómo se le quita de encima sin que tengan que aprender a ser ingenieros.</p>
+        </div>
+      </div>
+
+      <div class="lg:col-span-5 flex justify-center lg:justify-end">
+        <!-- Tarjeta de bloqueo LOTO -->
+        <div class="relative w-[15.5rem] sm:w-[17rem]">
+          <div class="mx-auto w-[2px] h-8 bg-steeldk"></div>
+          <div class="loto">
+            <div class="relative bg-[#E4E2D8] text-[#14171A] rounded-[3px] shadow-[0_14px_30px_rgba(0,0,0,.55)] border-t-[10px] border-[#C6231A] px-5 pt-5 pb-6">
+              <div class="absolute left-1/2 -translate-x-1/2 top-[-6px] w-[14px] h-[14px] rounded-full bg-[#0F1210] shadow-[inset_0_0_0_2px_#6f7570]"></div>
+              <p class="head-cond text-[1.85rem] text-[#B3261B] leading-none">No operar</p>
+              <div class="h-px bg-[#14171A]/25 my-3"></div>
+              <dl class="font-mono text-[.68rem] leading-relaxed text-[#14171A] space-y-1.5">
+                <div><dt class="inline text-[#4E5551]">EQUIPO: </dt><dd class="inline">software carísimo</dd></div>
+                <div><dt class="inline text-[#4E5551]">FUERA DESDE: </dt><dd class="inline">la semana tres</dd></div>
+                <div><dt class="inline text-[#4E5551]">BLOQUEÓ: </dt><dd class="inline">todo el mundo</dd></div>
+                <div><dt class="inline text-[#4E5551]">MOTIVO: </dt><dd class="inline">nadie preguntó</dd></div>
+              </dl>
+              <p class="mt-4 text-[.72rem] text-[#4E5551] leading-relaxed">No retire esta tarjeta sin hablar con quien la puso. Que es su propio equipo.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== M-05 · MECANISMO ===================== -->
+<section id="m05" data-mod="5" data-tag="M-05" data-name="Mecanismo" class="mod bg-panelB metal seamline relative overflow-clip">
+  <div class="mx-auto max-w-rack px-5 sm:px-8 lg:px-14">
+    <div class="flex items-center gap-3 sm:gap-4 py-3 border-b border-[rgba(140,146,145,.16)]">
+      <span class="screw" style="--r:34deg"></span>
+      <span class="engraved plate-type text-[.62rem] px-2.5 py-1">M-05</span>
+      <span class="plate-type text-[.62rem] text-steeldk">Mecanismo</span>
+      <span class="ml-auto lamp" style="--c:#3ED18A"></span>
+    </div>
+
+    <div class="pt-14 sm:pt-20 pb-16 sm:pb-24">
+      <h2 class="head-cond text-[clamp(2.4rem,9.5vw,5.6rem)] text-[#F2F4F0]">Una sola mano</h2>
+
+      <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 mt-9 items-start">
+        <div class="lg:col-span-7">
+          <div class="lede space-y-5 max-w-prose">
+            <p>El que decide la estrategia es el mismo que construye la herramienta. Yo. No hay un consultor que entrega el diagnóstico y un proveedor que después lo interpreta a su manera y le cobra los cambios.</p>
+            <p class="text-mute">Eso antes era imposible de vender: una sola persona haciendo las dos cosas salía carísimo o se demoraba un año. Hoy no. Con inteligencia artificial —desarrollo asistido, y agentes trabajando en cosas que ni siquiera son programar— una persona sola construye en semanas lo que antes pedía un equipo.</p>
+            <p>Por eso lo que le entrego no es una recomendación. Es algo prendido, con su gente adentro, funcionando.</p>
+          </div>
+
+          <div class="mt-10 engraved-lite px-5 py-5 max-w-[34rem]">
+            <p class="head text-[1.15rem] sm:text-[1.35rem] text-[#14171A] leading-snug">«Construyo sistemas que le funcionan a la gente que los usa. Y hago que las cosas arranquen.»</p>
+            <p class="font-mono text-[.66rem] text-[#4E5551] mt-3 leading-relaxed">ORIGINAL: “Building systems that work for people using them, and getting stuff off the ground.”</p>
+          </div>
+        </div>
+
+        <!-- Esquema de conexión -->
+        <div class="lg:col-span-5">
+          <div class="engraved p-1">
+            <div class="bg-[#101310] border border-[#2B312D] p-5 sm:p-6">
+              <div class="flex items-center justify-between mb-6">
+                <span class="plate-type text-[.6rem] text-steeldk">Esquema de conexión</span>
+                <span class="font-mono text-[.62rem] text-steeldk">ESQ-05</span>
+              </div>
+              <ol class="space-y-8">
+                <li class="relative wire-v"><div class="engraved-lite plate-type text-[.66rem] px-3 py-2 inline-block">El día de su gente</div><p class="text-[.82rem] text-mute mt-2 leading-relaxed">Qué hacen, en qué se les va la hora, qué rodean.</p></li>
+                <li class="relative wire-v"><div class="engraved-lite plate-type text-[.66rem] px-3 py-2 inline-block">La decisión</div><p class="text-[.82rem] text-mute mt-2 leading-relaxed">Qué se ataca primero. Con usted, no en un PDF aparte.</p></li>
+                <li class="relative wire-v"><div class="engraved-lite plate-type text-[.66rem] px-3 py-2 inline-block">La herramienta</div><p class="text-[.82rem] text-mute mt-2 leading-relaxed">La construyo yo. No la cotizo con nadie.</p></li>
+                <li class="relative"><div class="engraved-lite plate-type text-[.66rem] px-3 py-2 inline-block">La gente usándola</div><p class="text-[.82rem] text-mute mt-2 leading-relaxed">Si no la usan, no sirvió. Se ajusta y se vuelve a soltar.</p></li>
+              </ol>
+              <div class="mt-7 pt-5 border-t border-[rgba(140,146,145,.2)] flex items-center gap-3">
+                <svg class="w-5 h-5 text-amber flex-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="square"><path d="M20 12H4M10 6l-6 6 6 6"/></svg>
+                <span class="font-mono text-[.68rem] text-amber tracking-widest">RETORNO: ajuste</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== M-06 · PLACA DE DATOS ===================== -->
+<section id="m06" data-mod="6" data-tag="M-06" data-name="Placa de datos" class="mod bg-panelA metal seamline relative overflow-clip">
+  <div class="mx-auto max-w-rack px-5 sm:px-8 lg:px-14">
+    <div class="flex items-center gap-3 sm:gap-4 py-3 border-b border-[rgba(140,146,145,.16)]">
+      <span class="screw" style="--r:-22deg"></span>
+      <span class="engraved plate-type text-[.62rem] px-2.5 py-1">M-06</span>
+      <span class="plate-type text-[.62rem] text-steeldk">Placa de datos</span>
+      <span class="ml-auto lamp off"></span>
+    </div>
+
+    <div class="pt-14 sm:pt-20 pb-16 sm:pb-24">
+      <div class="grid lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+
+        <!-- retrato montado, rompiendo la retícula -->
+        <div class="lg:col-span-5 relative">
+          <div class="relative -mx-5 sm:mx-0 lg:-ml-20 xl:-ml-28">
+            <div class="relative bg-[#0D100E] border-[3px] border-[#2B312D] shadow-[0_24px_60px_rgba(0,0,0,.6)]">
+              <img src="assets/fotoSalo.jpeg" alt="Retrato de Salomón Muriel" width="800" height="800"
+                   class="w-full h-auto block grayscale-[.35] contrast-[1.06] brightness-[.95]">
+              <span class="screw absolute top-2 left-2" style="--r:12deg"></span>
+              <span class="screw absolute top-2 right-2" style="--r:-40deg"></span>
+              <span class="screw absolute bottom-2 left-2" style="--r:52deg"></span>
+              <span class="screw absolute bottom-2 right-2" style="--r:-6deg"></span>
+            </div>
+            <div class="engraved-lite plate-type text-[.62rem] px-3 py-2 inline-block absolute -bottom-4 left-5 shadow-[0_6px_16px_rgba(0,0,0,.6)]">
+              Operario · Salomón Muriel · Bogotá · quinta empresa
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-7 pt-10 lg:pt-0">
+          <h2 class="head text-[clamp(1.9rem,5.2vw,3.5rem)] text-[#F2F4F0] max-w-[16ch]">Quién le está escribiendo.</h2>
+          <div class="lede max-w-prose mt-7 space-y-5">
+            <p>Salomón Muriel. Treinta y cinco años, Bogotá. Esta es mi quinta empresa. Mi papá y mi abuelo también fueron empresarios, así que esto no lo escogí: me tocó de nacimiento.</p>
+            <p class="text-mute">En R5 dirigí a cerca de cuarenta personas y ahí armé el pipeline de datos completo y el sistema de modelación de riesgo. En mis propias empresas he manejado hasta quince. Aprendí inglés jugando en línea, no en una academia.</p>
+          </div>
+
+          <!-- foto pegada por dentro de la puerta del gabinete -->
+          <div class="mt-10 flex flex-col sm:flex-row items-start gap-5 sm:gap-6">
+            <div class="relative flex-none w-[8.5rem] sm:w-[10rem] bg-[#0D100E] border-[3px] border-[#2B312D] shadow-[0_14px_34px_rgba(0,0,0,.55)] rotate-[-1.6deg]">
+              <img src="assets/marathon.jpg" alt="Salomón Muriel con la medalla al terminar una media maratón en Bogotá" width="600" height="600" class="w-full h-auto block grayscale-[.45] contrast-[1.05] brightness-[.9]">
+              <span class="screw absolute top-1.5 left-1.5" style="--r:24deg"></span>
+              <span class="screw absolute bottom-1.5 right-1.5" style="--r:-32deg"></span>
+            </div>
+            <div class="pt-1">
+              <p class="font-mono text-[.68rem] text-amber tracking-widest">MEDIA MARATÓN · 2:10</p>
+              <p class="text-[.9rem] text-mute leading-relaxed mt-3 max-w-[34ch]">Aguanto cosas largas y aburridas hasta el final. Es medio requisito para lo que hago.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LA PLACA -->
+      <div class="mt-16 sm:mt-20">
+        <div class="engraved-lite overflow-hidden">
+          <div class="flex flex-wrap items-center gap-x-4 gap-y-1 px-5 py-3 bg-[#C4C3B9] border-b border-[#14171A]/20">
+            <span class="plate-type text-[.66rem] text-[#14171A]">Placa de datos · historial de equipos</span>
+            <span class="ml-auto font-mono text-[.64rem] text-[#4E5551]">5 registros · 3 salidas · 2 fallas</span>
+          </div>
+
+          <ul class="divide-y divide-[#14171A]/15">
+            <!-- IGNIA -->
+            <li class="grid sm:grid-cols-12 gap-x-5 gap-y-3 px-5 py-6 items-start">
+              <div class="sm:col-span-3 flex items-center gap-3">
+                <img src="assets/ignia.png" alt="Ignia" class="h-9 w-auto object-contain mix-blend-multiply plate-logo">
+              </div>
+              <div class="sm:col-span-6">
+                <p class="head text-[1.15rem] text-[#14171A]">Ignia <span class="font-mono text-[.7rem] text-[#4E5551] align-middle ml-1">2025 — HOY</span></p>
+                <p class="text-[.9rem] text-[#2C312F] leading-relaxed mt-1">Un modelo nuevo de educación superior. Rentable desde el primer día. Ciento cincuenta mil dólares de ARR el primer año, treinta fellows en la primera cohorte del Action Lab, equipo de cinco. El CRM, el sitio y la plataforma de comunidad los construí yo.</p>
+              </div>
+              <div class="sm:col-span-3 sm:text-right">
+                <span class="inline-flex items-center gap-2 bg-[#14653D] text-[#EDF3EF] plate-type text-[.62rem] px-3 py-1.5 rounded-[2px]">Activa</span>
+              </div>
+            </li>
+            <!-- FINCO -->
+            <li class="grid sm:grid-cols-12 gap-x-5 gap-y-3 px-5 py-6 items-start">
+              <div class="sm:col-span-3 flex items-center gap-3">
+                <img src="assets/finco.png" alt="Finco" class="h-11 w-auto object-contain mix-blend-multiply plate-logo">
+              </div>
+              <div class="sm:col-span-6">
+                <p class="head text-[1.15rem] text-[#14171A]">Finco <span class="font-mono text-[.7rem] text-[#4E5551] align-middle ml-1">2019 — 2022</span></p>
+                <p class="text-[.9rem] text-[#2C312F] leading-relaxed mt-1">Valoración inmobiliaria con datos e inteligencia artificial para Latinoamérica. Cien mil reportes al año. Vendida a RED Atlas por cerca de un millón y medio de dólares: cinco veces lo invertido.</p>
+              </div>
+              <div class="sm:col-span-3 sm:text-right">
+                <span class="inline-flex items-center gap-2 bg-[#14653D] text-[#EDF3EF] plate-type text-[.62rem] px-3 py-1.5 rounded-[2px]">Vendida</span>
+              </div>
+            </li>
+            <!-- PRESTAGENTE -->
+            <li class="grid sm:grid-cols-12 gap-x-5 gap-y-3 px-5 py-6 items-start">
+              <div class="sm:col-span-3 flex items-center gap-3">
+                <img src="assets/prestagente.png" alt="PrestaGente" class="h-12 w-auto object-contain mix-blend-multiply plate-logo">
+              </div>
+              <div class="sm:col-span-6">
+                <p class="head text-[1.15rem] text-[#14171A]">PrestaGente <span class="font-mono text-[.7rem] text-[#4E5551] align-middle ml-1">2017 — 2019</span></p>
+                <p class="text-[.9rem] text-[#2C312F] leading-relaxed mt-1">Libranza entre personas. Vendida a Taurus Capital por cerca de un millón de dólares. Sigue operando hoy.</p>
+              </div>
+              <div class="sm:col-span-3 sm:text-right">
+                <span class="inline-flex items-center gap-2 bg-[#14653D] text-[#EDF3EF] plate-type text-[.62rem] px-3 py-1.5 rounded-[2px]">Vendida</span>
+              </div>
+            </li>
+            <!-- BERIBLOCK -->
+            <li class="grid sm:grid-cols-12 gap-x-5 gap-y-3 px-5 py-6 items-start bg-[#14171A]/[.045]">
+              <div class="sm:col-span-3 flex items-center gap-3">
+                <img src="assets/beriblock.png" alt="Beriblock" class="h-10 w-auto object-contain mix-blend-multiply plate-logo">
+              </div>
+              <div class="sm:col-span-6">
+                <p class="head text-[1.15rem] text-[#14171A]">Beriblock <span class="font-mono text-[.7rem] text-[#4E5551] align-middle ml-1">2018 — 2019</span></p>
+                <p class="text-[.9rem] text-[#2C312F] leading-relaxed mt-1">Autenticación de pagarés con blockchain. Quebró.</p>
+              </div>
+              <div class="sm:col-span-3 sm:text-right">
+                <span class="inline-flex items-center gap-2 bg-[#B3261B] text-[#F6ECEA] plate-type text-[.62rem] px-3 py-1.5 rounded-[2px]">Quebró</span>
+              </div>
+            </li>
+            <!-- EL PALOMO -->
+            <li class="grid sm:grid-cols-12 gap-x-5 gap-y-3 px-5 py-6 items-start bg-[#14171A]/[.045]">
+              <div class="sm:col-span-3 flex items-center gap-3">
+                <img src="assets/elpalomo.png" alt="El Palomo" class="h-11 w-auto object-contain mix-blend-multiply plate-logo">
+              </div>
+              <div class="sm:col-span-6">
+                <p class="head text-[1.15rem] text-[#14171A]">El Palomo <span class="font-mono text-[.7rem] text-[#4E5551] align-middle ml-1">2016 — 2017</span></p>
+                <p class="text-[.9rem] text-[#2C312F] leading-relaxed mt-1">Flores por suscripción. Fracasó espectacularmente.</p>
+              </div>
+              <div class="sm:col-span-3 sm:text-right">
+                <span class="inline-flex items-center gap-2 bg-[#B3261B] text-[#F6ECEA] plate-type text-[.62rem] px-3 py-1.5 rounded-[2px]">Fracasó</span>
+              </div>
+            </li>
+          </ul>
+
+          <div class="px-5 py-5 bg-[#C4C3B9] border-t border-[#14171A]/20 flex flex-wrap items-center gap-x-4 gap-y-2">
+            <div class="flex gap-2"><span class="screw" style="--r:18deg"></span><span class="screw" style="--r:-24deg"></span></div>
+            <p class="text-[.88rem] text-[#2C312F] leading-relaxed">Dos de cinco se cayeron. Las dejo en la placa porque son las que me enseñaron a no venderle humo a nadie.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== M-07 · MONITOR ===================== -->
+<section id="m07" data-mod="7" data-tag="M-07" data-name="Monitor" class="mod bg-panelB metal seamline relative overflow-clip">
+  <div class="mx-auto max-w-rack px-5 sm:px-8 lg:px-14">
+    <div class="flex items-center gap-3 sm:gap-4 py-3 border-b border-[rgba(140,146,145,.16)]">
+      <span class="screw" style="--r:40deg"></span>
+      <span class="engraved plate-type text-[.62rem] px-2.5 py-1">M-07</span>
+      <span class="plate-type text-[.62rem] text-steeldk">Monitor</span>
+      <span class="ml-auto lamp off"></span>
+    </div>
+
+    <div class="pt-14 sm:pt-20 pb-16 sm:pb-24 grid lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+      <div class="lg:col-span-4">
+        <h2 class="head text-[clamp(1.9rem,5.2vw,3.5rem)] text-[#F2F4F0] max-w-[12ch]">Hablando, me veo así.</h2>
+        <div class="lede space-y-5 mt-7 text-mute max-w-prose">
+          <p><strong class="text-bone font-semibold">No tengo testimonios publicados.</strong> Todavía no se los he pedido a nadie y no pienso inventarlos. Lo que sí hay es esto: una conversación real, sin edición amable.</p>
+          <p>Doy charlas en conferencias, empresas y universidades sobre adopción de tecnología e IA, emprendimiento, mentalidad y balance vida-trabajo. Para mí son publicidad de lo otro, no un producto. Si necesita una, escríbame igual.</p>
+        </div>
+      </div>
+
+      <div class="lg:col-span-8">
+        <div class="engraved p-1">
+          <div class="bg-[#0C0F0D] border border-[#2B312D] p-3 sm:p-4 relative">
+            <span class="screw absolute top-2 left-2" style="--r:30deg"></span>
+            <span class="screw absolute top-2 right-2" style="--r:-16deg"></span>
+            <span class="screw absolute bottom-2 left-2" style="--r:8deg"></span>
+            <span class="screw absolute bottom-2 right-2" style="--r:-48deg"></span>
+
+            <div id="videoBox" class="relative aspect-video bg-[#080A09] overflow-hidden border border-[#20251F] mx-4 my-3">
+              <img id="videoPoster" src="https://img.youtube.com/vi/F9t9f5Et_04/maxresdefault.jpg" alt="Salomón Muriel en el podcast Ventaja" class="absolute inset-0 w-full h-full object-cover opacity-70 grayscale-[.25]">
+              <button id="playBtn" type="button" class="absolute inset-0 w-full h-full flex flex-col items-center justify-center gap-4 group cursor-pointer" aria-label="Reproducir el video: Negocios Aburridos e Innovación, podcast Ventaja">
+                <span class="absolute inset-0 bg-gradient-to-t from-[#080A09] via-[#080A09]/25 to-transparent"></span>
+                <span class="relative flex items-center justify-center w-[74px] h-[74px] rounded-full border-2 border-hazard bg-[#0A0C0B]/70 transition-transform duration-300 group-hover:scale-110">
+                  <svg class="w-7 h-7 ml-1 text-hazard" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg>
+                </span>
+                <span class="relative plate-type text-[.66rem] text-bone">Energizar monitor</span>
+              </button>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-x-4 gap-y-2 px-4 pb-3">
+              <span class="engraved plate-type text-[.6rem] px-2.5 py-1.5">Monitor 01</span>
+              <span class="font-mono text-[.68rem] text-steel tracking-wider">PODCAST VENTAJA — “Negocios Aburridos e Innovación”</span>
+              <span class="ml-auto lamp" style="--c:#FF4B39"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== M-08 · LOS MÓDULOS (OFERTA) ===================== -->
+<section id="m08" data-mod="8" data-tag="M-08" data-name="Módulos disponibles" class="mod bg-panelA metal seamline relative overflow-clip">
+  <div class="mx-auto max-w-rack px-5 sm:px-8 lg:px-14">
+    <div class="flex items-center gap-3 sm:gap-4 py-3 border-b border-[rgba(140,146,145,.16)]">
+      <span class="screw" style="--r:-34deg"></span>
+      <span class="engraved plate-type text-[.62rem] px-2.5 py-1">M-08</span>
+      <span class="plate-type text-[.62rem] text-steeldk">Módulos disponibles</span>
+      <span class="ml-auto lamp" style="--c:#F2A81C"></span>
+    </div>
+
+    <div class="pt-14 sm:pt-20 pb-16 sm:pb-24">
+      <h2 class="head text-[clamp(1.9rem,5.2vw,3.5rem)] text-[#F2F4F0] max-w-[18ch]">Lo que se puede conectar.</h2>
+      <p class="lede text-mute max-w-prose mt-6">Son dos cosas. No hay un catálogo detrás.</p>
+
+      <div class="grid lg:grid-cols-2 gap-6 lg:gap-8 mt-12">
+
+        <!-- MÓDULO A -->
+        <div class="engraved p-1">
+          <div class="bg-[#111511] border border-[#2B312D] h-full flex flex-col">
+            <div class="flex items-center gap-3 px-5 py-3 border-b border-[rgba(140,146,145,.2)]">
+              <span class="lamp" style="--c:#F2A81C"></span>
+              <span class="engraved-lite plate-type text-[.64rem] px-2.5 py-1.5">Módulo A</span>
+              <span class="plate-type text-[.68rem] text-bone">Consultoría</span>
+            </div>
+            <div class="p-5 sm:p-6 flex-1">
+              <p class="lede text-bone">Estrategia de cero a uno y adopción de tecnología. Yo defino qué hay que hacer y yo mismo lo construyo.</p>
+              <ul class="mt-6 space-y-4">
+                <li class="flex gap-3.5"><svg class="w-[18px] h-[18px] flex-none mt-1 text-amber" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="square"><path d="M4 12.5 9.5 18 20 6"/></svg><span class="text-[.94rem] leading-relaxed text-mute">Primero entiendo el día de su gente. Antes de tocar nada.</span></li>
+                <li class="flex gap-3.5"><svg class="w-[18px] h-[18px] flex-none mt-1 text-amber" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="square"><path d="M4 12.5 9.5 18 20 6"/></svg><span class="text-[.94rem] leading-relaxed text-mute">La estrategia la definimos juntos, en la mesa, no en un anexo.</span></li>
+                <li class="flex gap-3.5"><svg class="w-[18px] h-[18px] flex-none mt-1 text-amber" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="square"><path d="M4 12.5 9.5 18 20 6"/></svg><span class="text-[.94rem] leading-relaxed text-mute">Construyo la herramienta con IA. Es lo que hace posible que la haga una sola persona.</span></li>
+                <li class="flex gap-3.5"><svg class="w-[18px] h-[18px] flex-none mt-1 text-amber" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="square"><path d="M4 12.5 9.5 18 20 6"/></svg><span class="text-[.94rem] leading-relaxed text-mute">La dejo andando y su equipo aprende a operarla sin mí.</span></li>
+              </ul>
+            </div>
+            <div class="px-5 sm:px-6 py-4 border-t border-[rgba(140,146,145,.2)] font-mono text-[.68rem] text-steeldk leading-relaxed">
+              PARA: empresa tradicional colombiana · 5–40 personas · menos de USD 2M al año
+            </div>
+          </div>
+        </div>
+
+        <!-- MÓDULO B -->
+        <div class="engraved p-1">
+          <div class="bg-[#111511] border border-[#2B312D] h-full flex flex-col">
+            <div class="flex items-center gap-3 px-5 py-3 border-b border-[rgba(140,146,145,.2)]">
+              <span class="lamp" style="--c:#F2A81C"></span>
+              <span class="engraved-lite plate-type text-[.64rem] px-2.5 py-1.5">Módulo B</span>
+              <span class="plate-type text-[.68rem] text-bone">Mentoría</span>
+            </div>
+            <div class="p-5 sm:p-6 flex-1">
+              <p class="lede text-bone">Para el que está arrancando algo. Empresa, ONG, startup, lo que sea.</p>
+              <ul class="mt-6 space-y-4">
+                <li class="flex gap-3.5"><svg class="w-[18px] h-[18px] flex-none mt-1 text-amber" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="square"><path d="M4 12.5 9.5 18 20 6"/></svg><span class="text-[.94rem] leading-relaxed text-mute">Nos vemos seguido y cada semana usted sale con tareas concretas.</span></li>
+                <li class="flex gap-3.5"><svg class="w-[18px] h-[18px] flex-none mt-1 text-amber" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="square"><path d="M4 12.5 9.5 18 20 6"/></svg><span class="text-[.94rem] leading-relaxed text-mute">La sesión siguiente empieza revisando la tarea, sin excusas de por medio.</span></li>
+                <li class="flex gap-3.5"><svg class="w-[18px] h-[18px] flex-none mt-1 text-amber" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="square"><path d="M4 12.5 9.5 18 20 6"/></svg><span class="text-[.94rem] leading-relaxed text-mute">Llevo siete mentoreados hasta hoy. Es uno a uno, no un programa.</span></li>
+              </ul>
+              <div class="mt-7 engraved-lite px-4 py-4">
+                <p class="head text-[1.05rem] text-[#14171A] leading-snug">«Trabajar conmigo significa que las cosas pasan, así toque a las malas.»</p>
+              </div>
+            </div>
+            <div class="px-5 sm:px-6 py-4 border-t border-[rgba(140,146,145,.2)] font-mono text-[.68rem] text-steeldk leading-relaxed">
+              PARA: cualquiera que esté arrancando · incluidas ONG y startups
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Módulo C, subordinado, + la placa de precios -->
+      <div class="grid lg:grid-cols-2 gap-6 lg:gap-8 mt-6 lg:mt-8">
+        <div class="border border-[rgba(140,146,145,.22)] bg-[#0F1210] px-5 py-5">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="lamp off"></span>
+            <span class="plate-type text-[.62rem] text-steeldk">Módulo C — charlas · publicidad, no producto</span>
+          </div>
+          <p class="text-[.9rem] text-mute leading-relaxed">Adopción de tecnología e IA, emprendimiento, mentalidad, balance vida-trabajo. Me han contratado conferencias, empresas y universidades. Si necesita una, escríbame; pero lo que vendo es lo de arriba.</p>
+        </div>
+
+        <div class="engraved-lite px-5 py-5">
+          <p class="head-cond text-[1.5rem] sm:text-[1.8rem] text-[#14171A] leading-none">En esta placa no figuran precios</p>
+          <p class="text-[.9rem] text-[#2C312F] leading-relaxed mt-3">Porque no tengo uno. Depende de qué hay que construir y de cuánto de eso lo hago yo. Eso se habla hablando, y yo se lo digo derecho en la primera llamada.</p>
+        </div>
+      </div>
+
+      <p class="lede text-mute max-w-prose mt-10">Todo esto lo hago al lado de Ignia, que es mi trabajo principal. No es un negocio de volumen: es lo que me cabe.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== M-09 · CUPOS ===================== -->
+<section id="m09" data-mod="9" data-tag="M-09" data-name="Capacidad" class="mod bg-panelB metal seamline relative overflow-clip">
+  <div class="mx-auto max-w-rack px-5 sm:px-8 lg:px-14">
+    <div class="flex items-center gap-3 sm:gap-4 py-3 border-b border-[rgba(140,146,145,.16)]">
+      <span class="screw" style="--r:26deg"></span>
+      <span class="engraved plate-type text-[.62rem] px-2.5 py-1">M-09</span>
+      <span class="plate-type text-[.62rem] text-steeldk">Capacidad</span>
+      <span class="ml-auto lamp" style="--c:#F2A81C"></span>
+    </div>
+
+    <div class="pt-14 sm:pt-20 pb-16 sm:pb-24 grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+      <div class="lg:col-span-6">
+        <h2 class="head text-[clamp(1.9rem,5.2vw,3.5rem)] text-[#F2F4F0] max-w-[16ch]">El tablero tiene cupos contados.</h2>
+        <div class="lede space-y-5 mt-7 max-w-prose">
+          <p class="text-mute">No es una táctica de venta. Ignia es mi trabajo principal y tengo dos hijos de cuatro años. Si le digo que sí a más de esto, le quedo mal a alguien.</p>
+          <p>Cuando se llenan, se llenan, y le voy a decir que espere. Prefiero eso a atenderlo a medias.</p>
+        </div>
+      </div>
+
+      <div class="lg:col-span-6 w-full">
+        <div class="engraved p-1">
+          <div class="bg-[#101310] border border-[#2B312D] p-5 sm:p-7">
+            <div class="pb-7 border-b border-[rgba(140,146,145,.2)]">
+              <div class="flex items-center justify-between gap-4 mb-4">
+                <span class="plate-type text-[.66rem] text-bone">Mentorías</span>
+                <span class="font-mono text-[.72rem] text-amber tnum tracking-widest">3 / 5 OCUPADAS</span>
+              </div>
+              <div class="flex gap-3 sm:gap-4">
+                <span class="lamp lg" style="--c:#F2A81C"></span><span class="lamp lg" style="--c:#F2A81C"></span><span class="lamp lg" style="--c:#F2A81C"></span><span class="lamp lg off"></span><span class="lamp lg off"></span>
+              </div>
+              <p class="font-mono text-[.66rem] text-steeldk mt-3 tracking-wider">ÁMBAR = ocupado · APAGADO = libre</p>
+            </div>
+
+            <div class="pt-7">
+              <div class="flex items-center justify-between gap-4 mb-4">
+                <span class="plate-type text-[.66rem] text-bone">Consultorías</span>
+                <span class="font-mono text-[.72rem] text-amber tnum tracking-widest">2 / 4 OCUPADAS</span>
+              </div>
+              <div class="flex gap-3 sm:gap-4">
+                <span class="lamp lg" style="--c:#F2A81C"></span><span class="lamp lg" style="--c:#F2A81C"></span><span class="lamp lg off"></span><span class="lamp lg off"></span>
+              </div>
+              <p class="font-mono text-[.66rem] text-steeldk mt-3 tracking-wider">ÁMBAR = ocupado · APAGADO = libre</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== M-10 · PREGUNTAS ===================== -->
+<section id="m10" data-mod="10" data-tag="M-10" data-name="Preguntas" class="mod bg-panelA metal seamline relative overflow-clip">
+  <div class="mx-auto max-w-rack px-5 sm:px-8 lg:px-14">
+    <div class="flex items-center gap-3 sm:gap-4 py-3 border-b border-[rgba(140,146,145,.16)]">
+      <span class="screw" style="--r:-18deg"></span>
+      <span class="engraved plate-type text-[.62rem] px-2.5 py-1">M-10</span>
+      <span class="plate-type text-[.62rem] text-steeldk">Preguntas</span>
+      <span class="ml-auto lamp off"></span>
+    </div>
+
+    <div class="pt-14 sm:pt-20 pb-16 sm:pb-24">
+      <h2 class="head text-[clamp(1.9rem,5.2vw,3.5rem)] text-[#F2F4F0] max-w-[20ch]">Lo que me preguntan antes de contratarme.</h2>
+
+      <div class="mt-12 grid md:grid-cols-2 gap-x-10 lg:gap-x-16 gap-y-10">
+        <div>
+          <p class="engraved-lite plate-type text-[.66rem] px-3 py-2 inline-block">Yo no soy técnico. ¿Voy a entender?</p>
+          <p class="text-[.97rem] leading-relaxed text-mute mt-4 max-w-prose">Si usted necesita entender de tecnología para usar lo que le construyo, lo hice mal. Con usted hablo de pedidos, de cartera y de gente. Lo otro es problema mío.</p>
+        </div>
+        <div>
+          <p class="engraved-lite plate-type text-[.66rem] px-3 py-2 inline-block">Ya compré un software y me costó un ojo.</p>
+          <p class="text-[.97rem] leading-relaxed text-mute mt-4 max-w-prose">Perfecto: ya sabemos qué no le funcionó y por qué. A veces la respuesta es hacerle una pieza para que por fin sirva. A veces es aceptar que no. Se lo digo derecho.</p>
+        </div>
+        <div>
+          <p class="engraved-lite plate-type text-[.66rem] px-3 py-2 inline-block">¿En cuánto tiempo veo algo?</p>
+          <p class="text-[.97rem] leading-relaxed text-mute mt-4 max-w-prose">Antes de que se le enfríe. Prefiero entregarle algo chiquito funcionando que un plan grande en PDF que se vuelve mueble.</p>
+        </div>
+        <div>
+          <p class="engraved-lite plate-type text-[.66rem] px-3 py-2 inline-block">¿Y si no funciona?</p>
+          <p class="text-[.97rem] leading-relaxed text-mute mt-4 max-w-prose">Puede pasar: dos de mis cinco empresas se cayeron. Lo que no va a pasar es que yo lo sepa antes que usted y no se lo diga.</p>
+        </div>
+        <div>
+          <p class="engraved-lite plate-type text-[.66rem] px-3 py-2 inline-block">¿Usted crece conmigo?</p>
+          <p class="text-[.97rem] leading-relaxed text-mute mt-4 max-w-prose">Hasta cierto punto. De unos cinco millones de dólares de facturación en adelante no sé escalar, y no voy a aprender con su plata. Ahí le sirvo más como el que arranca cosas que como el que las administra.</p>
+        </div>
+        <div>
+          <p class="engraved-lite plate-type text-[.66rem] px-3 py-2 inline-block">¿Por qué no hay testimonios?</p>
+          <p class="text-[.97rem] leading-relaxed text-mute mt-4 max-w-prose">Porque todavía no se los he pedido a nadie, y prefiero esta página sin testimonios que con uno maquillado. Si quiere hablar con alguien con quien haya trabajado, pídamelo y yo lo conecto.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== M-11 · ARRANQUE ===================== -->
+<div class="hazardband seamline" aria-hidden="true"></div>
+<section id="m11" data-mod="11" data-tag="M-11" data-name="Arranque" class="mod bg-[#0F1210] metal relative overflow-clip scroll-mt-4">
+  <div class="mx-auto max-w-rack px-5 sm:px-8 lg:px-14">
+    <div class="flex items-center gap-3 sm:gap-4 py-3 border-b border-[rgba(140,146,145,.16)]">
+      <span class="screw" style="--r:12deg"></span>
+      <span class="engraved plate-type text-[.62rem] px-2.5 py-1">M-11</span>
+      <span class="plate-type text-[.62rem] text-steeldk">Arranque</span>
+      <span id="startLamp" class="ml-auto lamp lg off"></span>
+    </div>
+
+    <div class="pt-16 sm:pt-24 pb-14 sm:pb-20 grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+      <div class="lg:col-span-6">
+        <h2 class="head text-[clamp(2.2rem,6.5vw,4.5rem)] text-[#F2F4F0]">Ya está.<br>Ahora sí.</h2>
+        <div class="lede space-y-5 mt-8 max-w-prose">
+          <p>Escríbame por WhatsApp y cuénteme en dos líneas qué hace su empresa y qué le está tocando hacer a mano. Yo le contesto.</p>
+          <p class="text-mute">Si no somos el uno para el otro, se lo digo de una y no le hago perder el tiempo. Y si sí, la siguiente conversación es de treinta minutos y ya arrancamos.</p>
+        </div>
+
+        <div class="mt-10 flex items-center gap-4">
+          <img src="assets/salomon.webp" alt="" width="120" height="120" class="w-14 h-14 rounded-full object-cover grayscale-[.4] border border-[#2B312D]">
+          <div>
+            <p class="head text-[1.35rem] text-[#F2F4F0]">Salomón Muriel</p>
+            <p class="font-mono text-[.68rem] text-steeldk tracking-widest mt-1">BOGOTÁ D.C. · COLOMBIA</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- unidad de arranque con tapa de seguridad -->
+      <div class="lg:col-span-6 w-full">
+        <div class="engraved p-1">
+          <div class="bg-[#0B0E0C] border border-[#2B312D] p-5 sm:p-7">
+            <div class="flex items-center justify-between mb-6">
+              <span class="plate-type text-[.62rem] text-steeldk">Unidad de arranque</span>
+              <div class="flex gap-2"><span class="screw" style="--r:36deg"></span><span class="screw" style="--r:-20deg"></span></div>
+            </div>
+
+            <div class="relative" style="perspective:900px">
+              <!-- tapa -->
+              <div id="guard" class="guard absolute inset-0 z-10 rounded-[3px] border-2 border-hazard/70 bg-[#FF6A13]/[.10] backdrop-blur-[1px] flex items-center justify-center pointer-events-none">
+                <span class="plate-type text-[.68rem] text-hazard text-center px-4">Levante la tapa<br><span class="text-[.6rem] text-steel">se abre sola al llegar aquí</span></span>
+              </div>
+
+              <a id="ctaMain" href="https://wa.me/573132465100" target="_blank" rel="noopener"
+                 class="group flex items-center justify-between gap-4 w-full bg-hazard text-[#0A0C0B] px-6 sm:px-8 py-6 sm:py-7 rounded-[3px]
+                        shadow-[0_6px_0_0_#9E3D07,0_16px_28px_rgba(0,0,0,.55)] active:translate-y-[4px] active:shadow-[0_2px_0_0_#9E3D07,0_8px_16px_rgba(0,0,0,.55)]
+                        transition-[transform,box-shadow] duration-100 no-underline">
+                <span>
+                  <span class="block head-cond text-[clamp(1.6rem,5.5vw,2.5rem)]">Arrancar</span>
+                  <span class="block plate-type text-[.62rem] mt-1.5 opacity-80">Escribirme por WhatsApp</span>
+                </span>
+                <svg class="w-8 h-8 flex-none transition-transform duration-200 group-hover:translate-x-1.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+              </a>
+            </div>
+
+            <a href="https://cal.com/salomonmuriel" target="_blank" rel="noopener"
+               class="mt-4 flex items-center justify-between gap-4 w-full border border-steeldk hover:border-amber hover:text-amber text-bone px-6 py-4 rounded-[3px] transition-colors duration-200 no-underline">
+              <span class="plate-type text-[.7rem]">Agendar 30 minutos</span>
+              <svg class="w-5 h-5 flex-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="square"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+            </a>
+
+            <div class="mt-6 pt-5 border-t border-[rgba(140,146,145,.2)] flex flex-wrap gap-x-6 gap-y-2 font-mono text-[.7rem]">
+              <a href="mailto:salomon.muriel@gmail.com" class="text-steel hover:text-amber transition-colors">salomon.muriel@gmail.com</a>
+              <a href="https://www.linkedin.com/in/smuriel/" target="_blank" rel="noopener" class="text-steel hover:text-amber transition-colors">linkedin.com/in/smuriel</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- serigrafía de pie: las postdatas -->
+    <div class="pb-16 sm:pb-24">
+      <div class="border-t border-[rgba(140,146,145,.2)] pt-8 grid md:grid-cols-2 gap-8 lg:gap-16">
+        <p class="font-mono text-[.72rem] leading-[1.9] text-steeldk">
+          <span class="text-steel">P.D.</span> — Corrí una media maratón en 2:10, tengo mellizos de cuatro años que se llaman Franco y Luca, celebro el cumpleaños en una fecha que no es la mía a propósito, y tengo un rack de herramientas y una impresora 3D. Nada de eso le sirve a su empresa. Se lo cuento para que sepa con quién va a hablar.
+        </p>
+        <p class="font-mono text-[.72rem] leading-[1.9] text-steeldk">
+          <span class="text-steel">P.D. 2</span> — Si llegó hasta aquí leyendo y no escribe, va a cerrar esta página y en diez minutos se le olvidó. Son dos líneas por WhatsApp y las contesto yo, no un bot. <a href="https://wa.me/573132465100" target="_blank" rel="noopener" class="text-amber underline">Ahora.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PLACA DE FABRICANTE (pie) ===================== -->
+<footer class="bg-panelA metal seamline">
+  <div class="mx-auto max-w-rack px-5 sm:px-8 lg:px-14 py-7 flex flex-wrap items-center gap-x-6 gap-y-3 justify-between">
+    <div class="flex items-center gap-3">
+      <span class="screw" style="--r:-14deg"></span>
+      <span class="plate-type text-[.62rem] text-steeldk">Muriel · práctica independiente · Bogotá D.C. · Colombia</span>
+    </div>
+    <span class="font-mono text-[.64rem] text-steeldk tracking-wider">ESTE TABLERO no opera bajo la marca Ignia.</span>
+  </div>
+</footer>
+
+</main>
+
+<!-- ===================== BARRA DE ESTADO ===================== -->
+<div id="statusbar" class="fixed bottom-0 left-0 right-0 z-50 bg-[#0B0E0C]/95 backdrop-blur-sm border-t-[3px] border-seam shadow-[0_-10px_30px_rgba(0,0,0,.5)]">
+  <div class="mx-auto max-w-rack px-3 sm:px-8 lg:px-14 py-2.5 sm:py-3 flex items-center gap-3 sm:gap-6">
+
+    <div class="hidden sm:flex items-center gap-2.5 flex-none">
+      <span class="font-mono text-[.6rem] text-steeldk tracking-widest">HORÓMETRO</span>
+      <span id="clock" class="font-mono text-[.82rem] text-amber tnum tracking-widest">00:00:00</span>
+    </div>
+
+    <div class="flex-1 min-w-0">
+      <div class="flex items-center gap-2 sm:gap-3">
+        <span id="sbTag" class="engraved plate-type text-[.58rem] px-2 py-[3px] flex-none">M-01</span>
+        <span id="sbName" class="plate-type text-[.6rem] sm:text-[.64rem] text-steel truncate">Energía</span>
+      </div>
+      <div id="segments" class="flex gap-[3px] mt-1.5" aria-hidden="true"></div>
+    </div>
+
+    <div class="flex-none flex items-center gap-2 sm:gap-4">
+      <button id="breakGlass" type="button"
+        class="text-right sm:text-left font-mono text-[.55rem] sm:text-[.58rem] leading-tight text-steeldk hover:text-amber transition-colors">
+        <span class="hidden sm:inline">¿YA SABE?<br></span>ROMPA EL<br class="sm:hidden"> VIDRIO
+      </button>
+      <a id="sbCta" href="https://wa.me/573132465100" target="_blank" rel="noopener"
+         class="relative overflow-hidden plate-type text-[.62rem] sm:text-[.68rem] px-3.5 sm:px-6 py-2.5 sm:py-3 rounded-[2px] no-underline transition-colors duration-300
+                bg-[#1A1E1B] text-steeldk border border-[#333935] cursor-not-allowed pointer-events-none"
+         aria-disabled="true">
+        <span id="sbCtaLabel">Bloqueado</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- 1. HORÓMETRO ---------- */
+  var t0 = Date.now(), clockEl = document.getElementById('clock');
+  function pad(n){ return (n<10?'0':'')+n; }
+  setInterval(function(){
+    var s = Math.floor((Date.now()-t0)/1000);
+    clockEl.textContent = pad(Math.floor(s/3600))+':'+pad(Math.floor(s/60)%60)+':'+pad(s%60);
+  }, 1000);
+
+  /* ---------- 2. SECUENCIA: riel, segmentos, barra de estado ---------- */
+  var mods = Array.prototype.slice.call(document.querySelectorAll('.mod'));
+  var railLamps = document.getElementById('railLamps');
+  var segments  = document.getElementById('segments');
+  var sbTag = document.getElementById('sbTag'), sbName = document.getElementById('sbName');
+
+  mods.forEach(function(m, i){
+    var l = document.createElement('span');
+    l.className = 'lamp off'; l.setAttribute('data-i', i);
+    railLamps.appendChild(l);
+
+    var s = document.createElement('span');
+    s.className = 'block h-[4px] flex-1 rounded-[1px] bg-[#262B28] transition-colors duration-300';
+    s.setAttribute('data-i', i);
+    segments.appendChild(s);
+  });
+  var railEls = Array.prototype.slice.call(railLamps.children);
+  var segEls  = Array.prototype.slice.call(segments.children);
+
+  var current = -1;
+  function setCurrent(i){
+    if (i === current) return;
+    current = i;
+    var m = mods[i];
+    sbTag.textContent  = m.getAttribute('data-tag');
+    sbName.textContent = m.getAttribute('data-name');
+    railEls.forEach(function(l, k){
+      if (k <= i){ l.classList.remove('off'); l.style.setProperty('--c', k === i ? '#FF6A13' : '#F2A81C'); }
+      else { l.classList.add('off'); l.style.removeProperty('--c'); }
+    });
+    segEls.forEach(function(s, k){
+      s.style.background = k < i ? '#F2A81C' : (k === i ? '#FF6A13' : '#262B28');
+    });
+    if (i >= 7) unlockCta();
+  }
+
+  if ('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){
+          var idx = mods.indexOf(e.target);
+          if (idx > -1) setCurrent(idx);
+        }
+      });
+    }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+    mods.forEach(function(m){ io.observe(m); });
+  } else {
+    setCurrent(0);
+  }
+  setCurrent(0);
+
+  /* ---------- 3. CTA con guarda (VSL: el botón llega tarde) ---------- */
+  var sbCta = document.getElementById('sbCta'), sbCtaLabel = document.getElementById('sbCtaLabel');
+  var unlocked = false;
+  function unlockCta(){
+    if (unlocked) return;
+    unlocked = true;
+    sbCta.className = 'relative plate-type text-[.62rem] sm:text-[.68rem] px-3.5 sm:px-6 py-2.5 sm:py-3 rounded-[2px] no-underline transition-transform duration-150 bg-hazard text-[#0A0C0B] shadow-[0_3px_0_0_#9E3D07] active:translate-y-[2px] active:shadow-[0_1px_0_0_#9E3D07]';
+    sbCta.removeAttribute('aria-disabled');
+    sbCtaLabel.textContent = 'Arrancar';
+  }
+
+  document.getElementById('breakGlass').addEventListener('click', function(){
+    unlockCta();
+    var target = document.getElementById('m11');
+    if (target) target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+  });
+
+  /* ---------- 4. TABLERO CHINOMÁTICO ---------- */
+  var stations = [
+    { id:'pedidos',     label:'Pedidos',     fault:'FALLA — los pedidos llegan por WhatsApp.' },
+    { id:'inventario',  label:'Inventario',  fault:'FALLA — el inventario real está en la cabeza del de bodega.' },
+    { id:'nomina',      label:'Nómina',      fault:'FALLA — se calcula el 29 en un Excel que nadie más entiende.' },
+    { id:'facturacion', label:'Facturación', fault:'FALLA — la misma cifra se transcribe tres veces.' },
+    { id:'cobro',       label:'Cobro',       fault:'FALLA — cobra el que se acuerda.' }
+  ];
+  var chino = document.getElementById('chino');
+  var tried = {}, tryCount = 0;
+  var tryEl = document.getElementById('tryCount'), diagPlate = document.getElementById('diagPlate');
+
+  stations.forEach(function(st){
+    var cell = document.createElement('div');
+    cell.className = 'bg-[#0F1210] px-5 py-6 flex flex-col items-start gap-5';
+    cell.innerHTML =
+      '<div class="flex items-center gap-3 w-full">' +
+        '<span class="lamp" data-lamp style="--c:#F2A81C"></span>' +
+        '<span class="engraved plate-type text-[.62rem] px-2.5 py-1.5">'+st.label+'</span>' +
+      '</div>' +
+      '<div class="flex items-end gap-4">' +
+        '<div class="flex flex-col justify-between h-[56px] py-[2px]">' +
+          '<span class="font-mono text-[.58rem] text-steeldk leading-none">AUT</span>' +
+          '<span class="font-mono text-[.58rem] text-steeldk leading-none">MAN</span>' +
+        '</div>' +
+        '<button type="button" class="sw" data-sw data-pos="down" aria-pressed="false" aria-label="Poner '+st.label+' en automático">' +
+          '<span class="slot"></span><span class="bat"></span>' +
+        '</button>' +
+      '</div>' +
+      '<p data-out aria-live="polite" class="font-mono text-[.62rem] leading-snug text-amber min-h-[2.6em] tracking-wider">MODO: MANUAL<br>RESPONSABLE: una persona</p>';
+    chino.appendChild(cell);
+
+    var sw = cell.querySelector('[data-sw]');
+    var lamp = cell.querySelector('[data-lamp]');
+    var out  = cell.querySelector('[data-out]');
+    var busy = false;
+
+    sw.addEventListener('click', function(){
+      if (busy) return;
+      busy = true;
+      sw.setAttribute('data-pos','up');
+      sw.setAttribute('aria-pressed','true');
+      lamp.style.setProperty('--c', '#3ED18A');
+      out.style.color = '#3ED18A';
+      out.innerHTML = 'PASANDO A AUTOMÁTICO…';
+
+      if (!tried[st.id]){
+        tried[st.id] = true;
+        tryCount++;
+        tryEl.textContent = (tryCount<10?'0':'')+tryCount;
+        if (tryCount === stations.length){
+          diagPlate.style.opacity = '1';
+        }
+      }
+
+      setTimeout(function(){
+        lamp.style.setProperty('--c', '#FF4B39');
+        out.style.color = '#FF4B39';
+        out.innerHTML = st.fault;
+        sw.setAttribute('data-pos','down');
+        sw.setAttribute('aria-pressed','false');
+      }, reduce ? 200 : 620);
+
+      setTimeout(function(){
+        lamp.style.setProperty('--c', '#F2A81C');
+        out.style.color = '';
+        out.className = 'font-mono text-[.62rem] leading-snug text-amber min-h-[2.6em] tracking-wider';
+        out.innerHTML = 'MODO: MANUAL<br>RESPONSABLE: una persona';
+        busy = false;
+      }, reduce ? 1400 : 3000);
+    });
+  });
+
+  /* ---------- 5. TAPA DE SEGURIDAD ---------- */
+  var guard = document.getElementById('guard'), startLamp = document.getElementById('startLamp');
+  if ('IntersectionObserver' in window){
+    var go = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){
+          setTimeout(function(){
+            guard.classList.add('open');
+            startLamp.classList.remove('off');
+            startLamp.style.setProperty('--c', '#3ED18A');
+          }, reduce ? 0 : 450);
+          go.disconnect();
+        }
+      });
+    }, { threshold: 0.25 });
+    go.observe(document.getElementById('m11'));
+  } else {
+    guard.classList.add('open');
+  }
+
+  /* ---------- 6. MONITOR ---------- */
+  var playBtn = document.getElementById('playBtn'), videoBox = document.getElementById('videoBox');
+  var poster = document.getElementById('videoPoster');
+  poster.addEventListener('error', function(){
+    if (poster.src.indexOf('maxres') > -1){ poster.src = 'https://img.youtube.com/vi/F9t9f5Et_04/hqdefault.jpg'; }
+    else { poster.style.display = 'none'; }
+  });
+  playBtn.addEventListener('click', function(){
+    var f = document.createElement('iframe');
+    f.src = 'https://www.youtube-nocookie.com/embed/F9t9f5Et_04?autoplay=1&rel=0';
+    f.title = 'Negocios Aburridos e Innovación — podcast Ventaja';
+    f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+    f.setAttribute('allowfullscreen','');
+    f.className = 'absolute inset-0 w-full h-full';
+    f.style.border = '0';
+    videoBox.innerHTML = '';
+    videoBox.appendChild(f);
+  });
+})();
+</script>
+
+</body>
+</html>

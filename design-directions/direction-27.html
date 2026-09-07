@@ -1,0 +1,873 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Salomón Muriel | El chinómetro</title>
+<meta name="description" content="Su empresa no está automatizada: hay alguien haciéndolo a mano. Salomón Muriel define la estrategia y construye él mismo la herramienta.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;600;700&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        papel:  '#E3E5DE',
+        papel2: '#D6D9D0',
+        papel3: '#F2F3EF',
+        tinta:  '#181A14',
+        bezel:  '#1D2019',
+        sello:  '#C4381B',
+      },
+      fontFamily: {
+        blk:  ['"Archivo Black"','Impact','system-ui','sans-serif'],
+        sans: ['Archivo','system-ui','-apple-system','sans-serif'],
+        mono: ['"Courier Prime"','ui-monospace','Menlo','monospace'],
+      },
+      borderRadius: { none: '0px' },
+    }
+  }
+}
+</script>
+<style>
+  :root{
+    --papel:#E3E5DE; --papel2:#D6D9D0; --papel3:#F2F3EF;
+    --tinta:#181A14; --bezel:#1D2019; --sello:#C4381B;
+    color-scheme: light;
+  }
+  html{ scroll-behavior:smooth; }
+  body{ background:var(--papel); color:var(--tinta); overflow-x:hidden; -webkit-font-smoothing:antialiased; }
+  ::selection{ background:var(--sello); color:#F5F4EF; }
+
+  /* ---------- papel cuadriculado (fondo del instrumento) ---------- */
+  .cuadricula{
+    background-image:
+      linear-gradient(to right, rgba(24,26,20,.075) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(24,26,20,.075) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+  .cuadricula-gruesa{
+    background-image:
+      linear-gradient(to right, rgba(24,26,20,.13) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(24,26,20,.13) 1px, transparent 1px),
+      linear-gradient(to right, rgba(24,26,20,.055) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(24,26,20,.055) 1px, transparent 1px);
+    background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px;
+  }
+
+  /* ---------- foto: gris de imprenta + trama de puntos ---------- */
+  .foto{ position:relative; overflow:hidden; background:var(--bezel); }
+  .foto img{ filter:grayscale(1) contrast(1.12) brightness(1.02); display:block; width:100%; height:100%; object-fit:cover; }
+  .foto::after{
+    content:''; position:absolute; inset:0; pointer-events:none;
+    background: var(--sello); mix-blend-mode:color; opacity:.30;
+  }
+  .foto::before{
+    content:''; position:absolute; inset:0; pointer-events:none; z-index:2;
+    background-image: radial-gradient(circle at center, rgba(0,0,0,.42) .9px, transparent 1.1px);
+    background-size: 4px 4px;
+    mix-blend-mode:overlay; opacity:.55;
+  }
+  .foto-limpia::after{ opacity:.14; }
+
+  /* ---------- sello de caucho ---------- */
+  .sello{
+    display:inline-block; font-family:'Archivo Black',sans-serif;
+    color:var(--sello); border:3px solid var(--sello);
+    padding:.18em .5em .12em; letter-spacing:.05em; line-height:1;
+    transform:rotate(-7deg); opacity:.88;
+    -webkit-mask-image: radial-gradient(120% 140% at 25% 15%, #000 55%, rgba(0,0,0,.62) 100%);
+            mask-image: radial-gradient(120% 140% at 25% 15%, #000 55%, rgba(0,0,0,.62) 100%);
+  }
+  .sello-muerto{ color:var(--tinta); border-color:var(--tinta); opacity:.42; transform:rotate(5deg); }
+
+  /* ---------- botón ficha / bloque con sombra dura ---------- */
+  .btn{ position:relative; display:inline-flex; align-items:center; justify-content:center; white-space:nowrap;
+        transition: transform .14s cubic-bezier(.16,1,.3,1), box-shadow .14s cubic-bezier(.16,1,.3,1), background-color .14s; }
+  .btn:active{ transform: translate(3px,3px); box-shadow:0 0 0 var(--tinta) !important; }
+  .btn:focus-visible{ outline:3px solid var(--tinta); outline-offset:3px; }
+
+  /* ---------- el chinómetro ---------- */
+  .dial{ position:relative; width:100%; aspect-ratio:2/1; overflow:hidden; }
+  .dial-arco{
+    position:absolute; top:0; left:0; width:100%; aspect-ratio:1; border-radius:50%;
+    background: conic-gradient(from 270deg,
+      var(--sello) 0 calc(var(--p,0) * 50%),
+      rgba(243,243,239,.14) calc(var(--p,0) * 50%) 50%,
+      transparent 50%);
+    transition: background .55s cubic-bezier(.16,1,.3,1);
+  }
+  .dial-hueco{
+    position:absolute; left:50%; bottom:0; width:76%; aspect-ratio:1; border-radius:50%;
+    transform:translate(-50%,50%); background:var(--bezel);
+  }
+  .tick{ position:absolute; left:50%; bottom:0; width:2px; height:100%;
+         transform-origin:50% 100%; }
+  .tick i{ position:absolute; top:2%; left:0; width:2px; height:7%; background:rgba(243,243,239,.42); display:block; }
+  .tick.mayor i{ height:12%; width:3px; background:rgba(243,243,239,.85); }
+  .aguja{
+    position:absolute; left:50%; bottom:0; width:3px; height:70%;
+    background:var(--sello); transform-origin:50% 100%;
+    transform: translateX(-50%) rotate(-90deg);
+    transition: transform .75s cubic-bezier(.34,1.3,.4,1);
+    box-shadow:0 0 0 1px rgba(0,0,0,.35);
+  }
+  .aguja::before{ content:''; position:absolute; top:0; left:50%; transform:translateX(-50%);
+                  border-left:5px solid transparent; border-right:5px solid transparent; border-bottom:14px solid var(--sello); }
+  .buje{ position:absolute; left:50%; bottom:0; width:26px; height:26px; border-radius:50%;
+         transform:translate(-50%,50%); background:var(--papel3); border:3px solid var(--bezel); z-index:3; }
+
+  .tarea input{ position:absolute; opacity:0; width:0; height:0; }
+  .tarea .caja{ width:22px; height:22px; flex:0 0 22px; border:2px solid var(--tinta); background:transparent; position:relative; transition:background-color .12s; }
+  .tarea .caja::after{ content:''; position:absolute; inset:3px; background:var(--sello); transform:scale(0); transition:transform .16s cubic-bezier(.34,1.6,.5,1); }
+  .tarea input:checked + .caja::after{ transform:scale(1); }
+  .tarea input:focus-visible + .caja{ outline:3px solid var(--sello); outline-offset:3px; }
+  .tarea:hover{ background:rgba(24,26,20,.05); }
+  .tarea input:checked ~ .txt{ font-weight:600; }
+
+  .tam input{ position:absolute; opacity:0; width:0; height:0; }
+  .tam span{ display:block; padding:.55rem .35rem; text-align:center; border:2px solid var(--tinta); transition:background-color .14s,color .14s; }
+  .tam input:checked + span{ background:var(--tinta); color:var(--papel3); }
+  .tam input:focus-visible + span{ outline:3px solid var(--sello); outline-offset:3px; }
+
+  /* ---------- tachado de "lo que no hago" (funciona línea por línea) ---------- */
+  .tachado{
+    display:inline;
+    -webkit-box-decoration-break: clone; box-decoration-break: clone;
+    background-image: linear-gradient(var(--sello), var(--sello));
+    background-repeat: no-repeat;
+    background-position: 0 56%;
+    background-size: 0% 5px;
+    transition: background-size .7s cubic-bezier(.16,1,.3,1);
+  }
+  .rev.in .tachado{ background-size:100% 5px; }
+
+  /* ---------- reveal ---------- */
+  .rev{ opacity:0; transform:translateY(22px); transition:opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1); }
+  .rev.in{ opacity:1; transform:none; }
+
+  /* ---------- cupos ---------- */
+  .cupo{ width:26px; height:26px; border:2px solid; }
+  .cupo-claro{ border-color:var(--tinta); }
+  .cupo-claro.ocupado{ background:var(--tinta); }
+  .cupo-claro.libre{ background:repeating-linear-gradient(45deg, transparent 0 4px, rgba(24,26,20,.30) 4px 5px); }
+  .cupo-oscuro{ border-color:var(--papel3); }
+  .cupo-oscuro.ocupado{ background:var(--papel3); }
+  .cupo-oscuro.libre{ background:repeating-linear-gradient(45deg, transparent 0 4px, rgba(242,243,239,.38) 4px 5px); }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *,*::before,*::after{ animation:none !important; transition:none !important; }
+    .rev{ opacity:1 !important; transform:none !important; }
+    .tachado::after{ transform:scaleX(1) !important; }
+  }
+</style>
+</head>
+<body class="font-sans antialiased">
+
+<!-- ══════════ NAV ══════════ -->
+<header class="sticky top-0 z-50 bg-papel/95 backdrop-blur-sm border-b-2 border-tinta">
+  <nav class="mx-auto max-w-[1400px] h-16 px-4 sm:px-6 flex items-center justify-between gap-4">
+    <a href="#top" class="font-mono text-[11px] sm:text-[12px] font-bold tracking-[0.2em] uppercase leading-tight">
+      Salomón<br class="sm:hidden"><span class="hidden sm:inline"> </span>Muriel
+    </a>
+    <div class="hidden lg:flex items-center gap-8 font-mono text-[13px]">
+      <a href="#chinometro" class="hover:text-sello transition-colors">El chinómetro</a>
+      <a href="#mecanismo" class="hover:text-sello transition-colors">Cómo trabajo</a>
+      <a href="#registro" class="hover:text-sello transition-colors">Qué he hecho</a>
+      <a href="#trabajar" class="hover:text-sello transition-colors">Trabajar conmigo</a>
+    </div>
+    <a href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20vi%20su%20p%C3%A1gina%20y%20quiero%20contarle%20qu%C3%A9%20estamos%20haciendo%20a%20mano."
+       class="btn bg-sello text-papel3 px-4 sm:px-6 py-2.5 font-blk text-[12px] sm:text-[13px] uppercase tracking-wide shadow-[4px_4px_0_#181A14] hover:shadow-[6px_6px_0_#181A14] hover:-translate-y-[2px]">
+      Escríbame
+    </a>
+  </nav>
+</header>
+
+<main id="top">
+
+<!-- ══════════ 1. HERO . entrada a nivel de conciencia del problema ══════════ -->
+<section class="border-b-2 border-tinta">
+  <div class="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-10 pt-8 lg:pt-20 pb-14 lg:pb-20
+              grid lg:grid-cols-[1.35fr_1fr] gap-8 lg:gap-14 items-center min-h-[calc(100dvh-4rem)]">
+
+    <div class="order-2 lg:order-1">
+      <h1 class="font-blk uppercase leading-[0.87] tracking-[-0.025em]
+                 text-[2.35rem] xs:text-[2.7rem] sm:text-[3.6rem] lg:text-[4.3rem] xl:text-[5rem]">
+        Eso no está<br>automatizado.<br>
+        <span class="text-sello">Hay un chino</span><br>haciéndolo a mano.
+      </h1>
+
+      <p class="mt-6 lg:mt-8 max-w-[46ch] text-[1.02rem] sm:text-[1.15rem] leading-[1.55] text-tinta/80">
+        Le digo <strong class="font-bold text-tinta">chinomático</strong>. Le pasa a casi toda empresa
+        que compró un software carísimo y hoy cuadra todo en Excel.
+      </p>
+
+      <div class="mt-8 lg:mt-10 flex flex-wrap items-center gap-4">
+        <a href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20vi%20su%20p%C3%A1gina%20y%20quiero%20contarle%20qu%C3%A9%20estamos%20haciendo%20a%20mano."
+           class="btn bg-sello text-papel3 px-7 py-4 font-blk text-[15px] uppercase tracking-wide shadow-[6px_6px_0_#181A14] hover:shadow-[9px_9px_0_#181A14] hover:-translate-y-[3px]">
+          Escríbame
+        </a>
+        <a href="#chinometro"
+           class="btn border-2 border-tinta px-7 py-4 font-blk text-[15px] uppercase tracking-wide hover:bg-tinta hover:text-papel3">
+          Medir el mío
+        </a>
+      </div>
+    </div>
+
+    <div class="order-1 lg:order-2 lg:justify-self-end w-full max-w-[420px] mx-auto lg:mx-0">
+      <div class="foto border-[6px] border-tinta shadow-[10px_10px_0_rgba(24,26,20,.16)] h-[158px] sm:h-[300px] lg:h-[440px]">
+        <img src="assets/fotoSalo.jpeg" alt="Retrato de Salomón Muriel" width="800" height="800" fetchpriority="high">
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════ 2. EL CHINÓMETRO . intensificar el problema, ponerle número ══════════ -->
+<section id="chinometro" class="cuadricula-gruesa border-b-2 border-tinta">
+  <div class="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-10 py-16 lg:py-24">
+
+    <div class="rev">
+      <h2 class="font-blk uppercase leading-[0.9] tracking-[-0.02em] text-[2rem] sm:text-[2.9rem] lg:text-[3.6rem]
+                 max-w-[13ch] sm:max-w-[16ch] lg:max-w-[19ch]">
+        Marque lo que en su empresa todavía se hace a mano.
+      </h2>
+      <p class="mt-5 max-w-[52ch] text-[1rem] sm:text-[1.08rem] leading-relaxed text-tinta/75">
+        Es una cuenta gruesa, no un diagnóstico. Sirve para ponerle un número a algo
+        que hoy es apenas una sensación.
+      </p>
+    </div>
+
+    <div class="mt-10 lg:mt-14 grid lg:grid-cols-[minmax(0,420px)_minmax(0,1fr)] gap-8 lg:gap-14 items-start">
+
+      <!-- instrumento -->
+      <div class="lg:sticky lg:top-24">
+        <div class="bg-bezel border-2 border-tinta p-5 sm:p-7 shadow-[8px_8px_0_rgba(24,26,20,.2)]">
+          <div class="dial" id="dial">
+            <div class="dial-arco" id="arco"></div>
+            <div class="dial-hueco"></div>
+            <div id="ticks"></div>
+            <div class="aguja" id="aguja"></div>
+            <div class="buje"></div>
+            <span class="absolute left-[17%] bottom-[4%] font-mono text-[10px] text-papel3/55">0</span>
+            <span class="absolute right-[17%] bottom-[4%] font-mono text-[10px] text-papel3/55">420</span>
+          </div>
+
+          <div class="mt-6 border-t-2 border-papel3/25 pt-5 flex items-end gap-4">
+            <div class="font-blk text-papel3 leading-[0.8] text-[3.4rem] sm:text-[4.1rem] tabular-nums" id="horas">0</div>
+            <div class="font-mono text-[11px] leading-tight tracking-[0.2em] uppercase text-papel3/55 pb-1.5">horas<br>al mes</div>
+          </div>
+
+          <div class="mt-6 pt-5 border-t border-papel3/20 grid grid-cols-2 gap-4">
+            <div>
+              <div class="font-blk text-papel3 text-[1.55rem] leading-none tabular-nums" id="personas">0,0</div>
+              <div class="font-mono text-[10.5px] leading-snug uppercase tracking-[0.14em] text-papel3/55 mt-1.5">personas de<br>tiempo completo</div>
+            </div>
+            <div>
+              <div class="font-blk text-papel3 text-[1.55rem] leading-none tabular-nums" id="conteo">0</div>
+              <div class="font-mono text-[10.5px] leading-snug uppercase tracking-[0.14em] text-papel3/55 mt-1.5">tareas<br>marcadas</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-5" id="salida">
+          <p class="font-mono text-[13px] leading-relaxed text-tinta/70" id="vacio">
+            Marque al menos una casilla de la derecha y la aguja se mueve.
+          </p>
+          <div id="lleno" class="hidden">
+            <a id="waLink" href="https://wa.me/573132465100"
+               class="btn w-full bg-sello text-papel3 px-6 py-4 font-blk text-[15px] uppercase tracking-wide shadow-[6px_6px_0_#181A14] hover:shadow-[9px_9px_0_#181A14] hover:-translate-y-[3px]">
+              Escríbame
+            </a>
+            <p class="mt-3 font-mono text-[12px] leading-relaxed text-tinta/70">
+              El mensaje le llega con estas casillas ya escritas. Usted solo le da enviar.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- controles -->
+      <div>
+        <fieldset class="mb-8">
+          <legend class="font-mono text-[12px] uppercase tracking-[0.18em] text-tinta/72 mb-3">Tamaño de la operación</legend>
+          <div class="grid grid-cols-3 gap-2 sm:gap-3 font-mono text-[12.5px] sm:text-[13.5px]" id="tamanos">
+            <label class="tam cursor-pointer"><input type="radio" name="tam" value="0.6" data-nombre="chica"><span>Hasta 10<br>personas</span></label>
+            <label class="tam cursor-pointer"><input type="radio" name="tam" value="1" data-nombre="mediana" checked><span>De 10 a 25<br>personas</span></label>
+            <label class="tam cursor-pointer"><input type="radio" name="tam" value="1.6" data-nombre="grande"><span>De 25 a 40<br>personas</span></label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend class="font-mono text-[12px] uppercase tracking-[0.18em] text-tinta/72 mb-3">Trabajo que hoy hace una persona</legend>
+          <div class="border-2 border-tinta bg-papel3" id="tareas">
+            <label class="tarea flex items-center gap-4 px-4 sm:px-5 py-3.5 border-b border-tinta/20 cursor-pointer">
+              <input type="checkbox" data-h="34" data-t="pasar los pedidos de WhatsApp a un Excel">
+              <span class="caja"></span>
+              <span class="txt flex-1 text-[.95rem] sm:text-[1rem] leading-snug">Pasar los pedidos de WhatsApp a un Excel</span>
+              <span class="font-mono text-[12px] text-tinta/72 tabular-nums">34 h</span>
+            </label>
+            <label class="tarea flex items-center gap-4 px-4 sm:px-5 py-3.5 border-b border-tinta/20 cursor-pointer">
+              <input type="checkbox" data-h="26" data-t="armar las cotizaciones una por una">
+              <span class="caja"></span>
+              <span class="txt flex-1 text-[.95rem] sm:text-[1rem] leading-snug">Armar las cotizaciones una por una</span>
+              <span class="font-mono text-[12px] text-tinta/72 tabular-nums">26 h</span>
+            </label>
+            <label class="tarea flex items-center gap-4 px-4 sm:px-5 py-3.5 border-b border-tinta/20 cursor-pointer">
+              <input type="checkbox" data-h="22" data-t="cuadrar el inventario contando a mano">
+              <span class="caja"></span>
+              <span class="txt flex-1 text-[.95rem] sm:text-[1rem] leading-snug">Cuadrar el inventario contando a mano</span>
+              <span class="font-mono text-[12px] text-tinta/72 tabular-nums">22 h</span>
+            </label>
+            <label class="tarea flex items-center gap-4 px-4 sm:px-5 py-3.5 border-b border-tinta/20 cursor-pointer">
+              <input type="checkbox" data-h="20" data-t="perseguir la cartera llamando uno por uno">
+              <span class="caja"></span>
+              <span class="txt flex-1 text-[.95rem] sm:text-[1rem] leading-snug">Perseguir la cartera llamando uno por uno</span>
+              <span class="font-mono text-[12px] text-tinta/72 tabular-nums">20 h</span>
+            </label>
+            <label class="tarea flex items-center gap-4 px-4 sm:px-5 py-3.5 border-b border-tinta/20 cursor-pointer">
+              <input type="checkbox" data-h="18" data-t="digitar las facturas del proveedor">
+              <span class="caja"></span>
+              <span class="txt flex-1 text-[.95rem] sm:text-[1rem] leading-snug">Digitar las facturas del proveedor</span>
+              <span class="font-mono text-[12px] text-tinta/72 tabular-nums">18 h</span>
+            </label>
+            <label class="tarea flex items-center gap-4 px-4 sm:px-5 py-3.5 border-b border-tinta/20 cursor-pointer">
+              <input type="checkbox" data-h="16" data-t="copiar datos de un sistema a otro">
+              <span class="caja"></span>
+              <span class="txt flex-1 text-[.95rem] sm:text-[1rem] leading-snug">Copiar datos de un sistema a otro</span>
+              <span class="font-mono text-[12px] text-tinta/72 tabular-nums">16 h</span>
+            </label>
+            <label class="tarea flex items-center gap-4 px-4 sm:px-5 py-3.5 border-b border-tinta/20 cursor-pointer">
+              <input type="checkbox" data-h="12" data-t="consolidar las ventas de cada punto los lunes">
+              <span class="caja"></span>
+              <span class="txt flex-1 text-[.95rem] sm:text-[1rem] leading-snug">Consolidar las ventas de cada punto los lunes</span>
+              <span class="font-mono text-[12px] text-tinta/72 tabular-nums">12 h</span>
+            </label>
+            <label class="tarea flex items-center gap-4 px-4 sm:px-5 py-3.5 border-b border-tinta/20 cursor-pointer">
+              <input type="checkbox" data-h="10" data-t="hacer la nómina a punta de fórmulas">
+              <span class="caja"></span>
+              <span class="txt flex-1 text-[.95rem] sm:text-[1rem] leading-snug">Hacer la nómina a punta de fórmulas</span>
+              <span class="font-mono text-[12px] text-tinta/72 tabular-nums">10 h</span>
+            </label>
+            <label class="tarea flex items-center gap-4 px-4 sm:px-5 py-3.5 cursor-pointer">
+              <input type="checkbox" data-h="8" data-t="sacar a mano el informe que pide la gerencia">
+              <span class="caja"></span>
+              <span class="txt flex-1 text-[.95rem] sm:text-[1rem] leading-snug">Sacar a mano el informe que pide la gerencia</span>
+              <span class="font-mono text-[12px] text-tinta/72 tabular-nums">8 h</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <p class="mt-4 font-mono text-[12px] leading-relaxed text-tinta/72 max-w-[58ch]">
+          Las horas son estimados gruesos de operaciones parecidas a la suya. Si le quedan cortas,
+          súbale el tamaño de la operación arriba.
+        </p>
+        <noscript>
+          <p class="mt-4 font-mono text-[12.5px] text-sello">Este medidor necesita JavaScript. Si no le carga, escríbame y hacemos la cuenta juntos.</p>
+        </noscript>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 3. POR QUÉ FALLÓ LO ANTERIOR . mercado saturado de promesas ══════════ -->
+<section class="border-b-2 border-tinta bg-papel2">
+  <div class="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-10 py-16 lg:py-28">
+    <h2 class="rev font-blk uppercase leading-[0.9] tracking-[-0.02em] text-[2rem] sm:text-[3rem] lg:text-[4rem] max-w-[16ch]">
+      Usted ya compró la solución. Puede que dos veces.
+    </h2>
+
+    <div class="mt-12 lg:mt-20 space-y-10 lg:space-y-16">
+      <div class="rev grid lg:grid-cols-[1fr_1.1fr] gap-3 lg:gap-16 border-t-2 border-tinta pt-6">
+        <h3 class="font-blk text-[1.4rem] sm:text-[1.9rem] lg:text-[2.2rem] leading-[1.02] tracking-[-0.015em] max-w-[16ch]">
+          Le vendieron un sistema, no un cambio.
+        </h3>
+        <p class="text-[1.02rem] sm:text-[1.12rem] leading-[1.6] text-tinta/80 max-w-[54ch]">
+          El software llegó, se hizo la capacitación y se firmó el acta. La pregunta de quién,
+          exactamente, iba a dejar de hacerlo a mano el lunes siguiente no la contestó nadie.
+        </p>
+      </div>
+
+      <div class="rev grid lg:grid-cols-[1fr_1.1fr] gap-3 lg:gap-16 border-t-2 border-tinta pt-6">
+        <h3 class="font-blk text-[1.4rem] sm:text-[1.9rem] lg:text-[2.2rem] leading-[1.02] tracking-[-0.015em] max-w-[16ch]">
+          Lo montó gente que nunca vio su bodega un lunes a las seis.
+        </h3>
+        <p class="text-[1.02rem] sm:text-[1.12rem] leading-[1.6] text-tinta/80 max-w-[54ch]">
+          Configuraron el módulo que venía en el contrato, no la operación que usted tiene.
+          Por eso hay tres campos obligatorios que su equipo llena con un punto para poder seguir.
+        </p>
+      </div>
+
+      <div class="rev grid lg:grid-cols-[1fr_1.1fr] gap-3 lg:gap-16 border-t-2 border-tinta pt-6">
+        <h3 class="font-blk text-[1.4rem] sm:text-[1.9rem] lg:text-[2.2rem] leading-[1.02] tracking-[-0.015em] max-w-[16ch]">
+          Salió ocho meses después.
+        </h3>
+        <p class="text-[1.02rem] sm:text-[1.12rem] leading-[1.6] text-tinta/80 max-w-[54ch]">
+          Para cuando salió, la operación ya era otra. El Excel volvió a entrar por la puerta
+          de atrás y ahí sigue, sosteniendo el negocio.
+        </p>
+      </div>
+    </div>
+
+    <p class="rev mt-14 lg:mt-24 font-blk uppercase leading-[0.95] tracking-[-0.02em]
+              text-[1.6rem] sm:text-[2.4rem] lg:text-[3.1rem] max-w-[20ch] text-sello">
+      El problema no fue el software. Fue que nadie se quedó hasta que se usara.
+    </p>
+  </div>
+</section>
+
+<!-- ══════════ 4. EL MECANISMO ══════════ -->
+<section id="mecanismo" class="border-b-2 border-tinta">
+  <div class="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-10 py-16 lg:py-28">
+
+    <div class="rev">
+      <h2 class="font-blk uppercase leading-[0.86] tracking-[-0.03em]
+                 text-[2.6rem] sm:text-[4rem] lg:text-[6.2rem] xl:text-[7rem]">
+        Yo lo pienso<br>y yo lo armo.
+      </h2>
+      <p class="mt-7 max-w-[62ch] text-[1.05rem] sm:text-[1.2rem] leading-[1.55] text-tinta/80">
+        Ese es el mecanismo completo. No hay equipo de implementación, ni tres meses de
+        levantamiento de requerimientos, ni un consultor que entrega un PDF y se va.
+        La persona que decide qué hay que hacer es la misma que se sienta a construirlo.
+      </p>
+    </div>
+
+    <div class="mt-12 lg:mt-16 grid gap-4 sm:gap-5 md:grid-cols-2 lg:grid-cols-12">
+
+      <!-- a: foto real -->
+      <article class="rev lg:col-span-5 lg:row-span-1 border-2 border-tinta bg-papel3 flex flex-col overflow-hidden">
+        <div class="foto foto-limpia h-[180px] sm:h-[210px] border-b-2 border-tinta">
+          <img src="assets/salo_oscar.webp" alt="Salomón Muriel con su equipo mostrando la plataforma de Finco" width="527" height="329" loading="lazy">
+        </div>
+        <div class="p-6 sm:p-7">
+          <h3 class="font-blk text-[1.5rem] sm:text-[1.75rem] leading-none">Voy y miro</h3>
+          <p class="mt-3 text-[1rem] leading-[1.55] text-tinta/80">
+            Me siento al lado del que hace la vaina, no en una sala de juntas. Ahí es donde uno
+            entiende por qué la hacen así de raro, y casi siempre tienen razón.
+          </p>
+        </div>
+      </article>
+
+      <!-- b: celda de acento, el mecanismo verdadero -->
+      <article class="rev lg:col-span-7 lg:row-span-1 border-2 border-tinta bg-sello text-papel3 p-6 sm:p-9 flex flex-col justify-between">
+        <div>
+          <h3 class="font-blk text-[1.7rem] sm:text-[2.3rem] leading-none">Lo armo yo</h3>
+          <p class="mt-4 text-[1.02rem] sm:text-[1.12rem] leading-[1.55] text-papel3/95 max-w-[46ch]">
+            Con agentes de inteligencia artificial construyo en semanas lo que antes era un
+            proyecto de un año. Esa es la única razón por la que este trabajo hoy le cabe
+            a una sola persona. Hace cinco años yo no habría podido ofrecer esto.
+          </p>
+        </div>
+        <p class="mt-6 font-mono text-[12.5px] leading-relaxed text-papel3/80 border-t border-papel3/30 pt-4">
+          En Ignia hice el CRM, el sitio y la plataforma de comunidad. Yo, con mis manos.
+        </p>
+      </article>
+
+      <!-- c -->
+      <article class="rev lg:col-span-7 lg:row-span-1 border-2 border-tinta bg-papel2 p-6 sm:p-9 flex flex-col justify-center cuadricula">
+        <h3 class="font-blk text-[1.7rem] sm:text-[2.3rem] leading-none">Se usa o no sirve</h3>
+        <p class="mt-4 text-[1.02rem] sm:text-[1.12rem] leading-[1.55] text-tinta/80 max-w-[48ch]">
+          Si a los quince días el equipo volvió al Excel, el sistema está malo. No la gente.
+          Yo me quedo hasta que la herramienta le gane al cuaderno, que es lo difícil.
+        </p>
+      </article>
+
+      <!-- d -->
+      <article class="rev lg:col-span-5 lg:row-span-1 border-2 border-tinta bg-tinta text-papel3 p-6 sm:p-9 flex flex-col justify-center">
+        <h3 class="font-blk text-[1.7rem] sm:text-[2.3rem] leading-none">Me salgo</h3>
+        <p class="mt-4 text-[1.02rem] sm:text-[1.12rem] leading-[1.55] text-papel3/85 max-w-[38ch]">
+          La meta es que en unos meses usted no me necesite y su gente maneje la herramienta
+          sin preguntarme nada. No me quedo de nómina.
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 5. PRUEBA . el registro, sin testimonios ══════════ -->
+<section id="registro" class="border-b-2 border-tinta bg-papel2">
+  <div class="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-10 py-16 lg:py-28">
+
+    <div class="rev grid lg:grid-cols-[1.1fr_1fr] gap-6 lg:gap-16 items-end">
+      <h2 class="font-blk uppercase leading-[0.9] tracking-[-0.02em] text-[2rem] sm:text-[3rem] lg:text-[3.7rem]">
+        Cinco empresas. Dos vendidas, dos muertas, una andando.
+      </h2>
+      <p class="text-[1rem] sm:text-[1.08rem] leading-[1.6] text-tinta/80 max-w-[50ch]">
+        No tengo testimonios todavía y no los voy a inventar. Lo que tengo es un registro,
+        con las que se cayeron incluidas. Antes de esto dirigí cuarenta personas en R5 y armé
+        allá el pipeline de datos y el sistema de modelación de riesgo.
+      </p>
+    </div>
+
+    <div class="mt-12 lg:mt-16 grid gap-4 sm:gap-5 md:grid-cols-2 lg:grid-cols-6">
+
+      <article class="rev md:col-span-2 lg:col-span-3 border-2 border-tinta bg-papel3 p-6 sm:p-8 flex flex-col">
+        <div class="flex items-start justify-between gap-4">
+          <img src="assets/ignia.png" alt="Ignia" class="h-12 sm:h-16 w-auto max-w-[190px] object-contain object-left grayscale hover:grayscale-0 transition-[filter] duration-300" loading="lazy">
+          <span class="sello text-[12px] sm:text-[13px] shrink-0">Andando</span>
+        </div>
+        <p class="mt-5 font-mono text-[12px] uppercase tracking-[0.16em] text-tinta/72">Ignia, 2025 a hoy</p>
+        <p class="mt-2 text-[1.02rem] sm:text-[1.1rem] leading-[1.55] text-tinta/85">
+          Un modelo nuevo de educación superior. Lanzamos en junio de 2025 y fue rentable desde
+          el primer día: USD 150.000 en el primer año y treinta fellows en la primera cohorte
+          del Action Lab. Somos cinco personas.
+        </p>
+      </article>
+
+      <article class="rev md:col-span-2 lg:col-span-3 border-2 border-tinta bg-papel3 p-6 sm:p-8 flex flex-col">
+        <div class="flex items-start justify-between gap-4">
+          <img src="assets/finco.png" alt="Finco" class="h-12 sm:h-16 w-auto max-w-[190px] object-contain object-left grayscale hover:grayscale-0 transition-[filter] duration-300" loading="lazy">
+          <span class="sello text-[12px] sm:text-[13px] shrink-0">Vendida</span>
+        </div>
+        <p class="mt-5 font-mono text-[12px] uppercase tracking-[0.16em] text-tinta/72">Finco, 2019 a 2022</p>
+        <p class="mt-2 text-[1.02rem] sm:text-[1.1rem] leading-[1.55] text-tinta/85">
+          Avalúos de inmuebles con datos e inteligencia artificial para América Latina.
+          Cien mil reportes al año. La compró RED Atlas por cinco veces lo invertido.
+        </p>
+      </article>
+
+      <article class="rev lg:col-span-2 border-2 border-tinta bg-papel3 p-6 flex flex-col">
+        <div class="flex items-start justify-between gap-4">
+          <img src="assets/prestagente.png" alt="PrestaGente" class="h-12 sm:h-14 w-auto max-w-[150px] object-contain object-left grayscale hover:grayscale-0 transition-[filter] duration-300" loading="lazy">
+          <span class="sello text-[11px] shrink-0">Vendida</span>
+        </div>
+        <p class="mt-5 font-mono text-[12px] uppercase tracking-[0.16em] text-tinta/72">PrestaGente, 2017 a 2019</p>
+        <p class="mt-2 text-[.98rem] leading-[1.55] text-tinta/85">
+          Libranza entre personas. La compró Taurus Capital y todavía opera.
+        </p>
+      </article>
+
+      <article class="rev lg:col-span-2 border-2 border-tinta bg-papel2/70 p-6 flex flex-col">
+        <div class="flex items-start justify-between gap-4">
+          <img src="assets/beriblock.png" alt="Beriblock" class="h-12 sm:h-14 w-auto max-w-[150px] object-contain object-left grayscale opacity-45 hover:opacity-100 hover:grayscale-0 transition duration-300" loading="lazy">
+          <span class="sello sello-muerto text-[11px] shrink-0">Quebró</span>
+        </div>
+        <p class="mt-5 font-mono text-[12px] uppercase tracking-[0.16em] text-tinta/72">Beriblock, 2018 a 2019</p>
+        <p class="mt-2 text-[.98rem] leading-[1.55] text-tinta/70">
+          Autenticación de pagarés con blockchain. Nunca apareció el mercado. Cerramos.
+        </p>
+      </article>
+
+      <article class="rev lg:col-span-2 border-2 border-tinta bg-papel2/70 p-6 flex flex-col">
+        <div class="flex items-start justify-between gap-4">
+          <img src="assets/elpalomo.png" alt="El Palomo" class="h-12 sm:h-14 w-auto max-w-[150px] object-contain object-left grayscale opacity-45 hover:opacity-100 hover:grayscale-0 transition duration-300" loading="lazy">
+          <span class="sello sello-muerto text-[11px] shrink-0">Fracasó</span>
+        </div>
+        <p class="mt-5 font-mono text-[12px] uppercase tracking-[0.16em] text-tinta/72">El Palomo, 2016 a 2017</p>
+        <p class="mt-2 text-[.98rem] leading-[1.55] text-tinta/70">
+          Flores por suscripción. Un fracaso espectacular. Ahí aprendí más que en las dos que vendí.
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 6. LO QUE NO HAGO . descalificar para calificar ══════════ -->
+<section class="border-b-2 border-tinta">
+  <div class="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-10 py-16 lg:py-28">
+    <h2 class="rev font-blk uppercase leading-[0.9] tracking-[-0.02em] text-[1.9rem] sm:text-[2.7rem] lg:text-[3.4rem] max-w-[20ch]">
+      Lo que no hago, para no hacerle perder el tiempo.
+    </h2>
+
+    <div class="mt-10 lg:mt-16 grid md:grid-cols-2 gap-x-14 gap-y-10 lg:gap-y-14">
+      <div class="rev">
+        <h3 class="font-blk text-[1.35rem] sm:text-[1.7rem] leading-[1.15] tracking-[-0.01em] pb-1">
+          <span class="tachado">Escalar de cinco millones de dólares para arriba</span>
+        </h3>
+        <p class="mt-3 text-[1rem] leading-[1.55] text-tinta/75 max-w-[44ch]">
+          No sé hacerlo. Nunca lo he hecho y no lo voy a aprender en su empresa.
+          Si ya está en ese punto, necesita a otra persona.
+        </p>
+      </div>
+      <div class="rev">
+        <h3 class="font-blk text-[1.35rem] sm:text-[1.7rem] leading-[1.15] tracking-[-0.01em] pb-1">
+          <span class="tachado">Deep tech e investigación</span>
+        </h3>
+        <p class="mt-3 text-[1rem] leading-[1.55] text-tinta/75 max-w-[44ch]">
+          Si el proyecto necesita inventar algo que todavía no existe en el mundo, no soy yo.
+          Yo armo con lo que ya hay.
+        </p>
+      </div>
+      <div class="rev">
+        <h3 class="font-blk text-[1.35rem] sm:text-[1.7rem] leading-[1.15] tracking-[-0.01em] pb-1">
+          <span class="tachado">Charlas de ciencia de datos o de cultura organizacional</span>
+        </h3>
+        <p class="mt-3 text-[1rem] leading-[1.55] text-tinta/75 max-w-[44ch]">
+          Me las han pedido y las he dicho que no. Hablo de lo que he hecho, no de lo que he leído.
+        </p>
+      </div>
+      <div class="rev">
+        <h3 class="font-blk text-[1.35rem] sm:text-[1.7rem] leading-[1.15] tracking-[-0.01em] pb-1">
+          <span class="tachado">Consultoría bajo la marca Ignia</span>
+        </h3>
+        <p class="mt-3 text-[1rem] leading-[1.55] text-tinta/75 max-w-[44ch]">
+          Ignia es otra cosa y tiene su propio camino. Esto que usted está leyendo es
+          mi práctica personal, y responde mi celular.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 7. LAS DOS FORMAS . la oferta, con capacidad real ══════════ -->
+<section id="trabajar" class="border-b-2 border-tinta bg-papel2 cuadricula">
+  <div class="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-10 py-16 lg:py-28">
+    <h2 class="rev font-blk uppercase leading-[0.9] tracking-[-0.02em] text-[2rem] sm:text-[3rem] lg:text-[3.7rem] max-w-[18ch]">
+      Dos maneras de trabajar conmigo.
+    </h2>
+
+    <div class="mt-10 lg:mt-16 grid lg:grid-cols-[1.25fr_1fr] gap-5 lg:gap-8 items-stretch">
+
+      <article class="rev border-2 border-tinta bg-tinta text-papel3 p-7 sm:p-10 flex flex-col">
+        <h3 class="font-blk uppercase text-[1.9rem] sm:text-[2.6rem] leading-none">Consultoría</h3>
+        <p class="mt-4 font-mono text-[12.5px] uppercase tracking-[0.16em] text-papel3/60">
+          Para el dueño de una empresa que ya funciona
+        </p>
+        <p class="mt-5 text-[1.05rem] sm:text-[1.15rem] leading-[1.55] text-papel3/90 max-w-[48ch]">
+          Estrategia de cero a uno y adopción de tecnología. Yo defino qué hay que hacer,
+          yo construyo la herramienta que lo hace y me quedo hasta que su gente la use sin mí.
+          Empezamos por lo que hoy le está costando más horas, no por lo que suena mejor.
+        </p>
+
+        <div class="mt-auto pt-8">
+          <div class="flex items-center gap-2.5" aria-hidden="true">
+            <span class="cupo cupo-oscuro ocupado"></span>
+            <span class="cupo cupo-oscuro ocupado"></span>
+            <span class="cupo cupo-oscuro libre"></span>
+            <span class="cupo cupo-oscuro libre"></span>
+          </div>
+          <p class="mt-3 font-mono text-[13px] text-papel3/75">
+            Dos de cuatro cupos ocupados. Más de cuatro y dejo de ser útil.
+          </p>
+          <a href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20me%20interesa%20la%20consultor%C3%ADa.%20Le%20cuento%20qu%C3%A9%20estamos%20haciendo%20a%20mano%3A"
+             class="btn mt-6 bg-sello text-papel3 px-7 py-4 font-blk text-[15px] uppercase tracking-wide shadow-[6px_6px_0_#0d0f0a] hover:shadow-[9px_9px_0_#0d0f0a] hover:-translate-y-[3px]">
+            Escríbame
+          </a>
+        </div>
+      </article>
+
+      <article class="rev border-2 border-tinta bg-papel3 p-7 sm:p-10 flex flex-col">
+        <h3 class="font-blk uppercase text-[1.9rem] sm:text-[2.6rem] leading-none">Mentoría</h3>
+        <p class="mt-4 font-mono text-[12.5px] uppercase tracking-[0.16em] text-tinta/72">
+          Para el que está arrancando
+        </p>
+        <p class="mt-5 text-[1.05rem] leading-[1.55] text-tinta/85 max-w-[42ch]">
+          Emprendedores, fundaciones y proyectos que todavía no facturan. Tareas prácticas
+          cada semana, revisadas. Trabajar conmigo significa que las cosas pasan, así toque
+          a las malas. Van siete personas hasta hoy.
+        </p>
+
+        <div class="mt-auto pt-8">
+          <div class="flex items-center gap-2.5" aria-hidden="true">
+            <span class="cupo cupo-claro ocupado"></span>
+            <span class="cupo cupo-claro ocupado"></span>
+            <span class="cupo cupo-claro ocupado"></span>
+            <span class="cupo cupo-claro libre"></span>
+            <span class="cupo cupo-claro libre"></span>
+          </div>
+          <p class="mt-3 font-mono text-[13px] text-tinta/70">
+            Tres de cinco cupos ocupados.
+          </p>
+          <a href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20estoy%20arrancando%20algo%20y%20me%20interesa%20la%20mentor%C3%ADa."
+             class="btn mt-6 border-2 border-tinta px-7 py-4 font-blk text-[15px] uppercase tracking-wide hover:bg-tinta hover:text-papel3">
+            Escríbame
+          </a>
+        </div>
+      </article>
+    </div>
+
+    <p class="rev mt-8 border-t-2 border-tinta pt-6 font-mono text-[13px] sm:text-[14px] leading-[1.7] text-tinta/75 max-w-[80ch]">
+      ¿Charlas? Doy. Me han contratado congresos, empresas y universidades para hablar de
+      adopción de tecnología, emprendimiento, mentalidad y balance entre vida y trabajo.
+      Pero no las vendo como producto: son la forma en que la gente me conoce.
+    </p>
+  </div>
+</section>
+
+<!-- ══════════ 8. LA CHARLA . prueba de voz ══════════ -->
+<section class="border-b-2 border-tinta bg-bezel text-papel3">
+  <div class="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-10 py-16 lg:py-24">
+    <div class="rev grid lg:grid-cols-[1fr_1.4fr] gap-8 lg:gap-14 items-center">
+      <div>
+        <h2 class="font-blk uppercase leading-[0.9] tracking-[-0.02em] text-[1.9rem] sm:text-[2.6rem] lg:text-[3.1rem]">
+          Si prefiere oírme antes de escribirme.
+        </h2>
+        <p class="mt-5 text-[1.02rem] sm:text-[1.1rem] leading-[1.6] text-papel3/80 max-w-[44ch]">
+          Negocios aburridos e innovación, en el podcast Ventaja. Ahí está el argumento completo
+          de por qué los negocios de toda la vida son los que más tienen para ganar con esto,
+          y por qué casi nadie se los trabaja.
+        </p>
+      </div>
+      <div class="border-2 border-papel3/25 bg-black/40">
+        <div class="relative w-full" style="aspect-ratio:16/9">
+          <iframe class="absolute inset-0 w-full h-full"
+                  src="https://www.youtube-nocookie.com/embed/F9t9f5Et_04"
+                  title="Negocios aburridos e innovación, Salomón Muriel en el podcast Ventaja"
+                  loading="lazy" allowfullscreen
+                  allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  referrerpolicy="strict-origin-when-cross-origin"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 9. CIERRE ══════════ -->
+<section id="contacto">
+  <div class="foto h-[220px] sm:h-[300px] lg:h-[380px] border-b-2 border-tinta">
+    <img src="assets/marathon.jpg" alt="Salomón Muriel con la medalla al terminar la media maratón de Bogotá" width="600" height="600" loading="lazy" class="object-[50%_26%]">
+  </div>
+
+  <div class="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-10 py-14 lg:py-24">
+    <h2 class="rev font-blk uppercase leading-[0.88] tracking-[-0.025em]
+               text-[2.2rem] sm:text-[3.4rem] lg:text-[4.6rem] max-w-[17ch]">
+      Cuénteme qué es lo que se está haciendo a mano.
+    </h2>
+
+    <div class="mt-10 lg:mt-14 grid lg:grid-cols-[1.05fr_1fr] gap-10 lg:gap-20 items-start">
+      <p class="rev text-[1.05rem] sm:text-[1.15rem] leading-[1.6] text-tinta/85 max-w-[52ch]">
+        Tengo 35 años, vivo en Bogotá y esta es mi quinta empresa. Mi papá y mi abuelo también
+        fueron empresarios, así que esto lo aprendí en la mesa del comedor. Tengo mellizos de
+        cuatro años, corrí una media maratón en 2:10 y aprendí inglés jugando en línea.
+        Escríbame por WhatsApp: contesto yo.
+      </p>
+
+      <div class="rev">
+        <a href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20vi%20su%20p%C3%A1gina%20y%20quiero%20contarle%20qu%C3%A9%20estamos%20haciendo%20a%20mano."
+           class="btn w-full bg-sello text-papel3 px-7 py-5 font-blk text-[16px] sm:text-[18px] uppercase tracking-wide shadow-[7px_7px_0_#181A14] hover:shadow-[10px_10px_0_#181A14] hover:-translate-y-[3px]">
+          Escríbame
+        </a>
+        <a href="https://cal.com/salomonmuriel"
+           class="btn w-full mt-4 border-2 border-tinta px-7 py-5 font-blk text-[16px] sm:text-[18px] uppercase tracking-wide hover:bg-tinta hover:text-papel3">
+          Agendar 30 minutos
+        </a>
+        <div class="mt-6 flex flex-wrap gap-x-7 gap-y-2 font-mono text-[13.5px]">
+          <a href="https://www.linkedin.com/in/smuriel/" class="underline underline-offset-4 decoration-tinta/35 hover:text-sello hover:decoration-sello transition-colors">LinkedIn</a>
+          <a href="mailto:salomon.muriel@gmail.com" class="underline underline-offset-4 decoration-tinta/35 hover:text-sello hover:decoration-sello transition-colors">salomon.muriel@gmail.com</a>
+        </div>
+        <p class="mt-5 font-mono text-[12.5px] leading-relaxed text-tinta/72 max-w-[42ch]">
+          No escribo blog. Lo que tengo para decir lo publico en LinkedIn.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="border-t-2 border-tinta bg-tinta text-papel3">
+  <div class="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-10 py-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+    <p class="font-blk uppercase text-[15px] tracking-wide">Salomón Muriel</p>
+    <p class="font-mono text-[12.5px] text-papel3/60">Bogotá, Colombia</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- reveal por IntersectionObserver ---------- */
+  var revs = document.querySelectorAll('.rev');
+  if (reduce || !('IntersectionObserver' in window)) {
+    revs.forEach(function(el){ el.classList.add('in'); });
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+    revs.forEach(function(el, i){ el.style.transitionDelay = (Math.min(i,3)*60)+'ms'; io.observe(el); });
+  }
+
+  /* ---------- marcas del dial ---------- */
+  var ticks = document.getElementById('ticks');
+  if (ticks){
+    for (var i=0; i<=24; i++){
+      var ang = -90 + (180/24)*i;
+      var t = document.createElement('div');
+      t.className = 'tick' + (i%6===0 ? ' mayor' : '');
+      t.style.transform = 'translateX(-50%) rotate(' + ang + 'deg)';
+      t.innerHTML = '<i></i>';
+      ticks.appendChild(t);
+    }
+  }
+
+  /* ---------- el chinómetro ---------- */
+  var TOPE = 420;                       // tope de la escala en horas/mes
+  var aguja   = document.getElementById('aguja');
+  var arco    = document.getElementById('arco');
+  var elHoras = document.getElementById('horas');
+  var elPers  = document.getElementById('personas');
+  var elCont  = document.getElementById('conteo');
+  var vacio   = document.getElementById('vacio');
+  var lleno   = document.getElementById('lleno');
+  var waLink  = document.getElementById('waLink');
+  var cajas   = Array.prototype.slice.call(document.querySelectorAll('#tareas input[type=checkbox]'));
+  var radios  = Array.prototype.slice.call(document.querySelectorAll('#tamanos input[type=radio]'));
+
+  var animId = null;
+  function contarHasta(el, destino, decimales){
+    if (!el) return;
+    var inicio = parseFloat((el.textContent||'0').replace(',','.')) || 0;
+    if (reduce){ el.textContent = fmt(destino, decimales); return; }
+    var t0 = null, dur = 520;
+    function paso(ts){
+      if (t0 === null) t0 = ts;
+      var k = Math.min((ts - t0)/dur, 1);
+      var e = 1 - Math.pow(1-k, 3);
+      el.textContent = fmt(inicio + (destino-inicio)*e, decimales);
+      if (k < 1) requestAnimationFrame(paso);
+    }
+    requestAnimationFrame(paso);
+  }
+  function fmt(n, d){
+    if (d) return n.toFixed(1).replace('.', ',');
+    return String(Math.round(n));
+  }
+
+  function mult(){
+    var r = radios.filter(function(x){ return x.checked; })[0];
+    return r ? parseFloat(r.value) : 1;
+  }
+  function nombreTam(){
+    var r = radios.filter(function(x){ return x.checked; })[0];
+    return r ? r.getAttribute('data-nombre') : 'mediana';
+  }
+
+  function actualizar(){
+    var sel = cajas.filter(function(c){ return c.checked; });
+    var base = sel.reduce(function(a,c){ return a + parseFloat(c.getAttribute('data-h')); }, 0);
+    var total = Math.round(base * mult());
+    var p = Math.min(total / TOPE, 1);
+
+    if (aguja) aguja.style.transform = 'translateX(-50%) rotate(' + (-90 + p*180) + 'deg)';
+    if (arco)  arco.style.setProperty('--p', p);
+
+    contarHasta(elHoras, total, 0);
+    contarHasta(elPers, total/160, 1);
+    if (elCont) elCont.textContent = String(sel.length);
+
+    if (sel.length === 0){
+      vacio.classList.remove('hidden');
+      lleno.classList.add('hidden');
+      return;
+    }
+    vacio.classList.add('hidden');
+    lleno.classList.remove('hidden');
+
+    var lista = sel.map(function(c){ return c.getAttribute('data-t'); });
+    var texto = 'Hola Salomón. Hice el chinómetro en su página y me dio ' + total +
+      ' horas al mes, como ' + fmt(total/160,1) + ' personas de tiempo completo. ' +
+      'Lo que marqué fue: ' + lista.join('; ') + '. Mi operación es ' + nombreTam() + '.';
+    waLink.setAttribute('href', 'https://wa.me/573132465100?text=' + encodeURIComponent(texto));
+  }
+
+  cajas.forEach(function(c){ c.addEventListener('change', actualizar); });
+  radios.forEach(function(r){ r.addEventListener('change', actualizar); });
+  actualizar();
+})();
+</script>
+</body>
+</html>

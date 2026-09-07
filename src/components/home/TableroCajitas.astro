@@ -1,0 +1,523 @@
+---
+import EncabezadoSeccion from "@components/EncabezadoSeccion.astro";
+import { copia } from "@data/landing";
+import type { Lang } from "@i18n/ui";
+
+/**
+ * El tablero de cajitas. La geometría se dibuja en el cliente a partir de
+ * `offsetLeft/Top` de cada caja, así que el orden y los `id` de abajo son
+ * parte del contrato: `data-a` / `data-b` / `data-r` los lee el script.
+ * Portado tal cual de direction-36; no redibujar.
+ */
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const c = copia(lang).cajitas;
+const k = c.cajas;
+const e = c.enlaces;
+
+const chip =
+  "chip font-mono bg-papel text-[10px] leading-[1.35] uppercase tracking-[.05em] lg:inline-block lg:max-w-[132px] lg:rounded lg:border lg:px-1.5 lg:py-1 lg:text-center";
+const enlaceBase =
+  "enlace lg:absolute lg:z-20 lg:-translate-x-1/2 lg:-translate-y-1/2";
+const cajaBase =
+  "caja relative z-10 rounded border-[1.5px] border-linea2 bg-campo p-4";
+const tituloCaja =
+  "font-arch text-[1.14rem] font-extrabold leading-none tracking-[-.025em] [font-stretch:100%]";
+const rotuloCaja =
+  "font-mono mt-2 text-[9.5px] uppercase tracking-[.16em] text-gris";
+const cuerpoCaja = "mt-2.5 text-[13.5px] leading-[1.45] text-gris";
+const insignia =
+  "font-mono flex-none rounded border border-rojo2 px-1.5 py-[3px] text-[9.5px] uppercase tracking-[.1em] text-rojo2";
+---
+
+<section id="cajitas" class="py-[clamp(3.2rem,7vw,5.6rem)]">
+  <div class="hoja">
+    <EncabezadoSeccion rotulo={c.rotulo} nota={c.nota} notaCh={42} />
+
+    <h2
+      class="font-arch max-w-[20ch] text-[clamp(1.9rem,4.4vw,3.4rem)] font-extrabold leading-[1.03] tracking-[-.028em] [font-stretch:104%]"
+    >
+      {c.titulo}
+    </h2>
+
+    <div
+      class="mt-5 grid grid-cols-1 gap-x-[clamp(1.5rem,4vw,3.5rem)] gap-y-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]"
+    >
+      <p class="max-w-[54ch] text-[1.02rem] leading-[1.6] text-gris">{c.p1}</p>
+      <p
+        class="max-w-[54ch] text-[1.02rem] leading-[1.6] text-gris"
+        set:html={c.p2}
+      />
+    </div>
+
+    <!-- interruptor -->
+    <div
+      class="mt-[clamp(1.8rem,3.6vw,2.6rem)] flex flex-wrap items-center gap-3"
+    >
+      <div
+        class="inline-flex overflow-hidden rounded border-[1.5px] border-tinta"
+        role="group"
+        aria-label={c.estadoSistema}
+      >
+        <button
+          type="button"
+          id="btn-hoy"
+          aria-pressed="true"
+          class="tog font-mono px-4 py-2.5 text-[10.5px] font-semibold uppercase tracking-[.16em] transition-colors"
+          >{c.btnHoy}</button
+        >
+        <button
+          type="button"
+          id="btn-queda"
+          aria-pressed="false"
+          class="tog font-mono border-l-[1.5px] border-tinta px-4 py-2.5 text-[10.5px] font-semibold uppercase tracking-[.16em] transition-colors"
+          >{c.btnQueda}</button
+        >
+      </div>
+      <p
+        class="font-mono flex flex-wrap items-center gap-4 text-[10.5px] uppercase tracking-[.12em] text-gris"
+      >
+        <span class="inline-flex items-center gap-2"
+          ><span
+            class="inline-block h-0 w-7 border-t-[1.7px] border-dashed border-rojo"
+            aria-hidden="true"></span>{c.leyendaManual}</span
+        >
+        <span class="inline-flex items-center gap-2"
+          ><span
+            class="inline-block h-0 w-7 border-t-[1.7px] border-tinta"
+            aria-hidden="true"></span>{c.leyendaConectado}</span
+        >
+      </p>
+    </div>
+
+    <div id="tablero-wrap" data-estado="hoy" class="mt-6">
+      <div
+        id="tablero"
+        class="relative flex flex-col gap-4 lg:grid lg:grid-cols-4 lg:items-start lg:gap-x-[clamp(86px,6.6vw,130px)] lg:gap-y-[54px] lg:pb-[64px]"
+      >
+        <svg id="cables" aria-hidden="true"></svg>
+
+        <!-- MERCADEO -->
+        <article id="c-mercadeo" class={`${cajaBase} lg:[grid-area:2_/_1]`}>
+          <div class="flex items-start justify-between gap-2">
+            <p class={tituloCaja}>{k.mercadeo.titulo}</p>
+            <span class={`solo-queda ${insignia}`}>{k.mercadeo.orden}</span>
+          </div>
+          <p class={rotuloCaja}>{k.mercadeo.rotulo}</p>
+          <p class={`solo-hoy ${cuerpoCaja}`}>{k.mercadeo.hoy}</p>
+          <p class={`solo-queda ${cuerpoCaja}`}>{k.mercadeo.queda}</p>
+        </article>
+
+        <div
+          class={enlaceBase}
+          data-a="c-mercadeo"
+          data-b="c-web"
+          data-r="h"
+          data-hoy={e.mercadeoWeb[0]}
+          data-queda={e.mercadeoWeb[1]}
+        >
+          <span
+            class="flechita mr-2 inline-block align-middle lg:hidden"
+            aria-hidden="true"
+            ><svg class="h-4 w-4"><use href="#i-abajo"></use></svg></span
+          ><span class={chip}></span>
+        </div>
+        <div
+          class={enlaceBase}
+          data-a="c-mercadeo"
+          data-b="c-chat"
+          data-r="h"
+          data-hoy={e.mercadeoChat[0]}
+          data-queda={e.mercadeoChat[1]}
+        >
+          <span
+            class="flechita mr-2 inline-block align-middle lg:hidden"
+            aria-hidden="true"
+            ><svg class="h-4 w-4"><use href="#i-abajo"></use></svg></span
+          ><span class={chip}></span>
+        </div>
+
+        <!-- PÁGINA WEB + WHATSAPP -->
+        <div class="grid grid-cols-2 gap-3 lg:contents">
+          <article id="c-web" class={`${cajaBase} lg:[grid-area:1_/_2]`}>
+            <div class="flex items-start justify-between gap-2">
+              <p class={tituloCaja}>{k.web.titulo}</p>
+              <span class={`solo-queda ${insignia}`}>{k.web.orden}</span>
+            </div>
+            <p class={rotuloCaja}>{k.web.rotulo}</p>
+            <p class={`solo-hoy ${cuerpoCaja}`}>{k.web.hoy}</p>
+            <p class={`solo-queda ${cuerpoCaja}`}>{k.web.queda}</p>
+          </article>
+
+          <article id="c-chat" class={`${cajaBase} lg:[grid-area:3_/_2]`}>
+            <div class="flex items-start justify-between gap-2">
+              <p class={tituloCaja}>{k.chat.titulo}</p>
+              <span class={`solo-queda ${insignia}`}>{k.chat.orden}</span>
+            </div>
+            <p class={rotuloCaja}>{k.chat.rotulo}</p>
+            <p class={`solo-hoy ${cuerpoCaja}`}>{k.chat.hoy}</p>
+            <p class={`solo-queda ${cuerpoCaja}`}>{k.chat.queda}</p>
+          </article>
+        </div>
+
+        <div
+          class={enlaceBase}
+          data-a="c-web"
+          data-b="c-ventas"
+          data-r="h"
+          data-hoy={e.webVentas[0]}
+          data-queda={e.webVentas[1]}
+        >
+          <span
+            class="flechita mr-2 inline-block align-middle lg:hidden"
+            aria-hidden="true"
+            ><svg class="h-4 w-4"><use href="#i-abajo"></use></svg></span
+          ><span class={chip}></span>
+        </div>
+        <div
+          class={enlaceBase}
+          data-a="c-chat"
+          data-b="c-ventas"
+          data-r="h"
+          data-hoy={e.chatVentas[0]}
+          data-queda={e.chatVentas[1]}
+        >
+          <span
+            class="flechita mr-2 inline-block align-middle lg:hidden"
+            aria-hidden="true"
+            ><svg class="h-4 w-4"><use href="#i-abajo"></use></svg></span
+          ><span class={chip}></span>
+        </div>
+
+        <!-- VENTAS -->
+        <article
+          id="c-ventas"
+          class="caja relative z-10 rounded border-[1.5px] border-tinta bg-campo p-4 shadow-[0_1px_0_rgba(22,23,26,.06),0_14px_30px_-24px_rgba(22,23,26,.6)] lg:[grid-area:2_/_3]"
+        >
+          <div class="flex items-start justify-between gap-2">
+            <p class={tituloCaja}>{k.ventas.titulo}</p>
+            <span
+              class="font-mono solo-queda flex-none rounded bg-rojo2 px-1.5 py-[3px] text-[9.5px] uppercase tracking-[.1em] text-white"
+              >{k.ventas.orden}</span
+            >
+          </div>
+          <p class={rotuloCaja}>{k.ventas.rotulo}</p>
+          <p class={`solo-hoy ${cuerpoCaja}`}>{k.ventas.hoy}</p>
+          <p class={`solo-queda ${cuerpoCaja}`}>{k.ventas.queda}</p>
+        </article>
+
+        <div
+          class={enlaceBase}
+          data-a="c-ventas"
+          data-b="c-ops"
+          data-r="h"
+          data-hoy={e.ventasOps[0]}
+          data-queda={e.ventasOps[1]}
+        >
+          <span
+            class="flechita mr-2 inline-block align-middle lg:hidden"
+            aria-hidden="true"
+            ><svg class="h-4 w-4"><use href="#i-abajo"></use></svg></span
+          ><span class={chip}></span>
+        </div>
+
+        <!-- OPERACIONES -->
+        <article id="c-ops" class={`${cajaBase} lg:[grid-area:1_/_4]`}>
+          <div class="flex items-start justify-between gap-2">
+            <p class={tituloCaja}>{k.ops.titulo}</p>
+            <span class={`solo-queda ${insignia}`}>{k.ops.orden}</span>
+          </div>
+          <p class={rotuloCaja}>{k.ops.rotulo}</p>
+          <p class={`solo-hoy ${cuerpoCaja}`}>{k.ops.hoy}</p>
+          <p class={`solo-queda ${cuerpoCaja}`}>{k.ops.queda}</p>
+        </article>
+
+        <div
+          class={enlaceBase}
+          data-a="c-ops"
+          data-b="c-opsdos"
+          data-r="v"
+          data-muere="1"
+          data-hoy={e.opsOpsdos[0]}
+          data-queda={e.opsOpsdos[1]}
+        >
+          <span
+            class="flechita mr-2 inline-block align-middle lg:hidden"
+            aria-hidden="true"
+            ><svg class="h-4 w-4"><use href="#i-abajo"></use></svg></span
+          ><span class={chip}></span>
+        </div>
+
+        <article
+          id="c-opsdos"
+          data-apaga="1"
+          class="caja relative z-10 rounded border-[1.5px] border-dashed border-rojo2 bg-campo p-4 lg:[grid-area:2_/_4]"
+        >
+          <div class="flex items-start justify-between gap-2">
+            <p class={tituloCaja}>
+              {k.opsdos.titulo}<br class="hidden sm:block" />
+              <span class="font-bold text-gris">{k.opsdos.titulo2}</span>
+            </p>
+            <span
+              class="font-mono solo-queda flex-none rounded border border-linea2 px-1.5 py-[3px] text-[9.5px] uppercase tracking-[.1em] text-gris"
+              >{k.opsdos.orden}</span
+            >
+          </div>
+          <p
+            class="font-mono solo-hoy mt-2 text-[9.5px] uppercase tracking-[.16em] text-rojo2"
+          >
+            {k.opsdos.rotuloHoy}
+          </p>
+          <p
+            class="font-mono solo-queda mt-2 text-[9.5px] uppercase tracking-[.16em] text-gris"
+          >
+            {k.opsdos.rotuloQueda}
+          </p>
+          <p class={`solo-hoy ${cuerpoCaja}`}>{k.opsdos.hoy}</p>
+          <p class={`solo-queda ${cuerpoCaja}`}>{k.opsdos.queda}</p>
+        </article>
+
+        <div
+          class={enlaceBase}
+          data-a="c-ventas"
+          data-b="c-admin"
+          data-r="h"
+          data-hoy={e.ventasAdmin[0]}
+          data-queda={e.ventasAdmin[1]}
+        >
+          <span
+            class="flechita mr-2 inline-block align-middle lg:hidden"
+            aria-hidden="true"
+            ><svg class="h-4 w-4"><use href="#i-abajo"></use></svg></span
+          ><span class={chip}></span>
+        </div>
+
+        <!-- ADMINISTRACIÓN -->
+        <article id="c-admin" class={`${cajaBase} lg:[grid-area:3_/_4]`}>
+          <div class="flex items-start justify-between gap-2">
+            <p class={tituloCaja}>{k.admin.titulo}</p>
+            <span class={`solo-queda ${insignia}`}>{k.admin.orden}</span>
+          </div>
+          <p class={rotuloCaja}>{k.admin.rotulo}</p>
+          <p class={`solo-hoy ${cuerpoCaja}`}>{k.admin.hoy}</p>
+          <p class={`solo-queda ${cuerpoCaja}`}>{k.admin.queda}</p>
+        </article>
+
+        <!-- retorno (solo escritorio: se dibuja por debajo del tablero) -->
+        <div
+          class="enlace hidden lg:absolute lg:z-20 lg:block lg:-translate-x-1/2 lg:-translate-y-1/2"
+          data-a="c-ventas"
+          data-b="c-mercadeo"
+          data-r="under"
+          data-hoy={e.retorno[0]}
+          data-queda={e.retorno[1]}
+        >
+          <span
+            class="chip font-mono inline-block max-w-[160px] rounded border bg-papel px-1.5 py-1 text-center text-[10px] uppercase leading-[1.35] tracking-[.05em]"
+          ></span>
+        </div>
+      </div>
+
+      <!-- retorno en móvil -->
+      <div
+        class="mt-4 flex items-start gap-2.5 border-t border-linea pt-4 lg:hidden"
+      >
+        <span class="flechita mt-[1px] flex-none" aria-hidden="true"
+          ><svg class="h-[18px] w-[18px]"><use href="#i-vuelta"></use></svg
+          ></span
+        >
+        <p class="text-[13.5px] leading-[1.45]">
+          <b class="font-bold">{c.retornoMovil}</b>
+          <span class="solo-hoy text-gris">{c.retornoMovilHoy}</span>
+          <span class="solo-queda text-gris">{c.retornoMovilQueda}</span>
+        </p>
+      </div>
+
+      <!-- fuente de verdad -->
+      <div class="mt-4 lg:mt-2">
+        <div
+          class="solo-hoy rounded border-[1.5px] border-dashed border-rojo2 p-4 sm:px-5 sm:py-4"
+        >
+          <p
+            class="font-mono text-[10px] uppercase tracking-[.18em] text-rojo2"
+          >
+            {c.verdadNoRotulo}
+          </p>
+          <p class="mt-2 max-w-[70ch] text-[.98rem] leading-[1.5]">
+            {c.verdadNo}
+          </p>
+        </div>
+        <div
+          class="solo-queda rounded border-t-[3px] border-rojo bg-panel p-4 text-panelfg sm:px-5 sm:py-4"
+        >
+          <p
+            class="font-mono text-[10px] uppercase tracking-[.18em] text-rojo3"
+          >
+            {c.verdadSiRotulo}
+          </p>
+          <p
+            class="mt-2 max-w-[70ch] text-[.98rem] leading-[1.5] text-[#c9c7c0]"
+          >
+            {c.verdadSi}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="mt-[clamp(2rem,4vw,3rem)] grid grid-cols-1 gap-x-[clamp(1.5rem,4vw,3.5rem)] gap-y-5 border-t border-linea pt-[clamp(1.4rem,3vw,2.2rem)] lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]"
+    >
+      <div>
+        <p
+          class="font-arch max-w-[30ch] text-[clamp(1.2rem,2.4vw,1.6rem)] font-bold leading-[1.18] tracking-[-.028em] [font-stretch:98%]"
+          set:html={c.cierreTitulo}
+        />
+        <p class="mt-4 max-w-[58ch] text-[1.02rem] leading-[1.6] text-gris">
+          {c.cierreP1}
+        </p>
+        <p class="mt-3 max-w-[58ch] text-[1.02rem] leading-[1.6] text-gris">
+          {c.cierreP2}
+        </p>
+      </div>
+      <p
+        class="font-pen max-w-nota -rotate-[1deg] text-[clamp(1.3rem,3vw,1.65rem)] leading-[1.25] text-rojo2 lg:pt-2"
+      >
+        {c.cierreManuscrita}
+      </p>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    "use strict";
+    const envoltura = document.getElementById("tablero-wrap");
+    const tablero = document.getElementById("tablero");
+    const cables = document.getElementById("cables");
+    if (!envoltura || !tablero || !cables) return;
+
+    const enlaces = Array.prototype.slice.call(
+      tablero.querySelectorAll(".enlace")
+    ) as HTMLElement[];
+    const NS = "http://www.w3.org/2000/svg";
+    const anchoGrande = window.matchMedia("(min-width: 1024px)");
+
+    type Caja = {
+      x: number;
+      y: number;
+      w: number;
+      h: number;
+      cx: number;
+      cy: number;
+      r: number;
+      b: number;
+    };
+
+    function caja(id: string): Caja {
+      const el = document.getElementById(id) as HTMLElement;
+      return {
+        x: el.offsetLeft,
+        y: el.offsetTop,
+        w: el.offsetWidth,
+        h: el.offsetHeight,
+        cx: el.offsetLeft + el.offsetWidth / 2,
+        cy: el.offsetTop + el.offsetHeight / 2,
+        r: el.offsetLeft + el.offsetWidth,
+        b: el.offsetTop + el.offsetHeight,
+      };
+    }
+
+    function ruta(A: Caja, B: Caja, tipo: string | null, H: number) {
+      if (tipo === "v") {
+        const my = (A.b + B.y) / 2;
+        return {
+          d: "M " + A.cx + " " + A.b + " V " + my + " H " + B.cx + " V " + B.y,
+          x: (A.cx + B.cx) / 2,
+          y: my,
+        };
+      }
+      if (tipo === "under") {
+        const ly = H - 20;
+        return {
+          d: "M " + A.cx + " " + A.b + " V " + ly + " H " + B.cx + " V " + B.b,
+          x: (A.cx + B.cx) / 2,
+          y: ly,
+        };
+      }
+      const mx = (A.r + B.x) / 2;
+      return {
+        d: "M " + A.r + " " + A.cy + " H " + mx + " V " + B.cy + " H " + B.x,
+        x: mx,
+        y: (A.cy + B.cy) / 2,
+      };
+    }
+
+    function dibujar() {
+      if (!anchoGrande.matches) {
+        cables!.innerHTML = "";
+        enlaces.forEach(e => {
+          e.style.left = e.style.top = "";
+        });
+        return;
+      }
+      const W = tablero!.offsetWidth;
+      const H = tablero!.offsetHeight;
+      cables!.setAttribute("viewBox", "0 0 " + W + " " + H);
+      cables!.setAttribute("width", String(W));
+      cables!.setAttribute("height", String(H));
+      cables!.innerHTML =
+        "<defs>" +
+        '<marker id="pta-hoy" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0.5 1 L9 5 L0.5 9 Z" fill="#D8332A"/></marker>' +
+        '<marker id="pta-queda" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0.5 1 L9 5 L0.5 9 Z" fill="#16171A"/></marker>' +
+        "</defs>";
+      enlaces.forEach(e => {
+        const A = caja(e.getAttribute("data-a")!);
+        const B = caja(e.getAttribute("data-b")!);
+        const r = ruta(A, B, e.getAttribute("data-r"), H);
+        const path = document.createElementNS(NS, "path");
+        path.setAttribute("class", "cable");
+        path.setAttribute("d", r.d);
+        if (e.getAttribute("data-muere")) path.setAttribute("data-muere", "1");
+        cables!.appendChild(path);
+        e.style.left = r.x + "px";
+        e.style.top = r.y + "px";
+      });
+    }
+
+    function rotular() {
+      const estado = envoltura!.getAttribute("data-estado");
+      enlaces.forEach(e => {
+        const chip = e.querySelector(".chip");
+        if (chip) {
+          chip.textContent =
+            e.getAttribute(estado === "hoy" ? "data-hoy" : "data-queda") || "";
+        }
+      });
+    }
+
+    const bh = document.getElementById("btn-hoy")!;
+    const bq = document.getElementById("btn-queda")!;
+    function estado(v: string) {
+      envoltura!.setAttribute("data-estado", v);
+      bh.setAttribute("aria-pressed", String(v === "hoy"));
+      bq.setAttribute("aria-pressed", String(v === "queda"));
+      rotular();
+      requestAnimationFrame(dibujar);
+    }
+    bh.addEventListener("click", () => estado("hoy"));
+    bq.addEventListener("click", () => estado("queda"));
+
+    rotular();
+    dibujar();
+    let pausa: number | undefined;
+    window.addEventListener("resize", () => {
+      clearTimeout(pausa);
+      pausa = window.setTimeout(dibujar, 120);
+    });
+    if (document.fonts && document.fonts.ready)
+      document.fonts.ready.then(dibujar);
+    window.addEventListener("load", dibujar);
+  })();
+</script>

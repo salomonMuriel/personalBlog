@@ -1,0 +1,204 @@
+---
+import { getEntry, render } from "astro:content";
+import EncabezadoPagina from "@components/EncabezadoPagina.astro";
+import Montado from "@components/home/Montado.astro";
+import { CONTACTO, wa } from "@config";
+import { routes, type Lang } from "@i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const es = lang === "es";
+
+const entrada = await getEntry("pages", es ? "about-es" : "about-en");
+if (!entrada) throw new Error("Falta el contenido de /sobre-mi");
+const { Content } = await render(entrada);
+
+const t = es
+  ? {
+      rotulo: "Hoja de vida, sin currículo",
+      nota: "Vas a trabajar con una persona, no con una firma.",
+      titulo: "Sobre mí",
+      manuscrita: "esto es lo que hay debajo del casco",
+      datos: [
+        ["Nombre", "Salomón Muriel"],
+        ["Dónde", "Bogotá, Colombia"],
+        ["Empresas", "5 · va la quinta"],
+        ["Familia", "Casado. Mellizos: Franco y Luca"],
+        ["Media maratón", "2:10 — no es buen tiempo, pero la corrí completa"],
+        ["Idiomas", "Español e inglés"],
+      ] as [string, string][],
+      empresasRotulo: "Las empresas",
+      empresasNota: "Dos vendidas, dos quebradas y la que me ocupa hoy.",
+      empresasTitulo: "Lo que he montado",
+      ctaTitulo: "Si quieres hablar",
+      ctaTexto:
+        "El que te contesta el WhatsApp y el que escribe el código son el mismo.",
+      cta: "Escribirme",
+      ctaWa: "Hola Salomón, leí tu página y quiero contarte qué tengo montado.",
+      otras: "Las otras páginas",
+      enlaces: [
+        [
+          routes.home.es,
+          "Consultoría",
+          "Lo que hago de lunes a viernes por fuera de Ignia.",
+        ],
+        [routes.mentoria.es, "Mentoría", "Para el que está arrancando algo."],
+        [routes.charlas.es, "Charlas", "Si me quieres invitar a hablar."],
+        [routes.ahora.es, "Ahora", "En qué ando esta temporada."],
+      ] as [string, string, string][],
+    }
+  : {
+      rotulo: "A CV, without the CV",
+      nota: "You'd be working with a person, not with a firm.",
+      titulo: "About me",
+      manuscrita: "this is what's under the helmet",
+      datos: [
+        ["Name", "Salomón Muriel"],
+        ["Where", "Bogotá, Colombia"],
+        ["Companies", "5 · on the fifth"],
+        ["Family", "Married. Twins: Franco and Luca"],
+        ["Half marathon", "2:10 — not a good time, but I ran all of it"],
+        ["Languages", "Spanish and English"],
+      ] as [string, string][],
+      empresasRotulo: "The companies",
+      empresasNota:
+        "Two sold, two failed, and the one that keeps me busy today.",
+      empresasTitulo: "What I've built",
+      ctaTitulo: "If you want to talk",
+      ctaTexto:
+        "The person who answers WhatsApp and the person who writes the code are the same.",
+      cta: "Write to me",
+      ctaWa:
+        "Hi Salomón, I read your site and I'd like to tell you what I have running.",
+      otras: "The other pages",
+      enlaces: [
+        [routes.home.en, "Consulting", "What I do outside Ignia."],
+        [routes.mentoria.en, "Mentoring", "For whoever is starting something."],
+        [routes.charlas.en, "Talks", "If you want me on a stage."],
+        [routes.ahora.en, "Now", "What I'm up to this season."],
+      ] as [string, string, string][],
+    };
+---
+
+<EncabezadoPagina
+  rotulo={t.rotulo}
+  nota={t.nota}
+  titulo={t.titulo}
+  manuscrita={t.manuscrita}
+  anchoTitulo="max-w-[12ch]"
+>
+  <dl
+    class="font-mono mt-[clamp(1.8rem,3.6vw,2.6rem)] grid max-w-[62rem] grid-cols-1 gap-x-10 text-[10.5px] uppercase tracking-[.13em] sm:grid-cols-2"
+  >
+    {
+      t.datos.map(([k, v]) => (
+        <div class="flex justify-between gap-4 border-b border-linea py-[9px]">
+          <dt class="text-gris">{k}</dt>
+          <dd class="text-right font-medium">{v}</dd>
+        </div>
+      ))
+    }
+  </dl>
+</EncabezadoPagina>
+
+<section class="pb-[clamp(2.6rem,5.5vw,4.4rem)]">
+  <div class="hoja">
+    <article class="prosa max-w-medida">
+      <Content />
+    </article>
+  </div>
+</section>
+
+<!-- La lista de empresas es su propia sección de la biografía, con
+     encabezado propio: acá no es una credencial de venta como en la
+     portada. El texto de arriba la enlaza con #empresas. -->
+<Montado
+  lang={lang}
+  cierre={false}
+  id="empresas"
+  rotulo={t.empresasRotulo}
+  nota={t.empresasNota}
+  titulo={t.empresasTitulo}
+/>
+
+<section class="py-[clamp(2.6rem,5.5vw,4.4rem)]">
+  <div class="hoja">
+    <div
+      class="grid grid-cols-1 items-start gap-[clamp(1.5rem,4vw,3.5rem)] lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]"
+    >
+      <div class="border-t-[2.5px] border-tinta pt-3.5">
+        <p
+          class="font-mono text-[11px] font-semibold uppercase tracking-[.2em]"
+        >
+          {t.ctaTitulo}
+        </p>
+        <p class="mt-4 max-w-[40ch] text-[1.02rem] leading-[1.6] text-gris">
+          {t.ctaTexto}
+        </p>
+        <div class="mt-5 flex flex-wrap gap-3">
+          <a
+            href={wa(t.ctaWa)}
+            target="_blank"
+            rel="noopener"
+            data-origen="sobre-mi"
+            class="inline-flex items-center gap-2.5 rounded bg-rojo2 px-5 py-3.5 text-[.95rem] font-bold text-white transition-[background-color,transform] hover:bg-tinta active:translate-y-px"
+          >
+            {t.cta}<svg class="h-[18px] w-[18px] opacity-80" aria-hidden="true"
+              ><use href="#i-arw"></use></svg
+            >
+          </a>
+          <a
+            href={CONTACTO.linkedin}
+            target="_blank"
+            rel="noopener"
+            data-origen="sobre-mi-linkedin"
+            class="inline-flex items-center gap-2.5 rounded border-[1.5px] border-linea2 px-5 py-3.5 text-[.95rem] font-bold transition-[border-color,background-color,transform] hover:border-tinta hover:bg-papel2 active:translate-y-px"
+          >
+            <svg class="h-4 w-4 opacity-70" aria-hidden="true"
+              ><use href="#i-red"></use></svg
+            >LinkedIn
+          </a>
+        </div>
+      </div>
+
+      <div class="border-t-[2.5px] border-tinta pt-3.5">
+        <p
+          class="font-mono text-[11px] font-semibold uppercase tracking-[.2em]"
+        >
+          {t.otras}
+        </p>
+        <ul class="mt-3">
+          {
+            t.enlaces.map(([href, titulo, desc]) => (
+              <li>
+                <a
+                  href={href}
+                  class="group flex items-start gap-4 border-b border-linea py-3.5 transition-colors hover:bg-papel2"
+                >
+                  <span class="flex-1">
+                    <span class="font-arch block text-[1.1rem] font-bold tracking-[-.02em]">
+                      {titulo}
+                    </span>
+                    <span class="mt-1 block text-[.94rem] leading-[1.45] text-gris">
+                      {desc}
+                    </span>
+                  </span>
+                  <span
+                    class="mt-1 flex-none text-rojo2 transition-transform duration-200 group-hover:translate-x-1.5"
+                    aria-hidden="true"
+                  >
+                    <svg class="h-5 w-5">
+                      <use href="#i-arw" />
+                    </svg>
+                  </span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

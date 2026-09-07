@@ -40,3 +40,6 @@ scripts/linkedin-test-*.json
 .pnp.*
 .vercel
 .env*.local
+
+# Estado de herramientas de diseño, no del diseño
+design-directions/.impeccable/

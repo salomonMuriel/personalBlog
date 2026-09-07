@@ -1,0 +1,23 @@
+---
+import Layout from "@layouts/Layout.astro";
+import SobreMi from "@components/paginas/SobreMi.astro";
+import { breadcrumbLd } from "@utils/jsonld";
+import { routes } from "@i18n/ui";
+
+export const prerender = true;
+---
+
+<Layout
+  title="About me — Salomón Muriel"
+  description="Who Salomón Muriel is: five companies, two sold, two failed, twins, a half marathon and a 3D printer. Bogotá, Colombia."
+  lang="en"
+  ogImage="/en/og.png"
+  schemas={[
+    breadcrumbLd([
+      { name: "Home", url: routes.home.en },
+      { name: "About", url: routes.sobreMi.en },
+    ]),
+  ]}
+>
+  <SobreMi lang="en" />
+</Layout>

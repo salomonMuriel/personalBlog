@@ -1,0 +1,36 @@
+---
+/**
+ * El renglón de arriba de cada sección: rótulo a la izquierda, nota al
+ * margen a la derecha, sobre una regla gruesa.
+ */
+interface Props {
+  rotulo: string;
+  nota?: string;
+  /** Ancho máximo de la nota, en ch, como en el diseño. */
+  notaCh?: number;
+  class?: string;
+}
+const { rotulo, nota, notaCh = 42, class: clase = "" } = Astro.props;
+---
+
+<div
+  class:list={[
+    "mb-[clamp(1.8rem,3.6vw,2.8rem)] flex flex-col gap-x-6 gap-y-1 border-t-[2.5px] border-tinta pt-3 sm:flex-row sm:items-baseline",
+    clase,
+  ]}
+>
+  <span
+    class="font-mono whitespace-nowrap text-[11px] font-semibold uppercase tracking-[.2em]"
+    >{rotulo}</span
+  >
+  {
+    nota && (
+      <span
+        class="text-[13px] leading-[1.35] text-gris sm:ml-auto sm:text-right"
+        style={`max-width:${notaCh}ch`}
+      >
+        {nota}
+      </span>
+    )
+  }
+</div>

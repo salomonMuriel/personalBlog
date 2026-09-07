@@ -1,0 +1,979 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Expediente Chinomático — Salomón Muriel</title>
+<meta name="description" content="Su empresa parece automatizada. Adentro hay alguien copiando y pegando. Salomón Muriel arma la estrategia y él mismo construye la herramienta. Bogotá.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=Caveat:wght@400..700&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        papel:   '#E7E0CF',
+        hoja:    '#F3EEE1',
+        hoja2:   '#FBF8EF',
+        tinta:   '#171310',
+        tinta2:  '#3A322A',
+        sello:   '#B93724',
+        esfero:  '#1B3FA0',
+        marca:   '#EFE04A',
+        carbon:  '#0D1526',
+        verde:   '#2C6B4E',
+      },
+      fontFamily: {
+        display: ['"Bricolage Grotesque"', 'system-ui', 'sans-serif'],
+        body:    ['Newsreader', 'Georgia', 'serif'],
+        mono:    ['"Courier Prime"', 'ui-monospace', 'monospace'],
+        mano:    ['Caveat', 'cursive'],
+      },
+    }
+  }
+}
+</script>
+
+<style>
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+  body { background:#E7E0CF; color:#171310; overflow-x:hidden; }
+  @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } }
+
+  ::selection { background:#EFE04A; color:#171310; }
+
+  /* ---------- papel ---------- */
+  .grano::after{
+    content:""; position:fixed; inset:0; z-index:60; pointer-events:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity:.17; mix-blend-mode:multiply;
+  }
+  .cuadricula{
+    background-image:
+      linear-gradient(to right, rgba(27,63,160,.10) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(27,63,160,.10) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+  .rayado{
+    background-image: repeating-linear-gradient(to bottom, transparent 0 33px, rgba(27,63,160,.16) 33px 34px);
+  }
+  .fibra{
+    background-image: repeating-linear-gradient(115deg, rgba(23,19,16,.028) 0 2px, transparent 2px 7px);
+  }
+
+  /* ---------- sellos ---------- */
+  .sello-tinta{ filter:url(#rugoso); mix-blend-mode:multiply; }
+  .sello-caja{
+    border:3px solid currentColor; padding:.28em .7em .22em; display:inline-block;
+    font-family:'Courier Prime',monospace; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+    line-height:1; opacity:.9;
+  }
+
+  /* ---------- máquina de escribir ---------- */
+  .maquina{ font-family:'Courier Prime',monospace; }
+  .campo{ border-bottom:1px dotted rgba(23,19,16,.45); }
+
+  /* ---------- anclas bajo la barra fija ---------- */
+  section[id]{ scroll-margin-top:64px; }
+
+  /* ---------- fotos ---------- */
+  .fotocopia{ filter:grayscale(1) contrast(1.18) brightness(1.34); mix-blend-mode:multiply; }
+  .impresa{ filter:sepia(.16) contrast(1.06) saturate(.92); }
+
+  /* ---------- clip / cinta ---------- */
+  .cinta{
+    position:absolute; width:96px; height:26px; background:rgba(239,224,74,.55);
+    box-shadow:0 1px 0 rgba(23,19,16,.10); mix-blend-mode:multiply;
+  }
+
+  /* ---------- marginalia ---------- */
+  .mano{ font-family:Caveat,cursive; color:#1B3FA0; line-height:1.18; }
+
+  /* ---------- revelado ---------- */
+  #revelado input[type=range]{ -webkit-appearance:none; appearance:none; background:transparent; }
+  #revelado input[type=range]::-webkit-slider-thumb{ -webkit-appearance:none; width:52px; height:100%; cursor:ew-resize; }
+  #revelado input[type=range]::-moz-range-thumb{ width:52px; height:340px; border:0; background:transparent; cursor:ew-resize; }
+  #revelado input[type=range]:focus-visible + .rev-mango{ outline:3px solid #1B3FA0; outline-offset:3px; }
+
+  /* ---------- reveal on scroll ---------- */
+  .rv{ opacity:0; transform:translateY(18px); transition:opacity .5s ease, transform .5s cubic-bezier(.2,.7,.3,1); }
+  .rv.on{ opacity:1; transform:none; }
+  @media (prefers-reduced-motion: reduce){ .rv{ opacity:1 !important; transform:none !important; transition:none; } }
+
+  /* ---------- focus ---------- */
+  a:focus-visible, button:focus-visible, input:focus-visible, label:focus-visible{
+    outline:3px solid #1B3FA0; outline-offset:3px; border-radius:2px;
+  }
+
+  /* ---------- utilidad ---------- */
+  .angosta{ font-variation-settings:'wdth' 78, 'opsz' 96; }
+  .angosta2{ font-variation-settings:'wdth' 86, 'opsz' 72; }
+  .no-scrollbar::-webkit-scrollbar{ height:6px }
+  .no-scrollbar::-webkit-scrollbar-thumb{ background:rgba(23,19,16,.28) }
+
+  /* ---------- margen del cuaderno ---------- */
+  @media (min-width:1024px){
+    .con-margen{ margin-left:92px; border-left:2px solid rgba(185,55,36,.42); }
+    .folio{ position:absolute; left:-92px; top:0; width:92px; }
+  }
+</style>
+</head>
+<body class="grano font-body antialiased">
+
+<!-- filtros de tinta -->
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+  <filter id="rugoso">
+    <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="3" seed="11" result="n"/>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="4" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+</svg>
+
+<!-- ============ BARRA ============ -->
+<div class="fixed top-0 left-0 right-0 z-50">
+  <div id="progreso" class="h-[3px] bg-sello origin-left scale-x-0 transition-transform duration-150"></div>
+  <header class="bg-hoja/95 backdrop-blur-[2px] border-b border-tinta/25">
+    <div class="mx-auto max-w-[1280px] px-4 sm:px-6 h-[54px] flex items-center gap-4">
+      <a href="#portada" class="maquina text-[11px] sm:text-[12px] tracking-[.16em] uppercase shrink-0 leading-tight">
+        Exp. 001 <span class="hidden sm:inline text-tinta/70">/ S. Muriel</span>
+      </a>
+      <nav class="hidden lg:flex items-end gap-0 ml-2" aria-label="Secciones del expediente">
+        <a href="#portada"     class="maquina text-[11px] tracking-[.12em] uppercase px-3 py-1.5 border border-b-0 border-tinta/30 bg-papel hover:bg-marca transition-colors">01 · El caso</a>
+        <a href="#villano"     class="maquina text-[11px] tracking-[.12em] uppercase px-3 py-1.5 border border-b-0 border-tinta/30 bg-papel hover:bg-marca transition-colors">02 · El villano</a>
+        <a href="#guia"        class="maquina text-[11px] tracking-[.12em] uppercase px-3 py-1.5 border border-b-0 border-tinta/30 bg-papel hover:bg-marca transition-colors">04 · Quién firma</a>
+        <a href="#plan"        class="maquina text-[11px] tracking-[.12em] uppercase px-3 py-1.5 border border-b-0 border-tinta/30 bg-papel hover:bg-marca transition-colors">05 · El plan</a>
+        <a href="#diagnostico" class="maquina text-[11px] tracking-[.12em] uppercase px-3 py-1.5 border border-b-0 border-tinta/30 bg-papel hover:bg-marca transition-colors">07 · Diagnóstico</a>
+      </nav>
+      <a href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20llegu%C3%A9%20a%20su%20p%C3%A1gina%20y%20quiero%20que%20hablemos."
+         target="_blank" rel="noopener"
+         class="ml-auto shrink-0 inline-flex items-center gap-2 bg-sello text-hoja2 px-3.5 sm:px-5 min-h-[38px] maquina text-[11px] sm:text-[12px] font-bold tracking-[.12em] uppercase hover:bg-tinta transition-colors">
+        <svg viewBox="0 0 24 24" class="size-4 fill-current" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.13h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.16 8.16 0 0 1-1.26-4.36c0-4.54 3.7-8.23 8.25-8.23 2.2 0 4.27.86 5.83 2.41a8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.21-8.24 8.21Zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.8-.79.97-.14.16-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.41-.56-.42h-.48c-.16 0-.43.06-.65.31-.22.25-.85.83-.85 2.03s.87 2.35.99 2.51c.12.16 1.71 2.61 4.14 3.66.58.25 1.03.4 1.38.51.58.19 1.11.16 1.53.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.11-.22-.17-.47-.29Z"/></svg>
+        <span class="hidden sm:inline">WhatsApp</span><span class="sm:hidden">Escribir</span>
+      </a>
+    </div>
+  </header>
+</div>
+
+<main class="con-margen pt-[54px] pb-[76px] lg:pb-0">
+
+<!-- ================= FOLIO 01 · PORTADA / EL PERSONAJE ================= -->
+<section id="portada" class="relative overflow-hidden bg-papel fibra">
+  <div class="relative mx-auto max-w-[1280px] px-4 sm:px-6 pt-10 sm:pt-16 pb-14">
+
+    <span class="hidden lg:block folio pt-2">
+      <span class="maquina text-[11px] tracking-[.2em] text-sello/80 block rotate-90 origin-top-left translate-x-[64px] translate-y-[10px] whitespace-nowrap">FOLIO 01 — EL CASO</span>
+    </span>
+
+    <p class="maquina text-[11px] sm:text-[12px] tracking-[.22em] uppercase text-tinta/70 mb-5">
+      Expediente abierto · Bogotá · Caso 001 · Estado: <span class="text-sello font-bold">sin resolver</span>
+    </p>
+
+    <h1 class="font-display font-extrabold angosta leading-[.86] tracking-[-.02em] text-[15vw] sm:text-[10.5vw] lg:text-[8.4rem] max-w-[15ch]">
+      Su empresa<br>parece
+      <span class="relative inline-block">
+        <span class="relative z-10">automática.</span>
+        <span aria-hidden="true" class="absolute left-0 right-0 bottom-[.12em] h-[.34em] bg-marca -z-0 mix-blend-multiply -rotate-[.7deg]"></span>
+      </span>
+    </h1>
+
+    <div class="mt-6 sm:mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
+      <span class="sello-tinta text-sello -rotate-3 inline-block">
+        <span class="sello-caja text-[13px] sm:text-[17px]">Adentro hay alguien haciéndolo a mano</span>
+      </span>
+    </div>
+
+    <div class="mt-10 grid lg:grid-cols-[minmax(0,1fr)_360px] gap-10 lg:gap-14 items-start">
+
+      <div class="max-w-[54ch]">
+        <p class="font-body text-[1.22rem] sm:text-[1.45rem] leading-[1.5] text-tinta/90">
+          Usted vende. Usted factura. Y aun así, todos los lunes alguien vuelve a escribir
+          a mano un dato que ya existía en otra parte. El negocio no se cae —
+          <em class="italic">se sostiene con gente.</em>
+        </p>
+        <p class="font-body text-[1.05rem] sm:text-[1.15rem] leading-[1.6] text-tinta/70 mt-4">
+          Yo me llamo Salomón. Armo la estrategia y después me siento a construir la herramienta yo mismo.
+          No le voy a vender un software. Le voy a quitar trabajo de encima.
+        </p>
+
+        <div class="mt-8 flex flex-col sm:flex-row gap-3 sm:items-center">
+          <a href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n.%20Tengo%20una%20empresa%20y%20quiero%20contarle%20c%C3%B3mo%20funciona%20hoy."
+             target="_blank" rel="noopener"
+             class="group inline-flex items-center justify-center gap-3 bg-tinta text-hoja2 px-6 min-h-[56px] font-display font-bold text-[1.02rem] tracking-tight hover:bg-sello transition-colors">
+            Cuénteme cómo funciona hoy
+            <span aria-hidden="true" class="maquina text-[13px] group-hover:translate-x-1 transition-transform">→</span>
+          </a>
+          <a href="#diagnostico"
+             class="inline-flex items-center justify-center gap-2 px-6 min-h-[56px] border-2 border-tinta/70 maquina text-[12px] tracking-[.14em] uppercase hover:bg-marca transition-colors">
+            O haga el diagnóstico · 40 seg
+          </a>
+        </div>
+        <p class="maquina text-[11px] text-tinta/70 mt-3">Media hora. Sin propuesta, sin láminas, sin costo.</p>
+      </div>
+
+      <!-- FICHA DEL CASO -->
+      <div class="relative">
+        <div class="cinta -top-3 left-8 -rotate-6"></div>
+        <div class="cinta -top-2 right-6 rotate-3"></div>
+        <div class="bg-hoja2 border border-tinta/30 shadow-[7px_9px_0_rgba(23,19,16,.10)] rotate-[.6deg] p-5 sm:p-6">
+          <div class="flex items-start justify-between gap-3 border-b-2 border-tinta pb-2 mb-4">
+            <p class="maquina text-[11px] tracking-[.18em] uppercase font-bold leading-tight">Ficha del caso<br><span class="font-normal text-tinta/70">Diligenciar en mayúscula</span></p>
+            <div class="w-[74px] h-[92px] bg-papel border border-tinta/40 overflow-hidden shrink-0">
+              <img src="assets/fotoSalo.jpeg" alt="Retrato de Salomón Muriel" width="74" height="92" loading="lazy" class="w-full h-full object-cover fotocopia">
+            </div>
+          </div>
+          <dl class="maquina text-[12.5px] leading-[2.05] space-y-0">
+            <div class="flex gap-2 campo"><dt class="text-tinta/70 w-[104px] shrink-0">RAZÓN SOC.</dt><dd class="font-bold">LA SUYA</dd></div>
+            <div class="flex gap-2 campo"><dt class="text-tinta/70 w-[104px] shrink-0">SECTOR</dt><dd>ROPA · COMIDA · RETAIL · DISTRIBUCIÓN · IMPORTACIÓN</dd></div>
+            <div class="flex gap-2 campo"><dt class="text-tinta/70 w-[104px] shrink-0">NÓMINA</dt><dd>ENTRE 5 Y 40 PERSONAS</dd></div>
+            <div class="flex gap-2 campo"><dt class="text-tinta/70 w-[104px] shrink-0">TAMAÑO</dt><dd>MENOS DE USD 2 MM / AÑO</dd></div>
+            <div class="flex gap-2 campo"><dt class="text-tinta/70 w-[104px] shrink-0">TÉCNICOS</dt><dd>NINGUNO. Y ESTÁ BIEN.</dd></div>
+            <div class="flex gap-2 campo"><dt class="text-tinta/70 w-[104px] shrink-0">SOFTWARE</dt><dd class="text-sello font-bold">COMPRADO. CARO. SIN USAR.</dd></div>
+          </dl>
+          <p class="mano text-[1.35rem] mt-4 -rotate-2">…o va arrancando y todavía no tiene nada de esto. También sirve.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOLIO 02 · EL VILLANO ================= -->
+<section id="villano" class="relative bg-hoja border-t-2 border-tinta cuadricula">
+  <div class="relative mx-auto max-w-[1280px] px-4 sm:px-6 py-14 sm:py-20">
+    <span class="hidden lg:block folio pt-2">
+      <span class="maquina text-[11px] tracking-[.2em] text-sello/80 block rotate-90 origin-top-left translate-x-[64px] translate-y-[10px] whitespace-nowrap">FOLIO 02 — EL VILLANO</span>
+    </span>
+
+    <p class="maquina text-[11px] tracking-[.22em] uppercase text-tinta/70 mb-6 lg:hidden">Folio 02 — El villano</p>
+
+    <!-- entrada de diccionario -->
+    <div class="rv max-w-[62ch]">
+      <div class="border-y-[3px] border-tinta py-6 sm:py-8">
+        <h2 class="font-display font-extrabold angosta2 text-[13vw] sm:text-[5.4rem] leading-[.88] tracking-[-.02em]">chinomático</h2>
+        <p class="maquina text-[12.5px] tracking-wide text-tinta/70 mt-2">/tʃi.no.ˈma.ti.ko/ &nbsp;·&nbsp; adjetivo &nbsp;·&nbsp; uso: Colombia, oficinas reales</p>
+        <p class="font-body text-[1.3rem] sm:text-[1.6rem] leading-[1.45] mt-5">
+          <span class="maquina text-sello font-bold text-[.8em] align-middle mr-2">1.</span>
+          Dícese del proceso que <span class="bg-marca px-1 mix-blend-multiply">parece automatizado</span>
+          pero en realidad lo sostiene un chino —un muchacho— copiando y pegando a mano.
+        </p>
+        <p class="font-body text-[1.05rem] leading-[1.6] text-tinta/70 mt-4">
+          <span class="maquina text-sello font-bold text-[.8em] align-middle mr-2">2.</span>
+          Automatización a punta de gente. Funciona hasta que esa persona se enferma, se aburre o renuncia.
+        </p>
+        <p class="maquina text-[12px] text-tinta/70 mt-5 border-l-2 border-tinta/30 pl-3">
+          Nota del expediente: “chino”, en Colombia, es el muchacho. Nada más.<br>La palabra es de Salomón; el problema es de casi todos.
+        </p>
+      </div>
+    </div>
+
+    <!-- REVELADO -->
+    <div class="rv mt-14">
+      <h3 class="font-display font-bold text-[1.6rem] sm:text-[2.1rem] leading-tight tracking-tight max-w-[22ch]">
+        Arrastre la manija. A la izquierda, el organigrama. A la derecha, el lunes.
+      </h3>
+      <p class="maquina text-[11.5px] tracking-[.1em] uppercase text-tinta/70 mt-2 mb-5">Prueba documental A · flujo de un pedido</p>
+
+      <div id="revelado" class="relative select-none border-2 border-tinta bg-sello/[.055] overflow-hidden min-h-[300px] sm:min-h-[400px]" style="--x:52%">
+        <!-- capa REALIDAD (fondo) -->
+        <div class="p-4 sm:p-7 pt-12 sm:pt-14">
+          <span class="absolute top-3 right-4 sello-tinta text-sello rotate-2 z-10"><span class="sello-caja text-[9.5px] sm:text-[13px]">Lo que pasa de verdad</span></span>
+          <ol class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 maquina text-[10.5px] sm:text-[11.5px] leading-tight">
+            <li class="bg-hoja2 border border-sello/55 text-sello px-2 py-2 -rotate-1">Pedido por WhatsApp</li>
+            <li class="bg-hoja2 border border-sello/55 text-sello px-2 py-2 rotate-[.6deg]">Captura a mano en Excel</li>
+            <li class="bg-hoja2 border border-sello/55 text-sello px-2 py-2 -rotate-[.4deg]">Otro Excel, el “bueno”</li>
+            <li class="bg-hoja2 border border-sello/55 text-sello px-2 py-2 rotate-1">Llamada a bodega</li>
+            <li class="bg-hoja2 border border-sello/55 text-sello px-2 py-2 -rotate-[.8deg]">“¿Sí hay o no hay?”</li>
+            <li class="bg-hoja2 border border-sello/55 text-sello px-2 py-2 rotate-[.3deg]">Nota en el cuaderno</li>
+            <li class="bg-hoja2 border border-sello/55 text-sello px-2 py-2 -rotate-[.6deg]">Se digita la factura</li>
+            <li class="bg-hoja2 border border-sello/55 text-sello px-2 py-2 rotate-[.9deg]">Correo al cliente</li>
+            <li class="bg-hoja2 border border-sello/55 text-sello px-2 py-2 -rotate-1">Quedó mal: se corrige</li>
+            <li class="bg-hoja2 border border-sello/55 text-sello px-2 py-2 rotate-[.5deg]">Se pasa al contador</li>
+            <li class="bg-hoja2 border border-sello/55 text-sello px-2 py-2 -rotate-[.3deg]">Nadie sabe cuánto queda</li>
+            <li class="bg-hoja2 border-2 border-dashed border-sello text-sello px-2 py-2 font-bold rotate-1">Y así 40 veces al día</li>
+          </ol>
+          <p class="mano text-[1.25rem] sm:text-[1.45rem] mt-4 text-sello max-w-[30ch]">once pasos, y ninguno queda escrito en ningún sistema</p>
+        </div>
+
+        <!-- capa CREENCIA (recortada) -->
+        <div id="capa-creencia" class="absolute inset-0 bg-hoja2 cuadricula border-r-[3px] border-tinta"
+             style="clip-path: inset(0 calc(100% - var(--x)) 0 0)">
+          <div class="p-4 sm:p-7 pt-12 sm:pt-14 h-full">
+            <span class="absolute top-3 left-4 sello-tinta text-esfero -rotate-2"><span class="sello-caja text-[9.5px] sm:text-[13px]">Lo que usted cree</span></span>
+            <ol class="space-y-2.5 sm:space-y-3.5 maquina text-[12.5px] sm:text-[15px] max-w-[190px] sm:max-w-[330px]">
+              <li class="bg-hoja2 border-2 border-esfero text-esfero px-3 py-3 sm:py-4">1 · Entra el pedido</li>
+              <li class="bg-hoja2 border-2 border-esfero text-esfero px-3 py-3 sm:py-4">2 · El sistema lo registra</li>
+              <li class="bg-hoja2 border-2 border-esfero text-esfero px-3 py-3 sm:py-4">3 · Bodega despacha</li>
+              <li class="bg-hoja2 border-2 border-esfero text-esfero px-3 py-3 sm:py-4">4 · Se factura solo</li>
+            </ol>
+            <p class="mano text-[1.25rem] sm:text-[1.45rem] mt-4">así se lo vendieron</p>
+          </div>
+        </div>
+
+        <!-- manija -->
+        <div class="rev-mango absolute top-0 bottom-0 w-[3px] bg-tinta pointer-events-none" style="left:var(--x)">
+          <span class="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 left-0 size-11 rounded-full bg-tinta text-hoja2 grid place-items-center maquina text-[13px] font-bold shadow-[0_2px_0_rgba(23,19,16,.35)]">↔</span>
+        </div>
+        <label class="sr-only" for="rev-input">Comparar lo que usted cree con lo que pasa de verdad</label>
+        <input id="rev-input" type="range" min="0" max="100" value="52" class="absolute inset-0 w-full h-full opacity-0 cursor-ew-resize z-20" aria-label="Comparar el flujo que usted cree con el flujo real">
+      </div>
+      <p class="maquina text-[11px] text-tinta/70 mt-2">Arrastre, o use las flechas del teclado.</p>
+    </div>
+
+    <!-- tres capas del problema -->
+    <div class="rv mt-16 grid md:grid-cols-3 gap-px bg-tinta/25 border-2 border-tinta">
+      <article class="bg-hoja2 p-6 sm:p-7">
+        <p class="maquina text-[11px] tracking-[.18em] uppercase text-tinta/70 mb-3">Prueba B · lo de afuera</p>
+        <h4 class="font-display font-bold text-[1.45rem] leading-[1.1] tracking-tight mb-3">El proceso se sostiene con memoria humana.</h4>
+        <p class="font-body text-[1.02rem] leading-[1.55] text-tinta/80">Los datos existen tres veces y ninguna es la buena. Para saber cuánto vendió ayer, hay que preguntarle a alguien.</p>
+      </article>
+      <article class="bg-hoja2 p-6 sm:p-7">
+        <p class="maquina text-[11px] tracking-[.18em] uppercase text-tinta/70 mb-3">Prueba C · lo de adentro</p>
+        <h4 class="font-display font-bold text-[1.45rem] leading-[1.1] tracking-tight mb-3">Usted se siente atrasado y no quiere que se le note.</h4>
+        <p class="font-body text-[1.02rem] leading-[1.55] text-tinta/80">Ya le vendieron un sistema que nadie usa. Ahora todo el mundo habla de IA y usted no sabe si es humo o si es el bus que se le va.</p>
+      </article>
+      <article class="bg-hoja2 p-6 sm:p-7">
+        <p class="maquina text-[11px] tracking-[.18em] uppercase text-tinta/70 mb-3">Prueba D · por qué está mal</p>
+        <h4 class="font-display font-bold text-[1.45rem] leading-[1.1] tracking-tight mb-3">Nadie montó una empresa para ser el respaldo de un Excel.</h4>
+        <p class="font-body text-[1.02rem] leading-[1.55] text-tinta/80">Su gente es buena. Por eso duele verlos haciendo de robot ocho horas al día, cuando podrían estar vendiendo o pensando.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOLIO 03 · SI NADA CAMBIA (LO QUE ESTÁ EN JUEGO) ================= -->
+<section class="relative bg-tinta text-hoja2 border-t-2 border-tinta overflow-hidden">
+  <div class="absolute inset-0 opacity-[.07] rayado pointer-events-none" aria-hidden="true"></div>
+  <div class="relative mx-auto max-w-[1280px] px-4 sm:px-6 py-14 sm:py-20">
+    <span class="hidden lg:block folio pt-2">
+      <span class="maquina text-[11px] tracking-[.2em] text-marca/70 block rotate-90 origin-top-left translate-x-[64px] translate-y-[10px] whitespace-nowrap">FOLIO 03 — RIESGO</span>
+    </span>
+
+    <div class="grid lg:grid-cols-[1.15fr_.85fr] gap-10 lg:gap-16 items-start">
+      <div class="rv">
+        <p class="maquina text-[11px] tracking-[.22em] uppercase text-marca mb-5">Si el expediente se archiva sin hacer nada</p>
+        <h2 class="font-display font-extrabold angosta leading-[.92] tracking-[-.02em] text-[10vw] sm:text-[3.9rem] max-w-[16ch]">
+          Nada explota.<br>Eso es lo peor.
+        </h2>
+        <div class="mt-7 space-y-4 max-w-[52ch] font-body text-[1.1rem] sm:text-[1.2rem] leading-[1.55] text-hoja2/85">
+          <p>No hay crisis. No hay quiebra. Simplemente el negocio se queda del mismo tamaño mientras usted envejece adentro.</p>
+          <p>Se va ocho días de viaje y el celular no para. El que sabía el proceso renuncia y se lleva medio negocio en la cabeza. Su competencia contrata a alguien que sí sabe usar estas herramientas y de pronto le cotiza en dos horas lo que a usted le toma dos días.</p>
+          <p class="text-marca font-body italic">Y usted sigue creyendo que el problema es que le falta un software.</p>
+        </div>
+      </div>
+
+      <!-- medidor de tiempo -->
+      <div class="rv border border-hoja2/25 p-6 sm:p-7 bg-hoja2/[.04]">
+        <p class="maquina text-[11px] tracking-[.2em] uppercase text-hoja2/55">Cronómetro del expediente</p>
+        <p id="reloj" class="font-display font-extrabold text-[3.4rem] sm:text-[4.4rem] leading-none tracking-tight tabular-nums my-3">00:00</p>
+        <p class="font-body text-[1.05rem] leading-[1.55] text-hoja2/80">
+          Lleva ese rato leyendo esto. Le apuesto lo que quiera a que, en el mismo rato,
+          alguien en su empresa volvió a escribir a mano un dato que ya existía en otro lado.
+        </p>
+        <p class="mano text-[1.4rem] text-marca mt-4">y no es culpa de esa persona</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOLIO 04 · EL GUÍA ================= -->
+<section id="guia" class="relative bg-papel fibra border-t-2 border-tinta">
+  <div class="relative mx-auto max-w-[1280px] px-4 sm:px-6 py-14 sm:py-20">
+    <span class="hidden lg:block folio pt-2">
+      <span class="maquina text-[11px] tracking-[.2em] text-sello/80 block rotate-90 origin-top-left translate-x-[64px] translate-y-[10px] whitespace-nowrap">FOLIO 04 — QUIÉN FIRMA</span>
+    </span>
+
+    <div class="rv grid lg:grid-cols-[300px_minmax(0,1fr)] gap-10 lg:gap-14 items-start">
+      <!-- retrato -->
+      <div class="relative max-w-[300px]">
+        <div class="cinta -top-3 left-1/2 -translate-x-1/2 -rotate-2"></div>
+        <div class="bg-hoja2 border border-tinta/30 p-3 pb-4 shadow-[6px_8px_0_rgba(23,19,16,.10)] -rotate-1">
+          <img src="assets/fotoSalo.jpeg" alt="Salomón Muriel, de saco verde, brazos cruzados" width="300" height="300" loading="lazy" class="w-full aspect-square object-cover impresa">
+          <p class="maquina text-[11.5px] mt-3 leading-snug">SALOMÓN MURIEL<br><span class="text-tinta/70">Bogotá · 35 años · quinta empresa</span></p>
+        </div>
+        <p class="mano text-[1.4rem] mt-4 -rotate-1 lg:pl-2">Papá y abuelo también fueron<br>empresarios. Sé cómo huele<br>un negocio de familia.</p>
+      </div>
+
+      <div>
+        <p class="maquina text-[11px] tracking-[.22em] uppercase text-tinta/70 mb-4">Quien abre el expediente</p>
+        <h2 class="font-display font-extrabold angosta2 leading-[.94] tracking-[-.02em] text-[8.6vw] sm:text-[3.4rem] max-w-[19ch]">
+          Yo también tuve el Excel que sostenía todo.
+        </h2>
+        <div class="mt-6 space-y-4 max-w-[56ch] font-body text-[1.12rem] sm:text-[1.2rem] leading-[1.55] text-tinta/85">
+          <p>Van cinco empresas. Dos las vendí, dos se me murieron y una está viva y creciendo. En R5 dirigí unas 40 personas y construí el pipeline de datos y el sistema de modelación de riesgo completo.</p>
+          <p>No llego a explicarle qué es la transformación digital. Llego a mirar cómo entra un pedido en su empresa y a arreglar lo primero que se pueda arreglar.</p>
+        </div>
+
+        <blockquote class="mt-8 border-l-[5px] border-sello pl-5 max-w-[50ch]">
+          <p class="font-body italic text-[1.35rem] sm:text-[1.6rem] leading-[1.35]">“Building systems that work for people using them, and getting stuff off the ground.”</p>
+          <footer class="maquina text-[11.5px] text-tinta/70 mt-3">— Él mismo, cuando le preguntan cuál es su superpoder. Lo dejamos en inglés porque así lo dice.</footer>
+        </blockquote>
+      </div>
+    </div>
+
+    <!-- expediente de empresas -->
+    <div class="rv mt-16">
+      <div class="flex flex-wrap items-baseline justify-between gap-3 border-b-2 border-tinta pb-3 mb-6">
+        <h3 class="font-display font-bold text-[1.5rem] sm:text-[2rem] tracking-tight">Antecedentes · cinco empresas, sin maquillar</h3>
+        <p class="maquina text-[11px] tracking-[.14em] uppercase text-tinta/70">Deslice &nbsp;→</p>
+      </div>
+
+      <ol class="flex gap-4 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-4 -mx-4 px-4 sm:mx-0 sm:px-0">
+
+        <li class="snap-start shrink-0 w-[268px] sm:w-[300px] bg-hoja2 border border-tinta/35 shadow-[5px_6px_0_rgba(23,19,16,.09)] p-5 flex flex-col">
+          <div class="h-[52px] flex items-center mb-4"><img src="assets/elpalomo.png" alt="Logo de El Palomo" class="max-h-[52px] w-auto object-contain mix-blend-multiply" loading="lazy"></div>
+          <p class="maquina text-[11px] tracking-[.16em] text-tinta/70">2016 — 2017</p>
+          <h4 class="font-display font-bold text-[1.3rem] tracking-tight mt-1">El Palomo</h4>
+          <p class="font-body text-[1.02rem] leading-[1.5] text-tinta/80 mt-2 flex-1">Flores por suscripción. Fracasó espectacularmente. La primera lección cara.</p>
+          <span class="sello-tinta text-sello self-start mt-4 -rotate-3"><span class="sello-caja text-[12px]">Fracasó</span></span>
+        </li>
+
+        <li class="snap-start shrink-0 w-[268px] sm:w-[300px] bg-hoja2 border border-tinta/35 shadow-[5px_6px_0_rgba(23,19,16,.09)] p-5 flex flex-col">
+          <div class="h-[52px] flex items-center mb-4"><img src="assets/prestagente.png" alt="Logo de PrestaGente" class="max-h-[52px] w-auto object-contain mix-blend-multiply" loading="lazy"></div>
+          <p class="maquina text-[11px] tracking-[.16em] text-tinta/70">2017 — 2019</p>
+          <h4 class="font-display font-bold text-[1.3rem] tracking-tight mt-1">PrestaGente</h4>
+          <p class="font-body text-[1.02rem] leading-[1.5] text-tinta/80 mt-2 flex-1">Libranza entre personas. Vendida a Taurus Capital por cerca de USD 1 millón. Sigue operando hoy.</p>
+          <span class="sello-tinta text-verde self-start mt-4 rotate-2"><span class="sello-caja text-[12px]">Vendida</span></span>
+        </li>
+
+        <li class="snap-start shrink-0 w-[268px] sm:w-[300px] bg-hoja2 border border-tinta/35 shadow-[5px_6px_0_rgba(23,19,16,.09)] p-5 flex flex-col">
+          <div class="h-[52px] flex items-center mb-4"><img src="assets/beriblock.png" alt="Logo de Beriblock" class="max-h-[52px] w-auto object-contain mix-blend-multiply" loading="lazy"></div>
+          <p class="maquina text-[11px] tracking-[.16em] text-tinta/70">2018 — 2019</p>
+          <h4 class="font-display font-bold text-[1.3rem] tracking-tight mt-1">Beriblock</h4>
+          <p class="font-body text-[1.02rem] leading-[1.5] text-tinta/80 mt-2 flex-1">Autenticación de pagarés con blockchain. Tecnología linda, problema que a nadie le urgía. Quebró.</p>
+          <span class="sello-tinta text-sello self-start mt-4 -rotate-2"><span class="sello-caja text-[12px]">Quebró</span></span>
+        </li>
+
+        <li class="snap-start shrink-0 w-[268px] sm:w-[300px] bg-hoja2 border border-tinta/35 shadow-[5px_6px_0_rgba(23,19,16,.09)] p-5 flex flex-col">
+          <div class="h-[52px] flex items-center mb-4"><img src="assets/finco.png" alt="Logo de Finco" class="max-h-[52px] w-auto object-contain mix-blend-multiply" loading="lazy"></div>
+          <p class="maquina text-[11px] tracking-[.16em] text-tinta/70">2019 — 2022</p>
+          <h4 class="font-display font-bold text-[1.3rem] tracking-tight mt-1">Finco</h4>
+          <p class="font-body text-[1.02rem] leading-[1.5] text-tinta/80 mt-2 flex-1">Valoración inmobiliaria con datos e IA para Latinoamérica. 100.000 reportes al año. Vendida a RED Atlas por ~USD 1,5 millones: 5× la inversión.</p>
+          <span class="sello-tinta text-verde self-start mt-4 rotate-1"><span class="sello-caja text-[12px]">Vendida 5×</span></span>
+        </li>
+
+        <li class="snap-start shrink-0 w-[268px] sm:w-[300px] bg-marca/35 border-2 border-tinta shadow-[5px_6px_0_rgba(23,19,16,.14)] p-5 flex flex-col">
+          <div class="h-[52px] flex items-center mb-4"><img src="assets/ignia.png" alt="Logo de Ignia" class="max-h-[52px] w-auto object-contain mix-blend-multiply" loading="lazy"></div>
+          <p class="maquina text-[11px] tracking-[.16em] text-tinta/70">2025 — hoy</p>
+          <h4 class="font-display font-bold text-[1.3rem] tracking-tight mt-1">Ignia</h4>
+          <p class="font-body text-[1.02rem] leading-[1.5] text-tinta/85 mt-2 flex-1">Otro modelo de educación superior. Rentable desde el primer día. USD 150 mil de ingreso recurrente en el primer año, ~30 fellows en la primera cohorte, equipo de 5. El CRM, el sitio y la plataforma de comunidad los construí yo.</p>
+          <span class="sello-tinta text-esfero self-start mt-4 -rotate-1"><span class="sello-caja text-[12px]">Activa</span></span>
+        </li>
+      </ol>
+
+      <div class="mt-8 grid md:grid-cols-[minmax(0,1fr)_300px] gap-8 items-start">
+        <p class="font-body text-[1.08rem] leading-[1.55] text-tinta/80 max-w-[62ch] border-t border-tinta/25 pt-5">
+          Le muestro las dos que se murieron a propósito. Un consultor que solo enseña sus victorias no le va a avisar
+          cuándo parar. Yo ya pagué esa cuenta dos veces y prefiero que usted no la pague.
+        </p>
+        <div class="relative">
+          <img src="assets/salo_oscar.webp" alt="Salomón mostrando la plataforma de Finco en un evento de lanzamiento" class="w-full border border-tinta/30 impresa" loading="lazy">
+          <p class="maquina text-[10.5px] text-tinta/70 mt-2">Lanzamiento de Finco. La herramienta que ve en la pantalla también la construí yo.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOLIO 05 · EL PLAN ================= -->
+<section id="plan" class="relative bg-hoja border-t-2 border-tinta">
+  <div class="relative mx-auto max-w-[1280px] px-4 sm:px-6 py-14 sm:py-20">
+    <span class="hidden lg:block folio pt-2">
+      <span class="maquina text-[11px] tracking-[.2em] text-sello/80 block rotate-90 origin-top-left translate-x-[64px] translate-y-[10px] whitespace-nowrap">FOLIO 05 — EL PLAN</span>
+    </span>
+
+    <div class="rv max-w-[24ch]">
+      <p class="maquina text-[11px] tracking-[.22em] uppercase text-tinta/70 mb-4">Procedimiento en tres pasos</p>
+      <h2 class="font-display font-extrabold angosta leading-[.9] tracking-[-.02em] text-[11.5vw] sm:text-[4.6rem]">Cómo se resuelve esto.</h2>
+    </div>
+
+    <ol class="rv mt-12 grid md:grid-cols-3 gap-8 md:gap-6">
+      <li class="relative border-t-[3px] border-tinta pt-5">
+        <span class="font-display font-extrabold text-[4.2rem] leading-[.8] text-sello block mb-3">01</span>
+        <h3 class="font-display font-bold text-[1.35rem] tracking-tight mb-2">Media hora, sin compromiso</h3>
+        <p class="font-body text-[1.05rem] leading-[1.55] text-tinta/80">Usted me cuenta cómo funciona el negocio hoy y yo pregunto mucho. No hay presentación de 40 láminas ni propuesta al final de la llamada.</p>
+      </li>
+      <li class="relative border-t-[3px] border-tinta pt-5">
+        <span class="font-display font-extrabold text-[4.2rem] leading-[.8] text-sello block mb-3">02</span>
+        <h3 class="font-display font-bold text-[1.35rem] tracking-tight mb-2">Radiografía del proceso real</h3>
+        <p class="font-body text-[1.05rem] leading-[1.55] text-tinta/80">Me meto en lo que de verdad pasa: quién hace qué, con qué archivo, a qué hora y por qué. Salgo con una lista de lo que se puede quitar de encima y en qué orden.</p>
+      </li>
+      <li class="relative border-t-[3px] border-tinta pt-5">
+        <span class="font-display font-extrabold text-[4.2rem] leading-[.8] text-sello block mb-3">03</span>
+        <h3 class="font-display font-bold text-[1.35rem] tracking-tight mb-2">Lo construyo yo</h3>
+        <p class="font-body text-[1.05rem] leading-[1.55] text-tinta/80">Arrancamos por lo primero de la lista. Lo armo con IA y con lo que usted ya tiene. Se ve funcionando en semanas, no en trimestres, y su gente aprende a usarlo mientras se hace.</p>
+      </li>
+    </ol>
+
+    <!-- EL ACUERDO -->
+    <div class="rv mt-16 border-2 border-tinta bg-hoja2">
+      <div class="border-b-2 border-tinta px-5 sm:px-7 py-4 flex flex-wrap items-baseline justify-between gap-3">
+        <h3 class="font-display font-bold text-[1.5rem] sm:text-[1.9rem] tracking-tight">El acuerdo</h3>
+        <p class="maquina text-[11px] tracking-[.14em] uppercase text-tinta/70">Lo firmo antes de empezar</p>
+      </div>
+      <div class="grid md:grid-cols-2">
+        <div class="p-5 sm:p-7 border-b-2 md:border-b-0 md:border-r-2 border-tinta">
+          <p class="maquina text-[11.5px] tracking-[.16em] uppercase font-bold text-verde mb-4">Lo que sí hago</p>
+          <ul class="space-y-3.5 font-body text-[1.06rem] leading-[1.5]">
+            <li class="flex gap-3"><span class="maquina text-verde font-bold shrink-0">[×]</span><span>El trabajo lo hago yo. No le mando un practicante con una plantilla.</span></li>
+            <li class="flex gap-3"><span class="maquina text-verde font-bold shrink-0">[×]</span><span>Usted queda con la herramienta y con su gente sabiéndola usar. Si me voy y todo se cae, no serví.</span></li>
+            <li class="flex gap-3"><span class="maquina text-verde font-bold shrink-0">[×]</span><span>Empezamos por lo que duele esta semana, no por un plan a tres años.</span></li>
+            <li class="flex gap-3"><span class="maquina text-verde font-bold shrink-0">[×]</span><span>Le digo que no cuando toque. Prefiero perder el contrato que venderle humo.</span></li>
+          </ul>
+        </div>
+        <div class="p-5 sm:p-7 bg-sello/[.05]">
+          <p class="maquina text-[11.5px] tracking-[.16em] uppercase font-bold text-sello mb-4">Lo que no voy a hacer</p>
+          <ul class="space-y-3.5 font-body text-[1.06rem] leading-[1.5]">
+            <li class="flex gap-3"><span class="maquina text-sello font-bold shrink-0">[ ]</span><span>No lo llevo de USD 5 millones al año para arriba. Eso no lo sé hacer y no voy a aprender con su plata.</span></li>
+            <li class="flex gap-3"><span class="maquina text-sello font-bold shrink-0">[ ]</span><span>No hago deep tech ni proyectos de investigación donde toque inventar algo que todavía no existe.</span></li>
+            <li class="flex gap-3"><span class="maquina text-sello font-bold shrink-0">[ ]</span><span>No doy charlas de ciencia de datos ni de cultura organizacional. No es lo mío.</span></li>
+            <li class="flex gap-3"><span class="maquina text-sello font-bold shrink-0">[ ]</span><span>No trabajo con media docena de empresas a la vez. Por eso hay cupos y por eso a veces le toca esperar.</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t-2 border-tinta px-5 sm:px-7 py-5 flex flex-wrap items-end gap-6 justify-between">
+        <div>
+          <p class="mano text-[2.3rem] leading-none text-esfero">Salomón Muriel</p>
+          <p class="maquina text-[11px] text-tinta/70 mt-2 border-t border-tinta/30 pt-1.5 inline-block">Bogotá, Colombia</p>
+        </div>
+        <a href="https://cal.com/salomonmuriel" target="_blank" rel="noopener"
+           class="inline-flex items-center gap-2 min-h-[48px] px-5 border-2 border-tinta maquina text-[12px] tracking-[.12em] uppercase hover:bg-marca transition-colors">
+          Agendar la media hora →
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOLIO 06 · LO QUE SE PUEDE PEDIR ================= -->
+<section id="servicios" class="relative bg-papel cuadricula border-t-2 border-tinta">
+  <div class="relative mx-auto max-w-[1280px] px-4 sm:px-6 py-14 sm:py-20">
+    <span class="hidden lg:block folio pt-2">
+      <span class="maquina text-[11px] tracking-[.2em] text-sello/80 block rotate-90 origin-top-left translate-x-[64px] translate-y-[10px] whitespace-nowrap">FOLIO 06 — SOLICITUDES</span>
+    </span>
+
+    <div class="rv flex flex-wrap items-end justify-between gap-4 border-b-2 border-tinta pb-4">
+      <h2 class="font-display font-extrabold angosta2 text-[10vw] sm:text-[3.6rem] leading-[.92] tracking-[-.02em] max-w-[16ch]">Qué se me puede pedir</h2>
+      <p class="maquina text-[11px] tracking-[.16em] uppercase text-tinta/70 max-w-[30ch] leading-relaxed">Tres casillas. Ojalá marque la primera<br>o la segunda.</p>
+    </div>
+
+    <!-- CONSULTORÍA -->
+    <article class="rv mt-10 bg-hoja2 border-2 border-tinta shadow-[8px_10px_0_rgba(23,19,16,.11)]">
+      <div class="grid lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]">
+        <div class="p-6 sm:p-9">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="maquina text-[11px] tracking-[.2em] uppercase bg-tinta text-hoja2 px-2 py-1">Solicitud A</span>
+            <span class="maquina text-[11px] tracking-[.16em] uppercase text-tinta/70">lo principal</span>
+          </div>
+          <h3 class="font-display font-extrabold text-[2.1rem] sm:text-[2.9rem] leading-[.95] tracking-[-.02em]">Consultoría</h3>
+          <p class="font-body text-[1.2rem] leading-[1.5] mt-4 max-w-[50ch]">
+            Estrategia de cero a uno y adopción de tecnología para empresas que ya facturan y ya se cansaron de comprar software.
+          </p>
+          <div class="mt-5 space-y-3.5 font-body text-[1.06rem] leading-[1.55] text-tinta/85 max-w-[54ch]">
+            <p><strong class="font-display font-bold">Yo defino la estrategia y yo mismo construyo la herramienta.</strong> No hay traducción entre “el que piensa” y “el que programa”: es la misma persona. Eso ahorra meses y malentendidos.</p>
+            <p>Hoy trabajo mucho apoyado en IA: desarrollo asistido, y agentes tipo Claude Code haciendo tareas que no son de programar —cotizar, clasificar, redactar, revisar, ordenar—. Es la diferencia entre un proyecto de un año y uno de seis semanas.</p>
+          </div>
+          <a href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n.%20Me%20interesa%20la%20consultor%C3%ADa.%20Mi%20empresa%20se%20dedica%20a%3A%20"
+             target="_blank" rel="noopener"
+             class="mt-7 inline-flex items-center justify-center gap-3 bg-sello text-hoja2 px-6 min-h-[54px] font-display font-bold text-[1.02rem] hover:bg-tinta transition-colors">
+            Hablemos de mi empresa <span aria-hidden="true" class="maquina">→</span>
+          </a>
+        </div>
+        <div class="border-t-2 lg:border-t-0 lg:border-l-2 border-tinta p-6 sm:p-9 bg-papel/60">
+          <p class="maquina text-[11px] tracking-[.18em] uppercase text-tinta/70 mb-3">Cupos del semestre</p>
+          <div class="flex gap-2 mb-3" role="img" aria-label="2 de 4 cupos de consultoría ocupados">
+            <span class="size-9 border-2 border-tinta bg-tinta"></span>
+            <span class="size-9 border-2 border-tinta bg-tinta"></span>
+            <span class="size-9 border-2 border-tinta"></span>
+            <span class="size-9 border-2 border-tinta"></span>
+          </div>
+          <p class="font-display font-bold text-[1.25rem] leading-tight">2 de 4 ocupados.<br><span class="text-sello">Quedan dos.</span></p>
+          <p class="font-body text-[1rem] leading-[1.5] text-tinta/75 mt-3">Máximo cuatro empresas a la vez, porque el que se sienta a construir soy yo. Cuando se llenan, se llenan.</p>
+          <p class="mano text-[1.35rem] mt-5 -rotate-1">no es escasez de marketing:<br>es que solo tengo dos manos</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- MENTORÍA + CHARLAS -->
+    <div class="mt-8 grid lg:grid-cols-2 gap-8">
+
+      <article class="rv bg-hoja2 border-2 border-tinta p-6 sm:p-8 flex flex-col">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="maquina text-[11px] tracking-[.2em] uppercase bg-tinta text-hoja2 px-2 py-1">Solicitud B</span>
+        </div>
+        <h3 class="font-display font-extrabold text-[1.9rem] sm:text-[2.3rem] leading-[.98] tracking-[-.02em]">Mentoría</h3>
+        <p class="font-body text-[1.12rem] leading-[1.5] mt-3">
+          Para el que está arrancando: empresa, ONG o proyecto propio. Van siete personas hasta hoy.
+        </p>
+        <p class="font-body text-[1.04rem] leading-[1.55] text-tinta/80 mt-3">
+          El método es simple y algo incómodo: nos vemos, le dejo tareas prácticas para la semana, y a la siguiente las revisamos. Sin tareas hechas no hay sesión.
+        </p>
+        <blockquote class="mt-5 bg-marca/40 border-l-[5px] border-tinta pl-4 py-3 pr-3">
+          <p class="font-body italic text-[1.15rem] leading-[1.35]">“Trabajar conmigo significa que las cosas pasan, así toque a las malas.”</p>
+        </blockquote>
+        <div class="mt-5">
+          <p class="maquina text-[11px] tracking-[.18em] uppercase text-tinta/70 mb-2">Cupos</p>
+          <div class="flex gap-2 mb-2" role="img" aria-label="3 de 5 cupos de mentoría ocupados">
+            <span class="size-8 border-2 border-tinta bg-tinta"></span>
+            <span class="size-8 border-2 border-tinta bg-tinta"></span>
+            <span class="size-8 border-2 border-tinta bg-tinta"></span>
+            <span class="size-8 border-2 border-tinta"></span>
+            <span class="size-8 border-2 border-tinta"></span>
+          </div>
+          <p class="font-display font-bold text-[1.1rem]">3 de 5 ocupados. Quedan dos.</p>
+        </div>
+        <p class="maquina text-[11.5px] leading-[1.6] text-tinta/70 mt-5 border-t border-tinta/25 pt-4">
+          Nota honesta: si lo que usted busca es un programa con cohorte, estructura y compañeros de ruta,
+          eso no es esto — es el Action Lab de Ignia, y se lo digo de una sin que me lo pregunte.
+        </p>
+        <a href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n.%20Estoy%20arrancando%20un%20proyecto%20y%20quiero%20mentor%C3%ADa."
+           target="_blank" rel="noopener"
+           class="mt-6 inline-flex items-center justify-center gap-3 border-2 border-tinta px-6 min-h-[52px] font-display font-bold text-[1rem] hover:bg-marca transition-colors">
+          Quiero mentoría <span aria-hidden="true" class="maquina">→</span>
+        </a>
+      </article>
+
+      <article class="rv bg-tinta text-hoja2 border-2 border-tinta p-6 sm:p-8 flex flex-col">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="maquina text-[11px] tracking-[.2em] uppercase bg-marca text-tinta px-2 py-1">Solicitud C</span>
+        </div>
+        <h3 class="font-display font-extrabold text-[1.9rem] sm:text-[2.3rem] leading-[.98] tracking-[-.02em]">Charlas</h3>
+        <p class="font-body text-[1.12rem] leading-[1.5] mt-3 text-hoja2/90">
+          Esto no es un producto: es cómo me conoce la gente. Lo pongo aquí porque sería raro esconderlo.
+        </p>
+        <p class="font-body text-[1.04rem] leading-[1.55] text-hoja2/75 mt-3">
+          Me han contratado conferencias, empresas y universidades. Los temas: adopción de tecnología e IA, emprendimiento, mentalidad y el balance entre la vida y el trabajo.
+        </p>
+        <div class="mt-5 border border-hoja2/25">
+          <div class="aspect-video bg-black">
+            <iframe class="w-full h-full" src="https://www.youtube-nocookie.com/embed/F9t9f5Et_04"
+              title="Salomón Muriel — Negocios Aburridos e Innovación, podcast Ventaja"
+              loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+          </div>
+          <p class="maquina text-[11px] text-hoja2/60 p-2.5 leading-snug">“Negocios Aburridos e Innovación” · podcast Ventaja. Grabado, sin editar la parte incómoda.</p>
+        </div>
+        <a href="mailto:salomon.muriel@gmail.com?subject=Invitaci%C3%B3n%20a%20dar%20una%20charla&body=Hola%20Salom%C3%B3n%2C%20queremos%20invitarlo%20a%20hablar%20en%3A%20"
+           class="mt-6 inline-flex items-center justify-center gap-3 border-2 border-marca text-marca px-6 min-h-[52px] font-display font-bold text-[1rem] hover:bg-marca hover:text-tinta transition-colors">
+          Invitarlo a hablar <span aria-hidden="true" class="maquina">→</span>
+        </a>
+      </article>
+    </div>
+
+    <p class="rv maquina text-[11.5px] leading-[1.7] text-tinta/70 mt-8 max-w-[70ch] border-l-2 border-tinta/30 pl-4">
+      Aclaración de expediente: mi trabajo principal es Ignia. Esto de acá es mi práctica personal, aparte,
+      y no se hace bajo esa marca. Por eso los cupos son pocos y por eso prefiero decirle que no
+      antes que atenderlo mal.
+    </p>
+  </div>
+</section>
+
+<!-- ================= FOLIO 07 · DIAGNÓSTICO ================= -->
+<section id="diagnostico" class="relative bg-hoja rayado border-t-2 border-tinta">
+  <div class="relative mx-auto max-w-[1280px] px-4 sm:px-6 py-14 sm:py-20">
+    <span class="hidden lg:block folio pt-2">
+      <span class="maquina text-[11px] tracking-[.2em] text-sello/80 block rotate-90 origin-top-left translate-x-[64px] translate-y-[10px] whitespace-nowrap">FOLIO 07 — DIAGNÓSTICO</span>
+    </span>
+
+    <div class="rv grid lg:grid-cols-[minmax(0,1.15fr)_minmax(0,.85fr)] gap-10 lg:gap-14 items-start">
+
+      <div>
+        <p class="maquina text-[11px] tracking-[.22em] uppercase text-tinta/70 mb-4">Autoevaluación · 6 casillas · 40 segundos</p>
+        <h2 class="font-display font-extrabold angosta leading-[.9] tracking-[-.02em] text-[11vw] sm:text-[4rem] max-w-[15ch]">
+          ¿Qué tan chinomático está su negocio?
+        </h2>
+        <p class="font-body text-[1.12rem] leading-[1.55] text-tinta/80 mt-5 max-w-[48ch]">
+          Marque lo que sea cierto. Nadie lo está viendo y esto no se guarda en ningún lado.
+          Al final le armo el mensaje para que solo tenga que darle enviar.
+        </p>
+
+        <fieldset class="mt-8 border-2 border-tinta bg-hoja2">
+          <legend class="sr-only">Marque las afirmaciones que apliquen a su empresa</legend>
+          <ul id="lista-dx" class="divide-y-2 divide-tinta/15">
+            <li><label class="flex items-start gap-4 p-4 sm:p-5 min-h-[64px] cursor-pointer hover:bg-marca/25 transition-colors">
+              <input type="checkbox" class="dx sr-only" data-t="Copiamos información de un lado a otro todos los días">
+              <span class="caja size-7 border-2 border-tinta shrink-0 mt-0.5 grid place-items-center maquina font-bold text-[16px] leading-none text-transparent">×</span>
+              <span class="font-body text-[1.08rem] leading-[1.4]">Alguien copia información de un lado a otro todos los días.</span>
+            </label></li>
+            <li><label class="flex items-start gap-4 p-4 sm:p-5 min-h-[64px] cursor-pointer hover:bg-marca/25 transition-colors">
+              <input type="checkbox" class="dx sr-only" data-t="Compramos un software y hoy casi nadie lo usa">
+              <span class="caja size-7 border-2 border-tinta shrink-0 mt-0.5 grid place-items-center maquina font-bold text-[16px] leading-none text-transparent">×</span>
+              <span class="font-body text-[1.08rem] leading-[1.4]">Compramos un software caro y hoy casi nadie lo usa.</span>
+            </label></li>
+            <li><label class="flex items-start gap-4 p-4 sm:p-5 min-h-[64px] cursor-pointer hover:bg-marca/25 transition-colors">
+              <input type="checkbox" class="dx sr-only" data-t="Si esa persona se va, se lleva medio proceso en la cabeza">
+              <span class="caja size-7 border-2 border-tinta shrink-0 mt-0.5 grid place-items-center maquina font-bold text-[16px] leading-none text-transparent">×</span>
+              <span class="font-body text-[1.08rem] leading-[1.4]">Si esa persona se va, se lleva medio proceso en la cabeza.</span>
+            </label></li>
+            <li><label class="flex items-start gap-4 p-4 sm:p-5 min-h-[64px] cursor-pointer hover:bg-marca/25 transition-colors">
+              <input type="checkbox" class="dx sr-only" data-t="Los pedidos entran por WhatsApp y alguien los pasa a mano">
+              <span class="caja size-7 border-2 border-tinta shrink-0 mt-0.5 grid place-items-center maquina font-bold text-[16px] leading-none text-transparent">×</span>
+              <span class="font-body text-[1.08rem] leading-[1.4]">Los pedidos entran por WhatsApp y de ahí alguien los pasa a mano.</span>
+            </label></li>
+            <li><label class="flex items-start gap-4 p-4 sm:p-5 min-h-[64px] cursor-pointer hover:bg-marca/25 transition-colors">
+              <input type="checkbox" class="dx sr-only" data-t="Para saber cuánto vendimos ayer toca preguntarle a alguien">
+              <span class="caja size-7 border-2 border-tinta shrink-0 mt-0.5 grid place-items-center maquina font-bold text-[16px] leading-none text-transparent">×</span>
+              <span class="font-body text-[1.08rem] leading-[1.4]">Para saber cuánto vendimos ayer toca preguntarle a alguien.</span>
+            </label></li>
+            <li><label class="flex items-start gap-4 p-4 sm:p-5 min-h-[64px] cursor-pointer hover:bg-marca/25 transition-colors">
+              <input type="checkbox" class="dx sr-only" data-t="Sé que hay que hacer algo con IA pero no sé por dónde empezar">
+              <span class="caja size-7 border-2 border-tinta shrink-0 mt-0.5 grid place-items-center maquina font-bold text-[16px] leading-none text-transparent">×</span>
+              <span class="font-body text-[1.08rem] leading-[1.4]">Sé que hay que hacer algo con IA, pero no sé por dónde empezar.</span>
+            </label></li>
+          </ul>
+        </fieldset>
+      </div>
+
+      <!-- resultado -->
+      <div class="lg:sticky lg:top-[76px]">
+        <div class="border-2 border-tinta bg-papel shadow-[8px_10px_0_rgba(23,19,16,.11)]">
+          <div class="border-b-2 border-tinta px-5 py-3 flex items-center justify-between">
+            <p class="maquina text-[11px] tracking-[.18em] uppercase font-bold">Resultado preliminar</p>
+            <p class="maquina text-[11px] text-tinta/70">Exp. 001</p>
+          </div>
+          <div class="p-5 sm:p-6">
+            <div class="flex items-baseline gap-3">
+              <span id="dx-num" class="font-display font-extrabold text-[5rem] leading-[.8] tracking-tighter">0</span>
+              <span class="maquina text-[14px] text-tinta/70">/ 6 señales</span>
+            </div>
+            <div class="mt-4 h-4 border-2 border-tinta bg-hoja2 overflow-hidden">
+              <div id="dx-barra" class="h-full bg-sello transition-[width] duration-300" style="width:0%"></div>
+            </div>
+            <p id="dx-titulo" class="font-display font-bold text-[1.45rem] leading-[1.08] tracking-tight mt-5">Sin marcar todavía.</p>
+            <p id="dx-texto" class="font-body text-[1.06rem] leading-[1.5] text-tinta/80 mt-2">Marque las casillas de la izquierda y acá le digo qué veo.</p>
+
+            <a id="dx-cta" href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20quiero%20hablar%20de%20mi%20empresa."
+               target="_blank" rel="noopener"
+               class="mt-6 w-full inline-flex items-center justify-center gap-3 bg-tinta text-hoja2 px-5 min-h-[56px] font-display font-bold text-[1.02rem] text-center hover:bg-sello transition-colors">
+              Mandarle esto por WhatsApp <span aria-hidden="true" class="maquina">→</span>
+            </a>
+            <p class="maquina text-[10.5px] text-tinta/70 mt-3 leading-snug">Se abre WhatsApp con el mensaje ya escrito. Usted solo revisa y envía.</p>
+          </div>
+        </div>
+        <p class="mano text-[1.4rem] mt-5 -rotate-1">3 o más y ya sabemos<br>de qué se trata la llamada.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOLIO 08 · CÓMO SE VE CUANDO YA ESTÁ ================= -->
+<section class="relative bg-carbon text-hoja2 border-t-2 border-tinta overflow-hidden">
+  <div class="absolute inset-0 opacity-[.10] pointer-events-none" aria-hidden="true"
+       style="background-image:linear-gradient(to right,rgba(243,238,225,.5) 1px,transparent 1px),linear-gradient(to bottom,rgba(243,238,225,.5) 1px,transparent 1px);background-size:34px 34px"></div>
+  <div class="relative mx-auto max-w-[1280px] px-4 sm:px-6 py-16 sm:py-24">
+    <span class="hidden lg:block folio pt-2">
+      <span class="maquina text-[11px] tracking-[.2em] text-marca/70 block rotate-90 origin-top-left translate-x-[64px] translate-y-[10px] whitespace-nowrap">FOLIO 08 — CIERRE</span>
+    </span>
+
+    <div class="rv max-w-[20ch]">
+      <p class="maquina text-[11px] tracking-[.22em] uppercase text-marca mb-5">Cómo se ve el expediente cerrado</p>
+      <h2 class="font-display font-extrabold angosta leading-[.88] tracking-[-.025em] text-[12.5vw] sm:text-[5.2rem]">Un lunes cualquiera.</h2>
+    </div>
+
+    <ul class="rv mt-12 grid sm:grid-cols-2 gap-x-12 gap-y-7 max-w-[62rem]">
+      <li class="flex gap-4 border-t border-hoja2/20 pt-4">
+        <span class="maquina text-marca text-[13px] shrink-0 pt-1">07:40</span>
+        <p class="font-body text-[1.18rem] leading-[1.45]">Usted abre el celular y ya sabe cuánto se vendió el fin de semana. Nadie tuvo que armar el reporte.</p>
+      </li>
+      <li class="flex gap-4 border-t border-hoja2/20 pt-4">
+        <span class="maquina text-marca text-[13px] shrink-0 pt-1">09:15</span>
+        <p class="font-body text-[1.18rem] leading-[1.45]">Entra un pedido por WhatsApp y queda registrado sin que nadie lo vuelva a escribir.</p>
+      </li>
+      <li class="flex gap-4 border-t border-hoja2/20 pt-4">
+        <span class="maquina text-marca text-[13px] shrink-0 pt-1">11:00</span>
+        <p class="font-body text-[1.18rem] leading-[1.45]">La persona que “sabía el Excel” ahora está vendiendo, cerrando o pensando. Le costó lo mismo y rinde el triple.</p>
+      </li>
+      <li class="flex gap-4 border-t border-hoja2/20 pt-4">
+        <span class="maquina text-marca text-[13px] shrink-0 pt-1">18:30</span>
+        <p class="font-body text-[1.18rem] leading-[1.45]">Usted se va. Ocho días después vuelve de viaje y el negocio no lo llamó ni una vez.</p>
+      </li>
+    </ul>
+
+    <p class="rv font-body text-[1.25rem] sm:text-[1.5rem] leading-[1.45] mt-12 max-w-[46ch] text-hoja2/85">
+      No es magia y no es un software nuevo. Es que alguien por fin se sentó a mirar cómo funciona de verdad
+      su empresa y lo armó bien. <span class="text-marca">Eso es todo lo que hago.</span>
+    </p>
+  </div>
+</section>
+
+<!-- ================= CIERRE · LLAMADO A LA ACCIÓN ================= -->
+<section id="contacto" class="relative bg-sello text-hoja2 border-t-2 border-tinta overflow-hidden">
+  <div class="relative mx-auto max-w-[1280px] px-4 sm:px-6 py-16 sm:py-24">
+    <div class="rv grid lg:grid-cols-[minmax(0,1.25fr)_minmax(0,.75fr)] gap-12 items-start">
+      <div>
+        <h2 class="font-display font-extrabold angosta leading-[.86] tracking-[-.025em] text-[15vw] sm:text-[6.6rem] max-w-[11ch]">Escríbame. Sin vueltas.</h2>
+        <p class="font-body text-[1.2rem] sm:text-[1.35rem] leading-[1.45] mt-6 max-w-[44ch] text-hoja2/90">
+          Un mensaje de dos líneas contándome a qué se dedica y qué le está doliendo. Yo le contesto yo mismo.
+          Si no le puedo ayudar, se lo digo en el primer mensaje y no le hago perder la tarde.
+        </p>
+
+        <div class="mt-9 flex flex-col sm:flex-row flex-wrap gap-3">
+          <a href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n.%20Mi%20empresa%20se%20dedica%20a%3A%20____%20y%20lo%20que%20me%20est%C3%A1%20doliendo%20es%3A%20____"
+             target="_blank" rel="noopener"
+             class="inline-flex items-center justify-center gap-3 bg-hoja2 text-tinta px-7 min-h-[60px] font-display font-extrabold text-[1.12rem] hover:bg-marca transition-colors">
+            <svg viewBox="0 0 24 24" class="size-5 fill-current" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.13h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.16 8.16 0 0 1-1.26-4.36c0-4.54 3.7-8.23 8.25-8.23 2.2 0 4.27.86 5.83 2.41a8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.21-8.24 8.21Zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.8-.79.97-.14.16-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.41-.56-.42h-.48c-.16 0-.43.06-.65.31-.22.25-.85.83-.85 2.03s.87 2.35.99 2.51c.12.16 1.71 2.61 4.14 3.66.58.25 1.03.4 1.38.51.58.19 1.11.16 1.53.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.11-.22-.17-.47-.29Z"/></svg>
+            WhatsApp · 313 246 5100
+          </a>
+          <a href="https://cal.com/salomonmuriel" target="_blank" rel="noopener"
+             class="inline-flex items-center justify-center gap-3 border-2 border-hoja2 px-7 min-h-[60px] font-display font-bold text-[1.05rem] hover:bg-hoja2 hover:text-sello transition-colors">
+            Agendar 30 minutos
+          </a>
+        </div>
+
+        <div class="mt-6 flex flex-wrap gap-x-7 gap-y-2 maquina text-[12px] tracking-[.06em]">
+          <a href="https://www.linkedin.com/in/smuriel/" target="_blank" rel="noopener" class="underline underline-offset-4 decoration-hoja2/50 hover:decoration-hoja2 min-h-[44px] inline-flex items-center">LinkedIn / smuriel</a>
+          <a href="mailto:salomon.muriel@gmail.com" class="underline underline-offset-4 decoration-hoja2/50 hover:decoration-hoja2 min-h-[44px] inline-flex items-center">salomon.muriel@gmail.com</a>
+        </div>
+      </div>
+
+      <!-- foto -->
+      <div class="relative max-w-[420px] lg:max-w-none lg:justify-self-end lg:w-full">
+        <div class="cinta -top-3 left-10 -rotate-3" style="background:rgba(243,238,225,.4)"></div>
+        <div class="bg-hoja2/[.08] border border-hoja2/35 p-3 pb-4 rotate-[.8deg]">
+          <img src="assets/marathon.jpg" alt="Salomón mostrando la medalla al terminar la media maratón de Bogotá" class="w-full impresa" loading="lazy">
+          <p class="maquina text-[11px] text-hoja2 mt-3 leading-snug">Dorsal 15154 · media maratón, 2:10.<br>No es rápido. Es terminado.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- anexos: notas al margen -->
+    <div class="rv mt-14 sm:mt-16 border-t-2 border-hoja2/35 pt-8">
+      <p class="maquina text-[11px] tracking-[.2em] uppercase text-hoja2 mb-7">Anexos · notas al margen del expediente</p>
+      <ul class="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-8">
+        <li class="mano text-[1.55rem] leading-[1.15] text-hoja2 -rotate-1 border-l-2 border-hoja2/30 pl-4">Mellizos de 4 años: Franco y Luca. Por eso las reuniones son de 30 minutos y empiezan a la hora.</li>
+        <li class="mano text-[1.55rem] leading-[1.15] text-hoja2 rotate-[.6deg] border-l-2 border-hoja2/30 pl-4">Aprendí inglés jugando videojuegos en línea. Nadie me lo enseñó formalmente.</li>
+        <li class="mano text-[1.55rem] leading-[1.15] text-hoja2 -rotate-[.8deg] border-l-2 border-hoja2/30 pl-4">Celebro el cumpleaños en una fecha distinta a la real, a propósito. Es una larga historia.</li>
+        <li class="mano text-[1.55rem] leading-[1.15] text-hoja2 rotate-[.4deg] border-l-2 border-hoja2/30 pl-4">Impresora 3D y rack de herramientas en la casa. Me gusta que las cosas queden armadas.</li>
+        <li class="mano text-[1.55rem] leading-[1.15] text-hoja2 -rotate-[.5deg] border-l-2 border-hoja2/30 pl-4">Publico un medidor de felicidad. Si va a trabajar conmigo, va a saber cómo ando.</li>
+        <li class="mano text-[1.55rem] leading-[1.15] text-hoja2 rotate-1 border-l-2 border-hoja2/30 pl-4">Bogotá, 35 años, quinta empresa. Las cuatro anteriores están en el folio 04, con nombre propio.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer class="bg-tinta text-hoja2/70 border-t-2 border-tinta">
+  <div class="mx-auto max-w-[1280px] px-4 sm:px-6 py-9 flex flex-wrap gap-x-10 gap-y-4 items-baseline justify-between maquina text-[11.5px] leading-relaxed">
+    <p>Salomón Muriel · Bogotá, Colombia · Práctica personal, independiente de Ignia.</p>
+    <p class="text-hoja2/70">Acá no hay blog. <a href="https://www.linkedin.com/in/smuriel/" target="_blank" rel="noopener" class="underline underline-offset-2 hover:text-marca">LinkedIn es mi blog</a>.</p>
+    <p class="text-hoja2/60">Expediente 001 · cerrado cuando usted escriba.</p>
+  </div>
+</footer>
+
+</main>
+
+<!-- barra fija móvil -->
+<div class="lg:hidden fixed bottom-0 inset-x-0 z-50 bg-hoja border-t-2 border-tinta px-3 py-2.5 flex gap-2" style="padding-bottom:max(.625rem,env(safe-area-inset-bottom))">
+  <a href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n.%20Mi%20empresa%20se%20dedica%20a%3A%20"
+     target="_blank" rel="noopener"
+     class="flex-1 inline-flex items-center justify-center gap-2 bg-sello text-hoja2 min-h-[50px] font-display font-bold text-[.98rem]">
+    Escribirle por WhatsApp
+  </a>
+  <a href="#diagnostico" class="shrink-0 inline-flex items-center justify-center px-4 min-h-[50px] border-2 border-tinta maquina text-[11px] tracking-[.1em] uppercase">Test</a>
+</div>
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- progreso ---- */
+  var barra = document.getElementById('progreso');
+  function progreso(){
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    var p = h > 0 ? Math.min(1, window.scrollY / h) : 0;
+    barra.style.transform = 'scaleX(' + p + ')';
+  }
+  window.addEventListener('scroll', progreso, {passive:true});
+  window.addEventListener('resize', progreso);
+  progreso();
+
+  /* ---- reveal ---- */
+  var items = document.querySelectorAll('.rv');
+  if (reduce || !('IntersectionObserver' in window)) {
+    items.forEach(function(el){ el.classList.add('on'); });
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); }
+      });
+    }, {rootMargin:'0px 0px -8% 0px', threshold:0.08});
+    items.forEach(function(el){ io.observe(el); });
+  }
+
+  /* ---- revelado ---- */
+  var rev = document.getElementById('revelado');
+  var input = document.getElementById('rev-input');
+  var mango = rev ? rev.querySelector('.rev-mango') : null;
+  var capa = document.getElementById('capa-creencia');
+  function pintarRev(v){
+    rev.style.setProperty('--x', v + '%');
+    capa.style.clipPath = 'inset(0 calc(100% - ' + v + '%) 0 0)';
+    mango.style.left = v + '%';
+  }
+  if (rev && input){
+    input.addEventListener('input', function(){ pintarRev(this.value); });
+    pintarRev(input.value);
+  }
+
+  /* ---- cronómetro ---- */
+  var reloj = document.getElementById('reloj');
+  if (reloj){
+    var t0 = Date.now();
+    setInterval(function(){
+      var s = Math.floor((Date.now() - t0)/1000);
+      var m = Math.floor(s/60);
+      reloj.textContent = String(m).padStart(2,'0') + ':' + String(s%60).padStart(2,'0');
+    }, 1000);
+  }
+
+  /* ---- diagnóstico ---- */
+  var cajas = Array.prototype.slice.call(document.querySelectorAll('.dx'));
+  var num   = document.getElementById('dx-num');
+  var bar   = document.getElementById('dx-barra');
+  var tit   = document.getElementById('dx-titulo');
+  var txt   = document.getElementById('dx-texto');
+  var cta   = document.getElementById('dx-cta');
+
+  var veredictos = [
+    { t:'Sin marcar todavía.', d:'Marque las casillas de la izquierda y acá le digo qué veo.' },
+    { t:'Una señal. Vale la pena mirarla.', d:'Con una sola ya hay por dónde empezar, y suele ser lo más barato de arreglar.' },
+    { t:'Dos señales. Todavía se arregla fácil.', d:'A este nivel casi siempre es cuestión de conectar dos cosas que ya existen, no de comprar nada.' },
+    { t:'Chinomático promedio.', d:'Su empresa funciona porque su gente la empuja. Eso aguanta hasta cierto tamaño y usted ya llegó a ese tamaño.' },
+    { t:'Chinomático avanzado.', d:'Buena parte del día de su equipo se va en mover datos de un lado a otro. Ahí hay tiempo y plata escondidos.' },
+    { t:'Chinomático severo.', d:'Cinco de seis. El negocio depende de que nadie se enferme ni renuncie el mismo mes. Se puede arreglar, pero hay que empezar ya.' },
+    { t:'Chinomático puro. Seis de seis.', d:'No es un regaño: es el punto de partida más común que me encuentro. Y también el que más rápido cambia.' }
+  ];
+
+  function pintarDx(){
+    var marcadas = cajas.filter(function(c){ return c.checked; });
+    var n = marcadas.length;
+    num.textContent = n;
+    bar.style.width = Math.round(n/6*100) + '%';
+    bar.className = 'h-full transition-[width] duration-300 ' + (n >= 4 ? 'bg-sello' : n >= 2 ? 'bg-esfero' : 'bg-verde');
+    tit.textContent = veredictos[n].t;
+    txt.textContent = veredictos[n].d;
+
+    var msg;
+    if (n === 0){
+      msg = 'Hola Salomón. Entré a su página y quiero contarle cómo funciona mi empresa hoy.';
+    } else {
+      msg = 'Hola Salomón. Hice el diagnóstico de su página y me dieron ' + n + ' de 6 señales:\n\n'
+          + marcadas.map(function(c,i){ return (i+1) + '. ' + c.dataset.t + '.'; }).join('\n')
+          + '\n\nMi empresa se dedica a: ____. ¿Podemos hablar?';
+    }
+    cta.href = 'https://wa.me/573132465100?text=' + encodeURIComponent(msg);
+  }
+
+  cajas.forEach(function(c){
+    c.addEventListener('change', function(){
+      var marca = c.parentElement.querySelector('.caja');
+      if (c.checked){ marca.classList.remove('text-transparent'); marca.classList.add('text-sello','bg-marca'); }
+      else { marca.classList.add('text-transparent'); marca.classList.remove('text-sello','bg-marca'); }
+      pintarDx();
+    });
+  });
+  pintarDx();
+})();
+</script>
+
+</body>
+</html>

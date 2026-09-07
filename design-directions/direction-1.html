@@ -1,0 +1,1341 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Salomón Muriel · Estrategia y tecnología a la medida</title>
+<meta name="description" content="Armo la estrategia y yo mismo construyo la herramienta. Trabajo con empresas colombianas que ya venden y cuya operación no da abasto.">
+
+<!--
+  DESIGN READ: personal consulting practice landing page for non technical Colombian
+  small business owners, with an audited-record / ledger language, leaning toward
+  native CSS + tabular numerals + a single ink-blue accent block.
+  DIALS: DESIGN_VARIANCE 8 · MOTION_INTENSITY 4 · VISUAL_DENSITY 6
+  THESIS: evidence is the aesthetic. The failures are set at the same size as the exits.
+  Zero icons, zero emoji, zero rounded corners. Restraint as the argument.
+  TODO before launch: replace the wa.me links with Salomón's real WhatsApp number.
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   TOKENS
+   One theme, flipped as a whole. Paper is a cool uncoated grey,
+   never cream. One accent: ultramarine ink. Radius: 0, everywhere.
+   ============================================================ */
+:root{
+  --paper:        #E8E8E3;
+  --paper-2:      #F3F3EF;
+  --paper-3:      #DEDED8;
+  --ink:          #16171A;
+  --ink-soft:     #55575E;
+  --ink-faint:    #5F6167;
+  --accent:       #1A2BC4;
+  --accent-deep:  #101C86;
+  --panel:        #1A2BC4;
+  --panel-ink:    #FFFFFF;
+  --panel-soft:   #C4CAF6;
+  --rule:         rgba(22,23,26,.16);
+  --rule-strong:  rgba(22,23,26,.42);
+  --chip:         #F6F6F2;
+  --shadow:       0 1px 0 rgba(22,23,26,.10);
+  --maxw:         1320px;
+  --gut:          clamp(20px, 4.4vw, 64px);
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --paper:       #121316;
+    --paper-2:     #191A1E;
+    --paper-3:     #202127;
+    --ink:         #EAEAE4;
+    --ink-soft:    #A3A5AC;
+    --ink-faint:   #8A8C94;
+    --accent:      #7A93FF;
+    --accent-deep: #9DB0FF;
+    --panel:       #2434DA;
+    --panel-ink:   #FFFFFF;
+    --panel-soft:  #CBD2FB;
+    --rule:        rgba(234,234,228,.17);
+    --rule-strong: rgba(234,234,228,.40);
+    --chip:        #F6F6F2;
+    --shadow:      0 1px 0 rgba(0,0,0,.5);
+  }
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion: no-preference){ html{scroll-behavior:smooth} }
+
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"Archivo","Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-variation-settings:'wdth' 100,'wght' 400;
+  font-size:17px;
+  line-height:1.62;
+  letter-spacing:-0.006em;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:clip;
+}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit}
+h1,h2,h3,h4,p,ul,ol,figure,blockquote{margin:0}
+ul,ol{padding:0;list-style:none}
+[hidden]{display:none !important}
+/* Archivo is variable: font-weight alone is ignored once variation settings inherit. */
+b,strong{font-variation-settings:'wdth' 100,'wght' 650;font-weight:400}
+[id]{scroll-margin-top:88px}
+
+::selection{background:var(--accent);color:#fff}
+
+/* ---------- shared type instruments ---------- */
+.wrap{max-width:var(--maxw);margin:0 auto;padding-left:var(--gut);padding-right:var(--gut)}
+
+.meta{
+  font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:12px;
+  letter-spacing:.05em;
+  color:var(--ink-soft);
+  font-variant-numeric:tabular-nums;
+}
+
+.h-xl{
+  font-variation-settings:'wdth' 92,'wght' 600;
+  font-size:clamp(2.05rem,3.4vw,3.05rem);
+  line-height:1.06;
+  letter-spacing:-0.032em;
+  text-wrap:balance;
+}
+.h-lg{
+  font-variation-settings:'wdth' 92,'wght' 600;
+  font-size:clamp(1.72rem,2.9vw,2.45rem);
+  line-height:1.1;
+  letter-spacing:-0.028em;
+  text-wrap:balance;
+}
+.h-md{
+  font-variation-settings:'wdth' 95,'wght' 600;
+  font-size:clamp(1.22rem,1.7vw,1.42rem);
+  line-height:1.24;
+  letter-spacing:-0.02em;
+}
+.lede{
+  font-size:clamp(1.06rem,1.35vw,1.24rem);
+  line-height:1.55;
+  color:var(--ink-soft);
+  max-width:62ch;
+}
+.body-w{max-width:64ch}
+.dim{color:var(--ink-soft)}
+
+/* the numeral instrument: every figure on this page is set this way */
+.figure{
+  font-variation-settings:'wdth' 96,'wght' 700;
+  font-variant-numeric:tabular-nums lining-nums;
+  letter-spacing:-0.045em;
+  line-height:.86;
+  display:block;
+}
+/* the outcome instrument: condensed, uppercase, always the same size,
+   whether it says VENDIDA or QUEBRÓ. That equality is the whole point. */
+.outcome{
+  font-variation-settings:'wdth' 63,'wght' 700;
+  text-transform:uppercase;
+  letter-spacing:.012em;
+  line-height:.94;
+  color:var(--accent);
+  font-size:clamp(1.9rem,3.5vw,2.9rem);
+}
+
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-block;
+  font-variation-settings:'wdth' 96,'wght' 600;
+  font-size:1rem;
+  letter-spacing:-0.01em;
+  padding:16px 26px;
+  border:1px solid var(--accent);
+  background:var(--accent);
+  color:#fff;
+  text-decoration:none;
+  white-space:nowrap;
+  transition:background .18s ease, transform .12s ease, border-color .18s ease;
+  cursor:pointer;
+  font-family:inherit;
+}
+.btn:hover{background:var(--accent-deep);border-color:var(--accent-deep)}
+.btn:active{transform:translateY(1px)}
+.btn:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+@media (prefers-color-scheme: dark){
+  .btn{background:var(--accent);border-color:var(--accent);color:#0B0C10}
+  .btn:hover{background:var(--accent-deep);border-color:var(--accent-deep)}
+}
+
+.btn-ghost{
+  display:inline-block;
+  font-variation-settings:'wdth' 96,'wght' 600;
+  font-size:.98rem;
+  padding:14px 22px;
+  border:1px solid var(--rule-strong);
+  background:transparent;
+  color:var(--ink);
+  text-decoration:none;
+  white-space:nowrap;
+  transition:border-color .18s ease, background .18s ease, transform .12s ease;
+}
+.btn-ghost:hover{border-color:var(--ink);background:var(--paper-2)}
+.btn-ghost:active{transform:translateY(1px)}
+.btn-ghost:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+/* Sits on the ultramarine panel in both themes, so its colours are literal, not tokens. */
+.btn-on-panel{
+  background:#FFFFFF;border-color:#FFFFFF;color:#101C86;
+}
+.btn-on-panel:hover{background:#DDE1FA;border-color:#DDE1FA;color:#101C86}
+.btn-on-panel:focus-visible{outline:2px solid #FFFFFF;outline-offset:3px}
+
+.tlink{
+  color:var(--accent);
+  text-decoration:none;
+  border-bottom:1px solid currentColor;
+  padding-bottom:1px;
+  transition:opacity .16s ease;
+}
+.tlink:hover{opacity:.62}
+.tlink:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+#top-sentinel{position:absolute;top:0;height:1px;width:100%}
+.nav{
+  position:sticky;top:0;z-index:40;
+  background:var(--paper);
+  border-bottom:1px solid transparent;
+  transition:border-color .2s ease;
+}
+.nav.stuck{border-bottom-color:var(--rule)}
+.nav-in{
+  max-width:var(--maxw);margin:0 auto;
+  padding:0 var(--gut);
+  height:68px;
+  display:flex;align-items:center;gap:28px;
+}
+.wordmark{
+  font-variation-settings:'wdth' 74,'wght' 700;
+  text-transform:uppercase;
+  letter-spacing:.07em;
+  font-size:.95rem;
+  text-decoration:none;
+  white-space:nowrap;
+}
+.nav-links{display:flex;gap:22px;margin-left:auto;align-items:center}
+.nav-links a{
+  text-decoration:none;font-size:.88rem;color:var(--ink-soft);
+  letter-spacing:-0.004em;
+  transition:color .16s ease;white-space:nowrap;
+}
+.nav-links a:hover{color:var(--ink)}
+.nav-links a:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+.nav-cta{
+  padding:10px 16px;font-size:.86rem;
+  font-variation-settings:'wdth' 96,'wght' 600;
+}
+/* .nav-links a wins on specificity over .btn, so the CTA restates its own colour. */
+.nav-links a.nav-cta,.nav-links a.nav-cta:hover{color:#fff}
+@media (prefers-color-scheme: dark){
+  .nav-links a.nav-cta,.nav-links a.nav-cta:hover{color:#0B0C10}
+}
+/* The nav never wraps. It sheds items instead, in reverse order of commercial weight. */
+@media (max-width:1080px){ .nav-links a.nav-cta{display:none} }
+@media (max-width:820px){
+  .nav-in{height:60px;gap:18px}
+  .nav-links{gap:18px}
+  .nav-links a{font-size:.85rem}
+  .nav-links a[data-drop="3"]{display:none}
+}
+@media (max-width:600px){
+  .nav-links a[data-drop="2"]{display:none}
+  .nav-links{gap:16px}
+}
+@media (max-width:400px){
+  .nav-links a[data-drop="1"]{display:none}
+}
+
+/* ============================================================
+   1. HERO  (asymmetric split, portrait right)
+   ============================================================ */
+.hero{padding:clamp(34px,4.6vw,64px) 0 clamp(40px,4.4vw,66px)}
+.hero-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1.42fr) minmax(0,1fr);
+  gap:clamp(28px,5vw,72px);
+  align-items:center;
+}
+.hero h1{max-width:29ch}
+.hero .lede{margin-top:24px;max-width:46ch}
+.hero .cta-row{margin-top:34px}
+.hero-portrait{
+  position:relative;
+  aspect-ratio:4/5;
+  max-height:min(540px,58vh);
+  overflow:hidden;
+  background:#0d0f12;
+}
+/* Slight overscan crops the source photo's darker outer edge. */
+.hero-portrait img{width:100%;height:100%;object-fit:cover;object-position:50% 22%;transform:scale(1.05)}
+@media (max-width:900px){
+  .hero{padding-top:28px}
+  .hero-grid{grid-template-columns:1fr;gap:28px}
+  .hero-portrait{aspect-ratio:5/4;max-height:none;order:-1}
+  .hero-portrait img{object-position:50% 18%}
+}
+
+/* ============================================================
+   2. QUALIFY BAND (one sentence, offset right)
+   ============================================================ */
+.qualify{border-top:1px solid var(--rule);padding:clamp(26px,3vw,38px) 0}
+.qualify-in{
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2.1fr);
+  gap:clamp(16px,4vw,56px);align-items:start;
+}
+.qualify p{font-size:clamp(1rem,1.18vw,1.11rem);line-height:1.5;max-width:70ch}
+@media (max-width:820px){ .qualify-in{grid-template-columns:1fr;gap:12px} }
+
+/* ============================================================
+   3. PROOF BAR (5 figures, uneven columns)
+   ============================================================ */
+.proof{border-top:1px solid var(--rule-strong);padding:clamp(46px,6vw,86px) 0 clamp(40px,5vw,70px)}
+.proof h2{max-width:33ch}
+.proof-grid{
+  margin-top:clamp(36px,4.6vw,62px);
+  display:grid;
+  grid-template-columns:0.92fr 1.12fr 1.12fr 1.5fr 1.24fr;
+  gap:clamp(18px,2.4vw,34px);
+  align-items:start;
+}
+.pf{border-top:1px solid var(--rule);padding-top:16px}
+.pf .figure{font-size:clamp(2.5rem,5.4vw,4.4rem)}
+.pf .pf-l{margin-top:12px;font-size:.9rem;line-height:1.34;color:var(--ink-soft);max-width:20ch}
+@media (max-width:1000px){
+  .proof-grid{grid-template-columns:1fr 1fr;gap:26px 22px}
+  .pf:nth-child(5){grid-column:1 / -1}
+  .pf .figure{font-size:clamp(2.6rem,10vw,3.5rem)}
+}
+
+/* ============================================================
+   4. DOLOR (large-type list)
+   ============================================================ */
+.pain{border-top:1px solid var(--rule-strong);padding:clamp(52px,6.5vw,96px) 0}
+.pain-list{margin-top:clamp(30px,4vw,54px)}
+.pain-list li{
+  border-top:1px solid var(--rule);
+  padding:clamp(20px,2.4vw,30px) 0;
+  font-variation-settings:'wdth' 94,'wght' 500;
+  font-size:clamp(1.24rem,2.35vw,1.92rem);
+  line-height:1.22;
+  letter-spacing:-0.024em;
+  max-width:26ch;
+}
+.pain-list li:nth-child(2){margin-left:clamp(0px,7vw,120px);max-width:24ch}
+.pain-list li:nth-child(3){margin-left:clamp(0px,14vw,240px);max-width:27ch}
+.pain-foot{margin-top:clamp(28px,3.4vw,44px);color:var(--ink-soft);max-width:52ch}
+@media (max-width:760px){
+  .pain-list li:nth-child(2),.pain-list li:nth-child(3){margin-left:0;max-width:none}
+}
+
+/* ============================================================
+   5. BIFURCACIÓN (two unequal doors, one colour block)
+   ============================================================ */
+.fork{border-top:1px solid var(--rule-strong);padding:clamp(52px,6.5vw,96px) 0 clamp(52px,6.5vw,90px)}
+.fork-grid{
+  margin-top:clamp(30px,4vw,52px);
+  display:grid;
+  grid-template-columns:minmax(0,1.85fr) minmax(0,1fr);
+  gap:clamp(22px,3vw,44px);
+  align-items:stretch;
+}
+.door-a{
+  background:var(--panel);color:var(--panel-ink);
+  padding:clamp(30px,4vw,58px);
+  display:flex;flex-direction:column;
+}
+.door-a .door-h{
+  font-variation-settings:'wdth' 88,'wght' 600;
+  font-size:clamp(1.65rem,3.35vw,2.72rem);
+  line-height:1.08;letter-spacing:-0.03em;
+  max-width:19ch;
+}
+.door-a p{margin-top:22px;color:var(--panel-soft);max-width:48ch;font-size:1.02rem}
+.door-a .door-tag{
+  margin-top:auto;padding-top:34px;
+  display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;
+}
+.door-label{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;
+}
+.door-a .door-label{color:var(--panel-soft)}
+
+/* Deliberately hugs its content so it reads smaller than the consulting panel. */
+.door-b{
+  border:1px solid var(--rule-strong);
+  padding:clamp(26px,3vw,38px);
+  display:flex;flex-direction:column;
+  background:var(--paper-2);
+  align-self:start;
+}
+.door-b .door-h{
+  font-variation-settings:'wdth' 92,'wght' 600;
+  font-size:clamp(1.24rem,1.85vw,1.56rem);
+  line-height:1.16;letter-spacing:-0.022em;max-width:20ch;
+}
+.door-b p{margin-top:16px;color:var(--ink-soft);font-size:.97rem;max-width:38ch}
+.door-b .door-tag{margin-top:auto;padding-top:28px}
+.door-b .door-label{color:var(--ink-faint);display:block;margin-bottom:16px}
+@media (max-width:880px){ .fork-grid{grid-template-columns:1fr} }
+
+/* ============================================================
+   6. MÉTODO (proportional timeline band: column width = duration)
+   ============================================================ */
+.method{border-top:1px solid var(--rule-strong);padding:clamp(52px,6.5vw,96px) 0}
+.method-band{
+  margin-top:clamp(32px,4vw,56px);
+  display:grid;
+  /* Column width encodes duration: one week, three weeks, twelve weeks. */
+  grid-template-columns:1.3fr 2.05fr 3.2fr;
+  gap:clamp(18px,2.6vw,40px);
+}
+.step{border-top:2px solid var(--ink);padding-top:16px}
+.step .meta{display:block;margin-bottom:14px}
+.step h3{
+  font-variation-settings:'wdth' 92,'wght' 600;
+  font-size:clamp(1.12rem,1.55vw,1.34rem);
+  line-height:1.18;letter-spacing:-0.02em;margin-bottom:12px;
+}
+.step p{color:var(--ink-soft);font-size:.98rem;line-height:1.55}
+.step-bar{display:none}
+.method-foot{
+  margin-top:clamp(34px,4vw,56px);
+  padding-top:clamp(24px,2.6vw,34px);
+  border-top:1px solid var(--rule);
+  display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);
+  gap:clamp(20px,3vw,46px);align-items:center;
+}
+.method-foot p{font-size:clamp(1.02rem,1.3vw,1.16rem);max-width:56ch}
+.method-foot .cta-row{justify-self:end}
+@media (max-width:900px){
+  .method-band{grid-template-columns:1fr;gap:30px}
+  .step{border-top:none;padding-top:0}
+  .step-bar{display:block;height:3px;background:var(--ink);margin-bottom:14px}
+  .method-foot{grid-template-columns:1fr;gap:24px}
+  .method-foot .cta-row{justify-self:start}
+}
+
+/* ============================================================
+   7. CONSTRUÍ (photo + numbered artefact list)
+   ============================================================ */
+.built{border-top:1px solid var(--rule-strong);padding:clamp(52px,6.5vw,96px) 0}
+.built-grid{
+  margin-top:clamp(32px,4vw,54px);
+  display:grid;grid-template-columns:minmax(0,0.92fr) minmax(0,1.25fr);
+  gap:clamp(28px,4.4vw,68px);align-items:start;
+}
+.built-fig figcaption{
+  margin-top:14px;font-size:.88rem;color:var(--ink-soft);max-width:38ch;line-height:1.45;
+}
+.built-fig img{width:100%;background:var(--paper-3)}
+.artefacts li{
+  display:grid;grid-template-columns:auto 1fr;gap:0 22px;
+  border-top:1px solid var(--rule);padding:20px 0;
+}
+.artefacts li:first-child{border-top:none;padding-top:0}
+.art-n{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:12px;color:var(--ink-faint);padding-top:5px;font-variant-numeric:tabular-nums;
+}
+.art-t{
+  font-variation-settings:'wdth' 94,'wght' 600;
+  font-size:1.08rem;letter-spacing:-0.018em;line-height:1.22;
+}
+.art-t span{color:var(--accent)}
+.art-d{grid-column:2;color:var(--ink-soft);font-size:.95rem;margin-top:6px;max-width:46ch}
+.built-foot{margin-top:clamp(30px,3.4vw,44px);max-width:62ch;font-size:1.02rem}
+@media (max-width:880px){ .built-grid{grid-template-columns:1fr;gap:34px} }
+
+/* ============================================================
+   8. EL HISTORIAL (the ledger. the centrepiece.)
+   ============================================================ */
+.record{border-top:1px solid var(--rule-strong);padding:clamp(52px,6.5vw,96px) 0}
+.record-head p{margin-top:18px;color:var(--ink-soft);max-width:60ch;font-size:1.04rem}
+.ledger{margin-top:clamp(34px,4vw,58px);border-top:2px solid var(--ink)}
+.row{
+  display:grid;
+  grid-template-columns:104px 52px minmax(0,1.5fr) minmax(0,1.15fr);
+  gap:0 clamp(16px,2vw,34px);
+  padding:clamp(24px,2.9vw,40px) 0;
+  border-bottom:1px solid var(--rule);
+  align-items:start;
+}
+.row:last-child{border-bottom:1px solid var(--rule-strong)}
+.row-year{padding-top:6px}
+.chip{
+  width:46px;height:46px;background:var(--chip);
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid rgba(22,23,26,.10);
+}
+.chip img{width:34px;height:34px;object-fit:contain}
+.chip .chip-txt{
+  font-variation-settings:'wdth' 74,'wght' 700;
+  font-size:1rem;color:#16171A;letter-spacing:.02em;
+}
+.row-name{
+  font-variation-settings:'wdth' 78,'wght' 700;
+  text-transform:uppercase;letter-spacing:.02em;
+  font-size:clamp(1.42rem,2.5vw,2.05rem);line-height:.98;
+}
+.row-desc{margin-top:12px;color:var(--ink-soft);font-size:.97rem;max-width:40ch;line-height:1.5}
+.row-out{text-align:right}
+.row-note{
+  margin-top:12px;font-size:.92rem;color:var(--ink-soft);
+  max-width:34ch;margin-left:auto;line-height:1.5;
+}
+.row-note b{font-variation-settings:'wdth' 96,'wght' 600;color:var(--ink);font-weight:400}
+.record-foot{margin-top:clamp(28px,3.2vw,42px);max-width:58ch;font-size:1.04rem}
+@media (max-width:900px){
+  .row{
+    grid-template-columns:46px minmax(0,1fr);
+    grid-template-rows:auto auto auto;
+    gap:0 18px;row-gap:12px;padding:26px 0;
+  }
+  .row-year{grid-column:2;grid-row:1;padding-top:0}
+  .chip{grid-column:1;grid-row:1 / span 2;align-self:start}
+  .row-body{grid-column:2;grid-row:2}
+  .row-out{grid-column:2;grid-row:3;text-align:left;margin-top:10px}
+  .row-note{margin-left:0;max-width:46ch}
+  .outcome{font-size:clamp(1.7rem,8vw,2.3rem)}
+}
+
+/* ============================================================
+   9. MENTORÍA (method + example task list + redirect + form)
+   ============================================================ */
+.mentor{border-top:1px solid var(--rule-strong);padding:clamp(52px,6.5vw,96px) 0;background:var(--paper-2)}
+.mentor-top{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:clamp(28px,4.4vw,64px);align-items:start}
+.mentor h2{max-width:20ch}
+.mentor-top p{margin-top:22px;max-width:50ch;color:var(--ink-soft)}
+.rulebox{border-left:2px solid var(--accent);padding:2px 0 2px 22px}
+.rulebox p{margin:0;color:var(--ink);font-size:1.02rem;max-width:44ch}
+.tasklist{margin-top:26px}
+.tasklist .meta{display:block;margin-bottom:14px}
+.tasklist li{
+  display:grid;grid-template-columns:auto 1fr;gap:14px;
+  padding:11px 0;border-top:1px solid var(--rule);
+  font-size:.98rem;line-height:1.45;
+}
+.tasklist li span{color:var(--accent);font-variation-settings:'wdth' 96,'wght' 700}
+.redirect{
+  margin-top:clamp(38px,4.6vw,64px);
+  border:1px solid var(--rule-strong);
+  padding:clamp(22px,2.8vw,34px);
+  display:grid;grid-template-columns:minmax(0,1fr) auto;gap:22px;align-items:center;
+}
+.redirect p{max-width:70ch;font-size:1rem}
+@media (max-width:900px){
+  .mentor-top{grid-template-columns:1fr;gap:34px}
+  .redirect{grid-template-columns:1fr}
+}
+
+/* form */
+.apply{margin-top:clamp(34px,4vw,52px)}
+.apply-head{margin-bottom:28px}
+.apply-head p{margin-top:12px;color:var(--ink-soft);font-size:.98rem;max-width:58ch}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.field{display:flex;flex-direction:column;gap:8px}
+.field.span2{grid-column:1 / -1}
+.field label{
+  font-variation-settings:'wdth' 96,'wght' 600;
+  font-size:.94rem;letter-spacing:-0.01em;
+}
+.field .hint{font-size:.83rem;color:var(--ink-soft);margin-top:-3px}
+.field input,.field select,.field textarea{
+  font-family:inherit;font-size:.98rem;color:var(--ink);
+  background:var(--paper);
+  border:1px solid var(--rule-strong);
+  padding:13px 14px;
+  border-radius:0;
+  width:100%;
+  transition:border-color .16s ease;
+}
+.field textarea{min-height:88px;resize:vertical;line-height:1.5}
+.field input::placeholder,.field textarea::placeholder{color:var(--ink-faint);opacity:1}
+.field input:focus,.field select:focus,.field textarea:focus{
+  outline:2px solid var(--accent);outline-offset:1px;border-color:var(--accent);
+}
+/* Native select chrome is rounded on macOS, which breaks the radius-0 lock. */
+.selbox{position:relative;display:block}
+.selbox select{appearance:none;-webkit-appearance:none;padding-right:40px}
+.selbox::after{
+  content:"\25BE";position:absolute;right:15px;top:50%;transform:translateY(-52%);
+  color:var(--ink-soft);pointer-events:none;font-size:.9rem;line-height:1;
+}
+.field.err input,.field.err select,.field.err textarea{border-color:#B3261E}
+@media (prefers-color-scheme: dark){ .field.err input,.field.err select,.field.err textarea{border-color:#FF8A80} }
+.err-msg{font-size:.83rem;color:#B3261E;display:none}
+@media (prefers-color-scheme: dark){ .err-msg{color:#FF8A80} }
+.field.err .err-msg{display:block}
+.form-foot{margin-top:26px;display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+.form-foot .meta{max-width:36ch;line-height:1.45}
+.sent{
+  border-left:2px solid var(--accent);padding:4px 0 4px 22px;
+}
+.sent h3{font-variation-settings:'wdth' 92,'wght' 600;font-size:1.35rem;letter-spacing:-0.02em}
+.sent p{margin-top:10px;color:var(--ink-soft);max-width:46ch}
+@media (max-width:760px){ .form-grid{grid-template-columns:1fr} }
+
+/* ============================================================
+   10. CUPOS + IGNIA
+   ============================================================ */
+.slots{border-top:1px solid var(--rule-strong);padding:clamp(52px,6.5vw,90px) 0}
+.slots-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:clamp(28px,4.4vw,68px);align-items:center}
+.slots p{margin-top:20px;max-width:54ch;color:var(--ink-soft)}
+.slots .meta{display:block;margin-top:22px}
+.counts{display:grid;grid-template-columns:1fr 1fr;gap:clamp(18px,2.6vw,34px)}
+.count{border-top:2px solid var(--ink);padding-top:14px}
+.count .figure{font-size:clamp(2.6rem,5.6vw,4rem)}
+.count .c-l{margin-top:10px;font-size:.9rem;color:var(--ink-soft);line-height:1.35}
+@media (max-width:880px){ .slots-grid{grid-template-columns:1fr;gap:34px} }
+
+/* ============================================================
+   11. TESTIMONIOS (the honest zero)
+   ============================================================ */
+.tstm{border-top:1px solid var(--rule-strong);padding:clamp(52px,6.5vw,92px) 0}
+.tstm-grid{display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(24px,4vw,58px);align-items:start}
+.tstm .figure{font-size:clamp(6rem,15vw,13rem);color:var(--accent);margin-top:-.06em}
+.tstm-fig .meta{margin-top:14px;max-width:14ch}
+.tstm h2{margin-bottom:20px;max-width:16ch}
+.tstm p{max-width:50ch;color:var(--ink-soft);font-size:1.04rem}
+@media (max-width:760px){ .tstm-grid{grid-template-columns:1fr;gap:14px} }
+
+/* ============================================================
+   12. SOBRE MÍ + AHORA + CHARLAS
+   ============================================================ */
+.about{border-top:1px solid var(--rule-strong);padding:clamp(52px,6.5vw,96px) 0}
+.photoband{
+  display:grid;
+  grid-template-columns:0.86fr 1.18fr 1.18fr;
+  gap:clamp(10px,1.4vw,18px);
+  align-items:end;
+  margin-bottom:clamp(34px,4vw,54px);
+}
+.photoband img{width:100%;object-fit:cover;background:var(--paper-3)}
+.photoband .p1{aspect-ratio:3/4}
+.photoband .p2{aspect-ratio:1/1}
+.photoband .p3{aspect-ratio:4/3}
+.about-grid{display:grid;grid-template-columns:minmax(0,1.42fr) minmax(0,1fr);gap:clamp(28px,4.4vw,68px);align-items:start}
+.about-grid h2{margin-bottom:22px}
+.about-grid .body-w p + p{margin-top:16px}
+.now{border-top:2px solid var(--ink);padding-top:16px}
+.now .meta{display:block;margin-bottom:14px}
+.now p{color:var(--ink-soft);font-size:.97rem}
+.talks{
+  margin-top:clamp(42px,5vw,72px);
+  border-top:1px solid var(--rule);
+  padding-top:clamp(24px,2.8vw,36px);
+  display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);
+  gap:clamp(20px,3vw,48px);align-items:start;
+}
+.talks .venues{
+  font-variation-settings:'wdth' 92,'wght' 500;
+  font-size:clamp(1.06rem,1.55vw,1.3rem);
+  line-height:1.36;letter-spacing:-0.018em;max-width:44ch;
+}
+/* Venue names are emphasis, not links: weight, not the accent colour. */
+.talks .venues em{font-style:normal;font-variation-settings:'wdth' 90,'wght' 700;color:var(--ink)}
+.talks .talks-note{color:var(--ink-soft);font-size:.95rem;max-width:42ch}
+.talks .talks-links{margin-top:16px;display:flex;flex-direction:column;gap:9px;align-items:flex-start;font-size:.95rem}
+@media (max-width:820px){
+  .photoband{grid-template-columns:1fr 1fr;gap:10px}
+  .photoband .p3{grid-column:1 / -1;aspect-ratio:16/9}
+  .about-grid,.talks{grid-template-columns:1fr;gap:32px}
+}
+
+/* ============================================================
+   13. FAQ (two-column Q/A, no boxes)
+   ============================================================ */
+.faq{border-top:1px solid var(--rule-strong);padding:clamp(52px,6.5vw,96px) 0}
+.faq-grid{
+  margin-top:clamp(32px,4vw,54px);
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:clamp(28px,3.4vw,50px) clamp(32px,5vw,86px);
+}
+.qa h3{
+  font-variation-settings:'wdth' 92,'wght' 600;
+  font-size:clamp(1.06rem,1.42vw,1.22rem);
+  line-height:1.24;letter-spacing:-0.02em;margin-bottom:11px;
+  color:var(--ink);
+}
+.qa p{color:var(--ink-soft);font-size:.98rem;max-width:44ch}
+@media (max-width:820px){ .faq-grid{grid-template-columns:1fr} }
+
+/* ============================================================
+   14. CIERRE
+   ============================================================ */
+.close{border-top:1px solid var(--rule-strong);padding:clamp(56px,7vw,110px) 0 clamp(56px,7vw,100px)}
+.close h2{
+  font-variation-settings:'wdth' 90,'wght' 600;
+  font-size:clamp(1.72rem,3.5vw,3rem);
+  line-height:1.08;letter-spacing:-0.032em;max-width:20ch;
+}
+.close p{margin-top:22px;color:var(--ink-soft);max-width:46ch;font-size:1.06rem}
+.close .cta-row{margin-top:34px}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.foot{border-top:1px solid var(--rule-strong);padding:clamp(34px,4vw,52px) 0 clamp(38px,4vw,56px)}
+.foot-grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) auto;gap:clamp(24px,4vw,56px);align-items:start}
+.foot .wordmark{font-size:1.05rem}
+.foot-note{margin-top:12px;color:var(--ink-soft);font-size:.92rem;max-width:34ch}
+.foot-links{display:flex;flex-direction:column;gap:10px;font-size:.95rem;align-items:flex-start}
+.foot-lang{display:flex;gap:12px;align-items:center;font-size:.92rem}
+.foot-lang span{font-variation-settings:'wdth' 96,'wght' 600}
+.foot-lang a{color:var(--ink-soft);text-decoration:none;border-bottom:1px solid transparent}
+.foot-lang a:hover{color:var(--ink);border-bottom-color:var(--rule-strong)}
+.foot-bottom{margin-top:clamp(30px,3.6vw,48px);padding-top:18px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}
+@media (max-width:820px){ .foot-grid{grid-template-columns:1fr;gap:28px} }
+
+/* ============================================================
+   MOTION
+   Motivated only: hero opening (hierarchy), ledger rows entering in
+   chronological sequence (storytelling), figures rising (hierarchy).
+   ============================================================ */
+.reveal{opacity:0;transform:translateY(16px)}
+@media (prefers-reduced-motion: no-preference){
+  .reveal{transition:opacity .66s cubic-bezier(.16,1,.3,1), transform .66s cubic-bezier(.16,1,.3,1);transition-delay:var(--d,0ms)}
+}
+.reveal.in{opacity:1;transform:none}
+
+@media (prefers-reduced-motion: no-preference){
+  .rise{opacity:0;transform:translateY(18px);animation:rise .8s cubic-bezier(.16,1,.3,1) forwards;animation-delay:var(--d,0ms)}
+  @keyframes rise{to{opacity:1;transform:none}}
+}
+@media (prefers-reduced-motion: reduce){
+  .reveal{opacity:1;transform:none;transition:none}
+  .rise{opacity:1;transform:none;animation:none}
+  *{animation-duration:.001ms !important;transition-duration:.001ms !important}
+}
+
+.skip{
+  position:absolute;left:-9999px;top:0;background:var(--accent);color:#fff;
+  padding:12px 18px;z-index:100;text-decoration:none;
+}
+.skip:focus{left:var(--gut);top:10px}
+</style>
+</head>
+
+<body>
+<a class="skip" href="#main">Saltar al contenido</a>
+<div id="top-sentinel"></div>
+
+<header class="nav" id="nav">
+  <div class="nav-in">
+    <a class="wordmark" href="#main">Salomón Muriel</a>
+    <nav class="nav-links" aria-label="Principal">
+      <a href="#consultoria">Consultoría</a>
+      <a href="#mentoria">Mentoría</a>
+      <a href="#historial" data-drop="1">Trayectoria</a>
+      <a href="#sobre-mi" data-drop="2">Sobre mí</a>
+      <a href="#charlas" data-drop="3">Charlas</a>
+      <!-- TODO: real WhatsApp number -->
+      <a class="btn nav-cta" href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20tengo%20una%20empresa%20de%20___%20y%20quiero%20contarte%20qu%C3%A9%20tengo%20montado." target="_blank" rel="noopener">Cuéntame qué tienes montado</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ========== 1. HERO ========== -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <h1 class="h-xl rise" style="--d:60ms">Yo armo la estrategia y yo mismo construyo la herramienta.</h1>
+        <p class="lede rise" style="--d:180ms">Defino para dónde va el negocio y construyo la tecnología a la medida. La construyo yo, no la subcontrato.</p>
+        <div class="cta-row rise" style="--d:300ms">
+          <a class="btn" href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20tengo%20una%20empresa%20de%20___%20y%20quiero%20contarte%20qu%C3%A9%20tengo%20montado." target="_blank" rel="noopener">Cuéntame qué tienes montado</a>
+        </div>
+      </div>
+      <div class="hero-portrait rise" style="--d:120ms">
+        <img src="assets/fotoSalo.jpeg" width="800" height="800" alt="Salomón Muriel, de brazos cruzados, con abrigo verde sobre fondo oscuro." fetchpriority="high">
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 2. QUALIFY BAND ========== -->
+  <section class="qualify">
+    <div class="wrap qualify-in">
+      <p class="meta">Con quién trabajo</p>
+      <p>Trabajo sobre todo con empresas que ya facturan pero todavía no llegan a los 5.000 millones al año. Ropa, comida, retail, servicios, consultorías. No tienes que ser una empresa de tecnología: casi ninguno de mis clientes lo es.</p>
+    </div>
+  </section>
+
+  <!-- ========== 3. PROOF BAR ========== -->
+  <section class="proof">
+    <div class="wrap">
+      <h2 class="h-lg reveal">Cinco empresas. Dos vendidas, dos quebradas, una andando.</h2>
+      <div class="proof-grid">
+        <div class="pf reveal" style="--d:0ms">
+          <span class="figure">5</span>
+          <p class="pf-l">Empresas fundadas desde 2016.</p>
+        </div>
+        <div class="pf reveal" style="--d:70ms">
+          <span class="figure">2</span>
+          <p class="pf-l">Vendidas. Finco y PrestaGente.</p>
+        </div>
+        <!-- The two bankruptcies get the same size, weight and colour as the two exits.
+             No red, no grey, no smaller type. That equality is the whole design. -->
+        <div class="pf reveal" style="--d:140ms">
+          <span class="figure">2</span>
+          <p class="pf-l">Quebradas. Beriblock y El Palomo.</p>
+        </div>
+        <div class="pf reveal" style="--d:210ms">
+          <span class="figure">100.000</span>
+          <p class="pf-l">Reportes al año que llegó a servir Finco.</p>
+        </div>
+        <div class="pf reveal" style="--d:280ms">
+          <span class="figure">150K</span>
+          <p class="pf-l">Dólares el primer año de Ignia, rentable desde el día uno.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 4. DOLOR ========== -->
+  <section class="pain">
+    <div class="wrap">
+      <h2 class="h-lg reveal">Esto seguramente te suena.</h2>
+      <ul class="pain-list">
+        <li class="reveal" style="--d:0ms">Compraste un software carísimo que nadie en tu equipo usa.</li>
+        <li class="reveal" style="--d:90ms">Media operación depende de que tú te acuerdes de las cosas.</li>
+        <li class="reveal" style="--d:180ms">Todo el mundo te habla de inteligencia artificial y nadie te dice qué hacer el lunes por la mañana.</li>
+      </ul>
+      <p class="pain-foot reveal">Si nada de esto te suena, es muy posible que yo no sea el que te sirve. Prefiero decírtelo acá que cobrártelo después.</p>
+    </div>
+  </section>
+
+  <!-- ========== 5. BIFURCACIÓN ========== -->
+  <section class="fork">
+    <div class="wrap">
+      <h2 class="h-lg reveal">¿En cuál de estas dos estás hoy?</h2>
+      <div class="fork-grid">
+
+        <article class="door-a reveal" id="consultoria">
+          <h3 class="door-h">Ya tengo un negocio andando y la operación no me da abasto.</h3>
+          <p>Definimos para dónde va el negocio, encuentro el cuello de botella que sí vale la pena atacar primero y construyo la herramienta que lo resuelve. Empezamos por un diagnóstico corto, de dos o tres semanas, y ahí decides si seguimos.</p>
+          <div class="door-tag">
+            <span class="door-label">Consultoría</span>
+            <!-- TODO: real WhatsApp number -->
+            <a class="btn btn-on-panel" href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20tengo%20una%20empresa%20de%20___%20y%20quiero%20contarte%20qu%C3%A9%20tengo%20montado." target="_blank" rel="noopener">Cuéntame qué tienes montado</a>
+          </div>
+        </article>
+
+        <article class="door-b reveal" style="--d:110ms">
+          <h3 class="door-h">Apenas estoy arrancando y necesito que alguien me empuje.</h3>
+          <p>Una hora cada semana, tú y yo, con una lista de tareas concretas que revisamos la semana siguiente.</p>
+          <div class="door-tag">
+            <span class="door-label">Mentoría</span>
+            <a class="btn-ghost" href="#mentoria">Postularme a la mentoría</a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 6. MÉTODO (proportional band: width encodes duration) ========== -->
+  <section class="method">
+    <div class="wrap">
+      <h2 class="h-lg reveal">Qué pasa, en concreto, si trabajamos juntos.</h2>
+
+      <div class="method-band">
+        <div class="step reveal" style="--d:0ms">
+          <span class="step-bar" style="width:14%"></span>
+          <span class="meta">Semana 1</span>
+          <h3>Nos hablamos media hora</h3>
+          <p>Me escribes, te mando el calendario y hablamos por video. Te digo de frente si te puedo ayudar o no, y no cobro esa media hora.</p>
+        </div>
+
+        <div class="step reveal" style="--d:110ms">
+          <span class="step-bar" style="width:32%"></span>
+          <span class="meta">Semanas 2 a 4</span>
+          <h3>Diagnóstico corto y acotado</h3>
+          <p>Entiendo la operación de verdad: hablo con la gente que la ejecuta, no solo contigo. Salgo con el cuello de botella identificado, un plan de dos páginas y una primera cosa ya funcionando.</p>
+        </div>
+
+        <div class="step reveal" style="--d:220ms">
+          <span class="step-bar" style="width:100%"></span>
+          <span class="meta">Semanas 5 a 16</span>
+          <h3>Construcción</h3>
+          <p>Construyo lo que salió del diagnóstico: la herramienta interna a la medida, el CRM, la automatización, el flujo de trabajo con inteligencia artificial. Termino con tu equipo capacitado usándolo, no con una entrega y un adiós. Después, si quieres, queda un acompañamiento mensual liviano para que lo construido no se muera.</p>
+        </div>
+      </div>
+
+      <div class="method-foot">
+        <p class="reveal">Al final no te queda un informe. Te queda algo prendido, funcionando, y tu equipo sabiendo usarlo. Si te entrego un documento bonito y nadie lo abre, los dos perdimos la plata.</p>
+        <div class="cta-row reveal" style="--d:100ms">
+          <!-- TODO: real WhatsApp number -->
+          <a class="btn" href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20tengo%20una%20empresa%20de%20___%20y%20quiero%20contarte%20qu%C3%A9%20tengo%20montado." target="_blank" rel="noopener">Cuéntame qué tienes montado</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 7. CONSTRUÍ ========== -->
+  <section class="built">
+    <div class="wrap">
+      <h2 class="h-lg reveal">Cosas que construí con mis propias manos.</h2>
+      <div class="built-grid">
+        <figure class="built-fig reveal">
+          <img src="assets/salo_oscar.webp" width="527" height="328" alt="Salomón mostrando en pantalla el producto de Finco durante una presentación." loading="lazy">
+          <figcaption>Finco en vivo. El producto que se ve en esa pantalla lo escribí yo, línea por línea, cuando no había con quién más hacerlo.</figcaption>
+        </figure>
+
+        <ol class="artefacts">
+          <li class="reveal" style="--d:0ms">
+            <span class="art-n">01</span>
+            <span class="art-t">R5 <span>/</span> El pipeline de datos y el sistema de riesgo</span>
+            <p class="art-d">Toda la información de la empresa en un solo lugar, y el modelo que decide a quién se le presta. Fui Director de Datos y después Director de Tecnología de Nuevo Producto.</p>
+          </li>
+          <li class="reveal" style="--d:80ms">
+            <span class="art-n">02</span>
+            <span class="art-t">Ignia <span>/</span> El CRM</span>
+            <p class="art-d">Hecho a la medida para manejar ventas, matrículas y seguimiento a una comunidad de más de 2.000 personas. Sin comprar licencias de nada.</p>
+          </li>
+          <li class="reveal" style="--d:160ms">
+            <span class="art-n">03</span>
+            <span class="art-t">Ignia <span>/</span> La plataforma de comunidad</span>
+            <p class="art-d">Donde viven los fellows, los profesores y todo el material del programa.</p>
+          </li>
+          <li class="reveal" style="--d:240ms">
+            <span class="art-n">04</span>
+            <span class="art-t">Ignia <span>/</span> El sitio web</span>
+            <p class="art-d">Diseñado, escrito y montado por mí, y todavía lo mantengo yo.</p>
+          </li>
+        </ol>
+      </div>
+      <p class="built-foot reveal">Hoy construyo <b>con</b> inteligencia artificial, y uso agentes como Claude Code hasta para cosas que no son de programación. Por eso lo que antes tomaba un trimestre hoy sale en semanas.</p>
+    </div>
+  </section>
+
+  <!-- ========== 8. EL HISTORIAL ========== -->
+  <section class="record" id="historial">
+    <div class="wrap">
+      <div class="record-head">
+        <h2 class="h-lg reveal">El historial completo. Nada editado.</h2>
+        <p class="reveal" style="--d:80ms">Mismo tamaño de letra para las que vendí y para las que quebré. Si le voy a pedir a alguien que me confíe su empresa, lo mínimo es que sepa cómo me ha ido en las mías.</p>
+      </div>
+
+      <div class="ledger">
+
+        <article class="row reveal" style="--d:0ms">
+          <p class="meta row-year">2025 a hoy</p>
+          <span class="chip"><img src="assets/ignia.png" width="1657" height="1104" alt="Logo de Ignia" loading="lazy"></span>
+          <div class="row-body">
+            <h3 class="row-name">Ignia</h3>
+            <p class="row-desc">Un modelo nuevo de educación superior en Bogotá. Bootstrapped, sin inversionistas.</p>
+          </div>
+          <div class="row-out">
+            <p class="outcome">Andando</p>
+            <p class="row-note"><b>USD 150K</b> el primer año. Rentable desde el día uno. Equipo de 5.</p>
+          </div>
+        </article>
+
+        <article class="row reveal" style="--d:70ms">
+          <p class="meta row-year">2022 a 2024</p>
+          <span class="chip"><span class="chip-txt">R5</span></span>
+          <div class="row-body">
+            <h3 class="row-name">R5</h3>
+            <p class="row-desc">Fintech para dueños de vehículos. No era mía: entré como empleado y salí dirigiendo tecnología.</p>
+          </div>
+          <div class="row-out">
+            <p class="outcome">No fue mía</p>
+            <p class="row-note">Hasta <b>40 personas</b> a cargo. La app de vehículos más grande del país, cerca de 250.000 usuarios al mes.</p>
+          </div>
+        </article>
+
+        <article class="row reveal" style="--d:140ms">
+          <p class="meta row-year">2019 a 2022</p>
+          <span class="chip"><img src="assets/finco.png" width="730" height="734" alt="Logo de Finco" loading="lazy"></span>
+          <div class="row-body">
+            <h3 class="row-name">Finco</h3>
+            <p class="row-desc">Valoración de inmuebles con datos e inteligencia artificial para toda Latinoamérica.</p>
+          </div>
+          <div class="row-out">
+            <p class="outcome">Vendida</p>
+            <p class="row-note"><b>USD 1,5 M</b>, 5 veces la inversión. Más de 100.000 reportes al año. La compró RED Atlas.</p>
+          </div>
+        </article>
+
+        <article class="row reveal" style="--d:210ms">
+          <p class="meta row-year">2018 a 2019</p>
+          <span class="chip"><img src="assets/beriblock.png" width="808" height="954" alt="Logo de Beriblock" loading="lazy"></span>
+          <div class="row-body">
+            <h3 class="row-name">Beriblock</h3>
+            <p class="row-desc">Autenticación y trazabilidad de pagarés usando blockchain.</p>
+          </div>
+          <div class="row-out">
+            <p class="outcome">Quebró</p>
+            <p class="row-note">Le entregamos el desarrollo del corazón del producto a un equipo afuera porque los inversionistas lo pidieron. Nunca más.</p>
+          </div>
+        </article>
+
+        <article class="row reveal" style="--d:280ms">
+          <p class="meta row-year">2017 a 2019</p>
+          <span class="chip"><img src="assets/prestagente.png" width="932" height="912" alt="Logo de PrestaGente" loading="lazy"></span>
+          <div class="row-body">
+            <h3 class="row-name">PrestaGente</h3>
+            <p class="row-desc">Créditos de libranza entre personas, hechos a la medida de la regulación colombiana.</p>
+          </div>
+          <div class="row-out">
+            <p class="outcome">Vendida</p>
+            <p class="row-note"><b>USD 1 M</b> aproximadamente. La compró Taurus Capital y todavía está operando.</p>
+          </div>
+        </article>
+
+        <article class="row reveal" style="--d:350ms">
+          <p class="meta row-year">2016 a 2017</p>
+          <span class="chip"><img src="assets/elpalomo.png" width="100" height="100" alt="Logo de El Palomo" loading="lazy"></span>
+          <div class="row-body">
+            <h3 class="row-name">El Palomo</h3>
+            <p class="row-desc">Flores a domicilio por suscripción, con toda la experiencia en línea.</p>
+          </div>
+          <div class="row-out">
+            <p class="outcome">Quebró</p>
+            <p class="row-note">Mi primera empresa. Construí durante meses algo que nadie me había pedido. Ahí aprendí a vender antes de construir.</p>
+          </div>
+        </article>
+
+      </div>
+
+      <p class="record-foot reveal">Las dos que quebraron me costaron plata, tiempo y un par de años de vida. Te ahorro esos errores por muchísimo menos de lo que me costaron a mí.</p>
+    </div>
+  </section>
+
+  <!-- ========== 9. MENTORÍA ========== -->
+  <section class="mentor" id="mentoria">
+    <div class="wrap">
+      <div class="mentor-top">
+        <div>
+          <h2 class="h-lg reveal">Trabajar conmigo significa que las cosas pasan, así toque a las malas.</h2>
+          <p class="reveal" style="--d:70ms">Una videollamada de 60 minutos cada semana, 1 a 1. WhatsApp abierto entre sesiones para lo que se atraviese. Compromiso mínimo de tres meses, para que esto no se vuelva terapia. Ya van siete personas.</p>
+        </div>
+
+        <div>
+          <div class="rulebox reveal" style="--d:140ms">
+            <p>Cada sesión termina con una lista escrita. La siguiente arranca revisando esa lista, no conversando. Si dos semanas seguidas no hiciste nada, paramos. Sin resentimientos, pero paramos.</p>
+          </div>
+
+          <div class="tasklist reveal" style="--d:210ms">
+            <p class="meta">La lista de una semana cualquiera</p>
+            <ul>
+              <li><span>&rarr;</span> Llamar a cinco clientes que compraron una sola vez y preguntarles por qué no volvieron.</li>
+              <li><span>&rarr;</span> Poner el precio en la página. Sin «cotiza con nosotros».</li>
+              <li><span>&rarr;</span> Mandar la propuesta a Distribuidora Ochoa antes del jueves.</li>
+              <li><span>&rarr;</span> Sacar la contabilidad del cuaderno y meterla en una sola hoja.</li>
+              <li><span>&rarr;</span> Decidir si sigues con el socio o no. Escribirlo, no pensarlo.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- honest redirect to Ignia's cohort program, deliberately ABOVE the form -->
+      <div class="redirect reveal">
+        <p>Si lo que buscas es aprender en grupo, con estructura, con currículo y con gente que está exactamente en tu mismo momento, eso es el Action Lab de Ignia y probablemente te sirva más que yo. Te dejo el enlace de una vez. Acá somos tú y yo, cada semana, y nada más.</p>
+        <a class="btn-ghost" href="https://www.ignia.lat" target="_blank" rel="noopener">Ver el Action Lab</a>
+      </div>
+
+      <div class="apply">
+        <div class="apply-head">
+          <h3 class="h-md">Cinco preguntas. Se contestan en tres minutos.</h3>
+          <p>Están escritas para que sean el primer ejercicio del trabajo, no un formulario de contacto. Te contesto en menos de una semana, sí o no. No entra todo el mundo: hay cinco cupos en total y hoy quedan dos.</p>
+        </div>
+
+        <form id="apply-form" novalidate>
+          <div class="form-grid">
+            <div class="field span2" data-field>
+              <label for="q1">1. ¿Qué estás construyendo?</label>
+              <textarea id="q1" name="q1" required placeholder="Una marca de ropa, una fundación, una app, una idea todavía sin nombre."></textarea>
+              <p class="err-msg">Cuéntame aunque sea en una línea qué estás construyendo.</p>
+            </div>
+
+            <div class="field" data-field>
+              <label for="q2">2. ¿En qué punto estás hoy?</label>
+              <span class="selbox">
+                <select id="q2" name="q2" required>
+                  <option value="">Elige una opción</option>
+                  <option>Todavía es una idea</option>
+                  <option>Tengo los primeros clientes</option>
+                  <option>Ya estoy vendiendo con constancia</option>
+                  <option>Ya vendo, pero me estoy quemando</option>
+                </select>
+              </span>
+              <p class="err-msg">Escoge en qué punto estás.</p>
+            </div>
+
+            <div class="field" data-field>
+              <label for="q3">3. ¿Cuántas horas a la semana le metes de verdad?</label>
+              <input id="q3" name="q3" type="text" inputmode="numeric" required placeholder="Las de verdad, no las que te gustaría">
+              <p class="err-msg">Dime un número, aunque sea bajo.</p>
+            </div>
+
+            <div class="field span2" data-field>
+              <label for="q4">4. ¿Qué es lo que te tiene trancado ahora mismo?</label>
+              <textarea id="q4" name="q4" required placeholder="Lo que te quita el sueño esta semana, no el problema general."></textarea>
+              <p class="err-msg">Escribe qué te tiene trancado.</p>
+            </div>
+
+            <div class="field span2" data-field>
+              <label for="q5">5. ¿Por qué ahora?</label>
+              <textarea id="q5" name="q5" required placeholder="Qué cambió para que sea este mes y no el otro."></textarea>
+              <p class="err-msg">Esta es la que más me sirve. No la dejes en blanco.</p>
+            </div>
+
+            <div class="field span2" data-field>
+              <label for="mail">Tu correo</label>
+              <p class="hint">Es por donde te contesto. No lo uso para nada más.</p>
+              <input id="mail" name="mail" type="email" required placeholder="nombre@correo.com">
+              <p class="err-msg">Necesito un correo válido para contestarte.</p>
+            </div>
+          </div>
+
+          <div class="form-foot">
+            <button class="btn" type="submit">Postularme a la mentoría</button>
+            <p class="meta">Sin costo de postulación. Del precio hablamos solo si quedas.</p>
+          </div>
+        </form>
+
+        <div class="sent" id="apply-sent" hidden>
+          <h3>Listo, quedó enviada.</h3>
+          <p>Te contesto en menos de una semana, sí o no. Si la respuesta es no, te digo por qué y a dónde te conviene ir.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 10. CUPOS + IGNIA ========== -->
+  <section class="slots">
+    <div class="wrap slots-grid">
+      <div>
+        <h2 class="h-lg reveal">Por qué los cupos son contados.</h2>
+        <p class="reveal" style="--d:70ms">De lunes a viernes construyo Ignia. Esto de acá es aparte y va a mi nombre. No es urgencia de mercadeo: es que esto lo hago yo, con mis propias manos, en paralelo con mi trabajo. Cuando se llenan, se llenan.</p>
+        <p class="meta reveal" style="--d:140ms">Actualizado el 1 de septiembre de 2026</p>
+      </div>
+      <div class="counts">
+        <div class="count reveal" style="--d:100ms">
+          <span class="figure">2/4</span>
+          <p class="c-l">Cupos de consultoría libres.</p>
+        </div>
+        <div class="count reveal" style="--d:180ms">
+          <span class="figure">3/5</span>
+          <p class="c-l">Cupos de mentoría libres.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 11. TESTIMONIOS (honest empty state) ========== -->
+  <section class="tstm">
+    <div class="wrap tstm-grid">
+      <div class="tstm-fig reveal">
+        <span class="figure">0</span>
+        <p class="meta">Testimonios publicados</p>
+      </div>
+      <div>
+        <h2 class="h-lg reveal" style="--d:70ms">Todavía no tengo ni uno, y no los voy a inventar.</h2>
+        <p class="reveal" style="--d:140ms">Tengo algo mejor: si la conversación va en serio, te paso el teléfono de un cliente para que le preguntes tú mismo cómo fue, sin que yo esté en la llamada.</p>
+      </div>
+    </div>
+    <!--
+      Cuando lleguen los 2 o 3 testimonios reales, entran acá como tres tarjetas
+      con foto, nombre, empresa y cargo, reemplazando el bloque del cero.
+      El grid ya está dimensionado para tres columnas a 1fr con el mismo gutter.
+    -->
+  </section>
+
+  <!-- ========== 12. SOBRE MÍ + AHORA + CHARLAS ========== -->
+  <section class="about" id="sobre-mi">
+    <div class="wrap">
+      <div class="photoband">
+        <img class="p1 reveal" src="assets/chicago.jpg" width="300" height="400" alt="Salomón con su familia y los mellizos sobre los hombros, frente a un rascacielos." loading="lazy">
+        <img class="p2 reveal" style="--d:80ms" src="assets/marathon.jpg" width="600" height="600" alt="Salomón con la medalla de la media maratón de Bogotá." loading="lazy">
+        <img class="p3 reveal" style="--d:160ms" src="assets/bonfire.jpeg" width="600" height="600" alt="Una fogata encendida al anochecer." loading="lazy">
+      </div>
+
+      <div class="about-grid">
+        <div>
+          <h2 class="h-lg reveal">Quién soy, sin currículum.</h2>
+          <div class="body-w reveal" style="--d:70ms">
+            <p>Tengo 35 años, vivo en Bogotá y voy en mi quinta empresa. Tengo mellizos, Franco y Luca, y una esposa que me aguanta desde 2010. Corrí una media maratón en 2:10:00 después de no ser capaz de hacer cinco kilómetros sin caminar.</p>
+            <p>Aprendí a programar a la fuerza, en Finco, porque no había con quién más hacerlo y el producto tenía que salir. Construyo cosas porque me gusta construir: empresas, muebles, recetas, juegos para los niños. Emprender es lo más parecido a un oficio creativo que he encontrado.</p>
+          </div>
+        </div>
+
+        <aside class="now reveal" style="--d:140ms">
+          <p class="meta">Ahora, septiembre de 2026</p>
+          <p>Ignia ya está de pie. Lanzamos con Camilo en junio, el primer Action Lab corrió con unos golpes pero bien, y la empresa fue rentable desde el día uno. Somos cinco. Gano la sexta parte de lo que ganaba antes, pero es estable y va subiendo. Medidor de felicidad: 9 de 10. Lo único que me falta es una meta nueva de ejercicio.</p>
+        </aside>
+      </div>
+
+      <div class="talks" id="charlas">
+        <p class="venues">Me han invitado a hablar de esto en <em>ConfNodo</em>, <em>EAFIT</em>, <em>la EIA</em>, <em>el Externado</em>, <em>la Universidad Católica</em>, <em>la Asociación Colombiana de EdTech</em> y un par de podcasts.</p>
+        <div>
+          <p class="talks-note">Doy charlas porque me gusta y porque así me conocen. No es un producto: es la puerta de entrada. Adopción de tecnología e inteligencia artificial, emprendimiento sin romanticismo, mentalidad maker, y trabajo y vida sin la pose.</p>
+          <div class="talks-links">
+            <a class="tlink" href="https://cal.com/salomonmuriel" target="_blank" rel="noopener">Invitarme a una charla &rarr;</a>
+            <a class="tlink" href="assets/fotoSalo.jpeg" download>Descargar foto y bio &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 13. FAQ ========== -->
+  <section class="faq">
+    <div class="wrap">
+      <h2 class="h-lg reveal">Lo que siempre me preguntan.</h2>
+      <div class="faq-grid">
+        <div class="qa reveal" style="--d:0ms">
+          <h3>«Es que yo de tecnología no sé nada.»</h3>
+          <p>Perfecto. La mitad de mi trabajo es traducir. Si algo no se entiende, es culpa mía y no tuya. Con mis clientes hablo de facturas, de meseros y de inventario, no de arquitecturas.</p>
+        </div>
+        <div class="qa reveal" style="--d:60ms">
+          <h3>«¿Me vas a cobrar por un PowerPoint?»</h3>
+          <p>No. El entregable es algo funcionando en producción y tu equipo sabiendo usarlo. El documento existe, son dos páginas, y es lo de menos.</p>
+        </div>
+        <div class="qa reveal" style="--d:120ms">
+          <h3>«¿Mi empresa es muy chiquita?»</h3>
+          <p>Casi seguro que no. Trabajo con empresas de 5 a 40 empleados que ya venden. Si de verdad estás muy temprano, te lo digo y te mando a la mentoría, que para eso está.</p>
+        </div>
+        <div class="qa reveal" style="--d:180ms">
+          <h3>«¿Cuánto vale?»</h3>
+          <p>Depende del alcance, y te lo digo hablado en la primera llamada. Sin cotización de veinte páginas y sin sorpresas después. Empezamos con un diagnóstico corto: si eso no te aporta, ahí paramos y no perdiste medio año.</p>
+        </div>
+        <div class="qa reveal" style="--d:240ms">
+          <h3>«¿Esto es Ignia?»</h3>
+          <p>No. Ignia es la empresa que construyo de lunes a viernes con mi socio Camilo. Esto es mi práctica personal, va a mi nombre, y por eso los cupos son tan pocos.</p>
+        </div>
+        <div class="qa reveal" style="--d:300ms">
+          <h3>«¿En cuánto tiempo veo algo?»</h3>
+          <p>En el diagnóstico, dos o tres semanas, ya te dejo una primera cosa funcionando. No el plan de la primera cosa: la primera cosa.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 14. CIERRE ========== -->
+  <section class="close">
+    <div class="wrap">
+      <h2 class="reveal">Si tienes un negocio andando y una idea de para dónde llevarlo, hablemos 30 minutos.</h2>
+      <p class="reveal" style="--d:80ms">Si no te puedo ayudar, te lo digo de una y no te hago perder el tiempo. Ya me ha pasado un par de veces y nadie salió molesto.</p>
+      <div class="cta-row reveal" style="--d:160ms">
+        <!-- TODO: real WhatsApp number -->
+        <a class="btn" href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20tengo%20una%20empresa%20de%20___%20y%20quiero%20contarte%20qu%C3%A9%20tengo%20montado." target="_blank" rel="noopener">Cuéntame qué tienes montado</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <span class="wordmark">Salomón Muriel</span>
+        <p class="foot-note">Estrategia de negocio y tecnología a la medida. Bogotá, Colombia.</p>
+      </div>
+      <div class="foot-links">
+        <a class="tlink" href="https://www.linkedin.com/in/smuriel/" target="_blank" rel="noopener">LinkedIn es mi blog: ahí escribo todas las semanas &rarr;</a>
+        <a class="tlink" href="#sobre-mi">Ahora</a>
+        <a class="tlink" href="#charlas">Charlas</a>
+      </div>
+      <div class="foot-lang">
+        <span>Español</span>
+        <a href="/en/" hreflang="en" lang="en">English</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <p class="meta">&copy; 2026 Salomón Muriel</p>
+      <p class="meta">Cupos actualizados el 1 de septiembre de 2026</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---- Nav rule appears once the page has moved. IntersectionObserver, no scroll listener. ---- */
+  var nav = document.getElementById("nav");
+  var sentinel = document.getElementById("top-sentinel");
+  if (nav && sentinel && "IntersectionObserver" in window) {
+    new IntersectionObserver(function(entries){
+      nav.classList.toggle("stuck", !entries[0].isIntersecting);
+    }, {threshold: 0}).observe(sentinel);
+  }
+
+  /* ---- Scroll reveal. Motivated: the ledger enters in chronological order,
+          figures rise so the eye lands on the number before the label. ---- */
+  var targets = document.querySelectorAll(".reveal");
+  if (reduce || !("IntersectionObserver" in window)) {
+    Array.prototype.forEach.call(targets, function(el){ el.classList.add("in"); });
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+      });
+    }, {threshold: 0.15, rootMargin: "0px 0px -8% 0px"});
+    Array.prototype.forEach.call(targets, function(el){ io.observe(el); });
+  }
+
+  /* ---- Mentorship application: inline validation + success state ---- */
+  var form = document.getElementById("apply-form");
+  var sent = document.getElementById("apply-sent");
+  if (form) {
+    form.addEventListener("submit", function(ev){
+      ev.preventDefault();
+      var bad = null;
+      var wraps = form.querySelectorAll("[data-field]");
+      Array.prototype.forEach.call(wraps, function(w){
+        var input = w.querySelector("input,select,textarea");
+        if (!input) return;
+        var val = (input.value || "").trim();
+        var invalid = !val;
+        if (!invalid && input.type === "email") {
+          invalid = !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(val);
+        }
+        w.classList.toggle("err", invalid);
+        if (invalid && !bad) bad = input;
+      });
+      if (bad) { bad.focus(); return; }
+      form.hidden = true;
+      sent.hidden = false;
+      sent.setAttribute("tabindex", "-1");
+      sent.focus();
+    });
+
+    form.addEventListener("input", function(ev){
+      var w = ev.target.closest("[data-field]");
+      if (w && w.classList.contains("err") && (ev.target.value || "").trim()) {
+        w.classList.remove("err");
+      }
+    });
+  }
+})();
+</script>
+</body>
+</html>

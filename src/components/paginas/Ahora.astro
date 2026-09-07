@@ -1,0 +1,148 @@
+---
+import { render } from "astro:content";
+import EncabezadoPagina from "@components/EncabezadoPagina.astro";
+import EncabezadoSeccion from "@components/EncabezadoSeccion.astro";
+import { getLocalizedCollection } from "@i18n/utils";
+import type { Lang } from "@i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const es = lang === "es";
+
+const todas = (await getLocalizedCollection(lang, "now")).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+const [ultima, ...anteriores] = todas;
+if (!ultima) throw new Error("No hay actualizaciones en la colección `now`");
+
+const { Content } = await render(ultima);
+
+/** Las anteriores se renderizan de una vez y se abren con <details>. */
+const archivo = await Promise.all(
+  anteriores.map(async e => ({
+    header: e.data.header,
+    fecha: e.data.date,
+    Cuerpo: (await render(e)).Content,
+  }))
+);
+
+const fechaCorta = (d: Date) =>
+  new Intl.DateTimeFormat(es ? "es-CO" : "en-GB", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(d);
+
+const t = es
+  ? {
+      rotulo: "Parte del día",
+      nota: "Inspirado en la página «now» de Derek Sivers.",
+      titulo: "Ahora",
+      manuscrita: "en qué ando esta temporada",
+      bajada:
+        "Lo que estoy haciendo hoy, no lo que hice alguna vez. Se actualiza cuando cambia algo que valga la pena contar.",
+      ultimaRotulo: "Última actualización",
+      archivoRotulo: "Anteriores",
+      archivoTitulo: "Lo que decía antes",
+      archivoNota:
+        "Las actualizaciones viejas se quedan acá. Nada se borra: así se ve para dónde iba la cosa.",
+    }
+  : {
+      rotulo: "Daily report",
+      nota: "Inspired by Derek Sivers' “now” page.",
+      titulo: "Now",
+      manuscrita: "what I'm up to this season",
+      bajada:
+        "What I'm doing today, not what I did once. It gets updated when something worth telling changes.",
+      ultimaRotulo: "Latest update",
+      archivoRotulo: "Previously",
+      archivoTitulo: "What it used to say",
+      archivoNota:
+        "Old updates stay here. Nothing gets deleted: that's how you see where things were heading.",
+    };
+---
+
+<EncabezadoPagina
+  rotulo={t.rotulo}
+  nota={t.nota}
+  titulo={t.titulo}
+  manuscrita={t.manuscrita}
+  bajada={t.bajada}
+  anchoTitulo="max-w-[10ch]"
+/>
+
+<section class="pb-[clamp(2.6rem,5.5vw,4.4rem)]">
+  <div class="hoja">
+    <div
+      class="max-w-[62rem] overflow-hidden rounded border-[1.5px] border-linea2 bg-campo"
+    >
+      <div
+        class="font-mono flex flex-wrap items-baseline gap-x-4 gap-y-1 border-b border-linea px-4 py-3.5 text-[10.5px] uppercase tracking-[.18em] sm:px-5"
+      >
+        <span class="font-semibold text-rojo2">{t.ultimaRotulo}</span>
+        <span class="text-gris">{fechaCorta(ultima.data.date)}</span>
+      </div>
+      <div class="px-4 py-6 sm:px-7">
+        <h2
+          class="font-arch max-w-[26ch] text-[clamp(1.3rem,2.8vw,1.9rem)] font-extrabold leading-[1.12] tracking-[-.028em] [font-stretch:100%]"
+        >
+          {ultima.data.header}
+        </h2>
+        <article class="prosa mt-6 max-w-medida">
+          <Content />
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+{
+  archivo.length > 0 && (
+    <section class="border-t border-linea bg-papel2 py-[clamp(2.6rem,5.5vw,4.4rem)]">
+      <div class="hoja">
+        <EncabezadoSeccion
+          rotulo={t.archivoRotulo}
+          nota={t.archivoNota}
+          notaCh={44}
+        />
+        <h2 class="font-arch max-w-[20ch] text-[clamp(1.5rem,3.4vw,2.4rem)] font-extrabold leading-[1.05] tracking-[-.028em] [font-stretch:104%]">
+          {t.archivoTitulo}
+        </h2>
+
+        <div class="mt-[clamp(1.4rem,3vw,2.2rem)] max-w-[62rem]">
+          {archivo.map(({ header, fecha, Cuerpo }, i) => (
+            <details
+              class:list={[
+                "border-t border-linea",
+                i === archivo.length - 1 && "border-b",
+              ]}
+            >
+              <summary class="flex items-start gap-4 py-[1.05rem] pr-2">
+                <span class="font-mono w-[6.5rem] flex-none pt-[3px] text-[10.5px] uppercase tracking-[.14em] text-gris">
+                  {fechaCorta(fecha)}
+                </span>
+                <span class="font-arch flex-1 text-[clamp(1rem,1.7vw,1.14rem)] font-bold leading-[1.3] tracking-[-.015em]">
+                  {header}
+                </span>
+                <span
+                  class="cruz mt-[3px] flex-none text-rojo2"
+                  aria-hidden="true"
+                >
+                  <svg class="h-[18px] w-[18px]">
+                    <use href="#i-mas" />
+                  </svg>
+                </span>
+              </summary>
+              <article class="resp prosa max-w-medida pb-8 pt-2">
+                <Cuerpo />
+              </article>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
