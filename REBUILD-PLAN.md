@@ -40,6 +40,10 @@
 >   `talks/<slug>.md`, y las imágenes de `/ahora` y `/sobre-mi` se movieron
 >   a `/public`, para que Keystatic pueda leerlas y reescribirlas sin
 >   romperlas. Fue eso o dejar el contenido real fuera del CMS.
+> - **Todo el sitio se pasó a tuteo.** direction-36 está escrito de usted y
+>   el plan dice no reescribir esa copia, pero Salomón nunca ustedea: la voz
+>   del diseño no era la suya. Se reescribieron las ~130 construcciones del
+>   español, incluidos los mensajes prellenados de WhatsApp.
 > - **El pie usa `panelnota` y no el `#75746e` del diseño**: a 10 px ese gris
 >   queda en 3,7:1 sobre el panel oscuro y no pasa contraste.
 > - **Los formatos y las bios de `/charlas` se escribieron**, no se

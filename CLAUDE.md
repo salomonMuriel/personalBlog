@@ -21,8 +21,10 @@ queda como registro de decisiones; este archivo describe el estado actual.
   precios. Silencio sobre plata.
 - **No hay blog**, ni feed de posts, ni grilla de artículos. Lo que escribe
   va a LinkedIn.
-- **Español primero**, en español colombiano natural. El inglés es
-  secundario y es traducción.
+- **Español primero**, en español colombiano natural, **y siempre en
+  tuteo**. Salomón nunca ustedea: `direction-36.html` está escrito de usted
+  y el sitio se apartó de eso a propósito. Si toma copia de ahí, pásela a tú
+  antes de publicarla. El inglés es secundario y es traducción.
 - **Ningún testimonio inventado.** Los tres de `direction-36.html` eran
   marcador de posición y nunca se publicaron. La sección `Testimonios`
   sencillamente no se renderiza mientras la colección esté vacía.
