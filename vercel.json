@@ -17,29 +17,29 @@
     { "source": "/es/before", "destination": "/ahora/", "permanent": true },
     { "source": "/es/before/", "destination": "/ahora/", "permanent": true },
     {
-      "source": "/es/before/:slug*",
+      "source": "/es/before/(.+)",
       "destination": "/ahora/",
       "permanent": true
     },
     { "source": "/en/before", "destination": "/en/now/", "permanent": true },
     { "source": "/en/before/", "destination": "/en/now/", "permanent": true },
     {
-      "source": "/en/before/:slug*",
+      "source": "/en/before/(.+)",
       "destination": "/en/now/",
       "permanent": true
     },
     { "source": "/before", "destination": "/ahora/", "permanent": true },
-    { "source": "/before/:slug*", "destination": "/ahora/", "permanent": true },
+    { "source": "/before/(.+)", "destination": "/ahora/", "permanent": true },
 
     { "source": "/es/talks", "destination": "/charlas/", "permanent": true },
     { "source": "/es/talks/", "destination": "/charlas/", "permanent": true },
     {
-      "source": "/es/talks/:slug*",
+      "source": "/es/talks/(.*)",
       "destination": "/charlas/",
       "permanent": true
     },
     {
-      "source": "/en/talks/:slug+",
+      "source": "/en/talks/(.+)",
       "destination": "/en/talks/",
       "permanent": true
     },

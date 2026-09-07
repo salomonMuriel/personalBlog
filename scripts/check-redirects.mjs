@@ -2,15 +2,26 @@
  * Verifica el mapa de cutover: qué debe dar 200, qué 301 y a dónde, y qué
  * debe dar 410.
  *
- *   node scripts/check-redirects.mjs                      # contra dev (localhost:4321)
- *   node scripts/check-redirects.mjs https://…            # contra el deploy
+ *   node scripts/check-redirects.mjs                   # contra dev (localhost:4321)
+ *   node scripts/check-redirects.mjs https://…         # contra el deploy
+ *   node scripts/check-redirects.mjs https://… --vercel-curl
  *
  * Los 301 los sirve `vercel.json`, que sólo corre en Vercel: contra el
  * servidor de desarrollo esas filas se saltan y se avisa.
+ *
+ * `--vercel-curl` enruta cada petición por `vercel curl`, que se salta la
+ * protección de despliegue. Es la única manera de revisar un preview con
+ * Vercel Authentication prendida, donde si no todo devuelve 302 al SSO.
  */
+
+import { execFile } from "node:child_process";
+import { promisify } from "node:util";
+
+const ejecutar = promisify(execFile);
 
 const base = (process.argv[2] ?? "http://localhost:4321").replace(/\/$/, "");
 const esLocal = /localhost|127\.0\.0\.1/.test(base);
+const porVercel = process.argv.includes("--vercel-curl");
 
 /** [ruta, esperado, destino?] — `esperado` es 200 | 301 | 404 | 410 */
 const casos = [
@@ -76,11 +87,44 @@ const casos = [
   ["/en/companies/", 301, "/en/"],
   ["/es/before/", 301, "/ahora/"],
   ["/en/before/", 301, "/en/now/"],
+  // Con `:slug*` estas cuatro se caían al 410: el patrón no captura la
+  // barra final. Quedan como caso de prueba para que no vuelva a pasar.
+  ["/es/before/2024-04-23/", 301, "/ahora/"],
+  ["/en/before/2024-04-23/", 301, "/en/now/"],
+  ["/es/talks/makers-mindset-entrepreneurship/", 301, "/charlas/"],
+  ["/en/talks/makers-mindset-entrepreneurship/", 301, "/en/talks/"],
 
   // ── lo que de verdad no existe sigue siendo 404 ────────────────────
   ["/una-ruta-que-nunca-existio/", 404],
   ["/en/una-ruta-que-nunca-existio/", 404],
 ];
+
+/** Devuelve { estado, ubicacion } sin seguir la redirección. */
+async function pedir(ruta) {
+  if (!porVercel) {
+    const res = await fetch(base + ruta, { redirect: "manual" });
+    return { estado: res.status, ubicacion: res.headers.get("location") };
+  }
+  const { stdout } = await ejecutar(
+    "npx",
+    [
+      "vercel",
+      "curl",
+      base + ruta,
+      "--yes",
+      "--",
+      "-s",
+      "-o",
+      "/dev/null",
+      "-w",
+      "%{http_code} %{redirect_url}",
+    ],
+    { maxBuffer: 1024 * 1024 }
+  );
+  const linea = stdout.trim().split("\n").pop() ?? "";
+  const [codigo, destino] = linea.split(" ");
+  return { estado: Number(codigo), ubicacion: destino || null };
+}
 
 let fallas = 0;
 let saltados = 0;
@@ -90,29 +134,29 @@ for (const [ruta, esperado, destino] of casos) {
     saltados++;
     continue;
   }
-  let res;
+  let estado, ubicacion;
   try {
-    res = await fetch(base + ruta, { redirect: "manual" });
+    ({ estado, ubicacion } = await pedir(ruta));
   } catch (err) {
     console.log(`FALLA   ${ruta} — no respondió (${err.message})`);
     fallas++;
     continue;
   }
 
+  // Vercel emite 308 para `"permanent": true`; para SEO vale lo mismo.
   const ok =
     esperado === 301
-      ? (res.status === 301 || res.status === 308) &&
-        (res.headers.get("location") ?? "").replace(base, "") === destino
-      : res.status === esperado;
+      ? (estado === 301 || estado === 308) &&
+        (ubicacion ?? "").replace(base, "") === destino
+      : estado === esperado;
 
   if (ok) {
-    console.log(`ok      ${String(res.status).padEnd(3)} ${ruta}`);
+    console.log(`ok      ${String(estado).padEnd(3)} ${ruta}`);
   } else {
-    const loc = res.headers.get("location");
     console.log(
-      `FALLA   ${String(res.status).padEnd(3)} ${ruta} — esperaba ${esperado}${
+      `FALLA   ${String(estado).padEnd(3)} ${ruta} — esperaba ${esperado}${
         destino ? ` → ${destino}` : ""
-      }${loc ? ` (fue a ${loc})` : ""}`
+      }${ubicacion ? ` (fue a ${ubicacion})` : ""}`
     );
     fallas++;
   }
