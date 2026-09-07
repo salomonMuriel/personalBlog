@@ -63,6 +63,18 @@ export default defineConfig({
     optimizeDeps: {
       exclude: ["@resvg/resvg-js"],
     },
+    server: {
+      watch: {
+        // `astro build` escribe cientos de archivos en `dist/` y
+        // `.vercel/output/` dentro del mismo directorio. Si hay un `astro dev`
+        // vivo, su watcher los ve todos y invalida el grafo de módulos
+        // justo mientras el build reescribe `node_modules/.vite/deps` con
+        // otro configHash. De ahí salía el
+        // «TypeError: Cannot read properties of undefined (reading 'call')»
+        // en EnvironmentPluginContainer.transform.
+        ignored: ["**/dist/**", "**/.vercel/**"],
+      },
+    },
   },
   i18n: {
     defaultLocale: "es",
