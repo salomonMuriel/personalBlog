@@ -1,0 +1,1225 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Salomón Muriel · Estrategia y herramientas hechas a la medida</title>
+<meta name="description" content="Armo la estrategia y yo mismo construyo la herramienta. Trabajo con empresas colombianas que ya venden y cuya operación vive en Excel, en WhatsApp y en la cabeza del dueño.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=Martian+Mono:wght@400..700&display=swap" rel="stylesheet">
+
+<style>
+/* ==========================================================================
+   EL TALLER  ·  Salomón Muriel
+   Substrate: drafting paper (graph grid painted on the body).
+   Objects on it: steel plates, chalk cards, paper tickets, defect tags.
+   One accent: minio, the red-orange anticorrosive paint on Colombian
+   metalwork. Tuned lighter when it sits on a dark plate.
+   Radius: 0, everywhere, no exceptions. Shadows: hard offset, zero blur.
+   ========================================================================== */
+
+:root{
+  /* ground */
+  --bench:      #E3E2DA;
+  --bench-deep: #D6D5CB;
+  --chalk:      #F5F4EE;
+  --steel:      #22261F;
+  --steel-2:    #2C3128;
+
+  /* ink */
+  --ink:        #181A17;
+  --ink-soft:   #404535;
+  --ink-faint:  #565B4E;
+  --on-steel:   #EDEBE0;
+  --on-steel-soft:#A9AF9B;
+
+  /* structure */
+  --olive:      #4A5A3C;
+  --rule:       #9C9C90;
+  --edge:       rgba(34,38,31,.30);
+
+  /* one accent, two surfaces */
+  --minio:      #C4441F;
+  --minio-lit:  #F0834B;
+  --on-accent:  #FFFCF8;
+
+  --grid:       rgba(34,38,31,.055);
+  --grid-major: rgba(34,38,31,.085);
+
+  --plate:    7px 7px 0 var(--edge);
+  --plate-sm: 4px 4px 0 var(--edge);
+
+  --sans: 'Archivo','Helvetica Neue',Arial,sans-serif;
+  --mono: 'Martian Mono',ui-monospace,'SFMono-Regular',Menlo,monospace;
+
+  --wrap: 1320px;
+  --gut: clamp(1.25rem, 4vw, 3.5rem);
+}
+
+@media (prefers-color-scheme: dark){
+  :root{
+    --bench:      #171A15;
+    --bench-deep: #12140F;
+    --chalk:      #1F231B;
+    --steel:      #0E110C;
+    --steel-2:    #14170F;
+
+    --ink:        #E9E8DE;
+    --ink-soft:   #B4B9A7;
+    --ink-faint:  #949A86;
+    --on-steel:   #E9E8DE;
+    --on-steel-soft:#A0A692;
+
+    --olive:      #8FA37A;
+    --rule:       #3C4234;
+    --edge:       rgba(0,0,0,.6);
+
+    --minio:      #F0834B;
+    --minio-lit:  #F0834B;
+    --on-accent:  #14170F;
+
+    --grid:       rgba(233,232,222,.05);
+    --grid-major: rgba(233,232,222,.075);
+  }
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+body{
+  margin:0;
+  background-color:var(--bench);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-variation-settings:'wdth' 100,'wght' 400;
+  font-size:clamp(1rem,.97rem + .18vw,1.075rem);
+  line-height:1.6;
+  overflow-x:hidden;
+  background-image:
+    linear-gradient(to right, var(--grid-major) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-major) 1px, transparent 1px),
+    linear-gradient(to right, var(--grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
+  background-size:140px 140px,140px 140px,28px 28px,28px 28px;
+}
+
+img{max-width:100%;height:auto;display:block}
+a{color:inherit}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+h1,h2,h3{font-family:var(--sans);margin:0;text-wrap:balance}
+h1{
+  font-variation-settings:'wdth' 112,'wght' 800;
+  font-size:clamp(2.05rem,5.2vw,4.35rem);
+  line-height:.98;letter-spacing:-.032em;max-width:30ch;
+}
+h2{
+  font-variation-settings:'wdth' 108,'wght' 780;
+  font-size:clamp(1.8rem,3.4vw,2.9rem);
+  line-height:1.03;letter-spacing:-.026em;max-width:24ch;
+}
+h3{
+  font-variation-settings:'wdth' 104,'wght' 700;
+  font-size:clamp(1.15rem,1.6vw,1.45rem);
+  line-height:1.14;letter-spacing:-.018em;
+}
+p{margin:0 0 1.05em}
+p:last-child{margin-bottom:0}
+
+.wrap{max-width:var(--wrap);margin:0 auto;padding-inline:var(--gut)}
+.lede{max-width:62ch;color:var(--ink-soft);font-size:1.06rem}
+.tight{max-width:48ch}
+section[id]{scroll-margin-top:84px}
+#postular{scroll-margin-top:92px}
+
+/* technical layer */
+.stamp{
+  font-family:var(--mono);font-size:.6rem;font-weight:600;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);display:inline-block;
+}
+.stamp--steel{color:var(--on-steel-soft)}
+.meta{font-family:var(--mono);font-size:.72rem;line-height:1.55;color:var(--ink-faint)}
+
+/* a redline: something written on the drawing after the fact. Two on the page. */
+.redline{
+  font-family:var(--mono);font-size:.75rem;line-height:1.4;color:var(--minio);
+  display:inline-block;transform:rotate(-1.4deg);
+  border-bottom:1.5px solid var(--minio);padding-bottom:.3em;
+}
+
+/* ---------------- buttons ---------------- */
+.btn{
+  display:inline-flex;align-items:center;gap:.6rem;
+  font-family:var(--sans);font-variation-settings:'wdth' 104,'wght' 700;
+  font-size:.94rem;letter-spacing:-.01em;white-space:nowrap;
+  padding:.95rem 1.4rem;border:1.5px solid var(--ink);
+  background:var(--minio);color:var(--on-accent);
+  text-decoration:none;box-shadow:var(--plate-sm);cursor:pointer;
+  transition:transform .16s cubic-bezier(.16,1,.3,1),box-shadow .16s cubic-bezier(.16,1,.3,1);
+}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--edge)}
+.btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--edge)}
+.btn[disabled]{opacity:.7;cursor:progress;transform:none;box-shadow:var(--plate-sm)}
+.btn--ghost{background:transparent;color:var(--ink);border-color:var(--ink);box-shadow:none}
+.btn--ghost:hover{background:var(--chalk);box-shadow:var(--plate-sm)}
+.btn--on-steel{background:var(--minio-lit);color:#14170F;border-color:#0A0C08}
+.arrow{font-family:var(--mono);font-size:.85em;font-weight:400}
+
+a:focus-visible,button:focus-visible,summary:focus-visible,
+input:focus-visible,textarea:focus-visible,select:focus-visible{
+  outline:2.5px solid var(--minio);outline-offset:3px;
+}
+
+/* ---------------- nav ---------------- */
+.nav{
+  position:sticky;top:0;z-index:40;height:68px;display:flex;align-items:center;
+  background:var(--bench);
+  background:color-mix(in srgb,var(--bench) 95%,transparent);
+  backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px);
+  border-bottom:1.5px solid var(--ink);
+}
+.nav__in{display:flex;align-items:center;justify-content:space-between;gap:1.5rem;width:100%}
+.nav__mark{
+  font-variation-settings:'wdth' 118,'wght' 850;font-size:.98rem;
+  letter-spacing:-.005em;text-transform:uppercase;text-decoration:none;white-space:nowrap;
+}
+.nav__mark i{font-style:normal;color:var(--minio)}
+.nav__links{display:flex;align-items:center;gap:1.6rem}
+.nav__links a{
+  text-decoration:none;font-size:.86rem;font-variation-settings:'wdth' 100,'wght' 550;
+  color:var(--ink-soft);padding-block:.35rem;border-bottom:1.5px solid transparent;white-space:nowrap;
+}
+.nav__links a:hover{color:var(--ink);border-bottom-color:var(--minio)}
+.nav__lang{
+  font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;margin:0;
+  display:flex;gap:.45rem;align-items:center;color:var(--ink-faint);
+}
+.nav__lang a{text-decoration:none}
+.nav__lang [aria-current]{color:var(--ink);font-weight:700}
+@media (max-width:960px){.nav__links{display:none}}
+
+/* mobile: the five items live behind one disclosure, no JS */
+.menu{display:none;position:relative}
+.menu>summary{
+  list-style:none;cursor:pointer;
+  font-family:var(--sans);font-variation-settings:'wdth' 104,'wght' 700;
+  font-size:.82rem;letter-spacing:.02em;text-transform:uppercase;
+  padding:.5rem .8rem;border:1.5px solid var(--ink);color:var(--ink);
+}
+.menu>summary::-webkit-details-marker{display:none}
+.menu[open]>summary{background:var(--ink);color:var(--bench)}
+.menu__panel{
+  position:absolute;right:0;top:calc(100% + .65rem);z-index:41;
+  min-width:206px;background:var(--chalk);
+  border:1.5px solid var(--ink);box-shadow:var(--plate);
+  display:flex;flex-direction:column;
+}
+.menu__panel a{
+  padding:.85rem 1.1rem;text-decoration:none;font-size:.95rem;
+  font-variation-settings:'wdth' 100,'wght' 600;color:var(--ink);
+  border-bottom:1px solid var(--rule);
+}
+.menu__panel a:last-child{border-bottom:0}
+.menu__panel a:hover{background:var(--bench-deep);color:var(--minio)}
+@media (max-width:960px){.menu{display:block}.nav__lang{margin-left:auto}.nav__in{gap:.9rem}}
+
+.pad{padding-block:clamp(4rem,7vw,6.5rem)}
+.pad-s{padding-block:clamp(3rem,5.5vw,4.75rem)}
+.hr-top{border-top:1.5px solid var(--ink)}
+
+/* ============ 1. HERO ============ */
+.hero{
+  min-height:calc(100dvh - 68px);display:flex;align-items:center;
+  padding-top:clamp(1.5rem,3vw,3rem);padding-bottom:clamp(2rem,4vw,3.5rem);
+  border-bottom:1.5px solid var(--ink);
+}
+.hero__grid{display:grid;gap:1.9rem;grid-template-columns:1fr;width:100%}
+@media (min-width:1000px){
+  .hero__grid{
+    grid-template-columns:minmax(0,1fr) 340px;
+    gap:clamp(1.5rem,2.4vw,2.1rem) clamp(2.5rem,4vw,4rem);
+    align-items:start;
+  }
+  .hero__head{grid-column:1 / -1}
+  .hero__left{grid-column:1;grid-row:2;padding-top:.35rem}
+  .hero__right{grid-column:2;grid-row:2}
+}
+.hero h1 em{
+  font-style:normal;color:var(--minio);
+  box-shadow:inset 0 -.12em 0 var(--minio);padding-bottom:.02em;
+}
+.hero__sub{max-width:44ch;font-size:clamp(1.02rem,1.15vw,1.2rem);color:var(--ink-soft);line-height:1.5}
+.hero__cta{display:flex;flex-wrap:wrap;gap:.85rem;margin-top:1.9rem}
+
+/* the portrait, mounted like a print and clamped to the bench */
+.mount{
+  margin:0;background:var(--chalk);border:1.5px solid var(--ink);
+  padding:13px 13px 44px;box-shadow:var(--plate);
+  transform:rotate(-1.15deg);max-width:340px;
+  transition:transform .35s cubic-bezier(.16,1,.3,1);
+}
+.mount:hover{transform:rotate(0deg)}
+.mount img{width:100%;filter:saturate(.94) contrast(1.03)}
+@media (max-width:999px){.mount{margin-inline:auto}}
+
+/* ============ 2. PROOF BAND ============ */
+.band{background:var(--steel);color:var(--on-steel);border-bottom:1.5px solid var(--ink)}
+.band__nums{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  border-top:1px solid rgba(233,232,222,.17);border-left:1px solid rgba(233,232,222,.17);
+}
+@media (max-width:779px){.numcell:last-child{grid-column:span 2}}
+@media (min-width:780px){.band__nums{grid-template-columns:repeat(5,1fr)}}
+.numcell{
+  padding:1.55rem 1.15rem 1.3rem;
+  border-right:1px solid rgba(233,232,222,.17);border-bottom:1px solid rgba(233,232,222,.17);
+}
+.numcell b{
+  display:block;font-variation-settings:'wdth' 116,'wght' 800;
+  font-size:clamp(1.85rem,3.2vw,2.75rem);line-height:.94;letter-spacing:-.03em;
+}
+.numcell span{
+  display:block;margin-top:.6rem;font-family:var(--mono);font-size:.66rem;
+  letter-spacing:.11em;text-transform:uppercase;color:var(--on-steel-soft);line-height:1.55;
+}
+.numcell--broke b{color:var(--minio-lit)}
+.band__size{padding-top:1.5rem;max-width:74ch;color:var(--on-steel-soft);font-size:.99rem;line-height:1.6}
+.band__size strong{color:var(--on-steel);font-variation-settings:'wdth' 100,'wght' 650}
+
+/* ============ 3. PAIN: defect tags dropped on the bench ============ */
+.tags{display:grid;gap:1.5rem;margin-top:2.6rem;grid-template-columns:1fr}
+@media (min-width:900px){
+  .tags{grid-template-columns:1.18fr .92fr 1.06fr;gap:1.3rem;align-items:start}
+  .tags>*:nth-child(2){margin-top:2.6rem}
+  .tags>*:nth-child(3){margin-top:1.1rem}
+}
+.tag{
+  background:var(--chalk);border:1.5px solid var(--ink);border-top:9px solid var(--minio);
+  padding:1.45rem 1.35rem 1.3rem;box-shadow:var(--plate-sm);
+  transition:transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s cubic-bezier(.16,1,.3,1);
+}
+.tag:nth-child(1){transform:rotate(-1.3deg)}
+.tag:nth-child(2){transform:rotate(.8deg)}
+.tag:nth-child(3){transform:rotate(-.5deg)}
+.tag:hover{transform:rotate(0deg) translateY(-4px);box-shadow:7px 9px 0 var(--edge)}
+.tag p{
+  font-variation-settings:'wdth' 102,'wght' 620;
+  font-size:clamp(1.06rem,1.3vw,1.24rem);line-height:1.26;letter-spacing:-.018em;
+}
+.tag .meta{margin-top:1rem;padding-top:.8rem;border-top:1px solid var(--rule)}
+
+/* ============ 4. THE TWO DOORS ============ */
+.doors{display:grid;gap:1.5rem;margin-top:2.6rem;grid-template-columns:1fr}
+@media (min-width:980px){.doors{grid-template-columns:1.6fr 1fr;align-items:start}}
+.door-a{
+  background:var(--steel);color:var(--on-steel);border:1.5px solid var(--ink);
+  box-shadow:var(--plate);padding:clamp(1.75rem,3.2vw,2.9rem);
+  display:flex;flex-direction:column;
+}
+.door-a h3{
+  font-variation-settings:'wdth' 110,'wght' 800;
+  font-size:clamp(1.6rem,3vw,2.45rem);line-height:1.03;letter-spacing:-.028em;max-width:17ch;
+}
+.door-a p{color:var(--on-steel-soft);margin-top:1.05rem;max-width:50ch;font-size:1.02rem}
+.door-a__label{margin:1.9rem 0 1.5rem;padding-top:1rem;border-top:1px solid rgba(233,232,222,.22)}
+.door-a .btn{align-self:flex-start;margin-top:auto}
+.door-b{
+  background:var(--chalk);border:1.5px solid var(--ink);box-shadow:var(--plate-sm);
+  padding:clamp(1.5rem,2.4vw,1.9rem);display:flex;flex-direction:column;
+}
+.door-b h3{font-size:clamp(1.12rem,1.65vw,1.35rem);max-width:21ch}
+.door-b p{color:var(--ink-soft);margin-top:.85rem;font-size:.95rem}
+.door-b__label{margin:1.3rem 0 1.2rem;padding-top:.85rem;border-top:1px solid var(--rule)}
+.door-b .btn{align-self:flex-start;margin-top:auto}
+
+/* ============ 5. METHOD, DRAWN TO SCALE ============ */
+.tape{margin-top:2.75rem}
+.tape__marks{display:grid;grid-template-columns:1fr 1.35fr 3.05fr;margin-bottom:.45rem}
+.tape__marks span{
+  font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-faint);
+}
+.tape__rule{
+  height:22px;border-top:1.5px solid var(--ink);
+  background-image:repeating-linear-gradient(to right,var(--ink) 0 1.5px,transparent 1.5px 100%);
+  background-size:calc(100% / 16) 9px;background-repeat:repeat-x;background-position:0 0;
+  transform-origin:left center;
+}
+.steps{display:grid;gap:1.6rem;margin-top:1.5rem;grid-template-columns:1fr}
+@media (min-width:940px){.steps{grid-template-columns:1fr 1.35fr 3.05fr;gap:1.3rem}}
+@media (max-width:939px){.tape__marks,.tape__rule{display:none}}
+.step{border-left:3px solid var(--ink);padding-left:1.15rem}
+.step:last-child{border-left-color:var(--minio)}
+.step h3{margin-bottom:.45rem}
+.step .meta{margin-bottom:.75rem;color:var(--minio)}
+.step p{color:var(--ink-soft);font-size:.96rem}
+.method__close{
+  margin-top:2.75rem;padding:1.6rem 1.7rem;border:1.5px solid var(--ink);
+  background:var(--bench-deep);max-width:72ch;
+  font-variation-settings:'wdth' 100,'wght' 500;
+  font-size:clamp(1.01rem,1.2vw,1.16rem);line-height:1.45;letter-spacing:-.012em;
+}
+.method__foot{
+  margin-top:2rem;display:flex;flex-wrap:wrap;gap:1.5rem 2.5rem;align-items:center;
+}
+
+/* ============ 6. THE BENCH ============ */
+.bench{display:grid;gap:1.2rem;margin-top:2.6rem;grid-template-columns:1fr}
+@media (min-width:840px){
+  .bench{grid-template-columns:repeat(4,1fr)}
+  .bench__photo{grid-column:span 2;grid-row:span 2}
+  .made{grid-column:span 2}
+}
+.bench__photo{
+  margin:0;border:1.5px solid var(--ink);background:var(--chalk);padding:12px 12px 0;
+  display:flex;flex-direction:column;box-shadow:var(--plate-sm);
+}
+.bench__photo img{width:100%;height:100%;min-height:210px;object-fit:cover;flex:1 1 auto}
+.bench__photo figcaption{
+  padding:.95rem .15rem 1rem;font-family:var(--mono);font-size:.7rem;line-height:1.55;color:var(--ink-faint);
+}
+.made{
+  border:1.5px solid var(--ink);padding:1.35rem 1.3rem;
+  display:flex;flex-direction:column;justify-content:space-between;gap:1.05rem;
+  transition:transform .25s cubic-bezier(.16,1,.3,1),box-shadow .25s cubic-bezier(.16,1,.3,1);
+}
+.made:hover{transform:translateY(-4px);box-shadow:var(--plate-sm)}
+.made--chalk{background:var(--chalk)}
+.made--olive{background:var(--olive);color:#F2F2E9}
+.made--olive .meta{color:rgba(242,242,233,.84)}
+.made--steel{background:var(--steel);color:var(--on-steel)}
+.made--steel .meta{color:var(--on-steel-soft)}
+.made--outline{background:transparent}
+.made h3{font-size:clamp(1.04rem,1.35vw,1.26rem)}
+.made p{font-size:.93rem;opacity:.88;margin-top:.5rem}
+.bench__foot{
+  margin-top:2rem;max-width:70ch;color:var(--ink-soft);
+  border-top:1.5px solid var(--ink);padding-top:1.25rem;
+}
+.bench__foot strong{color:var(--ink);font-variation-settings:'wdth' 100,'wght' 650}
+
+/* ============ 7. TRAYECTORIA: staircase of finished pieces ============ */
+.stair{margin-top:2.6rem;display:flex;flex-direction:column;gap:1.05rem}
+.piece{
+  background:var(--chalk);border:1.5px solid var(--ink);box-shadow:var(--plate-sm);
+  padding:1.3rem 1.35rem;display:grid;gap:1.1rem;grid-template-columns:56px 1fr;align-items:center;
+  transition:transform .25s cubic-bezier(.16,1,.3,1);
+}
+@media (min-width:920px){
+  .piece{grid-template-columns:64px minmax(0,1fr) 216px;gap:1.6rem;padding:1.45rem 1.6rem}
+  .piece:nth-child(1){width:97%;transform:rotate(-.35deg)}
+  .piece:nth-child(2){width:93%;margin-left:4%;transform:rotate(.3deg)}
+  .piece:nth-child(3){width:89%;margin-left:8%;transform:rotate(-.25deg)}
+  .piece:nth-child(4){width:85%;margin-left:12%;transform:rotate(.35deg)}
+  .piece:nth-child(5){width:81%;margin-left:16%;transform:rotate(-.3deg)}
+  .piece:hover{transform:rotate(0deg) translateX(-8px)}
+}
+.piece__logo{
+  width:56px;height:56px;background:#fff;border:1.5px solid var(--ink);
+  display:flex;align-items:center;justify-content:center;padding:6px;
+}
+@media (min-width:920px){.piece__logo{width:64px;height:64px}}
+.piece__logo img{max-height:100%;width:auto;object-fit:contain}
+.piece__body h3{margin-bottom:.28rem}
+.piece__body p{font-size:.93rem;color:var(--ink-soft);margin:0}
+.piece__out{
+  font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;
+  line-height:1.65;border-left:3px solid var(--olive);padding-left:.85rem;
+  grid-column:1 / -1;color:var(--ink-soft);margin:0;
+}
+@media (min-width:920px){.piece__out{grid-column:auto}}
+.piece--broke .piece__out{border-left-color:var(--minio);color:var(--minio)}
+.stair__foot{
+  margin-top:2.25rem;display:flex;flex-wrap:wrap;gap:1.75rem 2.5rem;
+  align-items:flex-end;justify-content:space-between;
+}
+
+/* ============ 8. MENTORSHIP ============ */
+.mentor{border-top:1.5px solid var(--ink);background:var(--bench-deep)}
+.mentor__grid{display:grid;gap:2.25rem;grid-template-columns:1fr;align-items:start}
+@media (min-width:1000px){.mentor__grid{grid-template-columns:1fr 1.02fr;gap:clamp(2.5rem,4.5vw,4.5rem)}}
+.promise{
+  font-variation-settings:'wdth' 104,'wght' 700;
+  font-size:clamp(1.22rem,1.85vw,1.58rem);line-height:1.22;letter-spacing:-.02em;
+  margin:1.4rem 0 1.2rem;max-width:24ch;
+}
+.rule-hard{
+  margin-top:1.5rem;padding:1rem 1.15rem;border:1.5px solid var(--minio);
+  color:var(--minio);font-family:var(--mono);font-size:.78rem;line-height:1.65;
+}
+.ticket{
+  background:var(--chalk);border:1.5px solid var(--ink);box-shadow:var(--plate);
+  transform:rotate(.8deg);padding:1.45rem 1.45rem 1.3rem;
+  transition:transform .35s cubic-bezier(.16,1,.3,1);
+}
+.ticket:hover{transform:rotate(0deg)}
+.ticket__head{
+  display:flex;justify-content:space-between;gap:1rem;align-items:baseline;
+  border-bottom:2.5px solid var(--ink);padding-bottom:.75rem;margin-bottom:1.05rem;
+}
+.ticket__head h3{font-size:1.05rem}
+.ticket ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.8rem}
+.ticket li{display:grid;grid-template-columns:2.3rem 1fr;gap:.4rem;align-items:start;font-size:.94rem;line-height:1.42}
+.ticket li i{font-family:var(--mono);font-style:normal;font-size:.78rem;color:var(--ink-faint);padding-top:.14rem}
+.ticket li.done{color:var(--ink-faint);text-decoration:line-through;text-decoration-thickness:1.5px}
+.ticket li.done i{color:var(--olive)}
+.ticket__foot{margin-top:1.2rem;padding-top:.85rem;border-top:1px dashed var(--rule)}
+
+.detour{
+  margin-top:2.75rem;border:1.5px solid var(--olive);border-left-width:9px;
+  background:var(--chalk);padding:1.35rem 1.5rem;max-width:70ch;
+}
+.detour p{font-size:.97rem;color:var(--ink-soft)}
+.detour a{color:var(--ink);font-variation-settings:'wdth' 100,'wght' 650}
+
+.apply{margin-top:1.75rem;display:grid;gap:2rem;grid-template-columns:1fr;align-items:start}
+@media (min-width:1000px){.apply{grid-template-columns:1.05fr .95fr;gap:clamp(2.5rem,4.5vw,4.5rem)}}
+.apply__aside{border-top:1.5px solid var(--ink);padding-top:1.25rem}
+.apply__aside p{font-size:1rem;color:var(--ink-soft);margin-bottom:.9rem}
+.apply__aside strong{
+  display:block;color:var(--ink);font-size:clamp(1.1rem,1.5vw,1.32rem);
+  font-variation-settings:'wdth' 104,'wght' 700;letter-spacing:-.018em;line-height:1.2;margin-bottom:.9rem;
+}
+.form{max-width:56ch}
+.field{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1.2rem}
+.field label{font-variation-settings:'wdth' 100,'wght' 650;font-size:.93rem;color:var(--ink)}
+.field .help{font-family:var(--mono);font-size:.66rem;color:var(--ink-faint);letter-spacing:.02em}
+.field input,.field textarea,.field select{
+  font-family:var(--sans);font-size:.98rem;color:var(--ink);background:var(--chalk);
+  border:1.5px solid var(--ink-soft);padding:.72rem .8rem;width:100%;border-radius:0;
+}
+.field textarea{min-height:84px;resize:vertical}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--minio)}
+.field .err{font-family:var(--mono);font-size:.7rem;color:var(--minio);display:none}
+.field.invalid input,.field.invalid textarea,.field.invalid select{border-color:var(--minio);border-width:2px}
+.field.invalid .err{display:block}
+.apply__note{font-family:var(--mono);font-size:.72rem;line-height:1.8;color:var(--ink-faint)}
+.sent{
+  display:none;border:1.5px solid var(--ink);background:var(--olive);color:#F2F2E9;
+  padding:1.5rem 1.6rem;max-width:56ch;margin-top:1.75rem;box-shadow:var(--plate-sm);
+}
+.sent p{color:rgba(242,242,233,.88);font-size:.95rem;margin-top:.5rem}
+.is-sent .form{display:none}
+.is-sent .sent{display:block}
+.is-sent .apply__aside{display:none}
+
+/* ============ 9. CUPOS: the rack ============ */
+.rack{display:grid;gap:2rem;margin-top:2.4rem;grid-template-columns:1fr}
+@media (min-width:880px){.rack{grid-template-columns:1fr 1fr;gap:2.75rem}}
+.hooks{display:flex;gap:.5rem;flex-wrap:wrap;margin:1rem 0 .85rem}
+.hook{
+  width:64px;height:78px;border:1.5px solid var(--ink);display:flex;align-items:flex-end;
+  padding:.45rem;font-family:var(--mono);font-size:.66rem;letter-spacing:.04em;
+}
+.hook--taken{background:var(--steel);color:var(--on-steel-soft)}
+.hook--free{background:transparent;border-style:dashed;border-color:var(--ink-soft);color:var(--ink-faint)}
+.ignia-note{
+  margin-top:2.4rem;border-top:1.5px solid var(--ink);padding-top:1.4rem;max-width:66ch;
+  font-variation-settings:'wdth' 100,'wght' 500;font-size:clamp(1rem,1.2vw,1.13rem);line-height:1.5;
+}
+
+/* ============ 10. TESTIMONIALS, EMPTY ON PURPOSE ============ */
+.slots{display:grid;gap:1.1rem;margin-top:2.4rem;grid-template-columns:1fr}
+@media (min-width:840px){.slots{grid-template-columns:repeat(3,1fr)}}
+.slot{
+  border:2px dashed var(--ink-soft);padding:1.3rem;min-height:186px;
+  display:flex;flex-direction:column;justify-content:space-between;color:var(--ink-faint);
+}
+.slot__ph{display:flex;gap:.75rem;align-items:center;margin-top:1.25rem}
+.slot__ph i{width:38px;height:38px;border:1.5px dashed var(--ink-soft);display:block;flex:none}
+.slot__ph span{font-family:var(--mono);font-size:.64rem;line-height:1.75;letter-spacing:.05em}
+.offer{
+  margin-top:2.2rem;padding:1.55rem 1.7rem;background:var(--steel);color:var(--on-steel);
+  border:1.5px solid var(--ink);box-shadow:var(--plate-sm);max-width:70ch;
+  font-variation-settings:'wdth' 100,'wght' 500;font-size:clamp(1.01rem,1.2vw,1.16rem);line-height:1.45;
+}
+
+/* ============ 11. ABOUT ============ */
+.about{display:grid;gap:2.25rem;grid-template-columns:1fr;align-items:start}
+@media (min-width:1000px){.about{grid-template-columns:.9fr 1.1fr;gap:clamp(2.5rem,4.5vw,4rem)}}
+.about__pics{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
+.about__pics figure{
+  margin:0;border:1.5px solid var(--ink);background:var(--chalk);padding:9px 9px 0;box-shadow:var(--plate-sm);
+}
+.about__pics img{aspect-ratio:1/1;object-fit:cover;width:100%}
+.about__pics figcaption{
+  font-family:var(--mono);font-size:.63rem;line-height:1.55;color:var(--ink-faint);padding:.7rem .1rem .75rem;
+}
+.about__pics figure:nth-child(1){transform:rotate(-1.1deg)}
+.about__pics figure:nth-child(2){transform:rotate(.9deg)}
+.ahora{
+  margin-top:1.7rem;border:1.5px solid var(--ink);border-top:9px solid var(--olive);
+  background:var(--chalk);padding:1.3rem 1.4rem;
+}
+.ahora p{font-size:.95rem;color:var(--ink-soft)}
+.ahora a{color:var(--ink);font-variation-settings:'wdth' 100,'wght' 650}
+
+.talks{border-top:1.5px solid var(--ink);margin-top:clamp(3rem,5vw,4.5rem);padding-top:1.7rem}
+@media (min-width:920px){
+  .talks__grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,4vw,4rem);align-items:start}
+}
+.venues{
+  font-variation-settings:'wdth' 106,'wght' 700;
+  font-size:clamp(1.14rem,2.1vw,1.8rem);line-height:1.26;letter-spacing:-.022em;max-width:26ch;
+}
+.venues span{color:var(--ink-faint)}
+.talks__body{max-width:60ch;color:var(--ink-soft);font-size:.98rem;margin-top:1.1rem}
+@media (min-width:920px){.talks__body{margin-top:0}}
+.talks__link{
+  display:inline-block;margin-top:1.1rem;font-variation-settings:'wdth' 100,'wght' 650;
+  font-size:.96rem;color:var(--ink);text-decoration:none;
+  border-bottom:2px solid var(--minio);padding-bottom:.15rem;
+}
+.talks__link:hover{color:var(--minio)}
+
+/* ============ 12. FAQ ============ */
+.faq{margin-top:2.4rem;display:grid;gap:0 3rem;grid-template-columns:1fr;align-content:start}
+@media (min-width:980px){.faq{grid-template-columns:1fr 1fr}}
+.faq details{border-bottom:1.5px solid var(--rule)}
+.faq summary{
+  list-style:none;cursor:pointer;padding:1.1rem 2.5rem 1.1rem 0;position:relative;
+  font-variation-settings:'wdth' 102,'wght' 650;font-size:1.01rem;line-height:1.3;letter-spacing:-.012em;
+}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{
+  content:"+";position:absolute;right:.3rem;top:.95rem;
+  font-family:var(--mono);font-size:1.05rem;color:var(--minio);
+}
+.faq details[open] summary::after{content:"\2212"}
+.faq details[open] summary{color:var(--minio)}
+.faq p{padding:0 1.5rem 1.3rem 0;color:var(--ink-soft);font-size:.96rem;max-width:52ch}
+
+/* ============ 13. CLOSE ============ */
+.close{background:var(--steel);color:var(--on-steel);border-top:1.5px solid var(--ink)}
+.close h2{color:var(--on-steel);max-width:18ch}
+.close p{color:var(--on-steel-soft);max-width:56ch;margin-top:1.2rem;font-size:1.04rem}
+.close .btn{margin-top:1.9rem}
+
+/* ============ FOOTER ============ */
+.foot{
+  background:var(--steel-2);color:var(--on-steel-soft);
+  border-top:1px solid rgba(233,232,222,.17);padding-block:2.4rem;
+}
+.foot__in{display:flex;flex-wrap:wrap;gap:1.7rem;justify-content:space-between;align-items:flex-start}
+.foot p{margin:0}
+.foot a{color:var(--on-steel);text-decoration:none;border-bottom:1px solid transparent}
+.foot a:hover{border-bottom-color:var(--minio-lit)}
+.foot__nav{display:flex;flex-wrap:wrap;gap:1.2rem;font-size:.9rem}
+.foot__li{display:flex;align-items:center;gap:.55rem;font-size:.9rem}
+
+.foot__mark{font-variation-settings:'wdth' 118,'wght' 850;font-size:.95rem;text-transform:uppercase;color:var(--on-steel)}
+
+/* ============ DARK-MODE REPAIRS (contrast) ============ */
+@media (prefers-color-scheme:dark){
+  .made--olive{color:#12140F}
+  .made--olive .meta{color:rgba(18,20,15,.82)}
+  .sent{color:#12140F}
+  .sent p{color:rgba(18,20,15,.86)}
+  .btn--ghost{background:transparent;color:var(--ink);border-color:var(--ink)}
+  .btn--ghost:hover{background:var(--chalk)}
+  .piece__logo{background:#F5F4EE}
+}
+
+/* ============ MOTION: IntersectionObserver only, no scroll listeners ============ */
+.js [data-reveal]{opacity:0;transform:translateY(16px)}
+.js [data-reveal].is-in{
+  opacity:1;transform:none;
+  transition:opacity .62s cubic-bezier(.16,1,.3,1) var(--d,0ms),
+             transform .62s cubic-bezier(.16,1,.3,1) var(--d,0ms);
+}
+.js .tape__rule{transform:scaleX(0)}
+.js .tape__rule.is-in{transform:scaleX(1);transition:transform .95s cubic-bezier(.16,1,.3,1)}
+
+@media (prefers-reduced-motion:reduce){
+  .js [data-reveal],.js [data-reveal].is-in{opacity:1;transform:none;transition:none}
+  .js .tape__rule,.js .tape__rule.is-in{transform:none;transition:none}
+  .mount,.tag,.ticket,.piece,.made,.btn,.about__pics figure{transition:none}
+  .mount:hover,.tag:hover,.ticket:hover,.piece:hover,.made:hover,.btn:hover,.btn:active{transform:none}
+}
+</style>
+</head>
+
+<body>
+<script>document.documentElement.classList.add('js');</script>
+
+<!-- ============================= NAV ============================= -->
+<header class="nav">
+  <div class="wrap nav__in">
+    <a class="nav__mark" href="#top">Salomón Muriel<i>.</i></a>
+    <nav class="nav__links" aria-label="Principal">
+      <a href="#metodo">Consultoría</a>
+      <a href="#mentoria">Mentoría</a>
+      <a href="#trayectoria">Trayectoria</a>
+      <a href="#sobre-mi">Sobre mí</a>
+      <a href="#charlas">Charlas</a>
+    </nav>
+    <p class="nav__lang">
+      <a href="#top" aria-current="true">ES</a>
+      <span aria-hidden="true">/</span>
+      <a href="/en/">EN</a>
+    </p>
+    <details class="menu">
+      <summary>Menú</summary>
+      <nav class="menu__panel" aria-label="Principal, versión móvil">
+        <a href="#metodo">Consultoría</a>
+        <a href="#mentoria">Mentoría</a>
+        <a href="#trayectoria">Trayectoria</a>
+        <a href="#sobre-mi">Sobre mí</a>
+        <a href="#charlas">Charlas</a>
+      </nav>
+    </details>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ============================= 1. HERO ============================= -->
+<section class="hero">
+  <div class="wrap hero__grid">
+    <h1 class="hero__head" data-reveal>Yo armo la estrategia. Y <em>yo mismo</em> construyo la herramienta.</h1>
+
+    <div class="hero__left" data-reveal style="--d:110ms">
+      <p class="hero__sub">Trabajo con empresas que ya venden pero cuya operación vive en Excel, en WhatsApp y en tu cabeza.</p>
+      <div class="hero__cta">
+        <!-- Reemplazar por el número real: https://wa.me/573132465100?text=... -->
+        <a class="btn" href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20tengo%20una%20empresa%20de%20___%20y%20quiero%20contarte%20qu%C3%A9%20tengo%20montado.">Cuéntame qué tienes montado <span class="arrow" aria-hidden="true">&rarr;</span></a>
+        <a class="btn btn--ghost" href="#trayectoria">Ver mis empresas</a>
+      </div>
+    </div>
+
+    <div class="hero__right" data-reveal style="--d:180ms">
+      <figure class="mount">
+        <img src="assets/fotoSalo.jpeg" width="800" height="800" alt="Salomón Muriel, de saco verde y brazos cruzados, sobre un fondo oscuro.">
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= 2. PROOF BAND ============================= -->
+<section class="band pad-s">
+  <div class="wrap">
+    <div class="band__nums" data-reveal>
+      <div class="numcell"><b>5</b><span>empresas fundadas</span></div>
+      <div class="numcell"><b>2</b><span>vendidas</span></div>
+      <div class="numcell numcell--broke"><b>2</b><span>quebradas</span></div>
+      <div class="numcell"><b>100.000</b><span>reportes al año en Finco</span></div>
+      <div class="numcell"><b>USD 150K</b><span>el primer año de Ignia</span></div>
+    </div>
+    <p class="band__size" data-reveal style="--d:100ms">
+      Trabajo sobre todo con empresas que ya facturan pero todavía no llegan a los <strong>5.000 millones al año</strong>. Ropa, comida, retail, servicios, consultorías. No tienes que ser una empresa de tecnología: casi ninguno de mis clientes lo es.
+    </p>
+  </div>
+</section>
+
+<!-- ============================= 3. PAIN ============================= -->
+<section class="pad">
+  <div class="wrap">
+    <h2 data-reveal>Esto seguramente te suena</h2>
+    <div class="tags">
+      <div class="tag" data-reveal>
+        <p>Compraste un software carísimo que nadie en tu equipo usa.</p>
+        <p class="meta">y la licencia se sigue cobrando cada mes</p>
+      </div>
+      <div class="tag" data-reveal style="--d:90ms">
+        <p>Media operación depende de que tú te acuerdes de las cosas.</p>
+        <p class="meta">si te enfermas una semana, se para</p>
+      </div>
+      <div class="tag" data-reveal style="--d:180ms">
+        <p>Todo el mundo te habla de IA y nadie te dice qué hacer el lunes por la mañana.</p>
+        <p class="meta">el lunes por la mañana es lo único que importa</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= 4. THE TWO DOORS ============================= -->
+<section class="pad-s" style="padding-bottom:clamp(4rem,7vw,6.5rem)">
+  <div class="wrap">
+    <h2 data-reveal>¿En cuál de estas dos estás hoy?</h2>
+    <div class="doors">
+
+      <div class="door-a" data-reveal>
+        <h3>Ya tengo un negocio andando y la operación no me da abasto.</h3>
+        <p>Definimos para dónde va el negocio y yo construyo la herramienta que lo sostiene. Arrancamos con un diagnóstico corto de dos o tres semanas que termina con algo ya funcionando, no con un documento.</p>
+        <p class="door-a__label"><span class="stamp stamp--steel">Consultoría</span></p>
+        <a class="btn btn--on-steel" href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20tengo%20una%20empresa%20de%20___%20y%20quiero%20contarte%20qu%C3%A9%20tengo%20montado.">Cuéntame qué tienes montado <span class="arrow" aria-hidden="true">&rarr;</span></a>
+      </div>
+
+      <div class="door-b" data-reveal style="--d:110ms">
+        <h3>Apenas estoy arrancando y necesito que alguien me empuje.</h3>
+        <p>Uno a uno, una hora cada semana, con una lista de tareas concretas. Sin cohorte, sin currículo y sin compañeros de clase.</p>
+        <p class="door-b__label"><span class="stamp">Mentoría</span></p>
+        <a class="btn btn--ghost" href="#mentoria">Postularme a la mentoría</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================= 5. METHOD, TO SCALE ============================= -->
+<section class="pad hr-top" id="metodo">
+  <div class="wrap">
+    <h2 data-reveal>Qué pasa, en concreto, si trabajamos juntos</h2>
+    <p class="lede tight" data-reveal style="margin-top:1rem">Cada bloque de acá abajo está dibujado del ancho que dura de verdad.</p>
+
+    <div class="tape">
+      <div class="tape__marks" aria-hidden="true" data-reveal>
+        <span>Semana 1</span><span>Semanas 2 a 3</span><span>Semanas 4 a 16</span>
+      </div>
+      <div class="tape__rule" aria-hidden="true"></div>
+
+      <div class="steps">
+        <article class="step" data-reveal>
+          <h3>Entender la operación</h3>
+          <p class="meta">Semana 1</p>
+          <p>Hablo con la gente que ejecuta, no solo contigo. Miro cómo se hace hoy el trabajo de verdad, no cómo debería hacerse.</p>
+        </article>
+        <article class="step" data-reveal style="--d:90ms">
+          <h3>Diagnóstico</h3>
+          <p class="meta">Semanas 2 a 3</p>
+          <p>Un plan corto, de dos páginas, con el único cuello de botella que vale la pena atacar primero. Y una primera cosa ya funcionando, para que decidas con algo en la mano.</p>
+        </article>
+        <article class="step" data-reveal style="--d:180ms">
+          <h3>Construcción</h3>
+          <p class="meta">Semanas 4 a 16</p>
+          <p>Construyo lo que salió del diagnóstico: la herramienta interna, el CRM, la automatización, el flujo de trabajo con IA. Lo ponemos en producción y entreno a tu equipo hasta que lo usen sin mí. Después, si quieres, quedo de acompañante una vez al mes para que lo construido no se muera.</p>
+        </article>
+      </div>
+    </div>
+
+    <p class="method__close" data-reveal>Al final no te queda un informe. Te queda algo prendido, funcionando, y tu equipo sabiendo usarlo. Si te entrego un documento bonito y nadie lo abre, los dos perdimos la plata.</p>
+
+    <div class="method__foot" data-reveal>
+      <a class="btn" href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20tengo%20una%20empresa%20de%20___%20y%20quiero%20contarte%20qu%C3%A9%20tengo%20montado.">Cuéntame qué tienes montado <span class="arrow" aria-hidden="true">&rarr;</span></a>
+      <span class="redline">la construyo yo. no la subcontrato.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= 6. THE BENCH ============================= -->
+<section class="pad hr-top" style="background:var(--bench-deep);border-bottom:1.5px solid var(--ink)">
+  <div class="wrap">
+    <h2 data-reveal>Cosas que construí con mis propias manos</h2>
+
+    <div class="bench">
+      <figure class="bench__photo" data-reveal>
+        <img src="assets/salo_oscar.webp" width="527" height="328" alt="Salomón sosteniendo una pantalla con el producto de Finco durante una presentación.">
+        <figcaption>Finco, el día que salimos a mostrarlo. El motor de valoración corría con código que escribí yo.</figcaption>
+      </figure>
+
+      <article class="made made--steel" data-reveal style="--d:70ms">
+        <div>
+          <h3>Pipeline de datos y sistema de riesgo</h3>
+          <p>En R5 armé el pipeline completo y los modelos de riesgo, con el equipo de datos que también monté desde cero.</p>
+        </div>
+        <p class="meta">R5 · Python y SQL</p>
+      </article>
+
+      <article class="made made--chalk" data-reveal style="--d:140ms">
+        <div>
+          <h3>El CRM con el que vendemos</h3>
+          <p>Ninguno de los de estante hacía lo que necesitábamos, así que lo hice a la medida. El equipo comercial lo usa todos los días.</p>
+        </div>
+        <p class="meta">Ignia · en uso</p>
+      </article>
+
+      <article class="made made--olive" data-reveal style="--d:210ms">
+        <div>
+          <h3>La plataforma de la comunidad</h3>
+          <p>Más de 2.000 personas la usan para encontrarse, postularse y seguir en contacto cuando el programa termina.</p>
+        </div>
+        <p class="meta">Ignia · en uso</p>
+      </article>
+
+      <article class="made made--outline" data-reveal style="--d:280ms">
+        <div>
+          <h3>El sitio de Ignia</h3>
+          <p>Diseño, textos y código. Cuando hay que cambiar algo lo cambio el mismo día, sin esperar a nadie.</p>
+        </div>
+        <p class="meta">ignia.lat · en uso</p>
+      </article>
+    </div>
+
+    <p class="bench__foot" data-reveal><strong>Hoy construyo con IA, y por eso lo que antes tomaba un trimestre sale en semanas.</strong> También la uso para cosas que no son programar: leer cien entrevistas de clientes y sacar lo que se repite, entender un sistema viejo que nadie documentó, armar una propuesta. Eso mismo es lo que le enseño a tu equipo.</p>
+  </div>
+</section>
+
+<!-- ============================= 7. TRAYECTORIA ============================= -->
+<section class="pad" id="trayectoria">
+  <div class="wrap">
+    <h2 data-reveal>Cinco empresas. Dos vendidas, dos quebradas, una andando.</h2>
+
+    <div class="stair">
+      <article class="piece" data-reveal>
+        <span class="piece__logo"><img src="assets/ignia.png" width="1657" height="1104" alt="Logo de Ignia"></span>
+        <div class="piece__body">
+          <h3>Ignia</h3>
+          <p>Otro modelo de educación superior, en Bogotá. Sin inversionistas, equipo de cinco, tres cohortes corridas.</p>
+        </div>
+        <p class="piece__out">Andando<br>USD 150K el primer año<br>rentable desde el día uno</p>
+      </article>
+
+      <article class="piece" data-reveal style="--d:70ms">
+        <span class="piece__logo"><img src="assets/finco.png" width="730" height="734" alt="Logo de Finco"></span>
+        <div class="piece__body">
+          <h3>Finco</h3>
+          <p>Valoración de inmuebles con datos e inteligencia artificial para Latinoamérica. Más de 100.000 reportes al año.</p>
+        </div>
+        <p class="piece__out">Vendida a RED Atlas<br>cerca de USD 1,5M<br>5 veces la inversión</p>
+      </article>
+
+      <article class="piece" data-reveal style="--d:140ms">
+        <span class="piece__logo"><img src="assets/prestagente.png" width="932" height="912" alt="Logo de PrestaGente"></span>
+        <div class="piece__body">
+          <h3>PrestaGente</h3>
+          <p>Crédito de libranza entre personas, armado para la regulación colombiana. Sigue operando hoy.</p>
+        </div>
+        <p class="piece__out">Vendida a Taurus Capital<br>cerca de USD 1M</p>
+      </article>
+
+      <article class="piece piece--broke" data-reveal style="--d:210ms">
+        <span class="piece__logo"><img src="assets/beriblock.png" width="808" height="954" alt="Logo de Beriblock"></span>
+        <div class="piece__body">
+          <h3>Beriblock</h3>
+          <p>Autenticación de pagarés con blockchain. Los inversionistas pidieron tercerizar el desarrollo afuera. Nunca más.</p>
+        </div>
+        <p class="piece__out">Quebró<br>2018 a 2019</p>
+      </article>
+
+      <article class="piece piece--broke" data-reveal style="--d:280ms">
+        <span class="piece__logo"><img src="assets/elpalomo.png" width="100" height="100" alt="Logo de El Palomo"></span>
+        <div class="piece__body">
+          <h3>El Palomo</h3>
+          <p>Flores por suscripción, todo en línea. Vendí bien algo que la operación no era capaz de sostener.</p>
+        </div>
+        <p class="piece__out">Quebró<br>2016 a 2017</p>
+      </article>
+    </div>
+
+    <div class="stair__foot">
+      <p class="lede tight" data-reveal style="margin:0">Dos de estas me costaron caro y las dejo acá a propósito. Sé dónde no meterse porque ya me metí, y ese conocimiento te sale mucho más barato a ti que a mí.</p>
+      <p data-reveal style="margin:0"><span class="redline">acá aprendí lo que ahora te ahorro</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= 8. MENTORSHIP ============================= -->
+<section class="mentor pad" id="mentoria">
+  <div class="wrap">
+    <div class="mentor__grid">
+
+      <div data-reveal>
+        <h2>Mentoría, uno a uno</h2>
+        <p class="promise">Trabajar conmigo significa que las cosas pasan, así toque a las malas.</p>
+        <p class="lede">Una videollamada de 60 minutos cada semana. WhatsApp abierto entre sesiones para lo que se atraviese. Mínimo tres meses, para que no se vuelva terapia.</p>
+        <p class="lede" style="margin-top:1rem">Cada sesión termina con una lista escrita de tareas para esa semana, y la siguiente arranca revisando esa lista en vez de conversando. Llevo siete mentoreados y la mecánica siempre fue la misma.</p>
+        <p class="rule-hard">Si dos semanas seguidas no hiciste las tareas, paramos. Sin resentimientos, pero paramos.</p>
+      </div>
+
+      <div data-reveal style="--d:120ms">
+        <div class="ticket">
+          <div class="ticket__head">
+            <h3>Lista de la semana</h3>
+            <span class="stamp">semana 3 de 12</span>
+          </div>
+          <ol>
+            <li class="done"><i aria-hidden="true">[x]</i><span><span class="sr">Hecho. </span>Llamar a cinco clientes que compraron una sola vez y preguntarles por qué no volvieron.</span></li>
+            <li class="done"><i aria-hidden="true">[x]</i><span><span class="sr">Hecho. </span>Sacar el costo real de tu producto estrella, con mano de obra incluida.</span></li>
+            <li><i aria-hidden="true">[ ]</i><span>Escribir en una hoja qué se rompe primero si mañana vendes el triple.</span></li>
+            <li><i aria-hidden="true">[ ]</i><span>Cotizar domicilio propio contra plataforma, con los números de este mes.</span></li>
+            <li><i aria-hidden="true">[ ]</i><span>Mandarme el precio nuevo antes del jueves, así no esté perfecto.</span></li>
+          </ol>
+          <p class="ticket__foot meta">La próxima sesión arranca revisando esta lista. Es una semana real, con los datos del negocio cambiados.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="detour" data-reveal>
+      <p>Si lo que buscas es aprender en grupo, con estructura, con currículo y con gente que está exactamente en tu mismo momento, eso es el <a href="https://www.ignia.lat" target="_blank" rel="noopener">Action Lab de Ignia</a> y probablemente te sirva más que yo. Te dejo el enlace de una vez. Acá somos tú y yo, cada semana, y nada más.</p>
+    </div>
+
+    <div id="postular" class="apply" data-reveal>
+      <form class="form" novalidate>
+        <div class="field">
+          <label for="q1">¿Qué estás construyendo?</label>
+          <span class="help" id="h1">una o dos frases, en cristiano</span>
+          <textarea id="q1" name="q1" aria-describedby="h1 e1" required></textarea>
+          <span class="err" id="e1">Cuéntame aunque sea una frase.</span>
+        </div>
+        <div class="field">
+          <label for="q2">¿En qué punto estás hoy?</label>
+          <select id="q2" name="q2" aria-describedby="e2" required>
+            <option value="">Elige una</option>
+            <option>Todavía es una idea</option>
+            <option>Tengo los primeros clientes</option>
+            <option>Ya vendo, pero no despega</option>
+            <option>Me estoy reinventando profesionalmente</option>
+          </select>
+          <span class="err" id="e2">Escoge la que más se parezca.</span>
+        </div>
+        <div class="field">
+          <label for="q3">¿Qué es lo que te tiene trancado ahora mismo?</label>
+          <textarea id="q3" name="q3" aria-describedby="e3" required></textarea>
+          <span class="err" id="e3">Esta es la pregunta importante. No la dejes en blanco.</span>
+        </div>
+        <div class="field">
+          <label for="q4">¿Cuántas horas a la semana le metes de verdad?</label>
+          <span class="help" id="h4">de verdad, no las que te gustaría</span>
+          <input id="q4" name="q4" type="number" min="0" max="80" inputmode="numeric" aria-describedby="h4 e4" required>
+          <span class="err" id="e4">Pon un número, así te dé pena.</span>
+        </div>
+        <div class="field">
+          <label for="q5">¿Por qué ahora?</label>
+          <textarea id="q5" name="q5" aria-describedby="e5" required></textarea>
+          <span class="err" id="e5">Falta esta.</span>
+        </div>
+        <button class="btn" type="submit">Postularme a la mentoría <span class="arrow" aria-hidden="true">&rarr;</span></button>
+      </form>
+
+      <div class="sent" role="status" aria-live="polite">
+        <h3>Quedó enviada</h3>
+        <p>Te contesto en menos de una semana, sí o no. Si entras, en ese mismo correo va la primera lista de tareas para que arranques antes de la primera sesión.</p>
+      </div>
+
+      <aside class="apply__aside">
+        <strong>Te contesto en menos de una semana, sí o no.</strong>
+        <p>Hay cinco cupos en total y hoy quedan dos. No entra todo el mundo, y prefiero decírtelo antes de que te sientes a llenar esto.</p>
+        <p>Estas cinco preguntas no son un formulario de contacto. Son, literalmente, el primer ejercicio del trabajo: si te cuesta contestarlas, ya sabemos por dónde arrancar.</p>
+        <p class="apply__note">se responde en tres minutos. no hace falta que quede bonito.</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= 9. CUPOS ============================= -->
+<section class="pad hr-top">
+  <div class="wrap">
+    <h2 data-reveal>Cupos, sin cuento</h2>
+    <p class="lede" data-reveal style="margin-top:1rem;max-width:66ch">No es urgencia de mercadeo. Es que esto lo hago yo, con mis propias manos, y en paralelo con Ignia. Cuando se llenan, se llenan.</p>
+
+    <!-- Un solo valor editable en src/config.ts:
+         CAPACITY = { consultoria:{ocupados:2,total:4}, mentoria:{ocupados:3,total:5}, actualizado:"2026-09-01" } -->
+    <div class="rack">
+      <div data-reveal>
+        <h3>Consultoría</h3>
+        <div class="hooks">
+          <span class="hook hook--taken">activo</span>
+          <span class="hook hook--taken">activo</span>
+          <span class="hook hook--free">libre</span>
+          <span class="hook hook--free">libre</span>
+        </div>
+        <p class="meta">2 de 4 ocupados. Actualizado el 1 de septiembre de 2026.</p>
+      </div>
+      <div data-reveal style="--d:110ms">
+        <h3>Mentoría</h3>
+        <div class="hooks">
+          <span class="hook hook--taken">activo</span>
+          <span class="hook hook--taken">activo</span>
+          <span class="hook hook--taken">activo</span>
+          <span class="hook hook--free">libre</span>
+          <span class="hook hook--free">libre</span>
+        </div>
+        <p class="meta">3 de 5 ocupados. Actualizado el 1 de septiembre de 2026.</p>
+      </div>
+    </div>
+
+    <p class="ignia-note" data-reveal>De lunes a viernes construyo Ignia con mi socio. Esto de acá es aparte y va a mi nombre. Por eso los cupos son contados.</p>
+  </div>
+</section>
+
+<!-- ============================= 10. TESTIMONIALS ============================= -->
+<section class="pad-s" style="padding-bottom:clamp(4rem,7vw,6.5rem)">
+  <div class="wrap">
+    <h2 data-reveal>Todavía no hay testimonios acá</h2>
+
+    <div class="slots">
+      <div class="slot" data-reveal>
+        <p class="meta">Reservado</p>
+        <p class="slot__ph"><i aria-hidden="true"></i><span>nombre<br>cargo y empresa</span></p>
+      </div>
+      <div class="slot" data-reveal style="--d:80ms">
+        <p class="meta">Reservado</p>
+        <p class="slot__ph"><i aria-hidden="true"></i><span>nombre<br>cargo y empresa</span></p>
+      </div>
+      <div class="slot" data-reveal style="--d:160ms">
+        <p class="meta">Reservado</p>
+        <p class="slot__ph"><i aria-hidden="true"></i><span>nombre<br>cargo y empresa</span></p>
+      </div>
+    </div>
+
+    <p class="offer" data-reveal>Tengo algo mejor que tres frases bonitas en un sitio web: si la conversación va en serio, te paso el teléfono de un cliente para que le preguntes tú mismo cómo fue.</p>
+  </div>
+</section>
+
+<!-- ============================= 11. ABOUT + NOW + TALKS ============================= -->
+<section class="pad hr-top" id="sobre-mi" style="background:var(--bench-deep)">
+  <div class="wrap">
+    <div class="about">
+      <div data-reveal>
+        <div class="about__pics">
+          <figure>
+            <img src="assets/marathon.jpg" width="600" height="600" alt="Salomón muestra su medalla al terminar la media maratón de Bogotá.">
+            <figcaption>Media maratón, 2:10:00. Ocho semanas de plan, y una inscripción que le hice a mi esposa sin preguntarle.</figcaption>
+          </figure>
+          <figure>
+            <img src="assets/bonfire.jpeg" width="600" height="600" alt="Una fogata encendida al anochecer, rodeada de piedras.">
+            <figcaption>Fogata en familia. Los fines de semana no trabajo, y eso también es una decisión de negocio.</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div data-reveal style="--d:110ms">
+        <h2>Quién soy</h2>
+        <p class="lede" style="margin-top:1.2rem">Me llamo Salomón. Voy en la quinta empresa: dos las vendí, dos quebraron y la de ahora va bien. Antes de eso dirigí datos y después producto en R5, con unas 40 personas a cargo, y en mis propias empresas manejé hasta 15.</p>
+        <p class="lede" style="margin-top:1rem">Aprendí a programar a las malas, con una fecha de entrega encima, y desde entonces no he parado de construir cosas: empresas, herramientas internas, muebles para la casa, recetas, juegos para mis hijos. Tengo mellizos de tres años y una esposa que me aguanta desde 2010. Construyo porque me gusta construir. Lo demás vino detrás.</p>
+
+        <div class="ahora">
+          <p><strong>Ahora, septiembre de 2026.</strong> Ignia está montado y andando: equipo de cinco, tres cohortes y rentable desde el día uno. Gano la sexta parte de lo que ganaba antes, pero es estable y va subiendo. Medidor de felicidad: 9 sobre 10. Lo único que falta para el 10 es volver a moverme, porque desde la media maratón el ejercicio se me cayó. <a href="/ahora">Acá voy contando cómo va</a>.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="talks" id="charlas">
+      <div class="talks__grid">
+        <p class="venues" data-reveal>Me han invitado a hablar de esto en ConfNodo, EAFIT, la EIA, el Externado, la Universidad Católica, <span>la Asociación Colombiana de EdTech y un par de podcasts.</span></p>
+        <div data-reveal style="--d:100ms">
+          <p class="talks__body">Hablo de adopción de tecnología e IA, de emprender sin romanticismo, de mentalidad maker y de trabajo y vida sin la pose. Doy charlas porque me gusta y porque así me conocen. No es un producto: es la puerta de entrada.</p>
+          <a class="talks__link" href="https://cal.com/salomonmuriel">Invitarme a una charla <span class="arrow" aria-hidden="true">&rarr;</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= 12. FAQ ============================= -->
+<section class="pad hr-top">
+  <div class="wrap">
+    <h2 data-reveal>Lo que siempre me preguntan</h2>
+
+    <div class="faq" data-reveal>
+      <details>
+        <summary>Es que yo de tecnología no sé nada.</summary>
+        <p>Perfecto. La mitad de mi trabajo es traducir. Si algo no se entiende, es culpa mía y no tuya. A tu equipo le explico igual: en español y sin palabras raras.</p>
+      </details>
+      <details>
+        <summary>¿Me vas a cobrar por un PowerPoint?</summary>
+        <p>No. El entregable es algo funcionando en producción, tu equipo sabiendo usarlo, la documentación en español y la decisión estratégica escrita en dos páginas. Si lo que quieres es un informe de ochenta páginas, hay gente que lo hace mejor que yo.</p>
+      </details>
+      <details>
+        <summary>¿Mi empresa es muy chiquita?</summary>
+        <p>Casi seguro que no. Trabajo con empresas de 5 a 40 personas que ya venden. Donde de verdad no sirvo es más arriba: pasados los cinco millones de dólares al año no sé escalar, y prefiero decírtelo de una.</p>
+      </details>
+      <details>
+        <summary>¿Cuánto vale?</summary>
+        <p>Depende del alcance, y te lo digo hablado en la primera llamada. Sin cotización de veinte páginas y sin sorpresas después. Empezamos con el diagnóstico corto: si eso no te aporta, ahí paramos y no perdiste medio año.</p>
+      </details>
+      <details>
+        <summary>¿Esto es Ignia?</summary>
+        <p>No. Ignia es la empresa que construyo de lunes a viernes con mi socio. Esto es mi práctica personal, va a mi nombre, y por eso los cupos son tan pocos.</p>
+      </details>
+      <details>
+        <summary>¿En cuánto tiempo veo algo?</summary>
+        <p>Entre la semana dos y la tres ya hay una primera cosa funcionando. No es una maqueta bonita: es algo que tu equipo puede usar ese mismo día. Si te sirve, seguimos. Si no, ahí quedamos.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= 13. CLOSE ============================= -->
+<section class="close pad">
+  <div class="wrap" data-reveal>
+    <h2>Hablemos 30 minutos y salimos de la duda.</h2>
+    <p>Si tienes un negocio andando y una idea de para dónde quieres llevarlo, escríbeme. Y si no te puedo ayudar, te lo digo de una y no te hago perder el tiempo.</p>
+    <a class="btn btn--on-steel" href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20tengo%20una%20empresa%20de%20___%20y%20quiero%20contarte%20qu%C3%A9%20tengo%20montado.">Cuéntame qué tienes montado <span class="arrow" aria-hidden="true">&rarr;</span></a>
+  </div>
+</section>
+
+</main>
+
+<!-- ============================= FOOTER ============================= -->
+<footer class="foot">
+  <div class="wrap foot__in">
+    <p class="foot__mark">Salomón Muriel</p>
+    <p class="foot__li">
+      <a href="https://www.linkedin.com/in/smuriel/" target="_blank" rel="noopener">LinkedIn es mi blog: ahí escribo todas las semanas</a>
+    </p>
+    <nav class="foot__nav" aria-label="Pie de página">
+      <a href="#metodo">Consultoría</a>
+      <a href="#mentoria">Mentoría</a>
+      <a href="#trayectoria">Trayectoria</a>
+      <a href="#sobre-mi">Sobre mí</a>
+      <a href="#charlas">Charlas</a>
+      <a href="/ahora">Ahora</a>
+      <a href="/en/">English</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+/* ---- reveal on enter: sequences the argument section by section ---- */
+(function(){
+  var els = document.querySelectorAll('[data-reveal]');
+  var rule = document.querySelector('.tape__rule');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if(!('IntersectionObserver' in window) || reduce){
+    for(var i=0;i<els.length;i++){ els[i].classList.add('is-in'); }
+    if(rule){ rule.classList.add('is-in'); }
+    return;
+  }
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('is-in'); io.unobserve(e.target); }
+    });
+  },{threshold:0.08, rootMargin:'0px 0px -6% 0px'});
+  for(var j=0;j<els.length;j++){ io.observe(els[j]); }
+
+  /* the rule draws itself: it is a measurement being taken across the three phases */
+  if(rule){
+    var io2 = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('is-in'); io2.unobserve(e.target); }
+      });
+    },{threshold:0.35});
+    io2.observe(rule);
+  }
+})();
+
+/* ---- mentorship application: validate, acknowledge, confirm ---- */
+(function(){
+  var wrap = document.getElementById('postular');
+  if(!wrap) return;
+  var form = wrap.querySelector('form');
+  var btn = form.querySelector('button[type=submit]');
+
+  form.addEventListener('input', function(e){
+    var f = e.target.closest('.field');
+    if(f && f.classList.contains('invalid') && e.target.value.trim() !== ''){
+      f.classList.remove('invalid');
+    }
+  });
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var controls = form.querySelectorAll('[required]');
+    var firstBad = null;
+    for(var i=0;i<controls.length;i++){
+      var c = controls[i], f = c.closest('.field');
+      if(c.value.trim() === ''){ f.classList.add('invalid'); if(!firstBad){ firstBad = c; } }
+      else { f.classList.remove('invalid'); }
+    }
+    if(firstBad){ firstBad.focus(); return; }
+
+    btn.disabled = true;
+    btn.textContent = 'Enviando';
+    window.setTimeout(function(){ wrap.classList.add('is-sent'); }, 500);
+  });
+})();
+</script>
+</body>
+</html>

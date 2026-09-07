@@ -1,0 +1,895 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Salomón Muriel · Consultoría para empresas que funcionan a mano</title>
+<meta name="description" content="Estrategia y la herramienta construida, para empresas colombianas donde el proceso todavía lo hace alguien a mano.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   PALETA: grafito frío + hueso cálido + un solo acento (tungsteno).
+   Tema oscuro fijo. Sin prefers-color-scheme, sin toggle.
+   Radios: 4px controles, 8px paneles e imágenes. Sin excepciones.
+   ============================================================ */
+:root{
+  color-scheme: dark;
+  --ink:#0F1216;
+  --ink-2:#13171C;
+  --surface:#191E25;
+  --surface-2:#212832;
+  --line:rgba(236,231,221,.10);
+  --line-2:rgba(236,231,221,.18);
+  --bone:#ECE7DD;
+  --dim:#B7B2A9;
+  --muted:#8E97A2;
+  --amber:#E9A23B;
+  --amber-dim:rgba(233,162,59,.13);
+  --r:4px;
+  --r-lg:8px;
+  --shadow:0 24px 60px -20px rgba(4,7,12,.85), 0 2px 0 rgba(236,231,221,.03) inset;
+  --wrap:1320px;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;overflow-x:clip}
+body{
+  margin:0;
+  background:var(--ink);
+  color:var(--bone);
+  font-family:"Instrument Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  font-size:17px;
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:clip;
+}
+img{max-width:100%;display:block}
+a{color:inherit}
+h1,h2,h3,h4{
+  font-family:"Archivo","Instrument Sans",Helvetica,Arial,sans-serif;
+  font-weight:700;
+  letter-spacing:-.028em;
+  line-height:1.06;
+  margin:0;
+  text-wrap:balance;
+}
+p{margin:0}
+::selection{background:var(--amber);color:#12161B}
+
+/* grano fijo, sin repintado en scroll */
+.grain{
+  position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode:overlay;
+}
+
+.wrap{width:100%;max-width:var(--wrap);margin:0 auto;padding:0 28px}
+.rule{height:1px;background:var(--line);border:0;margin:0}
+
+/* ---------- NAV ---------- */
+.nav{
+  position:sticky;top:0;z-index:50;height:70px;
+  background:rgba(15,18,22,.82);
+  backdrop-filter:blur(14px) saturate(140%);
+  -webkit-backdrop-filter:blur(14px) saturate(140%);
+  border-bottom:1px solid var(--line);
+}
+.nav-in{height:70px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.brand{display:flex;align-items:baseline;gap:10px;text-decoration:none;white-space:nowrap}
+.brand b{font-family:"Archivo";font-weight:700;font-size:17px;letter-spacing:-.02em}
+.brand span{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--muted);letter-spacing:.02em}
+.nav-links{display:flex;gap:30px;margin-left:auto;margin-right:8px}
+.nav-links a{
+  text-decoration:none;color:var(--dim);font-size:14.5px;font-weight:500;
+  padding-bottom:2px;border-bottom:1px solid transparent;transition:color .2s var(--ease),border-color .2s var(--ease);
+}
+.nav-links a:hover{color:var(--bone);border-color:var(--amber)}
+
+/* ---------- BOTONES ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;
+  font-family:"Instrument Sans";font-weight:600;font-size:15.5px;line-height:1;
+  padding:15px 22px;border-radius:var(--r);text-decoration:none;border:1px solid transparent;
+  transition:transform .18s var(--ease),background-color .2s var(--ease),border-color .2s var(--ease),color .2s var(--ease);
+}
+.btn-primary{background:var(--amber);color:#12161B;box-shadow:0 1px 0 rgba(255,255,255,.28) inset}
+.btn-primary:hover{background:#F2B052}
+.btn-primary:active{transform:translateY(1px) scale(.99)}
+.btn-ghost{border-color:var(--line-2);color:var(--bone);background:transparent}
+.btn-ghost:hover{border-color:var(--bone);background:rgba(236,231,221,.05)}
+.btn-ghost:active{transform:translateY(1px) scale(.99)}
+.btn-sm{padding:11px 16px;font-size:14px}
+:focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:2px}
+
+/* ---------- HERO (split asimétrico) ---------- */
+.hero{position:relative;overflow:hidden}
+.hero::before{
+  content:"";position:absolute;top:-160px;left:-10%;width:70%;height:520px;pointer-events:none;
+  background:radial-gradient(ellipse at 30% 0%,rgba(233,162,59,.10),rgba(233,162,59,0) 62%);
+}
+.hero-in{position:relative;padding-top:66px;padding-bottom:70px}
+.hero h1{font-size:clamp(2.4rem,4.1vw,3.9rem);font-weight:800;letter-spacing:-.04em}
+.hero h1 .am{color:var(--amber)}
+.hero-row{display:grid;grid-template-columns:1fr .96fr;gap:56px;align-items:center;margin-top:44px}
+.hero-sub{
+  max-width:42ch;font-size:clamp(1.06rem,1.5vw,1.34rem);
+  color:var(--dim);line-height:1.55;
+}
+.hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:32px}
+.hero-fig{position:relative;border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow);border:1px solid var(--line)}
+.hero-fig img{width:100%;height:100%;object-fit:cover;aspect-ratio:3/2;filter:saturate(.72) contrast(1.04) brightness(.82)}
+.hero-fig::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(15,18,22,.28),rgba(15,18,22,.06) 40%,rgba(15,18,22,.62));
+}
+
+/* ---------- BANDA DE ETAPA ---------- */
+.stage{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--ink-2)}
+.stage-in{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.stage-cell{padding:38px 44px 42px}
+.stage-cell + .stage-cell{border-left:1px solid var(--line)}
+.stage-cell h3{font-size:1.16rem;font-weight:600;letter-spacing:-.02em;margin-bottom:10px}
+.stage-cell p{color:var(--muted);font-size:15.5px;max-width:52ch}
+
+/* ---------- SECCIÓN GENÉRICA ---------- */
+section{position:relative}
+.sec-pad{padding:104px 0}
+.sec-head{max-width:26ch}
+.sec-head h2{font-size:clamp(2rem,3.5vw,3.1rem)}
+.lede{margin-top:22px;max-width:62ch;color:var(--dim);font-size:1.08rem}
+
+/* ---------- MOMENTO DE FRICCIÓN (media scrim) ---------- */
+.scene{position:relative;min-height:640px;display:flex;align-items:center;isolation:isolate}
+.scene-bg{position:absolute;inset:0;z-index:-2;overflow:hidden}
+.scene-bg img{width:100%;height:100%;object-fit:cover;filter:grayscale(.35) saturate(.7) brightness(.55)}
+.scene-bg::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(96deg,rgba(15,18,22,.985) 0%,rgba(15,18,22,.955) 42%,rgba(15,18,22,.72) 68%,rgba(15,18,22,.42) 100%),
+             linear-gradient(180deg,rgba(15,18,22,.9),rgba(15,18,22,.25) 30%,rgba(15,18,22,.92));
+}
+.scene-copy{max-width:63ch;padding:112px 0}
+.scene-copy h2{font-size:clamp(2.05rem,3.9vw,3.35rem);max-width:19ch}
+.scene-copy p{margin-top:22px;font-size:1.11rem;color:var(--dim);max-width:58ch}
+.scene-trigger{
+  margin-top:34px;padding-left:22px;border-left:2px solid var(--amber);
+  font-size:1.14rem;color:var(--bone);max-width:56ch;
+}
+
+/* ---------- BENTO: LO QUE YA CONTRATÓ ---------- */
+.bento{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;margin-top:56px}
+.cell{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);
+  padding:32px 30px 34px;box-shadow:0 1px 0 rgba(236,231,221,.04) inset;
+  transition:border-color .25s var(--ease),transform .25s var(--ease),background-color .25s var(--ease);
+}
+.cell:hover{border-color:var(--line-2);transform:translateY(-2px);background:var(--surface-2)}
+.cell h3{font-size:1.3rem;font-weight:700;letter-spacing:-.025em}
+.cell p{margin-top:14px;color:var(--muted);font-size:15.6px}
+.cell .verdict{
+  margin-top:20px;font-family:"JetBrains Mono",monospace;font-size:11.5px;color:var(--dim);
+  padding-top:14px;border-top:1px solid var(--line);
+}
+.c-2{grid-column:span 2}
+.c-3{grid-column:span 3}
+.c-6{grid-column:span 6}
+.cell-img{padding:0;overflow:hidden;background:var(--ink-2)}
+.cell-img img{width:100%;height:100%;object-fit:cover;min-height:230px;filter:grayscale(.4) brightness(.68) saturate(.8)}
+.cell-wide{
+  background:linear-gradient(120deg,rgba(233,162,59,.10),rgba(233,162,59,.02) 46%,var(--surface) 78%);
+  border-color:rgba(233,162,59,.24);
+  display:grid;grid-template-columns:.85fr 1.15fr;gap:36px;align-items:start;padding:40px;
+}
+.cell-wide:hover{background:linear-gradient(120deg,rgba(233,162,59,.14),rgba(233,162,59,.03) 46%,var(--surface-2) 78%)}
+.cell-wide h3{font-size:clamp(1.5rem,2.3vw,2.05rem);line-height:1.12}
+.cell-wide p{font-size:1.03rem;color:var(--dim);margin-top:0}
+.cell-wide p + p{margin-top:16px}
+
+/* ---------- PROGRESO (pull) ---------- */
+.progress-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;margin-top:60px;background:var(--line)}
+.pitem{background:var(--ink);padding:40px 38px 44px;transition:background-color .25s var(--ease)}
+.pitem:hover{background:var(--ink-2)}
+.pitem.span2{grid-column:span 2}
+.pitem .pq{
+  display:block;font-family:"Archivo";font-weight:700;letter-spacing:-.03em;
+  font-size:clamp(1.42rem,2.5vw,2.02rem);line-height:1.14;
+}
+.pitem span{display:block;margin-top:16px;color:var(--muted);font-size:15.6px;max-width:44ch}
+
+/* ---------- BANDA DE IMAGEN ---------- */
+.band{width:100%;height:clamp(240px,34vw,420px);overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.band img{width:100%;height:100%;object-fit:cover;filter:grayscale(.45) brightness(.6) saturate(.75)}
+
+/* ---------- ANSIEDADES ---------- */
+.anx{border-top:1px solid var(--line-2);margin-top:56px}
+details.qa{border-bottom:1px solid var(--line);background:transparent;transition:background-color .25s var(--ease)}
+details.qa[open]{background:var(--ink-2)}
+details.qa summary{
+  list-style:none;cursor:pointer;display:flex;gap:24px;align-items:flex-start;
+  padding:30px 30px 30px 4px;
+}
+details.qa summary::-webkit-details-marker{display:none}
+.qa-q{
+  font-family:"Archivo";font-weight:700;letter-spacing:-.028em;
+  font-size:clamp(1.16rem,1.9vw,1.55rem);line-height:1.2;flex:1;
+  transition:color .2s var(--ease);
+}
+details.qa:hover .qa-q{color:var(--amber)}
+details.qa[open] .qa-q{color:var(--amber)}
+.qa-mark{position:relative;flex:0 0 22px;height:22px;margin-top:6px}
+.qa-mark::before,.qa-mark::after{
+  content:"";position:absolute;background:var(--dim);border-radius:1px;
+  transition:transform .3s var(--ease),background-color .3s var(--ease);
+}
+.qa-mark::before{left:0;top:10px;width:22px;height:2px}
+.qa-mark::after{left:10px;top:0;width:2px;height:22px}
+details.qa[open] .qa-mark::before{background:var(--amber)}
+details.qa[open] .qa-mark::after{transform:scaleY(0);background:var(--amber)}
+.qa-a{padding:0 30px 34px 50px;max-width:74ch;color:var(--dim);font-size:1.045rem}
+.qa-a strong{color:var(--bone);font-weight:600}
+
+/* ---------- QUIÉN (proof) ---------- */
+.who{display:grid;grid-template-columns:.9fr 1.35fr .75fr;gap:24px;margin-top:56px;align-items:start}
+.portrait{border-radius:var(--r-lg);overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow)}
+.portrait img{width:100%;aspect-ratio:1/1.06;object-fit:cover;object-position:50% 22%}
+.who-body p{color:var(--dim);font-size:1.06rem}
+.who-body p + p{margin-top:18px}
+.who-side{display:flex;flex-direction:column;gap:18px}
+.who-side .portrait img{aspect-ratio:4/3;object-position:50% 30%}
+.side-note{
+  font-family:"JetBrains Mono",monospace;font-size:11.5px;line-height:1.75;color:var(--muted);
+  border-left:1px solid var(--line-2);padding-left:14px;
+}
+.marks{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-top:52px}
+.mark{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);
+  padding:22px;display:flex;flex-direction:column;gap:18px;
+  transition:border-color .25s var(--ease),transform .25s var(--ease);
+}
+.mark:hover{border-color:var(--line-2);transform:translateY(-2px)}
+.mark .plate{
+  background:var(--bone);border-radius:var(--r);height:76px;
+  display:flex;align-items:center;justify-content:center;padding:14px 16px;
+}
+/* multiply funde el fondo blanco de los PNG con la placa, sin recortes */
+.mark .plate img{max-height:100%;width:auto;object-fit:contain;mix-blend-mode:multiply}
+.mark p{font-size:14.4px;color:var(--muted);line-height:1.5}
+.mark b{display:block;color:var(--bone);font-size:15px;font-weight:600;margin-bottom:6px;font-family:"Archivo";letter-spacing:-.015em}
+
+/* ---------- TESTIMONIOS: ESTADO VACÍO ---------- */
+.empty{
+  margin-top:52px;border:1px dashed var(--line-2);border-radius:var(--r-lg);
+  padding:52px 46px;background:
+    repeating-linear-gradient(135deg,rgba(236,231,221,.014) 0 12px,transparent 12px 24px),var(--ink-2);
+  display:grid;grid-template-columns:.85fr 1.15fr;gap:44px;align-items:center;
+}
+.empty h3{font-size:clamp(1.4rem,2.2vw,1.9rem)}
+.empty p{color:var(--dim);font-size:1.03rem}
+.empty p + p{margin-top:14px}
+.empty strong{color:var(--bone);font-weight:600}
+
+/* ---------- COSTO DEL STATU QUO ---------- */
+.cost{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:start;margin-top:8px}
+.cost-copy h2{font-size:clamp(1.95rem,3.1vw,2.7rem)}
+.cost-copy p{margin-top:22px;color:var(--dim);font-size:1.06rem;max-width:52ch}
+.calc{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);
+  padding:34px 32px 30px;box-shadow:var(--shadow);
+}
+.calc h3{font-size:1.15rem;font-weight:600;letter-spacing:-.02em}
+.calc .hint{margin-top:8px;color:var(--muted);font-size:14.4px}
+.field{margin-top:24px;display:flex;flex-direction:column;gap:8px}
+.field label{font-size:14.6px;font-weight:500;color:var(--bone);line-height:1.4}
+.field input{
+  font-family:"JetBrains Mono",monospace;font-size:17px;color:var(--bone);
+  background:var(--ink);border:1px solid var(--line-2);border-radius:var(--r);
+  padding:13px 14px;width:100%;transition:border-color .2s var(--ease),background-color .2s var(--ease);
+}
+.field input:hover{border-color:rgba(236,231,221,.3)}
+.field input:focus{outline:none;border-color:var(--amber);background:var(--ink-2);box-shadow:0 0 0 3px rgba(233,162,59,.18)}
+.field .help{font-size:13.2px;color:var(--muted)}
+.calc-out{
+  margin-top:28px;border-top:1px solid var(--line);padding-top:24px;
+}
+.calc-out .k{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}
+.calc-out .v{
+  font-family:"Archivo";font-weight:800;letter-spacing:-.035em;color:var(--amber);
+  font-size:clamp(1.9rem,3.4vw,2.7rem);line-height:1.05;margin-top:10px;
+}
+.calc-out .v.idle{color:var(--muted);font-size:1.15rem;font-weight:600;letter-spacing:-.02em;line-height:1.4}
+.calc-out .v.err{color:var(--bone);font-size:1.05rem;font-weight:600;letter-spacing:-.01em;line-height:1.45}
+.calc-out .sub{margin-top:12px;color:var(--dim);font-size:15.4px}
+.calc-foot{margin-top:22px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+
+/* ---------- PRIMER PASO ---------- */
+.step{background:var(--ink-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);position:relative;overflow:hidden}
+.step::before{
+  content:"";position:absolute;bottom:-220px;left:50%;transform:translateX(-50%);
+  width:900px;height:460px;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 100%,rgba(233,162,59,.13),rgba(233,162,59,0) 65%);
+}
+.step-in{position:relative;max-width:820px;margin:0 auto;text-align:center;padding:104px 0}
+.step-in h2{font-size:clamp(2.05rem,3.8vw,3.15rem)}
+.step-in > p{margin:24px auto 0;color:var(--dim);font-size:1.09rem;max-width:56ch}
+.msg{
+  margin:40px auto 0;max-width:620px;text-align:left;
+  background:var(--surface);border:1px solid var(--line-2);border-radius:var(--r-lg);
+  padding:26px 28px;box-shadow:var(--shadow);
+}
+.msg .k{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.msg p{margin-top:14px;font-size:1.09rem;color:var(--bone);line-height:1.55}
+.step-cta{margin-top:34px;display:flex;justify-content:center}
+.step-note{margin-top:22px;color:var(--muted);font-size:15px}
+
+/* ---------- PRIMERAS DOS SEMANAS ---------- */
+.track{display:grid;grid-template-columns:repeat(5,1fr);gap:2px;margin-top:52px;background:var(--line)}
+.tcard{background:var(--ink);padding:30px 26px 34px;display:flex;flex-direction:column;gap:14px;transition:background-color .25s var(--ease)}
+.tcard:hover{background:var(--surface)}
+.tcard .day{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--amber);letter-spacing:.02em}
+.tcard h3{font-size:1.18rem;font-weight:700;letter-spacing:-.025em;line-height:1.2}
+.tcard p{color:var(--muted);font-size:15px}
+.track-img{height:clamp(160px,20vw,240px);overflow:hidden;border-radius:var(--r-lg);margin-top:52px;border:1px solid var(--line)}
+.track-img img{width:100%;height:100%;object-fit:cover;object-position:50% 42%;filter:grayscale(.4) brightness(.62) saturate(.8)}
+
+/* ---------- CIERRE / MENTORÍA / FOOTER ---------- */
+.aside{
+  border-left:2px solid var(--line-2);padding:6px 0 6px 24px;max-width:74ch;
+  color:var(--muted);font-size:1.02rem;
+}
+.aside b{color:var(--bone);font-weight:600}
+footer{border-top:1px solid var(--line);background:var(--ink-2);padding:56px 0 44px;margin-top:104px}
+.foot{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:36px;align-items:start}
+.foot h4{font-family:"Archivo";font-size:1.05rem;font-weight:700;letter-spacing:-.02em}
+.foot p{margin-top:12px;color:var(--muted);font-size:14.8px;max-width:40ch}
+.foot a{color:var(--dim);text-decoration:none;font-size:14.8px;display:block;margin-top:10px;transition:color .2s var(--ease)}
+.foot a:hover{color:var(--amber)}
+.foot .lbl{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.foot-bottom{margin-top:44px;padding-top:24px;border-top:1px solid var(--line);color:var(--muted);font-size:13.6px}
+
+/* ---------- REVEAL ---------- */
+.rv{opacity:0;transform:translateY(18px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.rv.in{opacity:1;transform:none}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width:1080px){
+  .hero-in{padding-top:52px;padding-bottom:60px}
+  .hero-row{grid-template-columns:1fr;gap:38px;margin-top:34px}
+  .hero-fig img{aspect-ratio:16/9}
+  .who{grid-template-columns:1fr 1fr;gap:22px}
+  .who-side{grid-column:span 2;flex-direction:row}
+  .who-side > *{flex:1}
+  .marks{grid-template-columns:repeat(3,1fr)}
+  .marks .mark:nth-child(4){grid-column:span 2}
+  .track{grid-template-columns:repeat(2,1fr)}
+  .tcard:last-child{grid-column:span 2}
+  .cost{grid-template-columns:1fr;gap:40px}
+  .cell-wide{grid-template-columns:1fr;gap:20px}
+  .empty{grid-template-columns:1fr;gap:24px;padding:40px 32px}
+}
+@media (max-width:860px){
+  body{font-size:16.4px}
+  .wrap{padding:0 20px}
+  .nav-links{display:none}
+  .sec-pad{padding:74px 0}
+  .stage-in{grid-template-columns:1fr}
+  .stage-cell{padding:30px 20px 32px}
+  .stage-cell + .stage-cell{border-left:0;border-top:1px solid var(--line)}
+  .bento{grid-template-columns:1fr;gap:12px}
+  .c-2,.c-3,.c-6{grid-column:span 1}
+  .cell-img img{min-height:200px}
+  .progress-grid{grid-template-columns:1fr}
+  .pitem.span2{grid-column:span 1}
+  .pitem{padding:30px 22px 34px}
+  .who{grid-template-columns:1fr}
+  .who-side{grid-column:span 1;flex-direction:column}
+  .marks{grid-template-columns:1fr 1fr}
+  .marks .mark:last-child{grid-column:span 2}
+  .track{grid-template-columns:1fr}
+  .tcard:last-child{grid-column:span 1}
+  .scene{min-height:0}
+  .scene-copy{padding:74px 0}
+  .scene-bg::after{background:linear-gradient(180deg,rgba(15,18,22,.93),rgba(15,18,22,.9))}
+  details.qa summary{padding:24px 6px 24px 2px;gap:16px}
+  .qa-a{padding:0 6px 28px 38px}
+  .foot{grid-template-columns:1fr;gap:28px}
+  footer{margin-top:74px}
+  .step-in{padding:74px 0}
+  .cell-wide{padding:30px 24px}
+}
+@media (max-width:560px){
+  .brand span{display:none}
+}
+@media (max-width:420px){
+  .btn{width:100%;padding:16px 18px}
+  .nav .btn{width:auto;padding:11px 13px;font-size:13px}
+  .brand b{font-size:16px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .rv{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+
+<!-- ============ NAV ============ -->
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top"><b>Salomón Muriel</b><span>Consultoría</span></a>
+    <nav class="nav-links" aria-label="Secciones">
+      <a href="#ya-intento">Lo que ya intentó</a>
+      <a href="#dudas">Las dudas</a>
+      <a href="#empieza">Cómo empieza</a>
+    </nav>
+    <a class="btn btn-primary btn-sm" href="https://wa.me/573132465100?text=Hola%20Salomon.%20Le%20escribo%20por%20la%20pagina.%20Hay%20una%20parte%20de%20mi%20proceso%20que%20todavia%20hacemos%20a%20mano%20y%20quiero%20contarle%20cual%20es.">Escribirme por WhatsApp</a>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="top">
+  <div class="wrap hero-in">
+    <h1>Su empresa no está automatizada.<br>Está <span class="am">chinomática</span>.</h1>
+    <div class="hero-row">
+      <div>
+        <p class="hero-sub">Alguien pasa a mano lo que llega por WhatsApp, y de tanto verlo ya parece un sistema.</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="https://wa.me/573132465100?text=Hola%20Salomon.%20Le%20escribo%20por%20la%20pagina.%20Hay%20una%20parte%20de%20mi%20proceso%20que%20todavia%20hacemos%20a%20mano%20y%20quiero%20contarle%20cual%20es.">Escribirme por WhatsApp</a>
+          <a class="btn btn-ghost" href="#empieza">Cómo empieza</a>
+        </div>
+      </div>
+      <figure class="hero-fig" style="margin:0">
+        <img src="https://picsum.photos/seed/bodega-cajas-inventario-conteo-manual/1200/800" width="1200" height="800" alt="Bodega con cajas apiladas y un conteo de inventario hecho a mano">
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BANDA DE ETAPA (para quién es y por qué no hay precios) ============ -->
+<section class="stage">
+  <div class="wrap">
+    <div class="stage-in">
+      <div class="stage-cell rv">
+        <h3>Esta página es para el que ya está buscando.</h3>
+        <p>No para el que apenas sospecha que algo anda mal. Si usted todavía no ha llegado a buscar en serio, guárdela y vuelva cuando le pase otra vez.</p>
+      </div>
+      <div class="stage-cell rv">
+        <h3>Acá no va a encontrar precios.</h3>
+        <p>El precio depende de qué se va a construir y eso hoy no lo sabemos ninguno de los dos. Sale en la segunda conversación, por escrito y antes de empezar.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 1. EL MOMENTO DE FRICCIÓN ============ -->
+<section class="scene">
+  <div class="scene-bg" aria-hidden="true">
+    <img src="https://picsum.photos/seed/mostrador-celular-pedido-noche-negocio/2000/1100" width="2000" height="1100" alt="">
+  </div>
+  <div class="wrap">
+    <div class="scene-copy rv">
+      <h2>El pedido entra un sábado a las ocho de la noche.</h2>
+      <p>Llega al grupo de WhatsApp. Alguien lo lee en el celular, lo deja en visto y se acuerda el lunes. El lunes lo pasa al Excel a mano, con un dedo en la pantalla del celular y el otro en el teclado.</p>
+      <p>Si se equivocó en una cifra, el inventario queda mal toda la semana y nadie se entera hasta que falta mercancía. Nadie hizo nada mal ahí. Así fue como creció el negocio.</p>
+      <p class="scene-trigger">Y usted no se dio cuenta de esto un día malo de ventas. Se dio cuenta el día que la persona que sabe se enfermó. O el día que un cliente le pidió una cifra y a usted le tocó decirle: deme hasta mañana.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 2. LO QUE YA CONTRATÓ Y LO QUE YA BOTÓ ============ -->
+<section class="sec-pad" id="ya-intento">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <h2>Todo lo que ya contrató para esto tenía sentido cuando lo contrató.</h2>
+    </div>
+    <p class="lede rv">Ninguna de esas decisiones fue una bobada. Cada una resolvió el problema que había en ese momento y con la plata que había en ese momento. Lo que cambió fue el tamaño del negocio, no su criterio.</p>
+
+    <div class="bento">
+      <article class="cell c-2 rv">
+        <h3>El Excel maestro</h3>
+        <p>Lo armó usted mismo un domingo y aguantó tres años. Todavía sirve. El problema es que ya son tres archivos que tienen que cuadrar entre ellos, y no cuadran.</p>
+        <p class="verdict">Sigue contratado. Y sigue siendo el que manda.</p>
+      </article>
+
+      <article class="cell c-2 rv">
+        <h3>El software que compró y nadie abrió</h3>
+        <p>Lo instalaron, hicieron la capacitación, hubo hasta almuerzo. A los dos meses la gente volvió al Excel porque el programa pedía datos que nadie tenía a la mano.</p>
+        <p class="verdict">Botado. Y todavía se paga la mensualidad.</p>
+      </article>
+
+      <figure class="cell cell-img c-2 rv" style="margin:0">
+        <img src="https://picsum.photos/seed/hoja-de-calculo-pantalla-oficina-pequena/900/700" width="900" height="700" alt="Una hoja de cálculo abierta en la pantalla de una oficina pequeña">
+      </figure>
+
+      <figure class="cell cell-img c-2 rv" style="margin:0">
+        <img src="https://picsum.photos/seed/cuaderno-facturas-papel-escritorio-tienda/700/700" width="700" height="700" alt="Cuaderno con cuentas escritas a mano y facturas de papel sobre un escritorio">
+      </figure>
+
+      <article class="cell c-2 rv">
+        <h3>El grupo de WhatsApp de pedidos</h3>
+        <p>Es lo más confiable que tiene: a nadie se le olvida mirarlo. Lo malo es que no se puede consultar. Para saber cuánto vendió en marzo toca leerse marzo entero.</p>
+        <p class="verdict">Contratado sin querer. Insustituible hoy.</p>
+      </article>
+
+      <article class="cell c-2 rv">
+        <h3>El que le iba a hacer el sistema</h3>
+        <p>El sobrino, el freelance, la agencia. Empezó bien, mostró unas pantallas bonitas y después dejó de contestar. Usted quedó con medio sistema y con menos ganas de volver a intentar.</p>
+        <p class="verdict">Botado. Costó plata y costó confianza.</p>
+      </article>
+
+      <article class="cell cell-wide c-6 rv">
+        <div>
+          <h3>Y la contratación que sí funcionó fue una persona.</h3>
+        </div>
+        <div>
+          <p>Hay alguien en su empresa que se lo sabe todo: cómo se cobra, cuál cliente paga tarde, dónde quedó la mercancía, qué se le promete a quién. Esa persona es el mejor sistema que usted tiene y le salió más barata que cualquier programa.</p>
+          <p>También es la razón por la que a usted le da cosita cuando esa persona pide vacaciones. No la contrató mal. La contrató tan bien que hoy la empresa entera depende de una sola cabeza, y esa cabeza se cansa.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3. EL PROGRESO QUE DE VERDAD QUIERE ============ -->
+<section class="sec-pad" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <h2>Lo que usted quiere no es un software.</h2>
+    </div>
+    <p class="lede rv">Un sistema es el medio. Lo que usted está comprando de verdad es que pasen estas cosas:</p>
+
+    <div class="progress-grid">
+      <div class="pitem rv">
+        <p class="pq">Que el negocio siga andando la semana que usted no está.</p>
+        <span>Sin que le timbren el celular a preguntar dónde queda cada cosa.</span>
+      </div>
+      <div class="pitem rv">
+        <p class="pq">Que el pedido entre una sola vez y ya quede donde tiene que quedar.</p>
+        <span>Que nadie lo vuelva a escribir. Ni en el Excel, ni en el cuaderno.</span>
+      </div>
+      <div class="pitem rv">
+        <p class="pq">Que la información no viva en la cabeza de una sola persona.</p>
+        <span>Que alguien se pueda ir de vacaciones sin que la empresa se enferme.</span>
+      </div>
+      <div class="pitem rv">
+        <p class="pq">Que el lunes el informe ya esté hecho cuando usted se siente.</p>
+        <span>Sin que nadie lo arme a mano el domingo por la noche.</span>
+      </div>
+      <div class="pitem span2 rv">
+        <p class="pq">Y dejar de ser el cuello de botella de su propia empresa.</p>
+        <span>Que las decisiones chiquitas dejen de pasar por usted, para que le quede cabeza para las grandes.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="band rv">
+  <img src="https://picsum.photos/seed/restaurante-cocina-cierre-caja-noche/1900/700" width="1900" height="700" alt="Cocina de un restaurante durante el cierre de la noche">
+</div>
+
+<!-- ============ 4. LAS DUDAS, UNA POR UNA ============ -->
+<section class="sec-pad" id="dudas">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <h2>Las dudas que usted tiene, y ninguna es boba.</h2>
+    </div>
+    <p class="lede rv">Se las contesto una por una con algo concreto: qué pasa, quién queda con qué, y qué hacemos si sale mal. No con un "confíe en mí".</p>
+
+    <div class="anx">
+      <details class="qa rv" open>
+        <summary><span class="qa-mark" aria-hidden="true"></span><span class="qa-q">¿Y si esto termina siendo otro software que nadie usa?</span></summary>
+        <div class="qa-a">
+          <p>Eso pasa cuando se entrega el sistema completo el último día. Acá no funciona así. La primera entrega es <strong>una sola parte del proceso</strong>, la más molesta, andando con datos reales de su empresa y usada por la misma persona que hoy lo hace a mano. Si a las dos semanas esa persona no lo está usando, no seguimos construyendo encima: paramos y miramos qué quedó mal.</p>
+        </div>
+      </details>
+
+      <details class="qa rv">
+        <summary><span class="qa-mark" aria-hidden="true"></span><span class="qa-q">¿Y si usted desaparece?</span></summary>
+        <div class="qa-a">
+          <p>El código, los servidores y las cuentas quedan <strong>a nombre de su empresa desde el primer día</strong>, no del mío. Yo no soy dueño de nada suyo y no le vendo licencia de nada. Al final le dejo un video explicando cómo está hecho y qué se toca para cambiarlo, para que cualquier desarrollador pueda seguir sin llamarme. Si yo mañana me desaparezco, usted queda con la cosa funcionando y con las llaves en la mano.</p>
+        </div>
+      </details>
+
+      <details class="qa rv">
+        <summary><span class="qa-mark" aria-hidden="true"></span><span class="qa-q">Mi gente no es de computadores.</span></summary>
+        <div class="qa-a">
+          <p>Por eso lo que se construye lo tiene que poder usar la persona que hoy lo hace a mano, con el nivel que tiene hoy y sin cambiarle el trabajo. Si necesita tres días de capacitación está mal hecho, y eso es culpa mía, no de ella. La prueba que uso es sencilla: <strong>que esa persona lo use sola el segundo día</strong>, sin que yo esté al lado.</p>
+        </div>
+      </details>
+
+      <details class="qa rv">
+        <summary><span class="qa-mark" aria-hidden="true"></span><span class="qa-q">Me da pena que vea cómo lo hacemos por dentro.</span></summary>
+        <div class="qa-a">
+          <p>No he entrado nunca a una empresa que funcione y esté ordenada por dentro. Todas las que funcionan se armaron a mano primero, incluidas las mías. Yo tuve dos empresas que se quebraron, Beriblock y El Palomo, así que no estoy en posición de juzgarle un Excel. Y no vengo a que me muestren el proceso en una presentación bonita: <strong>vengo a sentarme al lado de la persona que lo hace</strong> y a verla trabajar un día normal.</p>
+        </div>
+      </details>
+
+      <details class="qa rv">
+        <summary><span class="qa-mark" aria-hidden="true"></span><span class="qa-q">¿Y si esto se me alarga un año?</span></summary>
+        <div class="qa-a">
+          <p>El alcance se escribe antes de empezar y ahí dice también <strong>qué no incluye</strong>, que es la parte que casi nadie escribe. La primera cosa funcionando se ve en semanas, no en trimestres. Si a mitad de camino aparece algo más importante, se cambia el alcance por escrito y usted decide, no se cambia de palabra en una llamada.</p>
+        </div>
+      </details>
+
+      <details class="qa rv">
+        <summary><span class="qa-mark" aria-hidden="true"></span><span class="qa-q">¿Voy a ser uno de cuarenta clientes?</span></summary>
+        <div class="qa-a">
+          <p>No, porque no tengo cómo. Esto no es mi trabajo principal: mi trabajo de tiempo completo es Ignia. Ahorita tengo <strong>dos empresas y no paso de cuatro al tiempo</strong>, porque el que construye soy yo y no hay a quién pasarle el trabajo. Si estoy lleno se lo digo de una y le digo cuándo me desocupo, en vez de meterlo en una fila y contestarle cada quince días.</p>
+        </div>
+      </details>
+
+      <details class="qa rv">
+        <summary><span class="qa-mark" aria-hidden="true"></span><span class="qa-q">¿Y si lo que necesito no es tecnología?</span></summary>
+        <div class="qa-a">
+          <p>Pasa seguido. A veces la respuesta es cambiar el orden en que se hacen las cosas, o quitar un paso, y no construir nada. <strong>Si eso es lo que veo, se lo digo y ahí se acaba el trabajo</strong>, aunque a mí me convenga más lo otro. Me sale más barato para usted y menos vergonzoso para mí que entregarle un sistema que sobra.</p>
+        </div>
+      </details>
+
+      <details class="qa rv">
+        <summary><span class="qa-mark" aria-hidden="true"></span><span class="qa-q">¿La inteligencia artificial no es puro cuento?</span></summary>
+        <div class="qa-a">
+          <p>Para vender humo, sí. Para construir, no. Es la razón por la que hoy una sola persona entrega en semanas lo que antes pedía un equipo y un trimestre entero. Yo la uso para escribir el software y también para automatizar cosas que no son de programadores. <strong>Usted no tiene que entenderla ni le voy a cobrar por la palabra</strong>: lo que va a ver es la cosa funcionando en su empresa.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ QUIÉN LO VA A CONSTRUIR ============ -->
+<section class="sec-pad" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <h2>Quién le va a construir esto.</h2>
+    </div>
+
+    <div class="who">
+      <figure class="portrait rv" style="margin:0">
+        <img src="assets/fotoSalo.jpeg" width="800" height="800" alt="Salomón Muriel, retrato">
+      </figure>
+
+      <div class="who-body rv">
+        <p>Salomón Muriel. Bogotá. Llevo quince años armando empresas y el software que las hace funcionar: unas mías, otras de otros. No soy el consultor que recomienda y se va, ni el taller de desarrollo que espera a que usted le entregue las especificaciones.</p>
+        <p>Lo que hago es definir qué hay que cambiar y después construirlo yo mismo. En mis empresas armé el producto; en R5 armé el sistema de riesgo y todo el flujo de datos, con cuarenta personas alrededor; en Ignia lo que más orgullo me da es el CRM y la plataforma de comunidad, que también los hice yo.</p>
+        <p>Lo que le entrego no es un informe con recomendaciones. Es una cosa andando, que su gente ya está usando cuando yo me voy.</p>
+      </div>
+
+      <div class="who-side rv">
+        <figure class="portrait" style="margin:0">
+          <img src="assets/salo_oscar.webp" width="527" height="330" alt="Salomón mostrando el sistema de Finco funcionando en pantalla, junto a su socio">
+        </figure>
+        <p class="side-note">También doy charlas sobre esto en conferencias, empresas y universidades. Eso es lo que hago para que me conozcan, no lo que le estoy vendiendo acá.</p>
+      </div>
+    </div>
+
+    <div class="marks">
+      <article class="mark rv">
+        <div class="plate"><img src="assets/ignia.png" width="1680" height="1120" alt="Ignia"></div>
+        <p><b>Hoy</b>USD 150.000 en el primer año, rentable desde el principio. Equipo de cinco.</p>
+      </article>
+      <article class="mark rv">
+        <div class="plate"><img src="assets/finco.png" width="736" height="736" alt="Finco"></div>
+        <p><b>Vendida</b>100.000 informes al año. Salió en cinco veces lo invertido.</p>
+      </article>
+      <article class="mark rv">
+        <div class="plate"><img src="assets/prestagente.png" width="940" height="900" alt="PrestaGente"></div>
+        <p><b>Vendida</b>Cerca de un millón de dólares.</p>
+      </article>
+      <article class="mark rv">
+        <div class="plate"><img src="assets/beriblock.png" width="800" height="960" alt="Beriblock"></div>
+        <p><b>Quebró</b>Ahí aprendí a no construir antes de vender.</p>
+      </article>
+      <article class="mark rv">
+        <div class="plate"><img src="assets/elpalomo.png" width="120" height="120" alt="El Palomo"></div>
+        <p><b>Fracasó</b>Feo, además. Lo cuento porque es parte del currículum.</p>
+      </article>
+    </div>
+
+    <!-- Estado vacío honesto: no hay testimonios y no se inventan -->
+    <div class="empty rv">
+      <div>
+        <h3>Acá deberían ir los testimonios.</h3>
+      </div>
+      <div>
+        <p>Todavía no los tengo publicados. Clientes sí tengo, pero no les he pedido que escriban nada y no me voy a inventar frases bonitas con nombres falsos.</p>
+        <p>Mientras tanto le ofrezco algo que sirve más: si vamos en serio, le paso el teléfono de un cliente para que <strong>lo llame usted</strong> y le pregunte lo que quiera, incluido lo que salió mal.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5. EL HÁBITO Y EL COSTO DE SEGUIR IGUAL ============ -->
+<section class="sec-pad" style="background:var(--ink-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div class="cost">
+      <div class="cost-copy rv">
+        <h2>Seguir como está también tiene precio. Lo que pasa es que no llega factura.</h2>
+        <p>No hacer nada es una decisión, y usted ya la ha tomado varias veces con buenas razones: el negocio funciona, eso ya está pago, y cambiarlo significa que su gente tenga que cambiar. Todo eso es cierto y es la competencia de verdad que yo tengo.</p>
+        <p>Lo único que le pido es que le ponga número. No al mío: al suyo.</p>
+        <p style="color:var(--muted);font-size:15.4px">Y esa cuenta todavía no incluye lo otro: el pedido que se perdió, la semana que no se pudo ir, la cifra que le tocó dar al ojo delante de un cliente.</p>
+      </div>
+
+      <form class="calc rv" id="calc" novalidate>
+        <h3>La cuenta de lo que ya está pagando</h3>
+        <p class="hint">Cambie los números por los suyos. Nadie los guarda ni me llegan a mí.</p>
+
+        <div class="field">
+          <label for="horas">Horas a la semana que alguien pasa datos de un lado a otro</label>
+          <input id="horas" name="horas" type="number" inputmode="numeric" min="0" max="400" step="1" value="10" autocomplete="off">
+          <span class="help">Sume a todas las personas que lo hacen, no solo a una.</span>
+        </div>
+
+        <div class="field">
+          <label for="costo">Cuánto le cuesta la hora de esa persona, en pesos</label>
+          <input id="costo" name="costo" type="number" inputmode="numeric" min="0" step="500" value="12000" autocomplete="off">
+          <span class="help">Sueldo, prestaciones y todo lo demás, dividido en las horas del mes.</span>
+        </div>
+
+        <div class="calc-out">
+          <div class="k">Su propia cuenta, al año</div>
+          <div class="v" id="out" aria-live="polite">$0</div>
+          <p class="sub" id="outsub">Ponga sus números arriba.</p>
+        </div>
+
+        <p class="calc-foot">Los números los pone usted, así que esto no es un argumento mío de ventas. Es su nómina, contada de otra manera.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 6. EL PRIMER PASO ============ -->
+<section class="step" id="empieza">
+  <div class="wrap">
+    <div class="step-in rv">
+      <h2>El primer paso es más chiquito que la decisión.</h2>
+      <p>Hoy no hay que decidir nada. No es una reunión, no es una propuesta, no es una cotización. Es un mensaje contándome cuál es la parte que todavía hacen a mano.</p>
+
+      <div class="msg">
+        <div class="k">El mensaje puede ser este</div>
+        <p>"Hola Salomón. Tengo una empresa de [lo que sea] y hay una parte del proceso que todavía hacemos a mano. Le cuento cuál es."</p>
+      </div>
+
+      <div class="step-cta">
+        <a class="btn btn-primary" href="https://wa.me/573132465100?text=Hola%20Salomon.%20Tengo%20una%20empresa%20y%20hay%20una%20parte%20del%20proceso%20que%20todavia%20hacemos%20a%20mano.%20Le%20cuento%20cual%20es.">Escribirme por WhatsApp</a>
+      </div>
+      <p class="step-note">Contesto yo, no un asistente. Si veo que no le sirvo, se lo digo en el mismo chat.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 7. LAS PRIMERAS DOS SEMANAS ============ -->
+<section class="sec-pad">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <h2>Cómo se ven las primeras dos semanas.</h2>
+    </div>
+    <p class="lede rv">Lo que más asusta de contratar a alguien casi nunca es el resultado. Es no saber qué va a estar pasando en su oficina mientras tanto, ni qué le van a preguntar a su gente.</p>
+
+    <figure class="track-img rv" style="margin-top:52px">
+      <img src="https://picsum.photos/seed/dos-personas-computador-mesa-taller-trabajo/1600/560" width="1600" height="560" alt="Dos personas trabajando frente a un computador en la mesa de un taller">
+    </figure>
+
+    <div class="track">
+      <article class="tcard rv">
+        <span class="day">Día 1</span>
+        <h3>Me siento al lado</h3>
+        <p>Voy a donde se hace el trabajo y miro a la persona hacerlo. No pido manuales ni documentación, porque no existen.</p>
+      </article>
+      <article class="tcard rv">
+        <span class="day">Días 2 y 3</span>
+        <h3>Escogemos una sola cosa</h3>
+        <p>La parte más molesta y más chiquita del proceso. No la más importante: la más molesta. Y se escribe qué queda por fuera.</p>
+      </article>
+      <article class="tcard rv">
+        <span class="day">Días 4 a 8</span>
+        <h3>La construyo yo</h3>
+        <p>No hay equipo al que pasarle el trabajo ni especificaciones que usted tenga que redactar. Le mando algo para mirar antes de que esté terminado.</p>
+      </article>
+      <article class="tcard rv">
+        <span class="day">Días 9 y 10</span>
+        <h3>La usa su gente</h3>
+        <p>Con datos reales y en el trabajo de verdad, no en una demostración. Ahí es donde se cae lo que quedó mal pensado, y todavía es barato arreglarlo.</p>
+      </article>
+      <article class="tcard rv">
+        <span class="day">Día 11 en adelante</span>
+        <h3>Usted decide si seguimos</h3>
+        <p>Si quedó en uso, seguimos con la siguiente parte. Si no, esa parte igual le queda funcionando y a su nombre. No queda amarrado a nada mío.</p>
+      </article>
+    </div>
+
+    <p class="aside rv" style="margin-top:56px">
+      <b>Si apenas está arrancando</b> y todavía no hay proceso que arreglar, esto no es lo que le sirve. Lo que le sirve es mentoría: trabajo uno a uno, tareas prácticas cada semana. Escríbame igual y le digo de frente cuál de las dos es. Y si lo que busca es un programa con más gente y una cohorte alrededor, eso es el Action Lab de Ignia, que es otra cosa distinta y se hace allá.
+    </p>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <h4>Salomón Muriel</h4>
+        <p>Estrategia y la herramienta construida, para empresas colombianas que todavía hacen una parte del trabajo a mano.</p>
+      </div>
+      <div>
+        <span class="lbl">Contacto</span>
+        <a href="https://wa.me/573132465100?text=Hola%20Salomon.%20Le%20escribo%20por%20la%20pagina.">Escribirme por WhatsApp</a>
+        <a href="mailto:salomon.muriel@gmail.com">salomon.muriel@gmail.com</a>
+        <p style="margin-top:10px">Bogotá, Colombia.</p>
+      </div>
+      <div>
+        <span class="lbl">Aviso</span>
+        <p>Esta es mi práctica personal. Mi trabajo de tiempo completo es Ignia y este trabajo no se hace bajo esa marca ni con ese equipo.</p>
+      </div>
+    </div>
+    <p class="foot-bottom">Dos cupos de consultoría ocupados de cuatro. Si están llenos, se lo digo cuando escriba.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Reveal en scroll: jerarquía de lectura, una sola vez. IntersectionObserver, sin listeners de scroll. */
+  var items = document.querySelectorAll('.rv');
+  if (reduce || !('IntersectionObserver' in window)) {
+    for (var i=0;i<items.length;i++) items[i].classList.add('in');
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px -12% 0px', threshold: 0.12 });
+    for (var j=0;j<items.length;j++) io.observe(items[j]);
+  }
+
+  /* Calculadora del statu quo. Los números los pone el visitante. */
+  var horas = document.getElementById('horas');
+  var costo = document.getElementById('costo');
+  var out   = document.getElementById('out');
+  var sub   = document.getElementById('outsub');
+  if (!horas || !costo || !out) return;
+
+  var cop = new Intl.NumberFormat('es-CO', { style:'currency', currency:'COP', maximumFractionDigits:0 });
+  var num = new Intl.NumberFormat('es-CO', { maximumFractionDigits:0 });
+
+  function render(){
+    var h = parseFloat(horas.value);
+    var c = parseFloat(costo.value);
+
+    if (horas.value.trim() === '' || costo.value.trim() === '') {
+      out.className = 'v idle'; out.textContent = 'Faltan los números.';
+      sub.textContent = 'Llene los dos campos de arriba con lo que pasa en su empresa.';
+      return;
+    }
+    if (isNaN(h) || isNaN(c) || h < 0 || c < 0) {
+      out.className = 'v err'; out.textContent = 'Ese número no me sirve.';
+      sub.textContent = 'Escriba solo cifras y que no sean negativas.';
+      return;
+    }
+    if (h === 0 || c === 0) {
+      out.className = 'v idle'; out.textContent = 'Da cero.';
+      sub.textContent = 'Si de verdad nadie pasa datos a mano en su empresa, esta página no es para usted, y qué bueno.';
+      return;
+    }
+    if (h > 400) {
+      out.className = 'v err'; out.textContent = 'Revise las horas.';
+      sub.textContent = 'Más de 400 horas a la semana ya no cuadra ni sumando a todo el equipo.';
+      return;
+    }
+
+    var anual = h * c * 48;
+    var dias  = (h * 48) / 8;
+    out.className = 'v';
+    out.textContent = cop.format(anual);
+    sub.textContent = 'Son ' + num.format(Math.round(dias)) + ' días de trabajo al año pasando cosas de un lado a otro. Cuarenta y ocho semanas, sin contar vacaciones.';
+  }
+
+  horas.addEventListener('input', render);
+  costo.addEventListener('input', render);
+  document.getElementById('calc').addEventListener('submit', function(e){ e.preventDefault(); render(); });
+  render();
+})();
+</script>
+</body>
+</html>

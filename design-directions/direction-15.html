@@ -1,0 +1,849 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Salomón Muriel · Consultoría</title>
+<meta name="description" content="Defino qué hay que arreglar en su operación y yo mismo construyo la herramienta que quita el trabajo a mano. Para empresas colombianas que crecieron más rápido que sus procesos.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+
+<style>
+/* ============================================================
+   DIRECTION 15 - VSL (Video Sales Letter)
+   Dark-native. One theme, no toggle, no prefers-color-scheme.
+   Radius system: media/panels 14px, buttons 12px, chips 8px.
+   Accent lock: amber (--amber) is the only accent on the page.
+   ============================================================ */
+
+:root{
+  color-scheme: dark;
+
+  --ink:      #0b100e;
+  --ink-2:    #111816;
+  --ink-3:    #18211d;
+  --ink-4:    #1f2a25;
+
+  --line:     rgba(232,228,216,.11);
+  --line-2:   rgba(232,228,216,.20);
+
+  --paper:    #ece8de;
+  --paper-2:  #a9b1a9;
+  --paper-3:  #7c857d;
+
+  --amber:    #f2a63c;
+  --amber-2:  #ffc271;
+  --on-amber: #1a1105;
+
+  --hero-w: 820px;
+  --wrap:  1160px;
+  --read:  62ch;
+
+  --r-panel: 14px;
+  --r-btn:   12px;
+  --r-chip:  8px;
+
+  --z-grain: 60;
+  --z-dock:  50;
+  --z-bar:   40;
+
+  --ease: cubic-bezier(.16,1,.3,1);
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+
+html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
+
+body{
+  margin:0;
+  background-color: var(--ink);
+  background-image:
+    radial-gradient(1100px 620px at 50% -12%, rgba(242,166,60,.10), transparent 62%),
+    radial-gradient(900px 700px at 92% 8%, rgba(90,130,115,.09), transparent 60%),
+    radial-gradient(1000px 900px at 0% 46%, rgba(60,90,80,.07), transparent 62%);
+  background-repeat:no-repeat;
+  background-attachment: scroll;
+  color: var(--paper);
+  font-family:"Instrument Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size:17px;
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+/* fixed grain layer, never on a scrolling container */
+.grain{
+  position:fixed; inset:0; z-index:var(--z-grain); pointer-events:none;
+  opacity:.30; mix-blend-mode:soft-light;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='180' height='180' filter='url(%23n)' opacity='.55'/></svg>");
+}
+
+img{ max-width:100%; display:block; }
+a{ color:inherit; }
+
+h1,h2,h3{
+  font-family:Archivo,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-weight:800;
+  letter-spacing:-.028em;
+  line-height:1.04;
+  margin:0;
+  text-wrap:balance;
+}
+h3{ font-weight:700; letter-spacing:-.018em; line-height:1.14; }
+p{ margin:0; }
+
+.wrap{ width:100%; max-width:var(--wrap); margin-inline:auto; padding-inline:22px; }
+.narrow{ width:100%; max-width:var(--hero-w); margin-inline:auto; padding-inline:22px; }
+.read{ max-width:var(--read); }
+
+section{ position:relative; }
+.pad{ padding-block:clamp(64px,9vw,120px); }
+
+.rule{ height:1px; background:var(--line); border:0; margin:0; }
+
+/* ---------- eyebrow (used exactly twice on the page) ---------- */
+.eyebrow{
+  font-size:11.5px; font-weight:600; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--amber); margin-bottom:18px;
+}
+
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:11px;
+  white-space:nowrap;
+  font-family:Archivo,sans-serif; font-weight:700; font-size:17px; letter-spacing:-.01em;
+  border-radius:var(--r-btn);
+  padding:17px 30px; text-decoration:none; border:1px solid transparent;
+  transition:transform .18s var(--ease), background-color .18s var(--ease), box-shadow .18s var(--ease);
+}
+.btn i{ font-size:21px; line-height:1; }
+.btn-a{
+  background:var(--amber); color:var(--on-amber);
+  box-shadow:0 1px 0 rgba(255,255,255,.35) inset, 0 14px 34px rgba(242,166,60,.20);
+}
+.btn-a:hover{ background:var(--amber-2); transform:translateY(-1px); }
+.btn-a:active{ transform:translateY(1px) scale(.99); }
+.btn:focus-visible{ outline:3px solid var(--amber-2); outline-offset:3px; }
+.btn-xl{ font-size:19px; padding:20px 36px; }
+
+.tlink{
+  color:var(--amber); text-decoration:none;
+  border-bottom:1px solid rgba(242,166,60,.42); padding-bottom:1px;
+  transition:border-color .18s var(--ease), color .18s var(--ease);
+}
+.tlink:hover{ color:var(--amber-2); border-bottom-color:var(--amber-2); }
+.tlink:focus-visible{ outline:3px solid var(--amber-2); outline-offset:3px; border-radius:2px; }
+
+/* ---------- top bar: stripped, no nav ---------- */
+.bar{
+  position:relative; z-index:var(--z-bar);
+  height:62px; display:flex; align-items:center;
+  border-bottom:1px solid var(--line);
+}
+.bar .wrap{ display:flex; align-items:center; justify-content:space-between; gap:16px; }
+.mark{
+  font-family:Archivo,sans-serif; font-weight:700; font-size:16px; letter-spacing:-.02em;
+  text-decoration:none;
+}
+.bar .aside{ font-size:13px; color:var(--paper-3); }
+
+/* ---------- HERO ---------- */
+.hero{ padding-top:clamp(26px,3.4vw,44px); padding-bottom:clamp(44px,6vw,72px); }
+.hero h1{
+  font-size:clamp(37px,5.6vw,58px);
+  text-align:center;
+}
+.hero h1 em{ font-style:normal; color:var(--amber); }
+.hero .sub{
+  margin:18px auto 0; text-align:center; color:var(--paper-2);
+  font-size:clamp(16px,1.7vw,18.5px); max-width:600px; line-height:1.5;
+}
+
+.stage{ position:relative; margin-top:clamp(24px,2.8vw,34px); }
+.stage::before{
+  content:""; position:absolute; left:50%; top:8%; width:96%; height:88%;
+  transform:translateX(-50%);
+  background:radial-gradient(closest-side, rgba(242,166,60,.30), transparent 72%);
+  filter:blur(46px); opacity:.5; pointer-events:none;
+}
+.frame{
+  position:relative; border-radius:var(--r-panel); overflow:hidden;
+  border:1px solid var(--line-2);
+  background:#000;
+  box-shadow:0 1px 0 rgba(255,255,255,.10) inset, 0 34px 90px rgba(0,0,0,.62);
+}
+.frame .ratio{ position:relative; width:100%; aspect-ratio:16/9; }
+.frame iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; display:block; }
+
+.cta-block{ margin-top:22px; text-align:center; }
+.cta-note{ margin-top:14px; font-size:14.5px; color:var(--paper-3); }
+
+/* ---------- honest frame about the video ---------- */
+.honest{ border-top:1px solid var(--line); background:var(--ink-2); }
+.honest .inner{ padding-block:clamp(46px,6vw,72px); }
+.honest h2{ font-size:clamp(26px,3.6vw,38px); margin-bottom:24px; max-width:22ch; }
+.honest p{ color:var(--paper-2); max-width:var(--read); }
+.honest p + p{ margin-top:14px; }
+.honest strong{ color:var(--paper); font-weight:600; }
+.side-rule{ border-left:2px solid var(--amber); padding-left:24px; max-width:66ch; }
+
+/* ---------- pain grid: 6 scenes, 12-col, 3 rows that fill exactly ---------- */
+.scenes{ display:grid; gap:14px; grid-template-columns:repeat(12,1fr); margin-top:38px; }
+.scene{
+  position:relative; border-radius:var(--r-panel); overflow:hidden;
+  border:1px solid var(--line); background:var(--ink-2);
+  min-height:196px; display:flex; align-items:flex-end;
+  grid-column:span 12;
+}
+.scene.photo{ background:#0a0d0c; min-height:280px; }
+.scene.photo img{
+  position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+  filter:grayscale(1) brightness(.52) contrast(1.12);
+}
+.scene.photo::after{
+  content:""; position:absolute; inset:0;
+  background:
+    linear-gradient(180deg, rgba(11,16,14,.10) 0%, rgba(11,16,14,.88) 78%),
+    linear-gradient(120deg, rgba(242,166,60,.16), transparent 58%);
+}
+.scene .txt{ position:relative; z-index:2; padding:24px 24px 26px; }
+.scene .txt p{
+  font-family:Archivo,sans-serif; font-weight:600; font-size:20px; line-height:1.24;
+  letter-spacing:-.018em;
+}
+.scene.plain .txt p{ color:var(--paper); }
+.scene.plain{ background:linear-gradient(180deg,var(--ink-3),var(--ink-2)); }
+.scene .txt small{
+  display:block; margin-top:10px; font-size:14.5px; color:var(--paper-2);
+  font-family:"Instrument Sans",sans-serif; line-height:1.5;
+}
+.after-scenes{
+  margin-top:28px; color:var(--paper); font-size:clamp(18px,2.2vw,21px);
+  max-width:56ch; font-family:Archivo,sans-serif; font-weight:600; letter-spacing:-.015em; line-height:1.3;
+}
+
+/* ---------- what he does: 7/5 split ---------- */
+.does{ border-top:1px solid var(--line); }
+.does h2{ font-size:clamp(28px,4.2vw,46px); max-width:27ch; }
+.does .lede{ margin-top:18px; color:var(--paper-2); max-width:52ch; font-size:18px; }
+.split{ display:grid; grid-template-columns:1fr; gap:clamp(34px,4vw,56px); margin-top:clamp(34px,4vw,52px); align-items:start; }
+.moves{ display:grid; gap:0; }
+.move{ padding:26px 0; border-top:1px solid var(--line); }
+.move:first-child{ border-top:0; padding-top:0; }
+.move h3{ font-size:clamp(20px,2.4vw,25px); }
+.move p{ margin-top:10px; color:var(--paper-2); max-width:52ch; }
+.move .kbd{
+  display:inline-block; font-family:"Instrument Sans",sans-serif; font-weight:500; font-size:14px;
+  color:var(--paper-3); margin-bottom:7px;
+}
+.portrait{
+  border-radius:var(--r-panel); overflow:hidden; border:1px solid var(--line-2);
+  background:var(--ink-2); box-shadow:0 26px 70px rgba(0,0,0,.5);
+}
+.portrait img{ width:100%; aspect-ratio:4/5; object-fit:cover; object-position:50% 22%; }
+.portrait figcaption{
+  padding:18px 20px; font-size:14.5px; color:var(--paper-2); border-top:1px solid var(--line);
+  background:var(--ink-2);
+}
+.portrait figcaption b{ color:var(--paper); font-weight:600; display:block; margin-bottom:4px; font-family:Archivo,sans-serif; }
+
+/* ---------- proof ---------- */
+.proof{ border-top:1px solid var(--line); background:var(--ink-2); }
+.proof h2{ font-size:clamp(28px,4.2vw,46px); max-width:20ch; }
+.ledger{ margin-top:clamp(30px,3.6vw,44px); display:grid; gap:0; }
+.row{
+  display:grid; grid-template-columns:1fr; gap:16px;
+  padding:26px 0; border-top:1px solid var(--line); align-items:start;
+}
+.row:first-child{ border-top:0; }
+.chip{
+  width:66px; height:66px; border-radius:var(--r-chip); background:#f7f5f0;
+  display:grid; place-items:center; padding:11px; flex:0 0 auto;
+}
+.chip img{ max-height:100%; width:auto; object-fit:contain; }
+.row .who{ display:flex; align-items:center; gap:16px; }
+.row .who h3{ font-size:22px; }
+.row .who span{ display:block; font-family:"Instrument Sans",sans-serif; font-weight:400; font-size:14px; color:var(--paper-3); letter-spacing:0; margin-top:3px; }
+.row .what{ color:var(--paper-2); max-width:56ch; }
+.row .what b{ color:var(--paper); font-weight:600; }
+.proof-photo{
+  margin-top:34px; border-radius:var(--r-panel); overflow:hidden; border:1px solid var(--line);
+  max-width:560px;
+}
+.proof-photo img{ width:100%; height:auto; }
+.aside-note{
+  margin-top:26px; font-size:15px; color:var(--paper-3); max-width:60ch;
+}
+
+/* ---------- failures band ---------- */
+.fail{ border-top:1px solid var(--line); background:var(--ink); }
+.fail .inner{ display:grid; gap:28px; align-items:center; grid-template-columns:1fr; }
+.fail h2{ font-size:clamp(27px,4vw,42px); }
+.fail p{ margin-top:18px; color:var(--paper-2); max-width:58ch; }
+.dead{ display:flex; gap:14px; align-items:center; }
+.dead .chip{ width:56px; height:56px; opacity:.55; filter:grayscale(1); }
+
+/* ---------- testimonial slot (honest empty state) ---------- */
+.slot{ border-top:1px solid var(--line); background:var(--ink-2); }
+.slot-panel{
+  border:1px dashed var(--line-2); border-radius:var(--r-panel);
+  padding:clamp(26px,4vw,44px); background:rgba(255,255,255,.012);
+}
+.slot h2{ font-size:clamp(24px,3.4vw,34px); max-width:22ch; }
+.slot p{ margin-top:16px; color:var(--paper-2); max-width:58ch; }
+.slot .punch{
+  margin-top:22px; padding-top:20px; border-top:1px solid var(--line);
+  color:var(--paper); font-size:clamp(17px,2.1vw,20px); font-family:Archivo,sans-serif;
+  font-weight:600; letter-spacing:-.015em; line-height:1.35; max-width:54ch;
+}
+
+/* ---------- capacity + fit ---------- */
+.cap{ border-top:1px solid var(--line); }
+.cap h2{ font-size:clamp(28px,4.2vw,44px); max-width:16ch; }
+.cap .lede{ margin-top:18px; color:var(--paper-2); max-width:54ch; }
+.counters{ display:grid; grid-template-columns:1fr; gap:14px; margin-top:32px; }
+.counter{
+  border:1px solid var(--line); border-radius:var(--r-panel); padding:22px 24px;
+  background:linear-gradient(180deg,var(--ink-3),var(--ink-2));
+}
+.counter .n{
+  font-family:Archivo,sans-serif; font-weight:800; font-size:44px; letter-spacing:-.04em;
+  line-height:1; color:var(--amber);
+}
+.counter .n small{ font-size:24px; color:var(--paper-3); font-weight:700; }
+.counter p{ margin-top:10px; font-size:15px; color:var(--paper-2); }
+
+.fit{ display:grid; grid-template-columns:1fr; gap:14px; margin-top:44px; }
+.fit-card{ border:1px solid var(--line); border-radius:var(--r-panel); padding:26px; background:var(--ink-2); }
+.fit-card h3{ font-size:20px; margin-bottom:16px; }
+.fit-card ul{ list-style:none; margin:0; padding:0; display:grid; gap:12px; }
+.fit-card li{ display:flex; gap:12px; align-items:flex-start; font-size:16px; color:var(--paper-2); line-height:1.5; }
+.fit-card li i{ font-size:18px; line-height:1.5; flex:0 0 auto; }
+.fit-yes li i{ color:var(--amber); }
+.fit-no li i{ color:var(--paper-3); }
+.fit-no{ background:transparent; }
+
+/* ---------- FAQ ---------- */
+.faq{ border-top:1px solid var(--line); background:var(--ink-2); }
+.faq h2{ font-size:clamp(26px,3.6vw,38px); }
+.faq-list{ margin-top:30px; border-top:1px solid var(--line); }
+details{ border-bottom:1px solid var(--line); }
+summary{
+  list-style:none; cursor:pointer; padding:22px 44px 22px 0; position:relative;
+  font-family:Archivo,sans-serif; font-weight:600; font-size:clamp(17px,2.1vw,20px);
+  letter-spacing:-.015em; line-height:1.3;
+}
+summary::-webkit-details-marker{ display:none; }
+summary:focus-visible{ outline:3px solid var(--amber-2); outline-offset:3px; border-radius:4px; }
+summary .ico{
+  position:absolute; right:2px; top:22px; color:var(--amber); font-size:20px; line-height:1.3;
+  transition:transform .22s var(--ease);
+}
+details[open] summary .ico{ transform:rotate(45deg); }
+details .body{ padding:0 0 24px; color:var(--paper-2); max-width:62ch; }
+details .body p + p{ margin-top:12px; }
+
+/* ---------- final CTA ---------- */
+.close{ border-top:1px solid var(--line); text-align:center; }
+.close h2{ font-size:clamp(30px,4.6vw,52px); max-width:17ch; margin-inline:auto; }
+.close .lede{ margin:20px auto 0; color:var(--paper-2); max-width:54ch; font-size:18px; }
+.close .btn{ margin-top:30px; }
+.close .alt{ margin-top:20px; font-size:15.5px; color:var(--paper-3); }
+.early{
+  margin:44px auto 0; max-width:60ch; padding-top:26px; border-top:1px solid var(--line);
+  font-size:15.5px; color:var(--paper-3); line-height:1.6;
+}
+.early b{ color:var(--paper-2); font-weight:600; }
+
+/* ---------- footer ---------- */
+footer{ border-top:1px solid var(--line); padding-block:34px; background:var(--ink-2); }
+footer .wrap{ display:flex; flex-wrap:wrap; gap:14px 26px; align-items:center; justify-content:space-between; }
+footer p{ font-size:14px; color:var(--paper-3); }
+footer .fl{ display:flex; gap:22px; flex-wrap:wrap; }
+footer a{ font-size:14px; color:var(--paper-2); text-decoration:none; }
+footer a:hover{ color:var(--amber); }
+
+/* ---------- sticky dock ---------- */
+.dock{
+  position:fixed; left:0; right:0; bottom:0; z-index:var(--z-dock);
+  background:rgba(17,24,22,.90);
+  -webkit-backdrop-filter:blur(14px) saturate(150%);
+  backdrop-filter:blur(14px) saturate(150%);
+  border-top:1px solid var(--line-2);
+  padding:12px 0 calc(12px + env(safe-area-inset-bottom));
+  transform:translateY(115%);
+  transition:transform .34s var(--ease);
+}
+.dock.show{ transform:translateY(0); }
+.dock .wrap{ display:flex; align-items:center; justify-content:space-between; gap:16px; }
+.dock p{ font-family:Archivo,sans-serif; font-weight:600; font-size:16px; letter-spacing:-.015em; }
+.dock .btn{ padding:13px 22px; font-size:16px; }
+@media (prefers-reduced-transparency: reduce){
+  .dock{ background:var(--ink-3); backdrop-filter:none; -webkit-backdrop-filter:none; }
+}
+
+/* ---------- reveal ---------- */
+.rv{ opacity:0; transform:translateY(18px); transition:opacity .7s var(--ease), transform .7s var(--ease); }
+.rv.in{ opacity:1; transform:none; }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (min-width:700px){
+  .scene{ grid-column:span 6; }
+  .counters{ grid-template-columns:1fr 1fr; }
+  .fit{ grid-template-columns:1fr 1fr; }
+  .row{ grid-template-columns:minmax(0,1fr) minmax(0,1.35fr); gap:30px; align-items:center; }
+}
+
+@media (min-width:960px){
+  .scenes{ gap:16px; }
+  .scene.s5{ grid-column:span 5; }
+  .scene.s6{ grid-column:span 6; }
+  .scene.s7{ grid-column:span 7; }
+  .scene.photo{ min-height:284px; }
+  .split{ grid-template-columns:minmax(0,7fr) minmax(0,5fr); gap:clamp(40px,5vw,72px); }
+  .fail .inner{ grid-template-columns:minmax(0,1.6fr) minmax(0,1fr); gap:56px; }
+
+  /* the video is sized by the shorter of the column and the viewport,
+     so the ask below it is never pushed under the fold */
+  .stage{ width:min(100%, max(520px, (100dvh - 470px) * 1.7778)); margin-inline:auto; }
+}
+
+@media (max-width:699px){
+  body{ font-size:16.5px; }
+  .bar .aside{ display:none; }
+  .btn{ width:100%; }
+  .btn-xl{ font-size:17.5px; padding:18px 22px; }
+  .dock p{ display:none; }
+  .dock .btn{ width:100%; }
+  .hero{ padding-top:26px; }
+  .scene{ min-height:auto; }
+  .scene.photo{ min-height:230px; }
+  .row .who h3{ font-size:19px; }
+  .chip{ width:56px; height:56px; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior:auto; }
+  .rv{ opacity:1; transform:none; transition:none; }
+  .dock{ transition:none; }
+  .btn, summary .ico, .tlink{ transition:none; }
+  .btn-a:hover, .btn-a:active{ transform:none; }
+}
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+
+<!-- ===== stripped bar: name only, zero navigation ===== -->
+<header class="bar">
+  <div class="wrap">
+    <a class="mark" href="#cerrar">Salomón Muriel</a>
+    <span class="aside">Consultoría a título personal</span>
+  </div>
+</header>
+
+<!-- ===== HERO: pre-frame + video + one ask ===== -->
+<section class="hero">
+  <div class="narrow">
+    <h1>No está automatizado.<br>Está <em>chinomático</em>.</h1>
+    <p class="sub">Una hora en el podcast Ventaja, hablando de negocios aburridos y de qué es innovar de verdad.</p>
+
+    <div class="stage">
+      <div class="frame">
+        <div class="ratio">
+          <iframe
+            src="https://www.youtube-nocookie.com/embed/F9t9f5Et_04"
+            title="Negocios Aburridos e Innovación. Salomón Muriel en el podcast Ventaja."
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-block" id="cta-hero">
+      <a class="btn btn-a btn-xl"
+         href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20vi%20tu%20p%C3%A1gina.%20Te%20cuento%20qu%C3%A9%20cosas%20hacemos%20a%20mano%20en%20mi%20empresa.">
+        <i class="ph-bold ph-whatsapp-logo" aria-hidden="true"></i>Escríbame por WhatsApp
+      </a>
+      <p class="cta-note">Le contesto yo. Si veo que no le sirvo, se lo digo de una.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== the honest frame: what that video is and is not ===== -->
+<section class="honest">
+  <div class="wrap inner rv">
+    <h2>Eso de arriba no es un video de ventas.</h2>
+    <div class="side-rule">
+      <p>Es una entrevista en un podcast que se llama Ventaja. Hablamos de tecnología y de <strong>negocios aburridos</strong>: los que venden ropa, comida, repuestos, servicios. Los que de verdad sostienen este país.</p>
+      <p>Lo pongo acá porque es lo más parecido que tengo a que usted me conozca antes de escribirme. Ahí no estoy vendiendo nada. Estoy pensando en voz alta sobre empresas como la suya, que es exactamente lo que haría con la suya.</p>
+      <p><strong>Si no tiene una hora, no la gaste.</strong> Todo lo que sigue está escrito, y con eso le alcanza para decidir.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== the pain, named ===== -->
+<section class="pad">
+  <div class="wrap">
+    <p class="eyebrow rv">Qué es chinomático</p>
+    <h2 class="rv" style="font-size:clamp(28px,4.2vw,46px); max-width:25ch;">Usted ya sabe cuál es el problema. Le da pena decirlo.</h2>
+
+    <div class="scenes">
+      <article class="scene photo s7 rv">
+        <img src="https://picsum.photos/seed/bodega-inventario-cajas-colombia/1200/760" alt="Bodega con estantes y cajas apiladas">
+        <div class="txt">
+          <p>Alguien re-digita en un Excel los pedidos que llegaron por WhatsApp.</p>
+          <small>Dos horas diarias de una persona, copiando lo que ya estaba escrito.</small>
+        </div>
+      </article>
+
+      <article class="scene plain s5 rv">
+        <div class="txt">
+          <p>Hay una persona que es el sistema.</p>
+          <small>Cuando sale a vacaciones, la empresa cojea. Y usted lo sabe.</small>
+        </div>
+      </article>
+
+      <article class="scene plain s5 rv">
+        <div class="txt">
+          <p>El informe de los lunes se arma a mano. Todos los lunes.</p>
+          <small>Mismos archivos, mismas fórmulas, misma pelea.</small>
+        </div>
+      </article>
+
+      <article class="scene photo s7 rv">
+        <img src="https://picsum.photos/seed/cuaderno-cuentas-mostrador-tienda/900/900" alt="Cuaderno de cuentas sobre un mostrador">
+        <div class="txt">
+          <p>Solo un empleado sabe de verdad qué hay en la bodega.</p>
+        </div>
+      </article>
+
+      <article class="scene photo s6 rv">
+        <img src="https://picsum.photos/seed/pantalla-hoja-calculo-oficina-noche/900/900" alt="Pantalla de computador con una hoja de cálculo abierta">
+        <div class="txt">
+          <p>Tres archivos que deberían cuadrar y nunca cuadran.</p>
+        </div>
+      </article>
+
+      <article class="scene plain s6 rv">
+        <div class="txt">
+          <p>El grupo de WhatsApp es, en la práctica, la base de datos de pedidos.</p>
+          <small>Y cuando alguien borra un mensaje, se borró el pedido.</small>
+        </div>
+      </article>
+    </div>
+
+    <p class="after-scenes rv">Nada de esto es falta de disciplina. Es que el negocio creció y el proceso se quedó donde estaba hace cinco años.</p>
+  </div>
+</section>
+
+<!-- ===== the offer ===== -->
+<section class="does pad">
+  <div class="wrap">
+    <h2 class="rv">Yo defino qué hay que arreglar y yo mismo construyo la herramienta.</h2>
+    <p class="lede rv">No entrego un informe con recomendaciones. Entrego algo que su gente abre el lunes y usa.</p>
+
+    <div class="split">
+      <div class="moves">
+        <div class="move rv">
+          <span class="kbd">Primero</span>
+          <h3>Me siento a ver cómo trabajan hoy</h3>
+          <p>Un par de días mirando el proceso real, no el que está en el manual. Hablo con la persona que hace la tarea, no solo con usted. Casi siempre el cuello de botella no es el que uno cree desde la oficina.</p>
+        </div>
+        <div class="move rv">
+          <span class="kbd">Después</span>
+          <h3>Decidimos qué se quita</h3>
+          <p>No se digitaliza todo. Se escoge la tarea que más tiempo se come y que más errores mete, y esa es la primera. Si lo que ya compró sirve para eso, lo usamos y usted no gasta más.</p>
+        </div>
+        <div class="move rv">
+          <span class="kbd">Y entonces</span>
+          <h3>Lo construyo yo</h3>
+          <p>Software hecho a la medida de su operación, conectado a lo que ya usa. Lo escribo yo, apoyado en inteligencia artificial, que es justo lo que permite que una sola persona entregue en semanas lo que antes necesitaba un equipo y un trimestre.</p>
+        </div>
+      </div>
+
+      <figure class="portrait rv" style="margin:0;">
+        <img src="assets/fotoSalo.jpeg" alt="Retrato de Salomón Muriel, saco verde, fondo oscuro">
+        <figcaption>
+          <b>Salomón Muriel</b>
+          Ingeniero. Fundé y vendí empresas, y también quebré un par. Hoy dirijo Ignia; esta consultoría la hago aparte, a título personal.
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ===== proof: his own companies, real numbers ===== -->
+<section class="proof pad">
+  <div class="wrap">
+    <h2 class="rv">No tengo un portafolio bonito de clientes. Tengo empresas que levanté yo.</h2>
+
+    <div class="ledger">
+      <div class="row rv">
+        <div class="who">
+          <div class="chip"><img src="assets/ignia.png" alt="Ignia"></div>
+          <div>
+            <h3>Ignia</h3>
+            <span>Fundada en 2025</span>
+          </div>
+        </div>
+        <p class="what"><b>USD 150.000 vendidos el primer año</b> y rentable desde el primer mes, con un equipo de cinco. El CRM, la página y la plataforma de comunidad los construí yo.</p>
+      </div>
+
+      <div class="row rv">
+        <div class="who">
+          <div class="chip"><img src="assets/finco.png" alt="Finco"></div>
+          <div>
+            <h3>Finco</h3>
+            <span>Vendida</span>
+          </div>
+        </div>
+        <p class="what"><b>100.000 reportes al año</b> saliendo de un producto que armamos de cero. La vendimos en cinco veces lo invertido, cerca de USD 1.500.000.</p>
+      </div>
+
+      <div class="row rv">
+        <div class="who">
+          <div class="chip"><img src="assets/prestagente.png" alt="PrestaGente"></div>
+          <div>
+            <h3>PrestaGente</h3>
+            <span>Vendida</span>
+          </div>
+        </div>
+        <p class="what">Crédito entre conocidos, con la operación montada sobre software propio. <b>Vendida en cerca de USD 1.000.000.</b></p>
+      </div>
+
+      <div class="row rv">
+        <div class="who">
+          <div class="chip" style="background:#1c2521; border:1px solid var(--line);">
+            <span style="font-family:Archivo,sans-serif;font-weight:800;font-size:19px;color:var(--paper);letter-spacing:-.03em;">R5</span>
+          </div>
+          <div>
+            <h3>R5</h3>
+            <span>Antes</span>
+          </div>
+        </div>
+        <p class="what"><b>Hasta 40 personas a cargo.</b> El pipeline de datos y el modelo de riesgo los construí y los sostuve yo. Ahí aprendí que la tecnología que nadie usa no sirve de nada.</p>
+      </div>
+    </div>
+
+    <div class="proof-photo rv">
+      <img src="assets/salo_oscar.webp" alt="Salomón mostrando en pantalla el producto de Finco durante una presentación">
+    </div>
+
+    <p class="aside-note rv">He trabajado con siete personas en mentoría y con varias empresas en consultoría. Buena parte de esa consultoría fue ciencia de datos, que es justo el trabajo del que me estoy moviendo. Por eso la prueba que le muestro son mis propias empresas.</p>
+  </div>
+</section>
+
+<!-- ===== failures, on the record ===== -->
+<section class="fail pad">
+  <div class="wrap inner">
+    <div class="rv">
+      <h2>También quebré dos empresas.</h2>
+      <p>Beriblock se acabó. El Palomo fracasó de manera espectacular. Lo digo de frente porque el que le prometa que nunca ha perdido plata, o lleva muy poco tiempo en esto, o le está mintiendo.</p>
+      <p>Casi todo lo que sé sobre arrancar un negocio lo aprendí ahí. Por eso hoy sirvo más para decirle qué no hacer que para venderle un plan bonito.</p>
+    </div>
+    <div class="dead rv">
+      <div class="chip"><img src="assets/beriblock.png" alt="Beriblock"></div>
+      <div class="chip"><img src="assets/elpalomo.png" alt="El Palomo"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== testimonial slot: honest empty state ===== -->
+<section class="slot pad">
+  <div class="wrap">
+    <div class="slot-panel rv">
+      <h2>Acá van los testimonios. Todavía no los tengo por escrito.</h2>
+      <p>Les pedí a mis clientes que escribieran algo y no ha salido. No voy a inventarme una frase con un nombre falso para llenar este espacio, porque entonces usted no tendría cómo saber qué más de esta página es inventado.</p>
+      <p class="punch">Mientras tanto hacemos algo mejor: en la llamada le paso el número de un cliente y usted lo llama, sin mí en la línea.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== capacity + fit ===== -->
+<section class="cap pad">
+  <div class="wrap">
+    <h2 class="rv">Tengo cuatro cupos. Dos están ocupados.</h2>
+    <p class="lede rv">Esto no es mi trabajo principal. Mi trabajo es Ignia. La consultoría la hago aparte, con tiempo real y contado. No es una táctica de venta: es la razón por la que a veces contesto que no.</p>
+
+    <div class="counters">
+      <div class="counter rv">
+        <div class="n">2 <small>de 4</small></div>
+        <p>Empresas en consultoría al mismo tiempo. Es el máximo que puedo atender construyendo yo mismo.</p>
+      </div>
+      <div class="counter rv">
+        <div class="n">3 <small>de 5</small></div>
+        <p>Personas en acompañamiento individual, que es otra cosa y toma menos horas a la semana.</p>
+      </div>
+    </div>
+
+    <div class="fit">
+      <div class="fit-card fit-yes rv">
+        <h3>Le sirvo si</h3>
+        <ul>
+          <li><i class="ph-bold ph-check" aria-hidden="true"></i><span>Su empresa factura menos de 5.000 millones de pesos al año y tiene entre 5 y 40 empleados.</span></li>
+          <li><i class="ph-bold ph-check" aria-hidden="true"></i><span>Vende ropa, comida, repuestos, servicios, importaciones. Un negocio normal, no una startup de tecnología.</span></li>
+          <li><i class="ph-bold ph-check" aria-hidden="true"></i><span>Usted todavía mete la mano en todo y ya es el cuello de botella.</span></li>
+          <li><i class="ph-bold ph-check" aria-hidden="true"></i><span>Compró un software carísimo que nadie usa y le da rabia acordarse.</span></li>
+        </ul>
+      </div>
+      <div class="fit-card fit-no rv">
+        <h3>No le sirvo si</h3>
+        <ul>
+          <li><i class="ph-bold ph-x" aria-hidden="true"></i><span>Ya pasó los USD 5 millones al año. De ahí para arriba no sé escalar una empresa y no se lo voy a improvisar.</span></li>
+          <li><i class="ph-bold ph-x" aria-hidden="true"></i><span>Necesita inventar tecnología nueva, tipo investigación o deep tech.</span></li>
+          <li><i class="ph-bold ph-x" aria-hidden="true"></i><span>Lo que busca es un documento con recomendaciones. Hay gente mejor que yo para eso.</span></li>
+          <li><i class="ph-bold ph-x" aria-hidden="true"></i><span>Quiere trabajo de cultura organizacional o proyectos de ciencia de datos.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== objections ===== -->
+<section class="faq pad">
+  <div class="wrap">
+    <p class="eyebrow rv">Lo que todos preguntan</p>
+    <h2 class="rv">Antes de escribirme</h2>
+
+    <div class="faq-list rv">
+      <details>
+        <summary>¿Cuánto vale?<span class="ico"><i class="ph-bold ph-plus" aria-hidden="true"></i></span></summary>
+        <div class="body">
+          <p>Depende del alcance, y por eso no publico precios: no vendo paquetes iguales para todos. Lo que sí le prometo es que en la primera llamada, que no cuesta nada, le doy un número antes de que usted gaste un peso.</p>
+          <p>Si el número no le sirve, ahí terminamos y quedamos bien.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>¿Usted programa o solo asesora?<span class="ico"><i class="ph-bold ph-plus" aria-hidden="true"></i></span></summary>
+        <div class="body">
+          <p>Programo. El entregable es algo funcionando y en uso, no una presentación. Si al final del trabajo su gente no está usando la herramienta todos los días, el trabajo salió mal.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>¿Cuánto se demora esto?<span class="ico"><i class="ph-bold ph-plus" aria-hidden="true"></i></span></summary>
+        <div class="body">
+          <p>Semanas, no trimestres. Prefiero sacar rápido una primera versión que sirva para una sola tarea, verla funcionando en su operación, y de ahí seguir. Nadie tiene por qué esperar seis meses para ver algo.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Ya compré un software carísimo que nadie usa.<span class="ico"><i class="ph-bold ph-plus" aria-hidden="true"></i></span></summary>
+        <div class="body">
+          <p>Pasa todo el tiempo, y casi siempre por lo mismo: se compró el software antes de entender el proceso. A veces la solución es sacarle provecho a lo que ya pagó y conectarlo bien, no comprar otra cosa.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>¿Esto es Ignia?<span class="ico"><i class="ph-bold ph-plus" aria-hidden="true"></i></span></summary>
+        <div class="body">
+          <p>No. Ignia es mi trabajo del día a día y es una empresa aparte. Esta consultoría la hago a título personal, con mi nombre y con mi tiempo. Por eso los cupos son tan pocos.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>¿Hay que estar en Bogotá?<span class="ico"><i class="ph-bold ph-plus" aria-hidden="true"></i></span></summary>
+        <div class="body">
+          <p>No. Trabajo remoto y voy a la operación cuando hay que verla con los ojos, que en este tipo de proyectos casi siempre toca al menos una vez. Casi todos mis clientes están en Colombia.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ===== close ===== -->
+<section class="close pad" id="cerrar">
+  <div class="wrap">
+    <h2 class="rv">Cuénteme qué hace su empresa a mano.</h2>
+    <p class="lede rv">En dos líneas: cuál es la tarea, quién la hace y cuánto tiempo se lleva. Con eso le digo si esto se arregla y cómo. Y si no soy yo el indicado, le digo con quién hablar.</p>
+
+    <div class="rv" id="cta-final">
+      <a class="btn btn-a btn-xl"
+         href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20vi%20tu%20p%C3%A1gina.%20Te%20cuento%20qu%C3%A9%20cosas%20hacemos%20a%20mano%20en%20mi%20empresa.">
+        <i class="ph-bold ph-whatsapp-logo" aria-hidden="true"></i>Escríbame por WhatsApp
+      </a>
+      <p class="alt">¿Prefiere agendar la llamada usted mismo? <a class="tlink" href="https://cal.com/salomonmuriel">Acá está mi calendario</a>.</p>
+    </div>
+
+    <p class="early rv"><b>Si apenas está arrancando</b> y todavía no hay operación que arreglar, lo que le sirve no es una consultoría sino acompañamiento individual: una hora a la semana, con tareas concretas para la siguiente. Escríbame igual y le digo con franqueza si va por ahí.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>Salomón Muriel. Consultoría a título personal, independiente de Ignia.</p>
+    <div class="fl">
+      <a href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20vi%20tu%20p%C3%A1gina.">WhatsApp</a>
+      <a href="https://cal.com/salomonmuriel">Calendario</a>
+    </div>
+  </div>
+</footer>
+
+<!-- sticky ask: the button is never more than one tap away -->
+<div class="dock" id="dock">
+  <div class="wrap">
+    <p>¿Qué hace su empresa a mano?</p>
+    <a class="btn btn-a"
+       href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20vi%20tu%20p%C3%A1gina.%20Te%20cuento%20qu%C3%A9%20cosas%20hacemos%20a%20mano%20en%20mi%20empresa.">
+      <i class="ph-bold ph-whatsapp-logo" aria-hidden="true"></i>Escríbame por WhatsApp
+    </a>
+  </div>
+</div>
+
+<script>
+(function () {
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var revealables = document.querySelectorAll('.rv');
+
+  // Reveal on enter. Motivation: sequences the long-form letter so each
+  // block lands as its own beat instead of arriving as a wall of text.
+  if (reduce || !('IntersectionObserver' in window)) {
+    revealables.forEach(function (el) { el.classList.add('in'); });
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
+    revealables.forEach(function (el) { io.observe(el); });
+  }
+
+  // Sticky ask. Motivation: state transition. It appears only once the
+  // hero CTA has left the screen, and hides again when the final CTA is
+  // visible so two identical buttons are never on screen at once.
+  var dock = document.getElementById('dock');
+  var heroCta = document.getElementById('cta-hero');
+  var finalCta = document.getElementById('cta-final');
+
+  if (dock && heroCta && finalCta && 'IntersectionObserver' in window) {
+    var pastHero = false, atFinal = false;
+
+    var sync = function () {
+      dock.classList.toggle('show', pastHero && !atFinal);
+    };
+
+    var heroIo = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        pastHero = !e.isIntersecting && e.boundingClientRect.top < 0;
+        sync();
+      });
+    }, { threshold: 0 });
+    heroIo.observe(heroCta);
+
+    var finalIo = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { atFinal = e.isIntersecting; sync(); });
+    }, { threshold: 0.2 });
+    finalIo.observe(finalCta);
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1203 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Salomón Muriel · Estrategia y tecnología a la medida</title>
+<meta name="description" content="Armo la estrategia y yo mismo construyo la herramienta. Trabajo con empresas colombianas que ya venden y cuya operación vive en Excel y en la cabeza del dueño.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   DIRECTION 2 - "EL PARTE DE LA SEMANA"
+   Design read: personal consulting practice for non-technical
+   Colombian SMB owners + first-time founders. Anti-guru,
+   anti-theory. The page is built like a work log: ruled entries,
+   tabular metadata, tasks that are either done or pending.
+   Accent (red pen) marks who did the work.
+   DESIGN_VARIANCE 8 · MOTION_INTENSITY 5 · VISUAL_DENSITY 6
+   Radius system: everything 2px. One accent: red.
+   ============================================================ */
+
+:root{
+  --paper:#f2f1ed;
+  --paper-2:#e9e8e2;
+  --ink:#16171a;
+  --panel:#17181c;
+  --panel-fg:#eceae4;
+  --fg:#16171a;
+  --muted:#65665f;
+  --rule:#cfcdc4;
+  --rule-strong:#a8a69c;
+  --accent:#d8332a;        /* fills, large type, buttons */
+  --accent-text:#b3251d;   /* small red text on paper (AA) */
+  --accent-dark:#ea4b3e;   /* red on ink panels (AA) */
+  --accent-deep:#b3251d;   /* deep red fill, white text 6.5:1 */
+  --field:#ffffff;
+  --r:2px;
+  --gut:clamp(1.25rem,4vw,3.5rem);
+  --maxw:1320px;
+  --shadow:0 1px 0 rgba(22,23,26,.06), 0 14px 34px -22px rgba(22,23,26,.5);
+}
+
+@media (prefers-color-scheme: dark){
+  :root{
+    --paper:#131418;
+    --paper-2:#191a1f;
+    --ink:#eceae4;
+    --panel:#0c0d10;
+    --panel-fg:#eceae4;
+    --fg:#e6e4de;
+    --muted:#9a988f;
+    --rule:#2e3037;
+    --rule-strong:#454852;
+    --accent:#ea4b3e;
+    --accent-text:#f2695c;
+    --accent-dark:#ea4b3e;
+    --accent-deep:#8f1c15;
+    --field:#1b1d22;
+    --shadow:0 1px 0 rgba(0,0,0,.4), 0 14px 34px -22px rgba(0,0,0,.9);
+  }
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--fg);
+  font-family:"Archivo","Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size:17px;
+  line-height:1.55;
+  font-synthesis-weight:none;
+  overflow-x:hidden;
+}
+img{max-width:100%;display:block}
+a{color:inherit}
+h1,h2,h3,h4{margin:0;font-weight:800;letter-spacing:-.028em;line-height:1.03}
+p{margin:0}
+button,input,textarea,select{font:inherit;color:inherit}
+
+.wrap{max-width:var(--maxw);margin-inline:auto;padding-inline:var(--gut)}
+.mono{font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;font-variant-numeric:tabular-nums}
+
+/* ---------- shared type ---------- */
+.h-sec{
+  font-size:clamp(1.9rem,4.4vw,3.4rem);
+  font-stretch:104%;
+  max-width:19ch;
+}
+.h-sec--wide{max-width:26ch}
+.lede{font-size:clamp(1.02rem,1.5vw,1.2rem);color:var(--muted);max-width:56ch;line-height:1.5}
+.tag{
+  font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);
+}
+
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-flex;align-items:center;gap:.6em;
+  white-space:nowrap;
+  border-radius:var(--r);
+  font-weight:700;font-size:.95rem;letter-spacing:-.01em;
+  padding:.86em 1.35em;
+  text-decoration:none;border:1.5px solid transparent;cursor:pointer;
+  transition:transform .14s cubic-bezier(.16,1,.3,1), background-color .18s, color .18s, border-color .18s;
+}
+.btn--primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn--primary:hover{background:#c02b23;border-color:#c02b23}
+.btn--primary:active{transform:translateY(1px)}
+.btn--ghost{background:transparent;color:var(--fg);border-color:var(--rule-strong)}
+.btn--ghost:hover{border-color:var(--fg);background:var(--paper-2)}
+.btn--ghost:active{transform:translateY(1px)}
+.btn--onink{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn--onink:hover{background:#fff;color:var(--panel);border-color:#fff}
+.btn--onink:active{transform:translateY(1px)}
+.btn .arw{font-weight:400;opacity:.75}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,summary:focus-visible{
+  outline:2.5px solid var(--accent);outline-offset:3px;border-radius:var(--r);
+}
+
+/* ---------- nav ---------- */
+.nav{
+  position:sticky;top:0;z-index:40;
+  height:64px;display:flex;align-items:center;
+  background:color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid transparent;
+  transition:border-color .25s, background-color .25s;
+}
+.nav[data-stuck="true"]{border-bottom-color:var(--rule);background:color-mix(in srgb, var(--paper) 96%, transparent)}
+.nav__in{display:flex;align-items:center;gap:1.5rem;width:100%}
+.brand{
+  font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  font-weight:600;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;
+  text-decoration:none;white-space:nowrap;
+}
+.brand b{color:var(--accent-text);font-weight:600}
+.brand{margin-right:auto}
+.nav__links{display:flex;gap:1.4rem}
+.nav__links a{
+  font-size:14px;font-weight:600;text-decoration:none;color:var(--muted);
+  padding:.25rem 0;border-bottom:1.5px solid transparent;transition:color .18s,border-color .18s;
+}
+.nav__links a:hover{color:var(--fg);border-bottom-color:var(--accent)}
+.nav .btn{padding:.55em 1em;font-size:12.5px}
+@media (max-width:880px){ .nav__links{display:none} }
+@media (max-width:420px){ .brand{font-size:11px;letter-spacing:.1em} .nav .btn{font-size:11.5px;padding:.55em .8em} }
+
+/* ---------- hero ---------- */
+.hero{padding-top:clamp(1.8rem,4vw,3.2rem);padding-bottom:clamp(2.5rem,5vw,4rem)}
+.hero h1{
+  font-size:clamp(2.3rem,4.9vw,4.2rem);
+  font-stretch:96%;
+  letter-spacing:-.04em;
+  line-height:.98;
+}
+.hero h1 .l2{display:block;color:var(--muted)}
+.hero__grid{
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,340px);
+  gap:clamp(1.5rem,4vw,3.5rem);align-items:start;
+  margin-top:clamp(1.6rem,3.4vw,2.6rem);
+}
+.hero__sub{font-size:clamp(1.02rem,1.55vw,1.28rem);line-height:1.45;max-width:42ch;color:var(--fg)}
+.hero__cta{margin-top:1.7rem;display:flex;gap:.85rem;flex-wrap:wrap}
+.hero__photo{position:relative}
+.hero__photo img{
+  width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:50% 22%;
+  border-radius:var(--r);filter:grayscale(.12) contrast(1.04);
+}
+.hero__photo::after{
+  content:"";position:absolute;left:-10px;top:14px;bottom:14px;width:3px;background:var(--accent);
+}
+@media (max-width:900px){
+  .hero__grid{grid-template-columns:1fr;gap:1.6rem;align-items:start}
+  .hero__photo{order:-1;max-width:165px}
+  .hero__photo::after{display:none}
+}
+
+/* ---------- proof strip ---------- */
+.proof{border-top:1.5px solid var(--ink);border-bottom:1px solid var(--rule);padding:clamp(1.6rem,3vw,2.4rem) 0}
+.proof__row{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:clamp(.75rem,2vw,2rem);
+}
+.figure__n{
+  font-size:clamp(1.6rem,3.4vw,3rem);font-weight:800;font-stretch:88%;letter-spacing:-.04em;line-height:1;
+}
+.figure__l{margin-top:.5rem;font-size:12.5px;line-height:1.35;color:var(--muted);max-width:22ch}
+.figure--bad .figure__n{color:var(--accent-text)}
+.proof__note{
+  margin-top:clamp(1.4rem,3vw,2.2rem);padding-top:1.2rem;border-top:1px dashed var(--rule);
+  font-size:15.5px;color:var(--muted);max-width:82ch;line-height:1.5;
+}
+.proof__note b{color:var(--fg);font-weight:700}
+@media (max-width:760px){ .proof__row{grid-template-columns:repeat(2,1fr);gap:1.5rem 1.25rem} .proof__row .figure:last-child{grid-column:1/-1} }
+
+/* ---------- pain ---------- */
+.pain{padding:clamp(3.5rem,8vw,6.5rem) 0}
+.pain h2{margin-bottom:clamp(1.8rem,4vw,3rem)}
+.pain__list{display:grid;gap:clamp(1.1rem,2.4vw,1.9rem)}
+.pain__item{
+  font-size:clamp(1.35rem,3.1vw,2.35rem);font-weight:700;font-stretch:98%;
+  letter-spacing:-.03em;line-height:1.12;max-width:24ch;position:relative;
+  padding-bottom:.35em;
+}
+.pain__item span.mark{
+  position:absolute;left:0;bottom:.12em;height:.14em;width:100%;max-width:9em;
+  background:var(--accent);transform:scaleX(0);transform-origin:0 50%;
+  transition:transform .7s cubic-bezier(.16,1,.3,1);
+}
+.reveal-in .pain__item span.mark{transform:scaleX(1)}
+.pain__item:nth-child(2) span.mark{transition-delay:.12s;max-width:12em}
+.pain__item:nth-child(3) span.mark{transition-delay:.24s;max-width:7em}
+.pain__foot{margin-top:clamp(1.8rem,4vw,2.8rem);font-size:1.05rem;color:var(--muted);max-width:52ch}
+
+/* ---------- doors ---------- */
+.doors{padding-bottom:clamp(3rem,7vw,5.5rem)}
+.doors h2{margin-bottom:clamp(1.5rem,3.5vw,2.4rem)}
+.doors__grid{display:grid;grid-template-columns:minmax(0,1.85fr) minmax(0,1fr);gap:clamp(1rem,2.4vw,1.6rem);align-items:start}
+.door{border-radius:var(--r);padding:clamp(1.5rem,3.4vw,2.6rem);display:flex;flex-direction:column;min-height:100%}
+.door--a{background:var(--panel);color:var(--panel-fg);box-shadow:var(--shadow);border-top:3px solid var(--accent)}
+.door--a .door__q{font-size:clamp(1.5rem,3.4vw,2.6rem);font-stretch:100%;letter-spacing:-.032em;line-height:1.06;max-width:17ch}
+.door--a .door__body{margin-top:1.1rem;color:#b8b6ae;font-size:1.02rem;max-width:48ch;line-height:1.5}
+.door--b{background:transparent;border:1.5px solid var(--rule-strong)}
+.door--b .door__q{font-size:clamp(1.15rem,2vw,1.45rem);font-weight:700;letter-spacing:-.02em;line-height:1.15;max-width:20ch}
+.door--b .door__body{margin-top:.85rem;color:var(--muted);font-size:.95rem;line-height:1.5}
+.door__label{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;margin-top:.9rem}
+.door--a .door__label{color:var(--accent-dark)}
+.door--b .door__label{color:var(--muted)}
+.door__cta{margin-top:auto;padding-top:1.8rem}
+@media (max-width:880px){ .doors__grid{grid-template-columns:1fr} }
+
+/* ---------- zone markers ---------- */
+.zone-open{
+  display:flex;align-items:baseline;gap:1.25rem;
+  border-top:2.5px solid var(--ink);padding-top:.7rem;margin-bottom:clamp(2rem,4vw,3.2rem);
+}
+.zone-open .tag{white-space:nowrap;color:var(--fg);font-weight:600}
+.zone-open .zone-note{font-size:13px;color:var(--muted);text-align:right;margin-left:auto;max-width:38ch;line-height:1.35}
+@media (max-width:640px){ .zone-open{flex-direction:column;gap:.35rem} .zone-open .zone-note{text-align:left;margin-left:0} }
+
+.zone-a{padding:clamp(3rem,6vw,5rem) 0 clamp(3.5rem,7vw,6rem)}
+.zone-b{padding:clamp(3rem,6vw,5rem) 0 clamp(3.5rem,7vw,6rem);background:var(--paper-2);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+
+/* ---------- gantt ---------- */
+.plan{margin-top:clamp(1.8rem,4vw,2.8rem)}
+.plan__scale{
+  display:grid;grid-template-columns:repeat(16,1fr);
+  border-bottom:1px solid var(--rule);padding-bottom:.4rem;margin-bottom:.9rem;
+}
+.plan__scale span{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:10.5px;color:var(--muted);position:relative}
+.plan__scale span::before{content:"";position:absolute;left:0;bottom:-.45rem;width:1px;height:5px;background:var(--rule-strong)}
+.plan__rows{display:grid;gap:.5rem}
+.plan__row{display:grid;grid-template-columns:repeat(16,1fr);align-items:center}
+.bar{
+  border-radius:var(--r);padding:.62rem .9rem;min-width:0;
+  font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;font-weight:600;
+  transform-origin:0 50%;
+}
+.reveal .bar{transform:scaleX(.02);opacity:0}
+.reveal-in .bar{transform:scaleX(1);opacity:1;transition:transform .75s cubic-bezier(.16,1,.3,1), opacity .4s ease}
+.reveal-in .plan__row:nth-child(2) .bar{transition-delay:.14s}
+.reveal-in .plan__row:nth-child(3) .bar{transition-delay:.28s}
+.bar--1{background:var(--rule);color:var(--fg)}
+.bar--2{background:var(--accent);color:#fff}
+.bar--3{background:var(--panel);color:var(--panel-fg)}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(1rem,2.4vw,2rem);margin-top:1.6rem}
+.step h3{font-size:1.12rem;font-weight:700;letter-spacing:-.02em}
+.step p{margin-top:.45rem;font-size:.95rem;color:var(--muted);line-height:1.5}
+.step .wk{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-text);display:block;margin-bottom:.4rem}
+@media (max-width:820px){
+  .plan__scale,.plan__row{display:none}
+  .steps{grid-template-columns:1fr;gap:1.4rem}
+  .step{border-left:2px solid var(--accent);padding-left:1rem}
+}
+.plan__close{
+  margin-top:clamp(2rem,4vw,3rem);border-top:1px solid var(--rule);padding-top:1.4rem;
+  font-size:clamp(1.05rem,1.9vw,1.35rem);line-height:1.45;max-width:60ch;font-weight:500;
+}
+.plan__close b{font-weight:800}
+
+/* ---------- task sheet (the signature component) ---------- */
+.sheet{border-radius:var(--r);overflow:hidden}
+.sheet--done{background:var(--panel);color:var(--panel-fg)}
+.sheet--open{background:var(--field);border:1.5px solid var(--rule-strong)}
+.sheet__head{
+  display:flex;align-items:baseline;gap:1rem;flex-wrap:wrap;
+  padding:1.05rem clamp(1rem,2.4vw,1.6rem);
+  font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+}
+.sheet--done .sheet__head{border-bottom:1px solid #2c2e34;color:#8e8d86}
+.sheet--open .sheet__head{border-bottom:1px solid var(--rule);color:var(--muted)}
+.sheet__who{margin-left:auto;font-weight:600}
+.sheet--done .sheet__who{color:var(--accent-dark)}
+.sheet--open .sheet__who{color:var(--accent-text)}
+.sheet__rows{display:grid}
+.task{
+  display:grid;grid-template-columns:3.2rem 1.35rem 1fr;align-items:start;gap:.85rem;
+  padding:.85rem clamp(1rem,2.4vw,1.6rem);
+}
+.sheet--done .task + .task{border-top:1px solid #232529}
+.sheet--open .task + .task{border-top:1px solid var(--rule)}
+.task__day{
+  font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  font-size:11px;letter-spacing:.14em;padding-top:.22em;
+}
+.sheet--done .task__day{color:#8e8d86}
+.sheet--open .task__day{color:var(--muted)}
+.task__cell{font-size:clamp(.98rem,1.5vw,1.06rem);line-height:1.35;min-width:0}
+.task__txt{
+  text-decoration-line:line-through;text-decoration-thickness:2px;
+  text-decoration-color:transparent;text-decoration-skip-ink:none;
+  transition:text-decoration-color .38s ease, color .38s ease;
+}
+
+/* done state (consulting): static, already ticked, not interactive */
+.tick{
+  width:1.35rem;height:1.35rem;border-radius:var(--r);
+  display:grid;place-items:center;font-size:13px;line-height:1;font-weight:700;
+  background:var(--accent);color:#fff;margin-top:.05em;
+}
+.sheet--done .task__txt{color:#8b8a83;text-decoration-color:var(--accent-dark)}
+
+/* open state (mentorship): real, interactive */
+.sheet--open .task{cursor:pointer}
+.sheet--open input[type="checkbox"]{
+  appearance:none;-webkit-appearance:none;margin:.05em 0 0;
+  width:1.35rem;height:1.35rem;border:1.6px solid var(--rule-strong);border-radius:var(--r);
+  background:var(--paper);display:grid;place-items:center;cursor:pointer;
+  transition:background-color .18s,border-color .18s;
+}
+.sheet--open input[type="checkbox"]::after{
+  content:"✓";font-size:13px;font-weight:700;color:#fff;opacity:0;transform:scale(.5);
+  transition:opacity .18s,transform .22s cubic-bezier(.16,1,.3,1);
+}
+.sheet--open input[type="checkbox"]:hover{border-color:var(--accent)}
+.sheet--open input[type="checkbox"]:checked{background:var(--accent);border-color:var(--accent)}
+.sheet--open input[type="checkbox"]:checked::after{opacity:1;transform:scale(1)}
+.sheet--open input[type="checkbox"]:checked ~ .task__cell .task__txt{color:var(--muted);text-decoration-color:var(--accent)}
+.sheet__foot{
+  padding:1.05rem clamp(1rem,2.4vw,1.6rem);
+  display:flex;gap:1rem;align-items:baseline;flex-wrap:wrap;
+  font-size:.95rem;
+}
+.sheet--done .sheet__foot{border-top:1px solid #2c2e34;color:#8b8a83}
+.sheet--open .sheet__foot{border-top:1px solid var(--rule);color:var(--muted)}
+.sheet__count{
+  font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-weight:600;font-size:12px;
+  letter-spacing:.14em;text-transform:uppercase;
+}
+.sheet--open .sheet__count{color:var(--accent-text)}
+.sheet--done .sheet__count{color:var(--accent-dark)}
+.sheet__msg{font-size:.95rem;line-height:1.4}
+.sheet--open .sheet__msg[data-full="true"]{color:var(--fg);font-weight:600}
+@media (max-width:520px){ .task{grid-template-columns:2.6rem 1.35rem 1fr;gap:.65rem} }
+
+.pair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:clamp(1.5rem,4vw,3.5rem);align-items:center;margin-top:clamp(2.5rem,5vw,4rem)}
+.pair__copy h3{font-size:clamp(1.35rem,2.6vw,1.95rem);letter-spacing:-.028em;line-height:1.1;max-width:18ch}
+.pair__copy p{margin-top:1rem;color:var(--muted);max-width:46ch;line-height:1.55}
+.pair--flip{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr)}
+.pair--flip .pair__copy{order:2}
+@media (max-width:880px){ .pair,.pair--flip{grid-template-columns:1fr;gap:1.6rem} .pair--flip .pair__copy{order:0} }
+
+/* ---------- built bento ---------- */
+.built{margin-top:clamp(3rem,6vw,5rem)}
+.built h2{margin-bottom:clamp(1.4rem,3vw,2.2rem)}
+.bento{display:grid;grid-template-columns:repeat(6,1fr);gap:clamp(.7rem,1.6vw,1.1rem)}
+.cell{border-radius:var(--r);overflow:hidden;position:relative;min-height:0}
+.cell--a{grid-column:span 4}
+.cell--b{grid-column:span 2;background:var(--panel);color:var(--panel-fg);padding:clamp(1.2rem,2.4vw,1.9rem);display:flex;flex-direction:column;justify-content:center}
+.cell--c{grid-column:span 3}
+.cell--d{grid-column:span 3;background:var(--accent-deep);color:#fff;padding:clamp(1.2rem,2.4vw,1.9rem);display:flex;flex-direction:column;justify-content:center}
+.cell img{width:100%;height:auto;object-fit:cover;aspect-ratio:16/10;filter:grayscale(.2) contrast(1.05)}
+.cell--photo{background:var(--paper-2);display:flex;flex-direction:column}
+.cell__cap{padding:.85rem 1rem 1rem;font-size:.93rem;line-height:1.4;color:var(--muted)}
+.cell__cap b{color:var(--fg);font-weight:700;display:block;margin-bottom:.2rem;font-size:1rem}
+.cell__t{font-size:clamp(1.05rem,1.8vw,1.3rem);font-weight:800;letter-spacing:-.025em;line-height:1.15;max-width:16ch}
+.cell__p{margin-top:.7rem;font-size:.93rem;line-height:1.45;opacity:.82;max-width:32ch}
+.cell--d .cell__p,.cell--d .cell__n{opacity:1}
+.cell--d .cell__n{color:#f6d5d2}
+.cell__n{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;margin-top:1.5rem;opacity:.8}
+.cell--c{background:var(--paper-2);border:1px solid var(--rule);padding:clamp(1.2rem,2.4vw,1.9rem);display:flex;flex-direction:column;justify-content:center}
+.cell--c .cell__big{font-size:clamp(2.4rem,5vw,3.6rem);font-weight:800;font-stretch:84%;letter-spacing:-.05em;line-height:1;color:var(--accent-text);margin-bottom:.5rem}
+.cell--c .cell__p{opacity:1;color:var(--muted)}
+@media (max-width:900px){
+  .bento{grid-template-columns:1fr}
+  .cell--a,.cell--b,.cell--c,.cell--d{grid-column:span 1}
+  .cell--b,.cell--d{min-height:200px}
+}
+
+/* ---------- cupos ---------- */
+.cupos{margin-top:clamp(3rem,6vw,5rem);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:clamp(1.5rem,4vw,3.5rem);align-items:start;border-top:1px solid var(--rule);padding-top:clamp(1.8rem,3.5vw,2.6rem)}
+.slots{display:grid;gap:1.5rem}
+.slot__n{font-size:clamp(2.2rem,5vw,3.6rem);font-weight:800;font-stretch:84%;letter-spacing:-.05em;line-height:1}
+.slot__n em{font-style:normal;color:var(--accent-text)}
+.slot__l{font-size:13px;color:var(--muted);margin-top:.25rem}
+.slot__boxes{display:flex;gap:5px;margin-top:.6rem}
+.slot__boxes i{width:16px;height:16px;border-radius:var(--r);border:1.5px solid var(--rule-strong);display:block}
+.slot__boxes i[data-taken="true"]{background:var(--ink);border-color:var(--ink)}
+.cupos__copy p{color:var(--muted);line-height:1.55;max-width:52ch}
+.cupos__copy p + p{margin-top:1rem}
+.cupos__copy b{color:var(--fg);font-weight:700}
+.stamp{margin-top:1.2rem;font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+@media (max-width:820px){ .cupos{grid-template-columns:1fr;gap:1.8rem} .slots{grid-template-columns:1fr 1fr;display:grid} }
+
+.cta-line{margin-top:clamp(2.5rem,5vw,4rem);display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap}
+.cta-line p{font-size:1.05rem;max-width:40ch;color:var(--muted)}
+
+/* ---------- mentorship extras ---------- */
+.rule-card{
+  margin-top:clamp(2rem,4vw,3rem);
+  border-left:3px solid var(--accent);padding:.4rem 0 .4rem 1.4rem;
+  font-size:clamp(1.1rem,2.2vw,1.5rem);font-weight:700;letter-spacing:-.025em;line-height:1.2;max-width:30ch;
+}
+.rule-card span{display:block;margin-top:.7rem;font-size:.95rem;font-weight:400;color:var(--muted);letter-spacing:0;line-height:1.5;max-width:44ch}
+.facts{display:flex;flex-wrap:wrap;gap:.5rem;margin:1.6rem 0 0;padding:0}
+.facts li{
+  list-style:none;font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;
+  border:1px solid var(--rule-strong);border-radius:var(--r);padding:.42em .75em;color:var(--muted);
+}
+.redirect{
+  margin-top:clamp(2.5rem,5vw,3.5rem);background:var(--paper);border:1px dashed var(--rule-strong);
+  border-radius:var(--r);padding:clamp(1.2rem,2.8vw,2rem);max-width:64ch;
+}
+.redirect h3{font-size:1.15rem;letter-spacing:-.02em}
+.redirect p{margin-top:.7rem;color:var(--muted);line-height:1.55;font-size:.98rem}
+.redirect a.txtlink{margin-top:.9rem;display:inline-block}
+.txtlink{
+  font-weight:700;text-decoration:none;color:var(--accent-text);
+  border-bottom:1.5px solid currentColor;padding-bottom:1px;
+}
+.txtlink:hover{color:var(--fg)}
+
+/* ---------- form ---------- */
+.form-zone{margin-top:clamp(2.5rem,5vw,4rem);display:grid;grid-template-columns:minmax(0,.72fr) minmax(0,1fr);gap:clamp(1.5rem,4vw,3.5rem);align-items:start}
+.form-zone h2{margin-bottom:1rem}
+.form-zone__aside p{color:var(--muted);line-height:1.55;font-size:.98rem;max-width:38ch}
+.form-zone__aside p + p{margin-top:.9rem}
+form{display:grid;gap:1.25rem}
+.field label{display:block;font-size:13.5px;font-weight:700;letter-spacing:-.005em;margin-bottom:.35rem}
+.field .help{display:block;font-size:12.5px;color:var(--muted);margin-bottom:.45rem;line-height:1.4}
+.field input,.field textarea{
+  width:100%;background:var(--field);border:1.5px solid var(--rule-strong);border-radius:var(--r);
+  padding:.7rem .8rem;font-size:15.5px;line-height:1.4;
+}
+.field input::placeholder,.field textarea::placeholder{color:var(--muted)}
+.field input:focus,.field textarea:focus{border-color:var(--accent)}
+.field textarea{resize:vertical;min-height:76px}
+.field__num{
+  font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:11px;
+  color:var(--accent-text);letter-spacing:.14em;margin-right:.5rem;
+}
+.form-foot{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-top:.25rem}
+.form-foot .note{font-size:12.5px;color:var(--muted);max-width:30ch;line-height:1.35}
+.form-status{display:none;font-size:.95rem;font-weight:600;border-left:3px solid var(--accent);padding-left:.9rem}
+.form-status[data-show="true"]{display:block}
+@media (max-width:880px){ .form-zone{grid-template-columns:1fr;gap:1.8rem} }
+
+/* ---------- trayectoria ---------- */
+.track{padding:clamp(3.5rem,7vw,6rem) 0}
+.track h2{margin-bottom:clamp(1.6rem,3.5vw,2.4rem)}
+.cluster + .cluster{margin-top:clamp(2rem,4vw,3rem)}
+.cluster__t{
+  font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--muted);border-top:1px solid var(--rule);padding-top:.6rem;margin-bottom:1.2rem;
+}
+.cluster__t em{font-style:normal;color:var(--accent-text)}
+.co-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(1rem,2.4vw,1.8rem)}
+.co-grid--solo{grid-template-columns:minmax(0,1fr)}
+.co{display:grid;grid-template-columns:56px 1fr;gap:1rem;align-items:start}
+.co__logo{width:56px;height:56px;border-radius:var(--r);background:#fff;display:grid;place-items:center;padding:8px;border:1px solid var(--rule)}
+.co__logo img{width:100%;height:100%;object-fit:contain}
+.co__n{font-size:1.15rem;font-weight:800;letter-spacing:-.02em}
+.co__y{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:11px;color:var(--muted);letter-spacing:.1em;margin-left:.5rem;font-weight:400}
+.co__d{margin-top:.4rem;font-size:.95rem;color:var(--muted);line-height:1.5;max-width:44ch}
+.track__foot{margin-top:clamp(2rem,4vw,3rem);border-top:1px solid var(--rule);padding-top:1.3rem;font-size:clamp(1rem,1.8vw,1.2rem);max-width:56ch;line-height:1.45;font-weight:500}
+
+/* ---------- testimonios empty ---------- */
+.empty{margin-top:clamp(2.5rem,5vw,3.5rem);display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(1.5rem,4vw,3rem);align-items:center}
+.empty__copy h3{font-size:clamp(1.25rem,2.4vw,1.75rem);letter-spacing:-.025em;line-height:1.15;max-width:20ch}
+.empty__copy p{margin-top:.9rem;color:var(--muted);line-height:1.55;max-width:46ch}
+.slots-3{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem}
+.slot-empty{
+  border:1px dashed var(--rule-strong);border-radius:var(--r);min-height:110px;
+  display:grid;place-items:center;text-align:center;padding:.8rem;
+  font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:10.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--muted);
+}
+@media (max-width:820px){ .empty{grid-template-columns:1fr} }
+
+/* ---------- about ---------- */
+.about{padding:clamp(3.5rem,7vw,6rem) 0;border-top:1px solid var(--rule)}
+.about__grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:clamp(1.8rem,4vw,3.5rem);align-items:start}
+.about__grid h2{margin-bottom:1.2rem}
+.about__grid p{color:var(--muted);line-height:1.6;max-width:50ch}
+.about__grid p + p{margin-top:1rem}
+.about__pics{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
+.about__pics img{width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;border-radius:var(--r);filter:grayscale(.15)}
+.about__pics figcaption{grid-column:1/-1;font-size:12.5px;color:var(--muted);line-height:1.4}
+.about__pics{margin:0}
+.now{
+  margin-top:clamp(2.5rem,5vw,3.5rem);border-top:2.5px solid var(--ink);padding-top:1rem;
+  display:grid;grid-template-columns:minmax(0,.42fr) minmax(0,1fr);gap:clamp(1.2rem,3vw,2.5rem);
+}
+.now__meta{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);line-height:2}
+.now__meta b{color:var(--accent-text);font-weight:600}
+.now__body p{line-height:1.6;color:var(--fg);max-width:60ch}
+.now__body p + p{margin-top:.8rem;color:var(--muted)}
+@media (max-width:760px){ .about__grid{grid-template-columns:1fr} .now{grid-template-columns:1fr;gap:.8rem} }
+
+.stage{margin-top:clamp(2.5rem,5vw,3.5rem);border-top:1px solid var(--rule);padding-top:1.4rem}
+.stage__names{
+  font-size:clamp(1.05rem,2.4vw,1.6rem);font-weight:700;font-stretch:94%;letter-spacing:-.02em;line-height:1.3;
+}
+.stage__names span{color:var(--muted)}
+.stage p{margin-top:1rem;color:var(--muted);max-width:60ch;line-height:1.55;font-size:.98rem}
+.stage__links{margin-top:1.1rem;display:flex;gap:1.5rem;flex-wrap:wrap}
+
+/* ---------- faq ---------- */
+.faq{padding:clamp(3.5rem,7vw,6rem) 0;background:var(--paper-2);border-top:1px solid var(--rule)}
+.faq__grid{display:grid;grid-template-columns:minmax(0,.55fr) minmax(0,1fr);gap:clamp(1.5rem,4vw,3.5rem);align-items:start}
+details{border-top:1px solid var(--rule)}
+details:last-of-type{border-bottom:1px solid var(--rule)}
+summary{
+  list-style:none;cursor:pointer;padding:1.05rem 2.5rem 1.05rem 0;position:relative;
+  font-weight:700;font-size:clamp(1rem,1.7vw,1.15rem);letter-spacing:-.015em;line-height:1.3;
+}
+summary::-webkit-details-marker{display:none}
+summary::after{
+  content:"+";position:absolute;right:.35rem;top:1rem;font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  font-size:1.1rem;color:var(--accent-text);transition:transform .22s cubic-bezier(.16,1,.3,1);line-height:1;
+}
+details[open] summary::after{transform:rotate(45deg)}
+details p{padding:0 3rem 1.3rem 0;color:var(--muted);line-height:1.6;max-width:60ch}
+details[open] p{animation:fade .28s ease both}
+@keyframes fade{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+@media (max-width:820px){ .faq__grid{grid-template-columns:1fr} }
+
+/* ---------- close ---------- */
+.close{background:var(--panel);color:var(--panel-fg);padding:clamp(3.5rem,8vw,6.5rem) 0}
+.close__in{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:clamp(1.5rem,4vw,3.5rem);align-items:end}
+.close h2{font-size:clamp(1.8rem,4.4vw,3.4rem);font-stretch:102%;letter-spacing:-.032em;line-height:1.05;max-width:20ch}
+.close p{margin-top:1.2rem;color:#b0aea6;max-width:48ch;line-height:1.55}
+@media (max-width:820px){ .close__in{grid-template-columns:1fr;align-items:start} }
+
+/* ---------- footer ---------- */
+.foot{padding:2.5rem 0 3.5rem;border-top:1px solid var(--rule)}
+.foot__in{display:flex;gap:1.5rem 2rem;flex-wrap:wrap;align-items:center}
+.foot a{font-size:14px;text-decoration:none;color:var(--muted);font-weight:600}
+.foot a:hover{color:var(--fg)}
+.foot__li{display:inline-flex;align-items:center;gap:.5rem}
+.foot__li img{width:15px;height:15px;opacity:.7}
+.foot__note{width:100%;font-size:12.5px;color:var(--muted);margin-top:.5rem}
+.foot .lang{margin-left:auto;font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:11.5px;letter-spacing:.14em}
+.foot .lang b{color:var(--fg)}
+@media (max-width:640px){ .foot .lang{margin-left:0} }
+
+/* ---------- reveal ---------- */
+.reveal > *{opacity:0;transform:translateY(14px)}
+.reveal-in > *{opacity:1;transform:none;transition:opacity .55s ease, transform .65s cubic-bezier(.16,1,.3,1)}
+.reveal-in > *:nth-child(2){transition-delay:.07s}
+.reveal-in > *:nth-child(3){transition-delay:.14s}
+.reveal-in > *:nth-child(4){transition-delay:.21s}
+
+/* ---------- small screens: explicit collapse for every multi-column block ---------- */
+@media (max-width:760px){
+  .co-grid{grid-template-columns:1fr}
+}
+@media (max-width:600px){
+  .hero h1{font-size:2rem;letter-spacing:-.032em}
+  .hero__photo{max-width:140px}
+  .hero__cta .btn{width:100%;justify-content:space-between}
+  .slots-3{grid-template-columns:1fr}
+  .slot-empty{min-height:64px}
+  .about__pics{grid-template-columns:1fr}
+  .form-foot .note{max-width:none}
+  .cluster__t{line-height:1.5}
+}
+@media (max-width:440px){
+  .slots{grid-template-columns:1fr}
+  .facts li{font-size:10.5px}
+}
+
+@media (prefers-color-scheme: dark){
+  .btn--primary,.btn--onink{color:#141519}
+  .btn--onink:hover{background:#fff;color:#141519;border-color:#fff}
+  .door--a,.sheet--done,.cell--b{border:1px solid #23262d}
+  .door--a{border-top:3px solid var(--accent)}
+  .bar--1{background:#262a31;color:#e6e4de}
+  .bar--3{background:#3a3f49;color:#f2f0ea}
+  .close{border-top:1px solid #23262d}
+  .co__logo{background:#f4f3ef}
+}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  .reveal > *{opacity:1;transform:none}
+  .reveal .bar{transform:none;opacity:1}
+  .pain__item span.mark{transform:scaleX(1)}
+}
+</style>
+</head>
+<body>
+
+<span id="top-sentinel" aria-hidden="true" style="position:absolute;top:0;height:1px;width:1px"></span>
+
+<header class="nav" id="nav">
+  <div class="wrap nav__in">
+    <a class="brand" href="#top-sentinel">Salomón Muriel<b>.</b></a>
+    <nav class="nav__links" aria-label="Secciones">
+      <a href="#consultoria">Consultoría</a>
+      <a href="#mentoria">Mentoría</a>
+      <a href="#trayectoria">Trayectoria</a>
+      <a href="#charlas">Charlas</a>
+    </nav>
+    <a class="btn btn--primary" href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20tengo%20una%20empresa%20de%20___%20y%20quiero%20contarte%20qu%C3%A9%20tengo%20montado." target="_blank" rel="noopener">Cuéntame qué tienes montado</a>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="wrap">
+    <h1>Yo armo la estrategia.<span class="l2">Y yo mismo construyo la herramienta.</span></h1>
+  </div>
+  <div class="wrap hero__grid">
+    <div>
+      <p class="hero__sub">Trabajo con empresas colombianas que ya venden, pero cuya operación vive en Excel y en la cabeza del dueño.</p>
+      <div class="hero__cta">
+        <a class="btn btn--primary" href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20tengo%20una%20empresa%20de%20___%20y%20quiero%20contarte%20qu%C3%A9%20tengo%20montado." target="_blank" rel="noopener">Cuéntame qué tienes montado <span class="arw" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+    <div class="hero__photo">
+      <img src="assets/fotoSalo.jpeg" width="800" height="800" alt="Salomón Muriel, de brazos cruzados, con abrigo verde." fetchpriority="high" decoding="async">
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROOF ============ -->
+<section class="proof">
+  <div class="wrap">
+    <div class="proof__row reveal">
+      <div class="figure">
+        <div class="figure__n mono">5</div>
+        <div class="figure__l">empresas fundadas, incluida la de ahora</div>
+      </div>
+      <div class="figure">
+        <div class="figure__n mono">2</div>
+        <div class="figure__l">vendidas: Finco y PrestaGente</div>
+      </div>
+      <div class="figure figure--bad">
+        <div class="figure__n mono">2</div>
+        <div class="figure__l">quebradas: Beriblock y El Palomo</div>
+      </div>
+      <div class="figure">
+        <div class="figure__n mono">100.000</div>
+        <div class="figure__l">reportes al año que entregaba Finco</div>
+      </div>
+      <div class="figure">
+        <div class="figure__n mono">USD 150K</div>
+        <div class="figure__l">el primer año de Ignia, rentable desde el día uno</div>
+      </div>
+    </div>
+    <p class="proof__note">Trabajo sobre todo con empresas que ya facturan pero todavía no llegan a los 5.000 millones al año. <b>Ropa, comida, retail, servicios, consultorías.</b> No tienes que ser una empresa de tecnología. De hecho, casi ninguno de mis clientes lo es.</p>
+  </div>
+</section>
+
+<!-- ============ PAIN ============ -->
+<section class="pain">
+  <div class="wrap">
+    <h2 class="h-sec">Esto seguramente te suena</h2>
+    <div class="pain__list reveal">
+      <p class="pain__item">Compraste un software carísimo que nadie en tu equipo usa.<span class="mark" aria-hidden="true"></span></p>
+      <p class="pain__item">Media operación depende de que tú te acuerdes de las cosas.<span class="mark" aria-hidden="true"></span></p>
+      <p class="pain__item">Todo el mundo te habla de IA y nadie te dice qué hacer el lunes por la mañana.<span class="mark" aria-hidden="true"></span></p>
+    </div>
+    <p class="pain__foot">Si nada de esto te sonó, probablemente no te sirvo, y prefiero decírtelo de una y no en la primera llamada.</p>
+  </div>
+</section>
+
+<!-- ============ DOORS ============ -->
+<section class="doors" id="doors">
+  <div class="wrap">
+    <h2 class="h-sec">¿En cuál de estas dos estás hoy?</h2>
+    <div class="doors__grid">
+
+      <div class="door door--a">
+        <p class="door__q">Ya tengo un negocio andando y la operación no me da abasto.</p>
+        <div class="door__label">Consultoría</div>
+        <p class="door__body">Definimos para dónde va el negocio y construyo la tecnología a la medida que lo sostiene. La construyo yo. No la subcontrato, no te mando un equipo, no te entrego un PowerPoint.</p>
+        <div class="door__cta">
+          <a class="btn btn--onink" href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20tengo%20una%20empresa%20de%20___%20y%20quiero%20contarte%20qu%C3%A9%20tengo%20montado." target="_blank" rel="noopener">Cuéntame qué tienes montado <span class="arw" aria-hidden="true">→</span></a>
+        </div>
+      </div>
+
+      <div class="door door--b">
+        <p class="door__q">Apenas estoy arrancando y necesito que alguien me empuje.</p>
+        <div class="door__label">Mentoría</div>
+        <p class="door__body">Una hora conmigo cada semana, una lista de tareas al final, y la semana siguiente arranca revisándola. No hay clase, no hay grupo, no hay currículo.</p>
+        <div class="door__cta">
+          <a class="btn btn--ghost" href="#mentoria">Postularme a la mentoría</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ ZONE A: CONSULTORÍA ============ -->
+<section class="zone-a" id="consultoria">
+  <div class="wrap">
+
+    <div class="zone-open">
+      <span class="tag">Consultoría</span>
+      <span class="zone-note">Acá el trabajo lo hago yo. Tú escribes un WhatsApp y el resto corre por mi cuenta.</span>
+    </div>
+
+    <h2 class="h-sec h-sec--wide">Qué pasa, en concreto, si trabajamos juntos</h2>
+
+    <div class="plan reveal">
+      <div class="plan__scale" aria-hidden="true">
+        <span>S1</span><span></span><span></span><span>S4</span><span></span><span></span><span></span><span>S8</span><span></span><span></span><span></span><span>S12</span><span></span><span></span><span></span><span>S16</span>
+      </div>
+      <div class="plan__rows">
+        <div class="plan__row"><div class="bar bar--1" style="grid-column:1 / span 2">Entender la operación</div></div>
+        <div class="plan__row"><div class="bar bar--2" style="grid-column:2 / span 2">Diagnóstico</div></div>
+        <div class="plan__row"><div class="bar bar--3" style="grid-column:4 / span 13">Construir</div></div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <span class="wk">Semanas 1 a 2</span>
+        <h3>Entender la operación</h3>
+        <p>Hablo con la gente que la ejecuta, no solo contigo. Miro cómo se hace de verdad, no cómo dice el manual que se hace.</p>
+      </div>
+      <div class="step">
+        <span class="wk">Semanas 2 a 3</span>
+        <h3>Diagnóstico</h3>
+        <p>Un plan corto, el único cuello de botella que vale la pena atacar primero, y una primera cosa ya funcionando. Compromiso acotado: si no te aporta, ahí paramos.</p>
+      </div>
+      <div class="step">
+        <span class="wk">Semanas 4 a 16</span>
+        <h3>Construir</h3>
+        <p>La herramienta interna, el CRM, la automatización, los flujos con IA. Termina con tu equipo entrenado usándolo. Después, si quieres, acompañamiento mensual liviano.</p>
+      </div>
+    </div>
+
+    <p class="plan__close">Al final no te queda un informe. Te queda <b>algo prendido, funcionando, y tu equipo sabiendo usarlo.</b> Si te entrego un documento bonito y nadie lo abre, los dos perdimos la plata.</p>
+
+    <!-- SIGNATURE COMPONENT, STATE 1: DONE, BY HIM -->
+    <div class="pair">
+      <div class="pair__copy">
+        <h3>Una semana cualquiera del diagnóstico</h3>
+        <p>Esto es lo que hago yo mientras tú sigues atendiendo tu negocio. No te pido que llenes formatos, no te mando tareas, no te cito a talleres de tres horas. Reviso, pregunto, construyo y vuelvo con algo hecho.</p>
+      </div>
+      <div class="sheet sheet--done">
+        <div class="sheet__head">
+          <span>Semana 2 del diagnóstico</span>
+          <span class="sheet__who">Responsable: Salomón</span>
+        </div>
+        <div class="sheet__rows">
+          <div class="task"><span class="task__day">LUN</span><span class="tick" aria-hidden="true">✓</span><span class="task__cell"><span class="task__txt">Entrevistar a seis personas del equipo, no solo al dueño</span></span></div>
+          <div class="task"><span class="task__day">MAR</span><span class="tick" aria-hidden="true">✓</span><span class="task__cell"><span class="task__txt">Sentarme un día entero en la operación a mirar cómo se hace de verdad</span></span></div>
+          <div class="task"><span class="task__day">MIÉ</span><span class="tick" aria-hidden="true">✓</span><span class="task__cell"><span class="task__txt">Sacar el inventario de todo lo que hoy vive en Excel y en WhatsApp</span></span></div>
+          <div class="task"><span class="task__day">JUE</span><span class="tick" aria-hidden="true">✓</span><span class="task__cell"><span class="task__txt">Escribir el cuello de botella en una frase que quepa en un mensaje</span></span></div>
+          <div class="task"><span class="task__day">VIE</span><span class="tick" aria-hidden="true">✓</span><span class="task__cell"><span class="task__txt">Dejar prendido el primer flujo automatizado, ese mismo viernes</span></span></div>
+        </div>
+        <div class="sheet__foot">
+          <span class="sheet__count">5 de 5 hechas</span>
+          <span class="sheet__msg">Ninguna te tocó a ti. Para eso me contratas.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- BUILT WITH HIS HANDS -->
+    <div class="built">
+      <h2 class="h-sec h-sec--wide">Cosas que construí con mis propias manos</h2>
+      <div class="bento">
+
+        <figure class="cell cell--a cell--photo">
+          <img src="assets/salo_oscar.webp" width="527" height="328" alt="Salomón mostrando en pantalla la herramienta de valoración de Finco." loading="lazy" decoding="async">
+          <figcaption class="cell__cap"><b>Finco</b>La herramienta de valoración que estoy mostrando en esa foto la construí yo, con mi socio. Más de 100.000 reportes al año.</figcaption>
+        </figure>
+
+        <div class="cell cell--b">
+          <div>
+            <p class="cell__t">R5</p>
+            <p class="cell__p">Armé el pipeline de datos y el sistema de riesgo de la fintech. Dirigí los equipos de web, móvil y datos.</p>
+          </div>
+          <p class="cell__n">250.000 usuarios activos al mes en la app</p>
+        </div>
+
+        <div class="cell cell--c">
+          <div>
+            <p class="cell__big mono">2.000</p>
+            <p class="cell__t">Ignia</p>
+            <p class="cell__p">Personas dentro de la plataforma de comunidad. El CRM, el sitio y esa plataforma los construí yo.</p>
+          </div>
+        </div>
+
+        <div class="cell cell--d">
+          <div>
+            <p class="cell__t">Hoy construyo con IA</p>
+            <p class="cell__p">Uso agentes como Claude Code incluso para cosas que no son programar. Por eso lo que antes tomaba un trimestre hoy sale en semanas.</p>
+          </div>
+          <p class="cell__n">Es la parte más nueva de lo que hago</p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- CUPOS + IGNIA -->
+    <div class="cupos" id="cupos">
+      <div class="slots">
+        <div>
+          <div class="slot__n mono"><em>2</em> de 4</div>
+          <div class="slot__l">cupos de consultoría ocupados</div>
+          <div class="slot__boxes" aria-hidden="true"><i data-taken="true"></i><i data-taken="true"></i><i></i><i></i></div>
+        </div>
+        <div>
+          <div class="slot__n mono"><em>3</em> de 5</div>
+          <div class="slot__l">cupos de mentoría ocupados</div>
+          <div class="slot__boxes" aria-hidden="true"><i data-taken="true"></i><i data-taken="true"></i><i data-taken="true"></i><i></i><i></i></div>
+        </div>
+      </div>
+      <div class="cupos__copy">
+        <p>No es urgencia de mercadeo: es que <b>esto lo hago yo, con mis propias manos,</b> y en paralelo con Ignia. Cuando se llenan, se llenan, y te lo digo de frente en vez de meterte en una lista de espera.</p>
+        <p>De lunes a viernes construyo Ignia. Esto de acá es aparte y va a mi nombre, por eso los cupos son contados y por eso la conversación empieza por WhatsApp y no por un calendario abierto.</p>
+        <p class="stamp">Actualizado el 5 de septiembre de 2026</p>
+      </div>
+    </div>
+
+    <div class="cta-line">
+      <a class="btn btn--primary" href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20tengo%20una%20empresa%20de%20___%20y%20quiero%20contarte%20qu%C3%A9%20tengo%20montado." target="_blank" rel="noopener">Cuéntame qué tienes montado <span class="arw" aria-hidden="true">→</span></a>
+      <p>Me escribes, hablamos 30 minutos, y te digo si puedo ayudarte o no. Sin cotización de veinte páginas.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ ZONE B: MENTORÍA ============ -->
+<section class="zone-b" id="mentoria">
+  <div class="wrap">
+
+    <div class="zone-open">
+      <span class="tag">Mentoría</span>
+      <span class="zone-note">Acá el trabajo lo haces tú. Yo reviso. Esa es toda la diferencia con lo de arriba.</span>
+    </div>
+
+    <h2 class="h-sec">Trabajar conmigo significa que las cosas pasan, así toque a las malas.</h2>
+
+    <!-- SIGNATURE COMPONENT, STATE 2: EMPTY, BY YOU, INTERACTIVE -->
+    <div class="pair pair--flip">
+      <div class="pair__copy">
+        <h3>Una semana cualquiera de mentoría</h3>
+        <p>Cada sesión termina con una lista escrita. La siguiente arranca revisándola, no conversando. Márcalas si quieres: vas a ver que ninguna se marca sola.</p>
+        <ul class="facts">
+          <li>1:1, sin cohorte</li>
+          <li>60 minutos cada semana</li>
+          <li>WhatsApp entre sesiones</li>
+          <li>Mínimo 3 meses</li>
+          <li>7 mentoreados hasta hoy</li>
+        </ul>
+      </div>
+
+      <div class="sheet sheet--open">
+        <div class="sheet__head">
+          <span>Tu semana 1</span>
+          <span class="sheet__who">Responsable: tú</span>
+        </div>
+        <div class="sheet__rows" id="tasklist">
+          <label class="task"><span class="task__day">LUN</span><input type="checkbox"><span class="task__cell"><span class="task__txt">Llamar a cinco clientes potenciales y anotar qué te dijeron</span></span></label>
+          <label class="task"><span class="task__day">MAR</span><input type="checkbox"><span class="task__cell"><span class="task__txt">Ponerle precio a lo que vendes y publicarlo donde se vea</span></span></label>
+          <label class="task"><span class="task__day">MIÉ</span><input type="checkbox"><span class="task__cell"><span class="task__txt">Cerrar la versión chiquita del producto, no la completa</span></span></label>
+          <label class="task"><span class="task__day">JUE</span><input type="checkbox"><span class="task__cell"><span class="task__txt">Mandar la propuesta que llevas dos semanas puliendo</span></span></label>
+          <label class="task"><span class="task__day">DOM</span><input type="checkbox"><span class="task__cell"><span class="task__txt">Escribirme con lo que no hiciste y por qué no lo hiciste</span></span></label>
+        </div>
+        <div class="sheet__foot">
+          <span class="sheet__count" id="taskCount">0 de 5 hechas</span>
+          <span class="sheet__msg" id="taskMsg" data-full="false" aria-live="polite">Ninguna se marca sola. Esa es toda la diferencia.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="rule-card">
+      Si dos semanas seguidas no hiciste las tareas, paramos.
+      <span>Sin resentimientos, pero paramos. Lo escribo acá y no en la letra menuda porque es la regla que hace que esto funcione, y porque prefiero que la leas antes de postularte.</span>
+    </div>
+
+    <div class="redirect">
+      <h3>Antes de postularte, léete esto</h3>
+      <p>Si lo que buscas es aprender en grupo, con estructura, con currículo y con gente que está exactamente en tu mismo momento, eso es el Action Lab de Ignia y probablemente te sirva más que yo. Te dejo el enlace de una vez. Acá somos tú y yo, cada semana, y nada más.</p>
+      <a class="txtlink" href="https://www.ignia.lat" target="_blank" rel="noopener">Ver el Action Lab de Ignia</a>
+    </div>
+
+    <div class="form-zone">
+      <div class="form-zone__aside">
+        <h2 class="h-sec" style="font-size:clamp(1.5rem,2.8vw,2.2rem)">Cinco preguntas. Tres minutos.</h2>
+        <p>No es un formulario de contacto: es el primer ejercicio. Si te cuesta contestarlo, esa ya es información útil para los dos.</p>
+        <p>Te contesto en menos de una semana, sí o no. No todos entran: hoy hay tres cupos ocupados de cinco y la selección es real.</p>
+      </div>
+
+      <form id="mentoriaForm" novalidate>
+        <div class="field">
+          <label for="q1"><span class="field__num">01</span>¿Qué estás construyendo?</label>
+          <span class="help" id="h1">Una frase basta. Si no cabe en una frase, escribe la frase igual.</span>
+          <input id="q1" name="q1" type="text" required aria-describedby="h1" placeholder="Una marca de arepas congeladas para tiendas de barrio">
+        </div>
+        <div class="field">
+          <label for="q2"><span class="field__num">02</span>¿En qué punto estás hoy?</label>
+          <span class="help" id="h2">Idea, primeros clientes, o ya vendiendo con algo de constancia.</span>
+          <input id="q2" name="q2" type="text" required aria-describedby="h2" placeholder="Vendiendo, unos 4 millones al mes">
+        </div>
+        <div class="field">
+          <label for="q3"><span class="field__num">03</span>¿Qué es lo que te tiene trancado ahora mismo?</label>
+          <span class="help" id="h3">Lo de verdad, no la versión bonita.</span>
+          <textarea id="q3" name="q3" required aria-describedby="h3" placeholder="Llevo tres meses sin subir el precio porque me da miedo perder los clientes que tengo"></textarea>
+        </div>
+        <div class="field">
+          <label for="q4"><span class="field__num">04</span>¿Cuántas horas a la semana le metes de verdad?</label>
+          <span class="help" id="h4">De verdad, no las que te gustaría meterle.</span>
+          <input id="q4" name="q4" type="text" required aria-describedby="h4" placeholder="Unas 10, casi todas los fines de semana">
+        </div>
+        <div class="field">
+          <label for="q5"><span class="field__num">05</span>¿Por qué ahora?</label>
+          <span class="help" id="h5">Qué cambió este mes que no había pasado antes.</span>
+          <input id="q5" name="q5" type="text" required aria-describedby="h5" placeholder="Renuncié en agosto y tengo seis meses de ahorros">
+        </div>
+        <div class="form-foot">
+          <button class="btn btn--primary" type="submit">Postularme a la mentoría</button>
+          <span class="note">Va a mi correo. No hay lista, no hay boletín, no te vuelvo a escribir si la respuesta es no.</span>
+        </div>
+        <p class="form-status" id="formStatus" role="status"></p>
+      </form>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ TRAYECTORIA ============ -->
+<section class="track" id="trayectoria">
+  <div class="wrap">
+    <h2 class="h-sec h-sec--wide">Cinco empresas. Dos vendidas, dos quebradas, una andando.</h2>
+
+    <div class="cluster">
+      <p class="cluster__t">Andando</p>
+      <div class="co-grid co-grid--solo">
+        <div class="co">
+          <div class="co__logo"><img src="assets/ignia.png" width="1657" height="1104" alt="Ignia" loading="lazy" decoding="async"></div>
+          <div>
+            <p class="co__n">Ignia <span class="co__y">2025 hasta hoy</span></p>
+            <p class="co__d">Un modelo distinto de educación superior en Bogotá, bootstrapped y rentable desde el día uno. USD 150K el primer año, equipo de 5, tres cohortes corridas o vendidas. Es lo que hago de lunes a viernes.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cluster">
+      <p class="cluster__t">Vendidas</p>
+      <div class="co-grid">
+        <div class="co">
+          <div class="co__logo"><img src="assets/finco.png" width="730" height="734" alt="Finco" loading="lazy" decoding="async"></div>
+          <div>
+            <p class="co__n">Finco <span class="co__y">2019 a 2022</span></p>
+            <p class="co__d">Valoración de inmuebles con datos e IA para Latinoamérica. Más de 100.000 reportes al año. La vendimos en cerca de USD 1,5M, cinco veces la inversión.</p>
+          </div>
+        </div>
+        <div class="co">
+          <div class="co__logo"><img src="assets/prestagente.png" width="932" height="912" alt="PrestaGente" loading="lazy" decoding="async"></div>
+          <div>
+            <p class="co__n">PrestaGente <span class="co__y">2017 a 2019</span></p>
+            <p class="co__d">Crédito de libranza entre personas, armado para la regulación colombiana. Vendida en cerca de USD 1M y todavía operando hoy con otro dueño.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cluster">
+      <p class="cluster__t">Quebradas <em>(las que más me enseñaron)</em></p>
+      <div class="co-grid">
+        <div class="co">
+          <div class="co__logo"><img src="assets/beriblock.png" width="808" height="954" alt="Beriblock" loading="lazy" decoding="async"></div>
+          <div>
+            <p class="co__n">Beriblock <span class="co__y">2018 a 2019</span></p>
+            <p class="co__d">Certificación de pagarés con blockchain. Quebró. Ahí aprendí lo que cuesta entregarle el desarrollo del corazón del producto a un equipo externo porque el inversionista lo pidió.</p>
+          </div>
+        </div>
+        <div class="co">
+          <div class="co__logo"><img src="assets/elpalomo.png" width="100" height="100" alt="El Palomo" loading="lazy" decoding="async"></div>
+          <div>
+            <p class="co__n">El Palomo <span class="co__y">2016 a 2017</span></p>
+            <p class="co__d">Flores por suscripción, todo en línea. Fracasó. Aprendí que un mercado que se mueve dos veces al año no aguanta un modelo mensual, y que eso se averigua preguntando antes de construir.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="track__foot">Te ahorro esos dos errores por muchísimo menos de lo que me costaron a mí.</p>
+
+    <!-- TESTIMONIALS: honest empty state -->
+    <div class="empty">
+      <div class="empty__copy">
+        <h3>Todavía no tengo testimonios publicados acá</h3>
+        <p>Tengo algo mejor: si la conversación va en serio, te paso el teléfono de un cliente para que le preguntes tú mismo cómo fue trabajar conmigo. Sin filtro y sin que yo esté en la llamada.</p>
+      </div>
+      <div class="slots-3" aria-hidden="true">
+        <div class="slot-empty">Espacio reservado</div>
+        <div class="slot-empty">Espacio reservado</div>
+        <div class="slot-empty">Espacio reservado</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABOUT + AHORA + CHARLAS ============ -->
+<section class="about">
+  <div class="wrap">
+    <div class="about__grid">
+      <div>
+        <h2 class="h-sec">Quién soy, sin currículo</h2>
+        <p>Tengo 35 años, vivo en Bogotá y voy en mi quinta empresa. Soy papá de mellizos, Franco y Luca, y llevo con Natalia desde 2010. Aprendí a programar a las malas, con un producto ya vendido y sin nadie que lo construyera.</p>
+        <p>Construyo porque me gusta construir: empresas, muebles, recetas, juegos para los niños, el sitio donde estás parado. Mi mejor cualidad es esa, y es la misma que te vendo: armar sistemas que la gente sí usa, y sacar cosas del papel.</p>
+        <p>El año pasado corrí mi primera media maratón en 2:10:00 y de paso inscribí a mi esposa sin preguntarle. Ella todavía me lo cobra.</p>
+      </div>
+      <figure class="about__pics">
+        <img src="assets/marathon.jpg" width="600" height="600" alt="Salomón con la medalla de la media maratón de Bogotá." loading="lazy" decoding="async">
+        <img src="assets/bonfire.jpeg" width="600" height="600" alt="Una fogata encendida al anochecer." loading="lazy" decoding="async">
+        <figcaption>La media maratón de 2:10:00, y una fogata de las que hago con los niños.</figcaption>
+      </figure>
+    </div>
+
+    <div class="now">
+      <div class="now__meta">
+        Ahora<br>
+        Actualizado 5 sep 2026<br>
+        Ánimo: <b>9 de 10</b>
+      </div>
+      <div class="now__body">
+        <p>Ignia está de pie. Lanzamos con Camilo el 14 de junio, metimos unos 30 fellows al primer Action Lab y salió con tropiezos pero salió. Rentable desde el día uno, vendimos un par de programas para empresas, y ya somos equipo de cinco.</p>
+        <p>El ingreso es la sexta parte de lo que ganaba antes, pero es estable y va subiendo. Estoy presente en la casa y no ando cerca de quemarme. Lo único que me falta para el 10 es volver a hacer ejercicio en serio: necesito una meta nueva.</p>
+      </div>
+    </div>
+
+    <div class="stage" id="charlas">
+      <p class="stage__names">ConfNodo, EAFIT, la EIA, el Externado, la Universidad Católica <span>y la Asociación Colombiana de EdTech.</span></p>
+      <p>Doy charlas de adopción de tecnología e IA, emprendimiento sin romanticismo, mentalidad maker, y trabajo y vida sin la pose. Lo hago porque me gusta y porque así me conocen. No es un producto: es la puerta de entrada.</p>
+      <div class="stage__links">
+        <a class="txtlink" href="/charlas">Ver las charlas, con foto y bio para descargar</a>
+        <a class="txtlink" href="https://cal.com/salomonmuriel" target="_blank" rel="noopener">Invitarme a una charla</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="faq">
+  <div class="wrap faq__grid">
+    <h2 class="h-sec">Lo que siempre me preguntan</h2>
+    <div>
+      <details>
+        <summary>Es que yo de tecnología no sé nada.</summary>
+        <p>Perfecto. La mitad de mi trabajo es traducir. Si algo no se entiende, es culpa mía y no tuya. Casi ningún cliente mío es una empresa de tecnología: son marcas de ropa, restaurantes, distribuidoras y consultorías.</p>
+      </details>
+      <details>
+        <summary>¿Me vas a cobrar por un PowerPoint?</summary>
+        <p>No. El entregable es algo funcionando y en producción, tu equipo capacitado para usarlo, la documentación en español y sin jerga, y la decisión estratégica escrita en dos páginas. Si lo que querías era un informe de 80 páginas, hay gente que lo hace mejor que yo.</p>
+      </details>
+      <details>
+        <summary>¿Mi empresa es muy chiquita para esto?</summary>
+        <p>Si ya vendes y tienes entre cinco y cuarenta personas, estás justo en el punto donde más sirvo. Donde no sirvo es de los 5.000 millones al año para arriba: no sé escalar más allá de ahí y prefiero decírtelo.</p>
+      </details>
+      <details>
+        <summary>¿Cuánto vale?</summary>
+        <p>Depende del alcance, y te lo digo hablado en la primera llamada. Sin cotización de veinte páginas y sin sorpresas después. Empezamos con un diagnóstico corto de dos o tres semanas: si eso no te aporta, ahí paramos y no perdiste medio año.</p>
+      </details>
+      <details>
+        <summary>¿Esto es Ignia?</summary>
+        <p>No. Ignia es la empresa que construyo de lunes a viernes con mi socio. Esto va a mi nombre, es aparte, y por eso los cupos son contados. Ignia aparece acá como prueba de lo que sé hacer, no como quien te presta el servicio.</p>
+      </details>
+      <details>
+        <summary>¿En cuánto tiempo veo algo?</summary>
+        <p>En la semana tres ya deberías tener una primera cosa prendida y funcionando, aunque sea chiquita. Esa es justamente la prueba de si vale la pena seguir a la fase de construcción o no.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CLOSE ============ -->
+<section class="close">
+  <div class="wrap close__in">
+    <div>
+      <h2>Si ya sabes para dónde quieres llevar tu negocio, la parte difícil está hecha.</h2>
+      <p>Escríbeme y hablamos 30 minutos. Si no te puedo ayudar, te lo digo de una y no te hago perder el tiempo. Eso también es un buen resultado.</p>
+    </div>
+    <div>
+      <a class="btn btn--onink" href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20tengo%20una%20empresa%20de%20___%20y%20quiero%20contarte%20qu%C3%A9%20tengo%20montado." target="_blank" rel="noopener">Cuéntame qué tienes montado <span class="arw" aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap foot__in">
+    <a class="foot__li" href="https://www.linkedin.com/in/smuriel/" target="_blank" rel="noopener">
+      <img src="https://cdn.simpleicons.org/linkedin/8a8a84" width="15" height="15" alt="" loading="lazy">
+      LinkedIn es mi blog: ahí escribo todas las semanas
+    </a>
+    <a href="#charlas">Charlas</a>
+    <a href="/ahora">Ahora</a>
+    <a href="#trayectoria">Trayectoria</a>
+    <span class="lang"><b>ES</b> / <a href="/en" style="font-weight:400">EN</a></span>
+    <p class="foot__note">Salomón Muriel. Práctica personal de estrategia y tecnología, a mi nombre y aparte de Ignia. Bogotá, Colombia.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* Nav: solidify once the page has moved off the top.
+     IntersectionObserver on a sentinel, no scroll listener. */
+  var nav = document.getElementById("nav");
+  var sentinel = document.getElementById("top-sentinel");
+  if (nav && sentinel && "IntersectionObserver" in window) {
+    new IntersectionObserver(function(entries){
+      nav.setAttribute("data-stuck", entries[0].isIntersecting ? "false" : "true");
+    }, {threshold: 0}).observe(sentinel);
+  }
+
+  /* Scroll reveal: motivates hierarchy (the red marks get "drawn",
+     the schedule bars grow left to right as time passes). */
+  var targets = document.querySelectorAll(".reveal");
+  if (reduce || !("IntersectionObserver" in window)) {
+    Array.prototype.forEach.call(targets, function(el){ el.classList.add("reveal-in"); });
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting) { e.target.classList.add("reveal-in"); io.unobserve(e.target); }
+      });
+    }, {threshold: 0.25, rootMargin: "0px 0px -8% 0px"});
+    Array.prototype.forEach.call(targets, function(el){ io.observe(el); });
+  }
+
+  /* The task sheet. Feedback: nothing gets checked unless you check it.
+     That is the whole argument of the mentorship section. */
+  var list = document.getElementById("tasklist");
+  var countEl = document.getElementById("taskCount");
+  var msgEl = document.getElementById("taskMsg");
+  if (list && countEl && msgEl) {
+    var boxes = list.querySelectorAll('input[type="checkbox"]');
+    var messages = {
+      0: "Ninguna se marca sola. Esa es toda la diferencia.",
+      1: "Una. La semana apenas arranca.",
+      2: "Dos. Vas bien, sigue.",
+      3: "Tres de cinco. Acá es donde casi todos aflojan.",
+      4: "Falta una, y siempre es la que más pereza da.",
+      5: "Listo. Así se siente una semana conmigo. La siguiente arranca revisando esta lista."
+    };
+    var update = function(){
+      var n = 0;
+      Array.prototype.forEach.call(boxes, function(b){ if (b.checked) n++; });
+      countEl.textContent = n + " de " + boxes.length + " hechas";
+      msgEl.textContent = messages[n];
+      msgEl.setAttribute("data-full", n === boxes.length ? "true" : "false");
+    };
+    Array.prototype.forEach.call(boxes, function(b){
+      b.checked = false;
+      b.addEventListener("change", update);
+    });
+    update();
+  }
+
+  /* Application form: inline validation, no fake success chrome. */
+  var form = document.getElementById("mentoriaForm");
+  var status = document.getElementById("formStatus");
+  if (form && status) {
+    form.addEventListener("submit", function(ev){
+      ev.preventDefault();
+      var missing = null;
+      Array.prototype.forEach.call(form.querySelectorAll("[required]"), function(f){
+        if (!f.value.trim() && !missing) missing = f;
+      });
+      if (missing) {
+        status.textContent = "Falta contestar la pregunta " + (Array.prototype.indexOf.call(form.querySelectorAll("[required]"), missing) + 1) + ". Son cinco y todas cuentan.";
+        status.setAttribute("data-show", "true");
+        missing.focus();
+        return;
+      }
+      status.textContent = "Recibido. Te contesto en menos de una semana, sí o no.";
+      status.setAttribute("data-show", "true");
+      form.reset();
+    });
+  }
+})();
+</script>
+
+</body>
+</html>

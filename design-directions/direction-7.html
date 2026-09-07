@@ -1,0 +1,1212 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Salomón Muriel</title>
+<meta name="description" content="Ayudo a empresas pequeñas en Colombia a sacar cosas adelante, y la tecnología la construyo yo mismo. Escríbeme por WhatsApp.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ------------------------------------------------------------------
+   PALETTE: "cal y oro". Cool limestone paper, forest-black ink,
+   one accent (gold). Light-committed on purpose. No dark variant,
+   no prefers-color-scheme block, no toggle.
+
+   RADIUS RULE (documented, followed everywhere):
+     interactive elements (buttons, chips, inputs)  -> pill, 999px
+     surfaces (panels, images, cells)               -> 16px
+------------------------------------------------------------------ */
+:root{
+  color-scheme: light;
+
+  --paper:      #EBEDE9;
+  --paper-hi:   #F6F7F4;
+  --paper-lo:   #DEE2DB;
+  --ink:        #141915;
+  --ink-soft:   #47514A;
+  --ink-faint:  #5A645D; /* darkened so 14px muted text clears WCAG AA on every ground here */
+  --rule:       #C9CFC5;
+  --rule-soft:  #D8DDD4;
+  --gold:       #E4A62A;
+  --gold-ink:   #8A5F08;
+  --gold-wash:  #F6E6C3;
+
+  --shadow-soft: 0 1px 2px rgba(20,25,21,.05), 0 12px 34px -18px rgba(20,25,21,.28);
+  --shadow-lift: 0 2px 4px rgba(20,25,21,.07), 0 22px 48px -20px rgba(20,25,21,.34);
+
+  --r-surface: 16px;
+  --r-small: 10px;
+
+  --font-display: "Bricolage Grotesque", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-body: "Instrument Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  --pad-x: clamp(1.25rem, 4vw, 3rem);
+  --sec-y: clamp(4.5rem, 9vw, 8rem);
+  --ease: cubic-bezier(.16,1,.3,1);
+}
+
+*,*::before,*::after{ box-sizing: border-box; }
+
+html{ -webkit-text-size-adjust:100%; }
+@media (prefers-reduced-motion: no-preference){ html{ scroll-behavior: smooth; } }
+
+body{
+  margin:0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.62;
+  font-weight: 400;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img{ max-width:100%; display:block; }
+
+a{ color: inherit; }
+
+::selection{ background: var(--gold); color: var(--ink); }
+
+:focus-visible{
+  outline: 3px solid var(--gold-ink);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+h1,h2,h3{
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.028em;
+  margin: 0;
+  text-wrap: balance;
+}
+
+p{ margin: 0; }
+
+.wrap{
+  width: 100%;
+  max-width: 1240px;
+  margin-inline: auto;
+  padding-inline: var(--pad-x);
+}
+
+.lead{
+  font-size: clamp(1.06rem, 1.5vw, 1.28rem);
+  line-height: 1.55;
+  color: var(--ink-soft);
+  max-width: 56ch;
+}
+
+.body-txt{ max-width: 62ch; color: var(--ink-soft); }
+.body-txt strong{ color: var(--ink); font-weight: 600; }
+
+.mk{
+  background-image: linear-gradient(transparent 60%, rgba(228,166,42,.58) 60%);
+  background-repeat: no-repeat;
+}
+
+/* ---------------- buttons ---------------- */
+.btn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap:.5rem;
+  white-space: nowrap;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: .98rem;
+  letter-spacing: -0.005em;
+  line-height: 1;
+  padding: .95rem 1.6rem;
+  border-radius: 999px;
+  border: 1.5px solid transparent;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform .18s var(--ease), background-color .18s var(--ease),
+              border-color .18s var(--ease), box-shadow .18s var(--ease);
+}
+.btn-primary{
+  background: var(--gold);
+  color: var(--ink);
+  border-color: #C98F1C;
+  box-shadow: var(--shadow-soft);
+}
+.btn-primary:hover{ background:#F0B23A; box-shadow: var(--shadow-lift); }
+.btn-primary:active{ transform: translateY(1px) scale(.99); }
+
+.btn-ghost{
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--ink);
+}
+.btn-ghost:hover{ background: var(--ink); color: var(--paper-hi); }
+.btn-ghost:active{ transform: translateY(1px) scale(.99); }
+
+.btn-solid{
+  background: var(--ink);
+  color: var(--paper-hi);
+  border-color: var(--ink);
+  box-shadow: var(--shadow-soft);
+}
+.btn-solid:hover{ background:#232E26; box-shadow: var(--shadow-lift); }
+.btn-solid:active{ transform: translateY(1px) scale(.99); }
+
+.btn-sm{ padding:.68rem 1.15rem; font-size:.9rem; }
+
+.tlink{
+  color: var(--gold-ink);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1.5px solid rgba(138,95,8,.4);
+  padding-bottom: 1px;
+  transition: border-color .18s var(--ease), color .18s var(--ease);
+}
+.tlink:hover{ border-color: var(--gold-ink); color:#6E4B05; }
+
+/* ---------------- nav ---------------- */
+.nav{
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  background: rgba(235,237,233,.88);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  border-bottom: 1px solid var(--rule-soft);
+}
+.nav-in{
+  display: flex;
+  align-items: center;
+  gap: clamp(1rem, 3vw, 2.6rem);
+  width:100%;
+}
+.brand{
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.06rem;
+  letter-spacing: -0.03em;
+  text-decoration: none;
+  margin-right: auto;
+  white-space: nowrap;
+}
+.nav-links{
+  display: flex;
+  align-items: center;
+  gap: clamp(1rem, 2.2vw, 2rem);
+  list-style: none;
+  margin:0; padding:0;
+}
+.nav-links a{
+  text-decoration: none;
+  font-size: .93rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  padding-bottom: 2px;
+  border-bottom: 1.5px solid transparent;
+  transition: color .18s var(--ease), border-color .18s var(--ease);
+}
+.nav-links a:hover{ color: var(--ink); border-color: var(--gold); }
+.nav-lang{
+  font-size:.8rem; font-weight:600; letter-spacing:.06em;
+  color: var(--ink-soft); text-decoration:none;
+  padding:.3rem .5rem; border:1px solid var(--rule); border-radius:999px;
+  transition: border-color .18s var(--ease), color .18s var(--ease);
+}
+.nav-lang:hover{ color: var(--ink); border-color: var(--ink); }
+
+@media (max-width: 860px){
+  .nav-links{ display:none; }
+}
+
+/* ---------------- hero ---------------- */
+.hero{
+  padding-top: clamp(2.5rem, 5vw, 4.5rem);
+  padding-bottom: clamp(3.5rem, 7vw, 6rem);
+}
+.hero-grid{
+  display: grid;
+  grid-template-columns: minmax(0,1.08fr) minmax(0,.92fr);
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: center;
+}
+/* Scale capped so both headline lines fit the text column: 2 lines, never 3. */
+.hero h1{
+  font-size: clamp(2.35rem, 4.6vw, 3.85rem);
+  line-height: 1.04;
+  letter-spacing: -0.038em;
+  margin-bottom: 1.35rem;
+}
+.hero .lead{ margin-bottom: 2.2rem; }
+.hero-cta{ display:flex; flex-wrap: wrap; gap:.8rem; }
+
+.portrait{
+  position: relative;
+  border-radius: var(--r-surface);
+  overflow: hidden;
+  background: var(--ink);
+  box-shadow: var(--shadow-lift);
+  aspect-ratio: 4 / 3.85;
+}
+.portrait img{
+  width:100%; height:100%; object-fit: cover; object-position: 50% 22%;
+}
+.portrait::after{
+  content:"";
+  position:absolute; inset:0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.09);
+  pointer-events:none;
+}
+
+@media (max-width: 900px){
+  .hero-grid{ grid-template-columns: 1fr; gap: 2.2rem; }
+  .portrait{ aspect-ratio: 4/3.2; max-width: 520px; }
+  .hero h1{ font-size: clamp(2.3rem, 9vw, 3.2rem); }
+}
+
+/* ---------------- generic section ---------------- */
+.sec{ padding-block: var(--sec-y); }
+.sec-head{ max-width: 34ch; margin-bottom: clamp(2.2rem, 4vw, 3.4rem); }
+.sec-head h2{
+  font-size: clamp(1.95rem, 4.1vw, 3.15rem);
+  line-height: 1.05;
+  margin-bottom: 1rem;
+}
+.sec-head .lead{ max-width: 52ch; }
+
+/* ---------------- composer ---------------- */
+.composer{
+  background: var(--paper-hi);
+  border-top: 1px solid var(--rule-soft);
+  border-bottom: 1px solid var(--rule-soft);
+}
+.composer .sec-head{ max-width: 46ch; }
+
+.msgstack{
+  border-top: 1px solid var(--rule);
+  max-width: 980px;
+}
+.msgrow{ border-bottom: 1px solid var(--rule); }
+
+.msgtrigger{
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 1.4rem;
+  background: transparent;
+  border: 0;
+  padding: clamp(1.35rem, 2.4vw, 1.9rem) 0;
+  text-align: left;
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  font-size: clamp(1.15rem, 2.1vw, 1.62rem);
+  line-height: 1.2;
+  color: var(--ink);
+  transition: color .18s var(--ease);
+}
+.msgtrigger:hover{ color: var(--gold-ink); }
+.msgtrigger span{ display:block; max-width: 26ch; }
+
+.plus{
+  flex: none;
+  width: 34px; height: 34px;
+  border-radius: 999px;
+  border: 1.5px solid var(--rule);
+  position: relative;
+  transition: border-color .2s var(--ease), background-color .2s var(--ease), transform .3s var(--ease);
+}
+.plus::before,.plus::after{
+  content:""; position:absolute; left:50%; top:50%;
+  background: var(--ink);
+  transform: translate(-50%,-50%);
+  transition: opacity .2s var(--ease);
+}
+.plus::before{ width:13px; height:1.6px; }
+.plus::after{ width:1.6px; height:13px; }
+/* 180deg, not 90: the horizontal bar stays horizontal so the open state
+   reads as a minus, while the turn still registers as a state change. */
+.msgtrigger[aria-expanded="true"] .plus{ background: var(--gold); border-color:#C98F1C; transform: rotate(180deg); }
+.msgtrigger[aria-expanded="true"] .plus::after{ opacity:0; }
+.msgtrigger:hover .plus{ border-color: var(--ink); }
+
+.panel{
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows .42s var(--ease);
+}
+.panel[data-open="true"]{ grid-template-rows: 1fr; }
+.panel-in{
+  overflow: hidden;
+  visibility: hidden;
+  transition: visibility 0s linear .42s;
+}
+.panel[data-open="true"] .panel-in{ visibility: visible; transition-delay: 0s; }
+
+.panel-body{
+  display: grid;
+  grid-template-columns: minmax(0,1.15fr) minmax(0,.85fr);
+  gap: clamp(1.5rem, 3.5vw, 3rem);
+  padding-bottom: clamp(1.8rem, 3vw, 2.6rem);
+}
+@media (max-width: 820px){
+  .panel-body{ grid-template-columns: 1fr; }
+}
+
+.draft{
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-surface);
+  padding: clamp(1.1rem, 2.2vw, 1.6rem);
+}
+.draft p{
+  font-size: 1.02rem;
+  line-height: 1.6;
+  color: var(--ink);
+}
+.draft-foot{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .9rem;
+  margin-top: 1.25rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--rule-soft);
+}
+.draft-foot small{ color: var(--ink-faint); font-size:.83rem; }
+
+.notes{ display: grid; gap: 1.05rem; align-content: start; padding-top:.2rem; }
+.note{ font-size: .96rem; line-height: 1.55; color: var(--ink-soft); }
+.note b{ color: var(--ink); font-weight: 600; }
+
+.composer-foot{
+  margin-top: clamp(1.8rem, 3vw, 2.6rem);
+  max-width: 62ch;
+  color: var(--ink-soft);
+  font-size: .97rem;
+}
+
+/* ---------------- trayectoria ---------------- */
+.bento{
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0,1fr));
+  gap: clamp(.9rem, 1.6vw, 1.4rem);
+}
+.cell{
+  border-radius: var(--r-surface);
+  padding: clamp(1.4rem, 2.6vw, 2.2rem);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border: 1px solid var(--rule-soft);
+}
+.cell--ignia{ grid-column: span 3; background: var(--gold-wash); border-color:#E6D2A8; }
+.cell--finco{ grid-column: span 3; background: var(--paper-hi); padding-bottom: 0; }
+.cell--presta{ grid-column: span 6; background: var(--paper-hi); flex-direction: row; align-items: center; gap: clamp(1.2rem,3vw,2.6rem); }
+
+/* White chip behind every mark: the source PNGs have different grounds and
+   the chip makes them read as one lockup instead of five stray images. */
+.logo-mark{
+  height: 60px; width: auto; max-width: 190px;
+  box-sizing: border-box;
+  padding: 10px 13px;
+  background: #FFFFFF;
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--r-small);
+  object-fit: contain;
+  align-self: flex-start;
+}
+.cell--presta .logo-mark{ height: 78px; flex:none; }
+
+.cell h3{
+  font-size: clamp(1.15rem, 1.9vw, 1.45rem);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+}
+.cell p{ font-size: .99rem; line-height: 1.55; color: var(--ink-soft); max-width: 42ch; }
+.cell .figure{
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  font-size: clamp(1.9rem, 3.4vw, 2.7rem);
+  line-height: 1;
+  color: var(--ink);
+}
+.cell-photo{
+  margin-top: auto;
+  border-radius: 12px 12px 0 0;
+  overflow: hidden;
+  margin-inline: 0;
+}
+.cell-photo img{ width:100%; height: clamp(128px, 12.5vw, 172px); object-fit: cover; object-position: 50% 34%; }
+
+.losses{
+  margin-top: clamp(.9rem, 1.6vw, 1.4rem);
+  background: var(--paper-lo);
+  border-radius: var(--r-surface);
+  padding: clamp(1.5rem, 3vw, 2.4rem);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: clamp(1.4rem, 3vw, 2.8rem);
+}
+.loss{ display:flex; gap: 1.1rem; align-items: flex-start; }
+.loss img{
+  height: 48px; width: 48px; flex:none;
+  box-sizing: border-box; padding: 7px;
+  background: #FFFFFF; border: 1px solid var(--rule-soft);
+  border-radius: var(--r-small);
+  object-fit: contain;
+  filter: grayscale(1); opacity:.72;
+  margin-top:.2rem;
+}
+.loss h3{ font-size: 1.05rem; font-weight:600; letter-spacing:-0.015em; margin-bottom:.3rem; }
+.loss p{ font-size:.94rem; line-height:1.5; color: var(--ink-soft); }
+
+.losses-note{
+  grid-column: 1 / -1;
+  border-top: 1px solid var(--rule);
+  padding-top: 1.4rem;
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  font-size: clamp(1.05rem, 1.9vw, 1.35rem);
+  line-height: 1.35;
+  max-width: 46ch;
+}
+
+@media (max-width: 880px){
+  .bento{ grid-template-columns: 1fr; }
+  .cell--ignia,.cell--finco,.cell--presta{ grid-column: auto; }
+  .cell--presta{ flex-direction: column; align-items: flex-start; }
+  .losses{ grid-template-columns: 1fr; }
+}
+
+/* ---------------- testimonios ---------------- */
+.testi{
+  border-top: 1px solid var(--rule);
+  padding-block: clamp(2.2rem, 4vw, 3.2rem);
+}
+/* No narrower max-width here: it would re-center inside .wrap and break the
+   left edge that every other section shares. Cap the paragraph instead. */
+.testi-in{
+  display: grid;
+  grid-template-columns: auto minmax(0, 62ch);
+  gap: clamp(1rem, 3vw, 2.4rem);
+  align-items: baseline;
+  justify-content: start;
+}
+.testi-in h2{
+  font-size: 1.02rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  font-family: var(--font-body);
+  color: var(--ink);
+}
+.testi-in p{ color: var(--ink-soft); max-width: 58ch; font-size:.99rem; }
+@media (max-width: 700px){ .testi-in{ grid-template-columns: 1fr; gap:.5rem; } }
+
+/* ---------------- manos (statement band) ---------------- */
+.band{
+  background: var(--paper-lo);
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+.band h2{
+  font-size: clamp(2.1rem, 5vw, 3.6rem);
+  line-height: 1.03;
+  margin-bottom: 1.6rem;
+}
+.band-txt{
+  font-size: clamp(1.06rem, 1.6vw, 1.24rem);
+  line-height: 1.62;
+  color: var(--ink-soft);
+  max-width: 60ch;
+  display: grid;
+  gap: 1.1rem;
+}
+.band-txt strong{ color: var(--ink); font-weight:600; }
+.band-pull{
+  margin-top: clamp(2.2rem, 4vw, 3.2rem);
+  padding-top: clamp(1.6rem, 3vw, 2.2rem);
+  border-top: 1px solid var(--rule);
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.028em;
+  font-size: clamp(1.35rem, 3vw, 2.15rem);
+  line-height: 1.2;
+  max-width: 24ch;
+}
+
+/* ---------------- sobre mí ---------------- */
+/* Photo cluster sits LEFT here, mirrored against the hero portrait on the
+   right, so the two asset-plus-text moments never read as the same block. */
+.about-grid{
+  display: grid;
+  grid-template-columns: minmax(0,1.02fr) minmax(0,.98fr);
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: center;
+}
+.about-grid > .cluster{ grid-column: 1; grid-row: 1; }
+.about-grid > .about-txt{ grid-column: 2; grid-row: 1; }
+.about-txt{ display: grid; gap: 1.15rem; }
+.about-txt h2{
+  font-size: clamp(1.95rem, 4.1vw, 3.15rem);
+  line-height: 1.05;
+  margin-bottom: .5rem;
+}
+.about-txt p{ color: var(--ink-soft); max-width: 50ch; }
+.about-txt p strong{ color: var(--ink); font-weight:600; }
+
+.cluster{
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-auto-rows: auto;
+  gap: clamp(.7rem, 1.4vw, 1.1rem);
+}
+.cluster figure{ margin:0; border-radius: var(--r-surface); overflow:hidden; box-shadow: var(--shadow-soft); }
+.cluster img{ width:100%; height:100%; object-fit: cover; }
+.ph-a{ grid-column: 1 / 4; aspect-ratio: 1/1; }
+.ph-b{ grid-column: 4 / 6; aspect-ratio: 3/4; margin-top: clamp(1.4rem, 4vw, 3rem); }
+.ph-c{ grid-column: 2 / 6; aspect-ratio: 16/10; margin-top: -.4rem; }
+
+@media (max-width: 900px){
+  .about-grid{ grid-template-columns: 1fr; }
+  .about-grid > .about-txt{ grid-column: 1; grid-row: 1; }
+  .about-grid > .cluster{ grid-column: 1; grid-row: 2; }
+  .ph-b{ margin-top: 0; }
+}
+/* The 5-column offset cluster leaves dead columns once it is this narrow.
+   Collapse it to one wide photo over a pair. */
+@media (max-width: 700px){
+  .cluster{ grid-template-columns: repeat(2, 1fr); }
+  .ph-a{ grid-column: 1 / -1; aspect-ratio: 16/11; }
+  .ph-b{ grid-column: 1 / 2; aspect-ratio: 3/4; margin-top: 0; }
+  .ph-c{ grid-column: 2 / 3; aspect-ratio: 3/4; margin-top: 0; }
+}
+
+/* ---------------- charlas ---------------- */
+.charlas{ padding-block: var(--sec-y); }
+/* Contained rather than full bleed: the source is 800px square, and bleeding
+   it edge to edge at 1440 would upscale it into mush. */
+.charla-media{
+  width: 100%;
+  height: clamp(180px, 24vw, 320px);
+  object-fit: cover;
+  object-position: 50% 38%;
+  border-radius: var(--r-surface);
+  box-shadow: var(--shadow-soft);
+}
+.charla-body{
+  padding-top: clamp(2.4rem, 4.5vw, 3.6rem);
+  display: grid;
+  gap: 1.3rem;
+  justify-items: start;
+}
+.charla-body h2{
+  font-size: clamp(1.95rem, 4.1vw, 3.15rem);
+  line-height: 1.05;
+  max-width: 20ch;
+}
+.charla-body p{ color: var(--ink-soft); max-width: 54ch; }
+.topics{
+  display: flex;
+  gap: .6rem;
+  flex-wrap: wrap;
+  margin-top: .5rem;
+  width: 100%;
+  padding: 0; list-style: none;
+}
+.topics li{
+  border: 1.5px solid var(--rule);
+  background: var(--paper-hi);
+  border-radius: 999px;
+  padding: .6rem 1.1rem;
+  font-size: .93rem;
+  font-weight: 500;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.charla-out{
+  margin-top: .4rem;
+  font-size: .93rem;
+  color: var(--ink-faint);
+  max-width: 50ch;
+}
+@media (max-width: 700px){
+  /* A wide letterbox of a square portrait crops to a forehead at this width. */
+  .charla-media{ height: auto; aspect-ratio: 4 / 3; }
+}
+@media (max-width: 880px){
+  .topics{
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: .6rem;
+    -webkit-overflow-scrolling: touch;
+  }
+  .topics li{ scroll-snap-align: start; }
+}
+
+/* ---------------- cierre ---------------- */
+.close{
+  background: var(--paper-hi);
+  border-top: 1px solid var(--rule-soft);
+  text-align: center;
+}
+.close-in{ max-width: 720px; margin-inline:auto; }
+.close h2{
+  font-size: clamp(2.1rem, 5vw, 3.5rem);
+  line-height: 1.04;
+  margin-bottom: 1.3rem;
+}
+.close p{ color: var(--ink-soft); font-size: clamp(1.02rem,1.5vw,1.18rem); margin-inline:auto; max-width: 48ch; }
+.close-cta{ display:flex; justify-content:center; flex-wrap: wrap; gap: 1rem 1.2rem; align-items: center; margin-top: 2.2rem; }
+.close-or{ color: var(--ink-soft); font-size: .99rem; }
+.close-note{ margin-top: 1.6rem; font-size:.9rem; color: var(--ink-faint); }
+
+/* ---------------- footer ---------------- */
+.foot{
+  border-top: 1px solid var(--rule);
+  padding-block: clamp(2.4rem, 4vw, 3.4rem);
+}
+.foot-in{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.6rem 2.4rem;
+  align-items: baseline;
+  justify-content: space-between;
+}
+.foot-name{ font-family: var(--font-display); font-weight:700; letter-spacing:-0.03em; font-size:1.02rem; }
+.foot-meta{ font-size:.88rem; color: var(--ink-faint); margin-top:.3rem; }
+.foot-links{ display:flex; flex-wrap: wrap; gap: 1.2rem 1.8rem; list-style:none; margin:0; padding:0; }
+.foot-links a{
+  font-size:.92rem; font-weight:500; color: var(--ink-soft); text-decoration:none;
+  border-bottom:1.5px solid transparent; padding-bottom:2px;
+  transition: color .18s var(--ease), border-color .18s var(--ease);
+}
+.foot-links a:hover{ color: var(--ink); border-color: var(--gold); }
+
+/* ---------------- reveal ----------------
+   Every rule below is scoped to .js, which the inline head script adds. If
+   the script never runs, or a CDN stalls the first paint, the page renders
+   fully visible instead of sitting at opacity 0 waiting for JavaScript. */
+@keyframes rise{
+  from{ opacity:0; transform: translateY(18px); }
+  to{ opacity:1; transform:none; }
+}
+
+/* Hero animates on the first painted frame. It never waits on the observer,
+   so the first impression cannot be gated by script timing. */
+.js .rise{ animation: rise .7s var(--ease) both; animation-delay: var(--d, 0s); }
+
+.js [data-reveal]{
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity .7s var(--ease), transform .7s var(--ease);
+}
+.js [data-reveal].is-in{ opacity:1; transform:none; }
+.js [data-reveal][data-delay="1"]{ transition-delay: .08s; }
+.js [data-reveal][data-delay="2"]{ transition-delay: .16s; }
+.js [data-reveal][data-delay="3"]{ transition-delay: .24s; }
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{
+    animation-duration: .001ms !important;
+    transition-duration: .001ms !important;
+    animation-delay: 0s !important;
+    transition-delay: 0s !important;
+    scroll-behavior: auto !important;
+  }
+  .js .rise{ animation: none; }
+  .js [data-reveal]{ opacity:1 !important; transform:none !important; }
+  .panel{ transition: none; }
+}
+
+.visually-hidden{
+  position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0;
+}
+</style>
+<script>document.documentElement.className += " js";</script>
+</head>
+<body>
+
+<a href="#escribir" class="visually-hidden">Saltar al mensaje</a>
+
+<!-- ============================= NAV ============================= -->
+<header class="nav">
+  <nav class="wrap nav-in" aria-label="Principal">
+    <a class="brand" href="#top">Salomón Muriel</a>
+    <ul class="nav-links">
+      <li><a href="#trayectoria">Trayectoria</a></li>
+      <li><a href="#trabajo">Cómo trabajo</a></li>
+      <li><a href="#charlas">Charlas</a></li>
+      <li><a href="#sobre-mi">Sobre mí</a></li>
+    </ul>
+    <a class="nav-lang" href="/en/" hreflang="en" lang="en">EN</a>
+    <a class="btn btn-primary btn-sm" href="#escribir">Escríbeme</a>
+  </nav>
+</header>
+
+<main id="top">
+
+<!-- ============================= HERO ============================= -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <h1 class="rise">Primero hablamos.<br>Después <span class="mk">vemos.</span></h1>
+      <p class="lead rise" style="--d:.09s">
+        Soy Salomón Muriel. Ayudo a empresas pequeñas colombianas a sacar cosas
+        adelante, y la tecnología la construyo yo mismo.
+      </p>
+      <div class="hero-cta rise" style="--d:.18s">
+        <a class="btn btn-primary" href="#escribir">Escríbeme</a>
+        <a class="btn btn-ghost" href="#trayectoria">Ver trayectoria</a>
+      </div>
+    </div>
+
+    <div class="portrait rise" style="--d:.14s">
+      <img src="assets/fotoSalo.jpeg" width="800" height="800" alt="Salomón Muriel, retrato de frente con abrigo verde." fetchpriority="high" decoding="async">
+    </div>
+  </div>
+</section>
+
+<!-- ========================== EL MENSAJE ========================== -->
+<section class="sec composer" id="escribir" aria-labelledby="escribir-h">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <h2 id="escribir-h">¿Qué me escribes?</h2>
+      <p class="lead">
+        Escribirle a alguien que uno no conoce da pereza. Te dejé el mensaje
+        escrito: escoge el que se parezca a tu caso y mándalo.
+      </p>
+    </div>
+
+    <div class="msgstack" data-reveal data-delay="1">
+
+      <!-- CONSULTORÍA -->
+      <div class="msgrow">
+        <h3>
+          <button class="msgtrigger" type="button" id="t-a" aria-expanded="true" aria-controls="p-a">
+            <span>Tengo una empresa y necesito construir algo.</span>
+            <span class="plus" aria-hidden="true"></span>
+          </button>
+        </h3>
+        <div class="panel" id="p-a" role="region" aria-labelledby="t-a" data-open="true">
+          <div class="panel-in">
+            <div class="panel-body">
+              <div class="draft">
+                <p id="msg-a">Hola Salomón. Tengo una empresa y hay algo que necesito montar: un sistema interno, un producto nuevo, o meterle inteligencia artificial a lo que ya hacemos. Te cuento en qué estamos y me dices de una si te sirve o no.</p>
+                <div class="draft-foot">
+                  <a class="btn btn-primary btn-sm" data-msg-for="msg-a" href="https://wa.me/573132465100" target="_blank" rel="noopener">Enviar por WhatsApp</a>
+                  <small>Se abre WhatsApp con este texto ya escrito.</small>
+                </div>
+              </div>
+              <div class="notes">
+                <p class="note">Empezamos con una conversación, no con una propuesta de cuarenta páginas.</p>
+                <p class="note">Si hay algo que construir, <b>lo construyo yo</b>. No revendo el trabajo de otro.</p>
+                <p class="note">Trabajo con <b>máximo cuatro empresas a la vez</b>. Ahora tengo dos.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MENTORÍA -->
+      <div class="msgrow">
+        <h3>
+          <button class="msgtrigger" type="button" id="t-b" aria-expanded="false" aria-controls="p-b">
+            <span>Estoy arrancando y necesito que alguien me empuje.</span>
+            <span class="plus" aria-hidden="true"></span>
+          </button>
+        </h3>
+        <div class="panel" id="p-b" role="region" aria-labelledby="t-b" data-open="false">
+          <div class="panel-in">
+            <div class="panel-body">
+              <div class="draft">
+                <p id="msg-b">Hola Salomón. Estoy arrancando algo y lo que necesito es que alguien me ponga tareas cada semana y me las revise. Te cuento qué tengo hasta ahora y para dónde quiero ir.</p>
+                <div class="draft-foot">
+                  <a class="btn btn-primary btn-sm" data-msg-for="msg-b" href="https://wa.me/573132465100" target="_blank" rel="noopener">Enviar por WhatsApp</a>
+                  <small>Se abre WhatsApp con este texto ya escrito.</small>
+                </div>
+              </div>
+              <div class="notes">
+                <p class="note">Nos vemos una vez por semana. Sales con <b>tareas concretas</b> y la sesión siguiente arranca revisándolas.</p>
+                <p class="note">Es trabajo uno a uno conmigo. No es un programa, ni una cohorte, ni un curso.</p>
+                <p class="note">Acompaño a <b>máximo cinco personas a la vez</b>. Ahora tengo tres.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CHARLAS -->
+      <div class="msgrow">
+        <h3>
+          <button class="msgtrigger" type="button" id="t-c" aria-expanded="false" aria-controls="p-c">
+            <span>Organizo un evento y quiero invitarte.</span>
+            <span class="plus" aria-hidden="true"></span>
+          </button>
+        </h3>
+        <div class="panel" id="p-c" role="region" aria-labelledby="t-c" data-open="false">
+          <div class="panel-in">
+            <div class="panel-body">
+              <div class="draft">
+                <p id="msg-c">Hola Salomón. Organizo un evento y quiero invitarte a hablar. Te cuento de qué se trata, qué fecha tenemos y quién va a estar en el público.</p>
+                <div class="draft-foot">
+                  <a class="btn btn-primary btn-sm" data-msg-for="msg-c" href="https://wa.me/573132465100" target="_blank" rel="noopener">Enviar por WhatsApp</a>
+                  <small>Se abre WhatsApp con este texto ya escrito.</small>
+                </div>
+              </div>
+              <div class="notes">
+                <p class="note">Las charlas son la forma en que la gente me conoce. <b>No las vendo como un producto.</b></p>
+                <p class="note">He hablado en conferencias, en empresas y en universidades.</p>
+                <p class="note">Cuéntame quién va a estar en el público. De eso depende si soy la persona indicada.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <p class="composer-foot" data-reveal>
+      Contesto yo, no un equipo comercial. Si prefieres hablar de una vez,
+      <a class="tlink" href="https://cal.com/salomonmuriel" target="_blank" rel="noopener">agenda veinte minutos</a>
+      en mi calendario.
+    </p>
+  </div>
+</section>
+
+<!-- ========================== TRAYECTORIA ========================== -->
+<section class="sec" id="trayectoria" aria-labelledby="tray-h">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <h2 id="tray-h">Cinco empresas. Tres salieron bien.</h2>
+      <p class="lead">
+        Las dos que no salieron también las cuento, porque de esas fue que aprendí
+        a no hacerte perder plata.
+      </p>
+    </div>
+
+    <div class="bento">
+
+      <article class="cell cell--ignia" data-reveal>
+        <img class="logo-mark" src="assets/ignia.png" width="330" height="220" alt="Ignia" loading="lazy" decoding="async">
+        <p class="figure">USD 150.000</p>
+        <h3>De ingresos en el primer año, rentable desde el primer día.</h3>
+        <p>
+          Es la empresa que dirijo hoy. La lanzamos en junio de 2025, somos un
+          equipo de cinco y en la primera cohorte acompañamos a treinta emprendedores.
+        </p>
+      </article>
+
+      <article class="cell cell--finco" data-reveal data-delay="1">
+        <img class="logo-mark" src="assets/finco.png" width="240" height="240" alt="Finco" loading="lazy" decoding="async">
+        <p class="figure">USD 1,5 millones</p>
+        <h3>La vendimos en cinco veces lo invertido.</h3>
+        <p>Cien mil informes al año pasando por un sistema que armamos nosotros.</p>
+        <div class="cell-photo">
+          <img src="assets/salo_oscar.webp" width="527" height="330" alt="Salomón con su socio en el lanzamiento de Finco, mostrando la plataforma en pantalla." loading="lazy" decoding="async">
+        </div>
+      </article>
+
+      <article class="cell cell--presta" data-reveal data-delay="2">
+        <img class="logo-mark" src="assets/prestagente.png" width="220" height="210" alt="PrestaGente" loading="lazy" decoding="async">
+        <div>
+          <p class="figure" style="margin-bottom:.55rem">Cerca de USD 1 millón</p>
+          <h3 style="margin-bottom:.5rem">PrestaGente también terminó vendida.</h3>
+          <p>Pedir prestado como se le pide a un amigo, pero con un sistema serio detrás.</p>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="losses" data-reveal>
+      <div class="loss">
+        <img src="assets/beriblock.png" width="80" height="80" alt="Beriblock" loading="lazy" decoding="async">
+        <div>
+          <h3>Beriblock quebró.</h3>
+          <p>Construimos algo muy bueno para un mercado que todavía no existía. El producto no era el problema.</p>
+        </div>
+      </div>
+      <div class="loss">
+        <img src="assets/elpalomo.png" width="80" height="80" alt="El Palomo" loading="lazy" decoding="async">
+        <div>
+          <h3>El Palomo se cayó, y feo.</h3>
+          <p>De la manera más espectacular posible. Es la historia que cuento cuando alguien me dice que su idea no puede fallar.</p>
+        </div>
+      </div>
+      <p class="losses-note">
+        Un consultor que solo te muestra los triunfos te va a salir caro.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ========================== TESTIMONIOS ========================== -->
+<section class="testi" id="testimonios" aria-labelledby="testi-h">
+  <div class="wrap testi-in" data-reveal>
+    <h2 id="testi-h">Testimonios</h2>
+    <p>
+      Aquí van a ir las palabras de la gente con la que he trabajado. Todavía no
+      se las he pedido, y no pienso inventármelas. Cuando las tenga, las pongo acá
+      con nombre y empresa.
+    </p>
+    <!-- TODO: 2 o 3 testimonios reales (nombre, empresa, 2 lineas maximo). Reemplazar este parrafo. -->
+  </div>
+</section>
+
+<!-- ========================== CÓMO TRABAJO ========================== -->
+<section class="sec band" id="trabajo" aria-labelledby="trabajo-h">
+  <div class="wrap">
+    <h2 id="trabajo-h" data-reveal>La tecnología la hago yo.</h2>
+    <div class="band-txt" data-reveal data-delay="1">
+      <p>
+        No llego con un diagnóstico bonito y me voy. En R5 manejé un equipo de
+        cuarenta personas y construí el sistema con el que se decidía a quién
+        prestarle plata. En mis propias empresas fui el que puso a funcionar el
+        producto, con equipos de hasta quince personas.
+      </p>
+      <p>
+        En Ignia hice <strong>el CRM que usa mi equipo todos los días</strong>, la
+        página y la plataforma donde vive la comunidad. No son ejemplos de
+        portafolio: son cosas que si se caen, me tocan a mí.
+      </p>
+      <p>
+        Hoy casi todo lo hago con inteligencia artificial. No solo para programar
+        más rápido, sino para que <strong>gente que nunca ha programado resuelva
+        cosas que antes necesitaban un programador</strong>. Ese es el pedazo más
+        nuevo de lo que hago y el que más resultados está dando.
+      </p>
+    </div>
+    <p class="band-pull" data-reveal data-delay="2">
+      Hago sistemas que le sirven a la gente que los usa, y saco las cosas del papel.
+    </p>
+  </div>
+</section>
+
+<!-- ========================== SOBRE MÍ ========================== -->
+<section class="sec" id="sobre-mi" aria-labelledby="sobre-h">
+  <div class="wrap about-grid">
+    <div class="about-txt">
+      <h2 id="sobre-h" data-reveal>Quién soy cuando no estoy trabajando.</h2>
+      <p data-reveal data-delay="1">
+        Vivo en Bogotá con mi esposa, dos niños y un perro que se cree hijo.
+        Corro, aunque lento, y cada tanto termino una media maratón más por
+        cabeza dura que por talento.
+      </p>
+      <p data-reveal data-delay="1">
+        <strong>Mi trabajo de tiempo completo es Ignia.</strong> Esto que estás
+        leyendo es mi práctica personal y va por fuera: por eso el cupo es tan
+        chiquito y por eso no puedo tomar todo lo que me llega.
+      </p>
+      <p data-reveal data-delay="2">
+        Tampoco sirvo para todo. No sé cómo se escala una empresa más allá de unos
+        cinco millones de dólares al año, y a los negocios que necesitan inventar
+        tecnología que todavía no existe los mando con otra gente.
+      </p>
+    </div>
+
+    <div class="cluster" data-reveal data-delay="2">
+      <figure class="ph-a">
+        <img src="assets/marathon.jpg" width="600" height="600" alt="Salomón con la medalla al terminar la media maratón de Bogotá." loading="lazy" decoding="async">
+      </figure>
+      <figure class="ph-b">
+        <img src="assets/chicago.jpg" width="300" height="400" alt="Salomón de viaje con su familia, con los niños en hombros." loading="lazy" decoding="async">
+      </figure>
+      <figure class="ph-c">
+        <img src="assets/bonfire.jpeg" width="600" height="600" alt="Fogata encendida de noche en el campo." loading="lazy" decoding="async">
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ========================== CHARLAS ========================== -->
+<section class="charlas" id="charlas" aria-labelledby="charlas-h">
+  <!-- TODO: si aparece una foto real de Salomón en tarima, cambiar esta por esa. -->
+  <div class="wrap">
+    <img class="charla-media" src="assets/salomon.jpg" width="800" height="800" alt="Salomón Muriel al aire libre, mirando a la cámara." loading="lazy" decoding="async">
+  </div>
+  <div class="wrap charla-body">
+    <h2 id="charlas-h" data-reveal>Las charlas no son un producto.</h2>
+    <p data-reveal data-delay="1">
+      Nunca he armado una charla para vender algo. La armo, la doy, y de ahí sale
+      la gente que después me escribe. Así funciona, y prefiero decirlo antes de
+      que lo preguntes.
+    </p>
+    <ul class="topics" data-reveal data-delay="2">
+      <li>Adopción de tecnología e IA</li>
+      <li>Emprender de verdad</li>
+      <li>Mentalidad</li>
+      <li>Vida y trabajo</li>
+    </ul>
+    <p class="charla-out" data-reveal data-delay="2">
+      No doy charlas técnicas de ciencia de datos ni de cultura organizacional.
+      Eso lo hace mejor otra gente.
+    </p>
+  </div>
+</section>
+
+<!-- ========================== CIERRE ========================== -->
+<section class="sec close" aria-labelledby="cierre-h">
+  <div class="wrap close-in">
+    <h2 id="cierre-h" data-reveal>Ya nos conocimos un poco.</h2>
+    <p data-reveal data-delay="1">
+      Si algo de lo que leíste te sonó, escríbeme. No hay formulario, no hay
+      cotización automática y no hay nadie más al otro lado.
+    </p>
+    <div class="close-cta" data-reveal data-delay="2">
+      <a class="btn btn-solid" href="#escribir">Escríbeme</a>
+      <span class="close-or">o <a class="tlink" href="https://cal.com/salomonmuriel" target="_blank" rel="noopener">agenda veinte minutos</a></span>
+    </div>
+    <p class="close-note" data-reveal data-delay="3">Contesto yo, casi siempre el mismo día.</p>
+  </div>
+</section>
+
+</main>
+
+<!-- ============================= FOOTER ============================= -->
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div>
+      <p class="foot-name">Salomón Muriel</p>
+      <p class="foot-meta">Práctica personal, independiente de Ignia. Bogotá, Colombia.</p>
+    </div>
+    <ul class="foot-links">
+      <li><a href="https://wa.me/573132465100" target="_blank" rel="noopener">WhatsApp</a></li>
+      <li><a href="https://www.linkedin.com/in/salomonmuriel/" target="_blank" rel="noopener">LinkedIn</a></li>
+      <li><a href="mailto:salomon.muriel@gmail.com">Correo</a></li>
+      <li><a href="/ahora/">Ahora</a></li>
+      <li><a href="/en/" hreflang="en" lang="en">English</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* --------------------------------------------------------------
+     1. Prefill the WhatsApp drafts from the visible message text.
+        The text on screen is the exact text that gets sent, so it
+        can never drift out of sync with the link.
+  -------------------------------------------------------------- */
+  var BASE = "https://wa.me/573132465100";
+  var senders = document.querySelectorAll("[data-msg-for]");
+  Array.prototype.forEach.call(senders, function (a) {
+    var src = document.getElementById(a.getAttribute("data-msg-for"));
+    if (!src) return;
+    var text = (src.textContent || "").replace(/\s+/g, " ").trim();
+    if (text) a.href = BASE + "?text=" + encodeURIComponent(text);
+  });
+
+  /* --------------------------------------------------------------
+     2. Message picker. One draft open at a time so the section
+        reads as a single message field, not a menu of products.
+        Motivated: state transition + feedback on the primary
+        conversion device.
+  -------------------------------------------------------------- */
+  var triggers = document.querySelectorAll(".msgtrigger");
+  Array.prototype.forEach.call(triggers, function (btn) {
+    btn.addEventListener("click", function () {
+      var panel = document.getElementById(btn.getAttribute("aria-controls"));
+      var isOpen = btn.getAttribute("aria-expanded") === "true";
+
+      Array.prototype.forEach.call(triggers, function (other) {
+        var p = document.getElementById(other.getAttribute("aria-controls"));
+        other.setAttribute("aria-expanded", "false");
+        if (p) p.setAttribute("data-open", "false");
+      });
+
+      if (!isOpen) {
+        btn.setAttribute("aria-expanded", "true");
+        if (panel) panel.setAttribute("data-open", "true");
+      }
+    });
+  });
+
+  /* --------------------------------------------------------------
+     3. Entry reveals. IntersectionObserver only, no scroll listener.
+        Motivated: the page is written as a letter, so lines arrive
+        in reading order instead of all at once.
+  -------------------------------------------------------------- */
+  var revealables = document.querySelectorAll("[data-reveal]");
+
+  function showAll() {
+    Array.prototype.forEach.call(revealables, function (el) {
+      el.classList.add("is-in");
+    });
+  }
+
+  if (reduce || !("IntersectionObserver" in window)) {
+    showAll();
+  } else {
+    var pending = Array.prototype.slice.call(revealables);
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) reveal(entry.target);
+      });
+      /* A jump (anchor click, End key, restored scroll position) can carry
+         whole sections past the observer without ever intersecting, which
+         would leave them stuck at opacity 0. Sweep whatever is already at or
+         above the fold every time the observer wakes up. No scroll listener. */
+      sweep();
+    }, { rootMargin: "0px 0px -6% 0px", threshold: 0 });
+
+    pending.forEach(function (el) { io.observe(el); });
+
+    function reveal(el) {
+      el.classList.add("is-in");
+      io.unobserve(el);
+      var i = pending.indexOf(el);
+      if (i > -1) pending.splice(i, 1);
+    }
+
+    function sweep() {
+      var limit = window.innerHeight * 0.94;
+      pending.slice().forEach(function (el) {
+        if (el.getBoundingClientRect().top < limit) reveal(el);
+      });
+    }
+
+    /* Anything already at the fold on load, plus the two other ways content
+       arrives without a scroll of its own: late layout, and hash navigation. */
+    window.requestAnimationFrame(sweep);
+    window.addEventListener("load", sweep);
+    window.addEventListener("hashchange", function () {
+      window.setTimeout(sweep, 60);
+    });
+  }
+
+  /* --------------------------------------------------------------
+     4. Fallback: if the talks band photo fails to load, collapse the
+        band instead of leaving a broken image frame in the layout.
+  -------------------------------------------------------------- */
+  var media = document.querySelector(".charla-media");
+  if (media) {
+    media.addEventListener("error", function () {
+      media.style.display = "none";
+    });
+  }
+})();
+</script>
+
+</body>
+</html>

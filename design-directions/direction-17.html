@@ -1,0 +1,1327 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Salomón Muriel, consultoría</title>
+<meta name="description" content="Consultoría de estrategia y tecnología para empresas colombianas que todavía hacen a mano lo que debería estar automatizado. Cuatro empresas al año. Se aplica.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ==========================================================================
+   Salomon Muriel, consultoria
+   Archetype: application funnel. Dark-native, one theme, no toggle.
+   VARIANCE 7 / MOTION 4 / DENSITY 5
+   ========================================================================== */
+
+:root{
+  color-scheme: dark;
+
+  /* Surfaces. One temperature family: green-ink. Layered, not flat black. */
+  --ink:      #0A0F0C;
+  --ink-2:    #0C120E;
+  --surf:     #111814;
+  --surf-2:   #16201A;
+  --surf-3:   #1D2921;
+
+  /* Ink on dark */
+  --bone:     #E9EAE2;
+  --dim:      #A9B5A8;
+  --mut:      #7F8D80;
+
+  /* Hairlines */
+  --line:     rgba(203,223,204,.13);
+  --line-2:   rgba(203,223,204,.075);
+  --line-3:   rgba(203,223,204,.28);
+
+  /* Single accent, locked for the whole page. Amber on green-ink ~8.2:1. */
+  --amber:    #DBA33F;
+  --amber-hi: #F0BC5F;
+  --amber-dim:rgba(219,163,63,.14);
+
+  /* One radius everywhere. */
+  --r: 4px;
+
+  --wrap: 1220px;
+  --gut:  clamp(20px, 4.4vw, 44px);
+  --sec:  clamp(72px, 8.6vw, 124px);
+
+  --sans: "Hanken Grotesk", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --disp: "Bricolage Grotesque", "Hanken Grotesk", ui-sans-serif, system-ui, Helvetica, Arial, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+
+html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
+@media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } }
+
+body{
+  margin:0;
+  background:var(--ink);
+  color:var(--bone);
+  font-family:var(--sans);
+  font-size:17px;
+  line-height:1.6;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+
+/* Material: a very slow ambient wash plus film grain. Fixed, non-interactive. */
+body::before{
+  content:"";
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(900px 620px at 82% -8%, rgba(219,163,63,.10), transparent 62%),
+    radial-gradient(1100px 800px at 6% 42%, rgba(84,132,102,.09), transparent 64%),
+    linear-gradient(180deg, rgba(255,255,255,.018), transparent 30%);
+}
+body::after{
+  content:"";
+  position:fixed; inset:0; z-index:60; pointer-events:none; opacity:.32;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.42'/%3E%3C/svg%3E");
+}
+
+img{ max-width:100%; display:block; }
+a{ color:inherit; }
+
+::selection{ background:var(--amber); color:#0A0F0C; }
+
+:focus-visible{
+  outline:2px solid var(--amber-hi);
+  outline-offset:3px;
+  border-radius:2px;
+}
+
+/* ---------- layout primitives ---------- */
+.wrap{ width:100%; max-width:var(--wrap); margin:0 auto; padding-inline:var(--gut); position:relative; z-index:1; }
+.sec{ padding-block:var(--sec); position:relative; z-index:1; }
+.rule{ height:1px; background:var(--line-2); border:0; margin:0; }
+
+/* ---------- type ---------- */
+h1,h2,h3,h4{ font-family:var(--disp); font-weight:800; letter-spacing:-.028em; margin:0; }
+h1{ font-size:clamp(2rem, 4.5vw, 3.4rem); line-height:1.04; }
+h2{ font-size:clamp(1.85rem, 3.9vw, 2.95rem); line-height:1.06; }
+h3{ font-size:clamp(1.12rem, 1.7vw, 1.32rem); line-height:1.2; font-weight:700; letter-spacing:-.018em; }
+p{ margin:0 0 1em; }
+p:last-child{ margin-bottom:0; }
+
+.lead{ font-size:clamp(1.06rem, 1.5vw, 1.24rem); color:var(--dim); line-height:1.56; max-width:60ch; }
+.body{ color:var(--dim); max-width:64ch; }
+.small{ font-size:.9rem; color:var(--mut); line-height:1.55; }
+em.hi{ font-style:normal; color:var(--amber); }
+strong{ color:var(--bone); font-weight:600; }
+.num{ font-family:var(--mono); font-variant-numeric:tabular-nums; }
+
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:.6em;
+  white-space:nowrap;
+  font-family:var(--sans); font-weight:600; font-size:1rem; letter-spacing:.005em;
+  padding:.86em 1.5em; border-radius:var(--r);
+  border:1px solid transparent; cursor:pointer;
+  text-decoration:none;
+  transition:transform .16s cubic-bezier(.16,1,.3,1), background-color .16s, border-color .16s, color .16s;
+}
+.btn-primary{ background:var(--amber); color:#0A0F0C; border-color:var(--amber); }
+.btn-primary:hover{ background:var(--amber-hi); border-color:var(--amber-hi); }
+.btn-primary:active{ transform:translateY(1px); }
+.btn-ghost{ background:transparent; color:var(--bone); border-color:var(--line-3); }
+.btn-ghost:hover{ border-color:var(--bone); background:rgba(233,234,226,.05); }
+.btn-ghost:active{ transform:translateY(1px); }
+.btn-sm{ font-size:.88rem; padding:.62em 1.1em; }
+.btn[disabled]{ opacity:.6; cursor:progress; }
+
+.tlink{
+  color:var(--bone); text-decoration:none;
+  border-bottom:1px solid var(--line-3);
+  padding-bottom:2px;
+  transition:border-color .16s, color .16s;
+}
+.tlink:hover{ color:var(--amber-hi); border-color:var(--amber-hi); }
+
+/* ---------- reveal (MOTION 4) ---------- */
+@media (prefers-reduced-motion: no-preference){
+  [data-reveal]{ opacity:0; transform:translateY(16px); }
+  [data-reveal].in{
+    opacity:1; transform:none;
+    transition:opacity .62s cubic-bezier(.16,1,.3,1), transform .62s cubic-bezier(.16,1,.3,1);
+    transition-delay:var(--d, 0ms);
+  }
+}
+
+/* ==========================================================================
+   NAV
+   ========================================================================== */
+.nav{
+  position:sticky; top:0; z-index:40;
+  height:68px;
+  display:flex; align-items:center;
+  background:rgba(10,15,12,.82);
+  backdrop-filter:blur(14px) saturate(140%);
+  -webkit-backdrop-filter:blur(14px) saturate(140%);
+  border-bottom:1px solid var(--line-2);
+}
+@media (prefers-reduced-transparency: reduce){
+  .nav{ background:var(--ink); backdrop-filter:none; -webkit-backdrop-filter:none; }
+}
+.nav__in{ display:flex; align-items:center; justify-content:space-between; gap:24px; width:100%; }
+.nav__brand{
+  font-family:var(--disp); font-weight:700; font-size:1rem; letter-spacing:-.01em;
+  text-decoration:none; color:var(--bone); white-space:nowrap;
+}
+.nav__brand span{ color:var(--mut); font-weight:500; }
+.nav__links{ display:flex; align-items:center; gap:26px; }
+.nav__links a{
+  font-size:.92rem; color:var(--dim); text-decoration:none; white-space:nowrap;
+  transition:color .16s;
+}
+.nav__links a:hover{ color:var(--bone); }
+@media (max-width:860px){ .nav__links{ display:none; } }
+
+/* ==========================================================================
+   HERO  (asymmetric split)
+   ========================================================================== */
+.hero{ padding-top:clamp(48px, 7vw, 88px); padding-bottom:clamp(56px, 7vw, 96px); }
+.hero__grid{
+  display:grid; gap:clamp(32px, 4.5vw, 64px);
+  grid-template-columns:minmax(0,1.45fr) minmax(0,.78fr);
+  align-items:center;
+}
+.hero__eyebrow{
+  display:inline-flex; align-items:center; gap:10px;
+  font-family:var(--mono); font-size:.73rem; letter-spacing:.15em; text-transform:uppercase;
+  color:var(--amber);
+  border:1px solid rgba(219,163,63,.34);
+  background:var(--amber-dim);
+  border-radius:var(--r);
+  padding:.5em .8em;
+  margin-bottom:26px;
+}
+.hero h1{ max-width:none; text-wrap:balance; }
+.hero h1 .l2{ display:block; color:var(--amber); }
+.hero__sub{ margin-top:24px; max-width:47ch; font-size:clamp(1.06rem,1.45vw,1.22rem); color:var(--dim); line-height:1.5; }
+.hero__cta{ margin-top:36px; display:flex; align-items:center; gap:26px; flex-wrap:wrap; }
+
+.hero__portrait{
+  position:relative; border-radius:var(--r); overflow:hidden;
+  border:1px solid var(--line);
+  box-shadow:0 40px 90px rgba(0,0,0,.55), inset 0 1px 0 rgba(233,234,226,.08);
+  background:var(--surf);
+}
+.hero__portrait img{
+  width:100%; aspect-ratio:4/4.6; object-fit:cover; object-position:50% 22%;
+  filter:contrast(1.04) saturate(.92) brightness(.96);
+}
+.hero__portrait::after{
+  content:""; position:absolute; inset:0;
+  background:linear-gradient(180deg, rgba(10,15,12,0) 46%, rgba(10,15,12,.72) 100%),
+             linear-gradient(300deg, rgba(219,163,63,.12), transparent 52%);
+}
+@media (max-width:900px){
+  .hero__grid{ grid-template-columns:1fr; }
+  .hero__portrait{ order:-1; max-width:340px; }
+  .hero__portrait img{ aspect-ratio:4/3.6; }
+}
+
+/* ==========================================================================
+   CONDICIONES  (2x2 hairline grid + capacity plate)
+   ========================================================================== */
+.cond__head{
+  display:grid; grid-template-columns:minmax(0,1fr) auto; gap:clamp(28px,4vw,60px);
+  align-items:end; padding-bottom:clamp(34px,4vw,52px);
+}
+@media (max-width:840px){ .cond__head{ grid-template-columns:1fr; align-items:start; } }
+
+.plate{
+  border:1px solid var(--line); border-radius:var(--r);
+  background:linear-gradient(180deg, var(--surf-2), var(--surf));
+  padding:20px 22px; min-width:264px;
+  box-shadow:inset 0 1px 0 rgba(233,234,226,.06);
+}
+.plate__t{ font-size:.82rem; color:var(--mut); margin-bottom:14px; letter-spacing:.01em; }
+.plate__bars{ display:grid; grid-template-columns:repeat(4,1fr); gap:6px; margin-bottom:12px; }
+.plate__bar{ height:34px; border-radius:2px; border:1px solid var(--line-3); }
+.plate__bar.on{ background:var(--amber); border-color:var(--amber); }
+.plate__legend{ display:flex; justify-content:space-between; gap:12px; font-family:var(--mono); font-size:.72rem; color:var(--mut); letter-spacing:.06em; }
+.plate__legend b{ color:var(--amber); font-weight:500; }
+
+.cond__grid{
+  display:grid; grid-template-columns:repeat(2,minmax(0,1fr));
+  border-top:1px solid var(--line);
+}
+.cond__cell{
+  padding:clamp(26px,3vw,40px) clamp(22px,2.6vw,38px) clamp(30px,3.4vw,44px);
+  border-bottom:1px solid var(--line);
+}
+.cond__cell:nth-child(odd){ border-right:1px solid var(--line); }
+.cond__cell h3{ margin-bottom:12px; }
+.cond__cell p{ color:var(--dim); font-size:.99rem; max-width:44ch; }
+@media (max-width:760px){
+  .cond__grid{ grid-template-columns:1fr; }
+  .cond__cell:nth-child(odd){ border-right:0; }
+}
+
+/* ==========================================================================
+   NO ES PARA TI  (full-bleed band, treated photo, two columns of plain lines)
+   ========================================================================== */
+.band-no{
+  position:relative; overflow:hidden;
+  background:var(--ink-2);
+  border-top:1px solid var(--line-2);
+  border-bottom:1px solid var(--line-2);
+}
+.band-no__bg{
+  position:absolute; inset:0; z-index:0;
+  background-size:cover; background-position:center;
+  filter:grayscale(1) contrast(1.1) brightness(.5);
+  opacity:.13;
+}
+.band-no__veil{
+  position:absolute; inset:0; z-index:0;
+  background:linear-gradient(180deg, var(--ink) 0%, rgba(12,18,14,.72) 24%, rgba(12,18,14,.72) 76%, var(--ink) 100%);
+}
+.band-no .wrap{ position:relative; z-index:1; }
+.no__head{ max-width:36ch; margin-bottom:clamp(30px,3.6vw,48px); }
+.no__list{
+  display:grid; grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:0 clamp(30px,4vw,72px);
+}
+.no__item{
+  display:grid; grid-template-columns:22px 1fr; gap:14px;
+  padding:18px 0; border-bottom:1px solid var(--line-2);
+  color:var(--dim); font-size:.99rem; line-height:1.5;
+}
+.no__item::before{
+  content:""; margin-top:.62em; height:1px; width:16px; background:var(--amber); opacity:.75;
+}
+.no__item b{ color:var(--bone); font-weight:600; }
+.no__foot{
+  margin-top:clamp(28px,3.4vw,44px);
+  font-family:var(--disp); font-weight:500; letter-spacing:-.012em;
+  font-size:clamp(1.06rem,1.7vw,1.3rem); line-height:1.4; color:var(--bone);
+  max-width:44ch;
+  border-left:2px solid var(--amber); padding-left:20px;
+}
+@media (max-width:760px){ .no__list{ grid-template-columns:1fr; } }
+
+/* ==========================================================================
+   FILTRO  (photo band + centered interactive panel)
+   ========================================================================== */
+.filmstrip{
+  height:clamp(180px, 26vw, 320px);
+  background-size:cover; background-position:center 60%;
+  filter:grayscale(1) contrast(1.06) brightness(.52) sepia(.24) hue-rotate(-8deg);
+  border-block:1px solid var(--line-2);
+}
+.filtro__head{ max-width:52ch; margin:0 auto clamp(28px,3.4vw,44px); text-align:center; }
+.filtro__head h2{ margin-bottom:16px; }
+.filtro__def{
+  display:inline-block;
+  font-family:var(--mono); font-size:.84rem; line-height:1.6; color:var(--dim);
+  border:1px dashed var(--line-3); border-radius:var(--r);
+  padding:.75em 1.1em;
+}
+.filtro__def b{ color:var(--amber); font-weight:500; }
+
+.panel{
+  max-width:840px; margin:0 auto;
+  border:1px solid var(--line); border-radius:var(--r);
+  background:linear-gradient(180deg, var(--surf-2), var(--surf));
+  box-shadow:0 30px 80px rgba(0,0,0,.42), inset 0 1px 0 rgba(233,234,226,.055);
+  overflow:hidden;
+}
+.panel__t{
+  padding:20px clamp(20px,2.6vw,32px);
+  border-bottom:1px solid var(--line);
+  font-size:.95rem; color:var(--dim);
+}
+.sx{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); }
+@media (max-width:720px){ .sx{ grid-template-columns:1fr; } }
+.sx label{
+  display:grid; grid-template-columns:auto 1fr; gap:13px; align-items:start;
+  padding:17px clamp(20px,2.6vw,32px);
+  border-bottom:1px solid var(--line-2);
+  font-size:.97rem; line-height:1.45; color:var(--dim);
+  cursor:pointer;
+  transition:background-color .16s, color .16s;
+}
+.sx label:nth-child(odd){ border-right:1px solid var(--line-2); }
+@media (max-width:720px){ .sx label:nth-child(odd){ border-right:0; } }
+.sx label:hover{ background:rgba(233,234,226,.035); color:var(--bone); }
+.sx input{
+  appearance:none; -webkit-appearance:none;
+  width:18px; height:18px; margin:2px 0 0; flex:none;
+  border:1px solid var(--line-3); border-radius:2px;
+  background:transparent; cursor:pointer;
+  display:grid; place-content:center;
+  transition:background-color .14s, border-color .14s;
+}
+.sx input::after{
+  content:""; width:9px; height:9px; border-radius:1px; transform:scale(0);
+  background:#0A0F0C; transition:transform .14s cubic-bezier(.16,1,.3,1);
+}
+.sx input:checked{ background:var(--amber); border-color:var(--amber); }
+.sx input:checked::after{ transform:scale(1); }
+.sx input:checked + span{ color:var(--bone); }
+
+.verdict{
+  padding:clamp(22px,2.8vw,32px);
+  display:grid; grid-template-columns:auto 1fr; gap:clamp(20px,2.6vw,30px); align-items:center;
+  background:var(--surf-3);
+  border-top:1px solid var(--line);
+}
+@media (max-width:620px){ .verdict{ grid-template-columns:1fr; gap:18px; } }
+.verdict__score{
+  font-family:var(--mono); font-size:2.3rem; line-height:1;
+  color:var(--amber); font-variant-numeric:tabular-nums;
+  border:1px solid rgba(219,163,63,.34); background:var(--amber-dim);
+  border-radius:var(--r); padding:.42em .58em; text-align:center; min-width:110px;
+}
+.verdict__score small{ display:block; font-size:.6rem; letter-spacing:.14em; color:var(--mut); margin-top:8px; text-transform:uppercase; }
+.verdict__txt{ font-size:1.02rem; line-height:1.5; color:var(--bone); }
+.verdict__txt .why{ display:block; color:var(--dim); font-size:.94rem; margin-top:8px; }
+[hidden]{ display:none !important; }
+.verdict__cta{ display:block; margin-top:16px; }
+
+/* ==========================================================================
+   HISTORIAL  (banner photo + ledger rows)
+   ========================================================================== */
+.hist__banner{
+  display:grid; grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);
+  gap:clamp(26px,3.4vw,52px); align-items:center;
+  margin-bottom:clamp(40px,4.6vw,66px);
+}
+@media (max-width:880px){ .hist__banner{ grid-template-columns:1fr; } }
+.hist__photo{
+  border:1px solid var(--line); border-radius:var(--r); overflow:hidden;
+  box-shadow:0 26px 60px rgba(0,0,0,.45);
+  background:var(--surf);
+}
+.hist__photo img{ width:100%; aspect-ratio:16/10; object-fit:cover; filter:contrast(1.04) saturate(.9) brightness(.94); }
+.hist__cap{ font-size:.86rem; color:var(--mut); padding:12px 14px; border-top:1px solid var(--line-2); }
+
+.ledger{ border-top:1px solid var(--line); }
+.ledger__row{
+  display:grid; grid-template-columns:88px minmax(0,1fr) minmax(0,1.35fr);
+  gap:clamp(18px,2.4vw,34px); align-items:start;
+  padding:clamp(22px,2.6vw,30px) 0;
+  border-bottom:1px solid var(--line-2);
+}
+@media (max-width:820px){
+  .ledger__row{ grid-template-columns:64px minmax(0,1fr); }
+  .ledger__body{ grid-column:1 / -1; }
+}
+.chip{
+  width:88px; height:88px; border-radius:var(--r);
+  background:#F3F2EC; border:1px solid rgba(0,0,0,.18);
+  display:grid; place-items:center; padding:12px; flex:none;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.7);
+}
+@media (max-width:820px){ .chip{ width:64px; height:64px; padding:8px; } }
+.chip img{ max-width:100%; max-height:100%; object-fit:contain; }
+.ledger__name{ font-family:var(--disp); font-weight:700; font-size:1.14rem; letter-spacing:-.018em; margin-bottom:5px; }
+.ledger__role{ font-size:.86rem; color:var(--mut); }
+.ledger__body{ color:var(--dim); font-size:.99rem; line-height:1.55; }
+.ledger__body b{ color:var(--bone); font-weight:600; }
+.stamp{
+  display:inline-block; margin-top:10px;
+  font-family:var(--mono); font-size:.68rem; letter-spacing:.14em; text-transform:uppercase;
+  padding:.34em .6em; border-radius:2px;
+  border:1px solid var(--line-3); color:var(--mut);
+}
+.stamp.win{ color:var(--amber); border-color:rgba(219,163,63,.4); }
+.hist__foot{ margin-top:clamp(26px,3vw,38px); }
+
+/* ==========================================================================
+   VIDEO  (media dominant)
+   ========================================================================== */
+.video__head{ max-width:46ch; margin-bottom:clamp(26px,3.2vw,40px); }
+.video__frame{
+  position:relative; width:100%; aspect-ratio:16/9;
+  border:1px solid var(--line); border-radius:var(--r); overflow:hidden;
+  background:#000;
+  box-shadow:0 40px 100px rgba(0,0,0,.55);
+}
+.video__frame iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+.video__note{ margin-top:16px; font-size:.9rem; color:var(--mut); }
+
+/* ==========================================================================
+   CRITERIOS + PROCESO  (two column, criteria stack vs numbered rail)
+   ========================================================================== */
+.crit__grid{
+  display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:clamp(38px,5vw,86px);
+}
+@media (max-width:920px){ .crit__grid{ grid-template-columns:1fr; } }
+.crit h2{ margin-bottom:26px; }
+.crit__item{ padding:20px 0; border-bottom:1px solid var(--line-2); }
+.crit__item:first-of-type{ border-top:1px solid var(--line); }
+.crit__item h3{ margin-bottom:7px; font-size:1.04rem; }
+.crit__item p{ color:var(--dim); font-size:.96rem; max-width:46ch; }
+
+.rail{ position:relative; padding-left:44px; }
+.rail::before{
+  content:""; position:absolute; left:13px; top:10px; bottom:26px;
+  width:1px; background:linear-gradient(180deg, var(--amber), rgba(219,163,63,.12));
+}
+.rail__step{ position:relative; padding-bottom:30px; }
+.rail__step:last-child{ padding-bottom:0; }
+.rail__n{
+  position:absolute; left:-44px; top:0;
+  width:27px; height:27px; border-radius:50%;
+  border:1px solid var(--line-3); background:var(--ink);
+  display:grid; place-items:center;
+  font-family:var(--mono); font-size:.76rem; color:var(--amber);
+}
+.rail__step h3{ font-size:1.04rem; margin-bottom:6px; }
+.rail__step p{ color:var(--dim); font-size:.96rem; max-width:42ch; }
+
+/* ==========================================================================
+   SIN TESTIMONIOS / SIN PRECIOS  (centered statement + reserved empty frame)
+   ========================================================================== */
+.honest{ text-align:center; }
+.honest h2{ max-width:22ch; margin:0 auto 22px; }
+.honest > .body{ margin:0 auto; text-align:left; }
+.honest__two{
+  display:grid; grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:clamp(24px,3vw,44px); margin-top:clamp(34px,4vw,52px); text-align:left;
+}
+@media (max-width:760px){ .honest__two{ grid-template-columns:1fr; } }
+.honest__box{
+  border:1px solid var(--line); border-radius:var(--r);
+  background:var(--surf); padding:clamp(22px,2.6vw,30px);
+}
+.honest__box h3{ margin-bottom:10px; }
+.honest__box p{ color:var(--dim); font-size:.97rem; }
+.empty-slot{
+  margin-top:18px;
+  border:1px dashed var(--line-3); border-radius:var(--r);
+  padding:26px 20px; text-align:center;
+  color:var(--mut); font-size:.9rem; line-height:1.5;
+  background:repeating-linear-gradient(135deg, rgba(233,234,226,.018) 0 8px, transparent 8px 16px);
+}
+
+/* ==========================================================================
+   APLICACIÓN  (the form: the conversion event)
+   ========================================================================== */
+.apply{
+  position:relative; overflow:hidden;
+  border-top:1px solid var(--line-2);
+  background:var(--ink-2);
+}
+.apply__bg{
+  position:absolute; inset:0 0 auto; height:min(560px, 70%); z-index:0;
+  background-size:cover; background-position:center 42%;
+  opacity:.20; filter:contrast(1.06) saturate(.72);
+  -webkit-mask-image:linear-gradient(180deg, rgba(0,0,0,.9), transparent 88%);
+  mask-image:linear-gradient(180deg, rgba(0,0,0,.9), transparent 88%);
+}
+.apply .wrap{ position:relative; z-index:1; }
+.apply__head{ max-width:56ch; margin-bottom:clamp(34px,4vw,52px); }
+.apply__head h2{ margin-bottom:18px; }
+
+form{ max-width:820px; }
+fieldset{ border:0; padding:0; margin:0 0 clamp(30px,3.4vw,44px); }
+legend{
+  font-family:var(--mono); font-size:.73rem; letter-spacing:.15em; text-transform:uppercase;
+  color:var(--mut); padding:0 0 16px; width:100%;
+  border-bottom:1px solid var(--line); margin-bottom:24px;
+}
+.f{ margin-bottom:24px; }
+.f-row{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; }
+@media (max-width:640px){ .f-row{ grid-template-columns:1fr; } }
+.f label{ display:block; font-size:.97rem; font-weight:600; color:var(--bone); margin-bottom:6px; line-height:1.4; }
+.f .hint{ display:block; font-size:.86rem; color:var(--mut); margin-bottom:10px; line-height:1.5; }
+.f input, .f select, .f textarea{
+  width:100%; font-family:var(--sans); font-size:1rem; line-height:1.5; color:var(--bone);
+  background:var(--surf); border:1px solid var(--line-3); border-radius:var(--r);
+  padding:.78em .9em;
+  transition:border-color .16s, background-color .16s;
+}
+.f textarea{ min-height:126px; resize:vertical; }
+.f input::placeholder, .f textarea::placeholder{ color:#93A093; opacity:1; }
+.f input:hover, .f select:hover, .f textarea:hover{ border-color:rgba(203,223,204,.42); }
+.f input:focus, .f select:focus, .f textarea:focus{
+  outline:none; border-color:var(--amber); background:var(--surf-2);
+  box-shadow:0 0 0 3px rgba(219,163,63,.18);
+}
+.f select{
+  appearance:none; -webkit-appearance:none;
+  background-image:linear-gradient(45deg, transparent 50%, var(--dim) 50%), linear-gradient(135deg, var(--dim) 50%, transparent 50%);
+  background-position:calc(100% - 20px) 55%, calc(100% - 14px) 55%;
+  background-size:6px 6px, 6px 6px;
+  background-repeat:no-repeat;
+  padding-right:44px;
+}
+.f select option{ background:var(--surf); color:var(--bone); }
+.f .meter{
+  display:flex; justify-content:space-between; gap:12px;
+  font-family:var(--mono); font-size:.74rem; color:var(--mut); margin-top:7px;
+}
+.f .meter .ok{ color:var(--amber); }
+.f .err{ display:none; margin-top:7px; font-size:.87rem; color:#F0A9A9; }
+.f.is-bad input, .f.is-bad select, .f.is-bad textarea{ border-color:#C86A6A; }
+.f.is-bad .err{ display:block; }
+
+.carry{
+  border:1px solid var(--line); border-radius:var(--r);
+  background:var(--surf); padding:20px 22px; margin-bottom:26px;
+}
+.carry h4{ font-size:.95rem; font-weight:700; margin-bottom:10px; }
+.carry ul{ margin:0; padding-left:19px; color:var(--dim); font-size:.94rem; line-height:1.6; }
+.carry .none{ color:var(--mut); font-size:.92rem; }
+
+.form-err{
+  display:none; margin-bottom:24px;
+  border:1px solid rgba(200,106,106,.5); background:rgba(200,106,106,.1);
+  border-radius:var(--r); padding:14px 16px; font-size:.94rem; color:#F0C2C2;
+}
+.form-err.on{ display:block; }
+.submit-row{ display:flex; align-items:center; gap:20px; flex-wrap:wrap; margin-top:6px; }
+.submit-note{ font-size:.88rem; color:var(--mut); max-width:36ch; line-height:1.5; }
+
+.sent{
+  display:none;
+  border:1px solid rgba(219,163,63,.4); border-radius:var(--r);
+  background:linear-gradient(180deg, rgba(219,163,63,.10), rgba(219,163,63,.03));
+  padding:clamp(22px,2.8vw,32px); margin-top:30px;
+}
+.sent.on{ display:block; }
+.sent h3{ margin-bottom:10px; }
+.sent p{ color:var(--dim); font-size:.97rem; }
+.sent textarea{
+  width:100%; min-height:150px; margin-top:16px; resize:vertical;
+  font-family:var(--mono); font-size:.8rem; line-height:1.55; color:var(--dim);
+  background:var(--ink); border:1px solid var(--line); border-radius:var(--r); padding:14px;
+}
+.sent__row{ display:flex; gap:14px; flex-wrap:wrap; margin-top:16px; align-items:center; }
+.copied{ font-size:.88rem; color:var(--amber); opacity:0; transition:opacity .2s; }
+.copied.on{ opacity:1; }
+
+@keyframes pulseband{ 0%{background-position:0% 50%} 100%{background-position:200% 50%} }
+.btn.is-loading{
+  background-image:linear-gradient(90deg, var(--amber) 0%, var(--amber-hi) 50%, var(--amber) 100%);
+  background-size:200% 100%;
+}
+@media (prefers-reduced-motion: no-preference){
+  .btn.is-loading{ animation:pulseband .9s linear infinite; }
+}
+
+/* ==========================================================================
+   MENTORÍA LINE + FOOTER
+   ========================================================================== */
+.aside-line{
+  border-top:1px solid var(--line-2);
+  padding-block:clamp(40px,5vw,64px);
+}
+.aside-line__in{
+  display:grid; grid-template-columns:minmax(0,1fr) auto; gap:clamp(22px,3vw,44px); align-items:center;
+}
+@media (max-width:800px){ .aside-line__in{ grid-template-columns:1fr; } }
+.aside-line p{ color:var(--dim); font-size:1rem; max-width:66ch; }
+.aside-line b{ color:var(--bone); font-weight:600; }
+
+.foot{
+  border-top:1px solid var(--line-2);
+  padding-block:clamp(38px,4.4vw,56px);
+  background:var(--ink-2);
+}
+.foot__in{ display:grid; grid-template-columns:minmax(0,1fr) auto; gap:26px; align-items:end; }
+@media (max-width:700px){ .foot__in{ grid-template-columns:1fr; align-items:start; } }
+.foot__name{ font-family:var(--disp); font-weight:700; font-size:1.06rem; margin-bottom:8px; }
+.foot p{ color:var(--mut); font-size:.9rem; max-width:52ch; }
+.foot a{ color:var(--dim); text-decoration:none; border-bottom:1px solid var(--line-2); }
+.foot a:hover{ color:var(--amber-hi); border-color:var(--amber-hi); }
+.foot__links{ display:flex; gap:22px; flex-wrap:wrap; font-size:.92rem; }
+
+.sr{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0; }
+</style>
+</head>
+<body>
+
+<!-- ====================== NAV ====================== -->
+<header class="nav">
+  <div class="wrap nav__in">
+    <a class="nav__brand" href="#top">Salomón Muriel <span>Consultoría</span></a>
+    <nav class="nav__links" aria-label="Secciones">
+      <a href="#condiciones">Condiciones</a>
+      <a href="#filtro">El filtro</a>
+      <a href="#historial">Historial</a>
+      <a href="#criterios">Cómo escojo</a>
+    </nav>
+    <a class="btn btn-primary btn-sm" href="#aplicacion">Aplicar</a>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ====================== HERO ====================== -->
+<section class="sec hero">
+  <div class="wrap">
+    <div class="hero__grid">
+      <div>
+        <p class="hero__eyebrow" data-reveal>Cupos abiertos: 2 de 4</p>
+        <h1 data-reveal style="--d:70ms">No vendo consultoría.<span class="l2">Escojo dos empresas más.</span></h1>
+        <p class="hero__sub" data-reveal style="--d:150ms">Defino la estrategia y construyo yo mismo la herramienta que le quita a tu empresa el trabajo hecho a mano.</p>
+        <div class="hero__cta" data-reveal style="--d:220ms">
+          <a class="btn btn-primary" href="#aplicacion">Aplicar</a>
+          <a class="tlink" href="#condiciones">Antes, lee las cuatro condiciones</a>
+        </div>
+      </div>
+      <figure class="hero__portrait" data-reveal style="--d:120ms; margin:0;">
+        <img src="assets/fotoSalo.jpeg" alt="Salomón Muriel, retrato" width="800" height="800">
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== CONDICIONES ====================== -->
+<section class="sec" id="condiciones">
+  <div class="wrap">
+    <div class="cond__head">
+      <div data-reveal>
+        <h2>Trabajo con cuatro empresas al año.<br>Estas son las condiciones.</h2>
+        <p class="lead" style="margin-top:20px;">Consultoría es lo que hago por fuera de mi trabajo de lunes a viernes. No me alcanza para más, y prefiero decirlo de una que quedarte mal después.</p>
+      </div>
+      <aside class="plate" data-reveal style="--d:100ms">
+        <p class="plate__t">Capacidad real en este momento</p>
+        <div class="plate__bars" role="img" aria-label="Dos de cuatro cupos ocupados">
+          <span class="plate__bar on"></span>
+          <span class="plate__bar on"></span>
+          <span class="plate__bar"></span>
+          <span class="plate__bar"></span>
+        </div>
+        <p class="plate__legend"><span>2 ocupados</span><b>2 abiertos</b></p>
+      </aside>
+    </div>
+
+    <div class="cond__grid">
+      <div class="cond__cell" data-reveal>
+        <h3>Ya vendes</h3>
+        <p>Tu empresa factura. No importa si son 300 millones o 4.000 millones de pesos al año. Si todavía no has vendido nada, tu problema es vender, y ese no lo resuelvo yo.</p>
+      </div>
+      <div class="cond__cell" data-reveal style="--d:80ms">
+        <h3>El trabajo lo hace una persona, no un sistema</h3>
+        <p>Alguien pasa los pedidos de WhatsApp a un Excel. Alguien rehace el mismo informe cada lunes. Alguien es el único que sabe cómo funciona el inventario de verdad.</p>
+      </div>
+      <div class="cond__cell" data-reveal>
+        <h3>Decides tú</h3>
+        <p>Hablo con el dueño o con quien firma. No armo propuestas para que alguien más las lleve a un comité y me avisen en tres meses.</p>
+      </div>
+      <div class="cond__cell" data-reveal style="--d:80ms">
+        <h3>Quieres algo funcionando, no un diagnóstico</h3>
+        <p>Al final no te entrego un PDF con recomendaciones. Te entrego una herramienta andando, hecha a la medida de cómo trabaja tu gente, que tu equipo usa el lunes siguiente.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== NO ES PARA TI ====================== -->
+<section class="sec band-no">
+  <div class="band-no__bg" style="background-image:url('https://picsum.photos/seed/bodega-cajas-inventario-conteo/1600/900');" aria-hidden="true"></div>
+  <div class="band-no__veil" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="no__head" data-reveal>
+      <h2>Esto no es para ti si...</h2>
+    </div>
+
+    <div class="no__list">
+      <p class="no__item" data-reveal><span><b>Facturas más de 8.000 millones de pesos al año.</b> A ese tamaño el problema ya es otro y hay gente mejor que yo para eso.</span></p>
+      <p class="no__item" data-reveal><span><b>Quieres que te lleve más allá de unos 5 millones de dólares al año.</b> No sé hacerlo. Nunca lo he hecho y no te voy a decir que sí.</span></p>
+      <p class="no__item" data-reveal><span><b>Estás inventando tecnología nueva.</b> Investigación, patentes, cosas que nadie ha construido antes: no es lo mío.</span></p>
+      <p class="no__item" data-reveal><span><b>Buscas un proveedor que espere especificaciones.</b> Yo pregunto, decido contigo y construyo. No recibo un documento y cotizo.</span></p>
+      <p class="no__item" data-reveal><span><b>Buscas al más barato.</b> No lo soy, y competir por precio no me interesa.</span></p>
+      <p class="no__item" data-reveal><span><b>Quieres una charla de cultura organizacional o de ciencia de datos.</b> No las doy. Esas dos las tengo cerradas.</span></p>
+      <p class="no__item" data-reveal><span><b>Todavía no has vendido nada.</b> Automatizar antes de vender es la manera más elegante de perder plata.</span></p>
+      <p class="no__item" data-reveal><span><b>Necesitas que esto arranque mañana.</b> Leo aplicaciones una vez por semana y nunca tengo cuatro cupos libres.</span></p>
+    </div>
+
+    <p class="no__foot" data-reveal>Escribo todo esto antes de pedirte nada porque prefiero perderte en esta página y no en la semana tres.</p>
+  </div>
+</section>
+
+<!-- ====================== FILTRO ====================== -->
+<div class="filmstrip" style="background-image:url('https://picsum.photos/seed/mostrador-cuaderno-pedidos-manual/1600/700');" role="img" aria-label="Trabajo de mostrador y registro manual en papel"></div>
+
+<section class="sec" id="filtro">
+  <div class="wrap">
+    <div class="filtro__head" data-reveal>
+      <h2>¿Qué tanto de tu operación es chinomática?</h2>
+      <p class="filtro__def"><b>chinomático:</b> parece automático, pero en realidad es un chino haciéndolo a mano.</p>
+    </div>
+
+    <div class="panel" data-reveal style="--d:90ms">
+      <p class="panel__t">Marca lo que pasa en tu empresa. Lo que marques viaja con tu aplicación más abajo.</p>
+
+      <div class="sx" id="sintomas">
+        <label><input type="checkbox" data-s="Alguien pasa los pedidos de WhatsApp a un Excel a mano."><span>Alguien pasa los pedidos de WhatsApp a un Excel a mano.</span></label>
+        <label><input type="checkbox" data-s="El mismo informe se rehace desde cero cada lunes."><span>El mismo informe se rehace desde cero cada lunes.</span></label>
+        <label><input type="checkbox" data-s="Si esa persona se va de vacaciones, algo se para."><span>Si esa persona se va de vacaciones, algo se para.</span></label>
+        <label><input type="checkbox" data-s="Hay tres archivos que deberían cuadrar y nunca cuadran."><span>Hay tres archivos que deberían cuadrar y nunca cuadran.</span></label>
+        <label><input type="checkbox" data-s="El inventario de verdad solo lo sabe un empleado."><span>El inventario de verdad solo lo sabe un empleado.</span></label>
+        <label><input type="checkbox" data-s="Compramos un software caro que nadie usa."><span>Compramos un software caro que nadie usa.</span></label>
+        <label><input type="checkbox" data-s="Yo soy el cuello de botella de por lo menos tres procesos."><span>Yo soy el cuello de botella de por lo menos tres procesos.</span></label>
+        <label><input type="checkbox" data-s="Me da pena contar en voz alta lo manual que es todo."><span>Me da pena contar en voz alta lo manual que es todo.</span></label>
+      </div>
+
+      <div class="verdict">
+        <div class="verdict__score"><span id="score">0</span><small>de 8</small></div>
+        <div class="verdict__txt" id="verdict" aria-live="polite">
+          Marca lo que te suene.
+          <span class="why">Si no marcas nada, es muy probable que no me necesites. Eso es una buena noticia y te acabas de ahorrar una reunión.</span>
+          <span class="verdict__cta" id="verdictCta" hidden><a class="btn btn-primary btn-sm" href="#aplicacion">Aplicar</a></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== HISTORIAL ====================== -->
+<section class="sec" id="historial" style="background:var(--ink-2); border-top:1px solid var(--line-2); border-bottom:1px solid var(--line-2);">
+  <div class="wrap">
+    <div class="hist__banner">
+      <figure class="hist__photo" data-reveal style="margin:0;">
+        <img src="assets/salo_oscar.webp" alt="Salomón Muriel presentando el producto de Finco junto a su socio" width="527" height="330">
+        <figcaption class="hist__cap">Finco, el día que mostramos el producto en público.</figcaption>
+      </figure>
+      <div data-reveal style="--d:90ms">
+        <h2>Mi historial completo, incluidas las que se cayeron.</h2>
+        <p class="lead" style="margin-top:20px;">No tengo testimonios publicados todavía. Lo que sí tengo son empresas que construí, dos salidas y dos fracasos con nombre propio. Si voy a ser selectivo contigo, lo mínimo es que veas la lista entera.</p>
+      </div>
+    </div>
+
+    <div class="ledger">
+
+      <article class="ledger__row" data-reveal>
+        <div class="chip"><img src="assets/ignia.png" alt="Ignia"></div>
+        <div>
+          <p class="ledger__name">Ignia</p>
+          <p class="ledger__role">Cofundador. 2025 hasta hoy.</p>
+        </div>
+        <div class="ledger__body">
+          <p><b>USD 150.000 de ingresos en el primer año</b> y rentable desde el primer mes. Cerca de 30 personas en la primera cohorte del Action Lab y un equipo de 5. Yo construí el CRM, la página y la plataforma de comunidad.</p>
+          <p class="small" style="margin-top:10px;">Es mi trabajo de lunes a viernes. Esta consultoría es aparte y no se hace bajo la marca Ignia.</p>
+          <span class="stamp win">Andando</span>
+        </div>
+      </article>
+
+      <article class="ledger__row" data-reveal>
+        <div class="chip"><img src="assets/finco.png" alt="Finco"></div>
+        <div>
+          <p class="ledger__name">Finco</p>
+          <p class="ledger__role">Cofundador. Construí el producto.</p>
+        </div>
+        <div class="ledger__body">
+          <p>Llegó a <b>100.000 informes al año</b>. Armé el pipeline de datos y el sistema de riesgo con mis propias manos. <b>La vendimos a 5 veces lo invertido, cerca de USD 1,5 millones.</b></p>
+          <span class="stamp win">Vendida</span>
+        </div>
+      </article>
+
+      <article class="ledger__row" data-reveal>
+        <div class="chip"><img src="assets/prestagente.png" alt="PrestaGente"></div>
+        <div>
+          <p class="ledger__name">PrestaGente</p>
+          <p class="ledger__role">Cofundador.</p>
+        </div>
+        <div class="ledger__body">
+          <p>Crédito entre conocidos, para gente que el banco no miraba. <b>Salida cercana a USD 1 millón.</b></p>
+          <span class="stamp win">Vendida</span>
+        </div>
+      </article>
+
+      <article class="ledger__row" data-reveal>
+        <div class="chip"><img src="assets/beriblock.png" alt="Beriblock"></div>
+        <div>
+          <p class="ledger__name">Beriblock</p>
+          <p class="ledger__role">Cofundador.</p>
+        </div>
+        <div class="ledger__body">
+          <p><b>Quebró.</b> La cerré yo mismo. Construimos algo bien hecho para un mercado que no existía todavía, que es una manera cara de aprender a preguntar primero.</p>
+          <span class="stamp">Cerrada</span>
+        </div>
+      </article>
+
+      <article class="ledger__row" data-reveal>
+        <div class="chip"><img src="assets/elpalomo.png" alt="El Palomo"></div>
+        <div>
+          <p class="ledger__name">El Palomo</p>
+          <p class="ledger__role">Fundador.</p>
+        </div>
+        <div class="ledger__body">
+          <p><b>Fracasó, y fracasó feo.</b> Es la que más me enseñó y la que más me ahorra tiempo hoy: casi todo lo que te voy a decir que no hagas, lo hice ahí.</p>
+          <span class="stamp">Cerrada</span>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="hist__foot" data-reveal>
+      <p class="body">Antes de todo esto lideré cerca de 40 personas en R5, donde construí el pipeline de datos y el modelo de riesgo. En mis propias empresas he manejado equipos de hasta 15. He acompañado negocios de ropa, comida, retail y servicios, y he trabajado uno a uno con unas siete personas en mentoría.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== VIDEO ====================== -->
+<section class="sec">
+  <div class="wrap">
+    <div class="video__head" data-reveal>
+      <h2>Si quieres oírme antes de aplicar.</h2>
+      <p class="lead" style="margin-top:18px;">Una conversación entera sobre negocios aburridos y qué es innovar de verdad. Los negocios aburridos son justo los que me interesan.</p>
+    </div>
+    <div class="video__frame" data-reveal style="--d:80ms">
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/F9t9f5Et_04"
+        title="Negocios Aburridos e Innovación, Salomón Muriel en el podcast Ventaja"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen></iframe>
+    </div>
+    <p class="video__note">Podcast Ventaja. Si el video no carga, es porque esta página está abierta sin internet.</p>
+  </div>
+</section>
+
+<!-- ====================== CRITERIOS + PROCESO ====================== -->
+<section class="sec" id="criterios" style="background:var(--ink-2); border-top:1px solid var(--line-2); border-bottom:1px solid var(--line-2);">
+  <div class="wrap crit__grid">
+
+    <div class="crit" data-reveal>
+      <h2>Cómo escojo.</h2>
+      <div class="crit__item">
+        <h3>Que el problema se pueda ver</h3>
+        <p>Si me puedes describir la tarea manual paso a paso, yo la puedo construir. Si me la describes como "necesitamos modernizarnos", todavía no.</p>
+      </div>
+      <div class="crit__item">
+        <h3>Que haya una cifra detrás</h3>
+        <p>Horas, errores, plata perdida, clientes que se fueron. No necesito el número exacto. Necesito que exista.</p>
+      </div>
+      <div class="crit__item">
+        <h3>Que lo vayas a usar tú</h3>
+        <p>Las herramientas que el dueño no abre nunca son las que he visto morir más rápido. Si esto va a quedar en manos de alguien que no quiere, no arranco.</p>
+      </div>
+      <div class="crit__item">
+        <h3>Que nos aguantemos</h3>
+        <p>Vamos a hablar mucho durante varias semanas, casi siempre de cosas incómodas. Si en la llamada eso no fluye, te lo digo y quedamos como amigos.</p>
+      </div>
+    </div>
+
+    <div data-reveal style="--d:90ms">
+      <h2 style="margin-bottom:26px;">Qué pasa después.</h2>
+      <div class="rail">
+        <div class="rail__step">
+          <span class="rail__n num">1</span>
+          <h3>Aplicas</h3>
+          <p>Con las preguntas de abajo. Toma entre 10 y 15 minutos si lo haces en serio. Ese es el punto.</p>
+        </div>
+        <div class="rail__step">
+          <span class="rail__n num">2</span>
+          <h3>Leo</h3>
+          <p>Reviso una vez por semana. Si no aplicas te lo digo por escrito, y te digo por qué. Nadie queda esperando.</p>
+        </div>
+        <div class="rail__step">
+          <span class="rail__n num">3</span>
+          <h3>Hablamos 30 minutos</h3>
+          <p>Sin presentación y sin slides. Te hago preguntas, tú me haces preguntas. Si quieres, ahí te paso el teléfono de alguien con quien ya trabajé.</p>
+        </div>
+        <div class="rail__step">
+          <span class="rail__n num">4</span>
+          <h3>Te mando una propuesta o un no</h3>
+          <p>En la propuesta va el alcance, el tiempo y el precio. El precio no está en esta página porque depende de qué vamos a construir, y todavía no lo sabemos.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ====================== LO QUE NO HAY ====================== -->
+<section class="sec">
+  <div class="wrap honest">
+    <h2 data-reveal>Dos cosas que no vas a encontrar acá.</h2>
+    <div class="honest__two">
+      <div class="honest__box" data-reveal>
+        <h3>Testimonios</h3>
+        <p>Llevo poco cobrando por esto y no tengo testimonios publicados. Inventarlos sería lo más fácil de esta página y no lo voy a hacer. Lo que sí hago: si llegas a la llamada, te paso el número de un cliente y lo llamas sin mí en la línea.</p>
+        <div class="empty-slot">Este espacio queda reservado. Cuando haya dos o tres reales y firmados, van aquí.</div>
+      </div>
+      <div class="honest__box" data-reveal style="--d:80ms">
+        <h3>Precios</h3>
+        <p>Cada cosa que construyo es distinta, así que un precio de lista sería un número inventado. El precio va en la propuesta, después de que hablemos y de que los dos entendamos qué hay que hacer.</p>
+        <div class="empty-slot">Tampoco hay paquetes, ni planes, ni "desde". Un alcance, un tiempo y un número.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== APLICACIÓN ====================== -->
+<section class="sec apply" id="aplicacion">
+  <div class="apply__bg" style="background-image:url('assets/bonfire.jpeg');" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="apply__head" data-reveal>
+      <h2>La aplicación.</h2>
+      <p class="lead" style="margin-top:18px;">Nueve preguntas. Las primeras son rápidas. Las de abajo son las que de verdad leo. Si te da pereza escribirlas, no apliques, y no pasa nada.</p>
+    </div>
+
+    <form id="app-form" novalidate data-reveal style="--d:80ms">
+
+      <div class="form-err" id="formErr" role="alert"></div>
+
+      <div class="carry">
+        <h4>Lo que marcaste arriba</h4>
+        <div id="carryBox"><p class="none">Todavía no has marcado nada en el filtro. Puedes subir y marcar, o dejarlo así.</p></div>
+      </div>
+
+      <fieldset>
+        <legend>Lo básico</legend>
+
+        <div class="f-row">
+          <div class="f" data-min="3">
+            <label for="q-nombre">Tu nombre completo</label>
+            <input id="q-nombre" name="nombre" type="text" autocomplete="name" placeholder="Nombre y apellido">
+            <p class="err">Escribe tu nombre.</p>
+          </div>
+          <div class="f" data-min="7">
+            <label for="q-wpp">Tu WhatsApp</label>
+            <input id="q-wpp" name="wpp" type="tel" inputmode="tel" autocomplete="tel" placeholder="Con indicativo, por ejemplo +57 310 000 0000">
+            <p class="err">Necesito un número para responderte.</p>
+          </div>
+        </div>
+
+        <div class="f" data-min="8">
+          <label for="q-empresa">Tu empresa y qué vende</label>
+          <span class="hint">En una línea, como se lo contarías a alguien en un ascensor.</span>
+          <input id="q-empresa" name="empresa" type="text" placeholder="Por ejemplo: distribuidora de repuestos en Medellín, 18 empleados">
+          <p class="err">Cuéntame qué vende tu empresa.</p>
+        </div>
+
+        <div class="f-row">
+          <div class="f" data-min="1">
+            <label for="q-ventas">Ventas del año pasado</label>
+            <span class="hint">Solo para saber si estás en el rango donde sirvo.</span>
+            <select id="q-ventas" name="ventas">
+              <option value="">Elige una opción</option>
+              <option>Todavía no vendemos</option>
+              <option>Menos de 300 millones COP</option>
+              <option>Entre 300 y 1.000 millones COP</option>
+              <option>Entre 1.000 y 4.000 millones COP</option>
+              <option>Entre 4.000 y 8.000 millones COP</option>
+              <option>Más de 8.000 millones COP</option>
+              <option>Prefiero decirlo en la llamada</option>
+            </select>
+            <p class="err">Escoge un rango.</p>
+          </div>
+          <div class="f" data-min="4">
+            <label for="q-equipo">¿Cuánta gente trabaja con ustedes?</label>
+            <span class="hint">Contando a los que no están en nómina.</span>
+            <input id="q-equipo" name="equipo" type="text" placeholder="Por ejemplo: 12 de planta y 4 por prestación">
+            <p class="err">Dime más o menos cuántos son.</p>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Las que de verdad leo</legend>
+
+        <div class="f" data-min="120" data-count="true">
+          <label for="q-tarea">¿Cuál es la tarea que hoy hacen a mano y que más los frena?</label>
+          <span class="hint">Descríbela paso a paso, como si me la estuvieras dictando por teléfono. Quién la hace, con qué la hace, en qué momento del día.</span>
+          <textarea id="q-tarea" name="tarea" placeholder="Todos los días a las 6 de la tarde, Mónica abre el grupo de WhatsApp, copia los pedidos uno por uno a un Excel, y después..."></textarea>
+          <p class="meter"><span class="c">0 caracteres</span><span>mínimo 120</span></p>
+          <p class="err">Esta es la pregunta más importante de la página. Necesito el paso a paso, no una frase.</p>
+        </div>
+
+        <div class="f" data-min="45" data-count="true">
+          <label for="q-horas">¿Cuántas horas a la semana se van en eso y quién las pone?</label>
+          <span class="hint">Si no lo sabes exacto, calcula por encima. Un número aproximado sirve.</span>
+          <textarea id="q-horas" name="horas" placeholder="Como 10 horas semanales entre Mónica y yo, casi todas en la noche."></textarea>
+          <p class="meter"><span class="c">0 caracteres</span><span>mínimo 45</span></p>
+          <p class="err">Dame al menos un estimado y quién lo hace.</p>
+        </div>
+
+        <div class="f" data-min="45" data-count="true">
+          <label for="q-intentos">¿Qué han intentado ya?</label>
+          <span class="hint">Incluye el software que compraron y nadie usa. Ese dato me sirve mucho más de lo que crees.</span>
+          <textarea id="q-intentos" name="intentos" placeholder="Compramos un ERP hace dos años, lo usamos tres meses y volvimos al Excel porque..."></textarea>
+          <p class="meter"><span class="c">0 caracteres</span><span>mínimo 45</span></p>
+          <p class="err">Cuéntame qué han probado, aunque no haya funcionado.</p>
+        </div>
+
+        <div class="f" data-min="60" data-count="true">
+          <label for="q-cambio">Si esto quedara resuelto en ocho semanas, ¿qué cambia?</label>
+          <span class="hint">Qué dejas de hacer tú, qué deja de hacer tu gente, y qué vale eso en plata o en tranquilidad.</span>
+          <textarea id="q-cambio" name="cambio" placeholder="Yo dejaría de revisar pedidos a las 11 de la noche y podríamos atender el doble sin contratar a nadie."></textarea>
+          <p class="meter"><span class="c">0 caracteres</span><span>mínimo 60</span></p>
+          <p class="err">Sin esta respuesta no sé si vale la pena para ti.</p>
+        </div>
+
+        <div class="f" data-min="10">
+          <label for="q-decision">¿Quién firma la decisión y cuándo quieres empezar?</label>
+          <input id="q-decision" name="decision" type="text" placeholder="Firmo yo. Quiero empezar en octubre.">
+          <p class="err">Dime quién decide y para cuándo.</p>
+        </div>
+      </fieldset>
+
+      <div class="submit-row">
+        <button class="btn btn-primary" type="submit" id="submitBtn">Enviar aplicación</button>
+        <p class="submit-note">El botón abre WhatsApp con tus respuestas ya escritas. Esta página no guarda nada.</p>
+      </div>
+
+      <div class="sent" id="sentBox" aria-live="polite">
+        <h3>Listo. Tu aplicación quedó armada.</h3>
+        <p>Se debió abrir WhatsApp en otra pestaña con todo el texto adentro. Si no se abrió, usa el botón de abajo o copia el texto y mándamelo tú.</p>
+        <div class="sent__row">
+          <a class="btn btn-primary btn-sm" id="waLink" href="https://wa.me/573132465100" target="_blank" rel="noopener">Abrir WhatsApp</a>
+          <button class="btn btn-ghost btn-sm" type="button" id="copyBtn">Copiar el texto</button>
+          <span class="copied" id="copied">Copiado.</span>
+        </div>
+        <label class="sr" for="sentText">Texto de tu aplicación</label>
+        <textarea id="sentText" readonly></textarea>
+      </div>
+
+    </form>
+  </div>
+</section>
+
+<!-- ====================== MENTORÍA (una línea, discreta) ====================== -->
+<section class="aside-line">
+  <div class="wrap aside-line__in">
+    <p><b>¿Todavía estás muy al principio para que esto tenga sentido?</b> Escríbeme igual y te digo por dónde. A veces la respuesta es un acompañamiento uno a uno conmigo, a veces es un programa en grupo como el que dirijo en Ignia, y muchas veces es simplemente vender más antes de automatizar nada.</p>
+    <a class="btn btn-ghost" href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n.%20Creo%20que%20estoy%20muy%20al%20principio%20para%20la%20consultor%C3%ADa%2C%20pero%20quer%C3%ADa%20contarte%20qu%C3%A9%20estoy%20montando." target="_blank" rel="noopener">Escríbeme</a>
+  </div>
+</section>
+
+</main>
+
+<!-- ====================== FOOTER ====================== -->
+<footer class="foot">
+  <div class="wrap foot__in">
+    <div>
+      <p class="foot__name">Salomón Muriel</p>
+      <p>Práctica de consultoría independiente. Trabajo con empresas en Colombia. Esto es aparte de Ignia y no se contrata a través de Ignia.</p>
+    </div>
+    <div class="foot__links">
+      <a href="#aplicacion">Aplicar</a>
+      <a href="https://wa.me/573132465100" target="_blank" rel="noopener">WhatsApp</a>
+      <a href="https://cal.com/salomonmuriel" target="_blank" rel="noopener">Agenda</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------- Scroll reveal.
+     Motivation: sequences the qualification argument so each condition lands
+     one at a time instead of arriving as a wall. IntersectionObserver only. ---------- */
+  var reveals = Array.prototype.slice.call(document.querySelectorAll("[data-reveal]"));
+  if (reduce || !("IntersectionObserver" in window)) {
+    reveals.forEach(function(el){ el.classList.add("in"); });
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); }
+      });
+    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.12 });
+    reveals.forEach(function(el){ io.observe(el); });
+  }
+
+  /* ---------- The filter: live self-qualification ---------- */
+  var boxes = Array.prototype.slice.call(document.querySelectorAll("#sintomas input[type=checkbox]"));
+  var scoreEl = document.getElementById("score");
+  var verdictEl = document.getElementById("verdict");
+  var verdictCta = document.getElementById("verdictCta");
+  var carryBox = document.getElementById("carryBox");
+
+  function checkedList(){
+    return boxes.filter(function(b){ return b.checked; }).map(function(b){ return b.getAttribute("data-s"); });
+  }
+
+  var VERDICTS = [
+    { max: 0, head: "Marca lo que te suene.",
+      why: "Si no marcas nada, es muy probable que no me necesites. Eso es una buena noticia y te acabas de ahorrar una reunión.", cta: false },
+    { max: 2, head: "Poco, por ahora.",
+      why: "Con dos señales lo tuyo se puede arreglar poniendo orden, sin que nadie construya nada. Aplica si quieres y te lo digo derecho.", cta: true },
+    { max: 5, head: "Ese es exactamente el terreno donde trabajo.",
+      why: "Tres o más señales casi siempre significan que hay una herramienta pequeña, hecha a la medida, que borra la mitad de ese trabajo.", cta: true },
+    { max: 8, head: "Tu empresa está andando sobre gente, no sobre sistemas.",
+      why: "A este nivel el riesgo ya no es solo la ineficiencia. Es que un día alguien se enferme y se pare la operación.", cta: true }
+  ];
+
+  function renderVerdict(){
+    var list = checkedList();
+    var n = list.length;
+    if (scoreEl) scoreEl.textContent = String(n);
+
+    var v = VERDICTS[VERDICTS.length - 1];
+    for (var i = 0; i < VERDICTS.length; i++){
+      if (n <= VERDICTS[i].max){ v = VERDICTS[i]; break; }
+    }
+    if (verdictEl){
+      verdictEl.firstChild.nodeValue = v.head + " ";
+      var why = verdictEl.querySelector(".why");
+      if (why) why.textContent = v.why;
+    }
+    if (verdictCta) verdictCta.hidden = !v.cta;
+
+    if (carryBox){
+      if (!n){
+        carryBox.innerHTML = '<p class="none">Todavía no has marcado nada en el filtro. Puedes subir y marcar, o dejarlo así.</p>';
+      } else {
+        var ul = document.createElement("ul");
+        list.forEach(function(t){
+          var li = document.createElement("li");
+          li.textContent = t;
+          ul.appendChild(li);
+        });
+        carryBox.innerHTML = "";
+        carryBox.appendChild(ul);
+      }
+    }
+  }
+
+  boxes.forEach(function(b){ b.addEventListener("change", renderVerdict); });
+  renderVerdict();
+
+  /* ---------- Character counters ---------- */
+  Array.prototype.slice.call(document.querySelectorAll(".f[data-count] textarea")).forEach(function(ta){
+    var field = ta.closest(".f");
+    var min = parseInt(field.getAttribute("data-min"), 10) || 0;
+    var out = field.querySelector(".meter .c");
+    function tick(){
+      var n = ta.value.trim().length;
+      out.textContent = n + (n === 1 ? " caracter" : " caracteres");
+      out.classList.toggle("ok", n >= min);
+      if (n >= min) field.classList.remove("is-bad");
+    }
+    ta.addEventListener("input", tick);
+    tick();
+  });
+
+  /* ---------- The application ---------- */
+  var form = document.getElementById("app-form");
+  var formErr = document.getElementById("formErr");
+  var submitBtn = document.getElementById("submitBtn");
+  var sentBox = document.getElementById("sentBox");
+  var sentText = document.getElementById("sentText");
+  var waLink = document.getElementById("waLink");
+  var copyBtn = document.getElementById("copyBtn");
+  var copied = document.getElementById("copied");
+
+  var QUESTIONS = [
+    { id: "q-nombre",    label: "Nombre" },
+    { id: "q-wpp",       label: "WhatsApp" },
+    { id: "q-empresa",   label: "Empresa y qué vende" },
+    { id: "q-ventas",    label: "Ventas del año pasado" },
+    { id: "q-equipo",    label: "Tamaño del equipo" },
+    { id: "q-tarea",     label: "La tarea que hacen a mano" },
+    { id: "q-horas",     label: "Horas semanales y quién las pone" },
+    { id: "q-intentos",  label: "Qué han intentado ya" },
+    { id: "q-cambio",    label: "Qué cambia si se resuelve" },
+    { id: "q-decision",  label: "Quién firma y cuándo empezar" }
+  ];
+
+  function validate(){
+    var bad = [];
+    QUESTIONS.forEach(function(q){
+      var el = document.getElementById(q.id);
+      var field = el.closest(".f");
+      var min = parseInt(field.getAttribute("data-min"), 10) || 1;
+      var val = (el.value || "").trim();
+      var ok = val.length >= min;
+      field.classList.toggle("is-bad", !ok);
+      el.setAttribute("aria-invalid", ok ? "false" : "true");
+      if (!ok) bad.push({ q: q, el: el });
+    });
+    return bad;
+  }
+
+  function buildText(trim){
+    var lines = [];
+    lines.push("APLICACIÓN A CONSULTORÍA");
+    lines.push("");
+    QUESTIONS.forEach(function(q){
+      var el = document.getElementById(q.id);
+      var val = (el.value || "").trim();
+      if (trim && val.length > 420) val = val.slice(0, 420) + " (...)";
+      lines.push(q.label + ":");
+      lines.push(val);
+      lines.push("");
+    });
+    var marks = checkedList();
+    if (marks.length){
+      lines.push("Señales que marqué en la página (" + marks.length + " de 8):");
+      marks.forEach(function(m){ lines.push("- " + m); });
+      lines.push("");
+    }
+    if (trim) lines.push("(Recorté las respuestas largas para que cupieran. Te mando el texto completo si lo necesitas.)");
+    return lines.join("\n").trim();
+  }
+
+  form.addEventListener("submit", function(ev){
+    ev.preventDefault();
+
+    var bad = validate();
+    if (bad.length){
+      formErr.textContent = bad.length === 1
+        ? "Falta una respuesta: " + bad[0].q.label + "."
+        : "Faltan " + bad.length + " respuestas. Empieza por " + bad[0].q.label + ".";
+      formErr.classList.add("on");
+      sentBox.classList.remove("on");
+      bad[0].el.focus({ preventScroll: false });
+      return;
+    }
+
+    formErr.classList.remove("on");
+    formErr.textContent = "";
+
+    /* Loading state: honest, brief, and it does not break the click gesture. */
+    submitBtn.classList.add("is-loading");
+    submitBtn.disabled = true;
+    var original = submitBtn.textContent;
+    submitBtn.textContent = "Armando tu aplicación";
+
+    var text = buildText(false);
+    var url = "https://wa.me/573132465100?text=" + encodeURIComponent(text);
+    if (url.length > 1900){
+      text = buildText(true);
+      url = "https://wa.me/573132465100?text=" + encodeURIComponent(text);
+    }
+
+    sentText.value = buildText(false);
+    waLink.setAttribute("href", url);
+    sentBox.classList.add("on");
+
+    try { window.open(url, "_blank", "noopener"); } catch (e) { /* el enlace de respaldo queda visible */ }
+
+    window.setTimeout(function(){
+      submitBtn.classList.remove("is-loading");
+      submitBtn.disabled = false;
+      submitBtn.textContent = original;
+      sentBox.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" });
+    }, 420);
+  });
+
+  copyBtn.addEventListener("click", function(){
+    var done = function(){
+      copied.classList.add("on");
+      window.setTimeout(function(){ copied.classList.remove("on"); }, 1800);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(sentText.value).then(done, function(){
+        sentText.select(); document.execCommand("copy"); done();
+      });
+    } else {
+      sentText.select(); document.execCommand("copy"); done();
+    }
+  });
+
+})();
+</script>
+
+</body>
+</html>

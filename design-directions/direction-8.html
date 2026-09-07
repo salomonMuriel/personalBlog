@@ -1,0 +1,943 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Salomón Muriel | Antes de contratarme, hagamos el diagnóstico</title>
+<meta name="description" content="Ayudo a dueños de negocio en Colombia a ponerle nombre al problema antes de gastar un peso en resolverlo. Consultoría y mentoría, hechas por una sola persona.">
+<meta name="theme-color" content="#0a1110">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   DIRECTION 8 - "EL DIAGNÓSTICO"
+   Theme: hard-committed DARK. No prefers-color-scheme block,
+   no toggle. Renders identically on any OS setting.
+   Palette family: deep pine ink + bone + one ember accent.
+   Radius system: ONE scale. Everything is 12px. No pills.
+   Type: Archivo (display) + Instrument Sans (body).
+   Icons: none, on purpose. No hand-rolled SVG illustration.
+   ============================================================ */
+
+:root{
+  color-scheme: dark;
+
+  /* ground and surfaces: four real elevations, green-black family */
+  --ink-000:#0a1110;
+  --ink-050:#0c1413;
+  --ink-100:#0f1917;
+  --ink-200:#14201d;
+  --ink-300:#1b2b26;
+
+  /* ink text */
+  --bone:#ece6da;
+  --bone-2:#b9b8ad;
+  --bone-3:#8c8f86;
+
+  /* single accent, locked for the whole page */
+  --ember:#f0705a;
+  --ember-deep:#8f3324;
+
+  --line:rgba(236,230,218,.11);
+  --line-strong:rgba(236,230,218,.20);
+  --highlight:inset 0 1px 0 rgba(255,255,255,.055);
+
+  --r:12px;
+  --shell:1280px;
+  --pad:clamp(20px,5vw,64px);
+
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--ink-000);
+  color:var(--bone);
+  font-family:"Instrument Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  font-size:17px;
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img{max-width:100%;display:block}
+a{color:inherit}
+button{font:inherit;color:inherit}
+h1,h2,h3,h4{
+  font-family:Archivo,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  font-weight:700;
+  letter-spacing:-.028em;
+  line-height:1.06;
+  margin:0;
+  text-wrap:balance;
+}
+p{margin:0}
+:focus-visible{outline:2px solid var(--ember);outline-offset:3px;border-radius:4px}
+.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+/* fixed film grain: material, not decoration. pointer-events none, never on a scroller */
+.grain{
+  position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.16;mix-blend-mode:soft-light;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.shell{width:100%;max-width:var(--shell);margin-inline:auto;padding-inline:var(--pad)}
+.band{position:relative;padding-block:clamp(76px,9vw,132px)}
+.band--alt{background:var(--ink-050)}
+.rule{height:1px;background:var(--line);border:0;margin:0}
+
+/* ---------- reveal (IntersectionObserver, never a scroll listener) ---------- */
+.js .reveal{opacity:0;transform:translateY(16px)}
+.js .reveal.is-in{opacity:1;transform:none;transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.js .reveal.d1{transition-delay:.07s}
+.js .reveal.d2{transition-delay:.14s}
+.js .reveal.d3{transition-delay:.21s}
+
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  white-space:nowrap;
+  padding:14px 22px;border-radius:var(--r);
+  font-family:Archivo,sans-serif;font-weight:600;font-size:16px;letter-spacing:-.012em;
+  text-decoration:none;border:1px solid transparent;cursor:pointer;
+  transition:transform .18s var(--ease),background-color .18s var(--ease),border-color .18s var(--ease),color .18s var(--ease);
+}
+.btn--primary{background:var(--ember);color:#12100f;box-shadow:0 10px 30px rgba(240,112,90,.16)}
+.btn--primary:hover{background:#ff8570;transform:translateY(-1px)}
+.btn--primary:active{transform:scale(.985)}
+.btn--ghost{background:transparent;color:var(--bone);border-color:var(--line-strong)}
+.btn--ghost:hover{border-color:var(--bone-3);background:rgba(236,230,218,.05);transform:translateY(-1px)}
+.btn--ghost:active{transform:scale(.985)}
+.btn--sm{padding:10px 16px;font-size:15px}
+
+.tlink{
+  display:inline-block;text-decoration:none;color:var(--ember);
+  font-weight:600;
+  border-bottom:1px solid rgba(240,112,90,.42);
+  padding-bottom:2px;
+  transition:border-color .2s var(--ease),color .2s var(--ease);
+}
+.tlink:hover{color:#ff8570;border-bottom-color:#ff8570}
+
+/* ---------- nav ---------- */
+.nav{
+  position:sticky;top:0;z-index:50;height:70px;
+  background:rgba(10,17,16,.82);
+  backdrop-filter:blur(14px) saturate(140%);
+  -webkit-backdrop-filter:blur(14px) saturate(140%);
+  border-bottom:1px solid var(--line);
+}
+.nav__in{height:100%;display:flex;align-items:center;gap:28px}
+.wordmark{
+  font-family:Archivo,sans-serif;font-weight:800;font-size:17px;letter-spacing:-.03em;
+  text-decoration:none;color:var(--bone);white-space:nowrap;
+}
+.wordmark span{color:var(--ember)}
+.nav__links{display:flex;align-items:center;gap:26px;margin-left:auto}
+.nav__links a{
+  text-decoration:none;color:var(--bone-2);font-size:15px;font-weight:500;white-space:nowrap;
+  transition:color .18s var(--ease);
+}
+.nav__links a:hover{color:var(--bone)}
+.nav__lang{
+  color:var(--bone-3)!important;font-size:13.5px;font-weight:600;
+  border:1px solid var(--line);border-radius:var(--r);padding:5px 10px;
+}
+.nav__lang:hover{border-color:var(--line-strong)}
+@media (max-width:1023px){.nav__links a:not(.nav__lang):not(.btn){display:none}}
+@media (max-width:520px){.nav{height:64px}.nav__lang{display:none!important}.btn--sm{padding:9px 13px;font-size:14px}}
+
+/* ============================================================
+   HERO - asymmetric split, portrait masked into the ground
+   ============================================================ */
+.hero{position:relative;overflow:hidden;padding-top:clamp(44px,6vw,88px);padding-bottom:clamp(52px,6vw,84px)}
+.hero::before{
+  content:"";position:absolute;inset:-20% -10% auto -20%;height:130%;pointer-events:none;
+  background:
+    radial-gradient(880px 620px at 8% -6%, rgba(240,112,90,.13), transparent 62%),
+    radial-gradient(760px 620px at 78% 26%, rgba(96,150,124,.10), transparent 64%);
+}
+.hero__in{position:relative;display:grid;grid-template-columns:1fr;gap:40px;align-items:center}
+@media (min-width:900px){
+  .hero{min-height:100dvh;display:flex;align-items:center}
+  .hero__in{grid-template-columns:minmax(0,1.32fr) minmax(0,1fr);gap:clamp(36px,5vw,80px);width:100%}
+}
+.hero h1{font-size:clamp(2.35rem,5.1vw,3.7rem);max-width:16ch}
+.hero h1 em{font-style:normal;color:var(--ember)}
+.hero__sub{margin-top:22px;max-width:48ch;color:var(--bone-2);font-size:clamp(1.02rem,1.5vw,1.18rem)}
+.hero__cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+
+.portrait{position:relative;isolation:isolate}
+.portrait img{
+  width:100%;height:auto;
+  aspect-ratio:4/4.6;object-fit:cover;object-position:50% 16%;
+  -webkit-mask-image:linear-gradient(180deg,#000 0,#000 58%,rgba(0,0,0,.55) 82%,transparent 100%);
+  mask-image:linear-gradient(180deg,#000 0,#000 58%,rgba(0,0,0,.55) 82%,transparent 100%);
+}
+.portrait::after{
+  content:"";position:absolute;left:-8%;right:-8%;top:-6%;bottom:0;z-index:-1;
+  background:radial-gradient(60% 55% at 50% 34%, rgba(240,112,90,.16), transparent 70%);
+}
+@media (max-width:899px){
+  .portrait{max-width:340px}
+  .portrait img{aspect-ratio:1/1}
+}
+
+/* ============================================================
+   DIAGNÓSTICO - the instrument. Two-column, sticky verdict.
+   ============================================================ */
+.diag__head{max-width:58ch}
+.diag__head h2{font-size:clamp(1.9rem,3.5vw,2.9rem)}
+.diag__head p{margin-top:18px;color:var(--bone-2);max-width:56ch}
+
+.diag{display:grid;grid-template-columns:1fr;gap:28px;margin-top:clamp(38px,4.5vw,56px)}
+@media (min-width:960px){.diag{grid-template-columns:minmax(0,1.18fr) minmax(0,.82fr);gap:44px;align-items:start}}
+
+.sym{display:grid;gap:10px}
+.sym__row{display:block;position:relative;cursor:pointer}
+.sym__row input{position:absolute;opacity:0;width:1px;height:1px}
+.sym__face{
+  display:grid;grid-template-columns:22px 1fr;gap:16px;align-items:start;
+  padding:17px 20px;border-radius:var(--r);
+  background:var(--ink-100);border:1px solid var(--line);box-shadow:var(--highlight);
+  transition:border-color .2s var(--ease),background-color .2s var(--ease),transform .16s var(--ease);
+}
+.sym__row:hover .sym__face{border-color:var(--line-strong);background:var(--ink-200)}
+.sym__row:active .sym__face{transform:scale(.995)}
+.sym__box{
+  width:22px;height:22px;border-radius:6px;margin-top:2px;
+  border:1.5px solid var(--line-strong);
+  display:grid;place-items:center;
+  transition:border-color .2s var(--ease),background-color .2s var(--ease);
+}
+.sym__box::after{
+  content:"";width:10px;height:10px;border-radius:2px;background:transparent;
+  transition:background-color .2s var(--ease),transform .2s var(--ease);transform:scale(.4);
+}
+.sym__text{font-size:16.5px;line-height:1.48;color:var(--bone-2)}
+.sym__row input:checked ~ .sym__face{background:var(--ink-200);border-color:rgba(240,112,90,.55)}
+.sym__row input:checked ~ .sym__face .sym__box{border-color:var(--ember)}
+.sym__row input:checked ~ .sym__face .sym__box::after{background:var(--ember);transform:scale(1)}
+.sym__row input:checked ~ .sym__face .sym__text{color:var(--bone)}
+.sym__row input:focus-visible ~ .sym__face{outline:2px solid var(--ember);outline-offset:3px}
+
+.verdict{
+  position:relative;border-radius:var(--r);
+  background:linear-gradient(168deg,rgba(240,112,90,.10),rgba(20,32,29,.35) 46%),var(--ink-100);
+  border:1px solid var(--line-strong);box-shadow:var(--highlight),0 24px 60px rgba(0,0,0,.35);
+  padding:clamp(24px,3vw,34px);
+}
+@media (min-width:960px){.verdict{position:sticky;top:98px}}
+.verdict__kicker{font-size:13.5px;color:var(--bone-3);font-weight:500}
+.verdict__title{font-size:clamp(1.4rem,2.3vw,1.85rem);margin-top:10px}
+.verdict__body{margin-top:14px;color:var(--bone-2);font-size:16px}
+.verdict__do{
+  margin-top:20px;padding-top:18px;border-top:1px solid var(--line);
+  font-size:15.5px;color:var(--bone);
+}
+.verdict__do b{font-family:Archivo,sans-serif;font-weight:700;color:var(--ember)}
+.verdict__cta{margin-top:22px;display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.verdict__reset{
+  background:none;border:0;padding:4px 2px;cursor:pointer;color:var(--bone-3);font-size:14.5px;
+  border-bottom:1px solid transparent;transition:color .18s var(--ease),border-color .18s var(--ease);
+}
+.verdict__reset:hover{color:var(--bone);border-bottom-color:var(--line-strong)}
+.verdict__note{margin-top:20px;font-size:13.5px;color:var(--bone-3);line-height:1.5}
+.verdict.is-empty .verdict__do,.verdict.is-empty .verdict__cta{display:none}
+.verdict.is-out .verdict__do b{color:var(--bone)}
+.js .verdict__swap{animation:swap .42s var(--ease) both}
+@keyframes swap{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+
+/* ============================================================
+   TRAYECTORIA - bento record, exactly 6 cells, mixed material
+   ============================================================ */
+.rec{display:grid;grid-template-columns:1fr;gap:14px;margin-top:clamp(36px,4vw,52px)}
+@media (min-width:820px){.rec{grid-template-columns:repeat(12,1fr)}}
+.cell{
+  border-radius:var(--r);border:1px solid var(--line);background:var(--ink-100);
+  box-shadow:var(--highlight);padding:clamp(22px,2.4vw,30px);
+  display:flex;flex-direction:column;gap:14px;
+}
+.cell--hero{background:linear-gradient(154deg,rgba(240,112,90,.16),rgba(20,44,36,.5) 52%),var(--ink-200);border-color:var(--line-strong)}
+.cell--tint{background:linear-gradient(200deg,rgba(96,150,124,.16),transparent 60%),var(--ink-200)}
+.cell--photo{padding:0;overflow:hidden;gap:0}
+.cell--photo img{width:100%;aspect-ratio:16/10;object-fit:cover;object-position:50% 34%}
+.cell--photo .cell__inner{
+  padding:clamp(22px,2.4vw,30px);background:var(--ink-200);
+  display:flex;flex-direction:column;gap:14px;flex:1;
+  border-top:1px solid var(--line);
+}
+.cell--muted{background:transparent;border-style:solid;border-color:var(--line)}
+.cell--muted .cell__out{color:var(--bone-3)}
+@media (min-width:820px){
+  .c-ignia{grid-column:span 7}
+  .c-finco{grid-column:span 5}
+  .c-presta{grid-column:span 5}
+  .c-r5{grid-column:span 7}
+  .c-beri{grid-column:span 6}
+  .c-palomo{grid-column:span 6}
+}
+.chip{
+  width:fit-content;background:#ece6da;border-radius:var(--r);padding:9px 13px;
+  display:flex;align-items:center;
+}
+.chip img{height:26px;width:auto;object-fit:contain}
+.chip--tall img{height:34px}
+.cell__name{font-family:Archivo,sans-serif;font-weight:700;font-size:1.15rem;letter-spacing:-.02em}
+.cell__out{font-size:15.5px;color:var(--bone-2);line-height:1.55}
+.cell__out b{color:var(--bone);font-weight:600}
+.cell--muted .cell__name{color:var(--bone-2)}
+.rec__note{margin-top:22px;font-size:14.5px;color:var(--bone-3);max-width:62ch}
+
+/* ============================================================
+   CÓMO TRABAJO - sticky left column + scrolling right column
+   ============================================================ */
+.work{display:grid;grid-template-columns:1fr;gap:38px}
+@media (min-width:1000px){.work{grid-template-columns:minmax(0,.86fr) minmax(0,1.14fr);gap:clamp(48px,6vw,96px);align-items:start}}
+@media (min-width:1000px){.work__aside{position:sticky;top:118px}}
+.work__aside h2{font-size:clamp(1.9rem,3.3vw,2.7rem)}
+.work__aside p{margin-top:18px;color:var(--bone-2);max-width:40ch}
+.work__shot{margin-top:30px;border-radius:var(--r);overflow:hidden;border:1px solid var(--line)}
+.work__shot img{width:100%;aspect-ratio:5/4;object-fit:cover}
+.work__list{display:grid;gap:clamp(30px,3.6vw,46px)}
+.step{padding-left:clamp(0px,2vw,26px);border-left:1px solid transparent}
+@media (min-width:1000px){.step{border-left-color:var(--line)}}
+.step h3{font-size:clamp(1.28rem,2.1vw,1.6rem);max-width:22ch}
+.step p{margin-top:14px;color:var(--bone-2);max-width:52ch;font-size:16.5px}
+.step:last-child h3{color:var(--ember)}
+
+/* ============================================================
+   CUPOS - numbers + prose, no cards, no progress tracks
+   ============================================================ */
+.cupos{display:grid;grid-template-columns:1fr;gap:40px}
+@media (min-width:900px){.cupos{grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:clamp(44px,6vw,90px);align-items:start}}
+.counts{display:grid;gap:30px}
+.count__label{font-size:15px;color:var(--bone-3)}
+.count__fig{
+  font-family:Archivo,sans-serif;font-weight:800;letter-spacing:-.045em;
+  font-size:clamp(3.1rem,7vw,4.6rem);line-height:.95;margin-top:6px;color:var(--bone);
+}
+.count__fig span{font-size:.4em;font-weight:600;color:var(--bone-3);letter-spacing:-.02em}
+.count__sub{margin-top:8px;font-size:15px;color:var(--bone-2)}
+.fit h3{font-size:clamp(1.5rem,2.6vw,2rem)}
+.fit p{margin-top:18px;color:var(--bone-2);max-width:54ch}
+.fit p + p{margin-top:14px}
+.fit .no{color:var(--bone-3)}
+
+/* ============================================================
+   REFERENCIAS - the honest empty state, centered once on the page
+   ============================================================ */
+.refs{max-width:720px;margin-inline:auto;text-align:center}
+.refs h2{font-size:clamp(1.75rem,3.1vw,2.5rem)}
+.refs p{margin-top:20px;color:var(--bone-2)}
+.refs__act{margin-top:28px}
+.refs__meta{
+  margin-top:34px;padding-top:22px;border-top:1px solid var(--line);
+  font-size:14.5px;color:var(--bone-3);
+}
+
+/* ============================================================
+   CHARLAS - full-width typographic statement, deliberately quiet
+   ============================================================ */
+.talks{background:var(--ink-050)}
+.talks__lead{font-family:Archivo,sans-serif;font-weight:700;letter-spacing:-.028em;line-height:1.1;
+  font-size:clamp(1.5rem,3.4vw,2.55rem);max-width:22ch}
+.talks__grid{display:grid;grid-template-columns:1fr;gap:26px;margin-top:34px}
+@media (min-width:820px){.talks__grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(40px,6vw,88px)}}
+.talks__grid p{color:var(--bone-2);font-size:16.5px}
+.talks__topics{margin-top:16px;color:var(--bone);font-size:16.5px;line-height:1.85}
+.talks__topics b{font-weight:600}
+.talks__act{margin-top:26px}
+
+/* ============================================================
+   SOBRE MÍ - photo mosaic, uneven
+   ============================================================ */
+.about{display:grid;grid-template-columns:1fr;gap:38px}
+@media (min-width:960px){.about{grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:clamp(40px,5vw,80px);align-items:center}}
+.about h2{font-size:clamp(1.8rem,3.2vw,2.6rem);max-width:15ch}
+.about p{margin-top:20px;color:var(--bone-2);max-width:48ch}
+.about p + p{margin-top:14px}
+.mosaic{display:grid;grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(5,54px);gap:12px}
+@media (min-width:520px){.mosaic{grid-template-rows:repeat(5,74px)}}
+.mosaic figure{margin:0;border-radius:var(--r);overflow:hidden;border:1px solid var(--line)}
+.mosaic img{width:100%;height:100%;object-fit:cover}
+.m1{grid-column:1;grid-row:1/4}
+.m2{grid-column:2;grid-row:1/3}
+.m3{grid-column:2;grid-row:3/6}
+
+/* ============================================================
+   CIERRE - the only full-bleed photographic band on the page
+   ============================================================ */
+.close{position:relative;overflow:hidden;isolation:isolate}
+.close img{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 58%;z-index:-2;
+}
+.close::after{
+  content:"";position:absolute;inset:0;z-index:-1;
+  background:linear-gradient(100deg,rgba(8,13,12,.95) 22%,rgba(8,13,12,.72) 56%,rgba(8,13,12,.5));
+}
+.close__in{max-width:640px}
+.close h2{font-size:clamp(1.85rem,3.6vw,2.8rem)}
+.close p{margin-top:20px;color:var(--bone-2);max-width:46ch}
+.close__cta{margin-top:32px;display:flex;flex-wrap:wrap;gap:20px;align-items:center}
+
+/* ---------- footer ---------- */
+.foot{background:var(--ink-000);border-top:1px solid var(--line);padding-block:56px 44px}
+.foot__top{display:grid;grid-template-columns:1fr;gap:32px}
+@media (min-width:760px){.foot__top{grid-template-columns:minmax(0,1.3fr) repeat(2,minmax(0,1fr))}}
+.foot__brand p{margin-top:14px;color:var(--bone-3);font-size:14.5px;max-width:34ch}
+.foot h4{font-family:Archivo,sans-serif;font-size:14px;font-weight:700;color:var(--bone-3);letter-spacing:0}
+.foot ul{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:10px}
+.foot ul a{text-decoration:none;color:var(--bone-2);font-size:15px;transition:color .18s var(--ease)}
+.foot ul a:hover{color:var(--ember)}
+.foot__bottom{
+  margin-top:46px;padding-top:22px;border-top:1px solid var(--line);
+  display:flex;flex-wrap:wrap;gap:12px 26px;justify-content:space-between;
+  font-size:13.5px;color:var(--bone-3);
+}
+
+/* ---------- reduced motion: everything collapses to static ---------- */
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  .js .reveal{opacity:1;transform:none;transition:none}
+  .js .verdict__swap{animation:none}
+  *{transition-duration:.01ms!important}
+}
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+
+<!-- ============================== NAV ============================== -->
+<header class="nav">
+  <div class="shell nav__in">
+    <a class="wordmark" href="#top">Salomón Muriel<span>.</span></a>
+    <nav class="nav__links" aria-label="Principal">
+      <a href="#diagnostico">Diagnóstico</a>
+      <a href="#trayectoria">Trayectoria</a>
+      <a href="#charlas">Charlas</a>
+      <a href="#sobre-mi">Sobre mí</a>
+      <a class="nav__lang" href="/en/" hreflang="en">EN</a>
+      <a class="btn btn--primary btn--sm"
+         href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n.%20Vengo%20de%20tu%20p%C3%A1gina%20y%20quiero%20contarte%20qu%C3%A9%20est%C3%A1%20pasando%20en%20mi%20negocio."
+         target="_blank" rel="noopener">Escríbeme por WhatsApp</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ============================== HERO ============================== -->
+<section class="hero">
+  <div class="shell hero__in">
+    <div>
+      <h1 class="reveal">Sabes que algo no cuadra. Todavía no sabes <em>qué</em>.</h1>
+      <p class="hero__sub reveal d1">Ayudo a dueños de negocio en Colombia a ponerle nombre al problema antes de gastar un peso en resolverlo.</p>
+      <div class="hero__cta reveal d2">
+        <a class="btn btn--primary" href="#diagnostico">Empezar el diagnóstico</a>
+        <a class="btn btn--ghost"
+           href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n.%20Vengo%20de%20tu%20p%C3%A1gina%20y%20quiero%20contarte%20qu%C3%A9%20est%C3%A1%20pasando%20en%20mi%20negocio."
+           target="_blank" rel="noopener">Escríbeme por WhatsApp</a>
+      </div>
+    </div>
+    <div class="portrait reveal d3">
+      <img src="assets/fotoSalo.jpeg" width="800" height="800" alt="Salomón Muriel, retrato sobre fondo oscuro." fetchpriority="high" decoding="async">
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<!-- ===================== EL DIAGNÓSTICO (instrumento) ===================== -->
+<section class="band" id="diagnostico">
+  <div class="shell">
+    <div class="diag__head">
+      <h2 class="reveal">Marca lo que te esté pasando esta semana.</h2>
+      <p class="reveal d1">Nueve frases. No es un examen y no hay respuesta correcta. Al final te digo qué creo que necesitas, incluso cuando la respuesta honesta es que no soy yo.</p>
+    </div>
+
+    <div class="diag">
+
+      <!-- symptom picker: real checkboxes, keyboard accessible -->
+      <div class="sym" id="sym">
+        <label class="sym__row">
+          <input type="checkbox" data-axis="maquina" data-short="Todo pasa por mí">
+          <span class="sym__face"><span class="sym__box" aria-hidden="true"></span>
+          <span class="sym__text">Todo pasa por mí. Si me desaparezco una semana, esto se frena.</span></span>
+        </label>
+
+        <label class="sym__row">
+          <input type="checkbox" data-axis="maquina" data-short="La información está regada">
+          <span class="sym__face"><span class="sym__box" aria-hidden="true"></span>
+          <span class="sym__text">La información del negocio está regada entre WhatsApp, tres Excel y la memoria de alguien.</span></span>
+        </label>
+
+        <label class="sym__row">
+          <input type="checkbox" data-axis="maquina" data-short="No sé qué haría con IA">
+          <span class="sym__face"><span class="sym__box" aria-hidden="true"></span>
+          <span class="sym__text">Todo el mundo me habla de inteligencia artificial y no sé qué haría yo con eso en mi negocio.</span></span>
+        </label>
+
+        <label class="sym__row">
+          <input type="checkbox" data-axis="maquina" data-short="Cotizamos y facturamos a mano">
+          <span class="sym__face"><span class="sym__box" aria-hidden="true"></span>
+          <span class="sym__text">Cotizamos, facturamos y hacemos seguimiento a mano, y ya no damos abasto.</span></span>
+        </label>
+
+        <label class="sym__row">
+          <input type="checkbox" data-axis="maquina" data-short="Compré herramientas que nadie usa">
+          <span class="sym__face"><span class="sym__box" aria-hidden="true"></span>
+          <span class="sym__text">Compré herramientas o contraté a alguien para esto y seguimos igual que antes.</span></span>
+        </label>
+
+        <label class="sym__row">
+          <input type="checkbox" data-axis="operador" data-short="Sé el paso y no lo doy">
+          <span class="sym__face"><span class="sym__box" aria-hidden="true"></span>
+          <span class="sym__text">Sé cuál es el siguiente paso y llevo meses sin darlo.</span></span>
+        </label>
+
+        <label class="sym__row">
+          <input type="checkbox" data-axis="operador" data-short="Empiezo cosas y no las termino">
+          <span class="sym__face"><span class="sym__box" aria-hidden="true"></span>
+          <span class="sym__text">Empiezo algo nuevo cada semana y no termino lo de la semana pasada.</span></span>
+        </label>
+
+        <label class="sym__row">
+          <input type="checkbox" data-axis="temprano" data-short="Todavía no he vendido nada">
+          <span class="sym__face"><span class="sym__box" aria-hidden="true"></span>
+          <span class="sym__text">Todavía no he vendido nada. Llevo tiempo con la idea dando vueltas.</span></span>
+        </label>
+
+        <label class="sym__row">
+          <input type="checkbox" data-axis="fuera" data-short="Quiero escalar mucho más">
+          <span class="sym__face"><span class="sym__box" aria-hidden="true"></span>
+          <span class="sym__text">Ya facturamos bien y lo que quiero es crecer mucho más rápido.</span></span>
+        </label>
+      </div>
+
+      <!-- verdict panel: live region, designed empty state -->
+      <aside class="verdict is-empty" id="verdict" aria-live="polite">
+        <p class="verdict__kicker" id="v-kicker">Todavía no puedo decirte nada</p>
+        <h3 class="verdict__title" id="v-title">Marca al menos una frase.</h3>
+        <p class="verdict__body" id="v-body">Escoge las que se parezcan a tu semana real, no a la semana que te gustaría tener. Entre más honesto, más sirve.</p>
+        <p class="verdict__do" id="v-do"></p>
+        <div class="verdict__cta">
+          <a class="btn btn--primary" id="v-cta"
+             href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n.%20Hice%20el%20diagn%C3%B3stico%20en%20tu%20p%C3%A1gina."
+             target="_blank" rel="noopener">Escríbeme por WhatsApp</a>
+          <button type="button" class="verdict__reset" id="v-reset">Empezar de nuevo</button>
+        </div>
+        <p class="verdict__note">Esto no es un formulario. No se guarda, no se envía y no te pide el correo. Si decides escribirme, el botón te arma el mensaje y tú decides si lo mandas.</p>
+      </aside>
+
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<!-- ===================== TRAYECTORIA (el expediente) ===================== -->
+<section class="band band--alt" id="trayectoria">
+  <div class="shell">
+    <h2 class="reveal" style="font-size:clamp(1.9rem,3.5vw,2.9rem);max-width:20ch">Antes de opinar sobre tu negocio, mira los míos.</h2>
+    <p class="reveal d1" style="margin-top:18px;color:var(--bone-2);max-width:58ch">Los que salieron bien y los que se quebraron, en la misma lista y del mismo tamaño. Es a propósito.</p>
+
+    <div class="rec">
+
+      <article class="cell cell--hero c-ignia reveal">
+        <span class="chip chip--tall"><img src="assets/ignia.png" width="320" height="70" alt="Ignia" loading="lazy" decoding="async"></span>
+        <h3 class="cell__name">Ignia, mi trabajo principal hoy</h3>
+        <p class="cell__out">Lanzada en junio de 2025. <b>150.000 dólares de facturación en el primer año</b> y rentable desde el primer día. Treinta fellows en la primera cohorte del Action Lab y un equipo de cinco personas. El CRM, la página y la plataforma de comunidad las construí yo.</p>
+      </article>
+
+      <article class="cell cell--photo c-finco reveal d1">
+        <img src="assets/salo_oscar.webp" width="527" height="330" alt="Salomón con su socio presentando la plataforma de Finco." loading="lazy" decoding="async">
+        <div class="cell__inner">
+          <span class="chip"><img src="assets/finco.png" width="60" height="60" alt="Finco" loading="lazy" decoding="async"></span>
+          <h3 class="cell__name">Finco</h3>
+          <p class="cell__out"><b>100.000 reportes al año.</b> La vendimos por cinco veces lo invertido, cerca de 1,5 millones de dólares.</p>
+        </div>
+      </article>
+
+      <article class="cell c-presta reveal">
+        <span class="chip chip--tall"><img src="assets/prestagente.png" width="140" height="130" alt="PrestaGente" loading="lazy" decoding="async"></span>
+        <h3 class="cell__name">PrestaGente</h3>
+        <p class="cell__out">Vendida por cerca de <b>un millón de dólares</b>. Crédito entre conocidos, en un país donde pedir plata prestada es incómodo.</p>
+      </article>
+
+      <article class="cell cell--tint c-r5 reveal d1">
+        <h3 class="cell__name">R5</h3>
+        <p class="cell__out">Cerca de <b>cuarenta personas a cargo</b>. Ahí construí el pipeline de datos y el sistema de modelos de riesgo con el que la compañía decidía a quién prestarle. En mis propias empresas he manejado equipos de hasta quince.</p>
+      </article>
+
+      <article class="cell cell--muted c-beri reveal">
+        <span class="chip"><img src="assets/beriblock.png" width="60" height="72" alt="Beriblock" loading="lazy" decoding="async"></span>
+        <h3 class="cell__name">Beriblock</h3>
+        <p class="cell__out">Quebró. Es la palabra correcta y no la voy a maquillar.</p>
+      </article>
+
+      <article class="cell cell--muted c-palomo reveal d1">
+        <span class="chip"><img src="assets/elpalomo.png" width="60" height="60" alt="El Palomo" loading="lazy" decoding="async"></span>
+        <h3 class="cell__name">El Palomo</h3>
+        <p class="cell__out">Fracasó, y de forma espectacular. Si vamos a trabajar juntos vas a oír esa historia completa.</p>
+      </article>
+
+    </div>
+
+    <p class="rec__note reveal">Casi todo lo que consultaba antes era ciencia de datos. Hoy hago otra cosa y por eso esto no vive dentro de Ignia: esta es mi práctica personal y es independiente.</p>
+  </div>
+</section>
+
+<hr class="rule">
+
+<!-- ===================== CÓMO TRABAJO ===================== -->
+<section class="band" id="como-trabajo">
+  <div class="shell work">
+    <div class="work__aside">
+      <h2 class="reveal">Lo que pasa en las primeras dos semanas.</h2>
+      <p class="reveal d1">No hay diagnóstico de cien páginas ni presentación con plantilla. Si contratas consultoría, la primera entrega es algo que funciona.</p>
+      <div class="work__shot reveal d2">
+        <img src="https://picsum.photos/seed/taller-bogota-mesa-trabajo/900/720" width="900" height="720" alt="Mesa de trabajo con papeles y computador durante una sesión con un equipo." loading="lazy" decoding="async">
+      </div>
+    </div>
+
+    <div class="work__list">
+      <article class="step reveal">
+        <h3>Me siento un día entero en tu operación.</h3>
+        <p>No en una sala de juntas. Donde se despacha, se cocina, se cotiza o se atiende al cliente. Miro con mis ojos cómo entra un pedido y cómo sale la plata.</p>
+      </article>
+
+      <article class="step reveal d1">
+        <h3>Dibujamos a mano cómo funciona hoy.</h3>
+        <p>En papel y con tu gente, no conmigo solo. Ahí casi siempre aparece el problema de verdad, y casi nunca es el que me contaron por teléfono.</p>
+      </article>
+
+      <article class="step reveal d2">
+        <h3>Construyo la primera pieza yo mismo.</h3>
+        <p>Un CRM que reemplace la libreta, un formulario que reemplace tres Excel, un tablero que te diga cuánto estás ganando de verdad. Yo escribo el software. No te mando a un proveedor ni te dejo con una lista de recomendaciones.</p>
+      </article>
+
+      <article class="step reveal d3">
+        <h3>Te enseño a manejarlo sin mí.</h3>
+        <p>Incluida la parte de inteligencia artificial: cómo usarla en el trabajo diario aunque nadie en tu equipo sepa programar. Si terminas necesitándome para siempre, hice mal el trabajo.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<!-- ===================== CUPOS Y ENCAJE ===================== -->
+<section class="band band--alt" id="cupos">
+  <div class="shell">
+    <h2 class="reveal" style="font-size:clamp(1.9rem,3.4vw,2.8rem);max-width:20ch">Cuántos cupos hay, de verdad.</h2>
+    <p class="reveal d1" style="margin-top:18px;color:var(--bone-2);max-width:56ch">Mi trabajo principal es Ignia. Esto es aparte, lo hago yo solo y por eso es pequeño. Prefiero decírtelo antes de que preguntes.</p>
+
+    <div class="cupos" style="margin-top:clamp(38px,4.5vw,58px)">
+      <div class="counts">
+        <div class="reveal">
+          <p class="count__label">Mentoría uno a uno</p>
+          <p class="count__fig">3 <span>de 5</span></p>
+          <p class="count__sub">Tres personas activas hoy. Cinco es el techo y no lo voy a subir.</p>
+        </div>
+        <div class="reveal d1">
+          <p class="count__label">Consultoría</p>
+          <p class="count__fig">2 <span>de 4</span></p>
+          <p class="count__sub">Dos empresas al tiempo. Cuatro es el máximo que puedo atender sin quedar mal.</p>
+        </div>
+      </div>
+
+      <div class="fit reveal d2">
+        <h3>Con quién funciona y con quién no.</h3>
+        <p>Trabajo con negocios que facturan menos de 5.000 millones de pesos al año, casi siempre en Colombia, y que no son de tecnología. Marcas de ropa, restaurantes, retail, empresas de servicios. Gente que ya está vendiendo y que se está quedando sin cuerda para sostenerlo a pulso.</p>
+        <p>En mentoría el rango es más ancho. He acompañado a fundadores de startups, a gente que apenas está arrancando y a fundaciones.</p>
+        <p class="no">No trabajo con proyectos de investigación ni con nada que necesite inventar tecnología que todavía no existe. Y no sé escalar una empresa más allá de unos cinco millones de dólares al año, porque nunca lo he hecho.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<!-- ===================== REFERENCIAS ===================== -->
+<section class="band" id="referencias">
+  <div class="shell refs">
+    <h2 class="reveal">Todavía no hay testimonios en esta página.</h2>
+    <p class="reveal d1">Estoy pidiéndole permiso a la gente con la que he trabajado para publicar lo que piensan, y hasta que no lo tenga no voy a poner frases bonitas aquí. Mientras tanto hago algo que sirve más: te paso el número de dos clientes actuales para que les preguntes tú directamente, sin mí en esa conversación.</p>
+    <p class="refs__act reveal d2">
+      <a class="tlink"
+         href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n.%20Antes%20de%20hablar%20contigo%20quiero%20preguntarle%20a%20alguien%20que%20haya%20trabajado%20contigo.%20%C2%BFMe%20pasas%20un%20contacto%3F"
+         target="_blank" rel="noopener">Escríbeme por WhatsApp</a>
+    </p>
+    <p class="refs__meta reveal d3">Siete personas han pasado por mentoría conmigo hasta hoy, y varias empresas por consultoría.</p>
+  </div>
+</section>
+
+<!-- ===================== CHARLAS ===================== -->
+<section class="band talks" id="charlas">
+  <div class="shell">
+    <p class="talks__lead reveal">Las charlas no son un servicio que vendo. Son la forma en que casi todo el mundo me conoce.</p>
+    <div class="talks__grid">
+      <div class="reveal d1">
+        <p>Me han invitado conferencias, empresas y universidades. No cobro por aparecer en una lista de conferencistas ni tengo un catálogo de temas: hablo de lo que he hecho y de lo que me ha salido mal.</p>
+        <p style="margin-top:14px">Si organizas un evento y crees que encaja, escríbeme y hablamos de fechas.</p>
+        <p class="talks__act">
+          <a class="tlink"
+             href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n.%20Organizo%20un%20evento%20y%20quiero%20invitarte%20a%20dar%20una%20charla.%20Te%20cuento%20la%20fecha%20y%20el%20p%C3%BAblico."
+             target="_blank" rel="noopener">Escríbeme por WhatsApp</a>
+        </p>
+      </div>
+      <div class="reveal d2">
+        <p class="talks__topics">
+          <b>Adopción de tecnología e inteligencia artificial</b> en empresas que no son de tecnología.<br>
+          <b>Emprender</b> en Colombia, con las quiebras incluidas.<br>
+          <b>Mentalidad</b> para sostener un negocio que todavía no da.<br>
+          <b>Vida y trabajo</b>, que es el tema que más me piden y el que más me costó aprender.
+        </p>
+        <p style="margin-top:20px;color:var(--bone-3);font-size:15px">No doy charlas de ciencia de datos ni de cultura organizacional. No es lo mío y prefiero decirlo antes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<!-- ===================== SOBRE MÍ ===================== -->
+<section class="band" id="sobre-mi">
+  <div class="shell about">
+    <div>
+      <h2 class="reveal">Quién te va a contestar el WhatsApp.</h2>
+      <p class="reveal d1">Yo. No hay equipo comercial, no hay formulario que caiga en el correo de otra persona y no hay agencia detrás. Si escribes, contesto yo, y si no puedo con tu caso también te lo digo yo.</p>
+      <p class="reveal d1">Trabajo desde Bogotá. Corro, acampo con mi familia y una de las razones por las que hablo de balance entre la vida y el trabajo es que me tocó aprenderlo a los golpes, entre dos empresas que se me cayeron.</p>
+      <p class="reveal d2"><a class="tlink" href="/sobre-mi/">La versión larga, con nombres y fechas</a></p>
+    </div>
+    <div class="mosaic reveal d2">
+      <figure class="m1"><img src="assets/chicago.jpg" width="300" height="400" alt="Salomón con su familia en Chicago." loading="lazy" decoding="async"></figure>
+      <figure class="m2"><img src="assets/marathon.jpg" width="600" height="600" alt="Salomón con la medalla al terminar una maratón en Bogotá." loading="lazy" decoding="async"></figure>
+      <figure class="m3"><img src="assets/miami.jpg" width="600" height="597" alt="Salomón con su familia en la playa." loading="lazy" decoding="async"></figure>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CIERRE ===================== -->
+<section class="band close" id="contacto">
+  <img src="assets/bonfire.jpeg" width="600" height="600" alt="Fogata encendida de noche." loading="lazy" decoding="async">
+  <div class="shell">
+    <div class="close__in">
+      <h2 class="reveal">Si llegaste hasta acá, ya sabes más de tu problema que hace cinco minutos.</h2>
+      <p class="reveal d1">Cuéntame qué te salió en el diagnóstico y te digo qué haría yo en tu lugar. Si no soy la persona indicada, esa también es una respuesta y te la doy de una vez.</p>
+      <div class="close__cta reveal d2">
+        <a class="btn btn--primary"
+           href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n.%20Vengo%20de%20tu%20p%C3%A1gina%20y%20quiero%20contarte%20qu%C3%A9%20est%C3%A1%20pasando%20en%20mi%20negocio."
+           target="_blank" rel="noopener">Escríbeme por WhatsApp</a>
+        <a class="tlink" href="https://cal.com/salomonmuriel" target="_blank" rel="noopener">Agendar 30 minutos</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============================== FOOTER ============================== -->
+<footer class="foot">
+  <div class="shell">
+    <div class="foot__top">
+      <div class="foot__brand">
+        <a class="wordmark" href="#top">Salomón Muriel<span>.</span></a>
+        <p>Práctica personal de consultoría y mentoría. Independiente de Ignia, donde trabajo el resto del tiempo.</p>
+      </div>
+      <div>
+        <h4>En esta página</h4>
+        <ul>
+          <li><a href="#diagnostico">Diagnóstico</a></li>
+          <li><a href="#trayectoria">Trayectoria</a></li>
+          <li><a href="#como-trabajo">Cómo trabajo</a></li>
+          <li><a href="#cupos">Cupos disponibles</a></li>
+          <li><a href="#charlas">Charlas</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Escribirme</h4>
+        <ul>
+          <li><a href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n.%20Vengo%20de%20tu%20p%C3%A1gina%20y%20quiero%20contarte%20qu%C3%A9%20est%C3%A1%20pasando%20en%20mi%20negocio." target="_blank" rel="noopener">Escríbeme por WhatsApp</a></li>
+          <li><a href="https://cal.com/salomonmuriel" target="_blank" rel="noopener">Agendar 30 minutos</a></li>
+          <li><a href="https://www.linkedin.com/in/salomonmuriel/" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href="/ahora/">En qué ando ahora</a></li>
+          <li><a href="/en/" hreflang="en">English</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot__bottom">
+      <span>Bogotá, Colombia.</span>
+      <span>Sin precios en la página. Eso lo hablamos cuando sepa qué necesitas.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+  document.documentElement.classList.add("js");
+
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* hero enters immediately on load, staggered: establishes hierarchy before anything scrolls */
+  requestAnimationFrame(function () {
+    document.querySelectorAll(".hero .reveal").forEach(function (el) { el.classList.add("is-in"); });
+  });
+
+  /* ---------- scroll reveal: IntersectionObserver only, never a scroll listener ---------- */
+  var revealables = document.querySelectorAll(".reveal");
+  if ("IntersectionObserver" in window && !reduce) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); }
+      });
+    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.12 });
+    revealables.forEach(function (el) { io.observe(el); });
+  } else {
+    revealables.forEach(function (el) { el.classList.add("is-in"); });
+  }
+
+  /* ---------- the instrument ---------- */
+  var WA = "https://wa.me/573132465100?text=";
+
+  var VERDICTS = {
+    maquina: {
+      kicker: "Lo que creo que te pasa",
+      title: "El problema es la máquina, no tú.",
+      body: "Tu negocio funciona porque tú lo sostienes a pulso todos los días. No te falta disciplina, te falta un sistema que haga solo lo que hoy haces a mano. Eso no se arregla con un consejo: se construye.",
+      doText: "<b>Consultoría.</b> Dos o tres meses. Yo mismo escribo el software que te haga falta y te lo dejo funcionando y en tus manos.",
+      msg: "Creo que mi problema es la operación: la estoy sosteniendo a pulso."
+    },
+    operador: {
+      kicker: "Lo que creo que te pasa",
+      title: "El problema no es qué hacer. Es hacerlo.",
+      body: "Ya sabes cuál es el siguiente paso y llevas semanas sin darlo. Ahí no sirve más estrategia ni otro curso. Sirve alguien que te ponga una tarea concreta cada semana y te llame cuando no la hiciste.",
+      doText: "<b>Mentoría uno a uno.</b> Una hora por semana, tareas prácticas y cero diapositivas. Conmigo la cosa es que pasen cosas, sí o sí.",
+      msg: "Creo que mi problema soy yo: sé qué hacer y no lo estoy haciendo."
+    },
+    ambas: {
+      kicker: "Lo que creo que te pasa",
+      title: "Te está pasando todo al tiempo.",
+      body: "El negocio te está pidiendo más de lo que aguanta la forma en que lo estás operando, y encima tú estás en el medio de cada decisión. Eso se arregla en ese orden: primero la máquina, después tu ritmo.",
+      doText: "<b>Consultoría con acompañamiento.</b> Arrancamos arreglando la operación y le montamos encima una sesión semanal contigo.",
+      msg: "Creo que tengo las dos cosas: la operación y mi propio ritmo."
+    },
+    temprano: {
+      kicker: "Lo que creo que te pasa",
+      title: "Todavía no necesitas contratar a nadie.",
+      body: "No has vendido nada todavía y eso cambia la respuesta. Lo que sirve en esta etapa es un grupo, un calendario y presión sana, no una asesoría uno a uno. Los programas por cohorte, como el Action Lab de Ignia, están hechos exactamente para esto.",
+      doText: "<b>Nada, por ahora.</b> Si quieres te digo por dónde empezar y a quién buscar. Eso no te lo cobro.",
+      msg: "Todavía no he vendido nada y quiero saber por dónde empezar."
+    },
+    fuera: {
+      kicker: "Respuesta honesta",
+      title: "Para eso yo no soy la persona.",
+      body: "No sé escalar una empresa más allá de unos cinco millones de dólares al año, porque nunca lo he hecho. Cualquiera que te diga que sí sin haberlo hecho te está vendiendo humo, y prefiero decírtelo aquí y no cobrarte por averiguarlo.",
+      doText: "<b>Nada.</b> Si quieres te recomiendo a alguien que sí haya llegado hasta allá.",
+      msg: "Quiero escalar bastante y entiendo que quizá no es tu terreno. ¿Me recomiendas a alguien?"
+    }
+  };
+
+  var EMPTY = {
+    kicker: "Todavía no puedo decirte nada",
+    title: "Marca al menos una frase.",
+    body: "Escoge las que se parezcan a tu semana real, no a la semana que te gustaría tener. Entre más honesto, más sirve."
+  };
+
+  var panel  = document.getElementById("verdict");
+  var elKick = document.getElementById("v-kicker");
+  var elTit  = document.getElementById("v-title");
+  var elBody = document.getElementById("v-body");
+  var elDo   = document.getElementById("v-do");
+  var elCta  = document.getElementById("v-cta");
+  var elRst  = document.getElementById("v-reset");
+  var inputs = Array.prototype.slice.call(document.querySelectorAll("#sym input[type=checkbox]"));
+
+  var lastKey = null;
+
+  function pick(counts) {
+    var m = counts.maquina, o = counts.operador, t = counts.temprano, f = counts.fuera;
+    if (f > 0) return "fuera";
+    if (m + o + t === 0) return null;
+    if (t > 0 && (m + o) <= 1) return "temprano";
+    if ((m >= 2 && o >= 1) || (m >= 1 && o >= 2)) return "ambas";
+    if (o > m) return "operador";
+    if (m > 0) return "maquina";
+    return "temprano";
+  }
+
+  function buildMessage(key, chosen) {
+    var v = VERDICTS[key];
+    var lines = [
+      "Hola Salomón. Hice el diagnóstico en tu página.",
+      "",
+      "Me salió: " + v.title,
+      v.msg,
+      "",
+      "Lo que marqué:"
+    ];
+    chosen.forEach(function (s) { lines.push("- " + s); });
+    lines.push("");
+    lines.push("¿Hablamos?");
+    return WA + encodeURIComponent(lines.join("\n"));
+  }
+
+  function swap(el) {
+    if (reduce) return;
+    el.classList.remove("verdict__swap");
+    void el.offsetWidth;
+    el.classList.add("verdict__swap");
+  }
+
+  function render() {
+    var counts = { maquina: 0, operador: 0, temprano: 0, fuera: 0 };
+    var chosen = [];
+    inputs.forEach(function (i) {
+      if (i.checked) {
+        counts[i.dataset.axis]++;
+        chosen.push(i.dataset.short);
+      }
+    });
+
+    var key = pick(counts);
+    if (key === lastKey) return;
+    lastKey = key;
+
+    if (!key) {
+      panel.classList.add("is-empty");
+      panel.classList.remove("is-out");
+      elKick.textContent = EMPTY.kicker;
+      elTit.textContent  = EMPTY.title;
+      elBody.textContent = EMPTY.body;
+      elDo.innerHTML     = "";
+      swap(panel);
+      return;
+    }
+
+    var v = VERDICTS[key];
+    panel.classList.remove("is-empty");
+    panel.classList.toggle("is-out", key === "fuera" || key === "temprano");
+    elKick.textContent = v.kicker;
+    elTit.textContent  = v.title;
+    elBody.textContent = v.body;
+    elDo.innerHTML     = v.doText;
+    elCta.setAttribute("href", buildMessage(key, chosen));
+    swap(panel);
+  }
+
+  inputs.forEach(function (i) { i.addEventListener("change", render); });
+
+  elRst.addEventListener("click", function () {
+    inputs.forEach(function (i) { i.checked = false; });
+    render();
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

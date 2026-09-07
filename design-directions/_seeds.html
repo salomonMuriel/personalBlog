@@ -1,0 +1,7 @@
+<!doctype html><meta charset="utf-8"><style>body{margin:0;display:grid;grid-template-columns:repeat(4,1fr);gap:3px;background:#222}
+figure{margin:0;position:relative}img{width:100%;height:150px;object-fit:cover;display:block;filter:grayscale(1)}
+figcaption{position:absolute;bottom:2px;left:4px;color:#fff;font:11px sans-serif;background:#000a}</style>
+<script>
+const ids=[0,1,2,3,4,20,48,60,119,180,239,326,367,435,450,455,469,489,548,596,684,730,736,760,820,883,904,1043,1077,1076];
+document.write(ids.map(i=>`<figure><img src="https://picsum.photos/id/${i}/500/340"><figcaption>${i}</figcaption></figure>`).join(''));
+</script>

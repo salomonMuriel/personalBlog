@@ -1,0 +1,1282 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Salomón Muriel — El tablero</title>
+<meta name="description" content="Yo defino la estrategia y yo mismo construyo la herramienta. Consultoría y mentoría para empresas colombianas que funcionan a punta de gente.">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=Archivo:wght@400;500;600;700&family=Archivo+Narrow:wght@500;600;700&display=swap" rel="stylesheet">
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        muro:      '#8C2F22',
+        'muro-alto':'#A6402D',
+        'muro-bajo':'#68221A',
+        tablero:   '#242220',
+        'tablero-alto':'#2E2B27',
+        placa:     '#141312',
+        hueso:     '#EDE4D4',
+        'hueso-dim':'#D3C7B2',
+        seguridad: '#F5C518',
+        oxido:     '#EF6A5C',
+        verde:     '#7FC98A',
+        acero:     '#9A968C'
+      },
+      fontFamily: {
+        rotulo: ['"Big Shoulders Display"','"Archivo Narrow"','"Arial Narrow"','sans-serif'],
+        obra:   ['Archivo','ui-sans-serif','system-ui','sans-serif'],
+        ficha:  ['"Archivo Narrow"','"Arial Narrow"','sans-serif']
+      },
+      maxWidth: { pared: '1180px' }
+    }
+  }
+}
+</script>
+<style>
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body { overflow-x: hidden; }
+  ::selection { background: #F5C518; color: #141312; }
+  :focus-visible { outline: 3px solid #F5C518; outline-offset: 3px; border-radius: 2px; }
+  html { scrollbar-color: #68221A #8C2F22; }
+  ::-webkit-scrollbar { width: 13px; height: 13px; }
+  ::-webkit-scrollbar-track { background: #7A281D; }
+  ::-webkit-scrollbar-thumb { background: #40140F; border: 3px solid #7A281D; border-radius: 8px; }
+  ::-webkit-scrollbar-thumb:hover { background: #2c0d0a; }
+  a { text-underline-offset: 4px; text-decoration-thickness: 1px; }
+  .num { font-variant-numeric: tabular-nums; }
+
+  /* ---------- el muro ---------- */
+  .muro {
+    background-color: #8C2F22;
+    background-image:
+      radial-gradient(120% 70% at 50% -8%, rgba(255,242,206,.26), rgba(255,242,206,0) 62%),
+      radial-gradient(60% 45% at 12% 26%, rgba(0,0,0,.16), transparent 70%),
+      radial-gradient(55% 40% at 88% 62%, rgba(0,0,0,.19), transparent 70%),
+      repeating-linear-gradient(101deg, rgba(0,0,0,.045) 0 2px, rgba(255,255,255,.018) 2px 7px);
+  }
+  .grano::before {
+    content:""; position:absolute; inset:0; pointer-events:none; z-index:0;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity:.09; mix-blend-mode:overlay;
+  }
+
+  /* ---------- panel perforado ---------- */
+  .perf {
+    background-color:#242220;
+    background-image:
+      radial-gradient(circle at 50% 50%,
+        rgba(0,0,0,.85) 0 2.6px,
+        rgba(237,228,212,.075) 2.6px 3.7px,
+        rgba(0,0,0,0) 3.8px);
+    background-size:26px 26px;
+    background-position:13px 13px;
+    box-shadow:
+      inset 0 1px 0 rgba(237,228,212,.10),
+      inset 0 -2px 0 rgba(0,0,0,.5),
+      0 18px 40px -18px rgba(0,0,0,.75),
+      0 3px 0 rgba(0,0,0,.35);
+    border:1px solid rgba(237,228,212,.13);
+  }
+  .perf-claro { background-color:#2E2B27; }
+
+  /* ---------- tornillos ---------- */
+  .tornillo{
+    width:11px;height:11px;border-radius:50%;position:absolute;
+    background:radial-gradient(circle at 33% 28%, #cfc9bb, #7d786e 55%, #35322e 100%);
+    box-shadow:0 1px 2px rgba(0,0,0,.7), inset 0 0 0 1px rgba(0,0,0,.4);
+  }
+  .tornillo::after{
+    content:"";position:absolute;inset:0;margin:auto;width:7px;height:1.6px;
+    background:#26231f;border-radius:1px;transform:rotate(34deg);
+  }
+  .tornillo.tl{top:9px;left:9px}.tornillo.tr{top:9px;right:9px}
+  .tornillo.bl{bottom:9px;left:9px}.tornillo.br{bottom:9px;right:9px}
+
+  /* ---------- placa grabada ---------- */
+  .placa-grab{
+    background:#141312;
+    border:1px solid rgba(237,228,212,.24);
+    box-shadow:0 2px 0 rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.07);
+    position:relative;
+  }
+  .placa-grab::before{
+    content:"";position:absolute;inset:3px;border:1px solid rgba(237,228,212,.16);pointer-events:none;
+  }
+
+  /* ---------- cinta de peligro ---------- */
+  .peligro{
+    background:repeating-linear-gradient(45deg,#F5C518 0 16px,#141312 16px 32px);
+  }
+
+  /* ---------- rótulo pintado ---------- */
+  .pintado{
+    color:#EDE4D4;
+    text-shadow: 3px 5px 0 rgba(30,7,4,.42);
+    letter-spacing:-.015em;
+  }
+  .pintado .real{ color:#F5C518; }
+
+  /* ---------- lámpara ---------- */
+  .tubo{
+    height:15px;border-radius:9px;
+    background:linear-gradient(180deg,#fffdf1,#fff5d8 45%,#f4e6bd);
+    box-shadow:0 0 26px 6px rgba(255,246,214,.55), 0 0 90px 26px rgba(255,231,168,.24), 0 34px 150px 46px rgba(255,225,160,.16);
+  }
+  .tapa{
+    width:26px;height:25px;border-radius:5px;
+    background:linear-gradient(180deg,#4a4640,#221f1c);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.16), 0 2px 4px rgba(0,0,0,.55);
+  }
+  @keyframes flick{
+    0%{opacity:.15}6%{opacity:1}9%{opacity:.2}14%{opacity:1}18%{opacity:.35}22%{opacity:1}100%{opacity:1}
+  }
+  .flick{ animation:flick 1100ms steps(1,end) 1 both; }
+
+  /* ---------- herramientas ---------- */
+  .silueta{ fill:rgba(237,228,212,.30); transition:fill .4s ease; }
+  .fierro{
+    fill:#EDE4D4;
+    filter:drop-shadow(4px 7px 5px rgba(0,0,0,.55));
+    transition:transform .45s cubic-bezier(.22,1,.36,1), fill .3s ease;
+    transform-origin:50% 8%;
+  }
+  .gancho:hover .fierro{ transform:rotate(-4deg) translateY(3px); }
+  .gancho[aria-pressed="true"] .fierro{ fill:#F5C518; transform:rotate(-11deg) translateY(12px); }
+  .gancho[aria-pressed="true"] .silueta{ fill:rgba(245,197,24,.28); }
+
+  /* ---------- panel chinomático ---------- */
+  .pieza{
+    transition:transform .75s cubic-bezier(.22,1,.36,1);
+    transform: translate(var(--tx,0px), var(--ty,0px)) rotate(var(--rz,0deg));
+  }
+  [data-orden="1"] .pieza{ transform: translate(0,0) rotate(0deg); }
+  .rotulo-swap{ display:grid; }
+  .rotulo-swap > *{ grid-area:1/1; transition:opacity .45s ease; }
+  .rot-mal{opacity:1} .rot-bien{opacity:0}
+  [data-orden="1"] .rot-mal{opacity:0} [data-orden="1"] .rot-bien{opacity:1}
+
+  #et-mal{ color:#EF6A5C; transition:color .35s ease; }
+  #et-bien{ color:rgba(237,228,212,.35); transition:color .35s ease; }
+  [data-orden="1"] #et-mal{ color:rgba(237,228,212,.35); }
+  [data-orden="1"] #et-bien{ color:#F5C518; }
+  .marca-estado{ color:rgba(237,228,212,.62); transition:color .25s ease; }
+  .marca-estado[data-on="1"]{ color:#F5C518; }
+
+  /* ---------- palanca ---------- */
+  .palanca{
+    width:112px;height:50px;border-radius:6px;position:relative;flex:none;
+    background:linear-gradient(180deg,#1b1917,#0e0d0c);
+    border:1px solid rgba(237,228,212,.22);
+    box-shadow:inset 0 2px 6px rgba(0,0,0,.85), 0 2px 0 rgba(0,0,0,.5);
+  }
+  .palanca .llave{
+    position:absolute;top:4px;left:4px;width:50px;height:40px;border-radius:4px;
+    background:linear-gradient(180deg,#F5C518,#C79A05);
+    box-shadow:0 3px 0 #7c5f02, 0 5px 10px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.55);
+    transition:transform .32s cubic-bezier(.34,1.56,.64,1);
+  }
+  .palanca .llave::after{
+    content:"";position:absolute;inset:0;margin:auto;width:3px;height:20px;border-radius:2px;
+    background:rgba(0,0,0,.42);
+  }
+  [data-orden="1"] .palanca .llave{ transform:translateX(54px); }
+  @keyframes latido{
+    0%,100%{box-shadow:0 0 0 0 rgba(245,197,24,0)}
+    30%{box-shadow:0 0 0 9px rgba(245,197,24,.32)}
+    60%{box-shadow:0 0 0 16px rgba(245,197,24,0)}
+  }
+  .latido{ animation:latido 1500ms ease-out 2; border-radius:8px; }
+
+  /* ---------- sello de caucho ---------- */
+  .sello{
+    display:inline-block;border:2px solid currentColor;border-radius:3px;
+    padding:.12rem .5rem;letter-spacing:.14em;font-weight:700;font-size:.74rem;
+    transform:rotate(-6deg); opacity:.95;
+  }
+
+  /* ---------- pinza / clip ---------- */
+  .pinza{
+    width:56px;height:24px;border-radius:4px;
+    background:linear-gradient(180deg,#d8d3c7,#8e897d 55%,#4d4942);
+    box-shadow:0 4px 8px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.6);
+    position:relative;
+  }
+  .pinza::after{
+    content:"";position:absolute;left:8px;right:8px;top:9px;height:5px;border-radius:2px;
+    background:rgba(0,0,0,.35);
+  }
+
+  /* ---------- cajón de acero ---------- */
+  .cajon{
+    background:linear-gradient(180deg,#3a3630 0%, #2a2723 8%, #232019 96%, #171512 100%);
+    border:1px solid rgba(237,228,212,.16);
+    box-shadow:0 26px 50px -22px rgba(0,0,0,.9), inset 0 1px 0 rgba(255,255,255,.09);
+  }
+  .celda{
+    background:#1b1916;
+    border-radius:8px;
+    box-shadow:inset 0 3px 9px rgba(0,0,0,.85), inset 0 -1px 0 rgba(255,255,255,.05);
+  }
+  .agarradera{
+    height:16px;border-radius:8px;
+    background:linear-gradient(180deg,#e0dbcf,#a09a8d 42%,#4a4740);
+    box-shadow:0 4px 8px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.7);
+  }
+
+  /* ---------- monitor ---------- */
+  .bisel{
+    background:linear-gradient(180deg,#33302b,#191714);
+    border:1px solid rgba(237,228,212,.16);
+    box-shadow:0 22px 44px -20px rgba(0,0,0,.9), inset 0 1px 0 rgba(255,255,255,.08);
+  }
+  .led{
+    width:8px;height:8px;border-radius:50%;background:#7FC98A;
+    box-shadow:0 0 8px 2px rgba(127,201,138,.55);
+  }
+
+  /* ---------- ficha colgante ---------- */
+  .ficha-cuelga{ position:relative; }
+  .ficha-cuelga::before{
+    content:"";position:absolute;left:50%;top:-16px;width:2px;height:18px;
+    background:rgba(237,228,212,.45);transform:translateX(-50%);
+  }
+
+  /* ---------- banco de trabajo ---------- */
+  .banco{
+    background:linear-gradient(180deg,#211e1b,#141210);
+    box-shadow:0 -18px 40px -14px rgba(0,0,0,.75);
+  }
+  .chip{
+    background:#2b2723;border:1px solid rgba(245,197,24,.45);color:#F5C518;
+    font-family:"Archivo Narrow","Arial Narrow",sans-serif;
+    font-size:.7rem; letter-spacing:.13em; text-transform:uppercase; line-height:1.25;
+    padding:.32rem .55rem; border-radius:2px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto}
+    *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  }
+</style>
+</head>
+
+<body class="muro grano relative font-obra text-hueso antialiased pb-[168px] sm:pb-[132px]">
+
+<!-- ============ sprite de herramientas ============ -->
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+  <symbol id="tl-llave" viewBox="0 0 100 340">
+    <path d="M10 4 H32 V42 H68 V4 H90 V66 H10 Z"/>
+    <path d="M38 58 H62 V286 H38 Z"/>
+    <path d="M10 278 H90 V336 H68 V300 H32 V336 H10 Z"/>
+  </symbol>
+  <symbol id="tl-llavechica" viewBox="0 0 80 210">
+    <path d="M5 4 H25 V29 H55 V4 H75 V52 H5 Z"/>
+    <path d="M30 46 H50 V168 H30 Z"/>
+    <path d="M5 160 H75 V206 H55 V180 H25 V206 H5 Z"/>
+  </symbol>
+  <symbol id="tl-calibrador" viewBox="0 0 340 140">
+    <path d="M62 60 H332 a6 6 0 0 1 6 6 v10 a6 6 0 0 1 -6 6 H62 Z"/>
+    <path d="M40 8 h32 v124 h-32 a8 8 0 0 1 -8 -8 V16 a8 8 0 0 1 8 -8 Z"/>
+    <path d="M150 8 h26 v124 h-26 Z"/>
+    <path d="M150 40 h96 a8 8 0 0 1 8 8 v44 a8 8 0 0 1 -8 8 h-96 Z"/>
+    <circle cx="276" cy="71" r="17"/>
+  </symbol>
+  <symbol id="tl-micro" viewBox="0 0 110 320">
+    <circle cx="55" cy="54" r="48"/>
+    <path d="M20 84 h70 v26 c0 9 -6 13 -13 14 v170 c0 13 -8 20 -22 20 s-22 -7 -22 -20 V124 c-7 -1 -13 -5 -13 -14 Z"/>
+  </symbol>
+  <symbol id="tl-destornillador" viewBox="0 0 80 320">
+    <path d="M24 8 h32 a12 12 0 0 1 12 12 v92 a12 12 0 0 1 -12 12 h-32 a12 12 0 0 1 -12 -12 V20 a12 12 0 0 1 12 -12 Z"/>
+    <path d="M33 118 h14 v152 h-14 Z"/>
+    <path d="M27 266 h26 v46 h-26 Z"/>
+  </symbol>
+  <symbol id="tl-martillo" viewBox="0 0 220 320">
+    <path d="M52 14 h116 v58 h-116 Z"/>
+    <path d="M166 4 h38 v78 h-38 Z"/>
+    <path d="M52 14 L14 44 L52 72 Z"/>
+    <path d="M96 68 h30 v244 h-30 Z"/>
+  </symbol>
+  <symbol id="tl-flexometro" viewBox="0 0 250 200">
+    <path fill-rule="evenodd" d="M28 26 h164 a26 26 0 0 1 26 26 v96 a26 26 0 0 1 -26 26 h-164 a26 26 0 0 1 -26 -26 v-96 a26 26 0 0 1 26 -26 Z M64 62 h80 v42 h-80 Z"/>
+    <path d="M214 90 h28 v22 h-28 Z"/>
+    <path d="M236 78 h10 v46 h-10 Z"/>
+  </symbol>
+  <symbol id="tl-nivel" viewBox="0 0 360 90">
+    <path fill-rule="evenodd" d="M6 16 H354 V74 H6 Z M158 30 h44 v30 h-44 Z M50 36 h30 v18 h-30 Z M280 36 h30 v18 h-30 Z"/>
+  </symbol>
+  <symbol id="tl-allen" viewBox="0 0 200 240">
+    <path d="M56 8 h36 v168 h96 v36 h-132 Z"/>
+  </symbol>
+</svg>
+
+<!-- ============ riel de identidad ============ -->
+<div class="relative z-20 border-b border-hueso/12">
+  <div class="mx-auto max-w-pared px-4 sm:px-6 py-2.5 flex items-center justify-between gap-4">
+    <p class="font-ficha text-[.72rem] sm:text-[.74rem] tracking-[.24em] uppercase text-hueso-dim">
+      Salomón Muriel <span class="text-hueso/40">·</span> Bogotá
+    </p>
+    <nav aria-label="Secciones del tablero" class="hidden md:flex items-center gap-1.5">
+      <a href="#desorden"  class="placa-grab px-2.5 py-1.5 font-ficha text-[.72rem] tracking-[.19em] uppercase text-hueso-dim hover:text-seguridad no-underline">El desorden</a>
+      <a href="#tablero"   class="placa-grab px-2.5 py-1.5 font-ficha text-[.72rem] tracking-[.19em] uppercase text-hueso-dim hover:text-seguridad no-underline">Herramientas</a>
+      <a href="#prueba"    class="placa-grab px-2.5 py-1.5 font-ficha text-[.72rem] tracking-[.19em] uppercase text-hueso-dim hover:text-seguridad no-underline">La prueba</a>
+      <a href="#limites"   class="placa-grab px-2.5 py-1.5 font-ficha text-[.72rem] tracking-[.19em] uppercase text-hueso-dim hover:text-seguridad no-underline">Límites</a>
+      <a href="#escribir"  class="placa-grab px-2.5 py-1.5 font-ficha text-[.72rem] tracking-[.19em] uppercase text-seguridad hover:text-hueso no-underline">Escribirme</a>
+    </nav>
+    <a href="https://wa.me/573132465100" class="md:hidden font-ficha text-[.72rem] tracking-[.19em] uppercase text-seguridad no-underline">WhatsApp</a>
+  </div>
+</div>
+
+<!-- ============ LÁMPARA + MURO ============ -->
+<header class="relative z-10 overflow-hidden">
+
+  <!-- lámpara de taller -->
+  <div id="lampara" class="relative pt-7 sm:pt-10 flex justify-center pointer-events-none">
+    <div class="flex items-center w-[86%] sm:w-[62%] max-w-[760px]">
+      <div class="tapa"></div>
+      <div class="tubo flex-1 mx-[-4px]"></div>
+      <div class="tapa"></div>
+    </div>
+  </div>
+
+  <div class="mx-auto max-w-pared px-4 sm:px-6 pt-10 sm:pt-16 pb-14 sm:pb-20">
+    <div class="grid lg:grid-cols-12 gap-10 lg:gap-8 items-start">
+
+      <!-- rótulo pintado -->
+      <div class="lg:col-span-7">
+        <h1 class="pintado font-rotulo font-extrabold uppercase leading-[.87] text-[2.85rem] xs:text-[3.3rem] sm:text-[4.4rem] lg:text-[5.4rem]">
+          Su empresa no está<br>automatizada.<br><span class="real">Hay un chino</span><br>haciéndolo a mano.
+        </h1>
+
+        <p class="mt-7 max-w-[34rem] text-[1.06rem] sm:text-[1.14rem] leading-[1.62] text-hueso">
+          Se llama <strong class="text-seguridad font-semibold">chinomático</strong>: por fuera parece un sistema,
+          por dentro es un muchacho pasando datos de una pantalla a otra. Funciona hasta que se enferma,
+          renuncia o se equivoca.
+        </p>
+        <p class="mt-4 max-w-[34rem] text-[1.06rem] sm:text-[1.14rem] leading-[1.62] text-hueso-dim">
+          Yo defino la estrategia y yo mismo construyo la herramienta que lo reemplaza.
+          No le mando un equipo junior ni le entrego un PDF de cuarenta páginas.
+        </p>
+
+        <div class="mt-9 flex flex-wrap items-center gap-3.5">
+          <a href="https://wa.me/573132465100"
+             class="group inline-flex items-center gap-2.5 bg-seguridad text-placa font-ficha font-bold uppercase tracking-[.15em] text-[.86rem] px-5 py-3.5 no-underline
+                    shadow-[0_5px_0_#8f6c03,0_10px_20px_-6px_rgba(0,0,0,.6)] hover:translate-y-[2px] hover:shadow-[0_3px_0_#8f6c03,0_8px_16px_-6px_rgba(0,0,0,.6)] transition-all">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 11.5a8.4 8.4 0 0 1-12.3 7.5L3 20.5l1.6-5.5A8.4 8.4 0 1 1 21 11.5Z"/>
+              <path d="M8.6 9.2c.3 2.9 3.3 5.9 6.2 6.2l1.1-1.4-2-1-.9.8c-1-.5-1.9-1.4-2.4-2.4l.8-.9-1-2-1.8 .7Z" fill="currentColor" stroke="none"/>
+            </svg>
+            Escríbame por WhatsApp
+          </a>
+          <a href="https://cal.com/salomonmuriel"
+             class="inline-flex items-center gap-2 border border-hueso/35 text-hueso font-ficha uppercase tracking-[.15em] text-[.8rem] px-4 py-3.5 no-underline hover:border-seguridad hover:text-seguridad transition-colors">
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>
+            </svg>
+            O agende 30 minutos
+          </a>
+        </div>
+        <p class="mt-4 font-ficha text-[.74rem] tracking-[.14em] uppercase text-hueso-dim">
+          Contesto yo. No hay asistente ni formulario.
+        </p>
+      </div>
+
+      <!-- panel del retrato -->
+      <div class="lg:col-span-5">
+        <div class="perf relative rounded-[3px] p-5 sm:p-6">
+          <span class="tornillo tl"></span><span class="tornillo tr"></span>
+          <span class="tornillo bl"></span><span class="tornillo br"></span>
+
+          <div class="relative mx-auto w-[76%] max-w-[290px]">
+            <div class="pinza absolute -top-3 left-1/2 -translate-x-1/2 z-10"></div>
+            <img src="assets/fotoSalo.jpeg" alt="Retrato de Salomón Muriel, de saco verde y brazos cruzados."
+                 width="800" height="800" loading="eager"
+                 class="w-full aspect-square object-cover rotate-[-1.4deg] border-[6px] border-[#f2ece0] shadow-[0_16px_32px_-12px_rgba(0,0,0,.8)]">
+          </div>
+
+          <div class="placa-grab mt-6 px-3.5 py-3">
+            <p class="font-ficha text-[.72rem] sm:text-[.78rem] tracking-[.2em] uppercase text-hueso leading-relaxed">
+              Salomón Muriel <span class="text-hueso/35">/</span> 35 años <span class="text-hueso/35">/</span> Bogotá
+            </p>
+            <p class="mt-1 font-ficha text-[.72rem] tracking-[.17em] uppercase text-seguridad">
+              Quinta empresa · Papá de Franco y Luca
+            </p>
+          </div>
+
+          <p class="mt-4 font-rotulo text-[1.55rem] sm:text-[1.75rem] uppercase leading-[1.05] text-hueso">
+            Vendí dos. Quebré dos.<br><span class="text-seguridad">La quinta va bien.</span>
+          </p>
+          <p class="mt-2.5 text-[.94rem] leading-relaxed text-hueso-dim">
+            Cinco empresas en nueve años, más una tanda de gente a cargo antes de eso.
+            Lo bueno y lo malo está en el cajón, más abajo.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</header>
+
+<!-- ============ EL DESORDEN ============ -->
+<section id="desorden" class="relative z-10 scroll-mt-6 pb-16 sm:pb-24">
+  <div class="mx-auto max-w-pared px-4 sm:px-6">
+
+    <div class="flex items-end justify-between gap-5 flex-wrap mb-6">
+      <div>
+        <h2 class="font-rotulo font-bold uppercase leading-[.92] text-[2.3rem] sm:text-[3.3rem] text-hueso">
+          Reconozca su operación
+        </h2>
+        <p class="mt-3 max-w-[36rem] text-[1.02rem] leading-relaxed text-hueso-dim">
+          Seis cosas que pasan en casi toda empresa colombiana que factura menos de dos millones de dólares al año.
+          <strong class="text-seguridad font-semibold">Baje la palanca</strong> y verá cómo se ven cuando cada cosa queda en su puesto.
+        </p>
+      </div>
+    </div>
+
+    <div id="panel-orden" data-orden="0" class="perf relative rounded-[3px] p-4 sm:p-7">
+      <span class="tornillo tl"></span><span class="tornillo tr"></span>
+      <span class="tornillo bl"></span><span class="tornillo br"></span>
+
+      <!-- palanca -->
+      <div class="flex items-center gap-4 sm:gap-6 flex-wrap mb-7 pb-6 border-b border-hueso/12">
+        <button id="palanca" type="button" role="switch" aria-checked="false" aria-controls="rejilla-orden"
+                class="palanca latido" aria-label="Ordenar el tablero">
+          <span class="llave"></span>
+        </button>
+        <div class="font-ficha uppercase tracking-[.2em] text-[.76rem] leading-relaxed">
+          <span id="et-mal">Como está hoy</span>
+          <span class="text-hueso/25 mx-2">/</span>
+          <span id="et-bien">En su puesto</span>
+          <p id="estado-txt" class="mt-1.5 text-[.72rem] tracking-[.14em] text-hueso-dim normal-case">Estado: desorden. Baje la palanca amarilla.</p>
+        </div>
+      </div>
+
+      <!-- rejilla -->
+      <ul id="rejilla-orden" class="grid grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8 sm:gap-x-7 sm:gap-y-10 list-none m-0 p-0">
+
+        <li class="relative">
+          <div class="h-[120px] sm:h-[142px] flex items-end justify-center">
+            <span class="relative block w-[27px] h-[108px] sm:w-[32px] sm:h-[128px]">
+              <svg class="silueta absolute inset-0 w-full h-full" aria-hidden="true"><use href="#tl-destornillador"/></svg>
+              <svg class="pieza fierro absolute inset-0 w-full h-full" style="--tx:-16px;--ty:-9px;--rz:-24deg" aria-hidden="true"><use href="#tl-destornillador"/></svg>
+            </span>
+          </div>
+          <p class="mt-3 font-ficha text-[.7rem] tracking-[.2em] uppercase text-hueso/40 num">D-01</p>
+          <div class="rotulo-swap mt-1">
+            <p class="rot-mal text-[.88rem] sm:text-[.95rem] leading-snug text-hueso">El pedido entra por WhatsApp y alguien lo copia al Excel.</p>
+            <p class="rot-bien text-[.88rem] sm:text-[.95rem] leading-snug text-seguridad font-medium">El pedido entra una vez y queda registrado.</p>
+          </div>
+        </li>
+
+        <li class="relative">
+          <div class="h-[120px] sm:h-[142px] flex items-end justify-center">
+            <span class="relative block w-[74px] h-[108px] sm:w-[88px] sm:h-[128px]">
+              <svg class="silueta absolute inset-0 w-full h-full" aria-hidden="true"><use href="#tl-martillo"/></svg>
+              <svg class="pieza fierro absolute inset-0 w-full h-full" style="--tx:18px;--ty:-14px;--rz:29deg" aria-hidden="true"><use href="#tl-martillo"/></svg>
+            </span>
+          </div>
+          <p class="mt-3 font-ficha text-[.7rem] tracking-[.2em] uppercase text-hueso/40 num">D-02</p>
+          <div class="rotulo-swap mt-1">
+            <p class="rot-mal text-[.88rem] sm:text-[.95rem] leading-snug text-hueso">La factura se hace dos veces: una en el sistema y otra en el cuaderno.</p>
+            <p class="rot-bien text-[.88rem] sm:text-[.95rem] leading-snug text-seguridad font-medium">Se hace una vez, con el dato de la primera.</p>
+          </div>
+        </li>
+
+        <li class="relative">
+          <div class="h-[120px] sm:h-[142px] flex items-end justify-center">
+            <span class="relative block w-[80px] h-[96px] sm:w-[95px] sm:h-[114px]">
+              <svg class="silueta absolute inset-0 w-full h-full" aria-hidden="true"><use href="#tl-allen"/></svg>
+              <svg class="pieza fierro absolute inset-0 w-full h-full" style="--tx:-20px;--ty:-6px;--rz:19deg" aria-hidden="true"><use href="#tl-allen"/></svg>
+            </span>
+          </div>
+          <p class="mt-3 font-ficha text-[.7rem] tracking-[.2em] uppercase text-hueso/40 num">D-03</p>
+          <div class="rotulo-swap mt-1">
+            <p class="rot-mal text-[.88rem] sm:text-[.95rem] leading-snug text-hueso">Compraron un software carísimo y nadie lo usa.</p>
+            <p class="rot-bien text-[.88rem] sm:text-[.95rem] leading-snug text-seguridad font-medium">Una herramienta que sí se usa, porque se hizo para quien la usa.</p>
+          </div>
+        </li>
+
+        <li class="relative">
+          <div class="h-[120px] sm:h-[142px] flex items-end justify-center">
+            <span class="relative block w-[105px] h-[84px] sm:w-[125px] sm:h-[100px]">
+              <svg class="silueta absolute inset-0 w-full h-full" aria-hidden="true"><use href="#tl-flexometro"/></svg>
+              <svg class="pieza fierro absolute inset-0 w-full h-full" style="--tx:13px;--ty:-18px;--rz:-14deg" aria-hidden="true"><use href="#tl-flexometro"/></svg>
+            </span>
+          </div>
+          <p class="mt-3 font-ficha text-[.7rem] tracking-[.2em] uppercase text-hueso/40 num">D-04</p>
+          <div class="rotulo-swap mt-1">
+            <p class="rot-mal text-[.88rem] sm:text-[.95rem] leading-snug text-hueso">Nadie sabe cuánto costó de verdad el pedido que acaban de despachar.</p>
+            <p class="rot-bien text-[.88rem] sm:text-[.95rem] leading-snug text-seguridad font-medium">El costo se calcula solo, pedido por pedido.</p>
+          </div>
+        </li>
+
+        <li class="relative">
+          <div class="h-[120px] sm:h-[142px] flex items-end justify-center">
+            <span class="relative block w-[136px] h-[34px] sm:w-[176px] sm:h-[44px] mb-6">
+              <svg class="silueta absolute inset-0 w-full h-full" aria-hidden="true"><use href="#tl-nivel"/></svg>
+              <svg class="pieza fierro absolute inset-0 w-full h-full" style="--tx:-8px;--ty:-26px;--rz:-12deg" aria-hidden="true"><use href="#tl-nivel"/></svg>
+            </span>
+          </div>
+          <p class="mt-3 font-ficha text-[.7rem] tracking-[.2em] uppercase text-hueso/40 num">D-05</p>
+          <div class="rotulo-swap mt-1">
+            <p class="rot-mal text-[.88rem] sm:text-[.95rem] leading-snug text-hueso">El inventario vive en la cabeza de una sola persona.</p>
+            <p class="rot-bien text-[.88rem] sm:text-[.95rem] leading-snug text-seguridad font-medium">El inventario está donde todo el equipo lo ve.</p>
+          </div>
+        </li>
+
+        <li class="relative">
+          <div class="h-[120px] sm:h-[142px] flex items-end justify-center">
+            <span class="relative block w-[41px] h-[108px] sm:w-[49px] sm:h-[128px]">
+              <svg class="silueta absolute inset-0 w-full h-full" aria-hidden="true"><use href="#tl-llavechica"/></svg>
+              <svg class="pieza fierro absolute inset-0 w-full h-full" style="--tx:22px;--ty:-8px;--rz:25deg" aria-hidden="true"><use href="#tl-llavechica"/></svg>
+            </span>
+          </div>
+          <p class="mt-3 font-ficha text-[.7rem] tracking-[.2em] uppercase text-hueso/40 num">D-06</p>
+          <div class="rotulo-swap mt-1">
+            <p class="rot-mal text-[.88rem] sm:text-[.95rem] leading-snug text-hueso">Hay un muchacho copiando datos de un sistema al otro, todo el día.</p>
+            <p class="rot-bien text-[.88rem] sm:text-[.95rem] leading-snug text-seguridad font-medium">Los dos sistemas se hablan solos y el muchacho hace otra cosa.</p>
+          </div>
+        </li>
+      </ul>
+
+      <div class="rotulo-swap mt-7 pt-6 border-t border-hueso/12 max-w-[46rem]">
+        <p class="rot-mal text-[1.02rem] sm:text-[1.1rem] leading-relaxed text-hueso-dim">
+          Si reconoció tres o más de estas seis, no le falta software: le falta que alguien
+          se siente a ordenar el tablero. <span class="text-seguridad font-semibold">Baje la palanca.</span>
+        </p>
+        <p class="rot-bien text-[1.02rem] sm:text-[1.1rem] leading-relaxed text-hueso-dim">
+          <span class="text-seguridad font-semibold">Eso es exactamente lo que hago.</span>
+          No le entrego un diagnóstico: le entrego el tablero organizado y la herramienta funcionando,
+          con su gente ya usándola. Hoy me apoyo mucho en IA para construir, y por eso lo que antes
+          tomaba trimestres hoy toma semanas.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EL TABLERO / HERRAMIENTAS ============ -->
+<section id="tablero" class="relative z-10 scroll-mt-6 pb-16 sm:pb-24">
+  <div class="mx-auto max-w-pared px-4 sm:px-6">
+
+    <h2 class="font-rotulo font-bold uppercase leading-[.92] text-[2.3rem] sm:text-[3.3rem] text-hueso">
+      El tablero: tres herramientas
+    </h2>
+    <p class="mt-3 mb-8 max-w-[38rem] text-[1.02rem] leading-relaxed text-hueso-dim">
+      Baje del tablero la que necesite. Se le van guardando abajo, en el banco de trabajo,
+      y al final me las manda por WhatsApp con un toque. Puede bajar más de una.
+    </p>
+
+    <div class="space-y-5 sm:space-y-6">
+
+      <!-- H-01 CONSULTORÍA -->
+      <article class="perf perf-claro relative rounded-[3px] p-5 sm:p-8">
+        <span class="tornillo tl"></span><span class="tornillo tr"></span>
+        <span class="tornillo bl"></span><span class="tornillo br"></span>
+
+        <div class="grid md:grid-cols-[168px_1fr] gap-6 md:gap-9 items-start">
+          <div class="flex md:block items-center gap-5">
+            <button type="button" class="gancho block" aria-pressed="false"
+                    data-item="Consultoría — estrategia y la herramienta construida">
+              <span class="sr-only">Bajar consultoría al banco de trabajo</span>
+              <span class="relative block h-[164px] sm:h-[196px] w-[74px] sm:w-[88px]">
+                <svg class="silueta absolute inset-0 h-full w-full" aria-hidden="true"><use href="#tl-llave"/></svg>
+                <svg class="fierro absolute inset-0 h-full w-full" aria-hidden="true"><use href="#tl-llave"/></svg>
+              </span>
+            </button>
+            <div class="md:mt-4">
+              <p class="font-ficha text-[.7rem] tracking-[.22em] uppercase text-hueso/35 num">H-01</p>
+              <p class="marca-estado font-ficha text-[.72rem] tracking-[.18em] uppercase mt-1" data-on="0">Toque para bajarla</p>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="font-rotulo font-bold uppercase text-[2rem] sm:text-[2.6rem] leading-[.95] text-hueso">Consultoría</h3>
+            <p class="mt-2 text-[1.08rem] sm:text-[1.18rem] leading-snug text-seguridad font-medium">
+              Estrategia de cero a uno — y yo mismo construyo la herramienta.
+            </p>
+            <p class="mt-4 max-w-[44rem] text-[1rem] leading-[1.65] text-hueso">
+              Defino qué hay que hacer, en qué orden, y después lo construyo. La misma persona en las dos mitades:
+              por eso no hay un requerimiento que se pierda entre la estrategia y el que programa.
+            </p>
+            <p class="mt-3 max-w-[44rem] text-[1rem] leading-[1.65] text-hueso-dim">
+              Sirve si ya compró un software caro que nadie usa, si el pedido entra por un lado y sale a mano por el otro,
+              o si sospecha que hay un proceso completo sostenido por una persona y un archivo.
+            </p>
+
+            <div class="mt-6 grid sm:grid-cols-2 gap-3">
+              <div class="placa-grab px-3.5 py-3">
+                <p class="font-ficha text-[.7rem] tracking-[.2em] uppercase text-hueso/45 mb-1.5">Para quién</p>
+                <p class="text-[.92rem] leading-snug text-hueso">
+                  Empresas colombianas de 5 a 40 empleados que facturan menos de USD 2 millones al año.
+                  Ropa, restaurantes, retail, distribución, importación, servicios. No tiene que ser técnico: yo lo soy.
+                </p>
+              </div>
+              <div class="placa-grab px-3.5 py-3">
+                <p class="font-ficha text-[.7rem] tracking-[.2em] uppercase text-hueso/45 mb-1.5">Capacidad real</p>
+                <p class="text-[.92rem] leading-snug text-hueso">
+                  Atiendo <strong class="text-seguridad num">2</strong> consultorías a la vez. El tope son
+                  <strong class="num">4</strong>. Prefiero pocas y hasta el final que muchas a medias.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- H-02 MENTORÍA -->
+      <article class="perf perf-claro relative rounded-[3px] p-5 sm:p-8">
+        <span class="tornillo tl"></span><span class="tornillo tr"></span>
+        <span class="tornillo bl"></span><span class="tornillo br"></span>
+
+        <div class="grid md:grid-cols-[168px_1fr] gap-6 md:gap-9 items-start">
+          <div class="flex md:block items-center gap-5">
+            <button type="button" class="gancho block" aria-pressed="false"
+                    data-item="Mentoría — tareas prácticas cada semana">
+              <span class="sr-only">Bajar mentoría al banco de trabajo</span>
+              <span class="relative block h-[62px] sm:h-[74px] w-[150px] sm:w-[178px]">
+                <svg class="silueta absolute inset-0 h-full w-full" aria-hidden="true"><use href="#tl-calibrador"/></svg>
+                <svg class="fierro absolute inset-0 h-full w-full" aria-hidden="true"><use href="#tl-calibrador"/></svg>
+              </span>
+            </button>
+            <div class="md:mt-4">
+              <p class="font-ficha text-[.7rem] tracking-[.22em] uppercase text-hueso/35 num">H-02</p>
+              <p class="marca-estado font-ficha text-[.72rem] tracking-[.18em] uppercase mt-1" data-on="0">Toque para bajarla</p>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="font-rotulo font-bold uppercase text-[2rem] sm:text-[2.6rem] leading-[.95] text-hueso">Mentoría</h3>
+            <p class="mt-2 text-[1.08rem] sm:text-[1.18rem] leading-snug text-seguridad font-medium">
+              Tareas prácticas cada semana. Nada de café y buenos consejos.
+            </p>
+            <p class="mt-4 max-w-[44rem] text-[1rem] leading-[1.65] text-hueso">
+              Nos vemos, salimos con tareas concretas, y la semana siguiente las revisamos. Así de simple
+              y así de incómodo. Si no hizo la tarea, hablamos de por qué no la hizo — que casi siempre
+              es la conversación que sirve.
+            </p>
+            <blockquote class="mt-5 border-l-[1px] border-seguridad/60 pl-4 text-[1.06rem] leading-snug italic text-hueso">
+              «Trabajar conmigo significa que las cosas pasan, así toque a las malas.»
+            </blockquote>
+
+            <div class="mt-6 grid sm:grid-cols-2 gap-3">
+              <div class="placa-grab px-3.5 py-3">
+                <p class="font-ficha text-[.7rem] tracking-[.2em] uppercase text-hueso/45 mb-1.5">Para quién</p>
+                <p class="text-[.92rem] leading-snug text-hueso">
+                  Cualquiera que esté arrancando: emprendedores, fundaciones, startups.
+                  Van <strong class="num">7</strong> mentoreados hasta hoy.
+                </p>
+              </div>
+              <div class="placa-grab px-3.5 py-3">
+                <p class="font-ficha text-[.7rem] tracking-[.2em] uppercase text-hueso/45 mb-1.5">Capacidad real</p>
+                <p class="text-[.92rem] leading-snug text-hueso">
+                  Llevo <strong class="text-seguridad num">3</strong> a la vez. El tope son
+                  <strong class="num">5</strong>. Más de ahí ya no alcanzo a revisar tareas.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- H-03 CHARLAS -->
+      <article class="perf perf-claro relative rounded-[3px] p-5 sm:p-8">
+        <span class="tornillo tl"></span><span class="tornillo tr"></span>
+        <span class="tornillo bl"></span><span class="tornillo br"></span>
+
+        <div class="grid md:grid-cols-[168px_1fr] gap-6 md:gap-9 items-start">
+          <div class="flex md:block items-center gap-5">
+            <button type="button" class="gancho block" aria-pressed="false"
+                    data-item="Una charla para mi empresa, universidad o evento">
+              <span class="sr-only">Bajar charlas al banco de trabajo</span>
+              <span class="relative block h-[130px] sm:h-[152px] w-[52px] sm:w-[60px]">
+                <svg class="silueta absolute inset-0 h-full w-full" aria-hidden="true"><use href="#tl-micro"/></svg>
+                <svg class="fierro absolute inset-0 h-full w-full" aria-hidden="true"><use href="#tl-micro"/></svg>
+              </span>
+            </button>
+            <div class="md:mt-4">
+              <p class="font-ficha text-[.7rem] tracking-[.22em] uppercase text-hueso/35 num">H-03</p>
+              <p class="marca-estado font-ficha text-[.72rem] tracking-[.18em] uppercase mt-1" data-on="0">Toque para bajarla</p>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex items-baseline gap-4 flex-wrap">
+              <h3 class="font-rotulo font-bold uppercase text-[2rem] sm:text-[2.6rem] leading-[.95] text-hueso">Charlas</h3>
+              <span class="placa-grab px-2.5 py-1.5 font-ficha text-[.7rem] tracking-[.18em] uppercase text-oxido">Esto es publicidad, no es un producto</span>
+            </div>
+            <p class="mt-4 max-w-[44rem] text-[1rem] leading-[1.65] text-hueso">
+              Me contratan conferencias, empresas y universidades. Hablo de adopción de tecnología e IA,
+              de emprender, de mentalidad y de balance vida-trabajo. Lo digo sin rodeos: las charlas son
+              el marketing de las dos herramientas de arriba. Si le sirve una, con mucho gusto.
+            </p>
+            <p class="mt-3 max-w-[44rem] text-[.98rem] leading-relaxed text-hueso-dim">
+              Lo que no doy: charlas de ciencia de datos ni de cultura organizacional.
+            </p>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- monitor de taller con la charla real -->
+    <div class="mt-10 sm:mt-14 grid lg:grid-cols-[1fr_320px] gap-6 items-start">
+      <div class="bisel rounded-[6px] p-3 sm:p-4">
+        <div class="relative w-full aspect-video bg-black rounded-[2px] overflow-hidden">
+          <iframe class="absolute inset-0 w-full h-full" src="https://www.youtube-nocookie.com/embed/F9t9f5Et_04"
+                  title="Negocios Aburridos e Innovación — Salomón Muriel en el podcast Ventaja"
+                  allowfullscreen
+                  allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+        </div>
+        <div class="flex items-center justify-between gap-4 pt-3 px-1">
+          <p class="font-ficha text-[.72rem] tracking-[.2em] uppercase text-hueso-dim">
+            Negocios aburridos e innovación · Podcast Ventaja
+          </p>
+          <span class="led flex-none" aria-hidden="true"></span>
+        </div>
+      </div>
+      <div class="placa-grab p-4 sm:p-5">
+        <p class="font-ficha text-[.7rem] tracking-[.2em] uppercase text-hueso/45 mb-2">Antes de escribirme</p>
+        <p class="text-[.98rem] leading-relaxed text-hueso">
+          Vea la charla y decida si mi forma de pensar le sirve. Cuarenta minutos son mejor filtro
+          que cualquier propuesta comercial. Si al final le suena, ahí sí hablemos.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ LA PRUEBA / EL CAJÓN ============ -->
+<section id="prueba" class="relative z-10 scroll-mt-6 pb-16 sm:pb-24">
+  <div class="mx-auto max-w-pared px-4 sm:px-6">
+
+    <h2 class="font-rotulo font-bold uppercase leading-[.92] text-[2.3rem] sm:text-[3.3rem] text-hueso">
+      El cajón: lo que he armado
+    </h2>
+    <p class="mt-3 mb-8 max-w-[40rem] text-[1.02rem] leading-relaxed text-hueso-dim">
+      No tengo testimonios y no los voy a inventar. Tengo esto: cinco empresas mías, con el resultado
+      estampado encima, incluido lo que se quebró.
+    </p>
+
+    <div class="cajon rounded-[6px] p-4 sm:p-7">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+
+        <!-- IGNIA -->
+        <div class="celda p-4">
+          <div class="bg-[#f4efe4] rounded-[2px] h-[76px] flex items-center justify-center px-4">
+            <img src="assets/ignia.png" alt="Logotipo de Ignia" class="max-h-[50px] w-auto object-contain">
+          </div>
+          <div class="flex items-center justify-between gap-3 mt-3.5">
+            <p class="font-ficha text-[.72rem] tracking-[.2em] uppercase text-hueso-dim num">2025 → hoy</p>
+            <span class="sello text-verde">Activa</span>
+          </div>
+          <p class="mt-2.5 text-[.92rem] leading-snug text-hueso">
+            Un modelo nuevo de educación superior. Rentable desde el primer día,
+            <span class="num">USD 150.000</span> en el primer año, unos <span class="num">30</span> fellows en la primera cohorte,
+            equipo de <span class="num">5</span>. El CRM, el sitio y la plataforma de comunidad los construí yo.
+          </p>
+        </div>
+
+        <!-- FINCO -->
+        <div class="celda p-4">
+          <div class="bg-[#f4efe4] rounded-[2px] h-[76px] flex items-center justify-center px-4">
+            <img src="assets/finco.png" alt="Logotipo de Finco" class="max-h-[62px] w-auto object-contain">
+          </div>
+          <div class="flex items-center justify-between gap-3 mt-3.5">
+            <p class="font-ficha text-[.72rem] tracking-[.2em] uppercase text-hueso-dim num">2019 – 2022</p>
+            <span class="sello text-seguridad">Vendida 5×</span>
+          </div>
+          <p class="mt-2.5 text-[.92rem] leading-snug text-hueso">
+            Valoración de inmuebles con datos e IA para Latinoamérica. <span class="num">100.000</span> reportes al año.
+            La compró RED Atlas por unos <span class="num">USD 1,5</span> millones: cinco veces lo invertido.
+          </p>
+        </div>
+
+        <!-- PRESTAGENTE -->
+        <div class="celda p-4">
+          <div class="bg-[#f4efe4] rounded-[2px] h-[76px] flex items-center justify-center px-4">
+            <img src="assets/prestagente.png" alt="Logotipo de PrestaGente" class="max-h-[58px] w-auto object-contain">
+          </div>
+          <div class="flex items-center justify-between gap-3 mt-3.5">
+            <p class="font-ficha text-[.72rem] tracking-[.2em] uppercase text-hueso-dim num">2017 – 2019</p>
+            <span class="sello text-seguridad">Vendida</span>
+          </div>
+          <p class="mt-2.5 text-[.92rem] leading-snug text-hueso">
+            Libranza entre personas. La compró Taurus Capital por cerca de <span class="num">USD 1</span> millón
+            y sigue operando hoy sin mí.
+          </p>
+        </div>
+
+        <!-- BERIBLOCK -->
+        <div class="celda p-4">
+          <div class="bg-[#f4efe4] rounded-[2px] h-[76px] flex items-center justify-center px-4">
+            <img src="assets/beriblock.png" alt="Logotipo de Beriblock" class="max-h-[54px] w-auto object-contain">
+          </div>
+          <div class="flex items-center justify-between gap-3 mt-3.5">
+            <p class="font-ficha text-[.72rem] tracking-[.2em] uppercase text-hueso-dim num">2018 – 2019</p>
+            <span class="sello text-oxido">Quebró</span>
+          </div>
+          <p class="mt-2.5 text-[.92rem] leading-snug text-hueso">
+            Autenticación de pagarés con blockchain. Buena tecnología, mercado que no existía.
+            No cuajó y la cerré.
+          </p>
+        </div>
+
+        <!-- EL PALOMO -->
+        <div class="celda p-4">
+          <div class="bg-[#f4efe4] rounded-[2px] h-[76px] flex items-center justify-center px-4">
+            <img src="assets/elpalomo.png" alt="Logotipo de El Palomo" class="max-h-[54px] w-auto object-contain">
+          </div>
+          <div class="flex items-center justify-between gap-3 mt-3.5">
+            <p class="font-ficha text-[.72rem] tracking-[.2em] uppercase text-hueso-dim num">2016 – 2017</p>
+            <span class="sello text-oxido">Fracasó</span>
+          </div>
+          <p class="mt-2.5 text-[.92rem] leading-snug text-hueso">
+            Flores por suscripción. Un fracaso espectacular, de los que se cuentan en las charlas
+            porque enseñan más que los otros.
+          </p>
+        </div>
+
+        <!-- R5 -->
+        <div class="celda p-4">
+          <div class="bg-[#f4efe4] rounded-[2px] h-[76px] flex items-center justify-center px-4">
+            <p class="font-rotulo font-extrabold text-[2.4rem] leading-none text-[#1c1a17] tracking-tight">R5</p>
+          </div>
+          <div class="flex items-center justify-between gap-3 mt-3.5">
+            <p class="font-ficha text-[.72rem] tracking-[.2em] uppercase text-hueso-dim">Antes</p>
+            <span class="sello text-hueso-dim">No es mía</span>
+          </div>
+          <p class="mt-2.5 text-[.92rem] leading-snug text-hueso">
+            Dirigí a unas <span class="num">40</span> personas. Construí el pipeline de datos completo
+            y el sistema de modelación de riesgo. Ahí aprendí a manejar equipos grandes.
+          </p>
+        </div>
+
+      </div>
+
+      <div class="agarradera mt-6 sm:mt-8 mx-auto w-[58%] max-w-[380px]"></div>
+    </div>
+
+    <!-- foto real de la época Finco -->
+    <div class="mt-8 grid sm:grid-cols-[280px_1fr] gap-6 items-center">
+      <div class="relative">
+        <div class="pinza absolute -top-3 left-1/2 -translate-x-1/2 z-10"></div>
+        <img src="assets/salo_oscar.webp" alt="Salomón Muriel con su socio, sosteniendo una pantalla con un reporte de Finco."
+             class="w-full rotate-[1.2deg] border-[6px] border-[#f2ece0] shadow-[0_16px_32px_-14px_rgba(0,0,0,.8)]">
+      </div>
+      <p class="text-[1rem] leading-[1.65] text-hueso-dim max-w-[36rem]">
+        Esta es la parte que casi nadie muestra: dos tipos, una pantalla y un producto que sí funcionaba.
+        Finco no se vendió por una presentación bonita — se vendió porque cien mil reportes al año salían
+        bien todos los días. Eso es lo mismo que le quiero dejar montado a usted.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ LÍMITES ============ -->
+<section id="limites" class="relative z-10 scroll-mt-6 pb-16 sm:pb-24">
+  <div class="mx-auto max-w-pared px-4 sm:px-6">
+    <div class="rounded-[3px] overflow-hidden shadow-[0_20px_44px_-22px_rgba(0,0,0,.85)]">
+      <div class="peligro h-[13px]"></div>
+      <div class="bg-[#191714] border-x border-hueso/12 px-5 sm:px-9 py-8 sm:py-11">
+        <h2 class="font-rotulo font-bold uppercase leading-[.92] text-[2.3rem] sm:text-[3.3rem] text-seguridad">
+          Lo que no hago
+        </h2>
+        <p class="mt-3 mb-7 max-w-[42rem] text-[1.02rem] leading-relaxed text-hueso-dim">
+          Esta lista le ahorra a usted una reunión y a mí una propuesta que no va a funcionar.
+        </p>
+
+        <ul class="grid md:grid-cols-2 gap-x-8 gap-y-6 list-none m-0 p-0">
+          <li class="flex gap-4">
+            <svg viewBox="0 0 24 24" width="22" height="22" class="flex-none mt-1 text-oxido" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+            <p class="text-[1rem] leading-[1.6] text-hueso">
+              <strong class="font-semibold">No sé escalar una empresa más allá de unos USD 5 millones al año.</strong>
+              Cuando llegue ahí, necesita a otro — y yo le ayudo a buscarlo.
+            </p>
+          </li>
+          <li class="flex gap-4">
+            <svg viewBox="0 0 24 24" width="22" height="22" class="flex-none mt-1 text-oxido" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+            <p class="text-[1rem] leading-[1.6] text-hueso">
+              <strong class="font-semibold">No trabajo con deep tech ni con proyectos de investigación.</strong>
+              Si toca inventar algo que no existe, ese no soy yo.
+            </p>
+          </li>
+          <li class="flex gap-4">
+            <svg viewBox="0 0 24 24" width="22" height="22" class="flex-none mt-1 text-oxido" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+            <p class="text-[1rem] leading-[1.6] text-hueso">
+              <strong class="font-semibold">No doy charlas de ciencia de datos ni de cultura organizacional.</strong>
+              Hay gente que las da muchísimo mejor que yo.
+            </p>
+          </li>
+          <li class="flex gap-4">
+            <svg viewBox="0 0 24 24" width="22" height="22" class="flex-none mt-1 text-oxido" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+            <p class="text-[1rem] leading-[1.6] text-hueso">
+              <strong class="font-semibold">No tengo testimonios todavía.</strong>
+              Los puedo conseguir, pero hoy no tengo ninguno y prefiero decirlo a inventarlos.
+            </p>
+          </li>
+        </ul>
+
+        <p class="mt-8 pt-6 border-t border-hueso/12 font-ficha text-[.72rem] sm:text-[.78rem] tracking-[.17em] uppercase text-hueso-dim leading-relaxed">
+          Aclaración necesaria: esta es mi práctica personal. No puedo consultarle bajo la marca Ignia,
+          y mi mentoría no compite con el Action Lab de Ignia — son cosas distintas.
+        </p>
+      </div>
+      <div class="peligro h-[13px]"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EL RINCÓN DEL DUEÑO ============ -->
+<section id="rincon" class="relative z-10 scroll-mt-6 pb-16 sm:pb-24">
+  <div class="mx-auto max-w-pared px-4 sm:px-6">
+
+    <h2 class="font-rotulo font-bold uppercase leading-[.92] text-[2.3rem] sm:text-[3.3rem] text-hueso">
+      El rincón del dueño
+    </h2>
+    <p class="mt-3 mb-8 max-w-[38rem] text-[1.02rem] leading-relaxed text-hueso-dim">
+      Un tablero dice mucho de quien lo arma. Este es el mío, con lo que cuelgo en la esquina.
+    </p>
+
+    <div class="perf relative rounded-[3px] p-5 sm:p-8">
+      <span class="tornillo tl"></span><span class="tornillo tr"></span>
+      <span class="tornillo bl"></span><span class="tornillo br"></span>
+
+      <div class="grid lg:grid-cols-[1fr_1fr_260px] gap-7 lg:gap-8 items-start">
+
+        <!-- foto maratón -->
+        <figure class="m-0 relative">
+          <div class="pinza absolute -top-3 left-1/2 -translate-x-1/2 z-10"></div>
+          <img src="assets/marathon.jpg" alt="Salomón Muriel con la medalla de la media maratón, con camiseta morada."
+               class="w-full aspect-[4/5] object-cover rotate-[-1.6deg] border-[6px] border-[#f2ece0] shadow-[0_16px_32px_-14px_rgba(0,0,0,.8)]">
+          <figcaption class="placa-grab mt-5 px-3.5 py-2.5 font-ficha text-[.7rem] tracking-[.16em] uppercase text-hueso">
+            Media maratón · <span class="num text-seguridad">2:10</span> · No soy rápido, pero termino
+          </figcaption>
+        </figure>
+
+        <!-- foto fogata -->
+        <figure class="m-0 relative">
+          <div class="pinza absolute -top-3 left-1/2 -translate-x-1/2 z-10"></div>
+          <img src="assets/bonfire.jpeg" alt="Fogata encendida de noche, rodeada de piedras."
+               class="w-full aspect-[4/5] object-cover rotate-[1.9deg] border-[6px] border-[#f2ece0] shadow-[0_16px_32px_-14px_rgba(0,0,0,.8)]">
+          <figcaption class="placa-grab mt-5 px-3.5 py-2.5 font-ficha text-[.7rem] tracking-[.16em] uppercase text-hueso">
+            Sábado en la noche · Sin computador · Con Franco y Luca
+          </figcaption>
+        </figure>
+
+        <!-- felicímetro + fichas -->
+        <div>
+          <div class="placa-grab p-4">
+            <p class="font-ficha text-[.7rem] tracking-[.2em] uppercase text-hueso/45 mb-2">Medidor de felicidad</p>
+            <svg id="felicimetro" viewBox="0 0 200 132" class="w-full h-auto" role="img" aria-label="Manómetro de felicidad, con la aguja marcando por encima de la mitad.">
+              <path d="M18 116 A82 82 0 0 1 182 116" fill="none" stroke="#D3C7B2" stroke-opacity=".26" stroke-width="11" stroke-linecap="round"/>
+              <g stroke="#D3C7B2" stroke-opacity=".55" stroke-width="3" stroke-linecap="round">
+                <path d="M26 96 L36 92"/><path d="M40 62 L48 68"/><path d="M72 39 L76 49"/>
+                <path d="M100 32 L100 43"/><path d="M128 39 L124 49"/><path d="M160 62 L152 68"/>
+                <path d="M174 96 L164 92"/>
+              </g>
+              <g id="aguja" style="transform-origin:100px 116px">
+                <path d="M100 116 L146 60" stroke="#F5C518" stroke-width="6" stroke-linecap="round"/>
+              </g>
+              <circle cx="100" cy="116" r="11" fill="#F5C518"/>
+              <circle cx="100" cy="116" r="4" fill="#141312"/>
+              <text x="20" y="130" font-family="Archivo Narrow, sans-serif" font-size="12" letter-spacing="2" fill="#D3C7B2" opacity=".8">MAL</text>
+              <text x="156" y="130" font-family="Archivo Narrow, sans-serif" font-size="12" letter-spacing="2" fill="#D3C7B2" opacity=".8">BIEN</text>
+            </svg>
+            <p class="mt-2 text-[.88rem] leading-snug text-hueso-dim">
+              Publico un medidor de felicidad. Si la aguja baja, casi siempre hay algo que arreglar
+              en el negocio, no en mí.
+            </p>
+          </div>
+
+          <ul class="mt-4 space-y-2.5 list-none m-0 p-0">
+            <li class="placa-grab px-3.5 py-2.5 font-ficha text-[.7rem] tracking-[.15em] uppercase text-hueso">Aprendí inglés jugando en línea</li>
+            <li class="placa-grab px-3.5 py-2.5 font-ficha text-[.7rem] tracking-[.15em] uppercase text-hueso">Celebro el cumpleaños otro día, a propósito</li>
+            <li class="placa-grab px-3.5 py-2.5 font-ficha text-[.7rem] tracking-[.15em] uppercase text-hueso">Rack de herramientas e impresora 3D</li>
+            <li class="placa-grab px-3.5 py-2.5 font-ficha text-[.7rem] tracking-[.15em] uppercase text-hueso">Mi papá y mi abuelo también fueron empresarios</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ESCRIBIRME ============ -->
+<section id="escribir" class="relative z-10 scroll-mt-6 pb-16 sm:pb-24">
+  <div class="mx-auto max-w-pared px-4 sm:px-6">
+    <div class="perf relative rounded-[3px] p-6 sm:p-10">
+      <span class="tornillo tl"></span><span class="tornillo tr"></span>
+      <span class="tornillo bl"></span><span class="tornillo br"></span>
+
+      <div class="grid lg:grid-cols-[1.15fr_1fr] gap-9 lg:gap-14 items-center">
+        <div>
+          <h2 class="font-rotulo font-extrabold uppercase leading-[.9] text-[2.5rem] sm:text-[3.6rem] text-hueso">
+            Cuénteme qué se le<br><span class="text-seguridad">está saliendo de las manos.</span>
+          </h2>
+          <p class="mt-5 max-w-[36rem] text-[1.06rem] leading-[1.65] text-hueso-dim">
+            No necesito un brief ni un documento. Con dos frases sobre qué hace su empresa y qué proceso
+            lo tiene amarrado, ya sé si le sirvo o no. Y si no le sirvo, se lo digo de una y le digo a quién buscar.
+          </p>
+
+          <div class="mt-8 flex flex-wrap gap-3.5">
+            <a href="https://wa.me/573132465100"
+               class="inline-flex items-center gap-2.5 bg-seguridad text-placa font-ficha font-bold uppercase tracking-[.15em] text-[.86rem] px-6 py-4 no-underline
+                      shadow-[0_5px_0_#8f6c03,0_10px_20px_-6px_rgba(0,0,0,.6)] hover:translate-y-[2px] hover:shadow-[0_3px_0_#8f6c03,0_8px_16px_-6px_rgba(0,0,0,.6)] transition-all">
+              <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 11.5a8.4 8.4 0 0 1-12.3 7.5L3 20.5l1.6-5.5A8.4 8.4 0 1 1 21 11.5Z"/>
+              </svg>
+              WhatsApp 313 246 5100
+            </a>
+            <a href="https://cal.com/salomonmuriel"
+               class="inline-flex items-center gap-2.5 border border-hueso/35 text-hueso font-ficha uppercase tracking-[.15em] text-[.82rem] px-5 py-4 no-underline hover:border-seguridad hover:text-seguridad transition-colors">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>
+              </svg>
+              Agendar 30 minutos
+            </a>
+          </div>
+
+          <div class="mt-5 flex flex-wrap gap-3.5">
+            <a href="mailto:salomon.muriel@gmail.com"
+               class="inline-flex items-center gap-2 font-ficha text-[.76rem] tracking-[.15em] uppercase text-hueso-dim hover:text-seguridad no-underline transition-colors">
+              <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/>
+              </svg>
+              salomon.muriel@gmail.com
+            </a>
+            <a href="https://www.linkedin.com/in/smuriel/"
+               class="inline-flex items-center gap-2 font-ficha text-[.76rem] tracking-[.15em] uppercase text-hueso-dim hover:text-seguridad no-underline transition-colors">
+              <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="3" y="3" width="18" height="18" rx="2.5"/><path d="M7.5 10.5v6M7.5 7.7v.1M12 16.5v-6M12 13c0-1.6 1-2.5 2.3-2.5S16.5 11.4 16.5 13v3.5"/>
+              </svg>
+              LinkedIn — ahí escribo
+            </a>
+          </div>
+        </div>
+
+        <!-- ganchos de capacidad -->
+        <div class="placa-grab p-5 sm:p-7">
+          <p class="font-ficha text-[.72rem] tracking-[.2em] uppercase text-hueso/45 mb-5">Cupos del tablero</p>
+
+          <div class="mb-7">
+            <div class="flex items-center justify-between gap-3 mb-3">
+              <p class="font-rotulo font-bold uppercase text-[1.5rem] leading-none text-hueso">Consultoría</p>
+              <p class="font-ficha text-[.72rem] tracking-[.16em] uppercase text-hueso-dim num">2 a la vez · tope 4</p>
+            </div>
+            <div class="flex gap-2.5" aria-hidden="true">
+              <span class="h-[46px] flex-1 rounded-[2px]" style="background:rgba(245,197,24,.85)"></span>
+              <span class="h-[46px] flex-1 rounded-[2px]" style="background:rgba(245,197,24,.85)"></span>
+              <span class="h-[46px] flex-1 rounded-[2px] border border-dashed border-hueso/30"></span>
+              <span class="h-[46px] flex-1 rounded-[2px] border border-dashed border-hueso/30"></span>
+            </div>
+          </div>
+
+          <div class="mb-7">
+            <div class="flex items-center justify-between gap-3 mb-3">
+              <p class="font-rotulo font-bold uppercase text-[1.5rem] leading-none text-hueso">Mentoría</p>
+              <p class="font-ficha text-[.72rem] tracking-[.16em] uppercase text-hueso-dim num">3 a la vez · tope 5</p>
+            </div>
+            <div class="flex gap-2.5" aria-hidden="true">
+              <span class="h-[46px] flex-1 rounded-[2px]" style="background:rgba(245,197,24,.85)"></span>
+              <span class="h-[46px] flex-1 rounded-[2px]" style="background:rgba(245,197,24,.85)"></span>
+              <span class="h-[46px] flex-1 rounded-[2px]" style="background:rgba(245,197,24,.85)"></span>
+              <span class="h-[46px] flex-1 rounded-[2px] border border-dashed border-hueso/30"></span>
+              <span class="h-[46px] flex-1 rounded-[2px] border border-dashed border-hueso/30"></span>
+            </div>
+          </div>
+
+          <p class="text-[.92rem] leading-relaxed text-hueso-dim border-t border-hueso/12 pt-4">
+            Las barras llenas son las que atiendo al mismo tiempo; las punteadas son el tope al que llego
+            sin quedar mal. Por eso a veces toca esperar turno — y por eso lo que entra, sale.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PIE ============ -->
+<footer class="relative z-10 border-t border-hueso/12">
+  <div class="mx-auto max-w-pared px-4 sm:px-6 py-8 flex flex-wrap items-center justify-between gap-4">
+    <p class="font-ficha text-[.7rem] tracking-[.2em] uppercase text-hueso-dim">
+      Salomón Muriel · Bogotá, Colombia
+    </p>
+    <p class="font-ficha text-[.7rem] tracking-[.2em] uppercase text-hueso/50">
+      Práctica personal · Independiente de Ignia
+    </p>
+  </div>
+</footer>
+
+<!-- ============ BANCO DE TRABAJO ============ -->
+<div id="banco" class="banco fixed bottom-0 left-0 right-0 z-40">
+  <div class="peligro h-[6px]"></div>
+  <div class="mx-auto max-w-pared px-4 sm:px-6 py-3 sm:py-3.5 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-5">
+    <div class="flex-1 min-w-0">
+      <p class="font-ficha text-[.7rem] tracking-[.24em] uppercase text-hueso/45">Banco de trabajo</p>
+      <p id="banco-vacio" class="mt-1 text-[.88rem] sm:text-[.92rem] leading-snug text-hueso-dim">
+        Vacío. Baje del tablero lo que necesite, o escríbame directo.
+      </p>
+      <ul id="banco-lista" class="mt-1.5 flex flex-wrap gap-1.5 list-none m-0 p-0" hidden></ul>
+    </div>
+    <a id="banco-wa" href="https://wa.me/573132465100"
+       class="flex-none inline-flex items-center justify-center gap-2.5 bg-seguridad text-placa font-ficha font-bold uppercase tracking-[.14em] text-[.78rem] sm:text-[.82rem] px-4 sm:px-6 py-3.5 no-underline
+              shadow-[0_4px_0_#8f6c03] hover:translate-y-[2px] hover:shadow-[0_2px_0_#8f6c03] transition-all">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 11.5a8.4 8.4 0 0 1-12.3 7.5L3 20.5l1.6-5.5A8.4 8.4 0 1 1 21 11.5Z"/>
+      </svg>
+      <span id="banco-cta">Escribirme por WhatsApp</span>
+    </a>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- lámpara: un solo parpadeo al cargar ---- */
+  if(!reduce){
+    var lamp = document.getElementById('lampara');
+    if(lamp){ lamp.classList.add('flick'); }
+  }
+
+  /* ---- palanca de orden ---- */
+  var panel = document.getElementById('panel-orden');
+  var palanca = document.getElementById('palanca');
+  var estado = document.getElementById('estado-txt');
+  var piezas = panel ? panel.querySelectorAll('.pieza') : [];
+
+  // escalonado del acomodo: una palanca propaga a todo el panel
+  for(var i=0;i<piezas.length;i++){
+    piezas[i].style.transitionDelay = (i*70)+'ms';
+  }
+
+  function setOrden(on){
+    panel.setAttribute('data-orden', on ? '1' : '0');
+    palanca.setAttribute('aria-checked', on ? 'true' : 'false');
+    estado.textContent = on
+      ? 'Estado: cada cosa en su puesto. Vuelva a subirla para comparar.'
+      : 'Estado: desorden. Baje la palanca amarilla.';
+  }
+
+  if(palanca && panel){
+    palanca.addEventListener('click', function(){
+      setOrden(panel.getAttribute('data-orden') !== '1');
+      palanca.classList.remove('latido');
+    });
+    // pista visual una sola vez, cuando el panel entra en pantalla
+    if('IntersectionObserver' in window && !reduce){
+      var obsP = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if(e.isIntersecting){
+            palanca.classList.add('latido');
+            obsP.disconnect();
+          }
+        });
+      }, { threshold: 0.4 });
+      obsP.observe(panel);
+    } else {
+      palanca.classList.remove('latido');
+    }
+  }
+
+  /* ---- felicímetro: la aguja se asienta al entrar en pantalla ---- */
+  var aguja = document.getElementById('aguja');
+  if(aguja){
+    if(reduce){
+      aguja.style.transform = 'rotate(0deg)';
+    } else {
+      aguja.style.transform = 'rotate(-58deg)';
+      aguja.style.transition = 'transform 1.4s cubic-bezier(.16,1,.3,1)';
+      if('IntersectionObserver' in window){
+        var obsA = new IntersectionObserver(function(entries){
+          entries.forEach(function(e){
+            if(e.isIntersecting){
+              aguja.style.transform = 'rotate(0deg)';
+              obsA.disconnect();
+            }
+          });
+        }, { threshold: 0.5 });
+        obsA.observe(aguja);
+      } else {
+        aguja.style.transform = 'rotate(0deg)';
+      }
+    }
+  }
+
+  /* ---- banco de trabajo ---- */
+  var elegidas = [];
+  var lista  = document.getElementById('banco-lista');
+  var vacio  = document.getElementById('banco-vacio');
+  var enlace = document.getElementById('banco-wa');
+  var ctaTxt = document.getElementById('banco-cta');
+  var TEL = '573132465100';
+
+  function mensaje(){
+    var base = 'Hola Salomón, vi su tablero.';
+    if(elegidas.length){
+      base += '\n\nBajé del tablero:';
+      for(var i=0;i<elegidas.length;i++){ base += '\n• ' + elegidas[i]; }
+    }
+    base += '\n\nMi empresa hace: \nLo que me tiene amarrado es: ';
+    return base;
+  }
+
+  function pintarBanco(){
+    lista.innerHTML = '';
+    if(elegidas.length === 0){
+      lista.hidden = true;
+      vacio.hidden = false;
+      ctaTxt.textContent = 'Escribirme por WhatsApp';
+    } else {
+      lista.hidden = false;
+      vacio.hidden = true;
+      for(var i=0;i<elegidas.length;i++){
+        var li = document.createElement('li');
+        li.className = 'chip';
+        li.textContent = elegidas[i];
+        lista.appendChild(li);
+      }
+      ctaTxt.textContent = elegidas.length === 1
+        ? 'Mandarle esto por WhatsApp'
+        : 'Mandarle estas ' + elegidas.length + ' por WhatsApp';
+    }
+    enlace.setAttribute('href', 'https://wa.me/' + TEL + '?text=' + encodeURIComponent(mensaje()));
+  }
+
+  var ganchos = document.querySelectorAll('.gancho');
+  for(var g=0; g<ganchos.length; g++){
+    (function(btn){
+      btn.addEventListener('click', function(){
+        var item = btn.getAttribute('data-item');
+        var on = btn.getAttribute('aria-pressed') === 'true';
+        btn.setAttribute('aria-pressed', on ? 'false' : 'true');
+
+        var marca = btn.parentNode.querySelector('.marca-estado');
+        if(on){
+          var idx = elegidas.indexOf(item);
+          if(idx > -1){ elegidas.splice(idx,1); }
+          if(marca){ marca.textContent = 'Toque para bajarla'; marca.setAttribute('data-on','0'); }
+        } else {
+          if(elegidas.indexOf(item) === -1){ elegidas.push(item); }
+          if(marca){ marca.textContent = 'Ya está en el banco'; marca.setAttribute('data-on','1'); }
+        }
+        pintarBanco();
+      });
+    })(ganchos[g]);
+  }
+
+  pintarBanco();
+})();
+</script>
+
+</body>
+</html>

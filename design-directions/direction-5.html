@@ -1,0 +1,855 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Salomón Muriel</title>
+<meta name="description" content="Le ayudo a montar su negocio y yo mismo le construyo la tecnología. Consultoría y mentoría uno a uno para empresas colombianas que están empezando.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Instrument+Sans:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   DIRECCION 5. "EL EXPEDIENTE"
+   Tema: LIGHT, comprometido. Sin bloque de esquema de color, sin toggle.
+   Ground: papel frio gris-verde (no crema).
+   Acento único: verde profundo #0E6B45, en toda la página.
+   Radio: 0 en todo. Una sola regla de forma.
+   ============================================================ */
+
+:root{
+  color-scheme: light;
+
+  --paper:      #F1F4F3;   /* papel frío, no crema */
+  --paper-sunk: #E4EAE7;   /* banda hundida */
+  --cell:       #FAFCFB;   /* celda clara */
+  --ink:        #14201C;   /* casi negro, sesgo verde pizarra */
+  --ink-2:      #4A5854;   /* secundario  6.6:1 */
+  --ink-3:      #62706C;   /* terciario   4.7:1 */
+  --accent:     #0E6B45;   /* verde profundo 5.9:1 sobre papel */
+  --accent-ink: #0A5537;
+  --accent-tint:#DCE9E1;
+  --line:       #D2DBD7;
+  --line-2:     #BFCBC6;
+
+  --display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --text:    "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+  --num:     "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --r: 0px;               /* SHAPE LOCK: cero radio en toda la página */
+  --gutter: clamp(1.25rem, 4vw, 3.5rem);
+  --maxw: 1320px;
+  --ease: cubic-bezier(.16,1,.3,1);
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
+body{
+  margin:0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--text);
+  font-size: 16px;
+  line-height: 1.6;
+  font-weight: 400;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+img{ display:block; max-width:100%; height:auto; border-radius: var(--r); }
+a{ color: inherit; }
+h1,h2,h3,h4{ font-family: var(--display); font-weight: 700; margin:0; letter-spacing:-0.025em; }
+p{ margin:0; }
+ul{ margin:0; padding:0; list-style:none; }
+
+.wrap{ width:100%; max-width: var(--maxw); margin:0 auto; padding-inline: var(--gutter); }
+
+:focus-visible{
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* ---------- BOTONES ---------- */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center;
+  gap:.5rem;
+  font-family: var(--text);
+  font-size: .9375rem; font-weight:600; line-height:1;
+  white-space: nowrap;                 /* CTA nunca envuelve */
+  padding: .95rem 1.35rem;
+  border-radius: var(--r);
+  border:1px solid transparent;
+  text-decoration:none;
+  cursor:pointer;
+  transition: background-color .22s var(--ease), transform .18s var(--ease), border-color .22s var(--ease), color .22s var(--ease);
+}
+.btn-primary{ background: var(--accent); color:#FFFFFF; }
+.btn-primary:hover{ background: var(--accent-ink); transform: translateY(-1px); }
+.btn-primary:active{ transform: translateY(1px); }
+.btn-ghost{ background: transparent; color: var(--ink); border-color: var(--line-2); }
+.btn-ghost:hover{ border-color: var(--ink); transform: translateY(-1px); }
+.btn-ghost:active{ transform: translateY(1px); }
+.btn-sm{ padding:.7rem 1rem; font-size:.875rem; }
+
+.tlink{
+  font-weight:600; color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1.5px solid var(--accent-tint);
+  padding-bottom:1px;
+  transition: border-color .2s var(--ease), color .2s var(--ease);
+}
+.tlink:hover{ border-color: var(--accent); color: var(--accent-ink); }
+
+/* ---------- NAV ---------- */
+.nav{
+  position: sticky; top:0; z-index: 40;
+  height: 68px;
+  background: rgba(241,244,243,.92);
+  backdrop-filter: saturate(160%) blur(10px);
+  -webkit-backdrop-filter: saturate(160%) blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.nav-in{ height:100%; display:flex; align-items:center; gap: 1.5rem; }
+.brand{
+  font-family: var(--display); font-weight:800; font-size:1.0625rem;
+  letter-spacing:-.03em; text-decoration:none; color:var(--ink);
+  white-space:nowrap;
+}
+.brand span{ color: var(--accent); }
+.nav-links{ display:flex; align-items:center; gap:1.6rem; margin-left:auto; }
+.nav-links a{
+  font-size:.875rem; font-weight:500; color: var(--ink-2); text-decoration:none;
+  transition: color .18s var(--ease);
+}
+.nav-links a:hover{ color: var(--accent); }
+.nav-right{ display:flex; align-items:center; gap:1rem; margin-left:1.6rem; }
+.lang{ display:flex; align-items:center; gap:.35rem; font-family:var(--num); font-size:.75rem; }
+.lang a{ text-decoration:none; color: var(--ink-3); padding:.15rem .1rem; }
+.lang a[aria-current]{ color: var(--ink); font-weight:500; }
+.lang i{ color: var(--line-2); font-style:normal; }
+@media (max-width: 1000px){
+  .nav-links{ display:none; }
+  .nav-right{ margin-left:auto; }
+}
+@media (max-width: 480px){
+  .lang{ display:none; }
+  .nav-in{ gap:.75rem; }
+  .brand{ font-size:.9375rem; }
+  .nav-right .btn{ font-size:.8125rem; padding:.6rem .8rem; }
+}
+@media (max-width: 400px){
+  .nav{ height:60px; }
+  .brand{ font-size:.875rem; }
+  .nav-right .btn{ font-size:.75rem; padding:.55rem .65rem; }
+}
+
+/* ---------- ESCALA TIPOGRÁFICA ---------- */
+.h1{ font-size: clamp(2.15rem, 5.4vw, 4.15rem); line-height:1.02; letter-spacing:-.035em; }
+.h2{ font-size: clamp(1.8rem, 3.5vw, 2.85rem); line-height:1.06; letter-spacing:-.03em; }
+.h3{ font-size: clamp(1.15rem, 1.8vw, 1.45rem); line-height:1.15; letter-spacing:-.02em; }
+.lede{ font-size: clamp(1rem, 1.25vw, 1.125rem); color: var(--ink-2); max-width: 46ch; }
+.small{ font-size:.875rem; color: var(--ink-2); }
+.meta{ font-family: var(--num); font-size:.75rem; color: var(--ink-3); }
+.fig{ font-family: var(--num); font-weight:500; color: var(--accent); font-variant-numeric: tabular-nums; }
+
+section{ position:relative; }
+.sec{ padding-block: clamp(4rem, 8vw, 7.5rem); }
+.sec-head{ max-width: 62ch; }
+.sec-head .h2{ margin-bottom: .9rem; }
+.rule{ height:1px; background: var(--line); border:0; margin:0; }
+
+/* ---------- HERO ---------- */
+.hero{ padding-top: clamp(2.5rem, 5vw, 5rem); padding-bottom: clamp(3rem, 6vw, 5.5rem); }
+.hero-grid{
+  display:grid; gap: clamp(2rem, 4vw, 4rem);
+  grid-template-columns: minmax(0,1.08fr) minmax(0,.92fr);
+  align-items: start;   /* la copia arranca arriba: el CTA nunca cae bajo el pliegue */
+}
+.hero-copy .h1{ margin-bottom: 1.35rem; max-width: 19ch; }
+.hero-sub{ font-size: clamp(1.0625rem, 1.35vw, 1.2rem); line-height:1.5; color: var(--ink-2); max-width: 42ch; margin-bottom: 2rem; }
+.hero-sub b{ color: var(--ink); font-weight:600; }
+.hero-cta{ display:flex; flex-wrap:wrap; gap:.75rem; }
+.hero-art{ position:relative; }
+.hero-art img{
+  width:100%; aspect-ratio: 4/5; max-height: min(56vh, 540px);
+  object-fit:cover; object-position: 50% 20%;
+  border:1px solid var(--line);
+}
+@media (max-width: 900px){
+  .hero-grid{ grid-template-columns: 1fr; }
+  .hero-copy .h1{ max-width: 18ch; }
+  .hero-art img{ aspect-ratio: 5/4; object-position: 50% 18%; }
+}
+
+/* ---------- EL EXPEDIENTE (ledger agrupado) ---------- */
+.ledger{ margin-top: clamp(2.5rem, 4vw, 3.5rem); }
+.cluster{ margin-top: 2.75rem; }
+.cluster:first-child{ margin-top:0; }
+.cluster-label{
+  font-family: var(--display); font-weight:700; font-size:1rem;
+  color: var(--accent); margin-bottom: .35rem;
+}
+.cluster-note{ font-size:.9375rem; color: var(--ink-3); max-width:42ch; margin-bottom:1.1rem; }
+.entry{
+  display:grid;
+  grid-template-columns: 76px minmax(0,1fr) minmax(0,1.15fr);
+  gap: clamp(1rem, 2.5vw, 2.5rem);
+  align-items: start;
+  padding-block: 1.6rem;
+  border-top: 1px solid var(--line);   /* una sola familia de filete */
+}
+.cluster .entry:first-of-type{ border-top-color: var(--line-2); }
+.entry-mark{
+  width:76px; height:76px; border:1px solid var(--line);
+  background: var(--cell);
+  display:flex; align-items:center; justify-content:center; padding:.7rem;
+}
+.entry-mark img{ max-width:100%; max-height:100%; width:auto; height:auto; object-fit:contain; mix-blend-mode: multiply; }
+.entry-stamp{
+  display:block; margin-top:.55rem; width:76px;
+  font-family: var(--num); font-size:.75rem; color: var(--ink-2);
+  border-top:1px solid var(--line-2); padding-top:.35rem;
+}
+.entry-stamp.is-open{ color: var(--accent); border-top-color: var(--accent); font-weight:500; }
+.entry-name{ font-family: var(--display); font-weight:700; font-size: clamp(1.3rem,2.1vw,1.7rem); letter-spacing:-.03em; line-height:1.1; }
+.entry-years{ font-family: var(--num); font-size:.75rem; color: var(--ink-3); margin-top:.3rem; }
+.entry-what{ font-size:.9375rem; color: var(--ink-2); margin-top:.55rem; max-width:34ch; }
+.entry-facts{ display:flex; flex-direction:column; gap:.55rem; }
+.fact{ display:flex; gap:.75rem; align-items:baseline; }
+.fact .fig{ font-size: clamp(1.05rem,1.6vw,1.3rem); flex:none; min-width: 5.2ch; }
+.fact span{ font-size:.9375rem; color: var(--ink-2); }
+@media (max-width: 800px){
+  .entry{ grid-template-columns: 60px minmax(0,1fr); row-gap:1rem; }
+  .entry-mark{ width:60px; height:60px; }
+  .entry-stamp{ width:60px; }
+  .entry-facts{ grid-column: 1 / -1; }
+}
+.ledger-foot{
+  margin-top: 2.25rem; padding-top:1.5rem; border-top:1px solid var(--line);
+  display:flex; flex-wrap:wrap; gap:1rem 2.5rem; align-items:baseline;
+}
+.ledger-foot p{ font-size:.9375rem; color: var(--ink-2); max-width: 48ch; }
+.ledger-foot b{ color: var(--ink); font-weight:600; }
+
+/* ---------- LO QUE CONSTRUYO (bento, 5 celdas exactas) ---------- */
+.band-sunk{ background: var(--paper-sunk); border-block:1px solid var(--line); }
+.bento{
+  margin-top: clamp(2.25rem, 4vw, 3rem);
+  display:grid; grid-template-columns: repeat(12, minmax(0,1fr));
+  gap: clamp(.75rem, 1.2vw, 1rem);
+}
+.tile{ border:1px solid var(--line); padding: clamp(1.25rem, 2vw, 1.9rem); display:flex; flex-direction:column; }
+.tile-a{ grid-column: span 7; background: var(--cell); padding:0; overflow:hidden; }
+.tile-b{ grid-column: span 5; background: var(--ink); border-color: var(--ink); color:#FFFFFF; justify-content:space-between; }
+.tile-c{ grid-column: span 5; background: var(--accent-tint); border-color:#C6D9CD; }
+.tile-d{ grid-column: span 7; background: var(--cell); justify-content:space-between; gap:2rem; }
+.tile-e{
+  grid-column: span 12; background: var(--ink); border-color: var(--ink); color:#FFFFFF;
+  display:grid; grid-template-columns: minmax(0,1.12fr) minmax(0,.88fr);
+  gap: clamp(1.5rem, 4vw, 4rem); align-items:start;
+}
+.tile-e .h3{ color:#FFFFFF; margin-bottom:.65rem; }
+.tile-e p{ color:#C6D2CE; max-width:48ch; }
+.e-lead{ font-size:.9375rem; }
+.e-list{ margin-top:1rem; }
+.e-list li{
+  font-family: var(--num); font-size:.9375rem; color:#8FD0AB;
+  padding:.7rem 0; border-top:1px solid rgba(255,255,255,.14);
+}
+.e-list li:last-child{ border-bottom:1px solid rgba(255,255,255,.14); }
+.tile h3{ margin-bottom:.55rem; }
+.tile p{ font-size:.9375rem; color: var(--ink-2); max-width: 44ch; }
+.tile-b p{ color:#C6D2CE; }
+.tile-b .h3{ color:#FFFFFF; }
+.tile-b .big{
+  font-family: var(--num); font-weight:500; font-size: clamp(2.4rem,4.5vw,3.6rem);
+  color:#7BC49B; line-height:1; letter-spacing:-.03em; margin-bottom:.4rem;
+}
+.tile-a figure{ margin:0; height:100%; display:flex; flex-direction:column; }
+.tile-a img{ width:100%; aspect-ratio: 16/10; object-fit:cover; }
+.tile-a figcaption{ padding: clamp(1.1rem,1.8vw,1.6rem); }
+.tile-a figcaption h3{ margin-bottom:.45rem; }
+.tile .tile-quote{   /* gana a .tile p, que si no le impone el tamaño de cuerpo */
+  font-family: var(--display); font-weight:600;
+  font-size: clamp(1.45rem, 2.6vw, 2.15rem); line-height:1.18; letter-spacing:-.03em;
+  color: var(--ink); max-width: 20ch;
+}
+.tile-list{ display:flex; flex-direction:column; gap:.5rem; margin-top:.85rem; }
+.tile-list li{ font-size:.9375rem; color: var(--ink-2); padding-left:1.1rem; position:relative; }
+.tile-list li::before{ content:"›"; position:absolute; left:0; color: var(--accent); font-weight:700; }
+@media (max-width: 900px){
+  .tile-a,.tile-b,.tile-c,.tile-d,.tile-e{ grid-column: span 12; }
+  .tile-e{ grid-template-columns: 1fr; gap:1.5rem; }
+}
+
+/* ---------- CRITERIO (declaración firmada) ---------- */
+.statement{ max-width: 30ch; }
+.statement-body{
+  margin-top: clamp(1.5rem,2.5vw,2.25rem);
+  max-width: 48ch;
+  font-size: clamp(1.15rem, 1.75vw, 1.5rem);
+  line-height:1.42; letter-spacing:-.012em; color: var(--ink);
+}
+.statement-body p + p{ margin-top:1.1rem; }
+.statement-body em{
+  font-style: italic; font-weight:600;
+  line-height:1.35; padding-bottom:.12em; display:inline-block;
+}
+.sign{
+  margin-top: 2.25rem; padding-top:1.1rem; border-top:1px solid var(--line-2);
+  max-width: 48ch; display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap;
+}
+.sign strong{ font-family: var(--display); font-weight:700; font-size:1.0625rem; letter-spacing:-.02em; }
+.sectors{
+  margin-top: clamp(2.5rem,4vw,3.5rem); display:flex; flex-wrap:wrap; gap:.5rem;
+}
+.sectors li{
+  font-size:.875rem; color: var(--ink-2);
+  border:1px solid var(--line-2); padding:.45rem .75rem; background: var(--cell);
+}
+
+/* ---------- VIDA (tira de fotos con scroll-snap) ---------- */
+.strip{
+  margin-top: clamp(2rem,3.5vw,2.75rem);
+  display:grid; grid-auto-flow: column; grid-auto-columns: minmax(230px, 1fr);
+  gap: clamp(.75rem, 1.4vw, 1.15rem);
+  overflow-x:auto; overflow-y:hidden;
+  scroll-snap-type: x mandatory;
+  padding-bottom:.75rem;
+  scrollbar-width: thin;
+}
+.strip::-webkit-scrollbar{ height:6px; }
+.strip::-webkit-scrollbar-thumb{ background: var(--line-2); }
+.strip figure{ margin:0; scroll-snap-align:start; }
+.strip img{ width:100%; aspect-ratio: 4/5; object-fit:cover; border:1px solid var(--line); }
+.strip figcaption{ margin-top:.6rem; font-size:.875rem; color: var(--ink-2); }
+.why-slots{
+  margin-top: clamp(2rem,3vw,2.5rem); padding-top:1.5rem; border-top:1px solid var(--line);
+  font-size: clamp(1rem,1.4vw,1.15rem); color: var(--ink); max-width: 50ch;
+}
+.why-slots b{ font-weight:600; }
+
+/* ---------- LA AGENDA ---------- */
+.agenda{ margin-top: clamp(2.25rem,4vw,3rem); display:grid; grid-template-columns: repeat(12,minmax(0,1fr)); gap: clamp(.75rem,1.2vw,1rem); }
+.offer{
+  background: var(--cell); border:1px solid var(--line);
+  padding: clamp(1.5rem, 2.6vw, 2.4rem);
+  display:flex; flex-direction:column;
+  border-top: 4px solid var(--accent);
+}
+.offer-lead{ grid-column: span 7; }
+.offer-second{ grid-column: span 5; }
+.offer h3{ font-size: clamp(1.5rem,2.6vw,2.1rem); letter-spacing:-.03em; }
+.offer .hands{
+  margin-top:.65rem; font-size: clamp(1rem,1.35vw,1.125rem); color: var(--ink); font-weight:500;
+  max-width:36ch;
+}
+.offer .how{ margin-top:1.1rem; font-size:.9375rem; color: var(--ink-2); max-width: 44ch; }
+.offer .how + .how{ margin-top:.7rem; }
+.offer .aside{
+  margin-top:1.1rem; padding:.85rem 1rem; background: var(--paper-sunk);
+  font-size:.875rem; color: var(--ink-2); max-width:44ch;
+}
+.offer-foot{ margin-top:auto; padding-top: 1.75rem; }
+.occupancy{ display:flex; align-items:center; gap:.85rem; flex-wrap:wrap; padding-top:1.4rem; border-top:1px solid var(--line); margin-top:1.5rem; }
+.slots{ display:inline-flex; gap:.3rem; }
+.slots i{ width:15px; height:15px; border:1.5px solid var(--line-2); display:block; }
+.slots i.on{ background: var(--accent); border-color: var(--accent); }
+.occ-text{ font-family: var(--num); font-size:.8125rem; color: var(--ink-2); }
+.occ-text b{ color: var(--ink); font-weight:500; }
+.offer .btn{ margin-top:1.25rem; }
+.offer-second .btn{ background: transparent; color: var(--ink); border-color: var(--ink); }
+.offer-second .btn:hover{ background: var(--ink); color:#FFFFFF; }
+
+.talks{
+  grid-column: span 12;
+  border:1px solid var(--line-2); background: transparent;
+  padding: clamp(1.5rem,2.6vw,2.2rem);
+  display:grid; grid-template-columns: minmax(0,.9fr) minmax(0,1.4fr); gap: clamp(1.25rem,3vw,3rem);
+  align-items:start;
+}
+.talks h3{ font-size: clamp(1.35rem,2.2vw,1.75rem); }
+.talks .nope{ margin-top:.6rem; font-size:.9375rem; color: var(--ink-2); max-width:32ch; }
+.talks-topics{ display:flex; flex-wrap:wrap; gap:.45rem; margin-top:1.1rem; }
+.talks-topics li{ font-size:.875rem; color:var(--ink-2); border:1px solid var(--line); background: var(--cell); padding:.45rem .8rem; }
+.talks-venues{ font-size:.9375rem; color: var(--ink-2); max-width:48ch; }
+.talks-foot{ margin-top:1.25rem; font-size:.9375rem; }
+@media (max-width: 950px){
+  .offer-lead,.offer-second,.talks{ grid-column: span 12; }
+  .talks{ grid-template-columns:1fr; }
+}
+
+/* ---------- REFERENCIAS ---------- */
+.refs{ display:grid; grid-template-columns: minmax(0,1.05fr) minmax(0,.95fr); gap: clamp(1.5rem,3.5vw,3.5rem); align-items:start; }
+.refs .body{ font-size: clamp(1rem,1.35vw,1.125rem); color: var(--ink-2); max-width:44ch; margin-top:1rem; }
+.refs .body b{ color: var(--ink); font-weight:600; }
+.reserved{
+  border:1px solid var(--line-2); background: var(--cell);
+  padding: clamp(1.5rem,2.5vw,2.25rem);
+  min-height: 200px; display:flex; flex-direction:column; justify-content:space-between; gap:1.5rem;
+}
+.reserved .ph{
+  font-family: var(--display); font-weight:600; font-size: clamp(1.1rem,1.7vw,1.35rem);
+  color: var(--ink-3); line-height:1.3; letter-spacing:-.02em; max-width:24ch;
+}
+.reserved .tag{ font-family:var(--num); font-size:.75rem; color: var(--ink-3); border-top:1px solid var(--line); padding-top:.9rem; }
+@media (max-width: 850px){ .refs{ grid-template-columns:1fr; } }
+
+/* ---------- CIERRE ---------- */
+.close-in{ display:flex; flex-direction:column; gap: clamp(1.5rem,2.5vw,2rem); }
+.close-head{ max-width: 20ch; }
+.close-body{ font-size: clamp(1rem,1.35vw,1.15rem); color: var(--ink-2); max-width:44ch; }
+.close-row{ display:flex; align-items:center; gap:1.25rem; flex-wrap:wrap; }
+.close-portrait{ width:88px; height:88px; object-fit:cover; object-position:50% 18%; border:1px solid var(--line); background: var(--cell); flex:none; }
+.channels{ display:flex; flex-wrap:wrap; gap:.5rem 2rem; padding-top:1.4rem; border-top:1px solid var(--line); font-size:.9375rem; color: var(--ink-2); }
+.channels a{ text-decoration:none; color: var(--ink); border-bottom:1.5px solid var(--line-2); transition: border-color .2s var(--ease); }
+.channels a:hover{ border-color: var(--accent); }
+
+/* ---------- FOOTER ---------- */
+.foot{ border-top:1px solid var(--line); padding-block: 2.5rem 3rem; }
+.foot-in{ display:flex; flex-wrap:wrap; gap:1.5rem 2.5rem; align-items:baseline; justify-content:space-between; }
+.foot-nav{ display:flex; flex-wrap:wrap; gap:1.5rem; }
+.foot-nav a{ font-size:.9375rem; color: var(--ink-2); text-decoration:none; }
+.foot-nav a:hover{ color: var(--accent); }
+.foot-meta{ font-family:var(--num); font-size:.75rem; color: var(--ink-3); }
+
+/* ---------- MOTION: reveal por IntersectionObserver ---------- */
+@media (prefers-reduced-motion: no-preference){
+  [data-reveal]{ opacity:0; transform: translateY(14px); }
+  [data-reveal].in{
+    opacity:1; transform:none;
+    transition: opacity .6s var(--ease) var(--d,0s), transform .6s var(--ease) var(--d,0s);
+  }
+}
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior:auto; }
+  [data-reveal]{ opacity:1 !important; transform:none !important; }
+  .btn{ transition:none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===================== NAV ===================== -->
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top">Salomón Muriel<span>.</span></a>
+    <nav class="nav-links" aria-label="Principal">
+      <a href="#expediente">Expediente</a>
+      <a href="#construyo">Lo que construyo</a>
+      <a href="#agenda">Agenda</a>
+      <a href="#charlas">Charlas</a>
+    </nav>
+    <div class="nav-right">
+      <div class="lang" aria-label="Idioma">
+        <a href="#top" aria-current="true">ES</a><i>/</i><a href="/en">EN</a>
+      </div>
+      <a class="btn btn-primary btn-sm"
+         href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20vengo%20de%20su%20p%C3%A1gina.%20Quiero%20contarle%20qu%C3%A9%20estoy%20montando.">Escríbame por WhatsApp</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ===================== HERO ===================== -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy" data-reveal>
+      <h1 class="h1">Nada de lo que sigue es una promesa.</h1>
+      <p class="hero-sub">Le ayudo a montar su negocio y yo mismo le construyo la tecnología. <b>Antes de creerme, revise el expediente.</b></p>
+      <div class="hero-cta">
+        <a class="btn btn-primary"
+           href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20vengo%20de%20su%20p%C3%A1gina.%20Quiero%20contarle%20qu%C3%A9%20estoy%20montando.">Escríbame por WhatsApp</a>
+        <a class="btn btn-ghost" href="#expediente">Ver el expediente</a>
+      </div>
+    </div>
+    <div class="hero-art" data-reveal style="--d:.12s">
+      <img src="assets/fotoSalo.jpeg" width="800" height="800" alt="Salomón Muriel, retrato de frente con abrigo verde." fetchpriority="high" decoding="async">
+    </div>
+  </div>
+</section>
+
+<!-- ===================== EL EXPEDIENTE ===================== -->
+<section class="sec" id="expediente" style="border-top:1px solid var(--line);">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <h2 class="h2">El expediente.</h2>
+      <p class="lede">Cinco empresas. Dos las vendí, dos las quebré y una está andando. Las cinco están aquí, con sus números.</p>
+    </div>
+
+    <div class="ledger">
+
+      <!-- Cluster 1 -->
+      <div class="cluster">
+        <p class="cluster-label" data-reveal>Vendidas</p>
+
+        <article class="entry" data-reveal>
+          <div class="entry-mark-col">
+            <div class="entry-mark"><img src="assets/finco.png" width="730" height="734" alt="Logo de Finco" loading="lazy" decoding="async"></div>
+            <span class="entry-stamp">Vendida</span>
+          </div>
+          <div>
+            <h3 class="entry-name">Finco</h3>
+            <p class="entry-years">Cofundador</p>
+            <p class="entry-what">Informes y datos de finca raíz para bancos, aseguradoras y constructoras.</p>
+          </div>
+          <div class="entry-facts">
+            <div class="fact"><span class="fig">100.000</span><span>informes procesados al año.</span></div>
+            <div class="fact"><span class="fig">5×</span><span>la inversión al momento de la venta, cerca de USD 1.500.000.</span></div>
+          </div>
+        </article>
+
+        <article class="entry" data-reveal style="--d:.06s">
+          <div class="entry-mark-col">
+            <div class="entry-mark"><img src="assets/prestagente.png" width="932" height="912" alt="Logo de PrestaGente" loading="lazy" decoding="async"></div>
+            <span class="entry-stamp">Vendida</span>
+          </div>
+          <div>
+            <h3 class="entry-name">PrestaGente</h3>
+            <p class="entry-years">Cofundador</p>
+            <p class="entry-what">Crédito entre conocidos. "Como pedirle a un amigo."</p>
+          </div>
+          <div class="entry-facts">
+            <div class="fact"><span class="fig">USD 1M</span><span>aproximadamente, el valor de la venta.</span></div>
+          </div>
+        </article>
+      </div>
+
+      <!-- Cluster 2 -->
+      <div class="cluster">
+        <p class="cluster-label" data-reveal>Quebradas</p>
+        <p class="cluster-note" data-reveal>Van con el mismo tamaño de letra que las otras. Quien solo le muestra las que le salieron bien le está escondiendo la mitad del expediente.</p>
+
+        <article class="entry" data-reveal>
+          <div class="entry-mark-col">
+            <div class="entry-mark"><img src="assets/beriblock.png" width="808" height="954" alt="Logo de Beriblock" loading="lazy" decoding="async"></div>
+            <span class="entry-stamp">Cerrada</span>
+          </div>
+          <div>
+            <h3 class="entry-name">Beriblock</h3>
+            <p class="entry-years">Cofundador</p>
+            <p class="entry-what">No se sostuvo. La cerramos.</p>
+          </div>
+          <div class="entry-facts">
+            <div class="fact"><span class="fig">0</span><span>pesos devueltos. Se acabó y no quedó nada que repartir.</span></div>
+          </div>
+        </article>
+
+        <article class="entry" data-reveal style="--d:.06s">
+          <div class="entry-mark-col">
+            <div class="entry-mark"><img src="assets/elpalomo.png" width="100" height="100" alt="Logo de El Palomo" loading="lazy" decoding="async"></div>
+            <span class="entry-stamp">Cerrada</span>
+          </div>
+          <div>
+            <h3 class="entry-name">El Palomo</h3>
+            <p class="entry-years">Fundador</p>
+            <p class="entry-what">Falló, y falló espectacularmente.</p>
+          </div>
+          <div class="entry-facts">
+            <div class="fact"><span class="fig">0</span><span>pesos devueltos. De esta aprendí más que de las dos ventas juntas.</span></div>
+          </div>
+        </article>
+      </div>
+
+      <!-- Cluster 3 -->
+      <div class="cluster">
+        <p class="cluster-label" data-reveal>Andando</p>
+
+        <article class="entry" data-reveal>
+          <div class="entry-mark-col">
+            <div class="entry-mark"><img src="assets/ignia.png" width="1657" height="1104" alt="Logo de Ignia" loading="lazy" decoding="async"></div>
+            <span class="entry-stamp is-open">Operando</span>
+          </div>
+          <div>
+            <h3 class="entry-name">Ignia</h3>
+            <p class="entry-years">Lanzada en junio de 2025</p>
+            <p class="entry-what">Aceleradora. Equipo de cinco personas. Es mi trabajo principal hoy.</p>
+          </div>
+          <div class="entry-facts">
+            <div class="fact"><span class="fig">150K</span><span>dólares facturados en el primer año.</span></div>
+            <div class="fact"><span class="fig">Día 1</span><span>rentable desde el primer día, sin levantar capital.</span></div>
+            <div class="fact"><span class="fig">~30</span><span>fellows en la primera cohorte del Action Lab.</span></div>
+          </div>
+        </article>
+      </div>
+
+      <div class="ledger-foot" data-reveal>
+        <p><b>Ignia es mi trabajo principal.</b> Esta página es mi práctica personal y va por separado: lo que contrata aquí lo hago yo, a mi nombre, y no pasa por Ignia.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== LO QUE CONSTRUYO ===================== -->
+<section class="sec band-sunk" id="construyo">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <h2 class="h2">Lo construí yo, con mis manos.</h2>
+      <p class="lede">No subcontrato la parte técnica. Cuando le digo que le construyo el sistema, lo escribo yo, y me toca a mí cuando algo se cae.</p>
+    </div>
+
+    <div class="bento">
+
+      <div class="tile tile-a" data-reveal>
+        <figure>
+          <img src="assets/salo_oscar.webp" width="527" height="328" alt="Salomón junto a su socio, mostrando la plataforma de Finco en pantalla durante un evento." loading="lazy" decoding="async">
+          <figcaption>
+            <h3 class="h3">La plataforma de Finco</h3>
+            <p>La construimos para que un banco pidiera un informe y lo recibiera resuelto. Terminó moviendo cien mil informes al año.</p>
+          </figcaption>
+        </figure>
+      </div>
+
+      <div class="tile tile-b" data-reveal style="--d:.06s">
+        <div>
+          <h3 class="h3">El motor de riesgo de R5</h3>
+          <p>Armé el pipeline de datos completo y el sistema de modelación de riesgo con el que la empresa decidía a quién prestarle.</p>
+        </div>
+        <div>
+          <p class="big">40</p>
+          <p>personas a mi cargo ahí. En mis propias empresas he manejado equipos de hasta 15.</p>
+        </div>
+      </div>
+
+      <div class="tile tile-c" data-reveal>
+        <h3 class="h3">Lo que hice en Ignia</h3>
+        <p>Tres piezas que uso todos los días y que salieron de mi teclado.</p>
+        <ul class="tile-list">
+          <li>El CRM con el que manejamos a los fellows.</li>
+          <li>La página web de la aceleradora.</li>
+          <li>La plataforma donde vive la comunidad.</li>
+        </ul>
+      </div>
+
+      <div class="tile tile-d" data-reveal style="--d:.06s">
+        <h3 class="h3">En qué soy bueno</h3>
+        <p class="tile-quote">Construir sistemas que le funcionen a la gente que los usa, y sacar cosas adelante.</p>
+      </div>
+
+      <div class="tile tile-e" data-reveal>
+        <div>
+          <h3 class="h3">Y hoy construyo con inteligencia artificial.</h3>
+          <p>Es lo más reciente que hago y lo que más cambia cuánto le puedo entregar en el mismo tiempo. La uso para escribir el software de su empresa más rápido y más barato de lo que costaba hace dos años.</p>
+        </div>
+        <div>
+          <p class="e-lead">Y pongo agentes como Claude Code a hacer trabajo que no es de programación:</p>
+          <ul class="e-list">
+            <li>armar cotizaciones</li>
+            <li>sacar informes que hoy hace alguien a mano</li>
+            <li>lo repetitivo que le come el día a su equipo</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CRITERIO (declaración) ===================== -->
+<section class="sec" id="criterio">
+  <div class="wrap">
+    <h2 class="h2 statement" data-reveal>Para quién sirvo, y para quién no.</h2>
+    <div class="statement-body" data-reveal style="--d:.06s">
+      <p>Trabajo con empresas colombianas que facturan menos de 5.000 millones de pesos al año. Ropa, comida, retail, consultoría. Negocios de verdad, casi siempre sin nadie de tecnología adentro.</p>
+      <p>No doy charlas de ciencia de datos ni de cultura organizacional. <em>No sé</em> cómo llevar una empresa más allá de unos cinco millones de dólares al año, y no voy a fingir que sí. Y si su idea necesita inventar tecnología que todavía no existe, yo no soy la persona: busque a alguien de investigación.</p>
+      <p>Digo esto de entrada porque es más barato para los dos que descubrirlo en la tercera reunión.</p>
+    </div>
+    <div class="sign" data-reveal>
+      <strong>Salomón Muriel</strong>
+      <span class="meta">Consultoría y mentoría a título personal</span>
+    </div>
+
+    <ul class="sectors" data-reveal>
+      <li>Marcas de ropa</li>
+      <li>Restaurantes y comida</li>
+      <li>Retail</li>
+      <li>Consultoras</li>
+      <li>Negocios que apenas arrancan</li>
+      <li>Fundaciones sin ánimo de lucro</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ===================== VIDA / POR QUÉ HAY POCOS CUPOS ===================== -->
+<section class="sec band-sunk" id="vida">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <h2 class="h2">Por qué hay tan pocos cupos.</h2>
+      <p class="lede">Porque esto no es mi trabajo principal y no quiero que lo sea. Tengo a Ignia, tengo dos hijos y salgo a correr.</p>
+    </div>
+
+    <div class="strip" data-reveal>
+      <figure>
+        <img src="assets/marathon.jpg" width="600" height="600" alt="Salomón mostrando su medalla al terminar una carrera en Bogotá." loading="lazy" decoding="async">
+        <figcaption>Llegando a la meta.</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/miami.jpg" width="600" height="599" alt="Salomón con su familia en la playa." loading="lazy" decoding="async">
+        <figcaption>Con la familia.</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/chicago.jpg" width="300" height="400" alt="Salomón de viaje con los niños en hombros." loading="lazy" decoding="async">
+        <figcaption>De viaje con los niños.</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/bonfire.jpeg" width="600" height="600" alt="Fogata encendida al anochecer, fuera de la ciudad." loading="lazy" decoding="async">
+        <figcaption>Fuera de la ciudad.</figcaption>
+      </figure>
+    </div>
+
+    <p class="why-slots" data-reveal>
+      Si le vendiera cupos a todo el que escribe, le estaría vendiendo mi cansancio. <b>Prefiero atender pocos y atenderlos bien.</b> Por eso la lista de abajo es corta y los números son reales.
+    </p>
+  </div>
+</section>
+
+<!-- ===================== LA AGENDA ===================== -->
+<section class="sec" id="agenda">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <h2 class="h2">Lo que tengo abierto hoy.</h2>
+      <p class="lede">Tres cosas, y solo dos se pueden contratar. Los cupos son de verdad: cuando se llenan, quito el botón.</p>
+    </div>
+
+    <div class="agenda">
+
+      <!-- Consultoría -->
+      <article class="offer offer-lead" data-reveal>
+        <h3>Consultoría</h3>
+        <p class="hands">Lo que cambia de manos: un sistema andando en su empresa. No un documento.</p>
+        <p class="how">Empezamos de ceros con lo aburrido y decisivo: qué va a vender, a quién, a qué precio y con qué margen. Cuando eso está claro, yo construyo la tecnología que ese negocio necesita para funcionar.</p>
+        <p class="how">Puede ser una herramienta hecha a la medida, ordenar los procesos que hoy viven en WhatsApp y Excel, o meter inteligencia artificial en el trabajo diario de su equipo. Lo que aplique. Yo lo construyo y yo se lo entrego funcionando.</p>
+        <div class="offer-foot">
+          <div class="occupancy">
+            <span class="slots" role="img" aria-label="Dos de cuatro cupos ocupados">
+              <i class="on"></i><i class="on"></i><i></i><i></i>
+            </span>
+            <span class="occ-text"><b>2 de 4</b> ocupados. Quedan 2 cupos.</span>
+          </div>
+          <a class="btn btn-primary"
+             href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20vengo%20de%20su%20p%C3%A1gina.%20Me%20interesa%20la%20consultor%C3%ADa%20para%20mi%20empresa.">Escríbame por WhatsApp</a>
+        </div>
+      </article>
+
+      <!-- Mentoría -->
+      <article class="offer offer-second" data-reveal style="--d:.06s">
+        <h3>Mentoría uno a uno</h3>
+        <p class="hands">Lo que cambia de manos: su propia ejecución, semana por semana.</p>
+        <p class="how">Nos vemos cada semana y usted sale con tareas concretas para esos siete días. La siguiente sesión empieza revisándolas. Trabajar conmigo significa que las cosas pasan, sí o sí.</p>
+        <p class="aside">Esto es uno a uno, conmigo. Si lo que busca es un programa por cohortes, con compañeros y currículo, eso es el Action Lab de Ignia y es otra cosa distinta. Con gusto le digo cuál de las dos le sirve más.</p>
+        <div class="offer-foot">
+          <div class="occupancy">
+            <span class="slots" role="img" aria-label="Tres de cinco cupos ocupados">
+              <i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i>
+            </span>
+            <span class="occ-text"><b>3 de 5</b> ocupados. Quedan 2 cupos.</span>
+          </div>
+          <a class="btn btn-ghost"
+             href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20vengo%20de%20su%20p%C3%A1gina.%20Me%20interesa%20la%20mentor%C3%ADa%20uno%20a%20uno.">Escríbame por WhatsApp</a>
+        </div>
+      </article>
+
+      <!-- Charlas: banda, no tarjeta. Señal visual de que no es un producto. -->
+      <aside class="talks" id="charlas" data-reveal>
+        <div>
+          <h3>Charlas</h3>
+          <p class="nope">Esto no se contrata como producto. Es la forma en que la gente me conoce, y por eso no tiene cupos ni botón grande.</p>
+        </div>
+        <div>
+          <p class="talks-venues">Me han llevado conferencias, empresas y universidades. Cuando me invitan, hablo de lo que sí he hecho.</p>
+          <ul class="talks-topics">
+            <li>Adopción de tecnología</li>
+            <li>IA en el día a día</li>
+            <li>Emprender de ceros</li>
+            <li>Mentalidad</li>
+            <li>Vida y trabajo mientras monta algo</li>
+          </ul>
+          <p class="talks-foot">¿Organiza un evento?
+            <a class="tlink" href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20vengo%20de%20su%20p%C3%A1gina.%20Quiero%20invitarlo%20a%20dar%20una%20charla.">Escríbame por WhatsApp</a>
+          </p>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===================== REFERENCIAS ===================== -->
+<section class="sec band-sunk" id="referencias">
+  <div class="wrap refs">
+    <div data-reveal>
+      <h2 class="h2">Todavía no tengo testimonios publicados.</h2>
+      <p class="body">Llevo unos siete mentoreados y varios clientes de consultoría, y no les he pedido que escriban nada. Escribirlos yo sería justo lo contrario de lo que hace esta página.</p>
+      <p class="body"><b>Mientras tanto le ofrezco algo mejor que una frase bonita:</b> dígame y lo pongo a hablar directamente con alguno de ellos, sin mí en la conversación, antes de que decida.</p>
+      <p style="margin-top:1.5rem;">
+        <a class="tlink" href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20vengo%20de%20su%20p%C3%A1gina.%20Quiero%20hablar%20con%20alguno%20de%20sus%20clientes%20antes%20de%20decidir.">Escríbame por WhatsApp</a>
+      </p>
+    </div>
+    <div class="reserved" data-reveal style="--d:.08s">
+      <p class="ph">Aquí van, cuando ellos los escriban y no antes.</p>
+      <p class="tag">Espacio reservado para testimonios de clientes</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CIERRE ===================== -->
+<section class="sec" id="contacto">
+  <div class="wrap close-in">
+    <h2 class="h2 close-head" data-reveal>Cuénteme qué está montando.</h2>
+    <p class="close-body" data-reveal>Un mensaje suyo con dos o tres frases me basta para decirle si le sirvo o si le conviene más otra persona. Si no le sirvo, se lo digo de una y no le hago perder la tarde.</p>
+    <div class="close-row" data-reveal style="--d:.06s">
+      <img class="close-portrait" src="assets/salomon.webp" width="432" height="432" alt="Salomón Muriel al aire libre." loading="lazy" decoding="async">
+      <a class="btn btn-primary"
+         href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20vengo%20de%20su%20p%C3%A1gina.%20Quiero%20contarle%20qu%C3%A9%20estoy%20montando.">Escríbame por WhatsApp</a>
+    </div>
+    <div class="channels" data-reveal>
+      <span>Prefiere agendar: <a href="https://cal.com/salomonmuriel">cal.com/salomonmuriel</a></span>
+      <span>LinkedIn: <a href="https://www.linkedin.com/in/salomonmuriel/">/in/salomonmuriel</a></span>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div>
+      <a class="brand" href="#top">Salomón Muriel<span>.</span></a>
+      <p class="foot-meta" style="margin-top:.5rem;">Bogotá, Colombia</p>
+    </div>
+    <nav class="foot-nav" aria-label="Pie de página">
+      <a href="#criterio">Sobre mí</a>
+      <a href="#vida">Ahora</a>
+      <a href="#charlas">Charlas</a>
+      <a href="#expediente">Empresas</a>
+      <a href="https://www.linkedin.com/in/salomonmuriel/">LinkedIn</a>
+    </nav>
+    <div class="lang" style="gap:.4rem;">
+      <a href="#top" aria-current="true">Español</a><i>/</i><a href="/en">English</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* Motivación de la animación: el expediente se lee entrada por entrada.
+   El reveal escalonado marca ese orden de lectura y nada más.
+   Sin listeners de scroll. IntersectionObserver, y desactivado bajo reduced-motion. */
+(function () {
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var nodes = document.querySelectorAll("[data-reveal]");
+  if (reduce || !("IntersectionObserver" in window)) {
+    for (var i = 0; i < nodes.length; i++) nodes[i].classList.add("in");
+    return;
+  }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+  nodes.forEach(function (n) { io.observe(n); });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1154 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Su empresa no está automatizada. Está chinomatizada.</title>
+<meta name="description" content="Carta abierta al dueño de una empresa colombiana que factura menos de 8.000 millones de pesos al año y todavía hace medio negocio a mano.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,600&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   Carta de venta larga. Direct-response sales letter.
+   Light theme, locked. No dark mode, no toggle, by brief.
+   Accent: ballpoint blue #1D46C7, used on the whole page.
+   Radius system: 3px everywhere (document, not app).
+   ============================================================ */
+
+:root{
+  color-scheme: light;
+
+  --desk:      #E7EAEE;   /* cool grey desk the sheet sits on */
+  --sheet:     #FCFCFC;   /* the letter itself, neutral white */
+  --panel:     #F3F5F7;   /* quiet inset panel */
+  --accent:    #1D46C7;   /* ballpoint blue */
+  --accent-dk: #16359B;
+  --accent-sf: #EBF0FE;
+  --ink:       #14171B;
+  --ink-2:     #474D56;
+  --ink-3:     #6D757F;
+  --rule:      #DDE1E6;
+  --rule-2:    #C9CFD6;
+
+  --r: 3px;
+  --serif: "Source Serif 4", Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --sans: "Archivo", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  --measure: 41rem;
+  --rail: 14.5rem;
+}
+
+*{ box-sizing: border-box; }
+
+html{
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior: auto; }
+}
+
+body{
+  margin: 0;
+  background: var(--desk);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 19px;
+  line-height: 1.62;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img{ max-width: 100%; display: block; }
+
+::selection{ background: #C9D6FB; color: var(--ink); }
+
+a{ color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+a:hover{ color: var(--accent-dk); }
+:focus-visible{
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: var(--r);
+}
+
+/* ---------- reading progress (CSS scroll-driven, no JS listeners) ---------- */
+.progress{
+  position: fixed; inset: 0 0 auto 0; height: 3px; z-index: 40;
+  background: var(--accent);
+  transform: scaleX(0); transform-origin: 0 50%;
+  pointer-events: none;
+}
+@supports (animation-timeline: scroll()){
+  .progress{
+    animation: grow linear both;
+    animation-timeline: scroll(root block);
+  }
+}
+@keyframes grow{ to{ transform: scaleX(1); } }
+
+/* ---------- the sheet ---------- */
+.sheet{
+  max-width: 1240px;
+  margin: 0 auto;
+  background: var(--sheet);
+  box-shadow:
+    0 1px 2px rgba(22,32,52,.06),
+    0 30px 70px -40px rgba(22,32,52,.28);
+  border-left: 1px solid #EEF0F2;
+  border-right: 1px solid #EEF0F2;
+}
+
+/* letterhead. Not navigation: this letter has none, by archetype. */
+.letterhead{
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 1.25rem; flex-wrap: wrap;
+  padding: 1.35rem 6rem;
+  border-bottom: 1px solid var(--rule);
+}
+.letterhead .name{
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: .95rem;
+  letter-spacing: .005em;
+}
+.letterhead .what{
+  font-family: var(--sans);
+  font-size: .82rem;
+  color: var(--ink-3);
+}
+
+/* ---------- the two column body grid ---------- */
+.wrap{
+  display: grid;
+  grid-template-columns: var(--rail) minmax(0, var(--measure));
+  column-gap: 3.5rem;
+  padding: 0 6rem 5rem;
+  align-items: start;
+}
+.wrap > *{ grid-column: 2; }
+.wrap > .full{ grid-column: 1 / -1; }
+
+/* paragraph plus its margin note, kept on the same row so the
+   reading column never opens a hole where the note sits */
+.pair{
+  display: grid;
+  grid-template-columns: var(--rail) minmax(0, var(--measure));
+  column-gap: 3.5rem;
+  align-items: start;
+}
+.pair > .note{ grid-column: 1; }
+.pair > .body{ grid-column: 2; }
+
+/* ---------- opening block ---------- */
+.opening{
+  padding: 4.5rem 0 2.75rem;
+}
+.prehead{
+  font-family: var(--sans);
+  font-size: .95rem;
+  line-height: 1.5;
+  color: var(--ink-2);
+  max-width: 46rem;
+  padding-left: 1rem;
+  border-left: 3px solid var(--accent);
+  margin: 0 0 2rem;
+}
+h1{
+  font-size: clamp(2.05rem, 4.4vw, 3.5rem);
+  line-height: 1.05;
+  letter-spacing: -.022em;
+  font-weight: 700;
+  margin: 0;
+  max-width: 28ch;
+}
+h1 .em{ color: var(--accent); }
+.deck{
+  font-size: clamp(1.12rem, 2.1vw, 1.4rem);
+  line-height: 1.48;
+  color: var(--ink-2);
+  max-width: 34ch;
+  margin: 1.5rem 0 0;
+}
+.readtime{
+  font-family: var(--sans);
+  font-size: .82rem;
+  color: var(--ink-3);
+  margin: 1.75rem 0 0;
+}
+
+/* ---------- prose ---------- */
+p{ margin: 0 0 1.15rem; }
+.lead{ font-size: 1.12rem; }
+strong{ font-weight: 600; }
+em{ font-style: italic; }
+
+.mark{
+  background: linear-gradient(transparent 62%, #D5DFFB 62%, #D5DFFB 94%, transparent 94%);
+  padding: 0 .06em;
+}
+
+h2{
+  font-size: clamp(1.5rem, 3.1vw, 2.05rem);
+  line-height: 1.16;
+  letter-spacing: -.018em;
+  font-weight: 700;
+  margin: 3.75rem 0 1.35rem;
+  max-width: 21ch;
+}
+/* hanging heads: the skim layer starts at the rail, left of the reading column */
+@media (min-width: 1060px){
+  h2{ max-width: 26ch; }
+}
+h3{
+  font-family: var(--sans);
+  font-size: .95rem;
+  font-weight: 600;
+  letter-spacing: .005em;
+  margin: 0 0 .5rem;
+}
+
+.sig-off{ margin-top: 2.25rem; }
+.sig-name{
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 1rem;
+  margin: 0;
+}
+.sig-role{
+  font-family: var(--sans);
+  font-size: .84rem;
+  color: var(--ink-3);
+  margin: .15rem 0 0;
+}
+
+/* ---------- margin annotations (the signature move) ---------- */
+.note{
+  font-family: var(--sans);
+  font-size: .8rem;
+  line-height: 1.5;
+  color: var(--accent-dk);
+  border-left: 1px solid var(--accent);
+  padding-left: .85rem;
+  margin: .35rem 0 0;
+  align-self: start;
+}
+@media (max-width: 1059px){
+  .wrap{
+    grid-template-columns: minmax(0, 1fr);
+    column-gap: 0;
+  }
+  .wrap > *{ grid-column: 1; }
+  .wrap > .full{ grid-column: 1; }
+  .pair{ grid-template-columns: minmax(0, 1fr); column-gap: 0; }
+  .pair > .note, .pair > .body{ grid-column: 1; }
+  .note{
+    background: var(--accent-sf);
+    border-left: 3px solid var(--accent);
+    padding: .8rem .95rem;
+    margin: 0 0 1.5rem;
+    max-width: none;
+  }
+}
+
+/* ---------- figures ---------- */
+figure{ margin: 2.5rem 0; }
+figure img{
+  width: 100%;
+  border-radius: var(--r);
+  filter: saturate(.18) contrast(1.04);
+}
+figcaption{
+  font-family: var(--sans);
+  font-size: .8rem;
+  color: var(--ink-3);
+  margin-top: .65rem;
+}
+
+/* ---------- the self diagnosis checklist ---------- */
+.diag{
+  border: 1px solid var(--rule-2);
+  border-radius: var(--r);
+  margin: 2.75rem 0 1rem;
+  background: #fff;
+}
+.diag-head{
+  padding: 1.5rem 1.75rem 1.1rem;
+  border-bottom: 1px solid var(--rule);
+}
+.diag-head p{
+  margin: 0;
+  font-family: var(--sans);
+  font-size: .9rem;
+  color: var(--ink-2);
+}
+.diag-head strong{ color: var(--ink); }
+.diag-list{
+  list-style: none;
+  margin: 0;
+  padding: .5rem 1.75rem 1.25rem;
+  display: grid;
+  gap: 0;
+}
+@media (min-width: 900px){
+  .diag-list{ grid-template-columns: 1fr 1fr; column-gap: 2.5rem; }
+}
+.diag-list li{ padding: .55rem 0; }
+.chk{
+  display: grid;
+  grid-template-columns: 1.35rem 1fr;
+  gap: .8rem;
+  align-items: start;
+  cursor: pointer;
+  font-size: .98rem;
+  line-height: 1.45;
+  color: var(--ink-2);
+}
+.chk input{
+  appearance: none; -webkit-appearance: none;
+  width: 1.35rem; height: 1.35rem; margin: .1rem 0 0;
+  border: 1px solid var(--rule-2);
+  border-radius: var(--r);
+  background: #fff;
+  display: grid; place-content: center;
+  cursor: pointer;
+  transition: border-color .15s ease, background-color .15s ease;
+}
+.chk input::after{
+  content: "";
+  width: .42rem; height: .78rem;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(42deg) translate(-1px,-1px) scale(0);
+  transition: transform .12s ease;
+}
+.chk input:checked{ background: var(--accent); border-color: var(--accent); }
+.chk input:checked::after{ transform: rotate(42deg) translate(-1px,-1px) scale(1); }
+.chk input:hover{ border-color: var(--accent); }
+.chk input:checked + span{ color: var(--ink); }
+.diag-verdict{
+  border-top: 1px solid var(--rule);
+  padding: 1.15rem 1.75rem;
+  background: var(--panel);
+  border-radius: 0 0 var(--r) var(--r);
+  display: flex; gap: 1.1rem; align-items: baseline; flex-wrap: wrap;
+}
+.diag-count{
+  font-family: var(--sans);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  font-size: .85rem;
+  color: var(--accent-dk);
+  white-space: nowrap;
+}
+.diag-text{
+  margin: 0;
+  font-size: 1rem;
+  color: var(--ink-2);
+  flex: 1 1 18rem;
+}
+.diag-text strong{ color: var(--ink); }
+
+/* ---------- numbers, no cards ---------- */
+.record{
+  margin: 2.5rem 0 1rem;
+  border-top: 1px solid var(--ink);
+  padding-top: 1.4rem;
+  display: grid;
+  gap: 1.6rem;
+}
+@media (min-width: 860px){
+  .record{ grid-template-columns: 1.45fr 1fr 1fr; gap: 0; }
+  .record > div + div{ border-left: 1px solid var(--rule); padding-left: 2rem; }
+  .record > div{ padding-right: 2rem; }
+}
+.record .logo{
+  height: 30px; width: auto; margin-bottom: 1rem;
+  filter: saturate(.9);
+}
+.record .logo.tall{ height: 40px; }
+.record .fig{
+  font-family: var(--sans);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  font-size: clamp(1.5rem, 2.6vw, 1.9rem);
+  letter-spacing: -.02em;
+  line-height: 1.1;
+  margin: 0 0 .35rem;
+}
+.record .sub{
+  font-family: var(--sans);
+  font-size: .84rem;
+  line-height: 1.5;
+  color: var(--ink-2);
+  margin: 0;
+}
+.record .sub + .sub{ margin-top: .5rem; color: var(--ink-3); }
+
+/* ---------- failures ---------- */
+.fails{
+  display: flex; gap: 2.5rem; align-items: center; flex-wrap: wrap;
+  padding: 1.5rem 0 0;
+  margin: 1.75rem 0 0;
+  border-top: 1px solid var(--rule);
+}
+.fails figure{ margin: 0; display: flex; align-items: center; gap: .85rem; }
+.fails img{
+  height: 38px; width: auto; border-radius: 0;
+  filter: grayscale(1) opacity(.55);
+}
+.fails figcaption{ margin: 0; }
+
+/* ---------- steps ---------- */
+.steps{
+  list-style: none; margin: 2.25rem 0 1rem; padding: 0;
+  border-top: 1px solid var(--rule);
+}
+.steps li{
+  padding: 1.35rem 0;
+  border-bottom: 1px solid var(--rule);
+  display: grid;
+  gap: .35rem;
+}
+@media (min-width: 780px){
+  .steps li{ grid-template-columns: 9rem 1fr; gap: 2rem; }
+}
+.steps .verb{
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: .95rem;
+  color: var(--accent-dk);
+}
+.steps p{ margin: 0; font-size: 1rem; color: var(--ink-2); }
+
+/* ---------- negative list ---------- */
+.nope{
+  background: var(--panel);
+  border-radius: var(--r);
+  padding: 1.75rem 1.9rem;
+  margin: 2.25rem 0 1rem;
+  list-style: none;
+}
+.nope li{
+  display: grid; grid-template-columns: 2.2rem 1fr; gap: .5rem;
+  padding: .6rem 0;
+  font-size: 1rem;
+  color: var(--ink-2);
+}
+.nope li + li{ border-top: 1px solid #E4E8EC; }
+.nope .x{
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: .8rem;
+  color: var(--ink-3);
+  padding-top: .18rem;
+}
+
+/* ---------- video ---------- */
+.video{
+  margin: 2.5rem 0 1rem;
+  border: 1px solid var(--rule-2);
+  border-radius: var(--r);
+  overflow: hidden;
+  background: #10131a;
+}
+.video .frame{ position: relative; padding-top: 56.25%; }
+.video iframe{ position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.video .cap{
+  font-family: var(--sans);
+  font-size: .82rem;
+  color: var(--ink-3);
+  padding: .8rem 1rem;
+  background: var(--sheet);
+  border-top: 1px solid var(--rule);
+}
+
+/* ---------- testimonial slot ---------- */
+.slot{
+  border: 1px dashed var(--rule-2);
+  border-radius: var(--r);
+  padding: 1.9rem;
+  margin: 2.25rem 0 1rem;
+  background: #fff;
+}
+.slot p{ margin: 0 0 1rem; }
+.slot p:last-child{ margin-bottom: 0; }
+.slot .lbl{
+  font-family: var(--sans);
+  font-size: .82rem;
+  color: var(--ink-3);
+}
+
+/* ---------- FAQ ---------- */
+.faq{ margin: 2.25rem 0 1rem; border-top: 1px solid var(--ink); }
+.faq details{ border-bottom: 1px solid var(--rule); }
+.faq summary{
+  list-style: none;
+  cursor: pointer;
+  padding: 1.15rem 2.5rem 1.15rem 0;
+  position: relative;
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--ink);
+}
+.faq summary::-webkit-details-marker{ display: none; }
+.faq summary::before,
+.faq summary::after{
+  content: "";
+  position: absolute; right: .35rem; top: 1.62rem;
+  background: var(--accent);
+  transition: transform .18s ease, opacity .18s ease;
+}
+.faq summary::before{ width: 13px; height: 1.5px; }
+.faq summary::after{ width: 1.5px; height: 13px; right: .35rem; margin-right: 5.75px; top: 1.62rem; transform: translateY(-5.75px); }
+.faq details[open] summary::after{ opacity: 0; transform: translateY(-5.75px) scaleY(0); }
+.faq summary:hover{ color: var(--accent-dk); }
+.faq .a{ padding: 0 2.5rem 1.4rem 0; color: var(--ink-2); font-size: 1rem; }
+.faq .a p{ margin: 0 0 .8rem; }
+.faq .a p:last-child{ margin: 0; }
+@media (prefers-reduced-motion: reduce){
+  .faq summary::before, .faq summary::after, .chk input, .chk input::after{ transition: none; }
+}
+
+/* ---------- the ask ---------- */
+.btn{
+  display: inline-flex; align-items: center; justify-content: center;
+  font-family: var(--sans);
+  font-size: .94rem;
+  font-weight: 600;
+  line-height: 1;
+  padding: .95rem 1.4rem;
+  border-radius: var(--r);
+  text-decoration: none;
+  white-space: nowrap;
+  border: 1px solid transparent;
+  transition: background-color .15s ease, transform .1s ease, border-color .15s ease, color .15s ease;
+}
+.btn-primary{ background: var(--accent); color: #fff; }
+.btn-primary:hover{ background: var(--accent-dk); color: #fff; }
+.btn-ghost{ background: #fff; color: var(--accent-dk); border-color: var(--rule-2); }
+.btn-ghost:hover{ border-color: var(--accent); color: var(--accent-dk); }
+.btn:active{ transform: translateY(1px); }
+@media (prefers-reduced-motion: reduce){ .btn{ transition: none; } .btn:active{ transform: none; } }
+
+.ask-inline{
+  margin: 1.9rem 0 .5rem;
+  display: flex; gap: .75rem; flex-wrap: wrap; align-items: center;
+}
+.ask-inline .hint{
+  font-family: var(--sans);
+  font-size: .82rem;
+  color: var(--ink-3);
+}
+
+.ask-panel{
+  background: var(--accent-sf);
+  border-radius: var(--r);
+  padding: 2.25rem 2.25rem 2.4rem;
+  margin: 3rem 0 1rem;
+}
+.ask-panel h3{
+  font-family: var(--serif);
+  font-size: clamp(1.35rem, 2.6vw, 1.7rem);
+  font-weight: 700;
+  letter-spacing: -.015em;
+  line-height: 1.2;
+  margin: 0 0 .8rem;
+  max-width: 26ch;
+}
+.ask-panel p{ max-width: 52ch; color: var(--ink-2); font-size: 1.02rem; }
+.ask-panel .btns{ display: flex; gap: .75rem; flex-wrap: wrap; margin-top: 1.5rem; }
+.ask-panel .fine{
+  font-family: var(--sans);
+  font-size: .8rem;
+  color: var(--ink-3);
+  margin: 1.1rem 0 0;
+}
+
+/* ---------- portrait split ---------- */
+.who{
+  display: grid; gap: 2rem;
+  align-items: start;
+  margin: 2.5rem 0 0;
+}
+@media (min-width: 820px){
+  .who{ grid-template-columns: 15rem 1fr; gap: 2.75rem; }
+}
+.who img{
+  border-radius: var(--r);
+  filter: saturate(.55) contrast(1.03);
+  width: 100%;
+}
+.who .cap{
+  font-family: var(--sans);
+  font-size: .8rem;
+  color: var(--ink-3);
+  margin-top: .6rem;
+}
+.who p{ font-size: 1.02rem; }
+
+/* ---------- postscript ---------- */
+.ps{
+  border-top: 1px solid var(--ink);
+  margin-top: 3.5rem;
+  padding-top: 1.6rem;
+}
+.ps p{ font-size: 1.02rem; }
+.ps .tag{
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: .84rem;
+  color: var(--accent-dk);
+  margin-right: .4rem;
+}
+
+/* ---------- footer ---------- */
+footer{
+  border-top: 1px solid var(--rule);
+  padding: 2.25rem 6rem 3rem;
+  font-family: var(--sans);
+  font-size: .84rem;
+  color: var(--ink-3);
+  display: flex; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap;
+}
+footer a{ color: var(--ink-2); text-decoration: none; }
+footer a:hover{ color: var(--accent-dk); text-decoration: underline; }
+footer nav{ display: flex; gap: 1.4rem; flex-wrap: wrap; }
+footer p{ margin: 0; max-width: 34rem; }
+
+/* ---------- responsive ---------- */
+@media (max-width: 1059px){
+  .letterhead{ padding: 1.15rem 3rem; }
+  .wrap{ padding: 0 3rem 4rem; }
+  footer{ padding: 2rem 3rem 2.5rem; }
+}
+@media (max-width: 720px){
+  body{ font-size: 17.5px; }
+  .sheet{ box-shadow: none; border: 0; }
+  body{ background: var(--sheet); }
+  .letterhead{ padding: 1rem 1.25rem; }
+  .wrap{ padding: 0 1.25rem 3rem; }
+  footer{ padding: 1.75rem 1.25rem 2.25rem; }
+  .opening{ padding: 2.5rem 0 1.5rem; }
+  h2{ margin: 2.75rem 0 1.1rem; }
+  .diag-head, .diag-list, .diag-verdict{ padding-left: 1.15rem; padding-right: 1.15rem; }
+  .nope{ padding: 1.25rem 1.25rem; }
+  .ask-panel{ padding: 1.6rem 1.35rem 1.8rem; }
+  .slot{ padding: 1.35rem; }
+  .btn{ width: 100%; }
+  .ask-inline .hint{ width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<div class="progress" aria-hidden="true"></div>
+
+<div class="sheet">
+
+  <header class="letterhead">
+    <span class="name">Salomón Muriel</span>
+    <span class="what">Estrategia y desarrollo a la medida, a título personal</span>
+  </header>
+
+  <main class="wrap">
+
+    <!-- ============ OPENING ============ -->
+    <section class="opening full">
+      <p class="prehead">
+        Esta carta es para el dueño de una empresa colombiana que factura menos de 8.000 millones de pesos al año.
+        Ropa, comida, distribución, retail, servicios. Si usted es un fondo, una multinacional o una startup buscando inversión, no le va a servir.
+      </p>
+
+      <h1>Su empresa no está automatizada. Está <span class="em">chinomatizada</span>.</h1>
+
+      <p class="deck">
+        El proceso parece un sistema. En realidad es un man con un Excel y mucha paciencia. Eso se arregla.
+      </p>
+
+      <p class="readtime">Nueve minutos de lectura. Sin video de venta, sin cuenta regresiva, sin descuento por comprar hoy.</p>
+    </section>
+
+    <!-- ============ THE OPEN ============ -->
+    <div class="pair full">
+      <aside class="note">
+        Esto va dirigido al dueño, no al jefe de sistemas. Si usted es el que firma, siga leyendo.
+      </aside>
+      <div class="body">
+        <p class="lead">
+          He fundado cinco empresas. Dos las vendí, dos se me quebraron, y una la estoy corriendo ahora.
+          En todas, sin excepción, hubo un momento en el que descubrí que la mitad de la operación funcionaba
+          porque alguien la estaba sosteniendo con las manos.
+        </p>
+
+        <p>
+          Y cuando entro a otras empresas, veo lo mismo. Empresas serias, con clientes reales,
+          con años de estar facturando. Por fuera se ven organizadas. Por dentro hay una persona
+          copiando pedidos de WhatsApp a un Excel, todos los días, desde hace tres años.
+        </p>
+      </div>
+    </div>
+
+    <p>
+      A eso yo le digo <strong>chinomático</strong>. El proceso parece automático. El que lo hace es un chino,
+      a mano. No lo digo para burlarme. Lo digo porque cuando una cosa tiene nombre, se puede arreglar.
+    </p>
+
+    <!-- ============ THE DIAGNOSIS ============ -->
+    <h2 class="full">Marque las que le suenan. En serio, márquelas.</h2>
+
+    <div class="pair full">
+      <aside class="note">
+        Nadie marca cero. Yo tampoco marqué cero cuando arranqué Ignia, y llevaba años haciendo esto.
+      </aside>
+      <div class="body">
+        <p>
+          No es un test de personalidad. Es la lista de las siete cosas que me encuentro en casi toda empresa
+          de este tamaño en Colombia. Léalas pensando en su empresa, no en la de al lado.
+        </p>
+      </div>
+    </div>
+
+    <div class="diag full" id="diag">
+      <div class="diag-head">
+        <p><strong>Diagnóstico de dos minutos.</strong> Nada se envía a ninguna parte. Es para usted.</p>
+      </div>
+      <ul class="diag-list">
+        <li><label class="chk"><input type="checkbox"><span>Alguien recibe pedidos por WhatsApp y los pasa a mano a un Excel.</span></label></li>
+        <li><label class="chk"><input type="checkbox"><span>Hay una persona que <em>es</em> el sistema. Si se enferma, la empresa cojea.</span></label></li>
+        <li><label class="chk"><input type="checkbox"><span>El informe del lunes se arma otra vez desde cero, todos los lunes.</span></label></li>
+        <li><label class="chk"><input type="checkbox"><span>El inventario de verdad solo lo sabe una persona, y no está escrito.</span></label></li>
+        <li><label class="chk"><input type="checkbox"><span>Hay tres archivos que deberían cuadrar entre sí y nunca cuadran.</span></label></li>
+        <li><label class="chk"><input type="checkbox"><span>Un grupo de WhatsApp es, en la práctica, la base de datos de pedidos.</span></label></li>
+        <li><label class="chk"><input type="checkbox"><span>Usted, que es el dueño, sigue siendo el cuello de botella de su propia empresa.</span></label></li>
+      </ul>
+      <div class="diag-verdict">
+        <span class="diag-count" id="diagCount" aria-live="polite">0 de 7 marcadas</span>
+        <p class="diag-text" id="diagText">Marque las que le pasan a usted y aquí abajo le digo qué significa.</p>
+      </div>
+    </div>
+
+    <p>
+      Si marcó tres o más, lo que usted tiene no es desorden. Es una empresa que corre sobre personas
+      en vez de correr sobre sistemas. Funciona. Ha funcionado. Y va a seguir funcionando hasta el día
+      en que alguien renuncie, se enferme o se vaya de vacaciones.
+    </p>
+
+    <!-- ============ THE SHAME ============ -->
+    <h2 class="full">Lo que más pesa no es el trabajo. Es la pena de contarlo.</h2>
+
+    <p>
+      He estado en reuniones donde el dueño baja la voz para explicarme cómo se hace de verdad,
+      como si me estuviera confesando algo. Le tengo dos noticias.
+    </p>
+
+    <p>
+      La primera: casi todas las empresas de este tamaño están igual. Las que no, ya pagaron para arreglarlo.
+      La segunda: el problema no es que a usted le falte disciplina. El problema es que su empresa creció
+      más rápido de lo que crecieron sus herramientas, y eso le pasa a todo negocio que funciona.
+    </p>
+
+    <p>
+      Lo que sí le está costando plata es lo otro: usted no puede irse una semana sin que le timbre el celular,
+      no puede crecer sin contratar a otra persona que haga lo mismo a mano, y no puede vender la empresa
+      porque buena parte del valor está en la cabeza de tres empleados.
+    </p>
+
+    <!-- ============ THE OBJECTION: BOUGHT SOFTWARE ============ -->
+    <h2 class="full">Usted ya intentó arreglarlo. Compró un software.</h2>
+
+    <div class="pair full">
+      <aside class="note">
+        Casi siempre hay una licencia pagándose sola en algún lado. La empresa la sigue pagando por si acaso.
+      </aside>
+      <div class="body">
+        <p>
+          Le costó plata. Hubo tres reuniones de implementación, le dieron un usuario y una clave,
+          capacitaron al equipo un martes. Hoy nadie lo abre, o lo abren para sacar un dato y volver al Excel.
+        </p>
+      </div>
+    </div>
+
+    <p>
+      No fue culpa suya y no fue culpa de su equipo. Le vendieron un software hecho para
+      <em>una empresa promedio</em>, y su empresa no es promedio. Su empresa tiene la forma exacta
+      de cómo ustedes trabajan: sus tiempos, sus excepciones, ese cliente grande al que se le factura distinto,
+      la temporada en que todo se duplica.
+    </p>
+
+    <p>
+      <span class="mark">Un software de caja le pide a la empresa que se adapte al software.</span>
+      Y la empresa, que tiene clientes que atender, hace lo lógico: vuelve al Excel y sigue.
+    </p>
+
+    <!-- ============ WHAT I DO ============ -->
+    <h2 class="full">Yo hago dos cosas, y las hago yo.</h2>
+
+    <p>
+      Primero definimos qué hay que arreglar de primeras. No todo. Una cosa: la que le está quitando más horas
+      o la que más riesgo le mete al negocio.
+    </p>
+
+    <p>
+      Segundo, <strong>yo construyo la herramienta que lo arregla</strong>. Yo escribo el código.
+      No soy un consultor que le entrega un documento con recomendaciones y se despide.
+      No soy una fábrica de software que se queda esperando a que usted le entregue un requerimiento firmado.
+      Lo que le entrego es algo funcionando, con su gente usándolo.
+    </p>
+
+    <div class="pair full">
+      <aside class="note">
+        Aquí es donde la mayoría de consultores entrega un PDF y se va. Ese PDF es el que usted ya tiene guardado.
+      </aside>
+      <div class="body">
+        <p>
+          Y sí, desarrollo con inteligencia artificial. No lo digo como frase de moda: lo digo porque
+      es la razón por la que hoy una sola persona le entrega en semanas lo que hace tres años
+      necesitaba un equipo y un trimestre. También uso agentes de IA para trabajo que ni siquiera
+          es de programadores, y parte de lo que hago es dejarle a su equipo usándolos.
+          Si eso le suena a chino, mejor. Para eso me contrata.
+        </p>
+      </div>
+    </div>
+
+    <div class="ask-inline full">
+      <a class="btn btn-primary" href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20le%20escribo%20por%20la%20carta%20de%20su%20p%C3%A1gina.%20En%20mi%20empresa%20esto%20todav%C3%ADa%20se%20hace%20a%20mano%3A%20">Escríbame por WhatsApp</a>
+      <span class="hint">Contésteme una sola cosa: qué se hace a mano hoy en su empresa.</span>
+    </div>
+
+    <!-- ============ HOW IT WORKS ============ -->
+    <h2 class="full">Cómo es trabajar conmigo, sin adornos.</h2>
+
+    <ol class="steps full">
+      <li>
+        <span class="verb">Miramos</span>
+        <p>Media hora por video para saber si esto tiene sentido. Si lo tiene, voy y me siento medio día en su operación a ver cómo se hace de verdad, no cómo dice el manual que se hace.</p>
+      </li>
+      <li>
+        <span class="verb">Decidimos</span>
+        <p>Le muestro las tres cosas que más le están costando y escogemos una sola para empezar. Le digo qué le va a devolver esa primera pieza y en cuánto tiempo, antes de arrancar.</p>
+      </li>
+      <li>
+        <span class="verb">Construyo</span>
+        <p>Yo escribo el código. Usted ve avances cada semana, no un informe al final. Se mide en semanas, no en trimestres, y si algo no está sirviendo lo cambiamos mientras se está haciendo.</p>
+      </li>
+      <li>
+        <span class="verb">Lo usan</span>
+        <p>Me siento con la persona que va a usarlo, no con el gerente. Se ajusta hasta que esa persona lo prefiere al Excel. Si necesita un manual de veinte páginas, lo hice mal y lo vuelvo a hacer.</p>
+      </li>
+      <li>
+        <span class="verb">Le entrego</span>
+        <p>El código queda suyo. Le explico cómo se mantiene y quién puede mantenerlo, así no sea yo. Desde el principio acordamos qué pasa después, porque yo no vivo de dejarlo amarrado.</p>
+      </li>
+    </ol>
+
+    <!-- ============ WHO I AM ============ -->
+    <h2 class="full">Quién le está escribiendo esto.</h2>
+
+    <div class="who full">
+      <div>
+        <img src="assets/fotoSalo.jpeg" width="800" height="800" alt="Salomón Muriel, retrato">
+        <p class="cap">Salomón Muriel. El mismo que le va a contestar el WhatsApp.</p>
+      </div>
+      <div>
+        <p>
+          Llevo la mayor parte de mi vida laboral haciendo dos cosas: montar negocios desde cero
+          y construir el software que los hace funcionar. Manejé un equipo de cerca de 40 personas
+          en R5, donde armé con mis manos el sistema de datos y los modelos de riesgo, y hasta
+          15 personas en mis propias empresas.
+        </p>
+        <p>
+          Hoy dirijo Ignia. Ahí construí el CRM, la página y la plataforma de comunidad que usamos
+          todos los días. No los mandé a hacer. Los hice.
+        </p>
+        <p>
+          Y antes de eso vendí dos empresas. Los números están abajo, con nombre propio,
+          para que usted los pueda verificar si quiere.
+        </p>
+      </div>
+    </div>
+
+    <div class="record full">
+      <div>
+        <img class="logo tall" src="assets/ignia.png" alt="Ignia" width="240" height="160">
+        <p class="fig">150.000 USD</p>
+        <p class="sub">de ingresos en el primer año. Lanzada en junio de 2025, rentable desde el primer mes.</p>
+        <p class="sub">Cerca de 30 fellows en la primera cohorte del Action Lab. Equipo de 5.</p>
+      </div>
+      <div>
+        <img class="logo" src="assets/finco.png" alt="Finco" width="120" height="120">
+        <p class="fig">100.000</p>
+        <p class="sub">informes al año corriendo sobre el sistema que construimos.</p>
+        <p class="sub">Vendida en 5 veces la inversión, cerca de 1,5 millones de dólares.</p>
+      </div>
+      <div>
+        <img class="logo" src="assets/prestagente.png" alt="PrestaGente" width="120" height="115">
+        <p class="fig">1 millón USD</p>
+        <p class="sub">fue la venta. Préstamos entre conocidos, con la plataforma hecha en casa.</p>
+        <p class="sub">Del garaje a la salida, con equipo propio.</p>
+      </div>
+    </div>
+
+    <figure class="full">
+      <img src="assets/salo_oscar.webp" width="527" height="330" alt="Salomón mostrando la plataforma de Finco en una pantalla, junto a un compañero de equipo">
+      <figcaption>Finco. La herramienta que ve en pantalla la construimos nosotros, no la compramos.</figcaption>
+    </figure>
+
+    <!-- ============ THE FAILURES ============ -->
+    <h2 class="full">Y las dos que se me cayeron.</h2>
+
+    <div class="pair full">
+      <aside class="note">
+        Sí, quebré dos empresas. Prefiero que lo lea aquí, de mi puño, y no que lo averigüe después.
+      </aside>
+      <div class="body">
+        <p>
+          Beriblock se quebró. El Palomo fracasó con todas las de la ley. Se lo cuento por dos razones.
+          La primera es que es verdad y usted lo puede averiguar. La segunda es que un tipo que solo le muestra
+          los aciertos le está escondiendo algo.
+        </p>
+      </div>
+    </div>
+
+    <p>
+      Sé cómo se ve una empresa por dentro cuando va mal, porque estuve ahí dos veces con la mía:
+      cuando la caja no da, cuando el equipo pregunta y uno no tiene respuesta, cuando toca decidir
+      si se cierra. Eso no lo aprende nadie en un curso, y es buena parte de lo que usted está contratando.
+    </p>
+
+    <div class="fails full">
+      <figure>
+        <img src="assets/beriblock.png" alt="Beriblock" width="120" height="145">
+        <figcaption>Beriblock. Se quebró.</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/elpalomo.png" alt="El Palomo" width="100" height="100">
+        <figcaption>El Palomo. Fracasó completo.</figcaption>
+      </figure>
+    </div>
+
+    <!-- ============ VIDEO ============ -->
+    <h2 class="full">Si prefiere oírme antes de escribirme.</h2>
+
+    <p>
+      Estuve en el podcast Ventaja hablando de negocios aburridos y de qué es de verdad
+      innovar y crecer. Es exactamente el tipo de negocio del que le vengo hablando en esta carta:
+      el que no sale en revistas y sí paga nómina todos los meses.
+    </p>
+
+    <div class="video full">
+      <div class="frame">
+        <iframe src="https://www.youtube-nocookie.com/embed/F9t9f5Et_04" title="Negocios Aburridos e Innovación. Salomón Muriel en el podcast Ventaja" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <p class="cap">Negocios Aburridos e Innovación. Conversación en el podcast Ventaja.</p>
+    </div>
+
+    <!-- ============ THE MISSING PROOF ============ -->
+    <h2 class="full">Lo que todavía no tengo, y no me lo voy a inventar.</h2>
+
+    <div class="slot full">
+      <p class="lbl">Aquí es donde normalmente van tres testimonios con foto.</p>
+      <p>
+        No los tengo publicados todavía. He trabajado con unas siete personas en acompañamiento
+        y con varias empresas en consultoría, pero no les he pedido que escriban nada, y no voy a
+        poner frases inventadas en una página que le está pidiendo confianza.
+      </p>
+      <p>
+        <strong>Le ofrezco algo mejor que un testimonio.</strong> Escríbame, y le paso el teléfono
+        de alguien con quien ya trabajé para que lo llame y le pregunte lo que quiera.
+        Sin mí en la llamada, y sin que yo sepa qué le dijeron.
+      </p>
+      <!-- Slot reservado: cuando lleguen los 2 o 3 testimonios reales, entran aquí como bloques de cita
+           con nombre, cargo y empresa. Ni uno solo antes de tenerlo firmado por la persona. -->
+    </div>
+
+    <div class="ask-inline full">
+      <a class="btn btn-primary" href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20le%20escribo%20por%20la%20carta%20de%20su%20p%C3%A1gina.%20Quisiera%20hablar%20con%20alguien%20con%20quien%20ya%20trabaj%C3%B3.">Escríbame por WhatsApp</a>
+      <span class="hint">Pídame el teléfono. Se lo paso el mismo día.</span>
+    </div>
+
+    <!-- ============ WHO THIS IS NOT FOR ============ -->
+    <h2 class="full">Cuándo no me contrate.</h2>
+
+    <p>
+      Prefiero decirle esto ahora y no en la reunión tres, cuando ya perdimos los dos el tiempo.
+    </p>
+
+    <ul class="nope full">
+      <li><span class="x">No</span><span>Si necesita escalar de 5 millones de dólares al año para arriba. No sé hacerlo, y no le voy a cobrar por aprender con su empresa.</span></li>
+      <li><span class="x">No</span><span>Si su negocio depende de inventar tecnología que todavía no existe. Eso es otro oficio y hay gente mejor que yo para eso.</span></li>
+      <li><span class="x">No</span><span>Si lo que quiere es un documento bonito para mostrar en junta. Se lo puedo hacer, pero le va a servir para lo mismo que le sirvió el software que compró.</span></li>
+      <li><span class="x">No</span><span>Si quiere una charla de cultura organizacional o de ciencia de datos. No las doy.</span></li>
+      <li><span class="x">No</span><span>Si lo que busca es alguien que le diga que sí a todo. Le voy a decir en la cara cuál de sus tres ideas no vale la pena.</span></li>
+    </ul>
+
+    <!-- ============ HONEST SCARCITY ============ -->
+    <h2 class="full">Por qué son cuatro empresas y no cuarenta.</h2>
+
+    <p>
+      Mi trabajo principal es Ignia. Esta consultoría la hago aparte, a título personal,
+      y la hago yo: no hay un equipo junior trabajando con mi nombre en la carátula.
+      Esa es toda la explicación del cupo.
+    </p>
+
+    <p>
+      <span class="mark">Tengo tope de cuatro empresas al tiempo. Hoy tengo dos.</span>
+      Quedan dos cupos. Cuando se llenen, esta página va a decir que se llenaron, y no voy a
+      poner un reloj en la pantalla para apurarlo.
+    </p>
+
+    <div class="pair full">
+      <aside class="note">
+        Ignia es la empresa que dirijo. Esto lo hago por fuera de Ignia y no lo puedo mezclar.
+      </aside>
+      <div class="body">
+        <p>
+          Y una aclaración que me importa: esto no es Ignia. Ignia es la empresa que dirijo y tiene su
+          propio programa. Lo que usted contrata aquí me contrata a mí, con mi celular y mi nombre.
+        </p>
+      </div>
+    </div>
+
+    <!-- ============ FAQ ============ -->
+    <h2 class="full">Las preguntas que siempre me hacen.</h2>
+
+    <div class="pair full">
+      <aside class="note">
+        No pongo precios en internet. No es misterio ni estrategia: es que no sé todavía qué necesita usted.
+      </aside>
+      <div class="body">
+        <p>
+          Se las contesto como se las contestaría por teléfono, sin rodeos y sin letra menuda.
+        </p>
+      </div>
+    </div>
+
+    <div class="faq full">
+      <details>
+        <summary>¿Cuánto vale?</summary>
+        <div class="a">
+          <p>Depende del tamaño de lo que haya que construir, y no le voy a poner un número en una página web sin saber qué necesita. Cualquiera que le dé una cifra antes de ver su operación se la está inventando.</p>
+          <p>Lo que sí le prometo: en la primera llamada de treinta minutos le digo si esto es para usted. Si lo es, le mando la propuesta con el número y el alcance escritos antes de que usted gaste un peso.</p>
+        </div>
+      </details>
+      <details>
+        <summary>¿Y si mi equipo no es de tecnología?</summary>
+        <div class="a">
+          <p>Mejor. Casi ningún cliente mío lo es. Trabajo con empresas de ropa, de comida, de distribución y de servicios, donde la persona que va a usar la herramienta lleva quince años haciendo el trabajo a mano y lo hace bien.</p>
+          <p>Mi oficio es que la herramienta se parezca a como ustedes ya trabajan, no al revés.</p>
+        </div>
+      </details>
+      <details>
+        <summary>¿Usted construye y después me deja tirado?</summary>
+        <div class="a">
+          <p>El código queda suyo, con la documentación de cómo funciona. Antes de arrancar acordamos por escrito qué pasa después: qué queda a cargo de quién, y qué pasa si algo se rompe.</p>
+          <p>Si mañana quiere contratar a otra persona para mantenerlo, va a poder. Ese es el punto.</p>
+        </div>
+      </details>
+      <details>
+        <summary>¿Cuánto se demora?</summary>
+        <div class="a">
+          <p>La primera pieza útil se mide en semanas, no en trimestres. Es la parte que más cambió con la inteligencia artificial y es honestamente la razón por la que hoy puedo hacer esto solo.</p>
+          <p>Pero el plazo exacto se lo doy cuando vea su operación. Antes sería adivinanza.</p>
+        </div>
+      </details>
+      <details>
+        <summary>¿Tiene que ser presencial?</summary>
+        <div class="a">
+          <p>Trabajo con empresas en toda Colombia. La primera visita la prefiero presencial, porque ver la operación en vivo cambia el diagnóstico. El resto se hace remoto sin problema.</p>
+        </div>
+      </details>
+      <details>
+        <summary>Todavía no tengo empresa, apenas la estoy armando.</summary>
+        <div class="a">
+          <p>Entonces esta carta no es para usted, y prefiero decírselo de una. Lo que sí hago es acompañar a emprendedores uno a uno, con tareas concretas cada semana, para gente que apenas está empezando.</p>
+          <p>Escríbame y le digo con franqueza si le sirve trabajar conmigo uno a uno, o si le rinde más entrar a un programa en grupo con una cohorte, como el Action Lab de Ignia. Son cosas distintas y no compiten.</p>
+        </div>
+      </details>
+    </div>
+
+    <!-- ============ THE ASK ============ -->
+    <div class="ask-panel full">
+      <h3>No le estoy pidiendo que me contrate. Le estoy pidiendo treinta minutos.</h3>
+      <p>
+        Escríbame por WhatsApp y cuénteme en dos frases qué es lo que hoy se hace a mano en su empresa.
+        Le contesto yo, no un asistente. Si de esa conversación sale que yo no soy la persona,
+        se lo digo ahí mismo y le sugiero por dónde buscar.
+      </p>
+      <div class="btns">
+        <a class="btn btn-primary" href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20le%20escribo%20por%20la%20carta%20de%20su%20p%C3%A1gina.%20En%20mi%20empresa%20esto%20todav%C3%ADa%20se%20hace%20a%20mano%3A%20">Escríbame por WhatsApp</a>
+        <a class="btn btn-ghost" href="https://cal.com/salomonmuriel">Agendar 30 minutos</a>
+      </div>
+      <p class="fine">Quedan dos cupos de cuatro. Sin costo la primera llamada y sin propuesta sorpresa después.</p>
+    </div>
+
+    <div class="sig-off full">
+      <p>Gracias por leer hasta acá. Ya sé que fue largo.</p>
+      <p class="sig-name">Salomón Muriel</p>
+      <p class="sig-role">Fundador de Ignia. Esta consultoría la presto a título personal.</p>
+    </div>
+
+    <!-- ============ POSTSCRIPTS ============ -->
+    <div class="ps full">
+      <p>
+        <span class="tag">P. D.</span>
+        Si llegó hasta acá y sigue pensando "sí, pero lo mío es distinto": lo suyo probablemente sí es distinto.
+        Por eso el software de caja no le sirvió. Esa es exactamente la razón por la que existe lo que yo hago.
+      </p>
+      <p>
+        <span class="tag">P. D. 2</span>
+        Y si esto no era para usted pero se acordó de alguien mientras leía, mándele el enlace.
+        Le hace un favor más grande de lo que parece.
+      </p>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>Salomón Muriel. Consultoría y desarrollo a la medida para empresas colombianas, prestada a título personal y por fuera de Ignia.</p>
+    <nav>
+      <a href="#">Sobre mí</a>
+      <a href="#">Ahora</a>
+      <a href="#">Charlas</a>
+      <a href="https://wa.me/573132465100">WhatsApp</a>
+    </nav>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  var box = document.getElementById('diag');
+  if(!box) return;
+  var inputs = Array.prototype.slice.call(box.querySelectorAll('input[type=checkbox]'));
+  var countEl = document.getElementById('diagCount');
+  var textEl  = document.getElementById('diagText');
+
+  var verdicts = [
+    'Marque las que le pasan a usted y aquí abajo le digo qué significa.',
+    'Una sola. Eso todavía se aguanta, pero ya sabe cuál es la primera que hay que arreglar.',
+    'Dos. Ninguna de las dos lo va a quebrar mañana, y las dos le están costando horas todas las semanas.',
+    'Tres. Ahí ya no es desorden: es que la operación depende de que nadie se enferme.',
+    'Cuatro. Su empresa no tiene sistemas, tiene personas haciendo de sistema. Y usted lo sabe.',
+    'Cinco. Con esto, crecer significa contratar a alguien más para hacer lo mismo a mano.',
+    'Seis. Usted no está manejando la empresa. Está sosteniéndola.',
+    'Siete de siete. Con toda franqueza: esta carta la escribí pensando en usted.'
+  ];
+
+  function update(){
+    var n = inputs.filter(function(i){ return i.checked; }).length;
+    countEl.textContent = n + ' de 7 marcadas';
+    textEl.innerHTML = n >= 3
+      ? '<strong>' + verdicts[n] + '</strong>'
+      : verdicts[n];
+  }
+
+  inputs.forEach(function(i){ i.addEventListener('change', update); });
+  update();
+})();
+</script>
+
+</body>
+</html>

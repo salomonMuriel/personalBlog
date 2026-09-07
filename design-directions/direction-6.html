@@ -1,0 +1,1106 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Salomón Muriel</title>
+<meta name="description" content="Hago la cuenta con usted de lo que su negocio gasta al año en tareas manuales, y después construyo la herramienta que las quita. Consultoría, mentoría y charlas. Bogotá.">
+
+<!--
+  DESIGN READ
+  Personal consulting practice for non-technical Colombian small-business owners (clothing,
+  food, retail), language: "libreta de cuentas" / paper ledger, native CSS, Bricolage Grotesque
+  + Instrument Sans on a cool green-grey paper with a single forest-green accent.
+
+  DIALS  DESIGN_VARIANCE 7  |  MOTION_INTENSITY 4  |  VISUAL_DENSITY 5
+
+  THEME LOCK: hard light commitment per client instruction. color-scheme: light, zero OS
+  colour-preference queries, no toggle. Overrides the skill's dual-mode default.
+
+  SHAPE LOCK: panels and cards 12px. Controls, chips, buttons 6px. No pills anywhere.
+  COLOR LOCK: one accent, forest green (--green). Company logos are real third-party marks.
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  color-scheme: light;
+
+  --paper:      #EEF1EC;
+  --paper-deep: #E4E9E2;
+  --panel:      #FAFBF8;
+  --ink:        #15211A;
+  --ink-2:      #4C5A51;
+  --ink-3:      #5E6C62;
+  --rule:       #D3DAD1;
+  --rule-soft:  #E2E7DF;
+  --green:      #1B6B3E;
+  --green-dark: #12502E;
+  --green-wash: #DCE7DD;
+  --dark:       #16241C;
+
+  --r-panel: 12px;
+  --r-ctrl: 6px;
+
+  --shadow-panel: 0 1px 0 rgba(21,33,26,.05), 0 18px 44px -28px rgba(21,33,26,.35);
+  --ease: cubic-bezier(.16,1,.3,1);
+
+  --display: "Bricolage Grotesque", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --body: "Instrument Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+
+html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
+
+body{
+  margin:0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 17px;
+  line-height: 1.55;
+  letter-spacing: -0.005em;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+h1,h2,h3{ font-family: var(--display); font-weight: 700; letter-spacing: -0.03em; line-height: 1.04; margin:0; }
+p{ margin:0; }
+a{ color: inherit; }
+img{ display:block; max-width:100%; height:auto; }
+button, input, select, textarea{ font: inherit; color: inherit; }
+
+:focus-visible{ outline: 2.5px solid var(--green); outline-offset: 3px; border-radius: 3px; }
+
+.wrap{ width:100%; max-width: 1240px; margin-inline:auto; padding-inline: 20px; }
+@media (min-width: 900px){ .wrap{ padding-inline: 40px; } }
+
+/* ============================================================ NAV */
+.site-head{
+  position: sticky; top:0; z-index: 40;
+  background: rgba(238,241,236,.92);
+  backdrop-filter: saturate(140%) blur(10px);
+  -webkit-backdrop-filter: saturate(140%) blur(10px);
+  border-bottom: 1px solid var(--rule);
+}
+.site-head__in{
+  height: 68px; display:flex; align-items:center; justify-content:space-between; gap: 24px;
+}
+.brand{
+  font-family: var(--display); font-weight: 700; font-size: 19px; letter-spacing:-0.035em;
+  text-decoration:none; white-space:nowrap;
+}
+.brand span{ color: var(--green); }
+.nav{ display:none; gap: 26px; align-items:center; }
+@media (min-width: 880px){ .nav{ display:flex; } }
+.nav a{
+  text-decoration:none; font-size:15px; font-weight:500; color: var(--ink-2);
+  padding: 6px 0; border-bottom: 1.5px solid transparent; transition: color .2s var(--ease), border-color .2s var(--ease);
+}
+.nav a:hover{ color: var(--ink); border-bottom-color: var(--green); }
+
+/* ============================================================ BUTTONS */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:.5rem;
+  font-weight:600; font-size:15px; line-height:1; white-space:nowrap;
+  padding: 13px 20px; border-radius: var(--r-ctrl); border:1.5px solid transparent;
+  text-decoration:none; cursor:pointer;
+  transition: background-color .18s var(--ease), color .18s var(--ease), transform .12s var(--ease), border-color .18s var(--ease);
+}
+.btn--fill{ background: var(--green); color:#FBFCFA; }
+.btn--fill:hover{ background: var(--green-dark); }
+.btn--fill:active{ transform: translateY(1px); }
+.btn--line{ background: transparent; color: var(--ink); border-color: var(--ink); }
+.btn--line:hover{ background: var(--ink); color: var(--panel); }
+.btn--line:active{ transform: translateY(1px); }
+.btn--sm{ padding: 10px 15px; font-size:14px; }
+
+.tlink{
+  display:inline-flex; align-items:center; gap:.4rem;
+  font-weight:600; color: var(--green); text-decoration:none;
+  border-bottom:1.5px solid var(--green-wash); padding-bottom:2px;
+  transition: border-color .2s var(--ease), gap .2s var(--ease);
+}
+.tlink:hover{ border-bottom-color: var(--green); gap:.65rem; }
+
+/* ============================================================ SECTION RHYTHM */
+section{ padding-block: 76px; }
+@media (min-width: 900px){ section{ padding-block: 112px; } }
+.sec-title{ font-size: clamp(30px, 4.4vw, 50px); }
+
+.reveal{ opacity:0; transform: translateY(16px); transition: opacity .65s var(--ease), transform .65s var(--ease); }
+.reveal.is-in{ opacity:1; transform:none; }
+
+/* ============================================================ HERO */
+.hero{ padding-top: 40px; padding-bottom: 64px; }
+@media (min-width: 900px){ .hero{ padding-top: 72px; padding-bottom: 96px; } }
+.hero__grid{ display:grid; gap: 40px; align-items:center; }
+@media (min-width: 940px){
+  .hero__grid{ grid-template-columns: minmax(0, 1.42fr) minmax(0, .8fr); gap: 56px; }
+}
+.hero h1{
+  font-size: clamp(36px, 5.2vw, 62px);
+  font-weight: 800;
+  max-width: 20ch;
+}
+.hero h1 em{ font-style: normal; color: var(--green); }
+.hero__sub{
+  margin-top: 22px; font-size: clamp(17px, 1.6vw, 20px); color: var(--ink-2);
+  max-width: 46ch; line-height:1.5;
+}
+.hero__cta{ margin-top: 34px; display:flex; flex-wrap:wrap; gap: 14px; }
+.hero__figure{ position:relative; }
+.hero__figure img{
+  width:100%; border-radius: var(--r-panel);
+  box-shadow: var(--shadow-panel);
+}
+.hero__figure::after{
+  content:""; position:absolute; inset: 14px -14px -14px 14px; z-index:-1;
+  border: 1.5px solid var(--rule); border-radius: var(--r-panel);
+}
+
+/* ============================================================ LA CUENTA (tool) */
+.cuenta{ background: var(--paper-deep); border-block: 1px solid var(--rule); }
+.cuenta__head{ max-width: 62ch; margin-bottom: 34px; }
+.cuenta__head h2{ font-size: clamp(30px, 4.4vw, 50px); }
+.cuenta__head p{ margin-top:16px; color: var(--ink-2); font-size:18px; }
+
+.tool{
+  display:grid; gap: 20px;
+}
+/* two columns only once the ledger still has room to breathe beside the total */
+@media (min-width: 1240px){
+  .tool{ grid-template-columns: minmax(0, 1fr) 320px; gap: 24px; }
+}
+
+.panel{
+  background: var(--panel); border:1px solid var(--rule); border-radius: var(--r-panel);
+  box-shadow: var(--shadow-panel);
+}
+.panel__pad{ padding: 20px; }
+@media (min-width: 700px){ .panel__pad{ padding: 26px 28px; } }
+
+.sueldo{
+  display:flex; flex-wrap:wrap; align-items:flex-end; gap: 16px 22px;
+  padding-bottom: 20px; border-bottom: 1px solid var(--rule-soft);
+}
+.field{ display:flex; flex-direction:column; gap:6px; min-width:0; }
+.field > label, .fld-label{
+  font-size: 13px; font-weight:600; color: var(--ink-3); letter-spacing: 0;
+}
+.help{ font-size:13px; color: var(--ink-3); line-height:1.45; }
+
+input[type="text"], input[type="number"], select{
+  width:100%; background:#FFFFFF; border:1.5px solid var(--rule);
+  border-radius: var(--r-ctrl); padding: 11px 12px; font-size:16px; color: var(--ink);
+  transition: border-color .18s var(--ease), box-shadow .18s var(--ease);
+  min-width:0;
+}
+input::placeholder{ color:#67746B; }
+input:hover, select:hover{ border-color: #B9C3B8; }
+input:focus, select:focus{ border-color: var(--green); box-shadow: 0 0 0 3px rgba(27,107,62,.14); outline:none; }
+input[aria-invalid="true"]{ border-color:#C0503A; background:#FFF7F5; }
+select{
+  appearance:none; -webkit-appearance:none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--ink-3) 50%), linear-gradient(135deg, var(--ink-3) 50%, transparent 50%);
+  background-position: calc(100% - 17px) calc(50% + 1px), calc(100% - 12px) calc(50% + 1px);
+  background-size: 5px 5px, 5px 5px; background-repeat: no-repeat;
+  padding-right: 34px;
+}
+.sueldo .field{ flex: 1 1 260px; }
+.sueldo .field--wide{ flex: 2 1 340px; }
+.money{ position:relative; }
+.money input{ padding-left: 26px; }
+.money .cur{ position:absolute; left:12px; top:50%; transform:translateY(-50%); color: var(--ink-3); font-size:16px; }
+
+/* ledger rows */
+.ledger{ padding-top: 20px; }
+.ledger__head{
+  display:none; font-size:12.5px; font-weight:600; color: var(--ink-3);
+  padding-bottom: 10px; border-bottom:1px solid var(--rule); margin-bottom: 14px;
+}
+.fila{
+  display:grid; gap: 12px;
+  padding: 16px; margin-bottom: 12px;
+  border:1.5px solid var(--rule-soft); border-radius: var(--r-ctrl); background: #FFFFFF;
+}
+.fila--bad{ border-color: #C0503A; background: #FFF7F5; }
+.fila__horas{ display:flex; align-items:baseline; gap:8px; }
+.fila__horas .n{
+  font-family: var(--display); font-weight:700; font-size: 24px; font-variant-numeric: tabular-nums;
+  letter-spacing:-0.02em;
+}
+.fila__horas .u{ font-size:13px; color: var(--ink-3); }
+.err{ grid-column:1/-1; font-size:13.5px; color:#A63B25; font-weight:500; }
+.quitar{
+  background:none; border:0; padding:6px 0; cursor:pointer;
+  font-size:13.5px; font-weight:600; color: var(--ink-3); text-align:left;
+  border-bottom:1.5px solid transparent; justify-self:start;
+  transition: color .18s var(--ease), border-color .18s var(--ease);
+}
+.quitar:hover{ color:#A63B25; border-bottom-color:#A63B25; }
+
+/* mobile row: task and frequency full width, the two numbers side by side */
+@media (max-width: 939px){
+  .fila{ grid-template-columns: 1fr 1fr; align-items:end; }
+  .fila > .field:nth-of-type(1), .fila > .field:nth-of-type(2){ grid-column: 1 / -1; }
+  .fila__horas{ grid-column: 1; padding-top: 4px; }
+  .fila .quitar{ grid-column: 2; justify-self: end; padding-top: 4px; }
+}
+
+@media (min-width: 940px){
+  .ledger__head{ display:grid; grid-template-columns: minmax(0,1.8fr) 9.5rem 5.5rem 5.5rem 6rem 3.5rem; gap: 12px; }
+  .fila{
+    grid-template-columns: minmax(0,1.8fr) 9.5rem 5.5rem 5.5rem 6rem 3.5rem;
+    gap: 12px; align-items: end;
+    padding: 12px 16px; background: transparent; border:0; border-bottom:1px solid var(--rule-soft);
+    border-radius:0; margin-bottom:0;
+  }
+  .fila--bad{ background: #FFF7F5; border-color: transparent; }
+  /* keep the label in the a11y tree at desktop; the column header carries it visually */
+  .fila .fld-label{
+    position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+    overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0;
+  }
+  .fila__horas{ padding-bottom: 8px; }
+  .fila select{ font-size: 15px; padding-right: 30px; }
+  .quitar{ padding-bottom: 10px; }
+}
+
+.ledger__actions{
+  display:flex; flex-wrap:wrap; gap:10px; padding-top: 18px;
+}
+.mini{
+  background:transparent; border:1.5px solid var(--rule); border-radius: var(--r-ctrl);
+  padding: 9px 14px; font-size:14px; font-weight:600; cursor:pointer; color: var(--ink);
+  transition: border-color .18s var(--ease), background-color .18s var(--ease), transform .12s var(--ease);
+}
+.mini:hover{ border-color: var(--ink); background: var(--paper); }
+.mini:active{ transform: translateY(1px); }
+.mini--key{ border-color: var(--ink); }
+
+.vacio{
+  border: 1.5px dashed var(--rule); border-radius: var(--r-ctrl);
+  padding: 34px 24px; text-align:left; background: #FDFEFC;
+}
+.vacio h3{ font-size: 21px; }
+.vacio p{ margin-top:8px; color: var(--ink-2); font-size:16px; max-width: 46ch; }
+
+/* total column */
+.total-wrap{ min-width:0; }
+.total{
+  background: var(--dark); color: #EDF2ED; border-radius: var(--r-panel);
+  border: 1px solid var(--dark);
+  padding: 26px 24px;
+}
+@media (min-width: 1240px){
+  .total{ position: sticky; top: 92px; }
+}
+.total__k{ font-size:13px; font-weight:600; color: #9FB3A5; }
+.costo-hora{
+  font-family: var(--display); font-weight:700; font-size:26px;
+  letter-spacing:-.03em; line-height:1.1; font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+.total__n{
+  font-family: var(--display); font-weight:800; letter-spacing:-0.035em;
+  font-variant-numeric: tabular-nums; line-height:1;
+  font-size: clamp(38px, 7vw, 50px); margin-top: 6px; color:#FBFCFA;
+}
+.total__n--money{ font-size: clamp(30px, 5.6vw, 40px); }
+.total__sep{ height:1px; background: rgba(237,242,237,.16); margin: 22px 0; }
+.total__note{ font-size:14.5px; color:#C3D2C7; line-height:1.5; }
+.total__note b{ color:#FBFCFA; font-weight:600; }
+.total .btn--fill{ width:100%; margin-top: 22px; background:#FBFCFA; color: var(--dark); }
+.total .btn--fill:hover{ background:#DCE7DD; }
+.total__fine{ font-size:12.5px; color:#93A897; margin-top:12px; line-height:1.45; }
+
+.supuestos{ margin-top: 18px; font-size:13.5px; color: var(--ink-3); max-width: 78ch; }
+
+/* ============================================================ BRIDGE */
+.bridge h2{ font-size: clamp(30px, 4.8vw, 56px); max-width: 20ch; }
+.bridge__body{ margin-top: 26px; display:grid; gap: 18px; max-width: 60ch; }
+.bridge__body p{ color: var(--ink-2); font-size: 18px; }
+.pull{
+  margin-top: 46px; padding: 30px 26px 32px;
+  background: var(--green-wash); border-radius: var(--r-panel);
+  border-left: 5px solid var(--green);
+}
+@media (min-width:900px){ .pull{ padding: 40px 44px 42px; } }
+.pull__k{ font-size:13px; font-weight:600; color: var(--green-dark); }
+.pull p{
+  margin-top: 10px; font-family: var(--display); font-weight:600;
+  font-size: clamp(22px, 3vw, 32px); line-height:1.18; letter-spacing:-0.028em; max-width: 26ch;
+}
+
+/* ============================================================ TRAYECTORIA (bento) */
+.tray{ background: var(--paper-deep); border-block:1px solid var(--rule); }
+.tray__head{ max-width: 58ch; margin-bottom: 36px; }
+.tray__head p{ margin-top:16px; color: var(--ink-2); font-size:18px; }
+
+.bento{ display:grid; gap: 14px; }
+@media (min-width: 780px){
+  .bento{ grid-template-columns: repeat(6, 1fr); grid-auto-rows: minmax(170px, auto); }
+  .b1{ grid-column: span 3; grid-row: span 2; }
+  .b2{ grid-column: span 3; }
+  .b3{ grid-column: span 3; }
+  .b4{ grid-column: span 3; }
+  .b5{ grid-column: span 3; }
+}
+.tile{
+  border-radius: var(--r-panel); border:1px solid var(--rule);
+  background: var(--panel); padding: 22px; display:flex; flex-direction:column; justify-content:space-between;
+  gap: 22px; min-height: 170px;
+}
+.chip{
+  background:#FFFFFF; border:1px solid var(--rule-soft); border-radius: var(--r-ctrl);
+  width: 62px; height: 62px; display:flex; align-items:center; justify-content:center; padding:9px;
+  flex: none;
+}
+.chip img{ max-height:100%; width:auto; object-fit:contain; }
+.tile h3{ font-size: 22px; letter-spacing:-0.03em; }
+.tile__out{ margin-top: 8px; font-size: 16px; color: var(--ink-2); line-height:1.45; }
+.tile__yr{ font-size:13px; color: var(--ink-3); font-weight:600; }
+
+.tile--dark{ background: var(--dark); border-color: var(--dark); color:#EDF2ED; }
+.tile--dark h3{ color:#FBFCFA; }
+.tile--dark .tile__out{ color:#C3D2C7; }
+.tile--dark .tile__yr{ color:#93A897; }
+.tile--dark .big{
+  font-family: var(--display); font-weight:800; letter-spacing:-0.035em; line-height:1;
+  font-size: clamp(40px, 6vw, 62px); color:#FBFCFA; font-variant-numeric: tabular-nums;
+}
+.tile--dark .big span{ font-size: .42em; letter-spacing:-0.02em; }
+
+.tile--photo{ padding:0; overflow:hidden; position:relative; border:0; }
+.tile--photo img{ width:100%; height:100%; object-fit:cover; min-height: 190px; }
+.tile--photo .tile__body{
+  position:absolute; inset: auto 0 0 0; padding: 18px 20px 18px;
+  background: linear-gradient(to top, rgba(22,36,28,.94) 22%, rgba(22,36,28,.68) 62%, rgba(22,36,28,0));
+  color:#FBFCFA;
+}
+.tile--photo h3{ color:#FBFCFA; }
+.tile--photo .tile__out{ color:#D6E2D8; }
+
+.tile--muted{ background: transparent; border-style: dashed; }
+.tile--muted h3, .tile--muted .tile__out{ color: var(--ink-3); }
+.tile--muted .chip{ opacity:.62; }
+
+.tray__foot{ margin-top: 26px; font-size:16px; color: var(--ink-2); max-width: 66ch; }
+
+/* ============================================================ TRES MANERAS */
+.maneras__head{ max-width: 56ch; margin-bottom: 8px; }
+.maneras__head p{ margin-top:16px; color: var(--ink-2); font-size:18px; }
+.via{
+  display:grid; gap: 18px; padding: 34px 0;
+  border-top:1px solid var(--rule);
+}
+.via:last-of-type{ border-bottom:1px solid var(--rule); }
+@media (min-width: 900px){
+  .via{ grid-template-columns: minmax(0,.9fr) minmax(0,1.35fr); gap: 48px; padding: 44px 0; align-items:start; }
+}
+.via__who{
+  font-family: var(--display); font-weight:700; letter-spacing:-0.032em; line-height:1.05;
+  font-size: clamp(28px, 3.6vw, 40px);
+}
+.via__whok{ font-size:13px; font-weight:600; color: var(--ink-3); margin-bottom:10px; font-family: var(--body); letter-spacing:0; }
+.via__name{ font-size: 15px; font-weight:600; color: var(--green); margin-top: 14px; }
+.via__body p{ color: var(--ink-2); font-size: 17px; }
+.via__body p + p{ margin-top: 12px; }
+.via__body .tlink{ margin-top: 18px; }
+.via--soft .via__who{ color: var(--ink-3); }
+
+/* ============================================================ QUIÉN SOY */
+.quien{ background: var(--paper-deep); border-block:1px solid var(--rule); }
+.strip{
+  display:grid; gap: 12px; grid-template-columns: repeat(2, 1fr);
+  margin-bottom: 44px;
+}
+@media (min-width: 780px){ .strip{ grid-template-columns: 1.4fr 1fr 1fr; } }
+.strip figure{ margin:0; border-radius: var(--r-panel); overflow:hidden; background: var(--paper); }
+.strip img{ width:100%; height:100%; object-fit:cover; aspect-ratio: 4/3; }
+.strip figure:last-child{ grid-column: span 2; }
+@media (min-width: 780px){
+  .strip figure{ height: 300px; }
+  .strip figure:last-child{ grid-column: auto; }
+  .strip img{ aspect-ratio: auto; }
+}
+
+.quien__cols{ display:grid; gap: 40px; }
+@media (min-width: 900px){ .quien__cols{ grid-template-columns: minmax(0,1.05fr) minmax(0,.95fr); gap: 72px; } }
+.quien h2{ font-size: clamp(28px, 3.6vw, 42px); }
+.quien__cols p{ color: var(--ink-2); font-size:18px; }
+.quien__cols p + p{ margin-top: 16px; }
+.nolist{ list-style:none; margin:0; padding:0; }
+.nolist li{
+  padding: 20px 0; border-bottom:1px solid var(--rule);
+  font-size: 16.5px; color: var(--ink-2); line-height:1.5;
+}
+.nolist li:first-child{ border-top:1px solid var(--rule); }
+.nolist li b{
+  display:block; font-family: var(--display); font-weight:700; font-size: 18px;
+  color: var(--ink); letter-spacing:-0.025em; margin-bottom: 5px;
+}
+
+/* ============================================================ CIERRE */
+.cierre__grid{ display:grid; gap: 40px; }
+@media (min-width: 980px){ .cierre__grid{ grid-template-columns: minmax(0,1.15fr) minmax(0,.85fr); gap: 64px; align-items:start; } }
+.cierre h2{ font-size: clamp(30px, 4.4vw, 52px); max-width: 16ch; }
+.cupo{ margin-top: 34px; display:grid; gap: 22px; }
+@media (min-width: 560px){ .cupo{ grid-template-columns: 1fr 1fr; gap: 28px; } }
+.cupo__n{
+  font-family: var(--display); font-weight:800; letter-spacing:-0.04em; line-height:1;
+  font-size: clamp(48px, 8vw, 70px); font-variant-numeric: tabular-nums;
+}
+.cupo__n em{ font-style:normal; color: var(--ink-3); }
+.cupo__k{ margin-top: 8px; font-size:15px; color: var(--ink-2); max-width: 24ch; }
+.cierre__cta{ margin-top: 38px; display:flex; flex-wrap:wrap; gap:14px; align-items:center; }
+.cierre__fine{ margin-top: 18px; font-size:14.5px; color: var(--ink-3); max-width: 52ch; }
+
+.testi{
+  background: var(--panel); border:1.5px dashed var(--rule); border-radius: var(--r-panel);
+  padding: 28px 26px;
+}
+.testi h3{ font-size: 20px; }
+.testi p{ margin-top: 12px; color: var(--ink-2); font-size:16px; }
+.testi .tlink{ margin-top: 18px; }
+
+/* ============================================================ FOOTER */
+.site-foot{ background: var(--dark); color:#C3D2C7; padding-block: 56px 40px; }
+.foot__grid{ display:grid; gap: 34px; }
+@media (min-width: 800px){ .foot__grid{ grid-template-columns: 1.4fr 1fr 1fr; gap: 48px; } }
+.foot__brand{ font-family: var(--display); font-weight:700; font-size: 22px; color:#FBFCFA; letter-spacing:-0.035em; }
+.foot__note{ margin-top: 12px; font-size:15px; max-width: 40ch; line-height:1.55; }
+.foot h4{ font-size:13px; font-weight:600; color:#93A897; margin:0 0 14px; font-family: var(--body); }
+.foot ul{ list-style:none; margin:0; padding:0; display:grid; gap:10px; }
+.foot a{ color:#DCE7DD; text-decoration:none; font-size:15.5px; border-bottom:1px solid transparent; transition: border-color .2s var(--ease), color .2s var(--ease); }
+.foot a:hover{ color:#FBFCFA; border-bottom-color:#6E8A76; }
+.foot__base{
+  margin-top: 44px; padding-top: 22px; border-top:1px solid rgba(237,242,237,.14);
+  display:flex; flex-wrap:wrap; gap: 12px 26px; justify-content:space-between;
+  font-size:13.5px; color:#8FA593;
+}
+
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior:auto; }
+  .reveal{ opacity:1; transform:none; transition:none; }
+  *{ animation-duration:.001ms !important; transition-duration:.001ms !important; }
+}
+</style>
+</head>
+
+<body>
+
+<header class="site-head">
+  <div class="wrap site-head__in">
+    <a class="brand" href="#inicio">Salomón Muriel<span>.</span></a>
+    <nav class="nav" aria-label="Secciones">
+      <a href="#cuenta">La cuenta</a>
+      <a href="#trayectoria">Lo que he hecho</a>
+      <a href="#maneras">Cómo trabajo</a>
+      <a href="#quien">Quién soy</a>
+    </nav>
+    <a class="btn btn--fill btn--sm"
+       href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20le%20escribo%20desde%20su%20p%C3%A1gina."
+       target="_blank" rel="noopener">Escribirme</a>
+  </div>
+</header>
+
+<main id="inicio">
+
+  <!-- ================================================= HERO : asymmetric split -->
+  <section class="hero">
+    <div class="wrap hero__grid">
+      <div>
+        <h1>Primero la cuenta.<br><em>Después hablamos.</em></h1>
+        <p class="hero__sub">Abajo hay una herramienta que suma lo que su negocio gasta al año en tareas repetitivas. Sin registro.</p>
+        <div class="hero__cta">
+          <a class="btn btn--fill" href="#cuenta">Hacer la cuenta</a>
+          <a class="btn btn--line" href="#trayectoria">Ver qué he construido</a>
+        </div>
+      </div>
+      <div class="hero__figure">
+        <img src="assets/fotoSalo.jpeg" width="800" height="800" alt="Salomón Muriel" fetchpriority="high" decoding="async">
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================= LA CUENTA : the working tool -->
+  <section class="cuenta" id="cuenta">
+    <div class="wrap">
+      <div class="cuenta__head reveal">
+        <h2>La cuenta</h2>
+        <p>Escriba las tareas que en su negocio se hacen a mano, una y otra vez. La herramienta le dice cuántas horas y cuánta plata se le van al año en eso. Ya cargué un ejemplo para que vea cómo funciona: bórrelo y ponga lo suyo.</p>
+      </div>
+
+      <div class="tool">
+
+        <div class="panel">
+          <div class="panel__pad">
+
+            <div class="sueldo">
+              <div class="field field--wide">
+                <label for="sueldo">Sueldo mensual de quien hace estas tareas</label>
+                <div class="money">
+                  <span class="cur" aria-hidden="true">$</span>
+                  <input type="text" id="sueldo" inputmode="numeric" autocomplete="off" value="2.000.000" aria-describedby="sueldo-help">
+                </div>
+                <p class="help" id="sueldo-help">Si son varias personas con sueldos distintos, ponga un promedio.</p>
+                <p class="err" id="sueldo-err" hidden>Escriba el sueldo mensual para poder pasar las horas a plata.</p>
+              </div>
+              <div class="field">
+                <span class="fld-label" id="ch-label">Costo de una hora de esa persona</span>
+                <p class="costo-hora" id="costo-hora" aria-labelledby="ch-label">$10.526</p>
+                <p class="help">Sueldo dividido en 190 horas al mes.</p>
+              </div>
+            </div>
+
+            <div class="ledger">
+              <div class="ledger__head" aria-hidden="true">
+                <span>La tarea</span>
+                <span>¿Cada cuánto?</span>
+                <span>Minutos</span>
+                <span>Personas</span>
+                <span>Horas al año</span>
+                <span></span>
+              </div>
+
+              <div id="filas"></div>
+
+              <div class="vacio" id="vacio" hidden>
+                <h3>La lista está vacía</h3>
+                <p>Empiece por la tarea que más lo aburre a usted o a su equipo. Casi siempre esa es la que más plata se está llevando.</p>
+                <div class="ledger__actions" style="padding-top:20px">
+                  <button class="mini mini--key" type="button" id="ejemplo2">Cargar el ejemplo otra vez</button>
+                </div>
+              </div>
+
+              <div class="ledger__actions">
+                <button class="mini mini--key" type="button" id="agregar">Agregar una tarea</button>
+                <button class="mini" type="button" id="vaciar">Vaciar la lista</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="total-wrap">
+        <aside class="total" aria-live="polite">
+          <p class="total__k">Al año se van</p>
+          <p class="total__n" id="out-horas">0 horas</p>
+          <div class="total__sep"></div>
+          <p class="total__k">Que en plata son</p>
+          <p class="total__n total__n--money" id="out-plata">$ 0</p>
+          <div class="total__sep"></div>
+          <p class="total__note" id="out-lectura">Agregue una tarea para ver la cuenta.</p>
+          <a class="btn btn--fill" id="wa-cuenta"
+             href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20hice%20la%20cuenta%20en%20su%20p%C3%A1gina."
+             target="_blank" rel="noopener">Mandarme esta cuenta</a>
+          <p class="total__fine">Se abre WhatsApp con la cuenta ya escrita. Usted decide si la manda.</p>
+        </aside>
+        </div>
+
+      </div>
+
+      <p class="supuestos">Cómo saca las cuentas: "todos los días" son 5 días a la semana, "cada quincena" son 24 veces al año. La hora sale del sueldo mensual dividido en 190 horas. Es un estimado para tomar una decisión, no una auditoría.</p>
+    </div>
+  </section>
+
+  <!-- ================================================= BRIDGE : full-width editorial statement -->
+  <section class="bridge">
+    <div class="wrap">
+      <h2 class="reveal">Ese número casi nunca se arregla contratando a otra persona.</h2>
+      <div class="bridge__body reveal">
+        <p>Se arregla haciendo que el computador haga la parte boba. Y hoy eso cuesta una fracción de lo que costaba hace dos años, porque construyo con inteligencia artificial y porque le enseño a su equipo a usarla para el trabajo del día a día, no solo a los que programan.</p>
+        <p>El software lo escribo yo, no lo subcontrato. En Ignia armé el CRM, la página y la plataforma de la comunidad. En R5 armé el sistema que decidía a quién se le podía prestar plata y con qué datos.</p>
+      </div>
+      <div class="pull reveal">
+        <p class="pull__k">Lo que hago bien</p>
+        <p>Construir sistemas que le sirvan a la gente que los usa, y sacar cosas del papel.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================= TRAYECTORIA : bento, 5 items 5 cells -->
+  <section class="tray" id="trayectoria">
+    <div class="wrap">
+      <div class="tray__head reveal">
+        <h2 class="sec-title">Lo que he hecho, completo</h2>
+        <p>Las que salieron bien y las que se cayeron. Si le voy a pedir que confíe en mis cuentas, le muestro las dos columnas.</p>
+      </div>
+
+      <div class="bento">
+
+        <article class="tile tile--dark b1 reveal">
+          <div class="chip"><img src="assets/ignia.png" width="120" height="80" alt="Ignia" loading="lazy" decoding="async"></div>
+          <div>
+            <p class="big">150<span> mil USD</span></p>
+            <h3 style="margin-top:14px">Ignia</h3>
+            <p class="tile__out">Facturados en el primer año. Rentable desde el primer mes, sin plata de inversionistas. Somos 5 y hoy es mi trabajo principal.</p>
+            <p class="tile__yr" style="margin-top:12px">Desde junio de 2025</p>
+          </div>
+        </article>
+
+        <article class="tile tile--photo b2 reveal">
+          <img src="assets/salo_oscar.webp" width="527" height="331" alt="Salomón Muriel presentando la plataforma de Finco" loading="lazy" decoding="async">
+          <div class="tile__body">
+            <h3>Finco</h3>
+            <p class="tile__out">100.000 informes de avalúo al año. Se vendió en 5 veces lo invertido.</p>
+          </div>
+        </article>
+
+        <article class="tile b3 reveal">
+          <div class="chip"><img src="assets/prestagente.png" width="120" height="115" alt="PrestaGente" loading="lazy" decoding="async"></div>
+          <div>
+            <h3>PrestaGente</h3>
+            <p class="tile__out">Créditos entre conocidos. Se vendió por cerca de un millón de dólares.</p>
+          </div>
+        </article>
+
+        <article class="tile tile--muted b4 reveal">
+          <div class="chip"><img src="assets/beriblock.png" width="100" height="120" alt="Beriblock" loading="lazy" decoding="async"></div>
+          <div>
+            <h3>Beriblock</h3>
+            <p class="tile__out">Quebró. Buen producto, mercado que no existía todavía.</p>
+          </div>
+        </article>
+
+        <article class="tile tile--muted b5 reveal">
+          <div class="chip"><img src="assets/elpalomo.png" width="100" height="100" alt="El Palomo" loading="lazy" decoding="async"></div>
+          <div>
+            <h3>El Palomo</h3>
+            <p class="tile__out">Se fue al piso, y de una manera espectacular. Es la historia que más me piden.</p>
+          </div>
+        </article>
+
+      </div>
+
+      <p class="tray__foot reveal">Antes de todo esto tuve equipos de hasta 15 personas en mis propias empresas y alrededor de 40 en R5. Sé lo que es tener nómina y no dormir por eso.</p>
+    </div>
+  </section>
+
+  <!-- ================================================= TRES MANERAS : separated by who does the work -->
+  <section class="maneras" id="maneras">
+    <div class="wrap">
+      <div class="maneras__head reveal">
+        <h2 class="sec-title">Trabajo de tres maneras. La diferencia es quién hace el trabajo.</h2>
+        <p>No hay paquetes ni niveles. Escoja por la respuesta a esa pregunta y hablamos de lo demás por WhatsApp.</p>
+      </div>
+
+      <article class="via reveal">
+        <div>
+          <p class="via__whok">¿Quién hace el trabajo?</p>
+          <p class="via__who">Lo hago yo.</p>
+          <p class="via__name">Consultoría</p>
+        </div>
+        <div class="via__body">
+          <p>Me meto en su negocio, entendemos por dónde se está yendo la plata y yo construyo la herramienta que lo arregla. Yo escribo el software, yo lo instalo y yo le enseño a su equipo a usarlo.</p>
+          <p>Trabajo con empresas que facturan menos de 5.000 millones de pesos al año y que no son de tecnología: ropa, comida, comercio, servicios. Empresas de verdad, con clientes de verdad.</p>
+          <a class="tlink" href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20quiero%20hablar%20de%20una%20consultor%C3%ADa%20para%20mi%20negocio." target="_blank" rel="noopener">Hablemos de consultoría <span aria-hidden="true">&rarr;</span></a>
+        </div>
+      </article>
+
+      <article class="via reveal">
+        <div>
+          <p class="via__whok">¿Quién hace el trabajo?</p>
+          <p class="via__who">Lo hace usted.</p>
+          <p class="via__name">Mentoría</p>
+        </div>
+        <div class="via__body">
+          <p>Nos vemos una hora a la semana. Yo le pongo tareas concretas, usted las hace y en la siguiente sesión las revisamos. Trabajar conmigo significa que las cosas pasan, así toque a las malas.</p>
+          <p>Esto es uno a uno y es mío, no de una cohorte ni de un programa. Si lo que usted busca es un proceso completo con un grupo de emprendedores al lado, eso es el Action Lab de Ignia y con gusto le cuento de qué se trata.</p>
+          <a class="tlink" href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20quiero%20preguntarle%20por%20la%20mentor%C3%ADa%20uno%20a%20uno." target="_blank" rel="noopener">Preguntar por la mentoría <span aria-hidden="true">&rarr;</span></a>
+        </div>
+      </article>
+
+      <article class="via via--soft reveal">
+        <div>
+          <p class="via__whok">¿Quién hace el trabajo?</p>
+          <p class="via__who">Todavía nadie.</p>
+          <p class="via__name">Charlas</p>
+        </div>
+        <div class="via__body">
+          <p>Las charlas son la manera en que la gente me conoce, no un producto que yo venda. Me han invitado congresos, empresas y universidades a hablar de adopción de tecnología e inteligencia artificial, de emprender, de mentalidad y de cómo sostener una vida mientras uno saca una empresa adelante.</p>
+          <p>Si le sirve para su evento, escríbame y cuadramos. Y si después de oírme quiere trabajar conmigo, ahí sí volvemos a las dos primeras.</p>
+          <a class="tlink" href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20quiero%20invitarlo%20a%20dar%20una%20charla." target="_blank" rel="noopener">Invitarme a una charla <span aria-hidden="true">&rarr;</span></a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ================================================= QUIÉN SOY : photo strip + honest limits -->
+  <section class="quien" id="quien">
+    <div class="wrap">
+      <div class="strip reveal">
+        <figure><img src="assets/marathon.jpg" width="600" height="600" alt="Salomón Muriel con la medalla de la media maratón de Bogotá" loading="lazy" decoding="async"></figure>
+        <figure><img src="assets/chicago.jpg" width="300" height="400" alt="Salomón Muriel con su familia en Chicago" loading="lazy" decoding="async"></figure>
+        <figure><img src="assets/bonfire.jpeg" width="600" height="600" alt="Una fogata de noche" loading="lazy" decoding="async"></figure>
+      </div>
+
+      <div class="quien__cols">
+        <div class="reveal">
+          <h2>Esto es una práctica personal, y por eso es chiquita.</h2>
+          <p>Mi trabajo principal es Ignia. Lo que hago aquí es aparte y lo hago porque me gusta meterme en negocios que apenas están arrancando y verlos moverse. Como es aparte, el cupo es de verdad pequeño y prefiero decirlo de una vez.</p>
+          <p>Llevo unas 7 mentorías hasta hoy y varias consultorías. Corro, tengo dos hijos y no vivo pegado del computador. Eso también es parte de cómo trabajo: si le prometo algo, es porque me cabe.</p>
+        </div>
+        <div class="reveal">
+          <h3 style="font-size:19px;margin-bottom:14px">Lo que no hago, para no hacerle perder el tiempo</h3>
+          <ul class="nolist">
+            <li><b>No sé escalar más allá de cierto punto.</b> Una empresa de más de 5 millones de dólares al año se me sale de las manos. Nunca lo he hecho y no se lo voy a vender.</li>
+            <li><b>No doy charlas de ciencia de datos ni de cultura organizacional.</b> Me las piden seguido y siempre digo que no. No es lo mío.</li>
+            <li><b>No trabajo con negocios que tienen que inventar tecnología para existir.</b> Si su empresa depende de una investigación de años, busque a otra persona.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================= CIERRE : capacity + ask + real testimonial slot -->
+  <section class="cierre" id="contacto">
+    <div class="wrap cierre__grid">
+      <div class="reveal">
+        <h2>Si la cuenta le dio grande, escríbame.</h2>
+        <div class="cupo">
+          <div>
+            <p class="cupo__n">3<em>/5</em></p>
+            <p class="cupo__k">mentorías ocupadas. Ese es el tope, no una estrategia.</p>
+          </div>
+          <div>
+            <p class="cupo__n">2<em>/4</em></p>
+            <p class="cupo__k">consultorías andando. Cuando se llenan, se llenan.</p>
+          </div>
+        </div>
+        <div class="cierre__cta">
+          <a class="btn btn--fill"
+             href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20le%20escribo%20desde%20su%20p%C3%A1gina."
+             target="_blank" rel="noopener">Escribirme</a>
+          <a class="tlink" href="https://cal.com/salomonmuriel" target="_blank" rel="noopener">Agendar 30 minutos en mi calendario <span aria-hidden="true">&rarr;</span></a>
+        </div>
+        <p class="cierre__fine">Contesto yo. Si no encajamos, se lo digo en la primera conversación y le sugiero a quién más buscar.</p>
+      </div>
+
+      <div class="testi reveal">
+        <h3>Aquí van los testimonios</h3>
+        <p>Todavía no los tengo escritos y no pienso inventarlos. Lo que sí puedo hacer es mejor: pídame los datos de dos o tres personas con las que he trabajado y hable con ellas directamente, sin que yo esté en la conversación.</p>
+        <a class="tlink" href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20quisiera%20hablar%20con%20alguien%20con%20quien%20usted%20haya%20trabajado." target="_blank" rel="noopener">Pedir los contactos <span aria-hidden="true">&rarr;</span></a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot__grid">
+      <div>
+        <p class="foot__brand">Salomón Muriel</p>
+        <p class="foot__note">Consultoría, mentoría y charlas para negocios que están arrancando. Práctica personal, separada de Ignia.</p>
+      </div>
+      <div class="foot">
+        <h4>La página</h4>
+        <ul>
+          <li><a href="#cuenta">La cuenta</a></li>
+          <li><a href="#trayectoria">Lo que he hecho</a></li>
+          <li><a href="#maneras">Cómo trabajo</a></li>
+          <li><a href="#quien">Quién soy</a></li>
+        </ul>
+      </div>
+      <div class="foot">
+        <h4>Escribirme</h4>
+        <ul>
+          <li><a href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20le%20escribo%20desde%20su%20p%C3%A1gina." target="_blank" rel="noopener">WhatsApp</a></li>
+          <li><a href="https://cal.com/salomonmuriel" target="_blank" rel="noopener">Mi calendario</a></li>
+          <li><a href="https://www.linkedin.com/in/salomonmuriel" target="_blank" rel="noopener">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot__base">
+      <span>Bogotá, Colombia</span>
+      <span><a href="/en/" style="color:#8FA593">Read this in English</a></span>
+      <span>&copy; 2026 Salomón Muriel</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------------------------------------------------------------
+     MOTION 1 (hierarchy): sections settle into place as they arrive.
+     IntersectionObserver only. No scroll listeners anywhere.
+  ---------------------------------------------------------------- */
+  var revealables = document.querySelectorAll(".reveal");
+  if (reduce || !("IntersectionObserver" in window)) {
+    revealables.forEach(function(el){ el.classList.add("is-in"); });
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){ e.target.classList.add("is-in"); io.unobserve(e.target); }
+      });
+    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.12 });
+    revealables.forEach(function(el){ io.observe(el); });
+  }
+
+  /* ---------------------------------------------------------------
+     LA CUENTA
+     Un cálculo real: horas y pesos al año perdidos en tareas manuales.
+  ---------------------------------------------------------------- */
+  var VECES = { dia: 260, semana: 52, quincena: 24, mes: 12 };
+  var ETIQUETA = { dia: "todos los días", semana: "cada semana", quincena: "cada quincena", mes: "cada mes" };
+  var HORAS_MES = 190;
+
+  var pesos = new Intl.NumberFormat("es-CO", { style:"currency", currency:"COP", maximumFractionDigits:0 });
+  var enteros = new Intl.NumberFormat("es-CO", { maximumFractionDigits:0 });
+
+  var EJEMPLO = [
+    { tarea:"Pasar los pedidos de WhatsApp a un Excel", frec:"dia",      min:25,  per:1 },
+    { tarea:"Cuadrar el inventario contra lo que se vendió", frec:"semana", min:90, per:2 },
+    { tarea:"Armar la lista de precios actualizada para los clientes", frec:"quincena", min:45, per:1 },
+    { tarea:"Organizar los soportes para el contador", frec:"mes",      min:180, per:1 }
+  ];
+
+  var uid = 0;
+  var filas = [];
+  var sueldo = 2000000;
+
+  var elFilas   = document.getElementById("filas");
+  var elVacio   = document.getElementById("vacio");
+  var elHoras   = document.getElementById("out-horas");
+  var elPlata   = document.getElementById("out-plata");
+  var elLectura = document.getElementById("out-lectura");
+  var elCostoH  = document.getElementById("costo-hora");
+  var elSueldo  = document.getElementById("sueldo");
+  var elSuErr   = document.getElementById("sueldo-err");
+  var elWa      = document.getElementById("wa-cuenta");
+
+  function nuevaFila(d){
+    return { id: ++uid, tarea: d ? d.tarea : "", frec: d ? d.frec : "semana", min: d ? d.min : "", per: d ? d.per : 1 };
+  }
+  function cargarEjemplo(){
+    filas = EJEMPLO.map(function(d){ return nuevaFila(d); });
+    pintar();
+  }
+
+  function horasFila(f){
+    var min = parseFloat(f.min), per = parseFloat(f.per);
+    if (!(min > 0) || !(per > 0)) return 0;
+    return (VECES[f.frec] * min * per) / 60;
+  }
+  function filaMala(f){
+    return f.min !== "" && !(parseFloat(f.min) > 0);
+  }
+
+  function crearCampo(labelTxt, control){
+    var wrap = document.createElement("div");
+    wrap.className = "field";
+    var lab = document.createElement("label");
+    lab.className = "fld-label";
+    lab.textContent = labelTxt;
+    var id = control.id;
+    lab.setAttribute("for", id);
+    wrap.appendChild(lab);
+    wrap.appendChild(control);
+    return wrap;
+  }
+
+  function pintar(){
+    elFilas.innerHTML = "";
+    elVacio.hidden = filas.length !== 0;
+
+    filas.forEach(function(f){
+      var row = document.createElement("div");
+      row.className = "fila" + (filaMala(f) ? " fila--bad" : "");
+      row.dataset.id = f.id;
+
+      var t = document.createElement("input");
+      t.type = "text"; t.id = "tarea-" + f.id; t.value = f.tarea;
+      t.placeholder = "Ej: cuadrar el inventario";
+      t.autocomplete = "off";
+      t.addEventListener("input", function(){ f.tarea = t.value; calcular(); });
+      row.appendChild(crearCampo("La tarea", t));
+
+      var s = document.createElement("select");
+      s.id = "frec-" + f.id;
+      ["dia","semana","quincena","mes"].forEach(function(k){
+        var o = document.createElement("option");
+        o.value = k;
+        o.textContent = k === "dia" ? "Todos los días" : k === "semana" ? "Cada semana" : k === "quincena" ? "Cada quincena" : "Cada mes";
+        if (f.frec === k) o.selected = true;
+        s.appendChild(o);
+      });
+      s.addEventListener("change", function(){ f.frec = s.value; calcular(); });
+      row.appendChild(crearCampo("¿Cada cuánto?", s));
+
+      var m = document.createElement("input");
+      m.type = "number"; m.id = "min-" + f.id; m.min = "0"; m.step = "5";
+      m.inputMode = "numeric"; m.value = f.min; m.placeholder = "30";
+      m.addEventListener("input", function(){ f.min = m.value; marcar(row, f); calcular(); });
+      row.appendChild(crearCampo("Minutos que toma", m));
+
+      var p = document.createElement("input");
+      p.type = "number"; p.id = "per-" + f.id; p.min = "1"; p.step = "1";
+      p.inputMode = "numeric"; p.value = f.per;
+      p.addEventListener("input", function(){ f.per = p.value; calcular(); });
+      row.appendChild(crearCampo("Cuántas personas", p));
+
+      var h = document.createElement("div");
+      h.className = "fila__horas";
+      h.innerHTML = '<span class="n" data-h="' + f.id + '">0</span><span class="u">h/año</span>';
+      row.appendChild(h);
+
+      var q = document.createElement("button");
+      q.type = "button"; q.className = "quitar"; q.textContent = "Quitar";
+      q.setAttribute("aria-label", "Quitar esta tarea de la lista");
+      q.addEventListener("click", function(){
+        filas = filas.filter(function(x){ return x.id !== f.id; });
+        pintar();
+      });
+      row.appendChild(q);
+
+      var e = document.createElement("p");
+      e.className = "err"; e.id = "err-" + f.id;
+      e.textContent = "Ponga cuántos minutos toma, en números.";
+      e.hidden = !filaMala(f);
+      row.appendChild(e);
+
+      elFilas.appendChild(row);
+    });
+
+    calcular();
+  }
+
+  function marcar(row, f){
+    var malo = filaMala(f);
+    row.classList.toggle("fila--bad", malo);
+    var e = row.querySelector(".err");
+    if (e) e.hidden = !malo;
+  }
+
+  function redondearPlata(v){
+    if (v >= 1000000) return Math.round(v / 100000) * 100000;
+    if (v >= 100000)  return Math.round(v / 10000) * 10000;
+    return Math.round(v / 1000) * 1000;
+  }
+
+  var ultimoTexto = "";
+
+  function calcular(){
+    var costoHora = sueldo > 0 ? sueldo / HORAS_MES : 0;
+    elCostoH.textContent = pesos.format(Math.round(costoHora));
+    elSuErr.hidden = sueldo > 0;
+    elSueldo.setAttribute("aria-invalid", sueldo > 0 ? "false" : "true");
+
+    var totalHoras = 0, peor = null, peorH = 0, contadas = 0;
+
+    filas.forEach(function(f){
+      var h = horasFila(f);
+      var n = elFilas.querySelector('[data-h="' + f.id + '"]');
+      if (n) n.textContent = enteros.format(Math.round(h));
+      if (h > 0){
+        totalHoras += h;
+        contadas++;
+        if (h > peorH){ peorH = h; peor = f; }
+      }
+    });
+
+    var totalPlata = totalHoras * costoHora;
+    var meses = totalHoras / HORAS_MES;
+
+    var txtHoras = totalHoras > 0 ? enteros.format(Math.round(totalHoras)) + " horas" : "0 horas";
+    var txtPlata = totalPlata > 0 ? pesos.format(redondearPlata(totalPlata)) : pesos.format(0);
+
+    elHoras.textContent = txtHoras;
+    elPlata.textContent = txtPlata;
+
+    if (contadas === 0){
+      elLectura.textContent = "Agregue una tarea, con sus minutos, para ver la cuenta.";
+    } else {
+      var nombre = (peor && peor.tarea.trim()) ? "“" + peor.tarea.trim() + "”" : "la primera de la lista";
+      elLectura.innerHTML =
+        "Es como tener a <b>" + (meses >= 1 ? enteros.format(Math.round(meses)) + " meses" : "menos de un mes") +
+        "</b> de una persona de tiempo completo dedicada solo a esto. La tarea que más pesa es <b>" + nombre +
+        "</b>, con " + enteros.format(Math.round(peorH)) + " horas al año.";
+    }
+
+    /* MOTION 2 (feedback): el total parpadea cuando cambia, para que se vea
+       que la edición sí movió el resultado. */
+    var firma = txtHoras + "|" + txtPlata;
+    if (!reduce && ultimoTexto && firma !== ultimoTexto && typeof elHoras.animate === "function"){
+      [elHoras, elPlata].forEach(function(el){
+        el.animate(
+          [{ opacity: .35, transform: "translateY(3px)" }, { opacity: 1, transform: "none" }],
+          { duration: 240, easing: "cubic-bezier(.16,1,.3,1)" }
+        );
+      });
+    }
+    ultimoTexto = firma;
+
+    armarWhatsapp(totalHoras, totalPlata, contadas, peor, peorH);
+  }
+
+  function armarWhatsapp(horas, plata, contadas, peor, peorH){
+    var msg;
+    if (contadas === 0){
+      msg = "Hola Salomón, entré a su página y quiero hacer la cuenta de las tareas manuales de mi negocio, pero prefiero que la hagamos juntos.";
+    } else {
+      var lista = filas.filter(function(f){ return horasFila(f) > 0; })
+                       .map(function(f){
+                         var t = f.tarea.trim() || "tarea sin nombre";
+                         return "- " + t + " (" + ETIQUETA[f.frec] + ", " + f.min + " min, " + f.per + " persona(s))";
+                       }).join("\n");
+      msg = "Hola Salomón, hice la cuenta en su página.\n\n" +
+            "Mi negocio se gasta cerca de " + enteros.format(Math.round(horas)) + " horas al año en " + contadas + " tarea(s) manuales, " +
+            "que son alrededor de " + pesos.format(redondearPlata(plata)) + " al año.\n\n" +
+            "Las tareas son:\n" + lista + "\n\n";
+      if (peor){
+        msg += "La que más pesa es “" + (peor.tarea.trim() || "la primera") + "” con " + enteros.format(Math.round(peorH)) + " horas al año.\n\n";
+      }
+      msg += "Quiero ver qué se puede hacer con esto.";
+    }
+    elWa.href = "https://wa.me/573132465100?text=" + encodeURIComponent(msg);
+  }
+
+  /* sueldo: acepta solo dígitos, se muestra con puntos de mil */
+  function leerSueldo(){
+    var raw = elSueldo.value.replace(/[^\d]/g, "");
+    sueldo = raw ? parseInt(raw, 10) : 0;
+    calcular();
+  }
+  elSueldo.addEventListener("input", leerSueldo);
+  elSueldo.addEventListener("blur", function(){
+    elSueldo.value = sueldo > 0 ? enteros.format(sueldo) : "";
+    if (sueldo <= 0){ elSueldo.value = ""; elSueldo.placeholder = "Escriba un sueldo mensual"; }
+  });
+  elSueldo.addEventListener("focus", function(){
+    elSueldo.value = sueldo > 0 ? String(sueldo) : "";
+  });
+
+  document.getElementById("agregar").addEventListener("click", function(){
+    filas.push(nuevaFila(null));
+    pintar();
+    var last = elFilas.lastElementChild;
+    if (last){ var i = last.querySelector("input"); if (i) i.focus(); }
+  });
+  document.getElementById("vaciar").addEventListener("click", function(){
+    filas = [];
+    pintar();
+  });
+  document.getElementById("ejemplo2").addEventListener("click", function(){
+    cargarEjemplo();
+    var first = elFilas.querySelector("input");
+    if (first) first.focus();
+  });
+
+  cargarEjemplo();
+})();
+</script>
+
+</body>
+</html>

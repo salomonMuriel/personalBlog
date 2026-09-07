@@ -1,0 +1,1126 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Salomón Muriel</title>
+<meta name="description" content="Su empresa no está automatizada. Está chinomática. Defino con usted qué pedazo del negocio se arregla primero y después lo construyo yo mismo.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   PALETA  ·  luz fija, sin modo oscuro, sin toggle
+   Familia: verde bosque profundo sobre papel frío gris-verde.
+   Un solo acento en toda la página. Radio de esquina: 0 en todo.
+   ============================================================ */
+:root{
+  color-scheme: light;
+
+  --paper:      #F1F3F0;
+  --paper-2:    #E7EAE4;
+  --paper-3:    #DCE1D8;
+  --ink:        #171B18;
+  --ink-2:      #2B312D;
+  --muted:      #5C645D;
+  --rule:       #CDD3C9;
+  --rule-soft:  #DFE3DB;
+  --accent:     #1E4D38;
+  --accent-deep:#153524;
+  --accent-soft:#E1E9E2;
+
+  --maxw: 1280px;
+  --gutter: clamp(20px, 5vw, 72px);
+  --read: 63ch;
+
+  --sans: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --serif: "Newsreader", Georgia, "Times New Roman", serif;
+}
+
+*,*::before,*::after{ box-sizing: border-box; }
+
+html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
+
+body{
+  margin:0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 19px;
+  line-height: 1.62;
+  font-weight: 400;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img{ max-width:100%; display:block; }
+
+a{ color: inherit; }
+
+::selection{ background: var(--accent); color: var(--paper); }
+
+/* ---------- layout ---------- */
+.wrap{
+  width:100%;
+  max-width: var(--maxw);
+  margin-inline:auto;
+  padding-inline: var(--gutter);
+}
+.read{ max-width: var(--read); }
+
+section{ position: relative; }
+
+.band{ padding-block: clamp(64px, 9vw, 132px); }
+.band-tight{ padding-block: clamp(48px, 6vw, 88px); }
+.tint{ background: var(--paper-2); }
+
+/* ---------- tipografía ---------- */
+h1,h2,h3,.sans{ font-family: var(--sans); }
+
+h1{
+  font-size: clamp(2.15rem, 5.6vw, 4.5rem);
+  line-height: 1.03;
+  letter-spacing: -0.034em;
+  font-weight: 600;
+  margin: 0;
+}
+h2{
+  font-size: clamp(1.7rem, 3.3vw, 2.6rem);
+  line-height: 1.08;
+  letter-spacing: -0.026em;
+  font-weight: 600;
+  margin: 0 0 .75em;
+  text-wrap: balance;
+  max-width: 22ch;
+}
+h2.wide{ max-width: 30ch; }
+h3{
+  font-size: 1.14rem;
+  line-height: 1.28;
+  letter-spacing: -0.015em;
+  font-weight: 600;
+  margin: 0 0 .5em;
+}
+p{ margin: 0 0 1.15em; }
+p:last-child{ margin-bottom: 0; }
+
+.lede{
+  font-size: clamp(1.24rem, 2vw, 1.52rem);
+  line-height: 1.45;
+  color: var(--ink-2);
+}
+.small{
+  font-family: var(--sans);
+  font-size: .88rem;
+  line-height: 1.55;
+  color: var(--muted);
+}
+.note{
+  font-size: .97rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+em{ font-style: italic; }
+strong{ font-weight: 600; color: var(--ink); }
+
+/* ---------- botones ---------- */
+.cta{
+  display: inline-flex;
+  align-items: center;
+  gap: .6em;
+  font-family: var(--sans);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  white-space: nowrap;
+  padding: 17px 26px;
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: var(--paper);
+  text-decoration: none;
+  border-radius: 0;
+  transition: background .18s ease, transform .12s ease, border-color .18s ease;
+}
+.cta:hover{ background: var(--accent-deep); border-color: var(--accent-deep); transform: translateY(-1px); }
+.cta:active{ transform: translateY(1px); }
+.cta:focus-visible{ outline: 3px solid var(--accent); outline-offset: 3px; }
+.cta .mark{
+  width: 7px; height: 7px;
+  background: var(--paper);
+  flex: none;
+}
+.cta.on-dark{
+  background: var(--paper);
+  color: var(--accent-deep);
+  border-color: var(--paper);
+}
+.cta.on-dark:hover{ background:#fff; border-color:#fff; }
+.cta.on-dark .mark{ background: var(--accent-deep); }
+
+.cta-sm{
+  padding: 12px 18px;
+  font-size: .9rem;
+}
+
+.link{
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  font-weight: 500;
+}
+.link:hover{ text-decoration-thickness: 2px; }
+
+/* ---------- barra superior ---------- */
+.topbar{
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--paper);
+  border-bottom: 1px solid var(--rule);
+}
+.topbar-in{
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+.brand{
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 1.02rem;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+}
+.topnav{
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+.topnav a.nl{
+  font-family: var(--sans);
+  font-size: .92rem;
+  font-weight: 500;
+  color: var(--muted);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color .15s ease;
+}
+.topnav a.nl:hover{ color: var(--accent); }
+@media (max-width: 860px){
+  .topnav a.nl{ display:none; }
+  .topbar-in{ height: 62px; }
+}
+@media (max-width: 540px){
+  .topbar-in{ gap: 12px; }
+  .brand{ font-size: .92rem; }
+  .cta-sm{ font-size: .8rem; padding: 10px 13px; gap: .5em; }
+}
+
+/* ---------- fotografía ---------- */
+.ph{ position: relative; overflow: hidden; background: var(--paper-3); }
+.ph img{
+  width: 100%; height: 100%; object-fit: cover;
+  filter: grayscale(1) contrast(1.07) brightness(1.02);
+}
+.ph::after{
+  content:"";
+  position:absolute; inset:0;
+  background: linear-gradient(180deg, rgba(30,77,56,.10), rgba(23,27,24,.16));
+  mix-blend-mode: multiply;
+  pointer-events:none;
+}
+
+/* ============================================================
+   1 · TITULAR  (lector consciente del problema: aquí no se vende)
+   ============================================================ */
+.hero{ padding-top: clamp(38px, 5vw, 76px); padding-bottom: clamp(52px, 6vw, 88px); }
+.hero h1 span{ display:block; }
+.hero h1 .b{ color: var(--accent); }
+.hero-lower{
+  margin-top: clamp(26px, 4vw, 46px);
+  display: grid;
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+  gap: clamp(26px, 4.5vw, 60px);
+  align-items: start;
+}
+.hero-sub{
+  font-size: clamp(1.12rem, 1.6vw, 1.32rem);
+  line-height: 1.48;
+  color: var(--ink-2);
+  max-width: 38ch;
+  margin: 0;
+  padding-top: 6px;
+}
+.hero-fig .ph{ aspect-ratio: 2/1; }
+@media (max-width: 880px){
+  .hero-lower{ grid-template-columns: 1fr; gap: 30px; }
+  .hero-fig .ph{ aspect-ratio: 16/10; }
+}
+
+/* ============================================================
+   2 · APERTURA  (identificación)
+   ============================================================ */
+.opening{ border-top: 1px solid var(--rule); }
+.opening .first{
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: clamp(1.45rem, 2.7vw, 2.05rem);
+  line-height: 1.16;
+  letter-spacing: -0.025em;
+  margin: 0 0 1em;
+  max-width: 24ch;
+}
+.opening .body{ max-width: var(--read); }
+.opening .body p{ font-size: 1.13rem; }
+
+/* ============================================================
+   3 · AMPLIFICACIÓN
+   ============================================================ */
+.said{
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 6px 40px;
+  margin: 28px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.said li{
+  font-size: 1.09rem;
+  line-height: 1.5;
+  padding: 13px 0;
+  color: var(--ink-2);
+}
+.said li q{ font-style: italic; quotes: "“" "”"; }
+@media (max-width: 760px){ .said{ grid-template-columns: 1fr; gap: 0; } }
+
+.strip{ margin-top: clamp(40px, 5vw, 64px); }
+.strip .ph{ aspect-ratio: 21/8; }
+@media (max-width: 700px){ .strip .ph{ aspect-ratio: 3/2; } }
+
+.cost{
+  margin-top: clamp(40px, 5vw, 64px);
+  display: grid;
+  grid-template-columns: minmax(0,.85fr) minmax(0,1.15fr);
+  gap: clamp(24px, 4vw, 64px);
+  align-items: start;
+}
+.cost-list{ margin:0; padding:0; list-style:none; }
+.cost-list li{
+  padding: 18px 0;
+  border-top: 1px solid var(--rule-soft);
+  font-size: 1.08rem;
+  line-height: 1.5;
+}
+.cost-list li:last-child{ border-bottom: 1px solid var(--rule-soft); }
+@media (max-width: 860px){ .cost{ grid-template-columns: 1fr; } }
+
+/* ============================================================
+   4 · CRISTALIZACIÓN  (la bisagra)
+   ============================================================ */
+.hinge-in{
+  border-left: 6px solid var(--accent);
+  padding-left: clamp(20px, 3.4vw, 48px);
+  max-width: 70ch;
+}
+.hinge-in .kick{
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: clamp(1.55rem, 3.1vw, 2.35rem);
+  line-height: 1.1;
+  letter-spacing: -0.028em;
+  margin: 0 0 .7em;
+}
+.hinge-in p{ font-size: 1.13rem; }
+
+/* ============================================================
+   5 · MECANISMO
+   ============================================================ */
+.mech-head{
+  display: grid;
+  grid-template-columns: minmax(0,1.25fr) minmax(0,.75fr);
+  gap: clamp(28px, 5vw, 72px);
+  align-items: start;
+}
+.mech-fig .ph{ aspect-ratio: 1/1; }
+.mech-fig .cap{
+  margin-top: 12px;
+  font-family: var(--sans);
+  font-size: .86rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+.mech-list{ margin: clamp(36px,4vw,56px) 0 0; padding:0; list-style:none; }
+.mech-item{
+  display: grid;
+  grid-template-columns: 74px minmax(0,.44fr) minmax(0,.56fr);
+  gap: clamp(16px, 3vw, 44px);
+  padding: clamp(26px,3vw,38px) 0;
+  border-top: 1px solid var(--rule);
+  align-items: start;
+}
+.mech-item .num{
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: clamp(2rem, 4vw, 3.1rem);
+  line-height: .84;
+  letter-spacing: -0.05em;
+  color: var(--accent);
+}
+.mech-item h3{ font-size: clamp(1.15rem, 1.9vw, 1.5rem); margin: 0; max-width: 22ch; }
+.mech-item p{ font-size: 1.06rem; color: var(--ink-2); max-width: 56ch; }
+@media (max-width: 900px){
+  .mech-item{ grid-template-columns: 64px minmax(0,1fr); }
+  .mech-item h3{ max-width: 30ch; margin-bottom: .5em; }
+  .mech-item p{ grid-column: 2; }
+}
+@media (max-width: 620px){
+  .mech-item{ grid-template-columns: 1fr; gap: 10px; }
+  .mech-item .num{ font-size: 1.7rem; }
+  .mech-item p{ grid-column: 1; }
+}
+@media (max-width: 900px){ .mech-head{ grid-template-columns: 1fr; } }
+
+.checkable{
+  margin-top: clamp(28px,3vw,40px);
+  padding: clamp(20px,2.6vw,30px);
+  background: var(--paper);
+  border: 1px solid var(--accent);
+  max-width: 74ch;
+}
+.checkable p{ font-size: 1.05rem; }
+
+.cta-row{
+  margin-top: clamp(30px, 3.5vw, 46px);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.cta-row .aside{
+  font-family: var(--sans);
+  font-size: .88rem;
+  color: var(--muted);
+  max-width: 34ch;
+  line-height: 1.5;
+}
+
+/* ============================================================
+   6 · GRADUALIZACIÓN  (la escalera de creencia)
+   ============================================================ */
+.ladder{ margin: clamp(28px,3.5vw,44px) 0 0; padding:0; list-style:none; counter-reset: rung; }
+.ladder li{
+  counter-increment: rung;
+  position: relative;
+  padding: 0 0 clamp(26px,3vw,36px) clamp(46px, 5.5vw, 78px);
+  margin-left: calc(var(--i) * clamp(0px, 1.6vw, 26px));
+}
+.ladder li::before{
+  content: counter(rung);
+  position: absolute;
+  left: 0; top: 1px;
+  font-family: var(--sans);
+  font-size: .8rem;
+  font-weight: 600;
+  color: var(--paper);
+  background: var(--accent);
+  width: 26px; height: 26px;
+  display: grid; place-items: center;
+}
+.ladder li::after{
+  content:"";
+  position: absolute;
+  left: 12px; top: 30px; bottom: 6px;
+  width: 1px;
+  background: var(--rule);
+}
+.ladder li:last-child::after{ display:none; }
+.ladder li p{
+  font-size: clamp(1.06rem, 1.5vw, 1.18rem);
+  line-height: 1.5;
+  max-width: 56ch;
+  color: var(--ink-2);
+}
+.ladder li strong{ color: var(--ink); }
+@media (max-width: 700px){ .ladder li{ margin-left: 0; } }
+
+/* ============================================================
+   7 · REDEFINICIÓN  (rejilla de 4 celdas, exactamente 4)
+   ============================================================ */
+.alts{
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  margin-top: clamp(28px,3.5vw,44px);
+}
+.alt{
+  background: var(--paper);
+  padding: clamp(24px, 3vw, 40px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 210px;
+}
+.alt:nth-child(1){ grid-column: span 7; min-height: 320px; position: relative; overflow:hidden; }
+.alt:nth-child(2){ grid-column: span 5; }
+.alt:nth-child(3){ grid-column: span 5; }
+.alt:nth-child(4){ grid-column: span 7; }
+.alt:nth-child(2){ background: var(--paper-2); }
+.alt:nth-child(4){ background: var(--paper-2); }
+.alt h3{ font-size: 1.16rem; }
+.alt p{ font-size: 1.03rem; line-height: 1.5; color: var(--ink-2); max-width: 46ch; }
+.alt-photo{ isolation: isolate; }
+.alt-photo img{
+  position: absolute; inset: 0; z-index: 0;
+  width:100%; height:100%; object-fit: cover;
+  filter: grayscale(1) contrast(1.05);
+}
+.alt-photo::before{
+  content:"";
+  position:absolute; inset:0; z-index: 1;
+  background: linear-gradient(0deg, rgba(18,45,31,.95) 30%, rgba(18,45,31,.78) 68%, rgba(18,45,31,.5));
+}
+.alt-photo h3, .alt-photo p{ position: relative; z-index: 2; color: var(--paper); }
+.alt-photo p{ color: #D3DED6; }
+@media (max-width: 820px){
+  .alts{ grid-template-columns: 1fr; }
+  .alt:nth-child(n){ grid-column: 1 / -1; min-height: 0; }
+  .alt:nth-child(1){ min-height: 280px; }
+}
+
+.criteria{ margin-top: clamp(40px,4.5vw,60px); }
+.criteria ol{ margin: 20px 0 0; padding: 0 0 0 1.15em; }
+.criteria li{
+  font-size: clamp(1.06rem,1.5vw,1.2rem);
+  line-height: 1.45;
+  margin-bottom: .7em;
+  max-width: 54ch;
+  font-weight: 500;
+}
+
+/* ============================================================
+   8 · VERIFICACIÓN  (documentación, no testimonios)
+   ============================================================ */
+.record{
+  display: grid;
+  grid-template-columns: minmax(0,1.12fr) minmax(0,.88fr);
+  gap: clamp(32px, 5vw, 76px);
+  align-items: start;
+  margin-top: clamp(24px,3vw,40px);
+}
+.entry{
+  display: grid;
+  grid-template-columns: 62px minmax(0,1fr);
+  gap: 22px;
+  align-items: start;
+  padding: 24px 0;
+  border-top: 1px solid var(--rule);
+}
+.entry:first-of-type{ border-top: 0; padding-top: 0; }
+.logo{
+  width: 62px; height: 62px;
+  background: #fff;
+  border: 1px solid var(--rule-soft);
+  display: grid; place-items: center;
+  padding: 7px;
+}
+.logo img{ max-height: 100%; width: auto; object-fit: contain; }
+.entry .who{
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 1.02rem;
+  letter-spacing: -0.015em;
+  margin: 0 0 .3em;
+}
+.entry .fact{ font-size: 1.02rem; line-height: 1.5; color: var(--ink-2); margin:0; }
+.entry .fact b{ font-weight: 600; color: var(--ink); }
+
+.side-fig .ph{ aspect-ratio: 16/10; }
+.side-fig .cap{
+  margin-top: 10px;
+  font-family: var(--sans);
+  font-size: .85rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.fails{
+  margin-top: clamp(28px,3vw,38px);
+  padding-top: 24px;
+  border-top: 1px solid var(--rule);
+}
+.fails-row{ display:flex; gap: 14px; align-items:center; margin-bottom: 16px; flex-wrap: wrap; }
+.fail-tag{
+  display:flex; align-items:center; gap: 9px;
+  font-family: var(--sans); font-size: .9rem; font-weight: 500; color: var(--muted);
+}
+.fail-tag img{ width: 26px; height: 26px; object-fit: contain; filter: grayscale(1); opacity:.75; }
+.honest{
+  margin-top: clamp(28px,3vw,38px);
+  padding: clamp(18px,2.2vw,26px);
+  border: 1px solid var(--accent);
+}
+.honest p{ font-size: 1rem; line-height: 1.55; }
+@media (max-width: 900px){ .record{ grid-template-columns: 1fr; } }
+@media (max-width: 460px){
+  .entry{ grid-template-columns: 1fr; gap: 14px; }
+}
+
+/* ============================================================
+   9 · CONCENTRACIÓN
+   ============================================================ */
+.concentrate{ border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+.concentrate p{
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: clamp(1.6rem, 3.7vw, 3.05rem);
+  line-height: 1.12;
+  letter-spacing: -0.032em;
+  max-width: 30ch;
+  margin: 0;
+}
+.concentrate .hl{ color: var(--accent); }
+
+/* ============================================================
+   10 · CIERRE
+   ============================================================ */
+.terms{ margin: clamp(24px,3vw,36px) 0 0; }
+.term{
+  display: grid;
+  grid-template-columns: minmax(0,.34fr) minmax(0,.66fr);
+  gap: clamp(14px,3vw,44px);
+  padding: 20px 0;
+  border-top: 1px solid var(--rule-soft);
+  align-items: baseline;
+}
+.term:last-child{ border-bottom: 1px solid var(--rule-soft); }
+.term dt{
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: .98rem;
+  letter-spacing: -0.015em;
+}
+.term dd{ margin: 0; font-size: 1.06rem; line-height: 1.5; color: var(--ink-2); max-width: 56ch; }
+@media (max-width: 640px){ .term{ grid-template-columns: 1fr; gap: 6px; } }
+
+.close-panel{
+  margin-top: clamp(40px,5vw,64px);
+  background: var(--accent);
+  color: var(--paper);
+  padding: clamp(30px, 4.5vw, 60px);
+  display: grid;
+  grid-template-columns: minmax(0,1.3fr) minmax(0,.7fr);
+  gap: clamp(26px, 4vw, 56px);
+  align-items: center;
+}
+.close-panel h2{
+  color: var(--paper);
+  margin-bottom: .5em;
+  max-width: 18ch;
+}
+.close-panel p{ color: #D9E2DB; font-size: 1.08rem; }
+.close-panel .capacity{
+  font-family: var(--sans);
+  font-size: .93rem;
+  line-height: 1.6;
+  color: #C3D2C7;
+  margin-top: 18px;
+}
+.close-cta{ display:flex; flex-direction: column; gap: 14px; align-items: flex-start; }
+@media (max-width: 860px){ .close-panel{ grid-template-columns: 1fr; } }
+
+.filter-out{
+  margin-top: clamp(40px,5vw,64px);
+  padding-top: 26px;
+  border-top: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: minmax(0,.42fr) minmax(0,.58fr);
+  gap: clamp(20px,4vw,56px);
+}
+.filter-out h3{ font-size: 1.08rem; }
+.filter-out ul{ margin:0; padding:0; list-style:none; }
+.filter-out li{
+  font-size: 1.02rem; line-height: 1.5; color: var(--ink-2);
+  padding: 12px 0; border-top: 1px solid var(--rule-soft);
+}
+.filter-out li:first-child{ border-top: 0; padding-top: 0; }
+@media (max-width: 760px){ .filter-out{ grid-template-columns: 1fr; } }
+
+.early{
+  margin-top: clamp(32px,4vw,48px);
+  padding: clamp(20px,2.4vw,28px);
+  background: var(--paper-2);
+  max-width: 78ch;
+}
+.early p{ font-size: 1.02rem; line-height: 1.55; }
+
+/* ---------- pie ---------- */
+.foot{
+  border-top: 1px solid var(--rule);
+  padding-block: clamp(36px, 4vw, 56px);
+}
+.foot-in{
+  display:flex; justify-content: space-between; gap: 28px; flex-wrap: wrap;
+  align-items: flex-start;
+}
+.foot .who{
+  font-family: var(--sans); font-weight: 600; font-size: 1.02rem; letter-spacing: -0.02em;
+  margin: 0 0 8px;
+}
+.foot p{ font-size: .96rem; color: var(--muted); max-width: 52ch; }
+.foot-links{ display:flex; gap: 22px; flex-wrap: wrap; }
+.foot-links a{
+  font-family: var(--sans); font-size: .92rem; font-weight: 500;
+  color: var(--muted); text-decoration: none;
+}
+.foot-links a:hover{ color: var(--accent); }
+
+/* ---------- movimiento: entrada por sección, jerarquía y secuencia ---------- */
+.rv{ opacity: 0; transform: translateY(16px); }
+@media (prefers-reduced-motion: no-preference){
+  .rv{ transition: opacity .6s cubic-bezier(.16,1,.3,1), transform .6s cubic-bezier(.16,1,.3,1); }
+  .rv.in{ opacity: 1; transform: none; }
+  .ladder li.rv{ transition-delay: calc(var(--i) * 70ms); }
+}
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior: auto; }
+  .rv{ opacity: 1; transform: none; transition: none; }
+  .cta{ transition: none; }
+}
+.no-js .rv{ opacity: 1; transform: none; }
+</style>
+</head>
+<body class="no-js">
+
+<!-- ══════════════════════════════════════════════════════════
+     BARRA. Existe para el lector que ya viene referido y solo
+     necesita el teléfono. El cuerpo de la página empieza donde
+     está el lector frío: en el problema.
+     ══════════════════════════════════════════════════════════ -->
+<header class="topbar">
+  <div class="wrap topbar-in">
+    <a class="brand" href="#inicio">Salomón Muriel</a>
+    <nav class="topnav">
+      <a class="nl" href="#mecanismo">Cómo trabajo</a>
+      <a class="nl" href="#construido">Qué he construido</a>
+      <a class="cta cta-sm" href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20vi%20tu%20p%C3%A1gina.%20Te%20cuento%20c%C3%B3mo%20funciona%20mi%20empresa%20por%20dentro."><span class="mark" aria-hidden="true"></span>Escribirme por WhatsApp</a>
+    </nav>
+  </div>
+</header>
+
+<main id="inicio">
+
+  <!-- ══════════════════════════════════════════════════════
+       1 · TITULAR
+       Lector consciente del problema. El titular no vende:
+       nombra el dolor con su propia palabra y no menciona ni
+       el servicio, ni el precio, ni la promesa.
+       ══════════════════════════════════════════════════════ -->
+  <section class="hero">
+    <div class="wrap">
+      <h1 class="rv">
+        <span>Su empresa no está automatizada.</span>
+        <span class="b">Está chinomática.</span>
+      </h1>
+      <div class="hero-lower">
+        <p class="hero-sub rv">Parece un sistema. En realidad es un muchacho, un Excel y un grupo de WhatsApp haciendo todo a mano.</p>
+        <div class="hero-fig rv">
+          <div class="ph">
+            <img src="https://picsum.photos/seed/restaurante/1400/700" alt="Manos trabajando sobre un mostrador" width="1400" height="700" fetchpriority="high">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       2 · APERTURA. Identificación pura: su monólogo interno,
+       su vocabulario, ningún producto.
+       ══════════════════════════════════════════════════════ -->
+  <section class="opening band">
+    <div class="wrap">
+      <div class="read rv">
+        <p class="first">El lunes a las siete de la mañana usted ya está contestando audios.</p>
+        <div class="body">
+          <p>Alguien pasó los pedidos del grupo de WhatsApp al Excel. Alguien más los pasó a la remisión. El del inventario dice una cantidad, el Excel dice otra, y usted ya sabe a cuál de los dos le va a tocar creerle. A las diez todavía no ha empezado el día: lleva tres horas cuadrando algo que ayer también cuadró.</p>
+          <p>Nadie en su empresa es bruto. Al contrario. El negocio quedó así porque así funcionaba cuando eran cinco personas, y funcionó tan bien que nadie tuvo tiempo de cambiarlo cuando ya eran veinte.</p>
+          <p>Y hoy hay un pedazo del negocio que solo entiende una persona. Cuando esa persona sale a vacaciones, usted no duerme igual.</p>
+          <p><strong>Usted no anda buscando un software. Usted anda cansado.</strong></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       3 · AMPLIFICACIÓN. Se agranda el deseo que ya existe.
+       No se humilla al lector: se le quita la culpa primero.
+       ══════════════════════════════════════════════════════ -->
+  <section class="band tint">
+    <div class="wrap">
+      <div class="rv">
+        <h2 class="wide">Usted ya sabe todo esto. No es descuido suyo, es como creció el negocio.</h2>
+        <p class="lede read">Estas frases aparecen en casi cualquier empresa de cinco a cuarenta personas apenas uno se sienta a mirar por dentro cómo se hace el trabajo. No son de nadie en particular. Son de todos.</p>
+      </div>
+
+      <ul class="said rv">
+        <li><q>Eso lo hace Jenny, ella sabe cómo es.</q></li>
+        <li><q>Ese informe lo armo yo los lunes, me toma como dos horas.</q></li>
+        <li><q>Sí compramos el sistema, pero nadie lo usa. Seguimos con el Excel.</q></li>
+        <li><q>El inventario de verdad es el que está en la cabeza de don Álvaro.</q></li>
+        <li><q>Los pedidos entran por WhatsApp y de ahí uno los pasa.</q></li>
+        <li><q>Si yo no reviso, se va mal facturado.</q></li>
+      </ul>
+
+      <div class="strip rv">
+        <div class="ph">
+          <img src="https://picsum.photos/seed/excel/1800/700" alt="Piezas de un inventario dispuestas una por una sobre una superficie" width="1800" height="700" loading="lazy">
+        </div>
+      </div>
+
+      <div class="cost">
+        <div class="rv">
+          <h2>El problema no es que sea manual. Es lo que le cuesta a usted que sea manual.</h2>
+        </div>
+        <div class="rv">
+          <ul class="cost-list">
+            <li>El negocio no puede crecer más rápido de lo que usted alcanza a revisar. Usted es el cuello de botella y lo sabe.</li>
+            <li>Usted es el respaldo de todo. Si se enferma una semana, la empresa no se cae, pero baja el ritmo y usted trabaja enfermo.</li>
+            <li>La información con la que decide siempre llega tarde y siempre llega con una duda encima. Nadie firma tranquilo con un dato de hace nueve días.</li>
+            <li>Y la parte del trabajo que a usted le gusta, que es vender y construir el negocio, es la que menos tiempo tiene.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       4 · CRISTALIZACIÓN. La bisagra: la frustración difusa se
+       vuelve un deseo concreto por un tipo concreto de solución.
+       Aquí el lector deja de ser consciente solo del problema.
+       ══════════════════════════════════════════════════════ -->
+  <section class="band">
+    <div class="wrap">
+      <div class="hinge-in rv">
+        <p class="kick">Lo que usted quiere no es un software.</p>
+        <p>Usted quiere que ese pedazo del negocio deje de pasar por sus manos y siga saliendo bien. Que el pedido entre una sola vez y solo se convierta en remisión, en factura y en descuento de inventario, sin que nadie lo vuelva a escribir. Que el informe del lunes ya esté hecho el lunes. Que la información deje de vivir en la cabeza de una persona.</p>
+        <p>Eso existe y tiene nombre: es una herramienta hecha para cómo trabaja su gente. Casi nunca se compra en caja, porque su gente no va a cambiar la forma en que trabaja para acomodarse a un programa que no entiende. Se construye al derecho: mirando primero la operación, y después escribiéndola.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       5 · MECANISMO. Sección que carga el peso. El mercado ya
+       oyó todas las promesas: aquí no va otra promesa, va el
+       cómo, contado con detalle comprobable.
+       ══════════════════════════════════════════════════════ -->
+  <section class="band tint" id="mecanismo">
+    <div class="wrap">
+      <div class="mech-head">
+        <div class="rv">
+          <h2 class="wide">Por qué esto hoy se puede hacer en semanas, y por qué hace cinco años no.</h2>
+          <p class="lede">Hace cinco años, para construir una herramienta a la medida usted necesitaba un consultor que entendiera el negocio, un diseñador, dos o tres programadores y un jefe de proyecto que tradujera entre todos. Tres meses de reuniones antes de la primera línea de código.</p>
+          <p>Ahí se le iba la plata: en la traducción entre personas, no en la herramienta. Y por eso el resultado casi siempre llegaba tarde y llegaba distinto a lo que usted necesitaba. Yo trabajo de otra forma, y son tres cosas concretas.</p>
+        </div>
+        <div class="mech-fig rv">
+          <div class="ph">
+            <img src="assets/fotoSalo.jpeg" alt="Salomón Muriel, retrato" width="800" height="800" loading="lazy">
+          </div>
+          <p class="cap">Salomón Muriel. Dirijo Ignia. Antes construí y vendí Finco y PrestaGente, y manejé cerca de 40 personas en R5.</p>
+        </div>
+      </div>
+
+      <ol class="mech-list">
+        <li class="mech-item rv">
+          <div class="num">01</div>
+            <h3>La misma persona que se sienta con su gente es la que escribe el código.</h3>
+            <p>No hay documento de requerimientos ni un momento en el que esto “pasa a desarrollo”. Yo veo cómo funciona su operación un martes y para el jueves hay algo corriendo que usted puede abrir y decirme qué está mal. Lo que usted corrige el jueves ya está corregido el viernes, porque no tengo que explicárselo a nadie más.</p>
+        </li>
+        <li class="mech-item rv">
+          <div class="num">02</div>
+            <h3>Uso inteligencia artificial para hacer el trabajo de un equipo, y la reviso línea por línea.</h3>
+            <p>Buena parte del código lo escribo con herramientas de IA que uso todos los días para trabajar de verdad, no para mostrarlas en una charla. Eso es lo que permite que una sola persona entregue en semanas lo que antes pedía cuatro personas y un trimestre. No es magia: es que se eliminó la traducción entre personas, que era la parte cara. Lo que la IA escribe, yo lo reviso y respondo por ello.</p>
+        </li>
+        <li class="mech-item rv">
+          <div class="num">03</div>
+            <h3>Lo que le entrego es algo que su gente abre el lunes.</h3>
+            <p>No es un diagnóstico, no es una presentación y no es un plan a doce meses. Es la herramienta funcionando con los datos reales de su empresa y su gente usándola mientras yo todavía estoy ahí para arreglar lo que salga torcido. Si su gente no la está usando, el trabajo no está terminado.</p>
+        </li>
+      </ol>
+
+      <div class="checkable rv">
+        <p><strong>Cómo comprobar esto sin contratarme:</strong> en la primera conversación le construyo algo pequeño en vivo, con usted mirando, sobre un problema real de su empresa. No una demostración grabada ni un caso de otro cliente. Si lo que le acabo de describir fuera mentira, esa media hora lo dejaría en evidencia.</p>
+      </div>
+
+      <div class="cta-row rv">
+        <a class="cta" href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20vi%20tu%20p%C3%A1gina.%20Te%20cuento%20c%C3%B3mo%20funciona%20mi%20empresa%20por%20dentro."><span class="mark" aria-hidden="true"></span>Escribirme por WhatsApp</a>
+        <p class="aside">Llega a mi teléfono. Contesto yo, no un asistente.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       6 · GRADUALIZACIÓN. La cadena de creencia. Cada eslabón
+       es aceptable por sí solo, y cada uno paga el siguiente.
+       Nunca se le pide al lector que se trague el reclamo entero.
+       ══════════════════════════════════════════════════════ -->
+  <section class="band">
+    <div class="wrap">
+      <div class="rv">
+        <h2 class="wide">Si le suena demasiado bonito, revisémoslo paso por paso.</h2>
+        <p class="lede read">Usted ya compró algo que le prometieron y no sirvió. Con toda razón desconfía. Entonces no me crea el conjunto: revise cada paso por separado y párese en el primero que no le cuadre.</p>
+      </div>
+      <ol class="ladder">
+        <li class="rv" style="--i:0"><p>En su operación hay pasos que hoy hace una persona a mano, uno por uno. <strong>Eso usted ya lo sabe. No se lo tengo que probar.</strong></p></li>
+        <li class="rv" style="--i:1"><p>Cada uno de esos pasos sigue una regla. La regla puede estar sin escribir, en la cabeza de alguien, pero es una regla: si el cliente pide esto, se hace aquello.</p></li>
+        <li class="rv" style="--i:2"><p>Todo lo que sigue una regla se puede escribir como software. No todo el negocio, ojo. <strong>Ese paso sí.</strong></p></li>
+        <li class="rv" style="--i:3"><p>Escribir ese software era caro porque hacía falta un equipo, y lo caro del equipo era coordinarlo, no programar.</p></li>
+        <li class="rv" style="--i:4"><p>Hoy una sola persona con IA hace ese trabajo. Y eso no es una promesa que le esté vendiendo: es lo que hago todas las semanas en mi propia empresa, donde el CRM, la página y la plataforma de comunidad las construí yo.</p></li>
+        <li class="rv" style="--i:5"><p>Si el trabajo lo hace una sola persona en semanas, entonces se puede empezar por un pedazo pequeño, verlo funcionando y seguir. <strong>Usted no tiene que apostarle todo de una para saber si esto le sirve.</strong></p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       7 · REDEFINICIÓN. Se reencuadran las alternativas y se
+       le entregan al lector los criterios con los que debería
+       juzgar cualquier opción, la mía incluida.
+       ══════════════════════════════════════════════════════ -->
+  <section class="band tint">
+    <div class="wrap">
+      <div class="rv">
+        <h2 class="wide">Usted probablemente ya intentó alguna de estas.</h2>
+      </div>
+      <div class="alts">
+        <article class="alt alt-photo rv">
+          <img src="https://picsum.photos/seed/taller/1200/900" alt="Escritorio de oficina con un computador abierto" width="1200" height="900" loading="lazy">
+          <h3>Compró un software de los buenos</h3>
+          <p>Uno grande, de los que todo el mundo recomienda. Está hecho para la empresa promedio y su empresa no es la promedio. Su gente lo usó dos meses y volvió al Excel. Usted todavía paga la licencia y no la cancela por no aceptar que se perdió.</p>
+        </article>
+        <article class="alt rv">
+          <h3>Contrató una fábrica de software</h3>
+          <p>Le pidieron los requerimientos. Usted no tiene requerimientos, usted tiene un negocio. Le entregaron exactamente lo que pidió, que no era lo que necesitaba, y cobrarle el cambio era otro contrato.</p>
+        </article>
+        <article class="alt rv">
+          <h3>Contrató un consultor</h3>
+          <p>Le dejaron un informe bien hecho, con diagnóstico y recomendaciones. El informe no descarga inventario. Alguien tenía que construir lo que el informe decía, y ese alguien nunca apareció.</p>
+        </article>
+        <article class="alt rv">
+          <h3>Pensó en contratar a alguien de sistemas</h3>
+          <p>Un buen ingeniero de planta le resuelve el día a día y vale la pena tenerlo. Pero una persona sola, empleada y aprendiendo su negocio, no le va a construir en tres meses lo que necesita, y no está en posición de discutirle a usted la estrategia del negocio.</p>
+        </article>
+      </div>
+
+      <div class="criteria rv">
+        <h2 class="wide">Yo juzgaría cualquier opción, la mía incluida, con tres preguntas.</h2>
+        <ol>
+          <li>¿La persona que entiende mi negocio es la misma que va a construir la herramienta?</li>
+          <li>¿En cuánto tiempo voy a ver algo funcionando: en semanas o en trimestres?</li>
+          <li>¿Qué me queda al final: un documento, o algo que mi gente ya está usando todos los días?</li>
+        </ol>
+      </div>
+
+      <div class="cta-row rv">
+        <a class="cta" href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20vi%20tu%20p%C3%A1gina.%20Te%20cuento%20c%C3%B3mo%20funciona%20mi%20empresa%20por%20dentro."><span class="mark" aria-hidden="true"></span>Escribirme por WhatsApp</a>
+        <p class="aside">Hágame las tres preguntas a mí primero.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       8 · VERIFICACIÓN. Prueba por documentación y por
+       especificidad, no por testimonio. Incluye lo que fracasó.
+       ══════════════════════════════════════════════════════ -->
+  <section class="band" id="construido">
+    <div class="wrap">
+      <div class="rv">
+        <h2 class="wide">Lo que he construido con mis manos, y lo que se me cayó.</h2>
+        <p class="lede read">No le voy a pedir que me crea por la página. Estos son datos que usted puede verificar preguntando en el sector.</p>
+      </div>
+
+      <div class="record">
+        <div class="rv">
+          <div class="entry">
+            <div class="logo"><img src="assets/ignia.png" alt="Ignia" width="62" height="62" loading="lazy"></div>
+            <div>
+              <p class="who">Ignia</p>
+              <p class="fact">La empresa que dirijo hoy. Arrancó en junio de 2025 y cerró su primer año en <b>USD 150.000 de ingresos recurrentes</b>, rentable desde el primer mes, con un equipo de cinco personas y treinta becarios en la primera cohorte. El CRM, la página y la plataforma de comunidad las construí yo.</p>
+            </div>
+          </div>
+          <div class="entry">
+            <div class="logo"><img src="assets/finco.png" alt="Finco" width="62" height="62" loading="lazy"></div>
+            <div>
+              <p class="who">Finco</p>
+              <p class="fact">Sistema que produce <b>100.000 informes al año</b>. Yo construí el flujo de datos y el modelo de riesgo. La vendimos por <b>cinco veces lo invertido</b>, cerca de USD 1.500.000.</p>
+            </div>
+          </div>
+          <div class="entry">
+            <div class="logo"><img src="assets/prestagente.png" alt="PrestaGente" width="62" height="62" loading="lazy"></div>
+            <div>
+              <p class="who">PrestaGente</p>
+              <p class="fact">Crédito entre conocidos. Vendida por cerca de <b>USD 1.000.000</b>.</p>
+            </div>
+          </div>
+          <div class="entry">
+            <div class="logo" aria-hidden="true"><span class="sans" style="font-weight:700;font-size:1.05rem;color:var(--accent)">R5</span></div>
+            <div>
+              <p class="fact">Dirigí a cerca de <b>40 personas</b>. Construí el flujo de datos completo y el sistema de modelos de riesgo con el que la empresa toma decisiones de crédito.</p>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="side-fig rv">
+            <div class="ph">
+              <img src="assets/salo_oscar.webp" alt="Salomón Muriel presentando la plataforma de Finco junto a su socio" width="1000" height="625" loading="lazy">
+            </div>
+            <p class="cap">Presentando la plataforma de Finco, la misma que hoy produce cien mil informes al año.</p>
+          </div>
+
+          <div class="fails rv">
+            <h3>Y dos que no salieron</h3>
+            <div class="fails-row">
+              <span class="fail-tag"><img src="assets/beriblock.png" alt="Beriblock" width="26" height="26" loading="lazy">Beriblock, quebró</span>
+              <span class="fail-tag"><img src="assets/elpalomo.png" alt="El Palomo" width="26" height="26" loading="lazy">El Palomo, se cayó feo</span>
+            </div>
+            <p class="note">Se lo cuento porque alguien que solo le muestra lo que le salió bien le está escondiendo la mitad de la información. De esas dos aprendí por qué no hay que empezar por lo grande, y es la razón por la que a usted no le voy a proponer rehacer toda la empresa de una.</p>
+          </div>
+
+          <div class="honest rv">
+            <p><strong>Sobre testimonios:</strong> todavía no tengo frases de clientes publicadas aquí y no las voy a inventar. Llevo poco tiempo cobrando por esto por fuera de mi empresa: siete personas en mentoría y unos pocos clientes de consultoría. Si antes de decidir quiere hablar con alguno de ellos, dígamelo y le paso un teléfono para que llame y pregunte lo que quiera.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       9 · CONCENTRACIÓN. Un solo deseo, un solo reclamo.
+       Nada nuevo: se reúne lo dicho en una sola frase.
+       ══════════════════════════════════════════════════════ -->
+  <section class="concentrate band-tight">
+    <div class="wrap rv">
+      <p>Todo esto es una sola cosa: que ese pedazo del negocio deje de hacerse a mano, y que <span class="hl">usted deje de ser el único que sabe cómo funciona</span>.</p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       10 · CIERRE. Ahora, con la conciencia levantada, se puede
+       nombrar la oferta y pedir una sola acción.
+       ══════════════════════════════════════════════════════ -->
+  <section class="band" id="empezar">
+    <div class="wrap">
+      <div class="rv">
+        <h2 class="wide">Qué es exactamente lo que le estoy proponiendo.</h2>
+      </div>
+
+      <dl class="terms rv">
+        <div class="term">
+          <dt>Qué hago</dt>
+          <dd>Definimos juntos cuál pedazo del negocio se arregla primero, el que más le pesa hoy. Después lo construyo yo mismo, a la medida de cómo trabaja su gente.</dd>
+        </div>
+        <div class="term">
+          <dt>Con quién trabaja</dt>
+          <dd>Conmigo. No hay un equipo júnior detrás ni una agencia que subcontrata. La persona que le contesta el WhatsApp es la que escribe el código.</dd>
+        </div>
+        <div class="term">
+          <dt>Cuándo ve algo</dt>
+          <dd>En semanas. Lo primero que ve funcionando no es un plan ni un cronograma: es la herramienta, con datos suyos, aunque todavía esté incompleta.</dd>
+        </div>
+        <div class="term">
+          <dt>Cuánto vale</dt>
+          <dd>Se lo digo por teléfono cuando ya sepamos qué hay que hacer. Poner un precio antes de conocer su operación sería inventarlo, y usted ya pagó una vez por algo que le vendieron así.</dd>
+        </div>
+        <div class="term">
+          <dt>Cuánta capacidad tengo</dt>
+          <dd>Hoy tengo dos clientes de consultoría y tomo máximo cuatro. Mi trabajo principal es dirigir Ignia. Ese es el número, sin adornos: si los cuatro cupos están llenos, se lo digo y le aviso cuando se libere uno.</dd>
+        </div>
+      </dl>
+
+      <div class="close-panel rv">
+        <div>
+          <h2>El siguiente paso es media hora, y es gratis.</h2>
+          <p>Usted me cuenta cómo entra un pedido a su empresa, desde que el cliente escribe hasta que sale la factura. Yo le digo ahí mismo si eso se puede arreglar y por dónde empezaría. No hay presentación, no hay propuesta de veinte páginas y no hay cotización esa misma tarde.</p>
+          <p class="capacity">Si al oírlo veo que no soy la persona indicada, se lo digo en esa misma llamada y no le cobro por decirlo. Prefiero eso a meterme en algo que no puedo resolver.</p>
+        </div>
+        <div class="close-cta">
+          <a class="cta on-dark" href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20vi%20tu%20p%C3%A1gina.%20Te%20cuento%20c%C3%B3mo%20funciona%20mi%20empresa%20por%20dentro."><span class="mark" aria-hidden="true"></span>Escribirme por WhatsApp</a>
+          <p class="capacity" style="margin-top:0">Escríbame y cuadramos la hora. Es la única cosa que le estoy pidiendo que haga en toda esta página.</p>
+        </div>
+      </div>
+
+      <div class="filter-out rv">
+        <div>
+          <h3>No soy la persona indicada si</h3>
+        </div>
+        <div>
+          <ul>
+            <li>Su empresa factura más de USD 5.000.000 al año. De ahí para arriba no sé cómo se hace, y prefiero decirlo que averiguarlo con su plata.</li>
+            <li>Necesita inventar tecnología que todavía no existe. Yo construyo con lo que ya existe, que es lo que casi cualquier empresa necesita, pero no la suya si el negocio depende de inventar algo nuevo.</li>
+            <li>Lo que quiere es un informe para presentarle a una junta. Eso lo hacen mejor otras personas y con mucho gusto le digo cuáles.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="early rv">
+        <p><strong>Si todavía está arrancando:</strong> cuando la empresa apenas está naciendo no hay una operación que arreglar, y una consultoría sería gastarle plata. Lo que sirve ahí es trabajo uno a uno, con tareas concretas cada semana. Eso también lo hago, hoy con tres personas y máximo con cinco.
+          <a class="link" href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20estoy%20arrancando%20y%20me%20interesa%20el%20trabajo%20uno%20a%20uno.">Escribirme por WhatsApp</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div>
+      <p class="who">Salomón Muriel</p>
+      <p>También doy charlas sobre adopción de tecnología e inteligencia artificial en conferencias, empresas y universidades.</p>
+    </div>
+    <nav class="foot-links">
+      <a href="#mecanismo">Cómo trabajo</a>
+      <a href="#construido">Qué he construido</a>
+      <a href="#empezar">Empezar</a>
+      <a href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20vi%20tu%20p%C3%A1gina.%20Te%20cuento%20c%C3%B3mo%20funciona%20mi%20empresa%20por%20dentro.">Escribirme por WhatsApp</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+/* Entrada por sección. Justificación: la página es una cadena de
+   creencia; revelar cada eslabón cuando entra sostiene la secuencia
+   y evita que el lector vea la escalera completa de golpe.
+   IntersectionObserver, nunca un listener de scroll. */
+(function () {
+  var body = document.body;
+  body.classList.remove('no-js');
+
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var items = document.querySelectorAll('.rv');
+
+  if (reduce.matches || !('IntersectionObserver' in window)) {
+    for (var i = 0; i < items.length; i++) items[i].classList.add('in');
+    return;
+  }
+
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
+
+  items.forEach(function (el) { io.observe(el); });
+
+  window.addEventListener('pagehide', function () { io.disconnect(); }, { once: true });
+})();
+</script>
+
+</body>
+</html>

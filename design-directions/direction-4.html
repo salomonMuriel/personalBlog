@@ -1,0 +1,1137 @@
+<!doctype html>
+<!--
+  DIRECTION 4 - "LA CARTA"
+
+  Design read: personal-practice landing for non-technical Colombian small-business
+  owners, in a correspondence / letterpress-editorial language. Native CSS, a
+  letter-and-marginalia grid, restrained IntersectionObserver reveal.
+  Dials: DESIGN_VARIANCE 8 / MOTION_INTENSITY 4 / VISUAL_DENSITY 4
+
+  Three-offer hierarchy is solved by the form of a letter:
+    Consultoria = the sealed envelope. The only dark panel on the page.
+    Mentoria    = a smaller note enclosed with it, offset right, on paper.
+    Charlas     = the P.D. A postscript is by definition the thing you mention
+                  on your way out. No card, no button, no column.
+
+  lang is es-CO on purpose: every visible string is Colombian Spanish and screen
+  readers must pronounce it as Spanish.
+-->
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Salomón Muriel. Yo armo la estrategia y yo mismo construyo la herramienta.</title>
+<meta name="description" content="Carta abierta para el dueño de una empresa colombiana que ya vende. Estrategia de negocio y tecnología a la medida, construida por mí, no subcontratada.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   1. TOKENS
+   ONE accent for the whole page: --red.
+   --air (airmail blue) is a MATERIAL, not an accent. It exists only
+   inside the diagonal airmail stripe. It never colours text or a control.
+   ============================================================ */
+:root{
+  color-scheme: light dark;
+
+  --paper:      #EDEDE5;   /* envelope stock. Cool oat, not cream. */
+  --paper-2:    #E4E4D9;
+  --card:       #F7F7F2;
+  --ink:        #17181B;   /* fountain-pen ink. Cool near-black. */
+  --ink-2:      #4B4D51;
+  --ink-3:      #66686A;
+  --rule:       #C5C5B8;
+
+  --red:        #BE2B21;
+  --red-hover:  #99201A;
+
+  --air:        #1E3C6E;
+
+  /* The envelope. It is always the single panel that inverts against the
+     page, so in both themes it is the highest-contrast object on the sheet
+     and the eye lands on it first. Light page, dark envelope. */
+  --panel:       #17181B;
+  --on-panel:    #EFEEE6;
+  --on-panel-2:  #A9AAA4;
+  --panel-rule:  #34353A;
+  --panel-accent:#F0604A;   /* the red, lifted so it reads on the panel */
+  --panel-air:   #4A79C4;
+  --panel-shadow:rgba(23,24,27,.22);
+
+  --btn-bg:     #BE2B21;
+  --btn-fg:     #FBFBF6;
+
+  --r:    3px;             /* one radius scale, near-sharp, letterpress */
+  --r-lg: 5px;
+  --wrap: 1180px;
+  --serif: "EB Garamond","Iowan Old Style","Palatino Linotype",Georgia,serif;
+  --mono:  "Courier Prime","Courier New",ui-monospace,monospace;
+}
+
+@media (prefers-color-scheme: dark){
+  :root{
+    --paper:      #141513;   /* the letter, read under a lamp */
+    --paper-2:    #1B1C19;
+    --card:       #24251F;
+    --ink:        #EDECE3;
+    --ink-2:      #B2B1A7;
+    --ink-3:      #8A8B81;
+    --rule:       #35362F;
+
+    --red:        #E4543F;
+    --red-hover:  #F26B55;
+
+    --air:        #3D66A3;
+
+    /* Dark page, so the envelope inverts the other way: a lit sheet on a
+       dark desk. Same object, same job, still the one panel that stands
+       apart from everything else on the page. */
+    --panel:       #EDECE3;
+    --on-panel:    #17181B;
+    --on-panel-2:  #4B4D51;
+    --panel-rule:  #C3C2B7;
+    --panel-accent:#BE2B21;
+    --panel-air:   #1E3C6E;
+    --panel-shadow:rgba(0,0,0,.5);
+
+    --btn-bg:     #C9382A;
+    --btn-fg:     #FBFBF6;
+  }
+}
+
+/* ============================================================
+   2. BASE
+   ============================================================ */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--serif);
+  font-size:19px;
+  line-height:1.58;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* Paper tooth. Fixed, pointer-events none, never on a scrolling container. */
+body::after{
+  content:"";position:fixed;inset:0;z-index:60;pointer-events:none;
+  background-image:
+    repeating-linear-gradient(0deg,  rgba(23,24,27,.022) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, rgba(23,24,27,.015) 0 1px, transparent 1px 4px);
+  mix-blend-mode:multiply;
+}
+@media (prefers-color-scheme: dark){ body::after{mix-blend-mode:screen;opacity:.45} }
+
+img{max-width:100%;display:block}
+a{color:inherit}
+h1,h2,h3,h4{font-weight:500;margin:0;letter-spacing:-.014em}
+p{margin:0}
+::selection{background:var(--red);color:var(--btn-fg)}
+:focus-visible{outline:2px solid var(--red);outline-offset:3px;border-radius:2px}
+
+.wrap{width:100%;max-width:var(--wrap);margin-inline:auto;padding-inline:24px}
+@media (max-width:640px){.wrap{padding-inline:20px}}
+
+/* Typewriter voice: the letter's furniture. Dates, labels, asides, numbers. */
+.tw{font-family:var(--mono);font-size:13px;line-height:1.7}
+.dim{color:var(--ink-2)}
+.dimmer{color:var(--ink-3)}
+
+/* Airmail stripe. One material, used exactly three times: page top,
+   envelope lip, page bottom. It is what makes this object a letter. */
+.airmail{
+  height:9px;
+  background:repeating-linear-gradient(-45deg,
+    var(--red) 0 9px, var(--paper) 9px 18px, var(--air) 18px 27px, var(--paper) 27px 36px);
+}
+
+/* ============================================================
+   3. THE LETTER GRID  (signature move)
+   Body column carries the argument. Margin column carries his asides,
+   in the typewriter voice, the way someone annotates a letter before
+   sending it. Below 900px the margin folds inline as a ruled note.
+   ============================================================ */
+.sheet{display:grid;grid-template-columns:minmax(0,34rem) minmax(0,15.5rem);gap:0 4rem;align-items:start}
+.sheet.pushed{margin-left:clamp(0px,6vw,6.5rem)}
+.body-col{grid-column:1}
+.mg{grid-column:2;font-family:var(--mono);font-size:12.5px;line-height:1.74;color:var(--ink-2)}
+.mg strong{color:var(--ink);font-weight:700}
+@media (min-width:901px){
+  .mg{border-left:1px solid var(--rule);padding-left:16px}
+  .mg.tilt{transform:rotate(-.5deg)}
+}
+@media (max-width:900px){
+  .sheet{grid-template-columns:1fr;gap:0}
+  .sheet.pushed{margin-left:0}
+  .body-col,.mg{grid-column:1}
+  .mg{border-left:2px solid var(--red);padding-left:14px;margin-top:24px}
+}
+
+/* ============================================================
+   4. TYPE SCALE
+   ============================================================ */
+.h-xl{font-size:clamp(1.95rem,4.6vw,3.55rem);line-height:1.06;letter-spacing:-.026em;padding-bottom:.07em}
+.h-xl em{font-style:italic;font-weight:500}
+.h-lg{font-size:clamp(1.85rem,3.5vw,2.9rem);line-height:1.09;letter-spacing:-.022em;text-wrap:balance}
+.h-md{font-size:clamp(1.42rem,2.2vw,1.9rem);line-height:1.16;letter-spacing:-.016em;text-wrap:balance}
+.h-sm{font-size:clamp(1.18rem,1.6vw,1.4rem);line-height:1.24}
+.lede{font-size:clamp(1.1rem,1.45vw,1.3rem);line-height:1.5;color:var(--ink-2)}
+.prose p+p{margin-top:1.05em}
+.measure{max-width:34rem}
+
+/* ============================================================
+   5. CONTROLS
+   One primary intent on the page ("contact Salomon"), one label for it,
+   used identically in the hero, in the envelope and at the close.
+   ============================================================ */
+.btn{
+  display:inline-flex;align-items:center;gap:.6rem;
+  font-family:var(--mono);font-size:14px;font-weight:700;
+  text-decoration:none;white-space:nowrap;
+  background:var(--btn-bg);color:var(--btn-fg);
+  padding:15px 24px;border:1px solid var(--btn-bg);border-radius:var(--r);
+  box-shadow:0 1px 0 rgba(23,24,27,.2);
+  transition:filter .18s cubic-bezier(.16,1,.3,1),transform .12s ease,box-shadow .18s ease;
+}
+.btn:hover{filter:brightness(.88)}
+.btn:active{transform:translateY(1px);box-shadow:none}
+.btn .wa{width:16px;height:16px;flex:none}
+@media (max-width:400px){.btn{font-size:12.5px;padding:14px 17px;gap:.45rem}}
+
+.btn-ghost{
+  display:inline-flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:13.5px;font-weight:700;
+  text-decoration:none;white-space:nowrap;cursor:pointer;
+  background:transparent;color:var(--ink);
+  padding:13px 22px;border:1px solid var(--ink);border-radius:var(--r);
+  transition:background .18s ease,color .18s ease,transform .12s ease;
+}
+.btn-ghost:hover{background:var(--ink);color:var(--paper)}
+.btn-ghost:active{transform:translateY(1px)}
+.btn-ghost[disabled]{opacity:.55;cursor:progress}
+
+.tlink{
+  font-family:var(--mono);font-size:13.5px;color:var(--red);text-decoration:none;
+  border-bottom:1px solid rgba(190,43,33,.4);padding-bottom:1px;
+  transition:border-color .18s ease,color .18s ease;
+}
+.tlink:hover{border-bottom-color:currentColor;color:var(--red-hover)}
+@media (prefers-color-scheme: dark){.tlink{border-bottom-color:rgba(228,84,63,.45)}}
+
+/* ============================================================
+   6. LETTERHEAD BAR
+   ============================================================ */
+.bar{position:sticky;top:0;z-index:40;background:var(--paper);border-bottom:1px solid var(--rule)}
+@supports (backdrop-filter:blur(6px)){
+  .bar{background:color-mix(in srgb,var(--paper) 90%,transparent);backdrop-filter:blur(8px)}
+}
+.bar-in{display:flex;align-items:center;justify-content:space-between;gap:24px;height:66px}
+.mark{font-size:20px;letter-spacing:-.02em;text-decoration:none;white-space:nowrap}
+.mark b{font-weight:600}
+.mark i{font-style:normal;color:var(--red)}
+.nav{display:flex;align-items:center;gap:26px;font-family:var(--mono);font-size:13px}
+.nav a{text-decoration:none;white-space:nowrap;flex:none;color:var(--ink-2);border-bottom:1px solid transparent;padding-bottom:2px;transition:color .16s,border-color .16s}
+.nav a:hover{color:var(--ink);border-bottom-color:var(--red)}
+@media (max-width:880px){ .bar-in{height:60px;gap:16px} .nav{gap:18px;font-size:12.5px} .mark{font-size:17px} }
+/* Below 760px the letterhead splits in two: the name, then the sections as a
+   full-bleed strip you can swipe. Nothing is squeezed and nothing wraps. */
+@media (max-width:760px){
+  .bar-in{height:auto;flex-direction:column;align-items:stretch;gap:0}
+  .mark{padding:11px 0 9px;font-size:17px}
+  .nav{
+    margin-inline:-24px;padding:9px 24px 10px;gap:20px;
+    border-top:1px solid var(--rule);justify-content:flex-start;
+    overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;
+  }
+  .nav::-webkit-scrollbar{display:none}
+}
+@media (max-width:640px){ .nav{margin-inline:-20px;padding-inline:20px} }
+
+/* ============================================================
+   7. HERO. Editorial opener: dateline, full-measure headline,
+   then a band with the promise on the left and his face on the right.
+   Four text elements, nothing else.
+   ============================================================ */
+.hero{padding:62px 0 54px}
+.dateline{
+  font-family:var(--mono);font-size:12px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink-2);padding-bottom:15px;border-bottom:1px solid var(--rule);margin-bottom:30px;
+}
+.dateline b{color:var(--red);font-weight:700}
+.hero-band{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,340px);gap:clamp(2rem,5vw,4rem);align-items:start;margin-top:32px}
+.hero-sub{max-width:31rem}
+.hero-cta{display:flex;flex-wrap:wrap;align-items:center;gap:16px 26px;margin-top:30px}
+.print{margin:0}
+.print img{width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;background:var(--panel);border:1px solid var(--rule);border-radius:var(--r);box-shadow:0 14px 34px rgba(23,24,27,.15)}
+.print figcaption{font-family:var(--mono);font-size:11.5px;line-height:1.55;color:var(--ink-3);margin-top:11px}
+@media (max-width:900px){
+  .hero{padding:40px 0 36px}
+  .hero-band{grid-template-columns:1fr;gap:32px;margin-top:26px}
+  .print{max-width:320px}
+}
+@media (max-width:560px){
+  .dateline{font-size:11px;letter-spacing:.1em;margin-bottom:24px}
+  .section{padding:58px 0}
+  .section.tight{padding:46px 0}
+  .close{padding:64px 0 56px}
+}
+
+/* ============================================================
+   8. LEDGER. Hard proof, quebradas included, before any decision.
+   ============================================================ */
+.section{padding:82px 0}
+.section.tight{padding:62px 0}
+.rule-top{border-top:1px solid var(--rule)}
+
+.ledger{display:grid;grid-template-columns:repeat(5,1fr);margin-top:36px;border-top:1px solid var(--ink)}
+.ledger div{padding:24px 20px 20px;border-right:1px solid var(--rule)}
+.ledger div:first-child{padding-left:0}
+.ledger div:last-child{border-right:0;padding-right:0}
+.ledger .n{font-family:var(--mono);font-size:clamp(1.45rem,2.5vw,2rem);font-weight:700;letter-spacing:-.03em;line-height:1;display:block;margin-bottom:11px}
+.ledger .n.bad{color:var(--red)}
+.ledger .l{font-family:var(--mono);font-size:12px;line-height:1.55;color:var(--ink-2)}
+@media (max-width:860px){
+  .ledger{grid-template-columns:repeat(2,1fr)}
+  .ledger div{border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:18px 14px}
+  .ledger div:nth-child(2n){border-right:0;padding-right:0}
+  .ledger div:nth-child(2n+1){padding-left:0}
+  .ledger div:last-child{grid-column:1/-1;border-bottom:0}
+}
+
+/* ============================================================
+   9. PAIN
+   ============================================================ */
+.pain{list-style:none;margin:32px 0 0;padding:0}
+.pain li{
+  font-size:clamp(1.2rem,1.95vw,1.58rem);line-height:1.32;letter-spacing:-.014em;
+  padding:22px 0 22px 26px;border-top:1px solid var(--rule);position:relative;
+}
+.pain li:last-child{border-bottom:1px solid var(--rule)}
+.pain li::before{content:"";position:absolute;left:0;top:30px;width:10px;height:2px;background:var(--red)}
+
+/* ============================================================
+   10. THE FORK. Two doors, deliberately unequal.
+   Door A is the only dark panel on the whole page, so the one dark
+   thing on the letter is the thing you are meant to open.
+   ============================================================ */
+.fork-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:14px}
+
+.envelope{
+  position:relative;margin-top:36px;background:var(--panel);color:var(--on-panel);
+  border-radius:var(--r-lg);overflow:hidden;box-shadow:0 22px 58px var(--panel-shadow);
+  transition:transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s ease;
+}
+.envelope:hover{transform:translateY(-3px);box-shadow:0 32px 76px var(--panel-shadow)}
+.envelope .airmail{
+  background:repeating-linear-gradient(-45deg,
+    var(--panel-accent) 0 9px, var(--panel) 9px 18px, var(--panel-air) 18px 27px, var(--panel) 27px 36px);
+}
+.env-in{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:clamp(2rem,4vw,3.6rem);padding:clamp(28px,4vw,52px)}
+.env-label{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--panel-accent);margin-bottom:15px}
+.envelope h3{color:var(--on-panel);max-width:19ch}
+.env-body{color:var(--on-panel-2);font-size:1.06rem;line-height:1.62;margin-top:20px;max-width:34rem}
+.env-body b{color:var(--on-panel);font-weight:500}
+.env-side{border-left:1px solid var(--panel-rule);padding-left:clamp(1.2rem,2.4vw,2rem)}
+.env-icp{font-family:var(--mono);font-size:12.5px;line-height:1.76;color:var(--on-panel-2)}
+.env-icp b{color:var(--on-panel);font-weight:700}
+.env-cta{margin-top:28px;display:flex;flex-wrap:wrap;gap:14px 22px;align-items:center}
+.env-fine{font-family:var(--mono);font-size:11.5px;line-height:1.6;color:var(--on-panel-2);max-width:30ch}
+@media (max-width:900px){
+  .env-in{grid-template-columns:1fr;gap:26px}
+  .env-side{border-left:0;border-top:1px solid var(--panel-rule);padding-left:0;padding-top:24px}
+}
+
+/* Postmark. Carries the real slot count, not decoration. */
+.stamp{
+  display:inline-block;font-family:var(--mono);font-size:11px;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--panel-accent);
+  border:1px solid var(--panel-accent);padding:7px 11px;border-radius:2px;
+  box-shadow:0 0 0 2px var(--panel),0 0 0 3px var(--panel-accent);
+  transform:rotate(-2.4deg);
+}
+.stamp.on-card{color:var(--red);border-color:var(--red);box-shadow:0 0 0 2px var(--card),0 0 0 3px var(--red)}
+
+/* Door B: the enclosed note. Smaller, on paper, offset right. */
+.enclosure{width:min(100%,58%);margin:32px 0 0 auto;transform:rotate(-.35deg)}
+@media (max-width:900px){.enclosure{width:100%;transform:none}}
+.note{
+  background:var(--card);border:1px solid var(--rule);border-left:3px solid var(--red);
+  border-radius:var(--r) var(--r) 0 0;padding:clamp(24px,3vw,34px);
+  box-shadow:0 8px 22px rgba(23,24,27,.08);
+}
+.note-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+.note-label{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--red);margin-bottom:13px}
+.note h3{max-width:34ch}
+.note p{color:var(--ink-2);font-size:1.02rem}
+.tasklist{margin-top:22px;border-top:1px solid var(--rule);padding-top:18px;font-family:var(--mono);font-size:12.5px;line-height:1.85;color:var(--ink-2)}
+.tasklist b{display:block;color:var(--ink);font-weight:700;margin-bottom:8px}
+.tasklist span{display:block;padding-left:20px;text-indent:-20px}
+.tasklist .done{color:var(--ink-2);text-decoration:line-through;text-decoration-color:var(--red);text-decoration-thickness:1px}
+.detour{margin-top:24px;padding:18px 20px;background:var(--paper-2);border-radius:var(--r);font-family:var(--mono);font-size:12.5px;line-height:1.78;color:var(--ink-2)}
+.detour b{color:var(--ink);font-weight:700}
+.detour .tlink{font-size:12.5px}
+
+/* The form, enclosed with the note. */
+.form-note{
+  background:var(--paper-2);border:1px solid var(--rule);border-top:0;border-left:3px solid var(--red);
+  border-radius:0 0 var(--r) var(--r);padding:clamp(24px,3vw,34px);
+  box-shadow:0 8px 22px rgba(23,24,27,.08);
+}
+.form-note h4{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--ink);margin-bottom:6px}
+.form-note .hint{font-family:var(--mono);font-size:11.5px;line-height:1.65;color:var(--ink-2);margin-bottom:22px}
+.field{display:grid;gap:7px;margin-bottom:20px}
+.field label{font-family:var(--mono);font-size:12px;line-height:1.45;color:var(--ink);font-weight:700}
+.field .help{font-family:var(--mono);font-size:11px;color:var(--ink-2)}
+.field input,.field select,.field textarea{
+  font-family:var(--serif);font-size:1rem;color:var(--ink);
+  background:transparent;border:0;border-bottom:1px solid var(--rule);
+  padding:7px 2px;width:100%;border-radius:0;
+  transition:border-color .16s ease;
+}
+.field select{font-family:var(--mono);font-size:13px;background:var(--paper-2);padding:8px 2px}
+.field textarea{resize:vertical;min-height:62px;line-height:1.5}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-bottom-color:var(--red);border-bottom-width:2px;padding-bottom:6px}
+.field input:focus-visible,.field select:focus-visible,.field textarea:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+.tried .field input:invalid,.tried .field textarea:invalid,.tried .field select:invalid{border-bottom-color:var(--red)}
+.err{font-family:var(--mono);font-size:11.5px;color:var(--red);margin-top:6px;display:none}
+.tried .field input:invalid ~ .err,.tried .field textarea:invalid ~ .err,.tried .field select:invalid ~ .err{display:block}
+.form-foot{display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px;margin-top:8px}
+.form-foot .tw{font-size:11.5px;color:var(--ink-2);max-width:26ch}
+.sent{font-family:var(--mono);font-size:13px;line-height:1.8;color:var(--ink);border-left:3px solid var(--red);padding-left:16px}
+
+/* ============================================================
+   11. METHOD. Three unequal columns, no card boxes. The middle
+   one is wider because the diagnostico is what actually sells.
+   ============================================================ */
+.steps{display:grid;grid-template-columns:.82fr 1.3fr 1fr;gap:clamp(1.6rem,3vw,3rem);margin-top:38px}
+.step{border-top:2px solid var(--ink);padding-top:20px}
+.step:nth-child(2){border-top-color:var(--red)}
+.step .when{font-family:var(--mono);font-size:12px;color:var(--ink-3);display:block;margin-bottom:12px}
+.step h3{margin-bottom:11px}
+.step p{color:var(--ink-2);font-size:1.02rem}
+.step-note{font-family:var(--mono);font-size:12px;line-height:1.65;color:var(--red);margin-top:14px}
+@media (max-width:880px){.steps{grid-template-columns:1fr;gap:30px}}
+.kicker{margin-top:42px;padding-top:26px;border-top:1px solid var(--rule);font-size:clamp(1.14rem,1.75vw,1.4rem);line-height:1.42;max-width:44rem}
+
+/* ============================================================
+   12. BENTO. Four things he built, four cells, no empties.
+   ============================================================ */
+.built{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:38px}
+.cell{border:1px solid var(--rule);border-radius:var(--r);overflow:hidden;background:var(--card);display:flex;flex-direction:column}
+.cell.a{grid-column:span 2;grid-row:span 2}
+.cell.b{grid-column:span 2}
+.cell img{width:100%;object-fit:cover;object-position:center 22%;flex:1;min-height:170px}
+.cell .txt{padding:22px 24px 24px}
+.cell .who{font-family:var(--mono);font-size:11.5px;color:var(--red);margin-bottom:10px;display:block}
+.cell h3{font-size:1.28rem;line-height:1.2;margin-bottom:9px}
+.cell p{font-size:.98rem;line-height:1.5;color:var(--ink-2)}
+.cell.a .txt{padding:26px 28px 30px}
+.cell.a h3{font-size:clamp(1.4rem,2.1vw,1.75rem)}
+/* Cells with no photograph carry their evidence as a set number instead,
+   in the same typewriter the ledger uses. Nothing here is stock filler. */
+.cell.fig{background:var(--paper-2)}
+.cell .figure{margin:26px 24px 0;padding-bottom:6px}
+.cell.a .figure,.cell.b .figure{margin:30px 28px 0}
+.cell .figure b{display:block;font-family:var(--mono);font-weight:700;line-height:.94;letter-spacing:-.04em;font-size:clamp(2.5rem,5.4vw,4.1rem)}
+.cell .figure span{display:block;font-family:var(--mono);font-size:12px;color:var(--red);margin-top:12px}
+.cell.logo{background:var(--card)}
+.cell.logo .logo-tile{margin:26px 24px 2px;width:62px;height:62px;background:#fff;border:1px solid var(--rule);border-radius:var(--r);display:grid;place-items:center;padding:9px}
+.cell.logo .logo-tile img{width:100%;height:100%;object-fit:contain;flex:none;min-height:0}
+.cell.logo .txt,.cell.fig .txt{margin-top:auto}
+@media (max-width:880px){
+  .built{grid-template-columns:1fr}
+  .cell.a,.cell.b{grid-column:span 1;grid-row:span 1}
+  .cell img{flex:none;height:210px;min-height:0}
+}
+.built-foot{margin-top:26px;font-family:var(--mono);font-size:13px;line-height:1.8;color:var(--ink-2);max-width:52rem}
+.built-foot b{color:var(--ink);font-weight:700}
+
+/* ============================================================
+   13. TRAYECTORIA. Scroll-snap row, not a bulleted list.
+   ============================================================ */
+.track{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(210px,1fr);gap:12px;margin-top:34px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:14px}
+.co{scroll-snap-align:start;background:var(--card);border:1px solid var(--rule);border-radius:var(--r);padding:20px;display:flex;flex-direction:column}
+.co .logo-tile{width:54px;height:54px;background:#fff;border:1px solid var(--rule);border-radius:var(--r);display:grid;place-items:center;padding:7px;margin-bottom:16px}
+.co .logo-tile img{width:100%;height:100%;object-fit:contain}
+.co h3{font-size:1.22rem;margin-bottom:3px}
+.co .yrs{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);display:block;margin-bottom:12px}
+.co p{font-size:.95rem;line-height:1.46;color:var(--ink-2);margin-bottom:16px}
+.co .out{margin-top:auto;font-family:var(--mono);font-size:11.5px;font-weight:700;line-height:1.5;border-top:1px solid var(--rule);padding-top:12px;display:block}
+.co .out.win{color:var(--red)}
+.co .out.loss{color:var(--ink-3)}
+.track-foot{margin-top:22px;font-size:1.06rem;line-height:1.5;color:var(--ink-2);max-width:42rem}
+
+/* ============================================================
+   14. CUPOS. The notice, with its date on it.
+   ============================================================ */
+.notice{border:1px solid var(--ink);border-radius:var(--r);padding:clamp(26px,4vw,42px);background:var(--paper-2);display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:clamp(2rem,4vw,3.4rem);align-items:start}
+.counts{display:flex;gap:52px;margin:22px 0 20px;flex-wrap:wrap}
+.count b{display:block;font-family:var(--mono);font-size:1.95rem;font-weight:700;line-height:1;letter-spacing:-.03em}
+.count b i{font-style:normal;font-weight:400;color:var(--ink-3)}
+.count span{font-family:var(--mono);font-size:12px;color:var(--ink-3);display:block;margin-top:9px}
+.notice-side{border-left:1px solid var(--rule);padding-left:clamp(1.2rem,2.4vw,2rem);font-family:var(--mono);font-size:12.5px;line-height:1.8;color:var(--ink-2)}
+.notice-side b{color:var(--ink);font-weight:700}
+@media (max-width:880px){
+  .notice{grid-template-columns:1fr;gap:24px}
+  .notice-side{border-left:0;border-top:1px solid var(--rule);padding-left:0;padding-top:22px}
+}
+
+/* ============================================================
+   15. TESTIMONIOS. Honest empty state, real reserved space.
+   ============================================================ */
+.slots{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:32px}
+.slot{border:1px dashed var(--rule);border-radius:var(--r);min-height:150px;padding:20px;display:flex;flex-direction:column;justify-content:space-between;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.slot .ph{width:34px;height:34px;border-radius:50%;border:1px dashed var(--rule)}
+@media (max-width:760px){.slots{grid-template-columns:1fr;gap:10px}.slot{min-height:92px}}
+
+/* ============================================================
+   16. SOBRE MI + AHORA
+   ============================================================ */
+.prints{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.prints figure{margin:0}
+.prints img{width:100%;height:155px;object-fit:cover;border:1px solid var(--rule);border-radius:var(--r)}
+.prints figcaption{font-family:var(--mono);font-size:11px;line-height:1.45;color:var(--ink-3);margin-top:8px}
+.meter{margin-top:26px;border-top:1px solid var(--rule);padding-top:18px}
+.meter b{font-family:var(--mono);font-size:2.05rem;font-weight:700;line-height:1;letter-spacing:-.03em;display:block;color:var(--red);margin-bottom:10px}
+
+/* ============================================================
+   17. P.D. Charlas live in the postscript. No card. No button.
+   ============================================================ */
+.ps{border-top:2px solid var(--ink);padding-top:32px}
+.ps-h{font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--red);margin-bottom:18px}
+.ps-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:clamp(2rem,5vw,4rem);align-items:start}
+.venues{font-size:clamp(1.4rem,2.8vw,2.25rem);line-height:1.26;letter-spacing:-.022em;max-width:25ch}
+.venues span{color:var(--ink-3)}
+.topics{list-style:none;margin:0;padding:0}
+.topics li{border-top:1px solid var(--rule);padding:14px 0;font-family:var(--mono);font-size:12.5px;line-height:1.62;color:var(--ink-2)}
+.topics li b{color:var(--ink);font-weight:700;font-size:13.5px;display:block;margin-bottom:3px}
+.topics li:first-child{border-top:0;padding-top:0}
+.topics li.out b,.topics li.out{color:var(--ink-3)}
+.ps-links{margin-top:24px;display:flex;flex-wrap:wrap;gap:14px 26px;align-items:center}
+@media (max-width:880px){.ps-grid{grid-template-columns:1fr;gap:28px}}
+
+/* ============================================================
+   18. FAQ
+   ============================================================ */
+.faq{margin-top:32px;border-top:1px solid var(--ink)}
+.faq details{border-bottom:1px solid var(--rule)}
+.faq summary{list-style:none;cursor:pointer;padding:21px 46px 21px 0;position:relative;font-size:clamp(1.1rem,1.65vw,1.32rem);line-height:1.3;letter-spacing:-.012em;transition:color .16s ease}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:hover{color:var(--red)}
+.faq summary::after{content:"+";position:absolute;right:6px;top:19px;font-family:var(--mono);font-size:20px;line-height:1;color:var(--red);transition:transform .22s cubic-bezier(.16,1,.3,1);transform-origin:50% 50%}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq .ans{padding:0 12% 26px 0;color:var(--ink-2);font-size:1.05rem;line-height:1.6}
+.faq .ans p+p{margin-top:.9em}
+
+/* ============================================================
+   19. CIERRE + PIE
+   ============================================================ */
+.close{padding:92px 0 80px}
+.sig{font-style:italic;font-size:clamp(1.85rem,3.2vw,2.6rem);line-height:1.16;margin-top:34px;padding-bottom:.1em}
+.sig-role{font-family:var(--mono);font-size:12px;color:var(--ink-3);margin-top:4px}
+
+footer{padding:46px 0 56px;background:var(--paper-2)}
+.foot{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr) minmax(0,1fr);gap:32px}
+.foot h4{font-family:var(--mono);font-size:12px;color:var(--ink-3);margin-bottom:14px;font-weight:400}
+.foot p{font-family:var(--mono);font-size:12.5px;line-height:1.72;color:var(--ink-2);max-width:26rem}
+.foot ul{margin:0;padding:0}
+.foot li{list-style:none;margin-bottom:11px}
+.foot a{font-family:var(--mono);font-size:13px;text-decoration:none;color:var(--ink-2);display:inline-flex;align-items:center;gap:8px;border-bottom:1px solid transparent;transition:color .16s,border-color .16s}
+.foot a:hover{color:var(--red);border-bottom-color:var(--red)}
+@media (max-width:820px){.foot{grid-template-columns:1fr;gap:26px}}
+
+/* ============================================================
+   20. MOTION. Motivated: a letter is read in sequence, so blocks
+   arrive in reading order and then stay. Nothing loops, nothing
+   parallaxes, no scroll listeners.
+   ============================================================ */
+.js [data-rev]{opacity:0;transform:translateY(14px);transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1)}
+.js [data-rev].in{opacity:1;transform:none}
+@media (prefers-reduced-motion: reduce){
+  .js [data-rev]{opacity:1!important;transform:none!important;transition:none!important}
+  .envelope,.btn,.btn-ghost,.faq summary::after{transition:none!important}
+  .envelope:hover{transform:none}
+}
+</style>
+</head>
+
+<body id="top">
+
+<div class="airmail" aria-hidden="true"></div>
+
+<header class="bar">
+  <div class="wrap bar-in">
+    <a class="mark" href="#top"><span>Salomón </span><b>Muriel</b><i>.</i></a>
+    <nav class="nav" aria-label="Principal">
+      <a href="#consultoria">Consultoría</a>
+      <a href="#mentoria">Mentoría</a>
+      <a href="#trayectoria">Trayectoria</a>
+      <a href="#sobremi">Sobre mí</a>
+      <a href="#charlas">Charlas</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ============ 1. ENCABEZADO DE LA CARTA ============ -->
+<section class="hero">
+  <div class="wrap">
+    <p class="dateline">Bogotá, septiembre de 2026. &nbsp;Carta abierta para el dueño de una empresa que <b>ya vende</b>.</p>
+    <h1 class="h-xl">Yo armo la estrategia.<br>Y yo mismo <em>construyo</em> la herramienta.</h1>
+    <div class="hero-band">
+      <div>
+        <p class="lede hero-sub">Trabajo con empresas colombianas que ya venden, pero cuya operación vive en Excel, en WhatsApp y en tu cabeza.</p>
+        <div class="hero-cta">
+          <a class="btn" href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20tengo%20una%20empresa%20de%20___%20y%20quiero%20contarte%20qu%C3%A9%20tengo%20montado." target="_blank" rel="noopener">
+            <img class="wa" src="https://cdn.simpleicons.org/whatsapp/FBFBF6" alt="" width="16" height="16">
+            Cuéntame qué tienes montado
+          </a>
+          <a class="tlink" href="#mentoria">Apenas estoy arrancando &rarr;</a>
+        </div>
+      </div>
+      <figure class="print">
+        <img src="assets/fotoSalo.jpeg" width="560" height="560" alt="Salomón Muriel, de brazos cruzados, con abrigo verde sobre fondo oscuro." fetchpriority="high">
+        <figcaption>El que contesta el WhatsApp soy yo. No hay equipo comercial detrás.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 2. LOS NÚMEROS ============ -->
+<section class="section tight rule-top">
+  <div class="wrap">
+    <div class="sheet">
+      <div class="body-col" data-rev><h2 class="h-lg">Los números, con las quiebras incluidas.</h2></div>
+      <aside class="mg tilt" data-rev>
+        Nadie mete sus fracasos en una barra de logros. Yo sí, porque son la mitad de lo que sé y la razón por la que hoy me pagan por no repetirlos.
+      </aside>
+    </div>
+    <div class="ledger" data-rev>
+      <div><span class="n">5</span><span class="l">empresas fundadas.<br>Voy en la quinta.</span></div>
+      <div><span class="n">2</span><span class="l">vendidas.<br>Finco y PrestaGente.</span></div>
+      <div><span class="n bad">2</span><span class="l">quebradas.<br>Beriblock y El Palomo.</span></div>
+      <div><span class="n">100.000</span><span class="l">reportes al año<br>corriendo en Finco.</span></div>
+      <div><span class="n">USD 150K</span><span class="l">el primer año de Ignia,<br>rentable desde el día uno.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3. EL DOLOR ============ -->
+<section class="section">
+  <div class="wrap">
+    <div class="sheet pushed">
+      <div class="body-col">
+        <h2 class="h-lg" data-rev>Esto seguramente te suena.</h2>
+        <ul class="pain">
+          <li data-rev>Compraste un software carísimo que nadie en tu equipo usa.</li>
+          <li data-rev>Media operación depende de que tú te acuerdes de las cosas.</li>
+          <li data-rev>Todo el mundo te habla de IA y nadie te dice qué hacer el lunes por la mañana.</li>
+        </ul>
+      </div>
+      <aside class="mg" data-rev>
+        Si ninguna de las tres te sonó, probablemente no soy para ti, y prefiero decírtelo acá y no en una reunión de hora y media.
+        <br><br>
+        <strong>Lo que no hago:</strong> empresas que ya pasaron los 5 millones de dólares al año, porque no sé escalar más allá de ahí y lo digo sin pena. Tampoco emprendimientos de investigación que tienen que inventar algo nuevo.
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 4. LA BIFURCACIÓN ============ -->
+<section class="section" id="consultoria">
+  <div class="wrap">
+    <div class="fork-head" data-rev>
+      <h2 class="h-lg">¿En cuál de estas dos estás hoy?</h2>
+      <p class="tw dim">Dos caminos. No hay un tercero.</p>
+    </div>
+
+    <!-- PUERTA A. Dominante. El único panel oscuro de la página. -->
+    <article class="envelope" data-rev>
+      <div class="airmail" aria-hidden="true"></div>
+      <div class="env-in">
+        <div>
+          <p class="env-label">Consultoría</p>
+          <h3 class="h-md">«Ya tengo un negocio andando y la operación no me da abasto.»</h3>
+          <p class="env-body">
+            Definimos para dónde va el negocio y después me siento a construir la herramienta que lo sostiene.
+            <b>La construyo yo. No la subcontrato.</b>
+            El CRM, la automatización, el reporte que hoy alguien arma a mano, los flujos con IA.
+            Termina con tu equipo usándola solo, no con una entrega y un adiós.
+          </p>
+          <div class="env-cta">
+            <a class="btn" href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20tengo%20una%20empresa%20de%20___%20y%20quiero%20contarte%20qu%C3%A9%20tengo%20montado." target="_blank" rel="noopener">
+              <img class="wa" src="https://cdn.simpleicons.org/whatsapp/FBFBF6" alt="" width="16" height="16">
+              Cuéntame qué tienes montado
+            </a>
+            <span class="env-fine">Escribes tú, contesto yo. La primera llamada es de 30 minutos y no cuesta nada.</span>
+          </div>
+        </div>
+        <div class="env-side">
+          <p style="margin-bottom:22px"><span class="stamp">2 de 4 cupos</span></p>
+          <p class="env-icp">
+            <b>Para quién es.</b><br>
+            Empresas que ya facturan pero todavía no llegan a los 5.000 millones al año. Ropa, comida, retail, distribución, servicios, consultorías. Entre 5 y 40 personas.
+            <br><br>
+            No tienes que ser una empresa de tecnología. De hecho casi ninguno de mis clientes lo es, y ninguno ha salido de una reunión conmigo sintiéndose bruto.
+          </p>
+        </div>
+      </div>
+    </article>
+
+    <!-- PUERTA B. Más pequeña, sobre papel, corrida a la derecha, con su formulario adentro. -->
+    <div class="enclosure" id="mentoria">
+      <article class="note" data-rev>
+        <div class="note-head">
+          <div>
+            <p class="note-label">Mentoría</p>
+            <h3 class="h-sm">«Apenas estoy arrancando y necesito que alguien me empuje.»</h3>
+          </div>
+          <span class="stamp on-card">3 de 5</span>
+        </div>
+        <p style="margin-top:16px">
+          Trabajar conmigo significa que las cosas pasan, así toque a las malas. Una hora por videollamada cada semana, tú y yo, sin cohorte y sin currículo. Sales con una lista de tareas concretas y la semana siguiente arrancamos revisándola.
+        </p>
+        <div class="tasklist">
+          <b>Lista de la semana del 8 de septiembre</b>
+          <span class="done">&#10003; Llamar a los 12 clientes que compraron en junio y preguntarles por qué compraron.</span>
+          <span class="done">&#10003; Subir el precio del plan básico. No pedir permiso.</span>
+          <span>&#9744; Escribir el correo de cobro que llevas tres semanas evitando.</span>
+        </div>
+        <p class="tw" style="margin-top:18px;color:var(--ink-2)"><strong style="color:var(--ink)">La regla:</strong> si dos semanas seguidas no hiciste nada, paramos. Sin resentimientos, pero paramos. Compromiso mínimo de tres meses.</p>
+        <div class="detour">
+          <b>Léelo antes de postularte.</b> Si lo que buscas es aprender en grupo, con estructura, con currículo y con gente que está exactamente en tu mismo momento, eso es el Action Lab de Ignia y probablemente te sirva más que yo.
+          <a class="tlink" href="https://www.ignia.lat" target="_blank" rel="noopener">Te dejo el enlace de una vez &rarr;</a>
+          Acá somos tú y yo, cada semana, y nada más.
+        </div>
+      </article>
+
+      <div class="form-note" data-rev>
+        <h4>Las cinco preguntas.</h4>
+        <p class="hint">Se contestan en tres minutos. Es la primera tarea, no un formulario de contacto. Te contesto en menos de una semana, sí o no. No todos entran: hoy quedan tres cupos.</p>
+        <form id="postulacion" novalidate>
+          <div class="field">
+            <label for="q0">Tu nombre y tu correo</label>
+            <input id="q0" name="q0" type="text" required autocomplete="name" aria-describedby="e0">
+            <span class="err" id="e0">Necesito por dónde contestarte.</span>
+          </div>
+          <div class="field">
+            <label for="q1">1. ¿Qué estás construyendo?</label>
+            <input id="q1" name="q1" type="text" required aria-describedby="e1">
+            <span class="err" id="e1">Cuéntame en una línea, no necesito más.</span>
+          </div>
+          <div class="field">
+            <label for="q2">2. ¿En qué punto estás hoy?</label>
+            <select id="q2" name="q2" required aria-describedby="e2">
+              <option value="">Escoge una</option>
+              <option>Todavía es una idea</option>
+              <option>Tengo los primeros clientes</option>
+              <option>Ya estoy vendiendo</option>
+              <option>Es una organización sin ánimo de lucro</option>
+            </select>
+            <span class="err" id="e2">Escoge la que más se te parezca.</span>
+          </div>
+          <div class="field">
+            <label for="q3">3. ¿Qué es lo que te tiene trancado ahora mismo?</label>
+            <textarea id="q3" name="q3" rows="2" required aria-describedby="e3"></textarea>
+            <span class="err" id="e3">Acá es donde de verdad me sirve el detalle.</span>
+          </div>
+          <div class="field">
+            <label for="q4">4. ¿Cuántas horas a la semana le metes de verdad?</label>
+            <span class="help">De verdad, no las que quisieras.</span>
+            <input id="q4" name="q4" type="text" required aria-describedby="e4">
+            <span class="err" id="e4">Un número aproximado basta.</span>
+          </div>
+          <div class="field">
+            <label for="q5">5. ¿Por qué ahora?</label>
+            <textarea id="q5" name="q5" rows="2" required aria-describedby="e5"></textarea>
+            <span class="err" id="e5">Esta es la que más peso tiene.</span>
+          </div>
+          <div class="form-foot">
+            <button class="btn-ghost" type="submit">Enviar mi postulación</button>
+            <span class="tw">Lo leo yo. No hay filtro automático ni asistente.</span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5. EL MÉTODO ============ -->
+<section class="section rule-top">
+  <div class="wrap">
+    <h2 class="h-lg measure" data-rev>Qué pasa, en concreto, si trabajamos juntos.</h2>
+    <div class="steps">
+      <div class="step" data-rev>
+        <span class="when">30 minutos</span>
+        <h3 class="h-sm">Escuchar</h3>
+        <p>Una videollamada, gratis. Me cuentas qué tienes montado y te digo de frente si te puedo ayudar o no. Si no puedo, te digo con quién.</p>
+      </div>
+      <div class="step" data-rev>
+        <span class="when">2 a 3 semanas</span>
+        <h3 class="h-sm">Diagnosticar</h3>
+        <p>Entiendo la operación de verdad: hablo con la gente que la ejecuta, no solo contigo. Salgo con el único cuello de botella que vale la pena atacar primero, un plan de dos páginas, y una primera cosa ya funcionando.</p>
+        <p class="step-note">Es la puerta de entrada: corta y acotada, para que no te comprometas a ciegas.</p>
+      </div>
+      <div class="step" data-rev>
+        <span class="when">8 a 16 semanas</span>
+        <h3 class="h-sm">Construir</h3>
+        <p>Construyo lo que salió del diagnóstico y entreno a tu equipo hasta que lo use solo. Después, si quieres, un acompañamiento mensual liviano para que no se muera.</p>
+      </div>
+    </div>
+    <p class="kicker" data-rev>Al final no te queda un informe. Te queda algo prendido, funcionando, y tu equipo sabiendo usarlo. Si te entrego un documento bonito y nadie lo abre, los dos perdimos la plata.</p>
+  </div>
+</section>
+
+<!-- ============ 6. COSAS QUE CONSTRUÍ ============ -->
+<section class="section">
+  <div class="wrap">
+    <div class="sheet">
+      <div class="body-col" data-rev><h2 class="h-lg">Cosas que construí con mis propias manos.</h2></div>
+      <aside class="mg" data-rev>
+        No soy un consultor que recomienda y se va, ni un desarrollador que espera especificaciones. Hago las dos cosas, y por eso los tiempos se acortan tanto.
+      </aside>
+    </div>
+
+    <div class="built">
+      <div class="cell a" data-rev>
+        <img src="assets/salo_oscar.webp" width="900" height="560" alt="Salomón presentando en pantalla la plataforma de Finco, junto a un compañero de equipo." loading="lazy">
+        <div class="txt">
+          <span class="who">Finco</span>
+          <h3>El motor de valoración inmobiliaria</h3>
+          <p>Datos y modelos de avalúo para América Latina. Pasó de una hoja de cálculo a más de 100.000 reportes al año corriendo solos. Terminamos vendiendo la empresa.</p>
+        </div>
+      </div>
+      <div class="cell b fig" data-rev>
+        <p class="figure"><b>250.000</b><span>usuarios al mes en la app que ayudé a construir</span></p>
+        <div class="txt">
+          <span class="who">R5</span>
+          <h3>El sistema de datos y el modelo de riesgo</h3>
+          <p>Armé el área de datos de una fintech de vehículos y el sistema que decide a quién se le presta. Hasta 40 personas a cargo entre web, móvil y datos.</p>
+        </div>
+      </div>
+      <div class="cell logo" data-rev>
+        <div class="logo-tile"><img src="assets/ignia.png" width="62" height="62" alt="Logo de Ignia." loading="lazy"></div>
+        <div class="txt">
+          <span class="who">Ignia</span>
+          <h3>El CRM</h3>
+          <p>Ninguno de los de la góndola servía para cómo vendemos. Lo armé yo en semanas, con IA, y hoy lo usa el equipo entero todos los días.</p>
+        </div>
+      </div>
+      <div class="cell fig" data-rev>
+        <p class="figure"><b>2.000</b><span>personas en la comunidad</span></p>
+        <div class="txt">
+          <span class="who">Ignia</span>
+          <h3>La plataforma de comunidad</h3>
+          <p>Y el sitio donde se inscriben. También los construí yo, y también con IA.</p>
+        </div>
+      </div>
+    </div>
+
+    <p class="built-foot" data-rev>
+      <b>Lo más actual que hago:</b> construir con IA, y usar agentes como Claude Code hasta para tareas que no son de programación. Por eso lo que antes tomaba un trimestre hoy sale en semanas. No es promesa de folleto: es cómo salieron las cuatro cosas de arriba.
+    </p>
+  </div>
+</section>
+
+<!-- ============ 7. TRAYECTORIA ============ -->
+<section class="section rule-top" id="trayectoria">
+  <div class="wrap">
+    <div class="sheet">
+      <div class="body-col" data-rev><h2 class="h-lg">Las cinco empresas. Sin maquillaje.</h2></div>
+      <aside class="mg" data-rev>
+        Entre una empresa y otra fui Director de Datos y luego Director de Tecnología de Nuevos Productos en R5. Hasta 40 personas a cargo allá, hasta 15 en mis propias empresas.
+      </aside>
+    </div>
+
+    <div class="track" tabindex="0" role="group" aria-label="Las cinco empresas, se desliza en horizontal">
+      <article class="co">
+        <div class="logo-tile"><img src="assets/ignia.png" width="54" height="54" alt="Ignia" loading="lazy"></div>
+        <h3>Ignia</h3><span class="yrs">2025 al presente</span>
+        <p>Un modelo nuevo de educación superior en Bogotá. Sin inversionistas, equipo de cinco, tres cohortes vendidas.</p>
+        <span class="out win">Andando. USD 150K el primer año</span>
+      </article>
+      <article class="co">
+        <div class="logo-tile"><img src="assets/finco.png" width="54" height="54" alt="Finco" loading="lazy"></div>
+        <h3>Finco</h3><span class="yrs">2019 a 2022</span>
+        <p>Valoración inmobiliaria con datos y modelos para América Latina. Más de 100.000 reportes al año.</p>
+        <span class="out win">Vendida en ~USD 1.5M, 5× la inversión</span>
+      </article>
+      <article class="co">
+        <div class="logo-tile"><img src="assets/prestagente.png" width="54" height="54" alt="PrestaGente" loading="lazy"></div>
+        <h3>PrestaGente</h3><span class="yrs">2017 a 2019</span>
+        <p>Libranza entre personas, hecha a la medida de la regulación colombiana. Sigue operando hoy con otro dueño.</p>
+        <span class="out win">Vendida en ~USD 1M</span>
+      </article>
+      <article class="co">
+        <div class="logo-tile"><img src="assets/beriblock.png" width="54" height="54" alt="Beriblock" loading="lazy"></div>
+        <h3>Beriblock</h3><span class="yrs">2018 a 2019</span>
+        <p>Autenticación de pagarés. Los inversionistas exigieron tercerizar el desarrollo del corazón del producto. Nunca más.</p>
+        <span class="out loss">Quebró</span>
+      </article>
+      <article class="co">
+        <div class="logo-tile"><img src="assets/elpalomo.png" width="54" height="54" alt="El Palomo" loading="lazy"></div>
+        <h3>El Palomo</h3><span class="yrs">2016 a 2017</span>
+        <p>Flores por suscripción, todo en línea. Duró un año y me enseñó lo que cuesta de verdad conseguir un cliente.</p>
+        <span class="out loss">Fracasó</span>
+      </article>
+    </div>
+    <p class="track-foot" data-rev>Las dos que quebraron me costaron caro, y por eso las cuento: te ahorro esos errores por mucho menos de lo que me costaron a mí.</p>
+  </div>
+</section>
+
+<!-- ============ 8. CUPOS ============ -->
+<!-- Los cupos salen de un único valor editable en src/config.ts
+     (SLOTS.consulting, SLOTS.mentorship, SLOTS.updatedAt) y la fecha
+     se imprime siempre, para que el bloque no se pudra en silencio. -->
+<section class="section tight">
+  <div class="wrap">
+    <div class="notice" data-rev>
+      <div>
+        <h2 class="h-md">Cupos, honestamente.</h2>
+        <div class="counts">
+          <div class="count"><b>2 <i>de 4</i></b><span>Consultoría</span></div>
+          <div class="count"><b>3 <i>de 5</i></b><span>Mentoría</span></div>
+        </div>
+        <p class="measure" style="color:var(--ink-2);font-size:1.05rem">
+          No es urgencia de mercadeo. Es que esto lo hago yo, con mis propias manos, y en paralelo con Ignia. Cuando se llenan, se llenan, y acá abajo dice cuándo fue la última vez que moví el número.
+        </p>
+        <p class="tw dimmer" style="margin-top:16px">Actualizado el 5 de septiembre de 2026.</p>
+      </div>
+      <aside class="notice-side">
+        <b>¿Y esto es Ignia?</b><br>
+        No. De lunes a viernes construyo Ignia con mi socio Camilo. Esto de acá es aparte y va a mi nombre, y por eso los cupos son contados.
+        <br><br>
+        Ignia aparece en esta carta como prueba de que sé construir, no como quien te presta el servicio.
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 9. TESTIMONIOS: ESTADO VACÍO HONESTO ============ -->
+<section class="section tight">
+  <div class="wrap">
+    <div class="sheet">
+      <div class="body-col" data-rev>
+        <h2 class="h-lg">Todavía no tengo testimonios acá.</h2>
+        <p class="lede" style="margin-top:20px">Tengo algo mejor: si la conversación va en serio, te paso el teléfono de un cliente para que le preguntes tú mismo cómo fue. Sin que yo esté en la llamada.</p>
+      </div>
+      <aside class="mg" data-rev>
+        Van tres, con nombre, empresa y cargo. Prefiero dejar el espacio vacío a llenarlo con frases que escribí yo mismo.
+      </aside>
+    </div>
+    <div class="slots" data-rev aria-hidden="true">
+      <div class="slot"><span>Reservado</span><div class="ph"></div></div>
+      <div class="slot"><span>Reservado</span><div class="ph"></div></div>
+      <div class="slot"><span>Reservado</span><div class="ph"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 10. QUIÉN TE ESCRIBE + AHORA ============ -->
+<section class="section rule-top" id="sobremi">
+  <div class="wrap">
+    <div class="sheet pushed">
+      <div class="body-col prose">
+        <h2 class="h-lg" data-rev>Quién te está escribiendo.</h2>
+        <div style="margin-top:26px" data-rev>
+          <p>Tengo 35 años, vivo en Bogotá y voy en mi quinta empresa. Dos las vendí y dos quebraron, y de las que quebraron aprendí más.</p>
+          <p>Tengo mellizos, Franco y Luca, que me quitaron 14 kilos sin necesidad de gimnasio. El año pasado corrí una media maratón en 2:10:00 después de no poder hacer 5 kilómetros sin caminar, e inscribí a mi esposa sin preguntarle. Todavía me lo cobra.</p>
+          <p>Construyo cosas porque me gusta construir: empresas, muebles, prototipos, juegos para los niños, recetas. Es lo único que he hecho consistentemente bien, y es exactamente lo que te vendo.</p>
+        </div>
+      </div>
+      <aside class="mg" data-rev>
+        <div class="prints">
+          <figure>
+            <img src="assets/marathon.jpg" width="600" height="600" alt="Salomón mostrando la medalla de la media maratón, con el dorsal puesto, en un parque." loading="lazy">
+            <figcaption>2:10:00. Ocho semanas de plan.</figcaption>
+          </figure>
+          <figure>
+            <img src="assets/bonfire.jpeg" width="600" height="600" alt="Fogata encendida de noche en el campo." loading="lazy">
+            <figcaption>Lo que hago cuando no estoy construyendo.</figcaption>
+          </figure>
+        </div>
+        <div class="meter">
+          <b>9/10</b>
+          <strong>Medidor de felicidad.</strong> El sueldo es la sexta parte del que tenía y aun así el número subió. Lo único que me falta para el 10 es una meta nueva de ejercicio.
+          <br><br>
+          Actualizado en septiembre de 2026.
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 11. P.D. LAS CHARLAS ============ -->
+<section class="section" id="charlas">
+  <div class="wrap ps">
+    <p class="ps-h">P.D. También doy charlas.</p>
+    <div class="ps-grid">
+      <div data-rev>
+        <p class="venues">ConfNodo. EAFIT. La EIA. El Externado. <span>La Universidad Católica. La Asociación Colombiana de EdTech. Un par de podcasts.</span></p>
+        <p class="lede" style="margin-top:24px;max-width:30rem">Doy charlas porque me gusta y porque así me conocen. No es un producto: es la puerta de entrada.</p>
+        <div class="ps-links">
+          <a class="tlink" href="https://cal.com/salomonmuriel" target="_blank" rel="noopener">Invitarme a una charla &rarr;</a>
+          <a class="tlink" href="/charlas">Los temas, los decks y los videos &rarr;</a>
+        </div>
+        <p class="tw dimmer" style="margin-top:18px;max-width:34ch">La foto en alta, la bio corta y la bio larga están ahí para copiar y descargar. Sin formulario y sin pedirte nada a cambio.</p>
+      </div>
+      <ul class="topics" data-rev>
+        <li><b>Adopción de tecnología e IA</b>Desarrollar con IA y usar agentes para tareas que no son de programación. Para empresas y equipos que no son de tecnología.</li>
+        <li><b>Emprendimiento sin romanticismo</b>Cinco empresas, dos vendidas, dos quebradas, y qué me costó caro cada una. Para universidades y programas de aceleración.</li>
+        <li><b>Mentalidad maker</b>Perrenque, curiosidad, resiliencia, creatividad. Para estudiantes y equipos que necesitan mover algo ya.</li>
+        <li><b>Trabajo y vida sin la pose</b>Quinta empresa, mellizos, media maratón y un medidor de felicidad publicado. Para eventos corporativos y de talento.</li>
+        <li class="out"><b>Lo que no doy</b>Charlas de ciencia de datos ni de cultura organizacional. Te ahorro el correo.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 12. FAQ ============ -->
+<section class="section rule-top">
+  <div class="wrap">
+    <h2 class="h-lg measure" data-rev>Lo que siempre me preguntan.</h2>
+    <div class="faq" data-rev>
+      <details open>
+        <summary>«Es que yo de tecnología no sé nada.»</summary>
+        <div class="ans"><p>Perfecto. La mitad de mi trabajo es traducir. Si algo no se entiende, es culpa mía y no tuya. Nunca vas a salir de una reunión conmigo sintiéndote bruto, y si eso llega a pasar, me lo dices y lo arreglo.</p></div>
+      </details>
+      <details>
+        <summary>«¿Me vas a cobrar por un PowerPoint?»</summary>
+        <div class="ans"><p>No. El entregable es algo funcionando y en producción, tu equipo entrenado para usarlo, y la documentación en español y sin jerga. La decisión estratégica detrás te la escribo en dos páginas.</p><p>Lo que no entrego es un informe de 80 páginas. Seguramente ya te vendieron uno y quedó guardado en un Drive.</p></div>
+      </details>
+      <details>
+        <summary>«¿Mi empresa es muy chiquita?»</summary>
+        <div class="ans"><p>Casi seguro que no. Trabajo con empresas de 5 a 40 personas que ya venden y todavía no llegan a los 5.000 millones al año. Marcas de ropa, restaurantes, retail, distribución, consultorías.</p><p>Si de verdad estás muy temprano, te lo digo y hablamos de la mentoría, que es lo que sirve en ese momento.</p></div>
+      </details>
+      <details>
+        <summary>«¿Cuánto vale?»</summary>
+        <div class="ans"><p>Depende del alcance, y te lo digo hablado en la primera llamada. Sin cotización de veinte páginas y sin sorpresas después.</p><p>Empezamos con un diagnóstico corto y acotado. Si eso no te aporta, ahí paramos y no perdiste medio año.</p></div>
+      </details>
+      <details>
+        <summary>«¿En cuánto tiempo veo algo?»</summary>
+        <div class="ans"><p>En el diagnóstico, entre dos y tres semanas, ya te dejo una primera cosa andando. Chiquita, pero andando. Nadie debería contratar tres meses de construcción con base en un documento, y yo tampoco te lo pediría.</p></div>
+      </details>
+      <details>
+        <summary>«¿Con quién trabajo exactamente?»</summary>
+        <div class="ans"><p>Conmigo. No hay junior, no hay fábrica de software detrás, y no hay un comercial que te pasa a otra persona después de firmar. Por eso solo tengo cuatro cupos y no cuarenta.</p></div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 13. CIERRE ============ -->
+<section class="close rule-top">
+  <div class="wrap">
+    <div class="measure" data-rev>
+      <p class="h-md">Si tienes un negocio andando y una idea de para dónde quieres llevarlo, escríbeme y hablamos 30 minutos. Si no te puedo ayudar, te lo digo de una y no te hago perder el tiempo.</p>
+      <p class="sig">Salomón</p>
+      <p class="sig-role">Salomón Muriel. Bogotá.</p>
+      <p style="margin-top:32px">
+        <a class="btn" href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20tengo%20una%20empresa%20de%20___%20y%20quiero%20contarte%20qu%C3%A9%20tengo%20montado." target="_blank" rel="noopener">
+          <img class="wa" src="https://cdn.simpleicons.org/whatsapp/FBFBF6" alt="" width="16" height="16">
+          Cuéntame qué tienes montado
+        </a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<div class="airmail" aria-hidden="true"></div>
+
+<footer>
+  <div class="wrap foot">
+    <div>
+      <h4>Dónde escribo</h4>
+      <p>LinkedIn es mi blog. Ahí escribo todas las semanas sobre lo que estoy construyendo, lo que se me cae y lo que aprendo. Es el único sitio donde me vas a ver seguido.</p>
+      <p style="margin-top:16px">
+        <a href="https://www.linkedin.com/in/smuriel/" target="_blank" rel="noopener">linkedin.com/in/smuriel &rarr;</a>
+      </p>
+    </div>
+    <div>
+      <h4>Esta carta</h4>
+      <ul>
+        <li><a href="#consultoria">Consultoría</a></li>
+        <li><a href="#mentoria">Mentoría</a></li>
+        <li><a href="#trayectoria">Trayectoria</a></li>
+        <li><a href="#sobremi">Sobre mí</a></li>
+        <li><a href="#charlas">Charlas</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Por fuera de acá</h4>
+      <ul>
+        <li><a href="#sobremi">Ahora, con medidor de felicidad</a></li>
+        <li><a href="https://www.ignia.lat" target="_blank" rel="noopener">Ignia, lo que construyo entre semana</a></li>
+        <li><a href="/en/" hreflang="en">Read this letter in English</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  document.documentElement.classList.add('js');
+
+  /* ---- Motion. A letter is read in sequence, so blocks arrive in reading
+     order and then stay put. IntersectionObserver only, no scroll listeners. */
+  var els = Array.prototype.slice.call(document.querySelectorAll('[data-rev]'));
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (reduce || !('IntersectionObserver' in window)) {
+    els.forEach(function (el) { el.classList.add('in'); });
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -5% 0px' });
+    els.forEach(function (el, i) {
+      el.style.transitionDelay = (Math.min(i % 3, 2) * 80) + 'ms';
+      io.observe(el);
+    });
+  }
+
+  /* ---- Mentorship form: error, loading and sent states.
+     Static prototype, so nothing leaves the browser. */
+  var form = document.getElementById('postulacion');
+  if (!form) return;
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    form.classList.add('tried');
+
+    if (!form.checkValidity()) {
+      var bad = form.querySelector(':invalid');
+      if (bad) bad.focus();
+      return;
+    }
+
+    var btn = form.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    btn.textContent = 'Enviando';
+
+    window.setTimeout(function () {
+      var done = document.createElement('p');
+      done.className = 'sent';
+      done.setAttribute('role', 'status');
+      done.setAttribute('tabindex', '-1');   // so the confirmation actually takes focus
+      done.textContent =
+        'Recibido. Lo leo yo, no un asistente. Te contesto en menos de una semana, ' +
+        'sí o no, al correo que dejaste. Si es que sí, arrancamos con la lista de la primera semana.';
+      form.replaceWith(done);
+      done.focus();
+    }, 600);
+  });
+})();
+</script>
+
+</body>
+</html>

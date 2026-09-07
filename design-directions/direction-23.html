@@ -1,0 +1,1164 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CHINOMÁTICO — Hoja técnica SM-01 · Salomón Muriel</title>
+<meta name="description" content="Hoja técnica de diagnóstico de operación. Su empresa parece automatizada, pero hay alguien haciéndolo a mano. Salomón Muriel — Bogotá.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=EB+Garamond:ital,wght@1,500&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        paper:  '#EDEBE4',
+        paper2: '#E2E0D8',
+        paper3: '#D6D3C8',
+        ink:    '#0B0B0B',
+        ink2:   '#2A2A26',
+        red:    '#E61919'
+      },
+      fontFamily: {
+        grot: ['Archivo','Helvetica Neue','Arial','sans-serif'],
+        mono: ['JetBrains Mono','ui-monospace','SFMono-Regular','monospace'],
+        gara: ['EB Garamond','Georgia','serif']
+      }
+    }
+  }
+}
+</script>
+<style>
+  :root{
+    --paper:#EDEBE4; --paper2:#E2E0D8; --paper3:#D6D3C8;
+    --ink:#0B0B0B; --red:#E61919;
+  }
+  *{ border-radius:0 !important; }
+  html{ scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
+  html,body{ max-width:100%; overflow-x:hidden; }
+  body{ background:var(--paper); color:var(--ink); }
+  ::selection{ background:var(--red); color:var(--paper); }
+
+  /* ---- grano mecánico global ---- */
+  #grain{
+    position:fixed; inset:0; z-index:70; pointer-events:none; opacity:.055;
+    mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/></filter><rect width='220' height='220' filter='url(%23n)'/></svg>");
+  }
+
+  /* ---- retícula de papel milimetrado ---- */
+  .reticula{
+    background-image:
+      linear-gradient(to right, rgba(11,11,11,.055) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(11,11,11,.055) 1px, transparent 1px);
+    background-size:44px 44px;
+  }
+
+  /* ---- tramado de semitono sobre fotografía ---- */
+  .trama{ position:relative; overflow:hidden; }
+  .trama img{
+    display:block; width:100%; height:100%; object-fit:cover;
+    filter:grayscale(1) contrast(1.42) brightness(1.04) sepia(.14);
+  }
+  .trama::after{
+    content:""; position:absolute; inset:0; pointer-events:none;
+    background-image:radial-gradient(circle, #ffffff 0 32%, transparent 34%);
+    background-size:3.5px 3.5px;
+    mix-blend-mode:screen; opacity:.62;
+  }
+  .trama::before{
+    content:""; position:absolute; inset:0; pointer-events:none; z-index:2;
+    background:repeating-linear-gradient(0deg, rgba(11,11,11,.10) 0 1px, transparent 1px 3px);
+    mix-blend-mode:multiply; opacity:.5;
+  }
+  .trama-fina::after{ background-size:2.5px 2.5px; opacity:.5; }
+
+  /* ---- barras de peligro ---- */
+  .hazard{ background-image:repeating-linear-gradient(45deg, var(--ink) 0 9px, transparent 9px 18px); }
+  .hazard-rojo{ background-color:var(--red); background-image:repeating-linear-gradient(45deg, var(--ink) 0 9px, transparent 9px 18px); }
+
+  /* ---- letrero corrido ---- */
+  .cinta{ overflow:hidden; }
+  .cinta-riel{ display:flex; width:max-content; animation:correr 46s linear infinite; }
+  .cinta-riel.rapido{ animation-duration:26s; }
+  @keyframes correr{ from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+  /* ---- numerales de sección, contorno ---- */
+  .num-hueco{
+    -webkit-text-stroke:2px var(--ink);
+    color:transparent;
+    font-weight:900; letter-spacing:-.06em; line-height:.72;
+  }
+  @media (max-width:640px){ .num-hueco{ -webkit-text-stroke-width:1.5px; } }
+
+  /* ---- cruces de registro ---- */
+  .cruz{ position:absolute; font-family:'JetBrains Mono',monospace; font-size:12px; line-height:1; color:var(--ink); opacity:.55; }
+
+  /* ---- sello de caucho ---- */
+  .sello{
+    border:2px solid var(--red); color:var(--red);
+    transform:rotate(-7deg);
+    box-shadow:inset 0 0 0 1px var(--red);
+    opacity:.92;
+  }
+
+  /* ---- casillas del chinómetro ---- */
+  .casilla{ width:20px; height:20px; border:2px solid var(--ink); display:grid; place-items:center; flex:none; background:var(--paper); }
+  .casilla span{ opacity:0; color:var(--red); font-weight:900; font-size:17px; line-height:1; transform:scale(.5); transition:transform .08s steps(2), opacity .01s; }
+  .sym:checked + .fila .casilla{ background:var(--ink); }
+  .sym:checked + .fila .casilla span{ opacity:1; transform:scale(1); }
+  .sym:checked + .fila{ background:var(--paper3); }
+  .sym:focus-visible + .fila{ outline:2px solid var(--red); outline-offset:-2px; }
+  .fila:hover{ background:var(--paper2); }
+
+  /* ---- segmentos del medidor ---- */
+  .seg{ transition:background-color .09s steps(1); }
+
+  /* ---- perforado de tiquete ---- */
+  .perforado{
+    background-image:radial-gradient(circle, var(--paper) 0 3.2px, transparent 3.4px);
+    background-size:12px 12px; background-position:0 -6px; background-repeat:repeat-x;
+    height:6px;
+  }
+
+  /* ---- rótulo vertical ---- */
+  .vertical{ writing-mode:vertical-rl; text-orientation:mixed; }
+
+  /* ---- enlaces de la orden de trabajo ---- */
+  .canal{ transition:background-color .1s steps(1), color .1s steps(1); }
+  .canal:hover, .canal:focus-visible{ background:var(--ink); color:var(--paper); }
+  .canal:hover .canal-flecha, .canal:focus-visible .canal-flecha{ transform:translateX(10px); }
+  .canal-flecha{ transition:transform .12s steps(3); }
+
+  .btn-ink{ transition:background-color .1s steps(1), color .1s steps(1); }
+  .btn-ink:hover, .btn-ink:focus-visible{ background:var(--red); color:var(--paper); }
+
+  /* ---- logos de unidades ---- */
+  .logo-cel img{ mix-blend-mode:multiply; filter:grayscale(1) contrast(1.15); transition:filter .12s steps(2); }
+  .logo-cel:hover img{ filter:grayscale(0) contrast(1); }
+
+  /* ---- parpadeo del piloto ---- */
+  @keyframes piloto{ 0%,49%{opacity:1} 50%,100%{opacity:.15} }
+  .piloto{ animation:piloto 1.1s steps(1) infinite; }
+
+  @media (prefers-reduced-motion:reduce){
+    .cinta-riel{ animation:none; }
+    .piloto{ animation:none; opacity:1; }
+    html{ scroll-behavior:auto; }
+  }
+
+  /* tipografía base de datos */
+  .dato{ font-family:'JetBrains Mono',monospace; text-transform:uppercase; letter-spacing:.08em; }
+</style>
+</head>
+
+<body class="font-grot antialiased">
+<div id="grain" aria-hidden="true"></div>
+
+<!-- =========================================================
+     BARRA DE ESTADO
+========================================================= -->
+<header class="fixed top-0 left-0 right-0 z-[60] bg-paper border-b-2 border-ink">
+  <div class="flex items-stretch h-7 dato text-[9px] sm:text-[10px]">
+    <div class="hidden sm:flex items-center px-2 border-r border-ink bg-ink text-paper font-bold tracking-[.18em]">SM 01</div>
+    <div class="flex items-center px-2 border-r border-ink whitespace-nowrap">HOJA TÉC. SM-01</div>
+    <div class="hidden md:flex items-center px-2 border-r border-ink whitespace-nowrap">DIAGNÓSTICO DE OPERACIÓN</div>
+    <div class="flex items-center px-2 border-r border-ink whitespace-nowrap"><span class="piloto text-red mr-1.5">●</span><span class="hidden sm:inline mr-1">BOG</span><output id="reloj">--:--:--</output></div>
+    <div class="flex-1 border-r border-ink relative min-w-0">
+      <div id="barra-avance" class="absolute inset-y-0 left-0 bg-red" style="width:0%"></div>
+    </div>
+    <div class="flex items-center px-2 whitespace-nowrap"><output id="avance">000</output>%</div>
+  </div>
+</header>
+
+<main class="pt-7">
+
+<!-- =========================================================
+     00 · PORTADA
+========================================================= -->
+<section class="border-b-2 border-ink reticula">
+  <div class="mx-auto max-w-[1500px] px-4 sm:px-6 lg:px-10">
+
+    <!-- fila de metadatos -->
+    <div class="dato text-[9px] sm:text-[10px] flex flex-wrap gap-x-5 gap-y-1 py-3 border-b border-ink/40">
+      <span>DOC. SM-01</span>
+      <span>REV. 2026.09</span>
+      <span>BOGOTÁ · 4°42′N 74°04′W</span>
+      <span class="text-red">PRÁCTICA PERSONAL — NO ES IGNIA</span>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12">
+
+      <!-- columna izquierda: la palabra -->
+      <div class="lg:col-span-8 lg:border-r-2 lg:border-ink lg:pr-8 pt-8 sm:pt-12 pb-8">
+        <p class="dato text-[10px] sm:text-[11px] mb-5 sm:mb-7">
+          ENTRADA 001 / GLOSARIO OPERATIVO <span class="text-red">▸</span> LÉASE ANTES DE SEGUIR
+        </p>
+
+        <h1 class="font-grot font-black uppercase leading-[.80] tracking-[-.055em] text-[clamp(3.3rem,15.5vw,13.5rem)] break-words">
+          CHINO<span class="text-red">·</span><br>MÁTICO
+        </h1>
+
+        <!-- entrada de diccionario -->
+        <div class="mt-8 sm:mt-10 border-2 border-ink bg-paper max-w-[46rem]">
+          <div class="bg-ink text-paper dato text-[9px] sm:text-[10px] px-3 py-1.5 flex justify-between">
+            <span>DEFINICIÓN / USO INTERNO</span><span class="hidden sm:inline">FIG. 01</span>
+          </div>
+          <div class="p-4 sm:p-6">
+            <p class="font-gara italic text-[1.6rem] sm:text-[2.1rem] leading-none">chi·no·má·ti·co, ca</p>
+            <p class="dato text-[10px] mt-1.5 opacity-70">ADJ. · COL. · SIN REGISTRO EN LA RAE</p>
+            <ol class="mt-5 space-y-3 text-[15px] sm:text-[17px] leading-snug max-w-[38rem]">
+              <li class="flex gap-3"><span class="dato text-[11px] pt-1 text-red flex-none">01</span><span>Dicho de un proceso: que <b>parece</b> automatizado, pero en realidad hay un muchacho haciéndolo a mano.</span></li>
+              <li class="flex gap-3"><span class="dato text-[11px] pt-1 text-red flex-none">02</span><span>Dicho de una empresa: la suya, probablemente.</span></li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="mt-8 flex flex-col sm:flex-row gap-3">
+          <a href="#chinometro" class="btn-ink bg-ink text-paper dato text-[11px] font-bold px-6 py-4 text-center tracking-[.14em]">
+            ▼ &nbsp;MEDIR MI EMPRESA
+          </a>
+          <a href="https://wa.me/573132465100" target="_blank" rel="noopener"
+             class="btn-ink border-2 border-ink dato text-[11px] font-bold px-6 py-4 text-center tracking-[.14em]">
+            ESCRIBIRME DE UNA &nbsp;▸
+          </a>
+        </div>
+      </div>
+
+      <!-- columna derecha: operario -->
+      <div class="lg:col-span-4 border-t-2 lg:border-t-0 border-ink lg:pl-8 pt-6 lg:pt-12 pb-10 relative">
+        <span class="cruz hidden lg:block" style="left:-6px; top:6px;">+</span>
+
+        <div class="border-2 border-ink">
+          <div class="bg-ink text-paper dato text-[9px] px-2.5 py-1.5 flex justify-between">
+            <span>OPERARIO</span><span>ARCH. 001</span>
+          </div>
+          <div class="trama aspect-[4/5] border-b-2 border-ink">
+            <img src="assets/fotoSalo.jpeg" alt="Retrato de Salomón Muriel" loading="eager">
+          </div>
+          <dl class="dato text-[10px]">
+            <div class="flex justify-between px-2.5 py-1.5 border-b border-ink/30"><dt class="opacity-60">NOMBRE</dt><dd class="font-bold">SALOMÓN MURIEL</dd></div>
+            <div class="flex justify-between px-2.5 py-1.5 border-b border-ink/30"><dt class="opacity-60">EDAD</dt><dd class="font-bold">35</dd></div>
+            <div class="flex justify-between px-2.5 py-1.5 border-b border-ink/30"><dt class="opacity-60">EMPRESAS</dt><dd class="font-bold">5 · LA QUINTA VA</dd></div>
+            <div class="flex justify-between px-2.5 py-1.5"><dt class="opacity-60">ESTADO</dt><dd class="font-bold text-red">EN OPERACIÓN</dd></div>
+          </dl>
+        </div>
+
+        <p class="mt-5 text-[14px] sm:text-[15px] leading-relaxed">
+          Me llamo Salomón. Llevo cinco empresas: <b>dos vendidas, dos quebradas, una andando</b>.
+          Aparte de eso me meto en empresas colombianas de toda la vida y dejo funcionando
+          lo que hoy sostiene una persona a pulso.
+        </p>
+        <p class="mt-3 text-[14px] sm:text-[15px] leading-relaxed">
+          No le vengo a vender un software. Le vengo a quitar el muchacho de encima
+          <span class="opacity-60">— y a ponerlo a hacer algo que sí valga la pena.</span>
+        </p>
+
+        <div class="mt-6 inline-block sello px-4 py-2 dato text-[10px] font-bold leading-tight">
+          ESTA HOJA NO<br>CONTIENE PRECIOS
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- cinta de peligro con letrero corrido -->
+  <div class="hazard h-4 border-t-2 border-ink"></div>
+  <div class="cinta bg-ink text-paper py-2 border-y-2 border-ink">
+    <div class="cinta-riel dato text-[11px] sm:text-[12px] font-bold tracking-[.2em]">
+      <span class="px-6">SI SE ENFERMA ESA PERSONA, SE CAE EL PROCESO  <span class="text-red">◆</span></span>
+      <span class="px-6">USTED YA COMPRÓ UN SOFTWARE CARO QUE NADIE USA  <span class="text-red">◆</span></span>
+      <span class="px-6">EL INVENTARIO REAL ESTÁ EN LA CABEZA DE ALGUIEN  <span class="text-red">◆</span></span>
+      <span class="px-6">ESO NO ES AUTOMATIZACIÓN, ES BUENA VOLUNTAD  <span class="text-red">◆</span></span>
+      <span class="px-6" aria-hidden="true">SI SE ENFERMA ESA PERSONA, SE CAE EL PROCESO  <span class="text-red">◆</span></span>
+      <span class="px-6" aria-hidden="true">USTED YA COMPRÓ UN SOFTWARE CARO QUE NADIE USA  <span class="text-red">◆</span></span>
+      <span class="px-6" aria-hidden="true">EL INVENTARIO REAL ESTÁ EN LA CABEZA DE ALGUIEN  <span class="text-red">◆</span></span>
+      <span class="px-6" aria-hidden="true">ESO NO ES AUTOMATIZACIÓN, ES BUENA VOLUNTAD  <span class="text-red">◆</span></span>
+    </div>
+  </div>
+</section>
+
+
+<!-- =========================================================
+     01 · EL CHINÓMETRO
+========================================================= -->
+<section id="chinometro" class="border-b-2 border-ink bg-paper2">
+  <div class="mx-auto max-w-[1500px] px-4 sm:px-6 lg:px-10">
+
+    <div class="overflow-hidden pt-8 sm:pt-12">
+      <div class="flex items-end gap-4 sm:gap-8">
+        <div class="num-hueco text-[clamp(3.2rem,16vw,13rem)] -ml-[.05em] select-none flex-none">01</div>
+        <div class="pb-3 sm:pb-6 min-w-0">
+          <p class="dato text-[10px] sm:text-[11px] text-red font-bold">INSTRUMENTO DE MEDICIÓN / OPERACIÓN MANUAL</p>
+          <h2 class="font-black uppercase leading-[.86] tracking-[-.04em] text-[clamp(1.7rem,5.4vw,4rem)] mt-1">EL CHINÓMETRO</h2>
+        </div>
+      </div>
+    </div>
+
+    <p class="mt-4 sm:mt-2 mb-8 max-w-[52rem] text-[15px] sm:text-[17px] leading-relaxed border-l-4 border-red pl-4">
+      Marque lo que reconozca de su empresa. Son diez preguntas y toma menos de un minuto.
+      Al final el aparato le escribe el mensaje y usted decide si me lo manda.
+      <span class="opacity-60">No pide correo, no guarda nada, no le va a llegar publicidad.</span>
+    </p>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 border-2 border-ink bg-ink gap-[2px] mb-10 sm:mb-16">
+
+      <!-- CHECKLIST -->
+      <div class="lg:col-span-7 bg-paper">
+        <div class="bg-ink text-paper dato text-[10px] px-3 py-2 flex justify-between">
+          <span>LISTA DE SÍNTOMAS · 10 PUNTOS</span>
+          <span class="hidden sm:inline">MARQUE TODAS LAS QUE APLIQUEN</span>
+        </div>
+
+        <div id="lista">
+          <!-- generado en HTML plano para funcionar sin JS -->
+          <label>
+            <input type="checkbox" class="sym sr-only" data-sym="Los pedidos llegan por WhatsApp y alguien los pasa a mano a un Excel">
+            <span class="fila flex gap-3 items-start px-3 py-3.5 border-b border-ink/25 cursor-pointer">
+              <span class="dato text-[10px] opacity-50 pt-0.5 w-6 flex-none">01</span>
+              <span class="casilla mt-[1px]"><span>✕</span></span>
+              <span class="text-[14px] sm:text-[15px] leading-snug">Los pedidos llegan por WhatsApp y alguien los pasa a mano a un Excel.</span>
+            </span>
+          </label>
+          <label>
+            <input type="checkbox" class="sym sr-only" data-sym="Hay un archivo que solo una persona sabe manejar, y si se enferma se para el negocio">
+            <span class="fila flex gap-3 items-start px-3 py-3.5 border-b border-ink/25 cursor-pointer">
+              <span class="dato text-[10px] opacity-50 pt-0.5 w-6 flex-none">02</span>
+              <span class="casilla mt-[1px]"><span>✕</span></span>
+              <span class="text-[14px] sm:text-[15px] leading-snug">Hay un archivo que solo una persona sabe manejar. Si se enferma, se para el negocio.</span>
+            </span>
+          </label>
+          <label>
+            <input type="checkbox" class="sym sr-only" data-sym="Compramos un software caro y hoy nadie lo usa">
+            <span class="fila flex gap-3 items-start px-3 py-3.5 border-b border-ink/25 cursor-pointer">
+              <span class="dato text-[10px] opacity-50 pt-0.5 w-6 flex-none">03</span>
+              <span class="casilla mt-[1px]"><span>✕</span></span>
+              <span class="text-[14px] sm:text-[15px] leading-snug">Compraron un software caro y hoy nadie lo usa. Nadie se atreve a decirlo en voz alta.</span>
+            </span>
+          </label>
+          <label>
+            <input type="checkbox" class="sym sr-only" data-sym="Alguien arma el mismo informe todos los lunes, copiando y pegando">
+            <span class="fila flex gap-3 items-start px-3 py-3.5 border-b border-ink/25 cursor-pointer">
+              <span class="dato text-[10px] opacity-50 pt-0.5 w-6 flex-none">04</span>
+              <span class="casilla mt-[1px]"><span>✕</span></span>
+              <span class="text-[14px] sm:text-[15px] leading-snug">Alguien arma el mismo informe todos los lunes, copiando y pegando.</span>
+            </span>
+          </label>
+          <label>
+            <input type="checkbox" class="sym sr-only" data-sym="El inventario de verdad está en la cabeza de un empleado, no en el sistema">
+            <span class="fila flex gap-3 items-start px-3 py-3.5 border-b border-ink/25 cursor-pointer">
+              <span class="dato text-[10px] opacity-50 pt-0.5 w-6 flex-none">05</span>
+              <span class="casilla mt-[1px]"><span>✕</span></span>
+              <span class="text-[14px] sm:text-[15px] leading-snug">El inventario “de verdad” está en la cabeza de un empleado, no en el sistema.</span>
+            </span>
+          </label>
+          <label>
+            <input type="checkbox" class="sym sr-only" data-sym="Para saber cuánto vendimos ayer hay que preguntarle a alguien">
+            <span class="fila flex gap-3 items-start px-3 py-3.5 border-b border-ink/25 cursor-pointer">
+              <span class="dato text-[10px] opacity-50 pt-0.5 w-6 flex-none">06</span>
+              <span class="casilla mt-[1px]"><span>✕</span></span>
+              <span class="text-[14px] sm:text-[15px] leading-snug">Para saber cuánto vendieron ayer toca preguntarle a alguien.</span>
+            </span>
+          </label>
+          <label>
+            <input type="checkbox" class="sym sr-only" data-sym="Hay tres versiones del mismo Excel y ninguna cuadra con la otra">
+            <span class="fila flex gap-3 items-start px-3 py-3.5 border-b border-ink/25 cursor-pointer">
+              <span class="dato text-[10px] opacity-50 pt-0.5 w-6 flex-none">07</span>
+              <span class="casilla mt-[1px]"><span>✕</span></span>
+              <span class="text-[14px] sm:text-[15px] leading-snug">Hay tres versiones del mismo Excel y ninguna cuadra con la otra.</span>
+            </span>
+          </label>
+          <label>
+            <input type="checkbox" class="sym sr-only" data-sym="La facturación o el cobro dependen de que alguien se acuerde">
+            <span class="fila flex gap-3 items-start px-3 py-3.5 border-b border-ink/25 cursor-pointer">
+              <span class="dato text-[10px] opacity-50 pt-0.5 w-6 flex-none">08</span>
+              <span class="casilla mt-[1px]"><span>✕</span></span>
+              <span class="text-[14px] sm:text-[15px] leading-snug">La facturación o el cobro dependen de que alguien se acuerde.</span>
+            </span>
+          </label>
+          <label>
+            <input type="checkbox" class="sym sr-only" data-sym="Contratamos a alguien para que organizara eso y todo sigue igual">
+            <span class="fila flex gap-3 items-start px-3 py-3.5 border-b border-ink/25 cursor-pointer">
+              <span class="dato text-[10px] opacity-50 pt-0.5 w-6 flex-none">09</span>
+              <span class="casilla mt-[1px]"><span>✕</span></span>
+              <span class="text-[14px] sm:text-[15px] leading-snug">Contrataron a alguien “para que organizara eso” y todo sigue igual.</span>
+            </span>
+          </label>
+          <label>
+            <input type="checkbox" class="sym sr-only" data-sym="Cuando alguien renuncia, se va con el proceso adentro">
+            <span class="fila flex gap-3 items-start px-3 py-3.5 cursor-pointer">
+              <span class="dato text-[10px] opacity-50 pt-0.5 w-6 flex-none">10</span>
+              <span class="casilla mt-[1px]"><span>✕</span></span>
+              <span class="text-[14px] sm:text-[15px] leading-snug">Cuando alguien renuncia, se va con el proceso adentro.</span>
+            </span>
+          </label>
+        </div>
+      </div>
+
+      <!-- MEDIDOR -->
+      <div class="lg:col-span-5 bg-paper">
+        <div class="lg:sticky lg:top-7">
+          <div class="hazard-rojo h-3.5 border-b-2 border-ink"></div>
+
+          <div class="p-4 sm:p-5">
+            <p class="dato text-[10px] opacity-60">LECTURA DEL INSTRUMENTO</p>
+
+            <div class="flex items-end gap-3 mt-1">
+              <output id="puntaje" class="font-black leading-[.72] tracking-[-.05em] text-[clamp(4.5rem,17vw,8rem)] tabular-nums">00</output>
+              <span class="dato text-[13px] font-bold pb-3">/ 100</span>
+            </div>
+
+            <!-- segmentos -->
+            <div id="segmentos" class="flex border-2 border-ink h-9 sm:h-10 mt-2 bg-paper" aria-hidden="true"></div>
+            <div class="flex justify-between dato text-[9px] mt-1 opacity-60">
+              <span>0</span><span class="hidden sm:inline">LEVE</span><span>MODERADO</span><span class="hidden sm:inline">ALTO</span><span>100</span>
+            </div>
+
+            <div class="mt-5 border-2 border-ink">
+              <div class="bg-ink text-paper dato text-[9px] px-2.5 py-1.5">VEREDICTO</div>
+              <div class="p-3">
+                <p id="veredicto-titulo" class="font-black uppercase tracking-[-.02em] text-[clamp(1.15rem,3.4vw,1.7rem)] leading-[.95]">SIN DIAGNÓSTICO</p>
+                <p id="veredicto-texto" class="text-[14px] leading-snug mt-2">Marque arriba lo que reconozca. El aparato no funciona en blanco.</p>
+              </div>
+            </div>
+
+            <!-- salida impresa -->
+            <div class="mt-5 border-2 border-ink bg-paper2">
+              <div class="bg-ink text-paper dato text-[9px] px-2.5 py-1.5 flex justify-between">
+                <span>ORDEN DE TRABAJO — BORRADOR</span>
+                <span id="conteo">0 ÍTEMS</span>
+              </div>
+              <output id="salida" class="block font-mono text-[10.5px] leading-[1.55] p-3 whitespace-pre-wrap max-h-[9.5rem] overflow-y-auto">Esperando marcación…</output>
+              <div class="perforado bg-ink"></div>
+            </div>
+
+            <a id="wa" href="https://wa.me/573132465100" target="_blank" rel="noopener"
+               class="btn-ink block bg-ink text-paper dato text-[11px] font-bold px-4 py-4 mt-4 text-center tracking-[.12em]">
+              ▸ &nbsp;MANDARLE ESTO POR WHATSAPP
+            </a>
+            <p class="dato text-[9px] opacity-60 mt-2 leading-relaxed">
+              SE ABRE WHATSAPP CON EL TEXTO YA ESCRITO. USTED LO LEE, LO CORRIGE Y LO MANDA. CONTESTO YO, NO UN BOT.
+            </p>
+            <a href="https://cal.com/salomonmuriel" target="_blank" rel="noopener"
+               class="btn-ink block border-2 border-ink dato text-[10px] font-bold px-4 py-3 mt-3 text-center tracking-[.12em]">
+              O AGENDE 45 MINUTOS EN CAL.COM
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =========================================================
+     CITA A TODO ANCHO
+========================================================= -->
+<section class="bg-ink text-paper border-b-2 border-ink">
+  <div class="hazard h-3.5 bg-red border-b-2 border-ink"></div>
+  <div class="mx-auto max-w-[1500px] px-4 sm:px-6 lg:px-10 py-12 sm:py-20">
+    <p class="dato text-[10px] opacity-60 mb-5">CITA TEXTUAL · OPERARIO · SIN EDITAR</p>
+    <blockquote class="font-black uppercase leading-[.88] tracking-[-.045em] text-[clamp(1.9rem,7.2vw,6.2rem)]">
+      «Trabajar conmigo<br>significa que las cosas<br><span class="text-red">pasan</span>, así toque<br>a las malas.»
+    </blockquote>
+    <p class="dato text-[10px] mt-6 opacity-60">— S.M., SOBRE SU MÉTODO DE MENTORÍA</p>
+  </div>
+  <div class="hazard h-3.5 bg-red border-t-2 border-ink"></div>
+</section>
+
+
+<!-- =========================================================
+     02 · HISTORIAL DE UNIDADES
+========================================================= -->
+<section class="border-b-2 border-ink">
+  <div class="mx-auto max-w-[1500px] px-4 sm:px-6 lg:px-10">
+
+    <div class="overflow-hidden pt-8 sm:pt-12">
+      <div class="flex items-end gap-4 sm:gap-8">
+        <div class="num-hueco text-[clamp(3.2rem,16vw,13rem)] -ml-[.05em] select-none flex-none">02</div>
+        <div class="pb-3 sm:pb-6 min-w-0">
+          <p class="dato text-[10px] sm:text-[11px] text-red font-bold">HISTORIAL DE UNIDADES CONSTRUIDAS</p>
+          <h2 class="font-black uppercase leading-[.86] tracking-[-.04em] text-[clamp(1.7rem,5.4vw,4rem)] mt-1">LO QUE HE MONTADO</h2>
+        </div>
+      </div>
+    </div>
+
+    <p class="mt-4 sm:mt-2 mb-8 max-w-[50rem] text-[15px] sm:text-[17px] leading-relaxed border-l-4 border-ink pl-4">
+      Los fracasos también están en la tabla. Esto es una hoja técnica, no una hoja de vida.
+      Y si le sirve el dato: mi papá y mi abuelo también fueron empresarios. Es lo único que hemos sabido hacer.
+    </p>
+
+    <!-- encabezado de tabla (escritorio) -->
+    <div class="hidden md:grid grid-cols-[92px_1.4fr_120px_2fr_150px] bg-ink text-paper dato text-[9px] tracking-[.14em]">
+      <div class="px-3 py-2 border-r border-paper/25">MARCA</div>
+      <div class="px-3 py-2 border-r border-paper/25">UNIDAD</div>
+      <div class="px-3 py-2 border-r border-paper/25">PERIODO</div>
+      <div class="px-3 py-2 border-r border-paper/25">FUNCIÓN</div>
+      <div class="px-3 py-2">ESTADO FINAL</div>
+    </div>
+
+    <div class="border-2 border-ink md:border-t-0">
+
+      <!-- IGNIA -->
+      <article class="grid grid-cols-[64px_1fr] md:grid-cols-[92px_1.4fr_120px_2fr_150px] border-b-2 border-ink">
+        <div class="logo-cel bg-white border-r-2 border-ink grid place-items-center p-2"><img src="assets/ignia.png" alt="Logo Ignia"></div>
+        <div class="px-3 py-3 md:border-r border-ink/30 flex flex-col justify-center">
+          <h3 class="font-black uppercase text-[clamp(1.2rem,3.4vw,1.9rem)] leading-none tracking-[-.03em]">IGNIA</h3>
+          <p class="dato text-[10px] opacity-60 mt-1 md:hidden">2025 — HOY</p>
+        </div>
+        <div class="hidden md:flex items-center px-3 py-3 border-r border-ink/30 dato text-[11px]">2025 — HOY</div>
+        <div class="col-span-2 md:col-span-1 px-3 py-3 border-t md:border-t-0 md:border-r border-ink/30 text-[14px] leading-snug">
+          Nuevo modelo de educación superior. Yo construí el CRM, el sitio y la plataforma de comunidad.
+          <span class="dato text-[10px] block mt-1.5 opacity-60">USD 150.000 ARR EL PRIMER AÑO · ~30 FELLOWS · EQUIPO DE 5 · RENTABLE DESDE EL DÍA UNO</span>
+        </div>
+        <div class="col-span-2 md:col-span-1 px-3 py-3 border-t md:border-t-0 border-ink/30 bg-red text-paper flex items-center">
+          <span class="dato text-[11px] font-bold">EN OPERACIÓN <span class="piloto">●</span></span>
+        </div>
+      </article>
+
+      <!-- FINCO -->
+      <article class="grid grid-cols-[64px_1fr] md:grid-cols-[92px_1.4fr_120px_2fr_150px] border-b-2 border-ink">
+        <div class="logo-cel bg-white border-r-2 border-ink grid place-items-center p-2"><img src="assets/finco.png" alt="Logo Finco"></div>
+        <div class="px-3 py-3 md:border-r border-ink/30 flex flex-col justify-center">
+          <h3 class="font-black uppercase text-[clamp(1.2rem,3.4vw,1.9rem)] leading-none tracking-[-.03em]">FINCO</h3>
+          <p class="dato text-[10px] opacity-60 mt-1 md:hidden">2019 — 2022</p>
+        </div>
+        <div class="hidden md:flex items-center px-3 py-3 border-r border-ink/30 dato text-[11px]">2019 — 2022</div>
+        <div class="col-span-2 md:col-span-1 px-3 py-3 border-t md:border-t-0 md:border-r border-ink/30 text-[14px] leading-snug">
+          Valoración inmobiliaria con datos e IA para LatAm.
+          <span class="dato text-[10px] block mt-1.5 opacity-60">100.000 REPORTES AL AÑO · VENDIDA A RED ATLAS · ~USD 1,5M · 5× LO INVERTIDO</span>
+        </div>
+        <div class="col-span-2 md:col-span-1 px-3 py-3 border-t md:border-t-0 border-ink/30 bg-ink text-paper flex items-center">
+          <span class="dato text-[11px] font-bold">VENDIDA</span>
+        </div>
+      </article>
+
+      <!-- BERIBLOCK -->
+      <article class="grid grid-cols-[64px_1fr] md:grid-cols-[92px_1.4fr_120px_2fr_150px] border-b-2 border-ink">
+        <div class="logo-cel bg-white border-r-2 border-ink grid place-items-center p-3"><img src="assets/beriblock.png" alt="Logo Beriblock"></div>
+        <div class="px-3 py-3 md:border-r border-ink/30 flex flex-col justify-center">
+          <h3 class="font-black uppercase text-[clamp(1.2rem,3.4vw,1.9rem)] leading-none tracking-[-.03em]">BERIBLOCK</h3>
+          <p class="dato text-[10px] opacity-60 mt-1 md:hidden">2018 — 2019</p>
+        </div>
+        <div class="hidden md:flex items-center px-3 py-3 border-r border-ink/30 dato text-[11px]">2018 — 2019</div>
+        <div class="col-span-2 md:col-span-1 px-3 py-3 border-t md:border-t-0 md:border-r border-ink/30 text-[14px] leading-snug">
+          Autenticación de pagarés con blockchain.
+          <span class="dato text-[10px] block mt-1.5 opacity-60">TECNOLOGÍA BONITA, MERCADO QUE NO EXISTÍA</span>
+        </div>
+        <div class="col-span-2 md:col-span-1 px-3 py-3 border-t md:border-t-0 border-ink/30 flex items-center">
+          <span class="dato text-[11px] font-bold text-red line-through decoration-2">QUEBRÓ</span>
+        </div>
+      </article>
+
+      <!-- PRESTAGENTE -->
+      <article class="grid grid-cols-[64px_1fr] md:grid-cols-[92px_1.4fr_120px_2fr_150px] border-b-2 border-ink">
+        <div class="logo-cel bg-white border-r-2 border-ink grid place-items-center p-2"><img src="assets/prestagente.png" alt="Logo PrestaGente"></div>
+        <div class="px-3 py-3 md:border-r border-ink/30 flex flex-col justify-center">
+          <h3 class="font-black uppercase text-[clamp(1.2rem,3.4vw,1.9rem)] leading-none tracking-[-.03em]">PRESTA<wbr>GENTE</h3>
+          <p class="dato text-[10px] opacity-60 mt-1 md:hidden">2017 — 2019</p>
+        </div>
+        <div class="hidden md:flex items-center px-3 py-3 border-r border-ink/30 dato text-[11px]">2017 — 2019</div>
+        <div class="col-span-2 md:col-span-1 px-3 py-3 border-t md:border-t-0 md:border-r border-ink/30 text-[14px] leading-snug">
+          Libranza entre personas.
+          <span class="dato text-[10px] block mt-1.5 opacity-60">VENDIDA A TAURUS CAPITAL · ~USD 1M · SIGUE OPERANDO SIN MÍ</span>
+        </div>
+        <div class="col-span-2 md:col-span-1 px-3 py-3 border-t md:border-t-0 border-ink/30 bg-ink text-paper flex items-center">
+          <span class="dato text-[11px] font-bold">VENDIDA</span>
+        </div>
+      </article>
+
+      <!-- EL PALOMO -->
+      <article class="grid grid-cols-[64px_1fr] md:grid-cols-[92px_1.4fr_120px_2fr_150px] border-b-2 border-ink">
+        <div class="logo-cel bg-white border-r-2 border-ink grid place-items-center p-3"><img src="assets/elpalomo.png" alt="Logo El Palomo"></div>
+        <div class="px-3 py-3 md:border-r border-ink/30 flex flex-col justify-center">
+          <h3 class="font-black uppercase text-[clamp(1.2rem,3.4vw,1.9rem)] leading-none tracking-[-.03em]">EL PALOMO</h3>
+          <p class="dato text-[10px] opacity-60 mt-1 md:hidden">2016 — 2017</p>
+        </div>
+        <div class="hidden md:flex items-center px-3 py-3 border-r border-ink/30 dato text-[11px]">2016 — 2017</div>
+        <div class="col-span-2 md:col-span-1 px-3 py-3 border-t md:border-t-0 md:border-r border-ink/30 text-[14px] leading-snug">
+          Flores por suscripción.
+          <span class="dato text-[10px] block mt-1.5 opacity-60">FRACASÓ DE MANERA ESPECTACULAR. LA HISTORIA SE LA CUENTO EN LA LLAMADA.</span>
+        </div>
+        <div class="col-span-2 md:col-span-1 px-3 py-3 border-t md:border-t-0 border-ink/30 flex items-center">
+          <span class="dato text-[11px] font-bold text-red line-through decoration-2">FRACASÓ</span>
+        </div>
+      </article>
+
+      <!-- R5 -->
+      <article class="grid grid-cols-[64px_1fr] md:grid-cols-[92px_1.4fr_120px_2fr_150px] bg-paper2">
+        <div class="border-r-2 border-ink grid place-items-center dato text-[10px] font-bold p-2">R5</div>
+        <div class="px-3 py-3 md:border-r border-ink/30 flex flex-col justify-center">
+          <h3 class="font-black uppercase text-[clamp(1rem,2.6vw,1.4rem)] leading-none tracking-[-.03em]">R5 <span class="dato text-[10px] font-normal opacity-60">/ UNIDAD EXTERNA</span></h3>
+        </div>
+        <div class="hidden md:flex items-center px-3 py-3 border-r border-ink/30 dato text-[11px]">EMPLEADO</div>
+        <div class="col-span-2 md:col-span-1 px-3 py-3 border-t md:border-t-0 md:border-r border-ink/30 text-[14px] leading-snug">
+          Dirigí ~40 personas. Construí el pipeline de datos completo y el sistema de modelación de riesgo.
+        </div>
+        <div class="col-span-2 md:col-span-1 px-3 py-3 border-t md:border-t-0 border-ink/30 flex items-center">
+          <span class="dato text-[11px] font-bold">ENTREGADO</span>
+        </div>
+      </article>
+    </div>
+
+    <!-- resumen mecánico -->
+    <div class="grid grid-cols-2 md:grid-cols-4 border-2 border-t-0 border-ink bg-ink gap-[2px] mb-12 sm:mb-16">
+      <div class="bg-paper p-3 sm:p-5">
+        <p class="font-black text-[clamp(2rem,6vw,3.4rem)] leading-none tracking-[-.05em]">5</p>
+        <p class="dato text-[9px] mt-1.5 opacity-70 leading-tight">EMPRESAS PROPIAS</p>
+      </div>
+      <div class="bg-paper p-3 sm:p-5">
+        <p class="font-black text-[clamp(2rem,6vw,3.4rem)] leading-none tracking-[-.05em]">2</p>
+        <p class="dato text-[9px] mt-1.5 opacity-70 leading-tight">VENDIDAS · ~USD 2,5M</p>
+      </div>
+      <div class="bg-paper p-3 sm:p-5">
+        <p class="font-black text-[clamp(2rem,6vw,3.4rem)] leading-none tracking-[-.05em] text-red">2</p>
+        <p class="dato text-[9px] mt-1.5 opacity-70 leading-tight">QUE SE CAYERON</p>
+      </div>
+      <div class="bg-paper p-3 sm:p-5">
+        <p class="font-black text-[clamp(2rem,6vw,3.4rem)] leading-none tracking-[-.05em]">40</p>
+        <p class="dato text-[9px] mt-1.5 opacity-70 leading-tight">PERSONAS A CARGO (MÁX.)</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =========================================================
+     03 · DOS MÁQUINAS
+========================================================= -->
+<section class="border-b-2 border-ink bg-paper2 reticula">
+  <div class="mx-auto max-w-[1500px] px-4 sm:px-6 lg:px-10">
+
+    <div class="overflow-hidden pt-8 sm:pt-12">
+      <div class="flex items-end gap-4 sm:gap-8">
+        <div class="num-hueco text-[clamp(3.2rem,16vw,13rem)] -ml-[.05em] select-none flex-none">03</div>
+        <div class="pb-3 sm:pb-6 min-w-0">
+          <p class="dato text-[10px] sm:text-[11px] text-red font-bold">DOS MODOS DE TRABAJO · NO HAY MÁS</p>
+          <h2 class="font-black uppercase leading-[.86] tracking-[-.04em] text-[clamp(1.7rem,5.4vw,4rem)] mt-1">CÓMO ME METO</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 border-2 border-ink bg-ink gap-[2px] mt-6">
+
+      <!-- A · INTERVENCIÓN -->
+      <div class="bg-paper flex flex-col">
+        <div class="bg-ink text-paper px-4 py-3 flex items-baseline justify-between gap-3">
+          <h3 class="font-black uppercase text-[clamp(1.4rem,4.4vw,2.4rem)] leading-none tracking-[-.04em]">A · INTERVENCIÓN</h3>
+          <span class="dato text-[9px] opacity-70 flex-none">CONSULTORÍA</span>
+        </div>
+        <div class="p-4 sm:p-5 flex-1">
+          <p class="text-[15px] sm:text-[16px] leading-relaxed mb-5">
+            Entro a su empresa, encuentro dónde está el muchacho, y construyo la herramienta que lo reemplaza.
+            <b>Yo defino la estrategia y yo mismo la construyo.</b> No le paso el trabajo a un tercero.
+          </p>
+          <dl class="text-[11px] border-2 border-ink">
+            <div class="grid grid-cols-[86px_1fr] border-b border-ink/25"><dt class="dato px-2.5 py-2 border-r border-ink/25 opacity-55">PARA</dt><dd class="px-2.5 py-2 font-mono">Dueños de empresa colombiana de toda la vida. Ropa, restaurantes, retail, distribución, importación, servicios. De 5 a 40 empleados.</dd></div>
+            <div class="grid grid-cols-[86px_1fr] border-b border-ink/25"><dt class="dato px-2.5 py-2 border-r border-ink/25 opacity-55">ENTRADA</dt><dd class="px-2.5 py-2 font-mono">Un proceso que hoy sostiene una persona a mano.</dd></div>
+            <div class="grid grid-cols-[86px_1fr] border-b border-ink/25"><dt class="dato px-2.5 py-2 border-r border-ink/25 opacity-55">PROCESO</dt><dd class="px-2.5 py-2 font-mono">Estrategia de cero a uno + desarrollo con IA. Uso agentes tipo Claude Code también para lo que no es programar.</dd></div>
+            <div class="grid grid-cols-[86px_1fr] border-b border-ink/25"><dt class="dato px-2.5 py-2 border-r border-ink/25 opacity-55">SALIDA</dt><dd class="px-2.5 py-2 font-mono">Algo andando que su gente usa sin usted encima.</dd></div>
+            <div class="grid grid-cols-[86px_1fr]"><dt class="dato px-2.5 py-2 border-r border-ink/25 opacity-55 text-red">NO ES</dt><dd class="px-2.5 py-2 font-mono">Un PDF con recomendaciones. Ni un diagnóstico de 80 páginas.</dd></div>
+          </dl>
+
+          <!-- capacidad -->
+          <div class="mt-5 border-2 border-ink p-3">
+            <div class="flex items-center justify-between dato text-[10px] mb-2">
+              <span class="opacity-60">CUPOS OCUPADOS</span><span class="font-bold">2 DE 4</span>
+            </div>
+            <div class="flex gap-1.5" aria-label="2 de 4 cupos ocupados">
+              <span class="h-6 flex-1 bg-ink"></span><span class="h-6 flex-1 bg-ink"></span>
+              <span class="h-6 flex-1 border-2 border-ink"></span><span class="h-6 flex-1 border-2 border-ink"></span>
+            </div>
+            <p class="dato text-[9px] mt-2 opacity-60 leading-relaxed">MÁXIMO 4 AL TIEMPO. NO POR ESCASEZ INVENTADA: ES QUE YO MISMO CONSTRUYO.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- B · ACOMPAÑAMIENTO -->
+      <div class="bg-paper flex flex-col">
+        <div class="bg-ink text-paper px-4 py-3 flex items-baseline justify-between gap-3">
+          <h3 class="font-black uppercase text-[clamp(1.4rem,4.4vw,2.4rem)] leading-none tracking-[-.04em]">B · ACOMPAÑA<wbr>MIENTO</h3>
+          <span class="dato text-[9px] opacity-70 flex-none">MENTORÍA</span>
+        </div>
+        <div class="p-4 sm:p-5 flex-1">
+          <p class="text-[15px] sm:text-[16px] leading-relaxed mb-5">
+            Para el que está arrancando y necesita que alguien lo empuje todas las semanas.
+            <b>Nos vemos, salimos con una tarea, y a la siguiente revisamos si la hizo.</b>
+            Si no la hizo, hablamos de por qué no la hizo. Ahí suele estar el negocio real.
+          </p>
+          <dl class="text-[11px] border-2 border-ink">
+            <div class="grid grid-cols-[86px_1fr] border-b border-ink/25"><dt class="dato px-2.5 py-2 border-r border-ink/25 opacity-55">PARA</dt><dd class="px-2.5 py-2 font-mono">Cualquiera que esté arrancando algo. Negocio propio, ONG, startup.</dd></div>
+            <div class="grid grid-cols-[86px_1fr] border-b border-ink/25"><dt class="dato px-2.5 py-2 border-r border-ink/25 opacity-55">CADENCIA</dt><dd class="px-2.5 py-2 font-mono">Semanal. Con tarea práctica, no con teoría.</dd></div>
+            <div class="grid grid-cols-[86px_1fr] border-b border-ink/25"><dt class="dato px-2.5 py-2 border-r border-ink/25 opacity-55">REGISTRO</dt><dd class="px-2.5 py-2 font-mono">7 personas hasta hoy. Es un número pequeño y así lo digo.</dd></div>
+            <div class="grid grid-cols-[86px_1fr]"><dt class="dato px-2.5 py-2 border-r border-ink/25 opacity-55 text-red">NOTA</dt><dd class="px-2.5 py-2 font-mono">Si lo suyo es formarse dentro de un programa con cohorte y comunidad, eso ya existe: es el Action Lab de Ignia. Esto de acá es a solas, conmigo.</dd></div>
+          </dl>
+
+          <div class="mt-5 border-2 border-ink p-3">
+            <div class="flex items-center justify-between dato text-[10px] mb-2">
+              <span class="opacity-60">CUPOS OCUPADOS</span><span class="font-bold">3 DE 5</span>
+            </div>
+            <div class="flex gap-1.5" aria-label="3 de 5 cupos ocupados">
+              <span class="h-6 flex-1 bg-ink"></span><span class="h-6 flex-1 bg-ink"></span><span class="h-6 flex-1 bg-ink"></span>
+              <span class="h-6 flex-1 border-2 border-ink"></span><span class="h-6 flex-1 border-2 border-ink"></span>
+            </div>
+            <p class="dato text-[9px] mt-2 opacity-60 leading-relaxed">MÁXIMO 5. CUANDO SE LLENA, SE LLENÓ.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 03.1 SECUENCIA DE ARRANQUE -->
+    <div class="mt-10 sm:mt-14 mb-12 sm:mb-16">
+      <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1 mb-4">
+        <h3 class="font-black uppercase text-[clamp(1.2rem,3.6vw,2.1rem)] leading-none tracking-[-.04em]">03.1 · SECUENCIA DE ARRANQUE</h3>
+        <p class="dato text-[10px] opacity-60">QUÉ PASA EXACTAMENTE SI USTED ME ESCRIBE HOY</p>
+      </div>
+
+      <ol class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 border-2 border-ink bg-ink gap-[2px]">
+        <li class="bg-paper p-4">
+          <div class="flex items-center justify-between">
+            <span class="font-black text-[2.6rem] leading-none tracking-[-.06em]">00</span>
+            <span class="dato text-[9px] opacity-55 text-right leading-tight">HOY</span>
+          </div>
+          <p class="dato text-[10px] font-bold mt-3 mb-1.5">WHATSAPP</p>
+          <p class="text-[13.5px] leading-snug">Usted manda el diagnóstico de arriba. Contesto yo mismo, casi siempre el mismo día.</p>
+        </li>
+        <li class="bg-paper p-4">
+          <div class="flex items-center justify-between">
+            <span class="font-black text-[2.6rem] leading-none tracking-[-.06em]">01</span>
+            <span class="dato text-[9px] opacity-55 text-right leading-tight">45 MIN</span>
+          </div>
+          <p class="dato text-[10px] font-bold mt-3 mb-1.5">LLAMADA FRANCA</p>
+          <p class="text-[13.5px] leading-snug">Le digo de una si le sirvo o no. Si no le sirvo, le digo a quién llamar. Sin vueltas.</p>
+        </li>
+        <li class="bg-paper p-4">
+          <div class="flex items-center justify-between">
+            <span class="font-black text-[2.6rem] leading-none tracking-[-.06em]">02</span>
+            <span class="dato text-[9px] opacity-55 text-right leading-tight">SEMANA 1</span>
+          </div>
+          <p class="dato text-[10px] font-bold mt-3 mb-1.5">ME SIENTO CON EL MUCHACHO</p>
+          <p class="text-[13.5px] leading-snug">Con la persona que hoy hace el trabajo a mano. Ahí está el problema, no en su oficina.</p>
+        </li>
+        <li class="bg-paper p-4">
+          <div class="flex items-center justify-between">
+            <span class="font-black text-[2.6rem] leading-none tracking-[-.06em]">03</span>
+            <span class="dato text-[9px] opacity-55 text-right leading-tight">SEM. 2–6</span>
+          </div>
+          <p class="dato text-[10px] font-bold mt-3 mb-1.5">CONSTRUYO</p>
+          <p class="text-[13.5px] leading-snug">La herramienta, funcionando. Usted la ve avanzar cada semana. Nada de diapositivas.</p>
+        </li>
+        <li class="bg-paper p-4 sm:col-span-2 xl:col-span-1 border-t-2 xl:border-t-0 border-ink">
+          <div class="flex items-center justify-between">
+            <span class="font-black text-[2.6rem] leading-none tracking-[-.06em] text-red">04</span>
+            <span class="dato text-[9px] opacity-55 text-right leading-tight">ENTREGA</span>
+          </div>
+          <p class="dato text-[10px] font-bold mt-3 mb-1.5">SE LO DEJO ANDANDO</p>
+          <p class="text-[13.5px] leading-snug">Y le enseño a su gente a moverlo sin mí. Si depende de mí, volvimos al mismo problema.</p>
+        </li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+
+<!-- =========================================================
+     04 · FUERA DE ESPECIFICACIÓN
+========================================================= -->
+<section class="border-b-2 border-ink">
+  <div class="hazard-rojo h-6 border-b-2 border-ink"></div>
+  <div class="mx-auto max-w-[1500px] px-4 sm:px-6 lg:px-10">
+
+    <div class="overflow-hidden pt-8 sm:pt-12">
+      <div class="flex items-end gap-4 sm:gap-8">
+        <div class="num-hueco text-[clamp(3.2rem,16vw,13rem)] -ml-[.05em] select-none flex-none" style="-webkit-text-stroke-color:var(--red)">04</div>
+        <div class="pb-3 sm:pb-6 min-w-0">
+          <p class="dato text-[10px] sm:text-[11px] text-red font-bold">ADVERTENCIA · LÍMITES DEL EQUIPO</p>
+          <h2 class="font-black uppercase leading-[.86] tracking-[-.04em] text-[clamp(1.5rem,5vw,3.6rem)] mt-1">FUERA DE ESPECIFICACIÓN</h2>
+        </div>
+      </div>
+    </div>
+
+    <p class="mt-4 sm:mt-2 mb-7 max-w-[48rem] text-[15px] sm:text-[17px] leading-relaxed">
+      Todo el mundo pone lo que sabe hacer. Yo pongo primero lo que no.
+      <b>Si su caso está en esta lista, le acabo de ahorrar una reunión.</b>
+    </p>
+
+    <ul class="border-2 border-ink mb-12 sm:mb-16">
+      <li class="flex gap-3 sm:gap-4 items-start px-3 sm:px-4 py-4 border-b-2 border-ink">
+        <span class="dato text-[13px] font-bold text-red flex-none pt-0.5">✕</span>
+        <div>
+          <p class="font-black uppercase text-[clamp(1rem,3vw,1.5rem)] leading-none tracking-[-.03em]">ESCALAR MÁS ALLÁ DE ~USD 5M AL AÑO</p>
+          <p class="text-[14px] mt-2 leading-snug">No sé hacerlo. Nunca he llevado una empresa hasta allá y no voy a fingir que sí. Si usted ya está ahí, necesita a otra persona.</p>
+        </div>
+      </li>
+      <li class="flex gap-3 sm:gap-4 items-start px-3 sm:px-4 py-4 border-b-2 border-ink">
+        <span class="dato text-[13px] font-bold text-red flex-none pt-0.5">✕</span>
+        <div>
+          <p class="font-black uppercase text-[clamp(1rem,3vw,1.5rem)] leading-none tracking-[-.03em]">DEEP TECH E INVESTIGACIÓN</p>
+          <p class="text-[14px] mt-2 leading-snug">Si su proyecto necesita inventar algo que no existe todavía, ese no es mi trabajo. Yo armo con lo que ya hay.</p>
+        </div>
+      </li>
+      <li class="flex gap-3 sm:gap-4 items-start px-3 sm:px-4 py-4 border-b-2 border-ink">
+        <span class="dato text-[13px] font-bold text-red flex-none pt-0.5">✕</span>
+        <div>
+          <p class="font-black uppercase text-[clamp(1rem,3vw,1.5rem)] leading-none tracking-[-.03em]">CHARLAS DE DATOS O DE CULTURA ORGANIZACIONAL</p>
+          <p class="text-[14px] mt-2 leading-snug">Me las piden y las digo que no. Hablo de lo que he hecho, no de lo que he leído.</p>
+        </div>
+      </li>
+      <li class="flex gap-3 sm:gap-4 items-start px-3 sm:px-4 py-4">
+        <span class="dato text-[13px] font-bold text-red flex-none pt-0.5">✕</span>
+        <div>
+          <p class="font-black uppercase text-[clamp(1rem,3vw,1.5rem)] leading-none tracking-[-.03em]">CONSULTORÍA BAJO LA MARCA IGNIA</p>
+          <p class="text-[14px] mt-2 leading-snug">Ignia es mi empresa hoy y es educación. Esto que usted está leyendo es mi práctica personal, aparte, y es un complemento a lo otro.</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+
+<!-- =========================================================
+     05 · ANEXO — DIVULGACIÓN
+========================================================= -->
+<section class="border-b-2 border-ink bg-paper2">
+  <div class="mx-auto max-w-[1500px] px-4 sm:px-6 lg:px-10">
+
+    <div class="overflow-hidden pt-8 sm:pt-12">
+      <div class="flex items-end gap-4 sm:gap-8">
+        <div class="num-hueco text-[clamp(3.2rem,16vw,13rem)] -ml-[.05em] select-none flex-none">05</div>
+        <div class="pb-3 sm:pb-6 min-w-0">
+          <p class="dato text-[10px] sm:text-[11px] text-red font-bold">ANEXO · MATERIAL DE DIVULGACIÓN</p>
+          <h2 class="font-black uppercase leading-[.86] tracking-[-.04em] text-[clamp(1.7rem,5.4vw,4rem)] mt-1">CHARLAS</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 border-2 border-ink bg-ink gap-[2px] mt-6 mb-12 sm:mb-16">
+
+      <!-- monitor -->
+      <div class="lg:col-span-7 bg-paper">
+        <div class="bg-ink text-paper dato text-[9px] px-3 py-2 flex justify-between">
+          <span>REG. VIDEO · PODCAST VENTAJA</span><span>ID F9t9f5Et_04</span>
+        </div>
+        <div class="p-2 sm:p-3">
+          <div class="border-2 border-ink bg-ink">
+            <div class="relative w-full" style="padding-top:56.25%">
+              <iframe class="absolute inset-0 w-full h-full" src="https://www.youtube-nocookie.com/embed/F9t9f5Et_04"
+                title="Negocios Aburridos e Innovación — Salomón Muriel en el podcast Ventaja"
+                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+            </div>
+          </div>
+          <p class="dato text-[10px] mt-2.5 leading-relaxed"><b>«NEGOCIOS ABURRIDOS E INNOVACIÓN»</b><span class="opacity-60"> · GRABACIÓN COMPLETA · SIN EDITAR PARA ESTA HOJA</span></p>
+        </div>
+      </div>
+
+      <!-- ficha -->
+      <div class="lg:col-span-5 bg-paper p-4 sm:p-5">
+        <div class="border-2 border-red p-3 mb-5">
+          <p class="dato text-[10px] font-bold text-red mb-1.5">ADVERTENCIA DE USO</p>
+          <p class="text-[14px] leading-snug">Las charlas no son un producto que yo esté vendiendo acá. Son cómo la gente me conoce. Si me contrata para una, bien; pero lo que hago de verdad es lo de arriba.</p>
+        </div>
+
+        <dl class="text-[10px] border-2 border-ink">
+          <div class="grid grid-cols-[92px_1fr] border-b border-ink/25"><dt class="dato px-2.5 py-2 border-r border-ink/25 opacity-55">TEMAS</dt><dd class="px-2.5 py-2 font-mono normal-case tracking-normal">Adopción de tecnología e IA · Emprendimiento · Mentalidad · Balance vida-trabajo</dd></div>
+          <div class="grid grid-cols-[92px_1fr] border-b border-ink/25"><dt class="dato px-2.5 py-2 border-r border-ink/25 opacity-55">ME HAN CONTRATADO</dt><dd class="px-2.5 py-2 font-mono normal-case tracking-normal">Conferencias, empresas y universidades</dd></div>
+          <div class="grid grid-cols-[92px_1fr]"><dt class="dato px-2.5 py-2 border-r border-ink/25 opacity-55">IDIOMAS</dt><dd class="px-2.5 py-2 font-mono normal-case tracking-normal">Español e inglés. El inglés lo aprendí jugando en línea, no en un instituto.</dd></div>
+        </dl>
+
+        <a href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20quiero%20invitarte%20a%20dar%20una%20charla."
+           target="_blank" rel="noopener"
+           class="btn-ink block border-2 border-ink dato text-[10px] font-bold px-4 py-3 mt-5 text-center tracking-[.12em]">
+          INVITARLO A UNA CHARLA  ▸
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =========================================================
+     06 · REGISTRO NO TÉCNICO
+========================================================= -->
+<section class="border-b-2 border-ink">
+  <div class="mx-auto max-w-[1500px] px-4 sm:px-6 lg:px-10">
+
+    <div class="overflow-hidden pt-8 sm:pt-12">
+      <div class="flex items-end gap-4 sm:gap-8">
+        <div class="num-hueco text-[clamp(3.2rem,16vw,13rem)] -ml-[.05em] select-none flex-none">06</div>
+        <div class="pb-3 sm:pb-6 min-w-0">
+          <p class="dato text-[10px] sm:text-[11px] text-red font-bold">DATOS QUE NO LE SIRVEN PARA NADA</p>
+          <h2 class="font-black uppercase leading-[.86] tracking-[-.04em] text-[clamp(1.7rem,5.4vw,4rem)] mt-1">REGISTRO NO TÉCNICO</h2>
+        </div>
+      </div>
+    </div>
+
+    <p class="mt-4 sm:mt-2 mb-6 max-w-[48rem] text-[15px] sm:text-[17px] leading-relaxed">
+      Usted va a trabajar con una persona, no con una firma. Esto es lo que hay debajo del casco.
+    </p>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 border-2 border-ink bg-ink gap-[2px] mb-12 sm:mb-16">
+
+      <div class="lg:col-span-7 bg-paper">
+        <dl class="text-[11px]">
+          <div class="grid grid-cols-[110px_1fr] sm:grid-cols-[150px_1fr] border-b border-ink/25"><dt class="dato px-3 py-3 border-r border-ink/25 opacity-55">NÚCLEO</dt><dd class="px-3 py-3 font-grot text-[14.5px]">Casado. Mellizos de 4 años: Franco y Luca. Ellos definen mi calendario, no al revés.</dd></div>
+          <div class="grid grid-cols-[110px_1fr] sm:grid-cols-[150px_1fr] border-b border-ink/25"><dt class="dato px-3 py-3 border-r border-ink/25 opacity-55">MEDIA MARATÓN</dt><dd class="px-3 py-3 font-grot text-[14.5px]"><b class="font-mono">2:10</b> — no es un tiempo bueno. Lo importante es que la corrí completa.</dd></div>
+          <div class="grid grid-cols-[110px_1fr] sm:grid-cols-[150px_1fr] border-b border-ink/25"><dt class="dato px-3 py-3 border-r border-ink/25 opacity-55">CUMPLEAÑOS</dt><dd class="px-3 py-3 font-grot text-[14.5px]">Lo celebro en una fecha distinta a la real, a propósito. Las convenciones se pueden mover.</dd></div>
+          <div class="grid grid-cols-[110px_1fr] sm:grid-cols-[150px_1fr] border-b border-ink/25"><dt class="dato px-3 py-3 border-r border-ink/25 opacity-55">TALLER</dt><dd class="px-3 py-3 font-grot text-[14.5px]">Rack de herramientas e impresora 3D. Si algo se puede arreglar en la casa, se arregla en la casa.</dd></div>
+          <div class="grid grid-cols-[110px_1fr] sm:grid-cols-[150px_1fr] border-b border-ink/25"><dt class="dato px-3 py-3 border-r border-ink/25 opacity-55">IDIOMA</dt><dd class="px-3 py-3 font-grot text-[14.5px]">Inglés aprendido jugando en línea de niño. La primera herramienta que aprendí a usar sin manual.</dd></div>
+          <div class="grid grid-cols-[110px_1fr] sm:grid-cols-[150px_1fr] border-b border-ink/25"><dt class="dato px-3 py-3 border-r border-ink/25 opacity-55">LINAJE</dt><dd class="px-3 py-3 font-grot text-[14.5px]">Papá empresario. Abuelo empresario. Tercera generación de gente que monta cosas.</dd></div>
+          <div class="grid grid-cols-[110px_1fr] sm:grid-cols-[150px_1fr]"><dt class="dato px-3 py-3 border-r border-ink/25 opacity-55">INDICADOR</dt><dd class="px-3 py-3 font-grot text-[14.5px]">Publico un medidor de felicidad en mi sitio personal. Si va a medir el negocio, mídase usted también.</dd></div>
+        </dl>
+      </div>
+
+      <div class="lg:col-span-5 grid grid-cols-2 lg:grid-cols-1 gap-[2px] bg-ink">
+        <figure class="bg-paper">
+          <div class="trama trama-fina aspect-[4/3]"><img src="assets/marathon.jpg" alt="Salomón terminando la media maratón" loading="lazy"></div>
+          <figcaption class="dato text-[9px] px-2.5 py-2 opacity-70">FIG. 02 — DORSAL 15154. LLEGÓ.</figcaption>
+        </figure>
+        <figure class="bg-paper">
+          <div class="trama trama-fina aspect-[4/3]"><img src="assets/bonfire.jpeg" alt="Fogata de noche" loading="lazy"></div>
+          <figcaption class="dato text-[9px] px-2.5 py-2 opacity-70">FIG. 03 — DONDE SE PIENSAN LAS COSAS.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =========================================================
+     07 · ORDEN DE TRABAJO / CONTACTO
+========================================================= -->
+<section id="contacto" class="bg-ink text-paper">
+  <div class="hazard h-6 bg-red border-b-2 border-ink"></div>
+
+  <div class="mx-auto max-w-[1500px] px-4 sm:px-6 lg:px-10 pt-10 sm:pt-16">
+    <div class="flex flex-wrap items-baseline gap-x-6 gap-y-2">
+      <p class="dato text-[10px] sm:text-[11px] text-red font-bold">07 · ORDEN DE TRABAJO · CIERRE DE HOJA</p>
+      <p class="dato text-[10px] opacity-50">CUATRO CANALES. TODOS LLEGAN A MÍ DIRECTO.</p>
+    </div>
+
+    <h2 class="font-black uppercase leading-[.80] tracking-[-.055em] text-[clamp(3rem,15vw,12rem)] mt-4">ESCRÍBAME</h2>
+
+    <p class="max-w-[44rem] text-[15px] sm:text-[18px] leading-relaxed mt-6 mb-10">
+      No hay formulario, no hay embudo, no hay secretaria. Escoja por dónde le queda más cómodo
+      y hablamos. Si no le sirvo, se lo digo en la primera llamada y no le cobro por eso.
+    </p>
+  </div>
+
+  <div class="border-y-2 border-paper/25">
+    <a class="canal flex items-center gap-4 sm:gap-6 px-4 sm:px-6 lg:px-10 py-5 sm:py-7 border-b border-paper/20"
+       href="https://wa.me/573132465100" target="_blank" rel="noopener">
+      <span class="dato text-[10px] opacity-50 w-8 flex-none">01</span>
+      <span class="font-black uppercase tracking-[-.04em] text-[clamp(1.5rem,6vw,3.6rem)] leading-none flex-1 min-w-0">WHATSAPP</span>
+      <span class="dato text-[10px] sm:text-[12px] hidden sm:block opacity-60 flex-none">+57 313 246 5100</span>
+      <span class="canal-flecha font-black text-[clamp(1.2rem,4vw,2.4rem)] flex-none">▸</span>
+    </a>
+    <a class="canal flex items-center gap-4 sm:gap-6 px-4 sm:px-6 lg:px-10 py-5 sm:py-7 border-b border-paper/20"
+       href="https://cal.com/salomonmuriel" target="_blank" rel="noopener">
+      <span class="dato text-[10px] opacity-50 w-8 flex-none">02</span>
+      <span class="font-black uppercase tracking-[-.04em] text-[clamp(1.5rem,6vw,3.6rem)] leading-none flex-1 min-w-0">AGENDAR</span>
+      <span class="dato text-[10px] sm:text-[12px] hidden sm:block opacity-60 flex-none">CAL.COM/SALOMONMURIEL</span>
+      <span class="canal-flecha font-black text-[clamp(1.2rem,4vw,2.4rem)] flex-none">▸</span>
+    </a>
+    <a class="canal flex items-center gap-4 sm:gap-6 px-4 sm:px-6 lg:px-10 py-5 sm:py-7 border-b border-paper/20"
+       href="https://www.linkedin.com/in/smuriel/" target="_blank" rel="noopener">
+      <span class="dato text-[10px] opacity-50 w-8 flex-none">03</span>
+      <span class="font-black uppercase tracking-[-.04em] text-[clamp(1.5rem,6vw,3.6rem)] leading-none flex-1 min-w-0">LINKEDIN</span>
+      <span class="dato text-[10px] sm:text-[12px] hidden sm:block opacity-60 flex-none">AHÍ ESCRIBO · NO TENGO BLOG</span>
+      <span class="canal-flecha font-black text-[clamp(1.2rem,4vw,2.4rem)] flex-none">▸</span>
+    </a>
+    <a class="canal flex items-center gap-4 sm:gap-6 px-4 sm:px-6 lg:px-10 py-5 sm:py-7"
+       href="mailto:salomon.muriel@gmail.com?subject=Orden%20de%20trabajo%20—%20SM-01">
+      <span class="dato text-[10px] opacity-50 w-8 flex-none">04</span>
+      <span class="font-black uppercase tracking-[-.04em] text-[clamp(1.5rem,6vw,3.6rem)] leading-none flex-1 min-w-0">CORREO</span>
+      <span class="dato text-[10px] sm:text-[12px] hidden sm:block opacity-60 flex-none">SALOMON.MURIEL@GMAIL.COM</span>
+      <span class="canal-flecha font-black text-[clamp(1.2rem,4vw,2.4rem)] flex-none">▸</span>
+    </a>
+  </div>
+
+  <!-- nota de honestidad -->
+  <div class="mx-auto max-w-[1500px] px-4 sm:px-6 lg:px-10 py-10 sm:py-14">
+    <div class="grid grid-cols-1 md:grid-cols-3 border-2 border-paper/30">
+      <div class="p-4 md:border-r border-paper/25 border-b md:border-b-0">
+        <p class="dato text-[10px] text-red font-bold mb-2">SIN PRECIOS</p>
+        <p class="text-[14px] leading-snug opacity-85">No hay una tabla de tarifas porque cada operación es distinta. El número se lo doy en la llamada, de frente y completo.</p>
+      </div>
+      <div class="p-4 md:border-r border-paper/25 border-b md:border-b-0">
+        <p class="dato text-[10px] text-red font-bold mb-2">SIN TESTIMONIOS</p>
+        <p class="text-[14px] leading-snug opacity-85">No hay una sola cita de cliente en esta hoja. Todavía no se los he pedido. Prefiero eso a inventármelos.</p>
+      </div>
+      <div class="p-4">
+        <p class="dato text-[10px] text-red font-bold mb-2">SIN EQUIPO DETRÁS</p>
+        <p class="text-[14px] leading-snug opacity-85">El que contesta soy yo. El que construye soy yo. Por eso los cupos son los que son.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- cinta final -->
+  <div class="cinta bg-red text-ink py-2 border-y-2 border-ink">
+    <div class="cinta-riel rapido dato text-[11px] font-bold tracking-[.22em]">
+      <span class="px-6">DEJE DE PAGARLE A ALGUIEN POR SER UNA MACRO ◆</span>
+      <span class="px-6">HOJA TÉCNICA SM-01 ◆</span>
+      <span class="px-6">BOGOTÁ, COLOMBIA ◆</span>
+      <span class="px-6">DEJE DE PAGARLE A ALGUIEN POR SER UNA MACRO ◆</span>
+      <span class="px-6" aria-hidden="true">DEJE DE PAGARLE A ALGUIEN POR SER UNA MACRO ◆</span>
+      <span class="px-6" aria-hidden="true">HOJA TÉCNICA SM-01 ◆</span>
+      <span class="px-6" aria-hidden="true">BOGOTÁ, COLOMBIA ◆</span>
+      <span class="px-6" aria-hidden="true">DEJE DE PAGARLE A ALGUIEN POR SER UNA MACRO ◆</span>
+    </div>
+  </div>
+
+  <!-- pie -->
+  <footer class="mx-auto max-w-[1500px] px-4 sm:px-6 lg:px-10 py-8">
+    <div class="flex flex-wrap gap-x-6 gap-y-2 dato text-[9px] opacity-55">
+      <span>© 2026 SALOMÓN MURIEL</span>
+      <span>HOJA TÉC. SM-01 · REV. 2026.09</span>
+      <span>BOGOTÁ · 4°42′N 74°04′W</span>
+      <span>PRÁCTICA PERSONAL · INDEPENDIENTE DE IGNIA®</span>
+      <span class="text-red">DOCUMENTO VIGENTE</span>
+    </div>
+    <p class="dato text-[9px] opacity-35 mt-3">FIN DE LA HOJA  ///  +  +  +</p>
+  </footer>
+</section>
+
+</main>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ---------- reloj de Bogotá ---------- */
+  var reloj = document.getElementById('reloj');
+  function tic(){
+    try{
+      reloj.textContent = new Intl.DateTimeFormat('es-CO',{
+        timeZone:'America/Bogota', hour:'2-digit', minute:'2-digit', second:'2-digit', hour12:false
+      }).format(new Date());
+    }catch(e){
+      var d = new Date();
+      reloj.textContent = ('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2)+':'+('0'+d.getSeconds()).slice(-2);
+    }
+  }
+  tic(); setInterval(tic, 1000);
+
+  /* ---------- avance de lectura ---------- */
+  var salidaAvance = document.getElementById('avance');
+  var barra = document.getElementById('barra-avance');
+  var pendiente = false;
+  function medirAvance(){
+    var alto = document.documentElement.scrollHeight - window.innerHeight;
+    var p = alto > 0 ? Math.min(100, Math.max(0, (window.scrollY / alto) * 100)) : 0;
+    salidaAvance.textContent = ('00' + Math.round(p)).slice(-3);
+    barra.style.width = p.toFixed(1) + '%';
+    pendiente = false;
+  }
+  window.addEventListener('scroll', function(){
+    if(!pendiente){ pendiente = true; requestAnimationFrame(medirAvance); }
+  }, {passive:true});
+  window.addEventListener('resize', medirAvance);
+  medirAvance();
+
+  /* ---------- chinómetro ---------- */
+  var TOTAL = 10;
+  var cont = document.getElementById('segmentos');
+  var segs = [];
+  for(var i=0;i<TOTAL;i++){
+    var s = document.createElement('span');
+    s.className = 'seg flex-1' + (i ? ' border-l-2 border-ink' : '');
+    cont.appendChild(s);
+    segs.push(s);
+  }
+
+  var sintomas   = Array.prototype.slice.call(document.querySelectorAll('.sym'));
+  var elPuntaje  = document.getElementById('puntaje');
+  var elTitulo   = document.getElementById('veredicto-titulo');
+  var elTexto    = document.getElementById('veredicto-texto');
+  var elSalida   = document.getElementById('salida');
+  var elConteo   = document.getElementById('conteo');
+  var elWa       = document.getElementById('wa');
+  var TEL        = '573132465100';
+
+  var ESCALA = [
+    { min:0,  t:'SIN DIAGNÓSTICO',      d:'Marque arriba lo que reconozca. El aparato no funciona en blanco.' },
+    { min:10, t:'CHINOMÁTICO LEVE',     d:'Hay muchacho, pero está descansado. Todavía está a tiempo de que no se le vuelva estructura.' },
+    { min:30, t:'CHINOMÁTICO MODERADO', d:'Su empresa ya depende de la memoria de alguien. Eso no aparece en el balance, pero se paga igual.' },
+    { min:60, t:'CHINOMÁTICO ALTO',     d:'Lo que usted llama operación es una persona con muy buena voluntad. Cuando esa persona se va, se le va el proceso.' },
+    { min:90, t:'CHINOMÁTICO CRÍTICO',  d:'Eso no es una empresa: es un acuerdo tácito entre tres personas y un Excel. Escríbame hoy, en serio.' }
+  ];
+
+  function nivel(p){
+    var r = ESCALA[0];
+    for(var i=0;i<ESCALA.length;i++){ if(p >= ESCALA[i].min) r = ESCALA[i]; }
+    return r;
+  }
+
+  function actualizar(){
+    var marcados = sintomas.filter(function(s){ return s.checked; });
+    var n = marcados.length;
+    var p = n * 10;
+
+    elPuntaje.textContent = ('0' + p).slice(-2);
+    if(p === 100) elPuntaje.textContent = '100';
+
+    var alto = p >= 60;
+    for(var i=0;i<TOTAL;i++){
+      segs[i].style.backgroundColor = (i < n) ? (alto ? 'var(--red)' : 'var(--ink)') : 'transparent';
+    }
+
+    var v = nivel(p);
+    elTitulo.textContent = v.t;
+    elTitulo.style.color = (p >= 60) ? 'var(--red)' : 'var(--ink)';
+    elTexto.textContent = v.d;
+
+    elConteo.textContent = n + (n === 1 ? ' ÍTEM' : ' ÍTEMS');
+
+    var texto;
+    if(n === 0){
+      elSalida.textContent = 'Esperando marcación…\n\nMarque al menos un síntoma para que el aparato\nescriba la orden de trabajo.';
+      texto = 'Hola Salomón. Vi tu hoja técnica SM-01 y quiero hablar de mi operación.';
+    }else{
+      var lineas = [];
+      lineas.push('ORDEN DE TRABAJO — HOJA SM-01');
+      lineas.push('Diagnóstico chinomático: ' + p + '/100 — ' + v.t.replace('CHINOMÁTICO ',''));
+      lineas.push('');
+      lineas.push('Esto lo reconozco en mi empresa:');
+      marcados.forEach(function(s, k){
+        lineas.push((k+1) + '. ' + s.getAttribute('data-sym') + '.');
+      });
+      lineas.push('');
+      lineas.push('Quiero que hablemos de esto.');
+      texto = lineas.join('\n');
+      elSalida.textContent = texto;
+      elSalida.scrollTop = elSalida.scrollHeight;
+    }
+
+    elWa.href = 'https://wa.me/' + TEL + '?text=' + encodeURIComponent(texto);
+  }
+
+  sintomas.forEach(function(s){ s.addEventListener('change', actualizar); });
+  actualizar();
+
+  /* ---------- entrada mecánica de las secciones ---------- */
+  if('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    var objetivos = document.querySelectorAll('.num-hueco');
+    objetivos.forEach(function(el){
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(14px)';
+      el.style.transition = 'opacity .22s steps(4), transform .22s steps(4)';
+    });
+    var obs = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(e){
+        if(e.isIntersecting){
+          e.target.style.opacity = '1';
+          e.target.style.transform = 'translateY(0)';
+          obs.unobserve(e.target);
+        }
+      });
+    }, {threshold:.25});
+    objetivos.forEach(function(el){ obs.observe(el); });
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1805 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CHINOMÁTICO — Edición única · Salomón Muriel</title>
+<meta name="description" content="Periódico de una sola edición. El sistema de su empresa se enferma, se cansa y renuncia. Diagnóstico de operación manual, consultoría y mentoría. Salomón Muriel, Bogotá.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Newsreader:ital,opsz,wght@0,6..72,200..700;1,6..72,200..700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        papel:  '#E8E2D4',
+        papel2: '#DCD5C3',
+        papel3: '#F3EFE4',
+        negro:  '#16140F',
+        gris:   '#575142',
+        azul:   '#12309B',
+        rojo:   '#BE1712'
+      },
+      fontFamily: {
+        tit:  ['Anton','Haettenschweiler','Arial Narrow','sans-serif'],
+        news: ['Newsreader','Georgia','Times New Roman','serif'],
+        mono: ['DM Mono','ui-monospace','SFMono-Regular','monospace']
+      }
+    }
+  }
+}
+</script>
+<style>
+  :root{
+    --papel:#E8E2D4; --papel2:#DCD5C3; --papel3:#F3EFE4;
+    --negro:#16140F; --gris:#575142; --azul:#12309B; --rojo:#BE1712;
+    --hair:rgba(22,20,15,.28);
+    --hair2:rgba(22,20,15,.16);
+  }
+  *{ border-radius:0 !important; }
+  html{ scroll-behavior:smooth; -webkit-text-size-adjust:100%; scrollbar-color:var(--negro) var(--papel2); }
+  html,body{ max-width:100%; overflow-x:clip; }
+  body{ background:var(--papel); color:var(--negro); }
+  ::selection{ background:var(--azul); color:var(--papel3); }
+  input,select,textarea{ caret-color:var(--rojo); }
+  :focus-visible{ outline:2px solid var(--azul); outline-offset:2px; }
+  .oscuro :focus-visible{ outline-color:var(--papel3); }
+  ::-webkit-scrollbar{ width:13px; height:13px; }
+  ::-webkit-scrollbar-track{ background:var(--papel2); }
+  ::-webkit-scrollbar-thumb{ background:var(--negro); border:4px solid var(--papel2); }
+  ::-webkit-scrollbar-thumb:hover{ background:var(--azul); }
+
+  /* ---------- fibra del papel periódico ---------- */
+  #fibra{
+    position:fixed; inset:0; z-index:80; pointer-events:none; opacity:.05; mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='f'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/></filter><rect width='200' height='200' filter='url(%23f)'/></svg>");
+  }
+  #fibra::after{
+    content:""; position:absolute; inset:0;
+    background:repeating-linear-gradient(0deg, rgba(22,20,15,.5) 0 1px, transparent 1px 4px);
+    opacity:.16;
+  }
+
+  /* ---------- desregistro de imprenta ---------- */
+  .fantasma{
+    position:absolute; inset:0; color:var(--azul); opacity:.5;
+    transform:translate(-4px,3px); mix-blend-mode:multiply; pointer-events:none; user-select:none;
+  }
+
+  /* ---------- filetes ---------- */
+  .filete-doble{ border-top:3px solid var(--negro); box-shadow:0 3px 0 -1px var(--negro); }
+  .col-regla{ border-left:1px solid var(--hair); }
+
+  /* ---------- capitular ---------- */
+  .capital::first-letter{
+    float:left; font-family:'Anton',sans-serif; font-weight:400;
+    font-size:3.55em; line-height:.78; padding:.04em .1em 0 0; margin-top:.06em;
+    color:var(--azul);
+  }
+
+  /* ---------- fotografía en medio tono ---------- */
+  .medio{ position:relative; overflow:hidden; background:var(--papel2); }
+  .medio img{ display:block; width:100%; height:100%; object-fit:cover; filter:grayscale(1) contrast(1.3) brightness(1.05); }
+  .medio::before{ content:""; position:absolute; inset:0; z-index:1; background:var(--azul); mix-blend-mode:color; opacity:.16; }
+  .medio::after{
+    content:""; position:absolute; inset:0; z-index:2; pointer-events:none;
+    background-image:radial-gradient(circle, #ffffff 0 30%, transparent 33%);
+    background-size:3.4px 3.4px; mix-blend-mode:screen; opacity:.58;
+  }
+  .medio-fino::after{ background-size:2.3px 2.3px; opacity:.46; }
+
+  /* ---------- troquel del cupón ---------- */
+  .troquel{
+    background-image:
+      repeating-linear-gradient(90deg, var(--negro) 0 8px, transparent 8px 15px),
+      repeating-linear-gradient(90deg, var(--negro) 0 8px, transparent 8px 15px),
+      repeating-linear-gradient(0deg, var(--negro) 0 8px, transparent 8px 15px),
+      repeating-linear-gradient(0deg, var(--negro) 0 8px, transparent 8px 15px);
+    background-size:100% 1.6px, 100% 1.6px, 1.6px 100%, 1.6px 100%;
+    background-position:0 0, 0 100%, 0 0, 100% 0;
+    background-repeat:no-repeat;
+  }
+
+  /* ---------- sellos de caucho ---------- */
+  .sello{
+    border:2.5px solid var(--rojo); color:var(--rojo);
+    outline:1px solid var(--rojo); outline-offset:3px;
+    mix-blend-mode:multiply;
+  }
+  .rayado{ background-image:repeating-linear-gradient(45deg, var(--rojo) 0 7px, transparent 7px 16px); }
+  .rayado-azul{ background-image:repeating-linear-gradient(45deg, var(--azul) 0 7px, transparent 7px 16px); }
+
+  /* ---------- casillas del cupón ---------- */
+  .casilla{ width:19px; height:19px; border:1.6px solid var(--negro); display:grid; place-items:center; flex:none; background:var(--papel3); }
+  .casilla svg{ width:13px; height:13px; opacity:0; color:var(--azul); transition:opacity .01s; }
+  .fila{ transition:background-color .1s steps(1); }
+  .fila:hover{ background:rgba(18,48,155,.06); }
+  .sym:checked + .fila .casilla svg{ opacity:1; }
+  .sym:checked + .fila .casilla{ border-color:var(--azul); }
+  .sym:checked + .fila{ background:rgba(18,48,155,.09); }
+  .sym:focus-visible + .fila{ outline:2px solid var(--azul); outline-offset:-2px; }
+  .veto:checked + .fila .casilla svg{ color:var(--rojo); }
+  .veto:checked + .fila .casilla{ border-color:var(--rojo); }
+  .veto:checked + .fila{ background:rgba(190,23,18,.1); }
+  .veto:focus-visible + .fila{ outline-color:var(--rojo); }
+
+  /* ---------- medidor ---------- */
+  .seg{ transition:background-color .1s steps(1); }
+
+  /* ---------- enlaces de contacto ---------- */
+  .canal{ transition:background-color .12s steps(1), color .12s steps(1); }
+  .canal:hover, .canal:focus-visible{ background:var(--papel); color:var(--negro); }
+  .canal:hover .punta, .canal:focus-visible .punta{ transform:translateX(9px); }
+  .punta{ transition:transform .16s cubic-bezier(.16,1,.3,1); }
+
+  .boton{ transition:background-color .12s steps(1), color .12s steps(1), border-color .12s steps(1); }
+  .boton-azul:hover, .boton-azul:focus-visible{ background:var(--azul); color:var(--papel3); border-color:var(--azul); }
+  .boton-negro:hover, .boton-negro:focus-visible{ background:var(--papel3); color:var(--negro); }
+  .boton-rojo:hover, .boton-rojo:focus-visible{ background:var(--rojo); color:var(--papel3); border-color:var(--rojo); }
+
+  /* ---------- logos ---------- */
+  .marca img{ mix-blend-mode:multiply; filter:grayscale(1) contrast(1.1); transition:filter .15s steps(2); }
+  .marca:hover img{ filter:grayscale(0) contrast(1); }
+
+  /* ---------- consultorio ---------- */
+  details > summary{ list-style:none; cursor:pointer; }
+  details > summary::-webkit-details-marker{ display:none; }
+  details .cruz-v{ transition:transform .18s cubic-bezier(.16,1,.3,1); }
+  details[open] .cruz-v{ transform:rotate(90deg); opacity:0; }
+
+  /* ---------- entrada de imprenta ---------- */
+  .imp{ opacity:0; transform:translateY(10px); }
+  .imp-on{ opacity:1; transform:none; transition:opacity .5s cubic-bezier(.16,1,.3,1), transform .5s cubic-bezier(.16,1,.3,1); }
+  .rodillo{ transform:scaleX(0); transform-origin:0 50%; }
+  .rodillo-on{ transform:scaleX(1); transition:transform .62s cubic-bezier(.16,1,.3,1); }
+
+  @keyframes golpe{ 0%{ transform:rotate(-14deg) scale(1.5); opacity:0 } 60%{ opacity:1 } 100%{ transform:rotate(-9deg) scale(1); opacity:1 } }
+  .golpe{ animation:golpe .26s cubic-bezier(.16,1,.3,1) both; }
+  @keyframes piloto{ 0%,55%{opacity:1} 56%,100%{opacity:.12} }
+  .piloto{ animation:piloto 1.4s steps(1) infinite; }
+
+  @media (prefers-reduced-motion:reduce){
+    html{ scroll-behavior:auto; }
+    .imp,.rodillo{ opacity:1 !important; transform:none !important; }
+    .golpe{ animation:none; }
+    .piloto{ animation:none; opacity:1; }
+    .punta{ transition:none; }
+  }
+
+  .dato{ font-family:'DM Mono',monospace; text-transform:uppercase; letter-spacing:.08em; font-variant-numeric:tabular-nums; }
+  .cifra{ font-variant-numeric:tabular-nums; }
+</style>
+</head>
+
+<body class="font-news antialiased">
+<div id="fibra" aria-hidden="true"></div>
+
+<!-- ══════════════ CINTILLO SUPERIOR ══════════════ -->
+<header class="fixed top-0 left-0 right-0 z-[70] bg-papel border-b-2 border-negro">
+  <div class="mx-auto max-w-[1440px] px-3 sm:px-6 lg:px-10">
+    <div class="flex items-center h-8 gap-4">
+      <a href="#portada" class="font-news font-bold text-[15px] sm:text-[17px] tracking-[-.03em] leading-none shrink-0">CHINOMÁTICO</a>
+      <span class="dato text-[9px] text-gris hidden sm:inline border-l border-negro/25 pl-4">EDICIÓN ÚNICA · BOGOTÁ</span>
+      <nav class="hidden lg:flex items-center gap-5 dato text-[9.5px] ml-auto">
+        <a href="#chinometro" class="hover:text-azul">EL CHINÓMETRO</a>
+        <a href="#montado" class="hover:text-azul">LO QUE HE MONTADO</a>
+        <a href="#metodo" class="hover:text-azul">CÓMO ME METO</a>
+        <a href="#cupos" class="hover:text-azul">CUPOS</a>
+        <a href="#consultorio" class="hover:text-azul">CONSULTORIO</a>
+      </nav>
+      <a href="#escribame" class="dato text-[9.5px] font-medium bg-negro text-papel3 px-3 py-1.5 ml-auto lg:ml-0 boton boton-negro shrink-0">ESCRÍBAME</a>
+      <span class="dato text-[9px] text-gris shrink-0 hidden sm:inline"><output id="folio">PÁG. 1</output>/8</span>
+    </div>
+  </div>
+</header>
+
+<main class="pt-8">
+
+<!-- ══════════════ PÁG. 1 · PORTADA ══════════════ -->
+<section id="portada" data-pag="1" class="border-b-2 border-negro">
+  <div class="mx-auto max-w-[1440px] px-3 sm:px-6 lg:px-10">
+
+    <!-- membrete -->
+    <div class="dato text-[9px] sm:text-[10px] text-gris flex flex-wrap justify-between gap-x-6 gap-y-1 pt-4 pb-2">
+      <span>AÑO I · NÚMERO ÚNICO</span>
+      <span class="hidden sm:inline">BOGOTÁ, COLOMBIA · 4°42′N 74°04′W</span>
+      <span>DOMINGO 6 DE SEPTIEMBRE DE 2026</span>
+    </div>
+
+    <!-- cabezote -->
+    <div class="border-y-2 border-negro py-3 sm:py-5">
+      <h1 class="sr-only">Chinomático — Salomón Muriel, práctica personal de estrategia y tecnología en Bogotá</h1>
+      <div class="relative inline-block w-full">
+        <span aria-hidden="true" class="block font-news font-bold uppercase leading-[.78] tracking-[-.05em] text-[clamp(2.1rem,11.4vw,11rem)] whitespace-nowrap">CHINOMÁTICO</span>
+        <span aria-hidden="true" class="fantasma block font-news font-bold uppercase leading-[.78] tracking-[-.05em] text-[clamp(2.1rem,11.4vw,11rem)] whitespace-nowrap">CHINOMÁTICO</span>
+      </div>
+    </div>
+    <div class="border-b-2 border-negro dato text-[8.5px] sm:text-[10px] flex flex-wrap justify-between gap-x-5 gap-y-1 py-2">
+      <span>PERIÓDICO DE UNA SOLA EDICIÓN, ESCRITO POR SALOMÓN MURIEL</span>
+      <span class="text-azul hidden md:inline">SE LEE DE UNA SENTADA</span>
+      <span class="text-rojo">PRÁCTICA PERSONAL · ESTO NO ES IGNIA</span>
+    </div>
+
+    <!-- cuerpo de portada -->
+    <div class="grid grid-cols-1 lg:grid-cols-12">
+
+      <!-- titular + entradilla -->
+      <div class="lg:col-span-8 lg:pr-8 lg:border-r border-negro/30 pt-6 sm:pt-9 pb-8">
+
+        <div class="relative">
+          <h2 class="font-tit uppercase leading-[.85] tracking-[-.02em] text-[clamp(2rem,5vw,4.8rem)] [overflow-wrap:break-word]">
+            EL SISTEMA DE SU EMPRESA<br>SE ENFERMA, SE CANSA<br>Y RENUNCIA.
+          </h2>
+        </div>
+
+        <p class="font-news italic text-[1.08rem] sm:text-[1.45rem] leading-[1.32] mt-5 max-w-[36ch] text-gris">
+          Porque no es un sistema. Es una persona con muy buena memoria,
+          un archivo compartido y toda la buena voluntad del mundo.
+        </p>
+
+        <div class="mt-7 pt-6 border-t border-negro/30 lg:columns-2 lg:gap-8 [column-rule:1px_solid_var(--hair)]">
+          <p class="capital text-[15px] sm:text-[16.5px] leading-[1.58] [break-inside:avoid]">
+            Usted compró el software. Vinieron, lo instalaron, hicieron la capacitación un jueves
+            y se fueron. Hoy nadie lo abre. Los pedidos siguen entrando por WhatsApp, alguien los
+            pasa a mano a un Excel, y ese Excel lo entiende una sola persona en toda la empresa.
+          </p>
+          <p class="text-[15px] sm:text-[16.5px] leading-[1.58] mt-4">
+            Eso no es una empresa automatizada. Es una empresa <b>chinomática</b>: por fuera
+            parece máquina, por dentro hay un muchacho. Y funciona —hasta el día que esa persona
+            se enferma, se cansa o consigue algo mejor.
+          </p>
+          <p class="text-[15px] sm:text-[16.5px] leading-[1.58] mt-4">
+            Me llamo <b>Salomón Muriel</b>. Llevo cinco empresas: dos vendidas, dos quebradas,
+            una andando. No le vengo a vender un software: le vengo a quitar el muchacho de encima
+            y a ponerlo a hacer algo que sí valga la pena.
+          </p>
+        </div>
+
+        <div class="mt-7 flex flex-col sm:flex-row gap-3">
+          <a href="#chinometro" class="boton boton-negro bg-negro text-papel3 dato text-[11px] font-medium px-6 py-4 text-center border-2 border-negro">
+            MÍDASE EN UN MINUTO — PÁG. 2
+          </a>
+          <a href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20le%20escribo%20desde%20su%20p%C3%A1gina." target="_blank" rel="noopener"
+             class="boton boton-azul border-2 border-negro dato text-[11px] font-medium px-6 py-4 text-center inline-flex items-center justify-center gap-2">
+            ESCRIBIRME DE UNA
+            <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><path d="M4 12h14M12.5 6.5 19 12l-6.5 5.5"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- retrato + definición -->
+      <div class="lg:col-span-4 lg:pl-8 pt-6 lg:pt-9 pb-9 border-t border-negro/30 lg:border-t-0">
+        <figure>
+          <div class="medio aspect-[4/5] border border-negro">
+            <img src="assets/fotoSalo.jpeg" alt="Retrato de Salomón Muriel, de abrigo verde y brazos cruzados, sobre fondo oscuro." width="800" height="800" loading="eager">
+          </div>
+          <figcaption class="dato text-[9px] text-gris mt-2 leading-relaxed">
+            SALOMÓN MURIEL, 35 AÑOS, BOGOTÁ. QUINTA EMPRESA.<br>EL QUE CONTESTA Y EL QUE CONSTRUYE.
+          </figcaption>
+        </figure>
+
+        <!-- entrada de glosario -->
+        <div class="mt-6 border-2 border-negro bg-papel3">
+          <div class="bg-negro text-papel3 dato text-[9px] px-3 py-1.5 flex justify-between">
+            <span>LA PALABRA</span><span>GLOSARIO</span>
+          </div>
+          <div class="p-4">
+            <p class="font-news italic font-medium text-[1.5rem] leading-none">chi·no·má·ti·co, ca</p>
+            <p class="dato text-[9px] text-gris mt-1.5">ADJ. · COLOMBIANISMO · SIN REGISTRO EN LA RAE</p>
+            <ol class="mt-4 space-y-2.5 text-[14px] leading-[1.45]">
+              <li class="flex gap-2.5"><span class="dato text-[10px] text-azul pt-[3px] flex-none">1.</span><span>Dicho de un proceso: que <b>parece</b> automatizado, pero en realidad hay un muchacho haciéndolo a mano.</span></li>
+              <li class="flex gap-2.5"><span class="dato text-[10px] text-azul pt-[3px] flex-none">2.</span><span>Dicho de una empresa: la suya, con toda seguridad.</span></li>
+              <li class="flex gap-2.5"><span class="dato text-[10px] text-azul pt-[3px] flex-none">3.</span><span>Dicho de un dueño: el que se entera de lo anterior leyendo esta página.</span></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- índice -->
+    <nav aria-label="Índice de la edición" class="border-t-2 border-negro py-4">
+      <p class="dato text-[10px] font-medium mb-3">EN ESTA EDICIÓN</p>
+      <ul class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-x-5 gap-y-2.5">
+        <li class="border-t border-negro/30 pt-2"><a href="#chinometro" class="block hover:text-azul"><span class="dato text-[9px] text-gris block">PÁG. 2</span><span class="font-tit uppercase text-[15px] leading-tight block mt-0.5">El chinómetro</span></a></li>
+        <li class="border-t border-negro/30 pt-2"><a href="#columna" class="block hover:text-azul"><span class="dato text-[9px] text-gris block">PÁG. 3</span><span class="font-tit uppercase text-[15px] leading-tight block mt-0.5">Por qué conmigo sí</span></a></li>
+        <li class="border-t border-negro/30 pt-2"><a href="#montado" class="block hover:text-azul"><span class="dato text-[9px] text-gris block">PÁG. 4</span><span class="font-tit uppercase text-[15px] leading-tight block mt-0.5">Lo que he montado</span></a></li>
+        <li class="border-t border-negro/30 pt-2"><a href="#metodo" class="block hover:text-azul"><span class="dato text-[9px] text-gris block">PÁG. 5</span><span class="font-tit uppercase text-[15px] leading-tight block mt-0.5">Cómo me meto</span></a></li>
+        <li class="border-t border-negro/30 pt-2"><a href="#cupos" class="block hover:text-azul"><span class="dato text-[9px] text-gris block">PÁG. 6</span><span class="font-tit uppercase text-[15px] leading-tight block mt-0.5">Los cupos</span></a></li>
+        <li class="border-t border-negro/30 pt-2"><a href="#testimonios" class="block hover:text-azul"><span class="dato text-[9px] text-gris block">PÁG. 7</span><span class="font-tit uppercase text-[15px] leading-tight block mt-0.5">Testimonios</span></a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <!-- boletín -->
+  <div class="bg-azul text-papel3 border-t-2 border-negro">
+    <div class="mx-auto max-w-[1440px] px-3 sm:px-6 lg:px-10 py-3">
+      <ul class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-y-2 gap-x-6 text-[13px] leading-snug">
+        <li class="flex gap-2.5 xl:border-r border-papel3/30 pr-4"><span class="dato text-[9px] opacity-70 pt-[3px] flex-none">01</span><span>Su proceso más importante se llama como un empleado.</span></li>
+        <li class="flex gap-2.5 xl:border-r border-papel3/30 pr-4"><span class="dato text-[9px] opacity-70 pt-[3px] flex-none">02</span><span>El botón de exportar lo oprime una persona, todos los lunes.</span></li>
+        <li class="flex gap-2.5 xl:border-r border-papel3/30 pr-4"><span class="dato text-[9px] opacity-70 pt-[3px] flex-none">03</span><span>Nadie ha vuelto a abrir ese software desde la capacitación.</span></li>
+        <li class="flex gap-2.5"><span class="dato text-[9px] opacity-70 pt-[3px] flex-none">04</span><span>Cuando renuncia, se lleva el proceso puesto.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════ PÁG. 2 · EL CHINÓMETRO ══════════════ -->
+<section id="chinometro" data-pag="2" class="border-b-2 border-negro bg-papel2">
+  <div class="mx-auto max-w-[1440px] px-3 sm:px-6 lg:px-10">
+
+    <div class="flex items-baseline justify-between gap-4 dato text-[9px] text-gris pt-3 pb-2">
+      <span>PÁG. 2 · CHINOMÁTICO · EDICIÓN ÚNICA</span>
+      <span class="text-azul">EL INSTRUMENTO</span>
+    </div>
+    <div class="filete-doble rodillo mb-6 sm:mb-8"></div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-x-8 gap-y-5 mb-7 imp">
+      <div class="lg:col-span-7">
+        <div class="relative inline-block">
+          <h2 class="font-tit uppercase leading-[.86] tracking-[-.015em] text-[clamp(2.1rem,7vw,4.6rem)]">EL CHINÓMETRO</h2>
+          <span aria-hidden="true" class="fantasma font-tit uppercase leading-[.86] tracking-[-.015em] text-[clamp(2.1rem,7vw,4.6rem)]">EL CHINÓMETRO</span>
+        </div>
+      </div>
+      <div class="lg:col-span-5">
+        <p class="text-[15px] sm:text-[16px] leading-[1.55]">
+          Un aparato de dos partes. <b>La parte A</b> mide qué tan chinomática está su operación.
+          <b>La parte B</b> decide si yo soy la persona indicada o no lo soy.
+          El instrumento dice las dos cosas —incluso cuando la respuesta es que no.
+        </p>
+        <p class="dato text-[9px] text-gris mt-3 leading-relaxed">NO PIDE CORREO · NO GUARDA NADA · NO LE VA A LLEGAR PUBLICIDAD</p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 pb-10 sm:pb-14">
+
+      <!-- ─── EL CUPÓN ─── -->
+      <div class="lg:col-span-7">
+        <div class="troquel bg-papel3 p-3 sm:p-5">
+
+          <div class="flex items-start justify-between gap-4 border-b border-negro/30 pb-3 mb-4">
+            <div>
+              <p class="font-tit uppercase text-[clamp(1.15rem,3.4vw,1.6rem)] leading-none">Cupón de diagnóstico</p>
+              <p class="dato text-[9px] text-gris mt-1.5">RECORTE POR LA LÍNEA PUNTEADA · O MÁRQUELO ACÁ MISMO</p>
+            </div>
+            <svg viewBox="0 0 24 24" class="w-7 h-7 flex-none text-gris" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
+              <circle cx="6" cy="6.2" r="2.5"/><circle cx="6" cy="17.8" r="2.5"/><path d="M8.2 7.7 20 18M8.2 16.3 20 6"/>
+            </svg>
+          </div>
+
+          <!-- PARTE A -->
+          <p class="dato text-[10px] font-medium bg-negro text-papel3 inline-block px-2.5 py-1">PARTE A · SÍNTOMAS</p>
+          <p class="text-[13.5px] text-gris leading-snug mt-2 mb-3">Marque todo lo que reconozca de su empresa. Diez renglones, menos de un minuto.</p>
+
+          <div class="border-t border-negro/30" id="lista-a">
+            <label class="block">
+              <input type="checkbox" class="sym sr-only" data-sym="Los pedidos entran por WhatsApp y alguien los pasa a mano a un Excel">
+              <span class="fila flex gap-3 items-start px-1.5 py-3 border-b border-negro/15 cursor-pointer">
+                <span class="dato text-[9px] text-gris pt-1 w-5 flex-none">01</span>
+                <span class="casilla mt-[1px]"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true"><path d="M3 3 13 13M13 3 3 13"/></svg></span>
+                <span class="text-[14px] sm:text-[15px] leading-snug">Los pedidos entran por WhatsApp y alguien los pasa a mano a un Excel.</span>
+              </span>
+            </label>
+            <label class="block">
+              <input type="checkbox" class="sym sr-only" data-sym="Hay un archivo que solo una persona sabe mover, y si falta se para el negocio">
+              <span class="fila flex gap-3 items-start px-1.5 py-3 border-b border-negro/15 cursor-pointer">
+                <span class="dato text-[9px] text-gris pt-1 w-5 flex-none">02</span>
+                <span class="casilla mt-[1px]"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true"><path d="M3 3 13 13M13 3 3 13"/></svg></span>
+                <span class="text-[14px] sm:text-[15px] leading-snug">Hay un archivo que solo una persona sabe mover. Si esa persona falta, se para el negocio.</span>
+              </span>
+            </label>
+            <label class="block">
+              <input type="checkbox" class="sym sr-only" data-sym="Compramos un software grande y hoy nadie lo abre">
+              <span class="fila flex gap-3 items-start px-1.5 py-3 border-b border-negro/15 cursor-pointer">
+                <span class="dato text-[9px] text-gris pt-1 w-5 flex-none">03</span>
+                <span class="casilla mt-[1px]"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true"><path d="M3 3 13 13M13 3 3 13"/></svg></span>
+                <span class="text-[14px] sm:text-[15px] leading-snug">Compraron un software grande y hoy nadie lo abre. Nadie se atreve a decirlo en voz alta.</span>
+              </span>
+            </label>
+            <label class="block">
+              <input type="checkbox" class="sym sr-only" data-sym="Todos los lunes alguien arma el mismo informe copiando y pegando">
+              <span class="fila flex gap-3 items-start px-1.5 py-3 border-b border-negro/15 cursor-pointer">
+                <span class="dato text-[9px] text-gris pt-1 w-5 flex-none">04</span>
+                <span class="casilla mt-[1px]"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true"><path d="M3 3 13 13M13 3 3 13"/></svg></span>
+                <span class="text-[14px] sm:text-[15px] leading-snug">Todos los lunes alguien arma el mismo informe copiando y pegando.</span>
+              </span>
+            </label>
+            <label class="block">
+              <input type="checkbox" class="sym sr-only" data-sym="El inventario de verdad no esta en el sistema, esta en la cabeza de un empleado">
+              <span class="fila flex gap-3 items-start px-1.5 py-3 border-b border-negro/15 cursor-pointer">
+                <span class="dato text-[9px] text-gris pt-1 w-5 flex-none">05</span>
+                <span class="casilla mt-[1px]"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true"><path d="M3 3 13 13M13 3 3 13"/></svg></span>
+                <span class="text-[14px] sm:text-[15px] leading-snug">El inventario de verdad no está en el sistema: está en la cabeza de un empleado.</span>
+              </span>
+            </label>
+            <label class="block">
+              <input type="checkbox" class="sym sr-only" data-sym="Para saber cuanto se vendio ayer toca preguntarle a alguien">
+              <span class="fila flex gap-3 items-start px-1.5 py-3 border-b border-negro/15 cursor-pointer">
+                <span class="dato text-[9px] text-gris pt-1 w-5 flex-none">06</span>
+                <span class="casilla mt-[1px]"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true"><path d="M3 3 13 13M13 3 3 13"/></svg></span>
+                <span class="text-[14px] sm:text-[15px] leading-snug">Para saber cuánto se vendió ayer, toca preguntarle a alguien.</span>
+              </span>
+            </label>
+            <label class="block">
+              <input type="checkbox" class="sym sr-only" data-sym="Existen tres versiones del mismo Excel y ninguna cuadra con la otra">
+              <span class="fila flex gap-3 items-start px-1.5 py-3 border-b border-negro/15 cursor-pointer">
+                <span class="dato text-[9px] text-gris pt-1 w-5 flex-none">07</span>
+                <span class="casilla mt-[1px]"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true"><path d="M3 3 13 13M13 3 3 13"/></svg></span>
+                <span class="text-[14px] sm:text-[15px] leading-snug">Existen tres versiones del mismo Excel y ninguna cuadra con la otra.</span>
+              </span>
+            </label>
+            <label class="block">
+              <input type="checkbox" class="sym sr-only" data-sym="La facturacion depende de que alguien se acuerde">
+              <span class="fila flex gap-3 items-start px-1.5 py-3 border-b border-negro/15 cursor-pointer">
+                <span class="dato text-[9px] text-gris pt-1 w-5 flex-none">08</span>
+                <span class="casilla mt-[1px]"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true"><path d="M3 3 13 13M13 3 3 13"/></svg></span>
+                <span class="text-[14px] sm:text-[15px] leading-snug">La facturación depende de que alguien se acuerde.</span>
+              </span>
+            </label>
+            <label class="block">
+              <input type="checkbox" class="sym sr-only" data-sym="Contratamos a alguien para que organizara eso y todo sigue igual">
+              <span class="fila flex gap-3 items-start px-1.5 py-3 border-b border-negro/15 cursor-pointer">
+                <span class="dato text-[9px] text-gris pt-1 w-5 flex-none">09</span>
+                <span class="casilla mt-[1px]"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true"><path d="M3 3 13 13M13 3 3 13"/></svg></span>
+                <span class="text-[14px] sm:text-[15px] leading-snug">Contrataron a alguien «para que organizara eso» y todo sigue igual.</span>
+              </span>
+            </label>
+            <label class="block">
+              <input type="checkbox" class="sym sr-only" data-sym="Cuando alguien renuncia se lleva el proceso adentro">
+              <span class="fila flex gap-3 items-start px-1.5 py-3 border-b border-negro/15 cursor-pointer">
+                <span class="dato text-[9px] text-gris pt-1 w-5 flex-none">10</span>
+                <span class="casilla mt-[1px]"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true"><path d="M3 3 13 13M13 3 3 13"/></svg></span>
+                <span class="text-[14px] sm:text-[15px] leading-snug">Cuando alguien renuncia, se lleva el proceso adentro.</span>
+              </span>
+            </label>
+          </div>
+
+          <!-- PARTE B -->
+          <div class="mt-7">
+            <div class="rayado h-2.5 mb-3" aria-hidden="true"></div>
+            <p class="dato text-[10px] font-medium bg-rojo text-papel3 inline-block px-2.5 py-1">PARTE B · CAUSALES DE DESCALIFICACIÓN</p>
+            <p class="text-[13.5px] leading-snug mt-2 mb-3">
+              Acá no está lo que sé hacer: está lo que <b>no</b>. Si marca cualquiera de estas,
+              el aparato deja de medirlo a usted y empieza a medirme a mí —y sale que no.
+            </p>
+
+            <div class="border-t border-rojo/40" id="lista-b">
+              <label class="block">
+                <input type="checkbox" class="veto sr-only" data-veto="Mi empresa ya es grande: tiene equipo de tecnologia propio y varias gerencias">
+                <span class="fila flex gap-3 items-start px-1.5 py-3 border-b border-rojo/25 cursor-pointer">
+                  <span class="casilla mt-[1px]"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true"><path d="M3 3 13 13M13 3 3 13"/></svg></span>
+                  <span class="text-[14px] sm:text-[15px] leading-snug">Mi empresa ya es grande: tiene equipo de tecnología propio y varias gerencias.</span>
+                </span>
+              </label>
+              <label class="block">
+                <input type="checkbox" class="veto sr-only" data-veto="Necesito inventar tecnologia que todavia no existe">
+                <span class="fila flex gap-3 items-start px-1.5 py-3 border-b border-rojo/25 cursor-pointer">
+                  <span class="casilla mt-[1px]"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true"><path d="M3 3 13 13M13 3 3 13"/></svg></span>
+                  <span class="text-[14px] sm:text-[15px] leading-snug">Lo que necesito es inventar tecnología que todavía no existe: investigación, deep tech.</span>
+                </span>
+              </label>
+              <label class="block">
+                <input type="checkbox" class="veto sr-only" data-veto="Busco una charla de ciencia de datos o de cultura organizacional">
+                <span class="fila flex gap-3 items-start px-1.5 py-3 border-b border-rojo/25 cursor-pointer">
+                  <span class="casilla mt-[1px]"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true"><path d="M3 3 13 13M13 3 3 13"/></svg></span>
+                  <span class="text-[14px] sm:text-[15px] leading-snug">Lo que busco es una charla de ciencia de datos o de cultura organizacional.</span>
+                </span>
+              </label>
+              <label class="block">
+                <input type="checkbox" class="veto sr-only" data-veto="Lo que quiero es un documento o una presentacion para la junta">
+                <span class="fila flex gap-3 items-start px-1.5 py-3 border-b border-rojo/25 cursor-pointer">
+                  <span class="casilla mt-[1px]"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true"><path d="M3 3 13 13M13 3 3 13"/></svg></span>
+                  <span class="text-[14px] sm:text-[15px] leading-snug">Lo que quiero es un documento o una presentación para mostrarle a la junta.</span>
+                </span>
+              </label>
+              <label class="block">
+                <input type="checkbox" class="veto sr-only" data-veto="Quiero que esto lo haga Ignia o que salga a nombre de Ignia">
+                <span class="fila flex gap-3 items-start px-1.5 py-3 border-b border-rojo/25 cursor-pointer">
+                  <span class="casilla mt-[1px]"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true"><path d="M3 3 13 13M13 3 3 13"/></svg></span>
+                  <span class="text-[14px] sm:text-[15px] leading-snug">Quiero que esto lo haga Ignia, o que salga a nombre de Ignia.</span>
+                </span>
+              </label>
+              <label class="block">
+                <input type="checkbox" class="veto sr-only" data-veto="Quiero que me arme y me contrate el equipo de tecnologia">
+                <span class="fila flex gap-3 items-start px-1.5 py-3 cursor-pointer">
+                  <span class="casilla mt-[1px]"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true"><path d="M3 3 13 13M13 3 3 13"/></svg></span>
+                  <span class="text-[14px] sm:text-[15px] leading-snug">Quiero que me arme y me contrate el equipo de tecnología.</span>
+                </span>
+              </label>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ─── LA LECTURA ─── -->
+      <div class="lg:col-span-5">
+        <div class="lg:sticky lg:top-12">
+
+          <div id="tablero" class="border-2 border-negro bg-papel3">
+            <div class="bg-negro text-papel3 dato text-[9px] px-3 py-1.5 flex justify-between">
+              <span>LECTURA DEL INSTRUMENTO</span>
+              <span><span class="piloto text-rojo">●</span> EN VIVO</span>
+            </div>
+
+            <div class="p-4 sm:p-5">
+              <!-- aguja -->
+              <div class="relative">
+                <div class="flex items-end gap-3">
+                  <output id="puntaje" class="font-tit leading-[.74] tracking-[-.02em] text-[clamp(4rem,15vw,6.5rem)] cifra">00</output>
+                  <span class="dato text-[12px] pb-3 text-gris">/ 100</span>
+                </div>
+                <div id="sello-no" hidden class="sello absolute right-0 top-2 px-3 py-2 dato text-[11px] font-medium leading-tight text-center" style="transform:rotate(-9deg)">
+                  NO APLICA<br><span class="text-[8px] tracking-[.2em]">PARTE B</span>
+                </div>
+              </div>
+
+              <div id="segmentos" class="flex border border-negro h-8 mt-2 bg-papel" aria-hidden="true"></div>
+              <div class="flex justify-between dato text-[8.5px] text-gris mt-1">
+                <span>0</span><span class="hidden sm:inline">LEVE</span><span>MODERADO</span><span class="hidden sm:inline">ALTO</span><span>100</span>
+              </div>
+
+              <!-- veredicto -->
+              <div id="caja-veredicto" class="mt-5 border border-negro">
+                <div class="dato text-[9px] px-2.5 py-1.5 bg-papel2 border-b border-negro" id="veredicto-rotulo">VEREDICTO</div>
+                <div class="p-3">
+                  <p id="veredicto-titulo" class="font-tit uppercase leading-[.95] text-[clamp(1.2rem,3.6vw,1.75rem)]">SIN LECTURA</p>
+                  <p id="veredicto-texto" class="text-[14px] leading-snug mt-2">El aparato no funciona en blanco. Marque en la parte A lo que reconozca de su empresa.</p>
+                </div>
+              </div>
+
+              <!-- la cuenta -->
+              <div class="mt-5 border border-negro">
+                <div class="dato text-[9px] px-2.5 py-1.5 bg-papel2 border-b border-negro flex justify-between">
+                  <span>LA CUENTA</span><span class="text-gris hidden sm:inline">OPCIONAL</span>
+                </div>
+                <div class="p-3">
+                  <p class="text-[13.5px] leading-snug mb-3">
+                    Ponga la tarea que más se repite. Le digo cuánto tiempo se le va al año en eso.
+                    <span class="text-gris">En horas, que es lo único que no se recupera.</span>
+                  </p>
+                  <div class="space-y-2.5">
+                    <div>
+                      <label for="c-tarea" class="dato text-[9px] text-gris block mb-1">LA TAREA</label>
+                      <input id="c-tarea" type="text" value="Pasar los pedidos de WhatsApp al Excel" autocomplete="off"
+                             class="w-full bg-papel border border-negro/50 px-2.5 py-2 text-[13.5px] focus:border-azul">
+                    </div>
+                    <div class="grid grid-cols-3 gap-2">
+                      <div>
+                        <label for="c-frec" class="dato text-[9px] text-gris block mb-1">CADA CUÁNTO</label>
+                        <select id="c-frec" class="w-full bg-papel border border-negro/50 px-1.5 py-2 text-[13px] focus:border-azul">
+                          <option value="dia">Todos los días</option>
+                          <option value="semana" selected>Cada semana</option>
+                          <option value="quincena">Cada quincena</option>
+                          <option value="mes">Cada mes</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label for="c-min" class="dato text-[9px] text-gris block mb-1">MINUTOS</label>
+                        <input id="c-min" type="number" min="0" step="5" inputmode="numeric" value="90"
+                               class="w-full bg-papel border border-negro/50 px-2 py-2 text-[13px] cifra focus:border-azul">
+                      </div>
+                      <div>
+                        <label for="c-per" class="dato text-[9px] text-gris block mb-1">PERSONAS</label>
+                        <input id="c-per" type="number" min="1" step="1" inputmode="numeric" value="1"
+                               class="w-full bg-papel border border-negro/50 px-2 py-2 text-[13px] cifra focus:border-azul">
+                      </div>
+                    </div>
+                  </div>
+                  <p id="c-error" hidden class="dato text-[9px] text-rojo mt-2">PONGA LOS MINUTOS EN NÚMEROS, MAYORES QUE CERO.</p>
+                  <div class="mt-3 pt-3 border-t border-negro/30 flex items-baseline gap-2 flex-wrap">
+                    <output id="c-horas" class="font-tit text-[clamp(1.6rem,5vw,2.3rem)] leading-none text-azul cifra">78</output>
+                    <span class="dato text-[10px]">HORAS AL AÑO</span>
+                    <span class="dato text-[10px] text-gris ml-auto">= <output id="c-dias" class="cifra">10</output> DÍAS HÁBILES</span>
+                  </div>
+                  <p class="dato text-[8.5px] text-gris mt-2 leading-relaxed">CUENTA GRUESA: «TODOS LOS DÍAS» SON 260 AL AÑO. SIRVE PARA DECIDIR, NO PARA AUDITAR.</p>
+                </div>
+              </div>
+
+              <!-- telegrama -->
+              <div class="mt-5 border border-negro bg-papel">
+                <div class="dato text-[9px] px-2.5 py-1.5 bg-papel2 border-b border-negro flex justify-between">
+                  <span>LO QUE LE VA A LLEGAR</span><span id="conteo" class="text-gris">0 RENGLONES</span>
+                </div>
+                <output id="salida" class="block font-mono text-[10.5px] leading-[1.6] p-3 whitespace-pre-wrap max-h-[10rem] overflow-y-auto">Esperando marcación…</output>
+              </div>
+
+              <a id="wa" href="https://wa.me/573132465100" target="_blank" rel="noopener"
+                 class="boton boton-negro block bg-negro text-papel3 border-2 border-negro dato text-[11px] font-medium px-4 py-4 mt-4 text-center">
+                MANDÁRSELO POR WHATSAPP
+              </a>
+              <p class="dato text-[8.5px] text-gris mt-2 leading-relaxed">SE ABRE WHATSAPP CON EL TEXTO YA ESCRITO. USTED LO LEE, LO CORRIGE Y LO MANDA. CONTESTO YO.</p>
+              <a href="https://cal.com/salomonmuriel" target="_blank" rel="noopener"
+                 class="boton boton-azul block border border-negro dato text-[10px] font-medium px-4 py-3 mt-3 text-center">
+                O AGENDE 45 MINUTOS EN CAL.COM
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- lectura compacta, solo en móvil -->
+  <div id="barra-movil" hidden class="lg:hidden fixed bottom-0 left-0 right-0 z-[65] bg-negro text-papel3 border-t-2 border-papel3/30" style="box-shadow:0 -6px 20px rgba(22,20,15,.28)">
+    <div class="flex items-stretch">
+      <div class="px-3 py-2.5 flex items-baseline gap-2 min-w-0">
+        <span id="bm-num" class="font-tit text-[26px] leading-none cifra">00</span>
+        <span id="bm-txt" class="dato text-[9px] leading-tight truncate">SIN LECTURA</span>
+      </div>
+      <a id="bm-cta" href="#tablero" class="ml-auto shrink-0 bg-papel3 text-negro dato text-[10px] font-medium px-4 flex items-center">VER LECTURA</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════ PÁG. 3 · LA COLUMNA ══════════════ -->
+<section id="columna" data-pag="3" class="border-b-2 border-negro">
+  <div class="mx-auto max-w-[1440px] px-3 sm:px-6 lg:px-10">
+
+    <div class="flex items-baseline justify-between gap-4 dato text-[9px] text-gris pt-3 pb-2">
+      <span>PÁG. 3 · CHINOMÁTICO · EDICIÓN ÚNICA</span>
+      <span class="text-azul">COLUMNA</span>
+    </div>
+    <div class="filete-doble rodillo mb-6 sm:mb-9"></div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-x-9 gap-y-8 pb-10 sm:pb-14">
+
+      <div class="lg:col-span-8 imp">
+        <h2 class="font-tit uppercase leading-[.9] tracking-[-.015em] text-[clamp(1.85rem,4.6vw,3.6rem)] max-w-[20ch]">
+          Por qué conmigo sí pasa, y con el software que compró no pasó
+        </h2>
+
+        <p class="capital text-[15px] sm:text-[16.5px] leading-[1.6] mt-6 max-w-[62ch]">
+          No fue culpa suya y tampoco fue culpa del software. Fue que entre el que decidió qué
+          había que hacer y el que lo construyó había tres reuniones, dos correos y una persona
+          que nunca vio cómo trabaja su gente de verdad. Yo hago las dos cosas, y por eso el
+          resultado es distinto.
+        </p>
+
+        <div class="mt-9 space-y-9">
+
+          <article class="grid sm:grid-cols-[3rem_minmax(0,1fr)] gap-x-5 gap-y-3">
+            <span class="font-tit text-azul text-[3rem] leading-[.8]">1</span>
+            <div class="max-w-[58ch]">
+              <h3 class="font-tit uppercase text-[clamp(1.15rem,2.6vw,1.55rem)] leading-tight">Una sola cabeza</h3>
+              <p class="text-[15px] sm:text-[16px] leading-[1.62] mt-2">
+                La estrategia y la herramienta las hace la misma persona: yo. No hay un consultor
+                que entrega una presentación bonita y después un proveedor que la interpreta como
+                le parece. <b>Lo que decidimos el lunes, lo estoy construyendo el martes.</b>
+              </p>
+            </div>
+          </article>
+
+          <article class="grid sm:grid-cols-[3rem_minmax(0,1fr)] gap-x-5 gap-y-3">
+            <span class="font-tit text-azul text-[3rem] leading-[.8]">2</span>
+            <div class="max-w-[58ch]">
+              <h3 class="font-tit uppercase text-[clamp(1.15rem,2.6vw,1.55rem)] leading-tight">Construyo con inteligencia artificial, y eso cambió el tamaño de lo que cabe en un mes</h3>
+              <p class="text-[15px] sm:text-[16px] leading-[1.62] mt-2">
+                Lo que antes necesitaba un equipo de desarrollo y medio año, hoy lo hago yo con
+                agentes. Y no solo para programar: le enseño a su gente a usarlos para el trabajo
+                de escritorio que hoy alguien hace a mano, renglón por renglón.
+              </p>
+              <p class="border-l-[1px] border-rojo pl-4 mt-4 font-news italic text-[15px] leading-[1.5] text-rojo max-w-[42ch]">
+                Esto cambió de verdad hace poco. No es la misma conversación de hace tres años, y
+                el que le diga lo contrario no ha estado construyendo.
+              </p>
+            </div>
+          </article>
+
+          <article class="grid sm:grid-cols-[3rem_minmax(0,1fr)] gap-x-5 gap-y-3">
+            <span class="font-tit text-azul text-[3rem] leading-[.8]">3</span>
+            <div class="max-w-[58ch]">
+              <h3 class="font-tit uppercase text-[clamp(1.15rem,2.6vw,1.55rem)] leading-tight">Manda el que va a usar la herramienta</h3>
+              <p class="text-[15px] sm:text-[16px] leading-[1.62] mt-2">
+                Si la persona que la va a usar no la abre el lunes por voluntad propia, la
+                herramienta no sirve, por elegante que sea. Ese es mi oficio, dicho como lo digo
+                yo: <b>hacer sistemas que le funcionen a la gente que los usa, y sacar cosas del papel.</b>
+              </p>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <aside class="lg:col-span-4 lg:border-l border-negro/30 lg:pl-8 imp">
+        <figure>
+          <div class="medio medio-fino aspect-[16/10] border border-negro">
+            <img src="assets/salo_oscar.webp" alt="Salomón Muriel y un compañero de equipo mostrando la plataforma de Finco en una feria." width="527" height="328" loading="lazy" decoding="async">
+          </div>
+          <figcaption class="dato text-[9px] text-gris mt-2 leading-relaxed">
+            LA HERRAMIENTA DE VALORACIÓN DE FINCO, EN LA PANTALLA. ESA LA CONSTRUIMOS NOSOTROS.
+          </figcaption>
+        </figure>
+
+        <blockquote class="mt-7 border-t-[3px] border-negro pt-4">
+          <p class="font-news font-medium text-[clamp(1.25rem,2.9vw,1.7rem)] leading-[1.18] tracking-[-.01em]">
+            «Trabajar conmigo significa que las cosas pasan, así toque a las malas.»
+          </p>
+          <footer class="dato text-[9px] text-gris mt-3">S. M., SOBRE SU MÉTODO DE MENTORÍA</footer>
+        </blockquote>
+
+        <div class="mt-7 bg-papel2 border border-negro p-4">
+          <p class="dato text-[9px] text-gris mb-2">EL DATO SUELTO</p>
+          <p class="text-[14.5px] leading-[1.55]">
+            El inglés lo aprendí jugando en línea, no en un instituto. Fue la primera herramienta
+            que aprendí a usar sin manual. Sigo trabajando igual: se abre, se rompe, se entiende.
+          </p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════ PÁG. 4 · LO QUE HE MONTADO ══════════════ -->
+<section id="montado" data-pag="4" class="border-b-2 border-negro bg-papel2">
+  <div class="mx-auto max-w-[1440px] px-3 sm:px-6 lg:px-10">
+
+    <div class="flex items-baseline justify-between gap-4 dato text-[9px] text-gris pt-3 pb-2">
+      <span>PÁG. 4 · CHINOMÁTICO · EDICIÓN ÚNICA</span>
+      <span class="text-azul">EL HISTORIAL</span>
+    </div>
+    <div class="filete-doble rodillo mb-6 sm:mb-8"></div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-x-9 gap-y-4 mb-7 imp">
+      <h2 class="lg:col-span-6 font-tit uppercase leading-[.88] tracking-[-.015em] text-[clamp(2rem,5.6vw,4.2rem)]">Lo que he montado</h2>
+      <p class="lg:col-span-6 text-[15px] sm:text-[16px] leading-[1.6] self-end max-w-[54ch]">
+        Los fracasos también están en la tabla. Esto no es una hoja de vida: es el historial
+        completo, con las dos columnas. Y si le sirve el dato, mi papá y mi abuelo también fueron
+        empresarios. Es lo único que hemos sabido hacer.
+      </p>
+    </div>
+
+    <!-- encabezado de tabla -->
+    <div class="hidden md:grid grid-cols-[86px_1.3fr_112px_2fr_130px] bg-negro text-papel3 dato text-[9px]">
+      <div class="px-3 py-2 border-r border-papel3/25">MARCA</div>
+      <div class="px-3 py-2 border-r border-papel3/25">EMPRESA</div>
+      <div class="px-3 py-2 border-r border-papel3/25">PERIODO</div>
+      <div class="px-3 py-2 border-r border-papel3/25">QUÉ ERA</div>
+      <div class="px-3 py-2">CÓMO TERMINÓ</div>
+    </div>
+
+    <div class="border-2 border-negro md:border-t-0 bg-papel3 imp">
+
+      <article class="grid grid-cols-[60px_1fr] md:grid-cols-[86px_1.3fr_112px_2fr_130px] border-b-2 border-negro">
+        <div class="marca bg-white border-r border-negro grid place-items-center p-2"><img src="assets/ignia.png" alt="Logo de Ignia" width="120" height="80" loading="lazy" decoding="async"></div>
+        <div class="px-3 py-3 md:border-r border-negro/25 flex flex-col justify-center">
+          <h3 class="font-tit uppercase text-[clamp(1.15rem,3.2vw,1.75rem)] leading-none">Ignia</h3>
+          <p class="dato text-[9px] text-gris mt-1 md:hidden">2025 — HOY</p>
+        </div>
+        <div class="hidden md:flex items-center px-3 py-3 border-r border-negro/25 dato text-[10px]">2025 — HOY</div>
+        <div class="col-span-2 md:col-span-1 px-3 py-3 border-t md:border-t-0 md:border-r border-negro/25 text-[14px] leading-snug">
+          Un modelo distinto de educación superior. Yo construí el CRM, el sitio y la plataforma de comunidad.
+          <span class="dato text-[9px] text-gris block mt-1.5">RENTABLE DESDE EL PRIMER DÍA · ~30 FELLOWS EN LA PRIMERA COHORTE · EQUIPO DE 5</span>
+        </div>
+        <div class="col-span-2 md:col-span-1 px-3 py-3 border-t md:border-t-0 border-negro/25 bg-azul text-papel3 flex items-center">
+          <span class="dato text-[10px] font-medium">ANDANDO <span class="piloto">●</span></span>
+        </div>
+      </article>
+
+      <article class="grid grid-cols-[60px_1fr] md:grid-cols-[86px_1.3fr_112px_2fr_130px] border-b-2 border-negro">
+        <div class="marca bg-white border-r border-negro grid place-items-center p-2"><img src="assets/finco.png" alt="Logo de Finco" width="120" height="80" loading="lazy" decoding="async"></div>
+        <div class="px-3 py-3 md:border-r border-negro/25 flex flex-col justify-center">
+          <h3 class="font-tit uppercase text-[clamp(1.15rem,3.2vw,1.75rem)] leading-none">Finco</h3>
+          <p class="dato text-[9px] text-gris mt-1 md:hidden">2019 — 2022</p>
+        </div>
+        <div class="hidden md:flex items-center px-3 py-3 border-r border-negro/25 dato text-[10px]">2019 — 2022</div>
+        <div class="col-span-2 md:col-span-1 px-3 py-3 border-t md:border-t-0 md:border-r border-negro/25 text-[14px] leading-snug">
+          Valoración inmobiliaria con datos e inteligencia artificial para América Latina.
+          <span class="dato text-[9px] text-gris block mt-1.5">100.000 REPORTES AL AÑO · VENDIDA A RED ATLAS</span>
+        </div>
+        <div class="col-span-2 md:col-span-1 px-3 py-3 border-t md:border-t-0 border-negro/25 bg-negro text-papel3 flex items-center">
+          <span class="dato text-[10px] font-medium">VENDIDA</span>
+        </div>
+      </article>
+
+      <article class="grid grid-cols-[60px_1fr] md:grid-cols-[86px_1.3fr_112px_2fr_130px] border-b-2 border-negro">
+        <div class="marca bg-white border-r border-negro grid place-items-center p-2.5"><img src="assets/beriblock.png" alt="Logo de Beriblock" width="120" height="80" loading="lazy" decoding="async"></div>
+        <div class="px-3 py-3 md:border-r border-negro/25 flex flex-col justify-center">
+          <h3 class="font-tit uppercase text-[clamp(1.15rem,3.2vw,1.75rem)] leading-none">Beriblock</h3>
+          <p class="dato text-[9px] text-gris mt-1 md:hidden">2018 — 2019</p>
+        </div>
+        <div class="hidden md:flex items-center px-3 py-3 border-r border-negro/25 dato text-[10px]">2018 — 2019</div>
+        <div class="col-span-2 md:col-span-1 px-3 py-3 border-t md:border-t-0 md:border-r border-negro/25 text-[14px] leading-snug">
+          Autenticación de pagarés con blockchain.
+          <span class="dato text-[9px] text-gris block mt-1.5">TECNOLOGÍA BONITA, MERCADO QUE NO EXISTÍA</span>
+        </div>
+        <div class="col-span-2 md:col-span-1 px-3 py-3 border-t md:border-t-0 border-negro/25 flex items-center">
+          <span class="dato text-[10px] font-medium text-rojo line-through decoration-[1.5px]">QUEBRÓ</span>
+        </div>
+      </article>
+
+      <article class="grid grid-cols-[60px_1fr] md:grid-cols-[86px_1.3fr_112px_2fr_130px] border-b-2 border-negro">
+        <div class="marca bg-white border-r border-negro grid place-items-center p-2"><img src="assets/prestagente.png" alt="Logo de PrestaGente" width="120" height="80" loading="lazy" decoding="async"></div>
+        <div class="px-3 py-3 md:border-r border-negro/25 flex flex-col justify-center">
+          <h3 class="font-tit uppercase text-[clamp(1.15rem,3.2vw,1.75rem)] leading-none">Presta<wbr>Gente</h3>
+          <p class="dato text-[9px] text-gris mt-1 md:hidden">2017 — 2019</p>
+        </div>
+        <div class="hidden md:flex items-center px-3 py-3 border-r border-negro/25 dato text-[10px]">2017 — 2019</div>
+        <div class="col-span-2 md:col-span-1 px-3 py-3 border-t md:border-t-0 md:border-r border-negro/25 text-[14px] leading-snug">
+          Libranza entre personas.
+          <span class="dato text-[9px] text-gris block mt-1.5">VENDIDA A TAURUS CAPITAL · SIGUE OPERANDO SIN MÍ</span>
+        </div>
+        <div class="col-span-2 md:col-span-1 px-3 py-3 border-t md:border-t-0 border-negro/25 bg-negro text-papel3 flex items-center">
+          <span class="dato text-[10px] font-medium">VENDIDA</span>
+        </div>
+      </article>
+
+      <article class="grid grid-cols-[60px_1fr] md:grid-cols-[86px_1.3fr_112px_2fr_130px] border-b-2 border-negro">
+        <div class="marca bg-white border-r border-negro grid place-items-center p-2.5"><img src="assets/elpalomo.png" alt="Logo de El Palomo" width="120" height="80" loading="lazy" decoding="async"></div>
+        <div class="px-3 py-3 md:border-r border-negro/25 flex flex-col justify-center">
+          <h3 class="font-tit uppercase text-[clamp(1.15rem,3.2vw,1.75rem)] leading-none">El Palomo</h3>
+          <p class="dato text-[9px] text-gris mt-1 md:hidden">2016 — 2017</p>
+        </div>
+        <div class="hidden md:flex items-center px-3 py-3 border-r border-negro/25 dato text-[10px]">2016 — 2017</div>
+        <div class="col-span-2 md:col-span-1 px-3 py-3 border-t md:border-t-0 md:border-r border-negro/25 text-[14px] leading-snug">
+          Flores por suscripción.
+          <span class="dato text-[9px] text-gris block mt-1.5">FRACASÓ DE MANERA ESPECTACULAR. LA HISTORIA SE LA CUENTO EN LA LLAMADA.</span>
+        </div>
+        <div class="col-span-2 md:col-span-1 px-3 py-3 border-t md:border-t-0 border-negro/25 flex items-center">
+          <span class="dato text-[10px] font-medium text-rojo line-through decoration-[1.5px]">FRACASÓ</span>
+        </div>
+      </article>
+
+      <article class="grid grid-cols-[60px_1fr] md:grid-cols-[86px_1.3fr_112px_2fr_130px] bg-papel2">
+        <div class="border-r border-negro grid place-items-center dato text-[10px] font-medium p-2">R5</div>
+        <div class="px-3 py-3 md:border-r border-negro/25 flex flex-col justify-center">
+          <h3 class="font-tit uppercase text-[clamp(1rem,2.6vw,1.35rem)] leading-none">R5 <span class="dato text-[9px] text-gris">/ COMO EMPLEADO</span></h3>
+        </div>
+        <div class="hidden md:flex items-center px-3 py-3 border-r border-negro/25 dato text-[10px]">EMPLEADO</div>
+        <div class="col-span-2 md:col-span-1 px-3 py-3 border-t md:border-t-0 md:border-r border-negro/25 text-[14px] leading-snug">
+          Dirigí ~40 personas. Construí el pipeline de datos completo y el sistema de modelación de riesgo.
+        </div>
+        <div class="col-span-2 md:col-span-1 px-3 py-3 border-t md:border-t-0 border-negro/25 flex items-center">
+          <span class="dato text-[10px] font-medium">ENTREGADO</span>
+        </div>
+      </article>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-4 border-2 border-t-0 border-negro bg-papel3 mb-11 sm:mb-14 imp">
+      <div class="p-3 sm:p-5 border-r border-negro/25">
+        <p class="font-tit text-[clamp(2rem,6vw,3.2rem)] leading-none cifra">5</p>
+        <p class="dato text-[9px] text-gris mt-1.5 leading-tight">EMPRESAS PROPIAS</p>
+      </div>
+      <div class="p-3 sm:p-5 md:border-r border-negro/25">
+        <p class="font-tit text-[clamp(2rem,6vw,3.2rem)] leading-none cifra">2</p>
+        <p class="dato text-[9px] text-gris mt-1.5 leading-tight">VENDIDAS</p>
+      </div>
+      <div class="p-3 sm:p-5 border-r border-negro/25 border-t md:border-t-0">
+        <p class="font-tit text-[clamp(2rem,6vw,3.2rem)] leading-none text-rojo cifra">2</p>
+        <p class="dato text-[9px] text-gris mt-1.5 leading-tight">QUE SE CAYERON</p>
+      </div>
+      <div class="p-3 sm:p-5 border-t md:border-t-0">
+        <p class="font-tit text-[clamp(2rem,6vw,3.2rem)] leading-none cifra">40</p>
+        <p class="dato text-[9px] text-gris mt-1.5 leading-tight">PERSONAS A CARGO (MÁX.)</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════ PÁG. 5 · CÓMO ME METO ══════════════ -->
+<section id="metodo" data-pag="5" class="border-b-2 border-negro">
+  <div class="mx-auto max-w-[1440px] px-3 sm:px-6 lg:px-10">
+
+    <div class="flex items-baseline justify-between gap-4 dato text-[9px] text-gris pt-3 pb-2">
+      <span>PÁG. 5 · CHINOMÁTICO · EDICIÓN ÚNICA</span>
+      <span class="text-azul">LAS DOS SALIDAS</span>
+    </div>
+    <div class="filete-doble rodillo mb-6 sm:mb-8"></div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-x-9 gap-y-4 mb-7 imp">
+      <h2 class="lg:col-span-6 font-tit uppercase leading-[.88] tracking-[-.015em] text-[clamp(2rem,5.6vw,4.2rem)]">Cómo me meto</h2>
+      <p class="lg:col-span-6 text-[15px] sm:text-[16px] leading-[1.6] self-end max-w-[54ch]">
+        Dos maneras, no hay más. Cada una tiene su botón, su cupo y su gente. Escoja la suya
+        y escríbame por esa; si se equivocó, yo lo mando a la otra.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 border-2 border-negro bg-negro gap-[2px] imp">
+
+      <!-- A · CONSULTORÍA -->
+      <article class="bg-papel3 flex flex-col">
+        <div class="bg-negro text-papel3 px-4 py-3 flex items-baseline justify-between gap-3">
+          <h3 class="font-tit uppercase text-[clamp(1.4rem,4.2vw,2.3rem)] leading-none">A · Consultoría</h3>
+          <span class="dato text-[9px] opacity-70 flex-none">SALIDA 01</span>
+        </div>
+        <div class="p-4 sm:p-6 flex-1 flex flex-col">
+          <p class="font-news font-medium text-[clamp(1.15rem,2.6vw,1.45rem)] leading-[1.2] mb-4">
+            De cero a uno, y tecnología que su gente sí abre el lunes.
+          </p>
+          <p class="text-[15px] leading-[1.6] mb-5">
+            Entro a su empresa, encuentro dónde está la persona que hoy sostiene el proceso a mano,
+            y construyo la herramienta que la releva de esa tarea.
+            <b>Yo defino la estrategia y yo mismo la construyo.</b> No le paso el trabajo a un tercero.
+          </p>
+
+          <dl class="text-[13px] border border-negro">
+            <div class="grid grid-cols-[80px_1fr] border-b border-negro/25"><dt class="dato text-[9px] text-gris px-2.5 py-2.5 border-r border-negro/25">PARA</dt><dd class="px-2.5 py-2.5 leading-snug">Dueños de empresa colombiana de toda la vida: ropa, restaurantes, retail, distribución, importación, servicios. De 5 a 40 empleados. Mejor si usted no es técnico.</dd></div>
+            <div class="grid grid-cols-[80px_1fr] border-b border-negro/25"><dt class="dato text-[9px] text-gris px-2.5 py-2.5 border-r border-negro/25">ENTRADA</dt><dd class="px-2.5 py-2.5 leading-snug">Un proceso que hoy sostiene una persona a pulso.</dd></div>
+            <div class="grid grid-cols-[80px_1fr] border-b border-negro/25"><dt class="dato text-[9px] text-gris px-2.5 py-2.5 border-r border-negro/25">CÓMO</dt><dd class="px-2.5 py-2.5 leading-snug">Estrategia de cero a uno y desarrollo con inteligencia artificial. Uso agentes tipo Claude Code también para lo que no es programar.</dd></div>
+            <div class="grid grid-cols-[80px_1fr] border-b border-negro/25"><dt class="dato text-[9px] text-gris px-2.5 py-2.5 border-r border-negro/25">SALIDA</dt><dd class="px-2.5 py-2.5 leading-snug">Algo andando que su gente usa sin usted encima.</dd></div>
+            <div class="grid grid-cols-[80px_1fr]"><dt class="dato text-[9px] text-rojo px-2.5 py-2.5 border-r border-negro/25">NO ES</dt><dd class="px-2.5 py-2.5 leading-snug">Un PDF con recomendaciones, ni un diagnóstico de ochenta páginas.</dd></div>
+          </dl>
+
+          <div class="mt-auto pt-6">
+            <div class="border border-negro p-3 mb-4">
+              <div class="flex items-center justify-between dato text-[10px] mb-2">
+                <span class="text-gris">CUPOS OCUPADOS</span><span class="font-medium">2 DE 4</span>
+              </div>
+              <div class="flex gap-1.5" role="img" aria-label="Dos de cuatro cupos ocupados">
+                <span class="h-5 flex-1 bg-negro"></span><span class="h-5 flex-1 bg-negro"></span>
+                <span class="h-5 flex-1 border border-negro"></span><span class="h-5 flex-1 border border-negro"></span>
+              </div>
+              <p class="dato text-[8.5px] text-gris mt-2 leading-relaxed">MÁXIMO 4 AL TIEMPO. NO ES ESCASEZ INVENTADA: ES QUE CONSTRUYO YO.</p>
+            </div>
+            <a href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20tengo%20una%20empresa%20de%20___%20y%20quiero%20destrabar%20una%20operaci%C3%B3n%20que%20hoy%20se%20hace%20a%20mano." target="_blank" rel="noopener"
+               class="boton boton-negro bg-negro text-papel3 border-2 border-negro dato text-[11px] font-medium px-5 py-4 w-full inline-flex items-center justify-center gap-2 text-center">
+              QUIERO DESTRABAR MI OPERACIÓN
+              <svg viewBox="0 0 24 24" class="w-4 h-4 flex-none" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><path d="M4 12h14M12.5 6.5 19 12l-6.5 5.5"/></svg>
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- B · MENTORÍA -->
+      <article class="bg-papel3 flex flex-col">
+        <div class="bg-negro text-papel3 px-4 py-3 flex items-baseline justify-between gap-3">
+          <h3 class="font-tit uppercase text-[clamp(1.4rem,4.2vw,2.3rem)] leading-none">B · Mentoría</h3>
+          <span class="dato text-[9px] opacity-70 flex-none">SALIDA 02</span>
+        </div>
+        <div class="p-4 sm:p-6 flex-1 flex flex-col">
+          <p class="font-news font-medium text-[clamp(1.15rem,2.6vw,1.45rem)] leading-[1.2] mb-4">
+            Para el que está arrancando y necesita que alguien lo empuje todas las semanas.
+          </p>
+          <p class="text-[15px] leading-[1.6] mb-5">
+            Nos vemos, usted sale con una tarea, y a la siguiente revisamos si la hizo.
+            Si no la hizo, hablamos de por qué no la hizo. <b>Ahí suele estar el negocio de verdad.</b>
+            No es un café ni una charla de motivación.
+          </p>
+
+          <dl class="text-[13px] border border-negro">
+            <div class="grid grid-cols-[80px_1fr] border-b border-negro/25"><dt class="dato text-[9px] text-gris px-2.5 py-2.5 border-r border-negro/25">PARA</dt><dd class="px-2.5 py-2.5 leading-snug">Cualquiera que esté arrancando algo: negocio propio, fundación, startup.</dd></div>
+            <div class="grid grid-cols-[80px_1fr] border-b border-negro/25"><dt class="dato text-[9px] text-gris px-2.5 py-2.5 border-r border-negro/25">CADENCIA</dt><dd class="px-2.5 py-2.5 leading-snug">Semanal, uno a uno, con tarea práctica. WhatsApp entre sesiones.</dd></div>
+            <div class="grid grid-cols-[80px_1fr] border-b border-negro/25"><dt class="dato text-[9px] text-gris px-2.5 py-2.5 border-r border-negro/25">REGISTRO</dt><dd class="px-2.5 py-2.5 leading-snug">7 mentoreados hasta hoy. Es un número pequeño y así lo digo.</dd></div>
+            <div class="grid grid-cols-[80px_1fr] border-b border-negro/25"><dt class="dato text-[9px] text-gris px-2.5 py-2.5 border-r border-negro/25">REGLA</dt><dd class="px-2.5 py-2.5 leading-snug">Si dos semanas seguidas no hizo las tareas, paramos. Sin resentimientos, pero paramos.</dd></div>
+            <div class="grid grid-cols-[80px_1fr]"><dt class="dato text-[9px] text-azul px-2.5 py-2.5 border-r border-negro/25">OJO</dt><dd class="px-2.5 py-2.5 leading-snug">Si lo suyo es formarse dentro de un programa con cohorte, currículo y comunidad, eso ya existe: es el Action Lab de Ignia, y probablemente le sirva más. Esto de acá es a solas, conmigo.</dd></div>
+          </dl>
+
+          <div class="mt-auto pt-6">
+            <div class="border border-negro p-3 mb-4">
+              <div class="flex items-center justify-between dato text-[10px] mb-2">
+                <span class="text-gris">CUPOS OCUPADOS</span><span class="font-medium">3 DE 5</span>
+              </div>
+              <div class="flex gap-1.5" role="img" aria-label="Tres de cinco cupos ocupados">
+                <span class="h-5 flex-1 bg-negro"></span><span class="h-5 flex-1 bg-negro"></span><span class="h-5 flex-1 bg-negro"></span>
+                <span class="h-5 flex-1 border border-negro"></span><span class="h-5 flex-1 border border-negro"></span>
+              </div>
+              <p class="dato text-[8.5px] text-gris mt-2 leading-relaxed">MÁXIMO 5. CUANDO SE LLENA, SE LLENÓ, Y SE LO DIGO DE UNA.</p>
+            </div>
+            <a href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20estoy%20arrancando%20___%20y%20quiero%20mentor%C3%ADa%20semanal." target="_blank" rel="noopener"
+               class="boton boton-azul border-2 border-negro dato text-[11px] font-medium px-5 py-4 w-full inline-flex items-center justify-center gap-2 text-center">
+              QUIERO MENTORÍA
+              <svg viewBox="0 0 24 24" class="w-4 h-4 flex-none" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><path d="M4 12h14M12.5 6.5 19 12l-6.5 5.5"/></svg>
+            </a>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- C · CHARLAS: subproducto -->
+    <article id="charlas" class="mt-6 border border-negro bg-papel2 imp">
+      <div class="rayado-azul h-2.5" aria-hidden="true"></div>
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-x-8 gap-y-6 p-4 sm:p-6">
+        <div class="lg:col-span-5 flex flex-col">
+          <p class="dato text-[9px] text-gris border border-negro/40 inline-block w-fit px-2 py-1 mb-3">SUBPRODUCTO — NO ES UN PRODUCTO</p>
+          <h3 class="font-tit uppercase text-[clamp(1.6rem,4.4vw,2.6rem)] leading-none">C · Charlas</h3>
+          <p class="text-[15px] leading-[1.6] mt-4">
+            Esto no se lo vendo como servicio: es la forma en que la gente me conoce, y lo digo
+            sin pena. Me han contratado conferencias, empresas y universidades. Hablo de adopción
+            de tecnología e inteligencia artificial, de emprender, de mentalidad y de cómo cuadrar
+            el trabajo con la vida. Después de verme hablar una hora, usted ya sabe si quiere
+            trabajar conmigo o no.
+          </p>
+          <p class="text-[14px] leading-[1.55] mt-3 text-gris">
+            Lo que no hago: charlas de ciencia de datos ni de cultura organizacional. Me las piden
+            y digo que no. Hablo de lo que he hecho, no de lo que he leído.
+          </p>
+          <div class="mt-auto pt-5">
+            <a href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20quiero%20invitarlo%20a%20dar%20una%20charla%20en%20___." target="_blank" rel="noopener"
+               class="boton boton-azul border border-negro dato text-[10px] font-medium px-5 py-3 inline-flex items-center gap-2">
+              INVITARLO A UNA CHARLA
+              <svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><path d="M4 12h14M12.5 6.5 19 12l-6.5 5.5"/></svg>
+            </a>
+          </div>
+        </div>
+        <figure class="lg:col-span-7">
+          <div class="border border-negro bg-negro">
+            <div class="relative w-full" style="padding-top:56.25%">
+              <iframe class="absolute inset-0 w-full h-full" src="https://www.youtube-nocookie.com/embed/F9t9f5Et_04"
+                      title="Negocios Aburridos e Innovación — Salomón Muriel en el podcast Ventaja"
+                      allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+            </div>
+          </div>
+          <figcaption class="dato text-[9px] text-gris mt-2 leading-relaxed">
+            «NEGOCIOS ABURRIDOS E INNOVACIÓN» · PODCAST VENTAJA · GRABACIÓN COMPLETA, SIN EDITAR PARA ESTA PÁGINA.
+          </figcaption>
+        </figure>
+      </div>
+    </article>
+
+    <!-- LA PROGRAMACIÓN -->
+    <div id="programacion" class="mt-11 sm:mt-16 pb-11 sm:pb-16">
+      <div class="border-t-[3px] border-negro pt-5 mb-7 imp">
+        <h3 class="font-tit uppercase leading-[.9] tracking-[-.015em] text-[clamp(1.6rem,4.4vw,3rem)] max-w-[24ch]">
+          Qué pasa, en concreto, si trabajamos juntos
+        </h3>
+        <p class="text-[15px] sm:text-[16px] leading-[1.6] mt-3 max-w-[58ch]">
+          Esta parte no cambia de un cliente a otro. Lo único que cambia es qué proceso metemos
+          adentro. Y las semanas son semanas, no «fases».
+        </p>
+      </div>
+
+      <!-- diagrama de barras -->
+      <div class="border border-negro bg-papel3 p-4 sm:p-6 imp">
+        <div class="hidden sm:grid grid-cols-[9.5rem_1fr] gap-4 mb-2">
+          <span class="dato text-[9px] text-gris">FRENTE</span>
+          <div class="grid grid-cols-[repeat(16,minmax(0,1fr))] dato text-[9px] text-gris">
+            <span class="col-span-1">S1</span><span class="col-start-4">S4</span><span class="col-start-8">S8</span><span class="col-start-12">S12</span><span class="col-start-16 text-right">S16</span>
+          </div>
+        </div>
+
+        <div class="space-y-2.5">
+          <div class="sm:grid sm:grid-cols-[9.5rem_1fr] sm:gap-4 sm:items-center">
+            <p class="dato text-[10px] mb-1.5 sm:mb-0">ENTENDER</p>
+            <div class="grid grid-cols-[repeat(16,minmax(0,1fr))] h-7 bg-papel border border-negro/30">
+              <span class="bg-negro" style="grid-column:1 / span 2"></span>
+            </div>
+          </div>
+          <div class="sm:grid sm:grid-cols-[9.5rem_1fr] sm:gap-4 sm:items-center">
+            <p class="dato text-[10px] mb-1.5 sm:mb-0">DIAGNÓSTICO</p>
+            <div class="grid grid-cols-[repeat(16,minmax(0,1fr))] h-7 bg-papel border border-negro/30">
+              <span class="bg-rojo" style="grid-column:2 / span 2"></span>
+            </div>
+          </div>
+          <div class="sm:grid sm:grid-cols-[9.5rem_1fr] sm:gap-4 sm:items-center">
+            <p class="dato text-[10px] mb-1.5 sm:mb-0">CONSTRUIR</p>
+            <div class="grid grid-cols-[repeat(16,minmax(0,1fr))] h-7 bg-papel border border-negro/30">
+              <span class="bg-azul" style="grid-column:4 / span 13"></span>
+            </div>
+          </div>
+        </div>
+        <p class="dato text-[8.5px] text-gris mt-3 sm:hidden">CADA CASILLA ES UNA SEMANA. DIECISÉIS EN TOTAL.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 border-2 border-t-0 border-negro bg-negro gap-[2px] imp">
+        <div class="bg-papel3 p-4 sm:p-5">
+          <p class="dato text-[9px] text-gris">SEMANAS 1 A 2</p>
+          <h4 class="font-tit uppercase text-[clamp(1.15rem,3vw,1.5rem)] leading-tight mt-1">Entender la operación</h4>
+          <p class="text-[14px] leading-[1.55] mt-2">Hablo con la gente que la ejecuta, no solo con usted. Miro cómo se hace de verdad, no cómo dice el manual que se hace.</p>
+        </div>
+        <div class="bg-papel3 p-4 sm:p-5">
+          <p class="dato text-[9px] text-gris">SEMANAS 2 A 3</p>
+          <h4 class="font-tit uppercase text-[clamp(1.15rem,3vw,1.5rem)] leading-tight mt-1">Diagnóstico</h4>
+          <p class="text-[14px] leading-[1.55] mt-2">Un plan corto, el único cuello de botella que vale la pena atacar primero, y una primera cosa ya funcionando. Compromiso acotado: si no le aporta, ahí paramos.</p>
+        </div>
+        <div class="bg-papel3 p-4 sm:p-5">
+          <p class="dato text-[9px] text-gris">SEMANAS 4 A 16</p>
+          <h4 class="font-tit uppercase text-[clamp(1.15rem,3vw,1.5rem)] leading-tight mt-1">Construir</h4>
+          <p class="text-[14px] leading-[1.55] mt-2">La herramienta interna, el CRM, la automatización, los flujos con IA. Termina con su equipo entrenado usándolo. Después, si quiere, acompañamiento mensual liviano.</p>
+        </div>
+      </div>
+
+      <p class="text-[15px] sm:text-[16.5px] leading-[1.6] mt-6 max-w-[62ch] imp">
+        Al final no le queda un informe. Le queda <b>algo prendido, funcionando, y su equipo
+        sabiendo usarlo.</b> Si le entrego un documento bonito y nadie lo abre, los dos perdimos
+        el semestre.
+      </p>
+
+      <!-- una semana cualquiera -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-x-9 gap-y-6 mt-10 imp">
+        <div class="lg:col-span-5">
+          <h4 class="font-tit uppercase text-[clamp(1.35rem,3.4vw,2rem)] leading-tight">Una semana cualquiera del diagnóstico</h4>
+          <p class="text-[15px] leading-[1.6] mt-3">
+            Esto es lo que hago yo mientras usted sigue atendiendo su negocio. No le pido que llene
+            formatos, no le mando tareas y no lo cito a talleres de tres horas. Reviso, pregunto,
+            construyo y vuelvo con algo hecho.
+          </p>
+        </div>
+        <div class="lg:col-span-7">
+          <div class="border-2 border-negro bg-papel3">
+            <div class="bg-negro text-papel3 dato text-[9px] px-3 py-2 flex justify-between">
+              <span>SEMANA 2 DEL DIAGNÓSTICO</span><span>RESPONSABLE: SALOMÓN</span>
+            </div>
+            <ul>
+              <li class="flex gap-3 items-start px-3 py-3 border-b border-negro/20">
+                <span class="dato text-[9px] text-gris w-8 flex-none pt-1">LUN</span>
+                <svg viewBox="0 0 16 16" class="w-4 h-4 flex-none text-azul mt-0.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true"><path d="M2.5 8.5 6.5 12.5 13.5 3.5"/></svg>
+                <span class="text-[14px] leading-snug">Entrevistar a seis personas del equipo, no solo al dueño.</span>
+              </li>
+              <li class="flex gap-3 items-start px-3 py-3 border-b border-negro/20">
+                <span class="dato text-[9px] text-gris w-8 flex-none pt-1">MAR</span>
+                <svg viewBox="0 0 16 16" class="w-4 h-4 flex-none text-azul mt-0.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true"><path d="M2.5 8.5 6.5 12.5 13.5 3.5"/></svg>
+                <span class="text-[14px] leading-snug">Sentarme un día entero en la operación a mirar cómo se hace de verdad.</span>
+              </li>
+              <li class="flex gap-3 items-start px-3 py-3 border-b border-negro/20">
+                <span class="dato text-[9px] text-gris w-8 flex-none pt-1">MIÉ</span>
+                <svg viewBox="0 0 16 16" class="w-4 h-4 flex-none text-azul mt-0.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true"><path d="M2.5 8.5 6.5 12.5 13.5 3.5"/></svg>
+                <span class="text-[14px] leading-snug">Sacar el inventario de todo lo que hoy vive en Excel y en WhatsApp.</span>
+              </li>
+              <li class="flex gap-3 items-start px-3 py-3 border-b border-negro/20">
+                <span class="dato text-[9px] text-gris w-8 flex-none pt-1">JUE</span>
+                <svg viewBox="0 0 16 16" class="w-4 h-4 flex-none text-azul mt-0.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true"><path d="M2.5 8.5 6.5 12.5 13.5 3.5"/></svg>
+                <span class="text-[14px] leading-snug">Escribir el cuello de botella en una frase que quepa en un mensaje.</span>
+              </li>
+              <li class="flex gap-3 items-start px-3 py-3">
+                <span class="dato text-[9px] text-gris w-8 flex-none pt-1">VIE</span>
+                <svg viewBox="0 0 16 16" class="w-4 h-4 flex-none text-azul mt-0.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true"><path d="M2.5 8.5 6.5 12.5 13.5 3.5"/></svg>
+                <span class="text-[14px] leading-snug">Dejar prendido el primer flujo automatizado, ese mismo viernes.</span>
+              </li>
+            </ul>
+            <div class="bg-papel2 border-t border-negro dato text-[9px] px-3 py-2 flex flex-wrap justify-between gap-2">
+              <span>5 DE 5 HECHAS</span><span class="text-azul">NINGUNA LE TOCÓ A USTED. PARA ESO ME LLAMA.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════ PÁG. 6 · LA ENTREGA Y LOS CUPOS ══════════════ -->
+<section id="entrega" data-pag="6" class="border-b-2 border-negro bg-papel2">
+  <div class="mx-auto max-w-[1440px] px-3 sm:px-6 lg:px-10">
+
+    <div class="flex items-baseline justify-between gap-4 dato text-[9px] text-gris pt-3 pb-2">
+      <span>PÁG. 6 · CHINOMÁTICO · EDICIÓN ÚNICA</span>
+      <span class="text-azul">LA ENTREGA</span>
+    </div>
+    <div class="filete-doble rodillo mb-6 sm:mb-8"></div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-x-9 gap-y-4 mb-7 imp">
+      <h2 class="lg:col-span-6 font-tit uppercase leading-[.88] tracking-[-.015em] text-[clamp(1.9rem,5.2vw,3.9rem)]">Qué le queda cuando yo salgo</h2>
+      <p class="lg:col-span-6 text-[15px] sm:text-[16px] leading-[1.6] self-end max-w-[54ch]">
+        No es un informe. Es algo prendido, con los datos de verdad de su empresa adentro,
+        que su gente ya está usando el día que me voy.
+      </p>
+    </div>
+
+    <ol class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 border-2 border-negro bg-negro gap-[2px] imp">
+      <li class="bg-papel3 p-4 sm:p-5">
+        <span class="dato text-[10px] text-azul">01</span>
+        <h3 class="font-tit uppercase text-[clamp(1.1rem,2.8vw,1.4rem)] leading-tight mt-1">La herramienta funcionando</h3>
+        <p class="text-[14px] leading-[1.55] mt-2">Con sus datos reales cargados, no con datos de ejemplo. El día de la entrega ya se está usando para trabajar.</p>
+      </li>
+      <li class="bg-papel3 p-4 sm:p-5">
+        <span class="dato text-[10px] text-azul">02</span>
+        <h3 class="font-tit uppercase text-[clamp(1.1rem,2.8vw,1.4rem)] leading-tight mt-1">El proceso en una página</h3>
+        <p class="text-[14px] leading-[1.55] mt-2">Qué quedó automático, qué quedó manual a propósito, y por qué. Una hoja, no un documento de sesenta.</p>
+      </li>
+      <li class="bg-papel3 p-4 sm:p-5">
+        <span class="dato text-[10px] text-azul">03</span>
+        <h3 class="font-tit uppercase text-[clamp(1.1rem,2.8vw,1.4rem)] leading-tight mt-1">Su gente entrenada</h3>
+        <p class="text-[14px] leading-[1.55] mt-2">Y la grabación del entrenamiento, para el que entre a trabajar dentro de seis meses y nadie tenga que repetirlo.</p>
+      </li>
+      <li class="bg-papel3 p-4 sm:p-5">
+        <span class="dato text-[10px] text-azul">04</span>
+        <h3 class="font-tit uppercase text-[clamp(1.1rem,2.8vw,1.4rem)] leading-tight mt-1">Todo a nombre suyo</h3>
+        <p class="text-[14px] leading-[1.55] mt-2">El código, las cuentas, las claves y los accesos quedan de la empresa. Nada queda a nombre mío.</p>
+      </li>
+      <li class="bg-papel3 p-4 sm:p-5">
+        <span class="dato text-[10px] text-azul">05</span>
+        <h3 class="font-tit uppercase text-[clamp(1.1rem,2.8vw,1.4rem)] leading-tight mt-1">El tiempo, medido</h3>
+        <p class="text-[14px] leading-[1.55] mt-2">Cronometramos el proceso antes y después. Le entrego el número, no la sensación de que mejoró.</p>
+      </li>
+      <li class="bg-papel3 p-4 sm:p-5">
+        <span class="dato text-[10px] text-azul">06</span>
+        <h3 class="font-tit uppercase text-[clamp(1.1rem,2.8vw,1.4rem)] leading-tight mt-1">Dos revisiones después</h3>
+        <p class="text-[14px] leading-[1.55] mt-2">Al mes y a los dos meses de haber entregado. Ahí se ajusta lo que se haya torcido con el uso real.</p>
+      </li>
+    </ol>
+
+    <p class="border-2 border-t-0 border-negro bg-papel p-4 text-[14px] leading-[1.6] imp">
+      <span class="dato text-[9px] text-rojo block mb-1.5">LA LETRA MENUDA, EN GRANDE</span>
+      Y lo que <b>no</b>: no le cambio la empresa entera —es un proceso, uno—, no le armo ni le
+      contrato el equipo de tecnología, no le vendo licencias de nada, no me gano comisión de
+      ningún software, y no me quedo pegado a usted para siempre. Si lo que necesita ya existe y
+      funciona, se lo digo y no se lo construyo. El resto de lo que no hago está en la
+      <a href="#chinometro" class="underline decoration-rojo decoration-[1.5px] underline-offset-2 hover:text-rojo">parte B del cupón, en la página 2</a>.
+    </p>
+
+    <!-- ─── REGISTRO DE CUPOS ─── -->
+    <div id="cupos" class="mt-12 sm:mt-16">
+      <div class="border-t-[3px] border-negro pt-5 mb-6 imp">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-x-9 gap-y-3">
+          <h3 class="lg:col-span-6 font-tit uppercase leading-[.9] tracking-[-.015em] text-[clamp(1.7rem,4.6vw,3.2rem)]">El registro de cupos</h3>
+          <p class="lg:col-span-6 text-[15px] leading-[1.6] self-end max-w-[54ch]">
+            Nueve renglones en total y no hay más. Los ocupados son reales y están andando hoy.
+            Cuando se llenan, le digo que están llenos: no lo meto en una lista de espera.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 imp">
+
+        <!-- consultoría -->
+        <div class="border-2 border-negro bg-papel3">
+          <div class="bg-negro text-papel3 dato text-[9px] px-3 py-2 flex justify-between">
+            <span>CONSULTORÍA · 4 RENGLONES</span><span>2 OCUPADOS</span>
+          </div>
+          <ul class="dato text-[10px]">
+            <li class="grid grid-cols-[34px_92px_1fr] items-center border-b border-negro/20">
+              <span class="px-2 py-3 text-gris">01</span>
+              <span class="px-2 py-3 text-rojo font-medium">EN CURSO</span>
+              <span class="px-2 py-3 normal-case tracking-normal font-news text-[13.5px] text-gris">[nombre reservado]</span>
+            </li>
+            <li class="grid grid-cols-[34px_92px_1fr] items-center border-b border-negro/20">
+              <span class="px-2 py-3 text-gris">02</span>
+              <span class="px-2 py-3 text-rojo font-medium">EN CURSO</span>
+              <span class="px-2 py-3 normal-case tracking-normal font-news text-[13.5px] text-gris">[nombre reservado]</span>
+            </li>
+            <li class="grid grid-cols-[34px_92px_1fr] items-center border-b border-negro/20 bg-papel2">
+              <span class="px-2 py-3 text-gris">03</span>
+              <span class="px-2 py-3 text-azul font-medium">LIBRE</span>
+              <a href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20vi%20que%20hay%20cupo%20de%20consultor%C3%ADa%20y%20quiero%20contarle%20mi%20caso." target="_blank" rel="noopener" class="px-2 py-3 underline decoration-azul decoration-[1.5px] underline-offset-2 hover:text-azul">TOMARLO</a>
+            </li>
+            <li class="grid grid-cols-[34px_92px_1fr] items-center bg-papel2">
+              <span class="px-2 py-3 text-gris">04</span>
+              <span class="px-2 py-3 text-azul font-medium">LIBRE</span>
+              <a href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20vi%20que%20hay%20cupo%20de%20consultor%C3%ADa%20y%20quiero%20contarle%20mi%20caso." target="_blank" rel="noopener" class="px-2 py-3 underline decoration-azul decoration-[1.5px] underline-offset-2 hover:text-azul">TOMARLO</a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- mentoría -->
+        <div class="border-2 border-negro bg-papel3">
+          <div class="bg-negro text-papel3 dato text-[9px] px-3 py-2 flex justify-between">
+            <span>MENTORÍA · 5 RENGLONES</span><span>3 OCUPADOS</span>
+          </div>
+          <ul class="dato text-[10px]">
+            <li class="grid grid-cols-[34px_92px_1fr] items-center border-b border-negro/20">
+              <span class="px-2 py-3 text-gris">01</span><span class="px-2 py-3 text-rojo font-medium">EN CURSO</span>
+              <span class="px-2 py-3 normal-case tracking-normal font-news text-[13.5px] text-gris">[nombre reservado]</span>
+            </li>
+            <li class="grid grid-cols-[34px_92px_1fr] items-center border-b border-negro/20">
+              <span class="px-2 py-3 text-gris">02</span><span class="px-2 py-3 text-rojo font-medium">EN CURSO</span>
+              <span class="px-2 py-3 normal-case tracking-normal font-news text-[13.5px] text-gris">[nombre reservado]</span>
+            </li>
+            <li class="grid grid-cols-[34px_92px_1fr] items-center border-b border-negro/20">
+              <span class="px-2 py-3 text-gris">03</span><span class="px-2 py-3 text-rojo font-medium">EN CURSO</span>
+              <span class="px-2 py-3 normal-case tracking-normal font-news text-[13.5px] text-gris">[nombre reservado]</span>
+            </li>
+            <li class="grid grid-cols-[34px_92px_1fr] items-center border-b border-negro/20 bg-papel2">
+              <span class="px-2 py-3 text-gris">04</span><span class="px-2 py-3 text-azul font-medium">LIBRE</span>
+              <a href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20vi%20que%20hay%20cupo%20de%20mentor%C3%ADa%20y%20quiero%20postularme." target="_blank" rel="noopener" class="px-2 py-3 underline decoration-azul decoration-[1.5px] underline-offset-2 hover:text-azul">POSTULARME</a>
+            </li>
+            <li class="grid grid-cols-[34px_92px_1fr] items-center bg-papel2">
+              <span class="px-2 py-3 text-gris">05</span><span class="px-2 py-3 text-azul font-medium">LIBRE</span>
+              <a href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20vi%20que%20hay%20cupo%20de%20mentor%C3%ADa%20y%20quiero%20postularme." target="_blank" rel="noopener" class="px-2 py-3 underline decoration-azul decoration-[1.5px] underline-offset-2 hover:text-azul">POSTULARME</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="dato text-[9px] text-gris mt-3 leading-relaxed imp">
+        LOS RENGLONES EN CURSO SON REALES: HOY TENGO 3 MENTOREADOS Y 2 CONSULTORÍAS ANDANDO.
+        LOS NOMBRES VAN AHÍ CUANDO LES PIDA PERMISO; MIENTRAS TANTO LOS DEJO EN BLANCO A PROPÓSITO.
+        ACTUALIZADO EL 6 DE SEPTIEMBRE DE 2026.
+      </p>
+
+      <!-- por qué hay tan pocos -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-x-9 gap-y-7 mt-11 sm:mt-14 pb-11 sm:pb-16">
+        <div class="lg:col-span-7 imp">
+          <h3 class="font-tit uppercase leading-[.9] tracking-[-.015em] text-[clamp(1.7rem,4.4vw,3rem)] max-w-[18ch]">Por qué hay tan pocos cupos</h3>
+          <p class="capital text-[15px] sm:text-[16.5px] leading-[1.6] mt-5 max-w-[60ch]">
+            Porque esto no es mi trabajo principal y no quiero que lo sea. De lunes a viernes
+            construyo Ignia. Tengo dos mellizos de cuatro años, Franco y Luca, y ellos definen mi
+            calendario, no al revés.
+          </p>
+          <p class="text-[15px] sm:text-[16.5px] leading-[1.6] mt-4 max-w-[60ch]">
+            Salgo a correr —una media maratón en 2:10, que no es buen tiempo, pero la corrí
+            completa— y los fines de semana estoy en el taller o encendiendo una fogata fuera de la
+            ciudad. Si le vendiera cupo a todo el que me escribe, le estaría vendiendo mi cansancio.
+            <b>Prefiero atender pocos y atenderlos bien.</b> Por eso la lista de arriba es corta y
+            los números son de verdad.
+          </p>
+
+          <div class="mt-6 border border-negro bg-papel3 p-4 max-w-[52ch]">
+            <p class="dato text-[9px] text-gris mb-2.5">SUELTOS</p>
+            <ul class="text-[14px] leading-[1.5] space-y-2">
+              <li class="flex gap-2.5"><span class="text-azul flex-none">—</span><span>Celebro el cumpleaños en una fecha distinta a la real, a propósito. Las convenciones se pueden mover.</span></li>
+              <li class="flex gap-2.5"><span class="text-azul flex-none">—</span><span>Tengo rack de herramientas e impresora 3D. Si algo se puede arreglar en la casa, se arregla en la casa.</span></li>
+              <li class="flex gap-2.5"><span class="text-azul flex-none">—</span><span>Publico un medidor de felicidad en mi sitio personal. Si va a medir el negocio, mídase usted también.</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="lg:col-span-5 imp">
+          <div class="grid grid-cols-2 gap-[2px] bg-negro border-2 border-negro">
+            <figure class="bg-papel3">
+              <div class="medio medio-fino aspect-square"><img src="assets/marathon.jpg" alt="Salomón mostrando la medalla al terminar la media maratón de Bogotá, con el dorsal 15154." width="600" height="600" loading="lazy" decoding="async"></div>
+              <figcaption class="dato text-[8.5px] text-gris px-2 py-1.5">DORSAL 15154. LLEGÓ.</figcaption>
+            </figure>
+            <figure class="bg-papel3">
+              <div class="medio medio-fino aspect-square"><img src="assets/miami.jpg" alt="Salomón con su familia en la playa, bajo una sombrilla." width="600" height="599" loading="lazy" decoding="async"></div>
+              <figcaption class="dato text-[8.5px] text-gris px-2 py-1.5">LOS QUE MANDAN EN LA AGENDA.</figcaption>
+            </figure>
+            <figure class="bg-papel3">
+              <div class="medio medio-fino aspect-square"><img src="assets/chicago.jpg" alt="Salomón y su esposa cargando a los mellizos en hombros, frente a un rascacielos." width="300" height="400" loading="lazy" decoding="async"></div>
+              <figcaption class="dato text-[8.5px] text-gris px-2 py-1.5">DE VIAJE, CON PESO ENCIMA.</figcaption>
+            </figure>
+            <figure class="bg-papel3">
+              <div class="medio medio-fino aspect-square"><img src="assets/bonfire.jpeg" alt="Fogata encendida al anochecer, fuera de la ciudad." width="600" height="600" loading="lazy" decoding="async"></div>
+              <figcaption class="dato text-[8.5px] text-gris px-2 py-1.5">DONDE SE PIENSAN LAS COSAS.</figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════ PÁG. 7 · TESTIMONIOS Y CONSULTORIO ══════════════ -->
+<section id="testimonios" data-pag="7" class="border-b-2 border-negro">
+  <div class="mx-auto max-w-[1440px] px-3 sm:px-6 lg:px-10">
+
+    <div class="flex items-baseline justify-between gap-4 dato text-[9px] text-gris pt-3 pb-2">
+      <span>PÁG. 7 · CHINOMÁTICO · EDICIÓN ÚNICA</span>
+      <span class="text-rojo">ESPACIO RESERVADO</span>
+    </div>
+    <div class="filete-doble rodillo mb-6 sm:mb-8"></div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-x-9 gap-y-4 mb-6 imp">
+      <h2 class="lg:col-span-5 font-tit uppercase leading-[.88] tracking-[-.015em] text-[clamp(2rem,5.6vw,4.2rem)]">Testimonios</h2>
+      <div class="lg:col-span-7 self-end">
+        <p class="text-[15px] sm:text-[16px] leading-[1.6] max-w-[58ch]">
+          <b>Todavía no le he pedido testimonio a nadie.</b> Voy a conseguir dos, tres o cuatro
+          de clientes reales. Este espacio está reservado y lo dejo montado para que se vea cómo
+          va a quedar cuando existan.
+        </p>
+        <p class="text-[15px] leading-[1.6] mt-3 max-w-[58ch] text-rojo">
+          Todo lo que hay abajo es texto de relleno, con el largo y el ritmo que va a tener el de
+          verdad. Ninguna de estas frases la dijo una persona. Los nombres van entre corchetes a
+          propósito, para que sea imposible confundirlos con algo cierto.
+        </p>
+      </div>
+    </div>
+
+    <!-- bloque de muestra -->
+    <div class="relative border-2 border-rojo bg-papel3 imp">
+      <div class="rayado h-3 border-b border-rojo/50" aria-hidden="true"></div>
+
+      <div class="absolute inset-0 z-20 grid place-items-center pointer-events-none overflow-hidden" aria-hidden="true">
+        <span class="font-tit uppercase text-rojo text-[clamp(3.5rem,15vw,11rem)] leading-none opacity-[.17] tracking-[.02em]"
+              style="transform:rotate(-11deg); -webkit-text-stroke:2px currentColor; color:transparent">MUESTRA</span>
+      </div>
+
+      <div class="flex flex-wrap items-center justify-between gap-3 px-4 py-3 border-b border-rojo/40 bg-rojo/[.06] relative z-10">
+        <p class="dato text-[10px] font-medium text-rojo">MUESTRA · SIN FIRMAR · NO PUBLICABLE</p>
+        <p class="dato text-[9px] text-rojo/85">TEXTO DE RELLENO PARA EVALUAR EL DISEÑO — 06.09.2026</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-[2px] bg-rojo/30 relative z-10">
+
+        <figure class="bg-papel3 p-4 sm:p-5 flex flex-col">
+          <div class="flex items-center justify-between gap-3 mb-3">
+            <span class="dato text-[8.5px] text-rojo border border-rojo px-1.5 py-1">MUESTRA 01</span>
+            <span class="dato text-[8.5px] text-gris">PENDIENTE DE AUTORIZACIÓN</span>
+          </div>
+          <blockquote class="text-[14.5px] leading-[1.6] flex-1">
+            «Llevábamos <b>[tiempo]</b> pasando los pedidos a mano y todos sabíamos que en algún
+            momento se nos iba a caer. Salomón se sentó tres días con <b>[nombre del empleado]</b>,
+            que es quien de verdad hacía el trabajo, y entendió el proceso mejor que yo. A las
+            <b>[n]</b> semanas ya teníamos algo funcionando. Lo que más me sorprendió fue que la
+            herramienta la construyó él mismo, no la mandó a hacer.»
+          </blockquote>
+          <figcaption class="mt-4 pt-3 border-t border-negro/25 flex items-center gap-3">
+            <span class="w-11 h-11 flex-none border border-negro/40 bg-papel2 grid place-items-center dato text-[7px] text-gris text-center leading-tight">SIN<br>FOTO</span>
+            <span class="text-[13px] leading-tight">
+              <b class="block">[NOMBRE]</b>
+              <span class="text-gris">[CARGO] · [EMPRESA]</span>
+              <span class="dato text-[8.5px] text-gris block mt-1">[SECTOR] · [CIUDAD]</span>
+            </span>
+          </figcaption>
+        </figure>
+
+        <figure class="bg-papel3 p-4 sm:p-5 flex flex-col">
+          <div class="flex items-center justify-between gap-3 mb-3">
+            <span class="dato text-[8.5px] text-rojo border border-rojo px-1.5 py-1">MUESTRA 02</span>
+            <span class="dato text-[8.5px] text-gris">PENDIENTE DE AUTORIZACIÓN</span>
+          </div>
+          <blockquote class="text-[14.5px] leading-[1.6] flex-1">
+            «Yo ya había contratado a <b>[proveedor]</b> antes y me habían entregado una
+            presentación muy bonita que nunca usamos. Acá fue distinto: cada semana veía avanzar
+            la cosa de verdad. Al final mi equipo la abrió solo, sin que yo tuviera que estar
+            encima. Eso para mí era lo difícil, no el software.»
+          </blockquote>
+          <figcaption class="mt-4 pt-3 border-t border-negro/25 flex items-center gap-3">
+            <span class="w-11 h-11 flex-none border border-negro/40 bg-papel2 grid place-items-center dato text-[7px] text-gris text-center leading-tight">SIN<br>FOTO</span>
+            <span class="text-[13px] leading-tight">
+              <b class="block">[NOMBRE]</b>
+              <span class="text-gris">[CARGO] · [EMPRESA]</span>
+              <span class="dato text-[8.5px] text-gris block mt-1">[SECTOR] · [CIUDAD]</span>
+            </span>
+          </figcaption>
+        </figure>
+
+        <figure class="bg-papel3 p-4 sm:p-5 flex flex-col">
+          <div class="flex items-center justify-between gap-3 mb-3">
+            <span class="dato text-[8.5px] text-rojo border border-rojo px-1.5 py-1">MUESTRA 03</span>
+            <span class="dato text-[8.5px] text-gris">PENDIENTE DE AUTORIZACIÓN</span>
+          </div>
+          <blockquote class="text-[14.5px] leading-[1.6] flex-1">
+            «Entré a la mentoría porque llevaba <b>[tiempo]</b> dándole vueltas a lo mismo. La
+            primera semana salí con cinco tareas y no hice tres. La segunda sesión empezó
+            hablando de eso, no de estrategia. Incómodo, pero fue lo que necesitaba: hoy
+            <b>[resultado concreto]</b>.»
+          </blockquote>
+          <figcaption class="mt-4 pt-3 border-t border-negro/25 flex items-center gap-3">
+            <span class="w-11 h-11 flex-none border border-negro/40 bg-papel2 grid place-items-center dato text-[7px] text-gris text-center leading-tight">SIN<br>FOTO</span>
+            <span class="text-[13px] leading-tight">
+              <b class="block">[NOMBRE]</b>
+              <span class="text-gris">[CARGO] · [EMPRESA]</span>
+              <span class="dato text-[8.5px] text-gris block mt-1">[MENTORÍA] · [CIUDAD]</span>
+            </span>
+          </figcaption>
+        </figure>
+      </div>
+
+      <div class="rayado h-3 border-t border-rojo/50 relative z-10" aria-hidden="true"></div>
+    </div>
+
+    <p class="dato text-[9px] text-rojo mt-3 leading-relaxed imp">
+      ESTE BLOQUE COMPLETO ES UNA MAQUETA. NO SE PUEDE PUBLICAR ASÍ. CUANDO LLEGUEN LOS
+      TESTIMONIOS REALES SE REEMPLAZAN LOS CORCHETES, SE QUITA EL SELLO Y SE QUITAN LAS FRANJAS ROJAS.
+    </p>
+
+    <!-- ─── CONSULTORIO ─── -->
+    <div id="consultorio" class="mt-12 sm:mt-16 pb-11 sm:pb-16">
+      <div class="border-t-[3px] border-negro pt-5 mb-6 imp">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-x-9 gap-y-3">
+          <h3 class="lg:col-span-5 font-tit uppercase leading-[.9] tracking-[-.015em] text-[clamp(1.8rem,4.8vw,3.2rem)]">Lo que siempre me preguntan</h3>
+          <p class="lg:col-span-7 text-[15px] leading-[1.6] self-end max-w-[56ch]">
+            Estas son textuales. Las he oído casi todas en la primera llamada, y las contesto igual acá.
+          </p>
+        </div>
+      </div>
+
+      <div class="border-t border-negro imp">
+        <details class="border-b border-negro/30 group">
+          <summary class="flex items-start gap-4 py-4 hover:text-azul">
+            <span class="font-news font-medium text-[clamp(1.05rem,2.4vw,1.3rem)] leading-snug flex-1">«Es que yo de tecnología no sé nada.»</span>
+            <svg viewBox="0 0 16 16" class="cruz-v w-4 h-4 flex-none mt-1.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><path d="M8 2v12M2 8h12"/></svg>
+          </summary>
+          <p class="text-[15px] leading-[1.62] pb-5 max-w-[64ch]">Perfecto. La mitad de mi trabajo es traducir. Si algo no se entiende, es culpa mía y no suya. Casi ninguno de mis clientes es una empresa de tecnología: son marcas de ropa, restaurantes, distribuidoras y empresas de servicios.</p>
+        </details>
+        <details class="border-b border-negro/30">
+          <summary class="flex items-start gap-4 py-4 hover:text-azul">
+            <span class="font-news font-medium text-[clamp(1.05rem,2.4vw,1.3rem)] leading-snug flex-1">«¿Al final me entrega una presentación?»</span>
+            <svg viewBox="0 0 16 16" class="cruz-v w-4 h-4 flex-none mt-1.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><path d="M8 2v12M2 8h12"/></svg>
+          </summary>
+          <p class="text-[15px] leading-[1.62] pb-5 max-w-[64ch]">No. Le entrego algo funcionando y en producción, su equipo capacitado para usarlo, la documentación en español y sin jerga, y la decisión estratégica escrita en dos páginas. Si lo que necesita es un informe de ochenta páginas, hay gente que lo hace mejor que yo.</p>
+        </details>
+        <details class="border-b border-negro/30">
+          <summary class="flex items-start gap-4 py-4 hover:text-azul">
+            <span class="font-news font-medium text-[clamp(1.05rem,2.4vw,1.3rem)] leading-snug flex-1">«¿Mi empresa es muy chiquita para esto?»</span>
+            <svg viewBox="0 0 16 16" class="cruz-v w-4 h-4 flex-none mt-1.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><path d="M8 2v12M2 8h12"/></svg>
+          </summary>
+          <p class="text-[15px] leading-[1.62] pb-5 max-w-[64ch]">Si ya vende y tiene entre cinco y cuarenta personas, está justo en el punto donde más sirvo. Donde no sirvo es en empresas grandes, con equipo de tecnología propio y varias gerencias: no sé manejar una de ese tamaño, nunca he llevado ninguna hasta allá, y no voy a fingir que sí.</p>
+        </details>
+        <details class="border-b border-negro/30">
+          <summary class="flex items-start gap-4 py-4 hover:text-azul">
+            <span class="font-news font-medium text-[clamp(1.05rem,2.4vw,1.3rem)] leading-snug flex-1">«¿Esto es Ignia?»</span>
+            <svg viewBox="0 0 16 16" class="cruz-v w-4 h-4 flex-none mt-1.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><path d="M8 2v12M2 8h12"/></svg>
+          </summary>
+          <p class="text-[15px] leading-[1.62] pb-5 max-w-[64ch]">No. Ignia es lo que construyo de lunes a viernes con mi equipo, y es educación. Esto va a mi nombre, es aparte, y por eso los cupos son contados. Ignia aparece acá como prueba de lo que sé hacer, no como quien le presta el servicio.</p>
+        </details>
+        <details class="border-b border-negro/30">
+          <summary class="flex items-start gap-4 py-4 hover:text-azul">
+            <span class="font-news font-medium text-[clamp(1.05rem,2.4vw,1.3rem)] leading-snug flex-1">«¿En cuánto tiempo veo algo prendido?»</span>
+            <svg viewBox="0 0 16 16" class="cruz-v w-4 h-4 flex-none mt-1.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><path d="M8 2v12M2 8h12"/></svg>
+          </summary>
+          <p class="text-[15px] leading-[1.62] pb-5 max-w-[64ch]">En la semana tres debería tener una primera cosa funcionando, aunque sea chiquita. Esa es justamente la prueba de si vale la pena seguir a la parte de construir o si mejor paramos ahí.</p>
+        </details>
+        <details class="border-b border-negro/30">
+          <summary class="flex items-start gap-4 py-4 hover:text-azul">
+            <span class="font-news font-medium text-[clamp(1.05rem,2.4vw,1.3rem)] leading-snug flex-1">«¿Y si usted no es la persona indicada?»</span>
+            <svg viewBox="0 0 16 16" class="cruz-v w-4 h-4 flex-none mt-1.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><path d="M8 2v12M2 8h12"/></svg>
+          </summary>
+          <p class="text-[15px] leading-[1.62] pb-5 max-w-[64ch]">Se lo digo en la primera llamada y le doy el nombre de quién sí. Llevo quince años en esto y conozco a la gente que hace bien lo que yo no hago. Prefiero eso a meterme en algo que no sé hacer. Y si quiere ahorrarse hasta la llamada, la parte B del cupón de la página 2 se lo dice de una.</p>
+        </details>
+        <details class="border-b border-negro/30">
+          <summary class="flex items-start gap-4 py-4 hover:text-azul">
+            <span class="font-news font-medium text-[clamp(1.05rem,2.4vw,1.3rem)] leading-snug flex-1">«¿Quién me contesta cuando escribo?»</span>
+            <svg viewBox="0 0 16 16" class="cruz-v w-4 h-4 flex-none mt-1.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><path d="M8 2v12M2 8h12"/></svg>
+          </summary>
+          <p class="text-[15px] leading-[1.62] pb-5 max-w-[64ch]">Yo. No hay ejecutivo de cuenta, no hay bot y no hay formulario que caiga en una bandeja compartida. Tampoco tengo blog: lo que escribo está en LinkedIn y es lo mismo que le voy a decir por teléfono.</p>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════ PÁG. 8 · CONTRAPORTADA ══════════════ -->
+<section id="escribame" data-pag="8" class="oscuro bg-negro text-papel">
+  <div class="rayado-azul h-5 border-b-2 border-negro bg-papel" aria-hidden="true"></div>
+
+  <div class="mx-auto max-w-[1440px] px-3 sm:px-6 lg:px-10 pt-9 sm:pt-14">
+    <div class="dato text-[9px] flex flex-wrap justify-between gap-x-6 gap-y-1 text-papel/55 border-b border-papel/25 pb-2">
+      <span>PÁG. 8 · CONTRAPORTADA</span>
+      <span class="text-papel/85">CUATRO CANALES. TODOS LLEGAN A MÍ, DIRECTO.</span>
+    </div>
+
+    <h2 class="font-tit uppercase leading-[.8] tracking-[-.02em] text-[clamp(3.2rem,20vw,13rem)] mt-5">ESCRÍBAME</h2>
+
+    <p class="max-w-[52ch] text-[16px] sm:text-[19px] leading-[1.5] mt-6 mb-9 text-papel/90">
+      No hay formulario, no hay embudo y no hay secretaria. Escoja por dónde le queda más cómodo
+      y hablamos. <b class="text-papel">Si no le sirvo, se lo digo en la primera llamada y le digo
+      a quién llamar.</b> Eso también es un resultado.
+    </p>
+  </div>
+
+  <div class="border-y-2 border-papel/30">
+    <a class="canal flex items-center gap-4 sm:gap-6 px-3 sm:px-6 lg:px-10 py-5 sm:py-7 border-b border-papel/20"
+       href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20le%20escribo%20desde%20su%20p%C3%A1gina." target="_blank" rel="noopener">
+      <span class="dato text-[10px] text-papel/55 w-7 flex-none">01</span>
+      <span class="font-tit uppercase tracking-[-.01em] text-[clamp(1.7rem,7vw,4rem)] leading-none flex-1 min-w-0">WhatsApp</span>
+      <span class="dato text-[10px] sm:text-[12px] hidden sm:block text-papel/60 flex-none">+57 313 246 5100</span>
+      <svg viewBox="0 0 24 24" class="punta w-6 h-6 sm:w-8 sm:h-8 flex-none" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><path d="M4 12h14M12.5 6.5 19 12l-6.5 5.5"/></svg>
+    </a>
+    <a class="canal flex items-center gap-4 sm:gap-6 px-3 sm:px-6 lg:px-10 py-5 sm:py-7 border-b border-papel/20"
+       href="https://cal.com/salomonmuriel" target="_blank" rel="noopener">
+      <span class="dato text-[10px] text-papel/55 w-7 flex-none">02</span>
+      <span class="font-tit uppercase tracking-[-.01em] text-[clamp(1.7rem,7vw,4rem)] leading-none flex-1 min-w-0">Agendar</span>
+      <span class="dato text-[10px] sm:text-[12px] hidden sm:block text-papel/60 flex-none">CAL.COM/SALOMONMURIEL</span>
+      <svg viewBox="0 0 24 24" class="punta w-6 h-6 sm:w-8 sm:h-8 flex-none" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><path d="M4 12h14M12.5 6.5 19 12l-6.5 5.5"/></svg>
+    </a>
+    <a class="canal flex items-center gap-4 sm:gap-6 px-3 sm:px-6 lg:px-10 py-5 sm:py-7 border-b border-papel/20"
+       href="https://www.linkedin.com/in/smuriel/" target="_blank" rel="noopener">
+      <span class="dato text-[10px] text-papel/55 w-7 flex-none">03</span>
+      <span class="font-tit uppercase tracking-[-.01em] text-[clamp(1.7rem,7vw,4rem)] leading-none flex-1 min-w-0">LinkedIn</span>
+      <span class="dato text-[10px] sm:text-[12px] hidden sm:block text-papel/60 flex-none">AHÍ ESCRIBO · NO TENGO BLOG</span>
+      <svg viewBox="0 0 24 24" class="punta w-6 h-6 sm:w-8 sm:h-8 flex-none" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><path d="M4 12h14M12.5 6.5 19 12l-6.5 5.5"/></svg>
+    </a>
+    <a class="canal flex items-center gap-4 sm:gap-6 px-3 sm:px-6 lg:px-10 py-5 sm:py-7"
+       href="mailto:salomon.muriel@gmail.com?subject=Vengo%20de%20CHINOM%C3%81TICO">
+      <span class="dato text-[10px] text-papel/55 w-7 flex-none">04</span>
+      <span class="font-tit uppercase tracking-[-.01em] text-[clamp(1.7rem,7vw,4rem)] leading-none flex-1 min-w-0">Correo</span>
+      <span class="dato text-[10px] sm:text-[12px] hidden sm:block text-papel/60 flex-none">SALOMON.MURIEL@GMAIL.COM</span>
+      <svg viewBox="0 0 24 24" class="punta w-6 h-6 sm:w-8 sm:h-8 flex-none" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><path d="M4 12h14M12.5 6.5 19 12l-6.5 5.5"/></svg>
+    </a>
+  </div>
+
+  <div class="mx-auto max-w-[1440px] px-3 sm:px-6 lg:px-10 py-9 sm:py-14">
+    <div class="grid grid-cols-1 md:grid-cols-3 border border-papel/35">
+      <div class="p-4 md:border-r border-papel/25 border-b md:border-b-0">
+        <p class="dato text-[9px] text-papel/60 mb-2">TESTIMONIOS, TODAVÍA NO</p>
+        <p class="text-[14px] leading-[1.55] text-papel/85">Los voy a pedir. Mientras tanto el espacio está reservado y marcado como muestra, en la página 7. Prefiero eso a inventármelos.</p>
+      </div>
+      <div class="p-4 md:border-r border-papel/25 border-b md:border-b-0">
+        <p class="dato text-[9px] text-papel/60 mb-2">NO HAY EQUIPO DETRÁS</p>
+        <p class="text-[14px] leading-[1.55] text-papel/85">El que contesta soy yo. El que se sienta con su gente soy yo. El que construye soy yo. Por eso los cupos son los que son.</p>
+      </div>
+      <div class="p-4">
+        <p class="dato text-[9px] text-papel/60 mb-2">NO HAY LISTA DE ESPERA</p>
+        <p class="text-[14px] leading-[1.55] text-papel/85">Cuando los nueve renglones se llenan, se lo digo de frente. No lo meto en una lista para escribirle en seis meses.</p>
+      </div>
+    </div>
+
+    <div class="mt-9 pt-5 border-t border-papel/25">
+      <p class="font-news italic text-[clamp(1.15rem,3vw,1.8rem)] leading-[1.25] max-w-[34ch]">
+        Deje de pagarle a alguien por ser una macro.
+      </p>
+      <div class="dato text-[8.5px] text-papel/45 flex flex-wrap gap-x-6 gap-y-1.5 mt-6">
+        <span>CHINOMÁTICO · EDICIÓN ÚNICA · Nº 1</span>
+        <span>BOGOTÁ · 4°42′N 74°04′W</span>
+        <span>ESCRITO, DIAGRAMADO Y ARMADO POR SALOMÓN MURIEL</span>
+        <span>PRÁCTICA PERSONAL · INDEPENDIENTE DE IGNIA</span>
+        <span class="text-papel/70">© 2026</span>
+      </div>
+      <p class="dato text-[8.5px] text-papel/30 mt-3">FIN DE LA EDICIÓN  ///  +  +  +</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<script>
+(function(){
+  'use strict';
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ─────────── folio del cintillo ─────────── */
+  var folio = document.getElementById('folio');
+  var paginas = document.querySelectorAll('[data-pag]');
+  if ('IntersectionObserver' in window && folio) {
+    var ioFolio = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(e){
+        if (e.isIntersecting) folio.textContent = 'PÁG. ' + e.target.getAttribute('data-pag');
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    Array.prototype.forEach.call(paginas, function(p){ ioFolio.observe(p); });
+  }
+
+  /* ─────────── entrada de imprenta ─────────── */
+  if ('IntersectionObserver' in window && !reduce) {
+    var ioImp = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(e){
+        if (!e.isIntersecting) return;
+        e.target.classList.add(e.target.classList.contains('rodillo') ? 'rodillo-on' : 'imp-on');
+        ioImp.unobserve(e.target);
+      });
+    }, { threshold: 0.14, rootMargin: '0px 0px -6% 0px' });
+    document.querySelectorAll('.imp, .rodillo').forEach(function(el){ ioImp.observe(el); });
+  } else {
+    document.querySelectorAll('.imp').forEach(function(el){ el.classList.add('imp-on'); });
+    document.querySelectorAll('.rodillo').forEach(function(el){ el.classList.add('rodillo-on'); });
+  }
+
+  /* ─────────── EL CHINÓMETRO ─────────── */
+  var TOTAL = 10, TEL = '573132465100';
+  var cajaSeg = document.getElementById('segmentos');
+  var segs = [];
+  for (var i = 0; i < TOTAL; i++) {
+    var s = document.createElement('span');
+    s.className = 'seg flex-1' + (i ? ' border-l border-negro/40' : '');
+    cajaSeg.appendChild(s);
+    segs.push(s);
+  }
+
+  var sintomas = Array.prototype.slice.call(document.querySelectorAll('.sym'));
+  var vetos    = Array.prototype.slice.call(document.querySelectorAll('.veto'));
+
+  var elPuntaje = document.getElementById('puntaje');
+  var elSello   = document.getElementById('sello-no');
+  var elCaja    = document.getElementById('caja-veredicto');
+  var elRotulo  = document.getElementById('veredicto-rotulo');
+  var elTitulo  = document.getElementById('veredicto-titulo');
+  var elTexto   = document.getElementById('veredicto-texto');
+  var elSalida  = document.getElementById('salida');
+  var elConteo  = document.getElementById('conteo');
+  var elWa      = document.getElementById('wa');
+
+  var bm    = document.getElementById('barra-movil');
+  var bmNum = document.getElementById('bm-num');
+  var bmTxt = document.getElementById('bm-txt');
+  var bmCta = document.getElementById('bm-cta');
+
+  var ESCALA = [
+    { min:0,  t:'SIN LECTURA',           d:'El aparato no funciona en blanco. Marque en la parte A lo que reconozca de su empresa.' },
+    { min:10, t:'CHINOMÁTICO LEVE',      d:'Hay muchacho, pero todavía alcanza. Está a tiempo de que esto no se le vuelva la estructura de la empresa.' },
+    { min:30, t:'CHINOMÁTICO MODERADO',  d:'Su empresa ya depende de la memoria de una persona. Eso no aparece en ningún informe, pero se nota el día que esa persona no llega.' },
+    { min:60, t:'CHINOMÁTICO ALTO',      d:'Lo que usted llama operación es una persona con muy buena voluntad. El día que se vaya, se va con el proceso puesto.' },
+    { min:90, t:'CHINOMÁTICO CRÍTICO',   d:'Eso no es una empresa: es un acuerdo tácito entre tres personas y un archivo compartido. Escríbame hoy, en serio.' }
+  ];
+  function nivel(p){ var r = ESCALA[0]; for (var i=0;i<ESCALA.length;i++){ if (p >= ESCALA[i].min) r = ESCALA[i]; } return r; }
+
+  /* ─── la cuenta, en horas ─── */
+  var VECES = { dia:260, semana:52, quincena:24, mes:12 };
+  var elTarea = document.getElementById('c-tarea');
+  var elFrec  = document.getElementById('c-frec');
+  var elMin   = document.getElementById('c-min');
+  var elPer   = document.getElementById('c-per');
+  var elHoras = document.getElementById('c-horas');
+  var elDias  = document.getElementById('c-dias');
+  var elErrC  = document.getElementById('c-error');
+  var nfEs = new Intl.NumberFormat('es-CO', { maximumFractionDigits:0 });
+
+  function cuenta(){
+    var min = parseFloat(elMin.value), per = parseFloat(elPer.value);
+    var malo = !(min > 0) || !(per > 0);
+    elErrC.hidden = !malo;
+    elMin.setAttribute('aria-invalid', (min > 0) ? 'false' : 'true');
+    elMin.style.borderColor = (min > 0) ? '' : 'var(--rojo)';
+    if (malo) return { horas:0, dias:0, ok:false };
+    var horas = (VECES[elFrec.value] * min * per) / 60;
+    return { horas: Math.round(horas), dias: Math.round(horas / 8), ok: true };
+  }
+
+  function actualizar(){
+    var marcados = sintomas.filter(function(s){ return s.checked; });
+    var vetados  = vetos.filter(function(v){ return v.checked; });
+    var n = marcados.length, p = n * 10;
+    var fuera = vetados.length > 0;
+
+    elPuntaje.textContent = (p === 100) ? '100' : ('0' + p).slice(-2);
+    elPuntaje.style.color = fuera ? 'var(--rojo)' : (p >= 60 ? 'var(--azul)' : '');
+    elPuntaje.style.opacity = fuera ? '.32' : '1';
+
+    for (var i = 0; i < TOTAL; i++) {
+      segs[i].style.backgroundColor = fuera ? 'transparent' : (i < n ? (p >= 60 ? 'var(--azul)' : 'var(--negro)') : 'transparent');
+    }
+
+    if (fuera && elSello.hidden) { elSello.hidden = false; if (!reduce) { elSello.classList.remove('golpe'); void elSello.offsetWidth; elSello.classList.add('golpe'); } }
+    if (!fuera) { elSello.hidden = true; elSello.classList.remove('golpe'); }
+
+    var c = cuenta();
+    elHoras.textContent = c.ok ? nfEs.format(c.horas) : '—';
+    elDias.textContent  = c.ok ? nfEs.format(c.dias)  : '—';
+
+    var v = nivel(p), texto, titulo, cuerpo;
+
+    if (fuera) {
+      elCaja.style.borderColor = 'var(--rojo)';
+      elRotulo.textContent = 'VEREDICTO · FUERA DE RANGO';
+      elRotulo.style.background = 'var(--rojo)';
+      elRotulo.style.color = 'var(--papel3)';
+      titulo = 'FUERA DE RANGO';
+      cuerpo = 'Marcó algo de la parte B, así que el aparato dejó de medirlo a usted y me midió a mí: no soy la persona indicada para eso. Se lo digo acá y no en la cuarta reunión. Escríbame igual con una línea de qué necesita — si no le sirvo yo, le digo a quién llamar.';
+      elTitulo.style.color = 'var(--rojo)';
+      elWa.textContent = 'PEDIRLE EL NOMBRE DE QUIÉN SÍ';
+      elWa.style.background = 'var(--rojo)';
+      elWa.style.borderColor = 'var(--rojo)';
+
+      var lineas = ['CUPÓN DE DIAGNÓSTICO — PARTE B', 'Resultado: FUERA DE RANGO.', '', 'Marqué esto:'];
+      vetados.forEach(function(vv, k){ lineas.push((k+1) + '. ' + vv.getAttribute('data-veto') + '.'); });
+      lineas.push('', 'Sé que usted no hace esto. ¿A quién me recomienda llamar?');
+      texto = lineas.join('\n');
+      elConteo.textContent = vetados.length + (vetados.length === 1 ? ' CAUSAL' : ' CAUSALES');
+    } else {
+      elCaja.style.borderColor = 'var(--negro)';
+      elRotulo.textContent = 'VEREDICTO';
+      elRotulo.style.background = 'var(--papel2)';
+      elRotulo.style.color = 'var(--negro)';
+      titulo = v.t;
+      cuerpo = v.d;
+      elTitulo.style.color = (p >= 60) ? 'var(--azul)' : 'var(--negro)';
+      elWa.textContent = 'MANDÁRSELO POR WHATSAPP';
+      elWa.style.background = 'var(--negro)';
+      elWa.style.borderColor = 'var(--negro)';
+      elConteo.textContent = n + (n === 1 ? ' RENGLÓN' : ' RENGLONES');
+
+      if (n === 0) {
+        texto = 'Hola Salomón. Vengo de su página y quiero hablar de mi operación.';
+        elSalida.textContent = 'Esperando marcación…\n\nMarque al menos un renglón de la parte A\npara que el aparato le escriba el mensaje.';
+      } else {
+        var l2 = ['CUPÓN DE DIAGNÓSTICO — CHINOMÁTICO', 'Lectura: ' + p + '/100 — ' + v.t.replace('CHINOMÁTICO ', ''), '', 'Esto lo reconozco en mi empresa:'];
+        marcados.forEach(function(s, k){ l2.push((k+1) + '. ' + s.getAttribute('data-sym') + '.'); });
+        var tarea = (elTarea.value || '').trim();
+        if (c.ok && tarea) {
+          l2.push('', 'La cuenta: "' + tarea + '" se lleva unas ' + nfEs.format(c.horas) + ' horas al año (' + nfEs.format(c.dias) + ' días hábiles).');
+        }
+        l2.push('', 'Quiero que hablemos de esto.');
+        texto = l2.join('\n');
+      }
+    }
+
+    elTitulo.textContent = titulo;
+    elTexto.textContent = cuerpo;
+    if (fuera || n > 0) { elSalida.textContent = texto; elSalida.scrollTop = 0; }
+    elWa.href = 'https://wa.me/' + TEL + '?text=' + encodeURIComponent(texto);
+
+    /* barra compacta de móvil */
+    var activa = fuera || n > 0;
+    bm.hidden = !(activa && bmVisible);
+    bmNum.textContent = fuera ? '!!' : elPuntaje.textContent;
+    bmNum.style.color = fuera ? 'var(--rojo)' : '';
+    bmTxt.textContent = fuera ? 'FUERA DE RANGO' : v.t.replace('CHINOMÁTICO ', '');
+    bmCta.textContent = fuera ? 'VER POR QUÉ' : 'VER LECTURA';
+  }
+
+  var bmVisible = false;
+  if ('IntersectionObserver' in window) {
+    var secc = document.getElementById('chinometro');
+    new IntersectionObserver(function(e){
+      bmVisible = e[0].isIntersecting;
+      actualizar();
+    }, { threshold: 0 }).observe(secc);
+  }
+
+  sintomas.concat(vetos).forEach(function(el){ el.addEventListener('change', actualizar); });
+  [elTarea, elFrec, elMin, elPer].forEach(function(el){
+    el.addEventListener('input', actualizar);
+    el.addEventListener('change', actualizar);
+  });
+  actualizar();
+})();
+</script>
+</body>
+</html>
