@@ -2,7 +2,7 @@ export const SITE = {
   website: "https://www.salomonmuriel.com",
   author: "Salomón Muriel",
   title: "Salomón Muriel",
-  desc: "Le construyo software hecho a la medida de su empresa y de como ya trabaja, en vez de que le toque torcer la empresa para caber en un programa que compró.",
+  desc: "Te construyo software hecho a la medida de tu empresa y de como ya trabajas, en vez de que te toque torcer la empresa para caber en un programa que compraste.",
   ogImage: "/og.png",
 } as const;
 

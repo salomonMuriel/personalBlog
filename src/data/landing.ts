@@ -27,31 +27,31 @@ const es = {
   meta: {
     title: "Se arregla lo chinomático — Salomón Muriel, Bogotá",
     description:
-      "Le construyo software hecho a la medida de su empresa y de como ya trabaja, en vez de que le toque torcer la empresa para caber en un programa que compró. Sin cobro mensual por usuario. Consultoría, Bogotá.",
+      "Te construyo software hecho a la medida de tu empresa y de como ya trabajas, en vez de que te toque torcer la empresa para caber en un programa que compraste. Sin cobro mensual por usuario. Consultoría, Bogotá.",
   },
 
   hero: {
     linea1: "Se arregla",
     linea2: "Lo chinomático",
-    manuscrita: "sin cambiarle la empresa entera, una cajita a la vez",
+    manuscrita: "sin cambiarte la empresa entera, una cajita a la vez",
     bajada:
-      "Le construyo software hecho a la medida de su empresa y de como ya trabaja, en vez de que a usted le toque torcer la empresa para caber en un programa que compró.",
+      "Te construyo software hecho a la medida de tu empresa y de como ya trabajas, en vez de que a ti te toque torcer la empresa para caber en un programa que compraste.",
     dicc: {
       palabra: "chi·no·má·ti·co, ca",
       categoria: "adj.",
       acepciones: [
         "Dicho de un proceso: que <b class='font-bold'>parece</b> automatizado, pero hay alguien haciéndolo a mano.",
         "Dicho de dos sistemas: que no se hablan, y alguien los pega copiando y pegando.",
-        "Dicho de un programa: el que le vendieron carísimo y hoy nadie abre.",
-        "Dicho de una empresa: la suya, probablemente.",
+        "Dicho de un programa: el que te vendieron carísimo y hoy nadie abre.",
+        "Dicho de una empresa: la tuya, probablemente.",
       ],
     },
-    ctaPrincipal: "Cuénteme qué tiene montado",
+    ctaPrincipal: "Cuéntame qué tienes montado",
     ctaPrincipalWa:
-      "Hola Salomón, tengo una empresa de ___ y quiero contarle qué tengo montado.",
+      "Hola Salomón, tengo una empresa de ___ y quiero contarte qué tengo montado.",
     ctaSecundario: "Ver el sistema de cajitas",
     especificacion:
-      "Software propio · Sin cobro mensual por usuario · Usted lo puede cambiar después",
+      "Software propio · Sin cobro mensual por usuario · Lo puedes cambiar después",
     fichaAlt:
       "Retrato de Salomón Muriel, de abrigo verde y brazos cruzados, sobre fondo oscuro",
     ficha: [
@@ -61,7 +61,7 @@ const es = {
       ["Quién contesta", "También Salomón", true],
     ] as [string, string, boolean][],
     fichaPie:
-      "El que le contesta el WhatsApp y el que escribe el código son el mismo. Por eso alcanzo para pocos.",
+      "El que te contesta el WhatsApp y el que escribe el código son el mismo. Por eso alcanzo para pocos.",
   },
 
   cinta: [
@@ -78,14 +78,14 @@ const es = {
     titulo: "Lo que me reportan, casi siempre lo mismo",
     etiqueta: "Falla",
     cierre:
-      "Si nada de esto le sonó, probablemente no le sirvo, y prefiero decírselo acá y no en la cuarta reunión.",
+      "Si nada de esto te sonó, probablemente no te sirvo, y prefiero decírtelo acá y no en la cuarta reunión.",
     fallas: [
       {
         n: "01",
         quien: "Lo reporta el dueño",
         antes: "",
         marcado: "Lo que dice el Excel",
-        despues: " no es lo mismo que dice el programa que compró.",
+        despues: " no es lo mismo que dice el programa que compraste.",
         nota: "y cuando no cuadran, gana el que hable más duro en la reunión",
         manuscrita: true,
         giro: "-rotate-[.8deg]",
@@ -122,11 +122,11 @@ const es = {
       {
         n: "05",
         quien: "Lo reporta el dueño",
-        antes: "Le vendieron ",
+        antes: "Te vendieron ",
         marcado: "carísimo",
         despues:
           " un programa que por dentro es una lista, un botón y un correo.",
-        nota: "Casi siempre viene inflado de módulos que su empresa nunca va a abrir.",
+        nota: "Casi siempre viene inflado de módulos que tu empresa nunca va a abrir.",
         manuscrita: false,
       },
       {
@@ -154,9 +154,9 @@ const es = {
 
   chinometro: {
     rotulo: "Hoja de chequeo",
-    nota: "No pide correo ni guarda nada. Al final le escribe el mensaje y usted decide si me lo manda.",
+    nota: "No pide correo ni guarda nada. Al final te escribe el mensaje y tú decides si me lo mandas.",
     titulo: "El chinómetro",
-    bajada: "Diez renglones. Marque los que reconozca en su empresa.",
+    bajada: "Diez renglones. Marca los que reconozcas en tu empresa.",
     encabezadoHoja: "Síntomas reportados",
     marcadasDe: "de %s marcadas",
     borrar: "Borrar marcas",
@@ -169,8 +169,8 @@ const es = {
     esperando: "Esperando marcación…",
     ctaWa: "Mandarme esto por WhatsApp",
     ctaWaNota:
-      "Se abre WhatsApp con el texto ya escrito. Usted lo corrige y lo manda. Contesto yo.",
-    ctaAgenda: "O agende cuarenta y cinco minutos",
+      "Se abre WhatsApp con el texto ya escrito. Lo corriges y lo mandas. Contesto yo.",
+    ctaAgenda: "O agenda cuarenta y cinco minutos",
     sintomas: [
       "Los pedidos llegan por WhatsApp y alguien los pasa a mano a un Excel.",
       "Hay dos sistemas que dicen cosas distintas sobre lo mismo.",
@@ -187,7 +187,7 @@ const es = {
       {
         min: 0,
         t: "Sin medir todavía",
-        d: "El aparato no funciona en blanco: marque los renglones que reconozca.",
+        d: "El aparato no funciona en blanco: marca los renglones que reconozcas.",
       },
       {
         min: 10,
@@ -197,22 +197,22 @@ const es = {
       {
         min: 30,
         t: "Chinomático moderado",
-        d: "Su empresa ya depende de la memoria de alguien y de que dos sistemas cuadren por buena voluntad.",
+        d: "Tu empresa ya depende de la memoria de alguien y de que dos sistemas cuadren por buena voluntad.",
       },
       {
         min: 60,
         t: "Chinomático alto",
-        d: "Buena parte de su operación es alguien pegando cajitas a mano. Cuando esa persona se va, se le va el proceso.",
+        d: "Buena parte de tu operación es alguien pegando cajitas a mano. Cuando esa persona se va, se te va el proceso.",
       },
       {
         min: 90,
         t: "Chinomático crítico",
-        d: "Su operación se sostiene en un acuerdo tácito entre dos personas y un chat. Escríbame hoy.",
+        d: "Tu operación se sostiene en un acuerdo tácito entre dos personas y un chat. Escríbeme hoy.",
       },
     ],
     waVacio:
-      "Hola Salomón, entré a su página y quiero contarle cómo está mi operación.",
-    waEncabezado: "Hola Salomón. Llené el chinómetro de su página y me dio",
+      "Hola Salomón, entré a tu página y quiero contarte cómo está mi operación.",
+    waEncabezado: "Hola Salomón. Llené el chinómetro de tu página y me dio",
     waDe100: "de 100.",
     waMarque: "Esto fue lo que marqué:",
     waCierre: "Mi empresa es de ____ y somos ____ personas.",
@@ -220,11 +220,11 @@ const es = {
   },
 
   cajitas: {
-    rotulo: "Cómo le explico mi trabajo",
-    nota: "Si se lleva una sola cosa de esta página, que sea esta.",
+    rotulo: "Cómo te explico mi trabajo",
+    nota: "Si te llevas una sola cosa de esta página, que sea esta.",
     titulo: "Una empresa es un sistema de cajitas",
     p1: "Mercadeo manda tráfico a la página y a WhatsApp. Eso genera leads para ventas. Ventas le devuelve información a mercadeo y le abre trabajo a operaciones y a administración. Cada una de esas es una cajita, y cada cajita tiene su propio sistema.",
-    p2: "<b class='font-semibold text-tinta'>Yo construyo esas cajitas y las conecto.</b> El CRM que necesita su proceso de ventas, el sistema con el que trabaja operaciones, la facturación de administración: le construyo el que le falte, hecho a la medida de como ya trabaja, y lo dejo hablando con los de al lado.",
+    p2: "<b class='font-semibold text-tinta'>Yo construyo esas cajitas y las conecto.</b> El CRM que necesita tu proceso de ventas, el sistema con el que trabaja operaciones, la facturación de administración: te construyo el que te falte, hecho a la medida de como ya trabajas, y lo dejo hablando con los de al lado.",
     estadoSistema: "Estado del sistema",
     btnHoy: "Como está hoy",
     btnQueda: "Como queda",
@@ -244,7 +244,7 @@ const es = {
         rotulo: "El sitio",
         hoy: "Sistema aparte, de otro proveedor, que le manda correos a alguien.",
         queda:
-          "Sigue siendo su página. Lo que entra por ahí ya cae donde tiene que caer.",
+          "Sigue siendo tu página. Lo que entra por ahí ya cae donde tiene que caer.",
         orden: "4.ª",
       },
       chat: {
@@ -260,7 +260,7 @@ const es = {
         rotulo: "Los leads",
         hoy: "Un CRM caro que se usa a medias, porque llenarlo es doble trabajo.",
         queda:
-          "El CRM que le construyo para su proceso de ventas. Llenarlo dejó de ser trabajo extra.",
+          "El CRM que te construyo para tu proceso de ventas. Llenarlo dejó de ser trabajo extra.",
         orden: "1.ª",
       },
       ops: {
@@ -268,7 +268,7 @@ const es = {
         rotulo: "El trabajo",
         hoy: "Un Excel que solo entiende una persona.",
         queda:
-          "El sistema de operación que le construyo. El trabajo se abre solo al cerrar la venta.",
+          "El sistema de operación que te construyo. El trabajo se abre solo al cerrar la venta.",
         orden: "2.ª",
       },
       opsdos: {
@@ -327,18 +327,18 @@ const es = {
     cierreTitulo:
       "Construyo la cajita y la dejo conectada <b class='text-rojo2'>antes</b> de pasar a la siguiente.",
     cierreP1:
-      "Lo chinomático aparece en la mitad: alguien saca el dato de una cajita y lo mete en la otra, todos los días. Cuando la conexión queda hecha, ese muchacho deja de copiar y pegar y se pone a atender clientes, que es para lo que usted lo contrató.",
+      "Lo chinomático aparece en la mitad: alguien saca el dato de una cajita y lo mete en la otra, todos los días. Cuando la conexión queda hecha, ese muchacho deja de copiar y pegar y se pone a atender clientes, que es para lo que lo contrataste.",
     cierreP2:
-      "Los numeritos rojos son el orden de un caso típico. El orden real lo decidimos usted y yo, mirando dónde le duele más.",
+      "Los numeritos rojos son el orden de un caso típico. El orden real lo decidimos tú y yo, mirando dónde te duele más.",
     cierreManuscrita:
       "si dos cajitas quedan pegadas con una persona en la mitad, quedaron chinomáticas",
   },
 
   banda: {
-    titulo: "Software suyo, hecho para su empresa.",
+    titulo: "Software tuyo, hecho para tu empresa.",
     texto:
-      "La herramienta la construyo a la medida de sus procesos. El código queda a nombre de su empresa y no le queda un cobro mensual por usuario. Antes de bajarme le enseño a su gente a cambiarlo sin llamarme.",
-    rotulo: "Qué le construyo",
+      "La herramienta la construyo a la medida de tus procesos. El código queda a nombre de tu empresa y no te queda un cobro mensual por usuario. Antes de bajarme le enseño a tu gente a cambiarlo sin llamarme.",
+    rotulo: "Qué te construyo",
   },
 
   porque: {
@@ -357,10 +357,10 @@ const es = {
       },
       {
         giro: "rotate-[4deg]",
-        titulo: "Le construyo software a la medida, y rápido.",
+        titulo: "Te construyo software a la medida, y rápido.",
         parrafos: [
-          "Le construyo la herramienta que su empresa necesita, hecha para su manera de trabajar, y la dejo andando rápido. Trabajo apoyado en agentes de inteligencia artificial, no subcontratando.",
-          "Y no solo para programar: <b class='font-semibold text-tinta'>le enseño a su gente a usar esos mismos agentes</b> para el trabajo de oficina que hoy hacen a mano.",
+          "Te construyo la herramienta que tu empresa necesita, hecha para tu manera de trabajar, y la dejo andando rápido. Trabajo apoyado en agentes de inteligencia artificial, no subcontratando.",
+          "Y no solo para programar: <b class='font-semibold text-tinta'>le enseño a tu gente a usar esos mismos agentes</b> para el trabajo de oficina que hoy hacen a mano.",
         ],
         manuscrita:
           "esto cambió de verdad hace poco. no es la misma conversación de hace tres años",
@@ -371,8 +371,8 @@ const es = {
         titulo:
           "El software se le acomoda a la empresa, no la empresa al software.",
         parrafos: [
-          "Casi siempre pasa al revés: usted compra algo hecho para otra empresa y después le toca torcer a su gente para que le sirva. Yo primero miro cómo se hace hoy de verdad, no como dice el manual, y construyo encima de eso.",
-          "<b class='font-semibold text-tinta'>Por eso la gente lo abre el lunes sin que usted tenga que estar encima.</b>",
+          "Casi siempre pasa al revés: compras algo hecho para otra empresa y después te toca torcer a tu gente para que te sirva. Yo primero miro cómo se hace hoy de verdad, no como dice el manual, y construyo encima de eso.",
+          "<b class='font-semibold text-tinta'>Por eso la gente lo abre el lunes sin que tengas que estar encima.</b>",
         ],
         manuscrita: "la primera semana me siento con quien lo va a usar",
         giroNota: "-rotate-[1deg]",
@@ -382,7 +382,7 @@ const es = {
 
   programa: {
     rotulo: "Programa de obra · 16 semanas",
-    nota: "El trabajo lo hago yo. Usted escribe un mensaje y el resto corre por mi cuenta.",
+    nota: "El trabajo lo hago yo. Tú escribes un mensaje y el resto corre por mi cuenta.",
     titulo: "Qué pasa si trabajamos juntos",
     barras: ["Entender", "Diagnóstico", "Construir · una cajita a la vez"],
     etapas: [
@@ -390,24 +390,24 @@ const es = {
         cuando: "Semanas 1 a 2",
         titulo: "Entender la operación",
         texto:
-          "Hablo con la gente que la ejecuta, no solo con usted, y miro cómo se hace de verdad.",
+          "Hablo con la gente que la ejecuta, no solo contigo, y miro cómo se hace de verdad.",
       },
       {
         cuando: "Semanas 2 a 3",
         titulo: "Diagnóstico",
         texto:
-          "Un plan corto, el cuello de botella que vale la pena atacar primero y una primera cosa ya funcionando. Si no le aporta, ahí paramos.",
+          "Un plan corto, el cuello de botella que vale la pena atacar primero y una primera cosa ya funcionando. Si no te aporta, ahí paramos.",
       },
       {
         cuando: "Semanas 4 a 16",
         titulo: "Construir",
         texto:
-          "Construyo la herramienta, el CRM y las conexiones entre cajitas. Termina con su equipo usándolo.",
+          "Construyo la herramienta, el CRM y las conexiones entre cajitas. Termina con tu equipo usándolo.",
       },
     ],
     bitacoraTitulo: "Una semana cualquiera del diagnóstico",
     bitacoraTexto:
-      "Esto es lo que hago yo mientras usted sigue atendiendo su negocio. No le pido que llene formatos ni le quito el día a su equipo.",
+      "Esto es lo que hago yo mientras tú sigues atendiendo tu negocio. No te pido que llenes formatos ni le quito el día a tu equipo.",
     bitacoraPie: "Bitácora de campo · Responsable: Salomón",
     bitacoraEncabezado: "Bitácora — semana 2",
     bitacoraResponsable: "Responsable: Salomón",
@@ -431,39 +431,39 @@ const es = {
       ],
     ] as [string, string][],
     bitacoraHechas: "5 de 5 hechas",
-    bitacoraNinguna: "Ninguna le tocó a usted.",
+    bitacoraNinguna: "Ninguna te tocó a ti.",
   },
 
   entrega: {
     rotulo: "Lista de empaque",
     nota: "Siete renglones que se entregan y se firman, uno por uno.",
-    titulo: "Qué le queda cuando yo me bajo",
+    titulo: "Qué te queda cuando yo me bajo",
     bajada:
-      "Algo prendido, con sus datos adentro, que su gente ya está usando el día que yo me bajo.",
+      "Algo prendido, con tus datos adentro, que tu gente ya está usando el día que yo me bajo.",
     cajaTitulo: "Va en la caja",
     cajaConteo: "07 renglones",
     renglones: [
       {
         n: "01",
         t: "La herramienta funcionando",
-        d: "Con sus datos reales cargados, no de ejemplo. El día de la entrega ya se está usando.",
+        d: "Con tus datos reales cargados, no de ejemplo. El día de la entrega ya se está usando.",
         resaltado: false,
       },
       {
         n: "02",
         t: "El código, a nombre de la empresa",
-        d: "El repositorio queda a nombre de su empresa, no mío. Si mañana quiere trabajar con otra persona, se lo lleva completo.",
+        d: "El repositorio queda a nombre de tu empresa, no mío. Si mañana quieres trabajar con otra persona, te lo llevas completo.",
         resaltado: true,
       },
       {
         n: "03",
-        t: "Le enseño a cambiarlo sin mí, con inteligencia artificial",
-        d: "Antes de bajarme me siento con usted y con su gente a enseñarles cómo pedirle un cambio a la inteligencia artificial y cómo dejarlo andando. Para mover un botón no tiene que llamarme.",
+        t: "Te enseño a cambiarlo sin mí, con inteligencia artificial",
+        d: "Antes de bajarme me siento contigo y con tu gente a enseñarles cómo pedirle un cambio a la inteligencia artificial y cómo dejarlo andando. Para mover un botón no tienes que llamarme.",
         resaltado: true,
       },
       {
         n: "04",
-        t: "Su gente entrenada",
+        t: "Tu gente entrenada",
         d: "Y la grabación del entrenamiento, para el que entre a trabajar dentro de seis meses.",
         resaltado: false,
       },
@@ -476,20 +476,20 @@ const es = {
       {
         n: "06",
         t: "El proceso en una hoja, y el tiempo medido",
-        d: "Qué quedó automático y qué quedó manual a propósito. Cronometramos el proceso al entrar y al salir, y le entrego el número.",
+        d: "Qué quedó automático y qué quedó manual a propósito. Cronometramos el proceso al entrar y al salir, y te entrego el número.",
         resaltado: false,
       },
       {
         n: "07",
         t: "Dos revisiones y mi WhatsApp",
-        d: "Al mes y a los dos meses, para ajustar lo que se haya torcido con el uso real. Me escribe a mí, no a una mesa de ayuda.",
+        d: "Al mes y a los dos meses, para ajustar lo que se haya torcido con el uso real. Me escribes a mí, no a una mesa de ayuda.",
         resaltado: false,
       },
     ] as Renglon[],
     menudaTitulo: "La letra menuda, en grande",
-    menudaAviso: "Léala ahora",
+    menudaAviso: "Léela ahora",
     menuda:
-      "Y lo que <b class='font-bold'>no</b>: no le cambio la empresa entera, es un proceso a la vez. No le armo el equipo de tecnología, no le vendo licencias de nada y no le queda un cobro mensual por usuario. Si lo que necesita ya existe y funciona, se lo digo y no se lo construyo.",
+      "Y lo que <b class='font-bold'>no</b>: no te cambio la empresa entera, es un proceso a la vez. No te armo el equipo de tecnología, no te vendo licencias de nada y no te queda un cobro mensual por usuario. Si lo que necesitas ya existe y funciona, te lo digo y no te lo construyo.",
     manuscrita: "un proceso a la vez, y cuando ese quede hablamos del segundo",
     tampocoTitulo: "Tampoco hago",
     tampoco: [
@@ -548,7 +548,7 @@ const es = {
         cuando: "2016 — 2017",
         texto: "Flores por suscripción.",
         remate: "Fracasó de manera espectacular.",
-        cola: " La historia se la cuento en la llamada.",
+        cola: " La historia te la cuento en la llamada.",
         remateRojo: true,
       },
       {
@@ -562,7 +562,7 @@ const es = {
     cierre1a:
       "La primera de la lista es la que me ocupa de lunes a viernes. De esa hablo ",
     cierreEnlace: "más abajo",
-    cierre1b: ", cuando le explique por qué hay tan pocos cupos.",
+    cierre1b: ", cuando te explique por qué hay tan pocos cupos.",
     cierre2:
       "Mi papá y mi abuelo también fueron empresarios. Es lo único que hemos sabido hacer.",
   },
@@ -605,10 +605,10 @@ const es = {
     ctaUno: "Tomar el que queda",
     ctaVarios: "Tomar uno de los %n que quedan",
     ctaWa:
-      "Hola Salomón, vi que hay un cupo de consultoría libre y quiero contarle mi caso.",
-    sinCupo: "Sin cupo por ahora. Escríbame y le aviso cuando se libere uno.",
+      "Hola Salomón, vi que hay un cupo de consultoría libre y quiero contarte mi caso.",
+    sinCupo: "Sin cupo por ahora. Escríbeme y te aviso cuando se libere uno.",
     remateA:
-      "Si lo suyo es más chiquito y apenas está arrancando, eso lo trabajo por otro lado: ",
+      "Si lo tuyo es más chiquito y apenas estás arrancando, eso lo trabajo por otro lado: ",
     remateEnlace: "mentoría",
     remateB: ".",
   },

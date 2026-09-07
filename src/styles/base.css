@@ -518,6 +518,16 @@ details[open] .resp {
   color: var(--gris);
   margin-top: 0.6rem;
 }
+/* La fecha de última actualización: primer párrafo en cursiva del About. */
+.prosa > p:first-child > em:only-child {
+  font-family: var(--font-mono);
+  font-style: normal;
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gris);
+}
+
 .prosa hr {
   border: 0;
   border-top: 1px solid var(--linea);

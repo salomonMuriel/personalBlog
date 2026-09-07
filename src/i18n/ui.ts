@@ -39,7 +39,7 @@ export const ui = {
 
     "pie.sinFormulario": "Sin formulario",
     "pie.sinFormularioTxt":
-      "No hay campos que llenar. Un mensaje suyo, una respuesta mía.",
+      "No hay campos que llenar. Un mensaje tuyo, una respuesta mía.",
     "pie.sinEquipo": "Sin equipo detrás",
     "pie.sinEquipoTxt":
       "El que contesta y el que construye soy yo. Por eso los cupos son los que son.",
@@ -47,9 +47,9 @@ export const ui = {
     "pie.vigente": "Documento vigente",
     "pie.coords": "Bogotá · 4°42′N 74°04′W",
 
-    "contacto.titulo": "Escríbame",
+    "contacto.titulo": "Escríbeme",
     "contacto.bajada":
-      "Escoja por dónde le queda más cómodo. Cuénteme qué tiene montado y le digo si le sirvo.",
+      "Escoge por dónde te queda más cómodo. Cuéntame qué tienes montado y te digo si te sirvo.",
     "contacto.wa": "WhatsApp",
     "contacto.agendar": "Agendar",
     "contacto.agendarNota": "cal.com/salomonmuriel",

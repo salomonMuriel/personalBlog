@@ -11,12 +11,12 @@ export const preguntasEs: Pregunta[] = [
     r: "Perfecto. La mitad de mi trabajo es traducir; si algo no se entiende es culpa mía. Mis clientes son marcas de ropa, restaurantes, distribuidoras, importadores y empresas de servicios.",
   },
   {
-    p: "¿Lo que me va a entregar es una presentación?",
-    r: "No. Le entrego algo funcionando y en producción, su equipo capacitado para usarlo y la decisión estratégica escrita en dos páginas, en español y sin jerga.",
+    p: "¿Lo que me vas a entregar es una presentación?",
+    r: "No. Te entrego algo funcionando y en producción, tu equipo capacitado para usarlo y la decisión estratégica escrita en dos páginas, en español y sin jerga.",
   },
   {
     p: "Ya compré un software carísimo. ¿Toca botarlo?",
-    r: "Casi nunca. Primero miro qué de lo que ya tiene sirve y por qué la gente no lo abre. Muchas veces el programa está bien, pero desconectado del resto, y por eso llenarlo es doble trabajo.",
+    r: "Casi nunca. Primero miro qué de lo que ya tienes sirve y por qué la gente no lo abre. Muchas veces el programa está bien, pero desconectado del resto, y por eso llenarlo es doble trabajo.",
   },
   {
     p: "Tenemos un Notion y un Excel que dicen cosas distintas. ¿Con cuál nos quedamos?",
@@ -24,19 +24,19 @@ export const preguntasEs: Pregunta[] = [
   },
   {
     p: "¿Mi empresa es muy chiquita para esto?",
-    r: "Si ya vende y tiene entre cinco y cuarenta personas, está justo en el punto donde más sirvo. Donde no sirvo es cuando la empresa ya está grande y lo que necesita es escalarla mucho más.",
+    r: "Si ya vendes y tienes entre cinco y cuarenta personas, estás justo en el punto donde más sirvo. Donde no sirvo es cuando la empresa ya está grande y lo que necesita es escalarla mucho más.",
   },
   {
     p: "¿Y después, cuando quiera cambiar algo?",
-    r: "El código queda a nombre de su empresa y antes de bajarme les enseño a modificarlo con inteligencia artificial: cómo pedir el cambio y cómo dejarlo andando. No quiero quedar de portero de su herramienta.",
+    r: "El código queda a nombre de tu empresa y antes de bajarme les enseño a modificarlo con inteligencia artificial: cómo pedir el cambio y cómo dejarlo andando. No quiero quedar de portero de tu herramienta.",
   },
   {
-    p: "¿De dónde saca el tiempo para esto?",
+    p: "¿De dónde sacas el tiempo para esto?",
     r: "De lunes a viernes construyo Ignia, que es mi empresa. Tengo dos mellizos de cuatro años y no trabajo los domingos. Por eso solo tomo cuatro consultorías al tiempo.",
   },
   {
-    p: "¿Y si usted no me sirve?",
-    r: "Se lo digo en la primera llamada y le digo a quién llamar. Llevo suficientes años en esto para conocer a la gente que hace bien lo que yo no hago.",
+    p: "¿Y si no me sirves?",
+    r: "Te lo digo en la primera llamada y te digo a quién llamar. Llevo suficientes años en esto para conocer a la gente que hace bien lo que yo no hago.",
   },
 ];
 

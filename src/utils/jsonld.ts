@@ -81,7 +81,7 @@ export function servicioLd(lang: Lang) {
     },
     description:
       lang === "es"
-        ? "Construyo el sistema que le falta a su empresa —CRM, operación, facturación— hecho a la medida de como ya trabaja, y lo dejo conectado con los que ya tiene."
+        ? "Construyo el sistema que le falta a tu empresa —CRM, operación, facturación— hecho a la medida de como ya trabajas, y lo dejo conectado con los que ya tienes."
         : "I build the system your company is missing — CRM, operations, invoicing — made to fit how you already work, and wire it to the ones you already have.",
   };
 }

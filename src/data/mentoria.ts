@@ -23,7 +23,7 @@ const es = {
   manuscrita:
     "trabajar conmigo significa que las cosas pasan, así toque a las malas",
   bajada:
-    "Para el que está arrancando y necesita que alguien lo empuje todas las semanas. Nos vemos, usted sale con una tarea, y a la siguiente revisamos si la hizo. Si no la hizo, hablamos de por qué no la hizo. Ahí suele estar el negocio de verdad.",
+    "Para el que está arrancando y necesita que alguien lo empuje todas las semanas. Nos vemos, sales con una tarea, y a la siguiente revisamos si la hiciste. Si no la hiciste, hablamos de por qué no la hiciste. Ahí suele estar el negocio de verdad.",
 
   ficha: {
     rotulo: "Ficha del servicio",
@@ -44,7 +44,7 @@ const es = {
       {
         n: "01",
         t: "La sesión",
-        d: "Una hora, usted y yo. No hay clase, no hay grupo y no hay currículo: la conversación sale de su caso y de dónde está trancado hoy.",
+        d: "Una hora, tú y yo. No hay clase, no hay grupo y no hay currículo: la conversación sale de tu caso y de dónde estás trancado hoy.",
       },
       {
         n: "02",
@@ -54,12 +54,12 @@ const es = {
       {
         n: "03",
         t: "La semana",
-        d: "Las hace usted. Yo estoy en el chat para desatascar, no para hacerlas.",
+        d: "Las haces tú. Yo estoy en el chat para desatascar, no para hacerlas.",
       },
       {
         n: "04",
         t: "La revisión",
-        d: "La siguiente sesión arranca revisando esa lista, en vez de conversando. Si no hizo la tarea, hablamos de por qué no la hizo.",
+        d: "La siguiente sesión arranca revisando esa lista, en vez de conversando. Si no hiciste la tarea, hablamos de por qué no la hiciste.",
       },
     ],
   },
@@ -70,12 +70,12 @@ const es = {
     texto:
       "Una semana real de mentoría, con los datos del negocio cambiados. Las tareas salen del caso, no de un temario.",
     encabezado: "Lista — semana 3 de 12",
-    responsable: "Responsable: usted",
+    responsable: "Responsable: tú",
     tareas: [
       "Llamar a cinco clientes que compraron una sola vez y preguntarles por qué no volvieron.",
-      "Sacar el costo real de su producto estrella, con mano de obra incluida.",
-      "Escribir en una hoja qué se rompe primero si mañana vende el triple.",
-      "Poner el precio donde se vea. Sin «cotice con nosotros».",
+      "Sacar el costo real de tu producto estrella, con mano de obra incluida.",
+      "Escribir en una hoja qué se rompe primero si mañana vendes el triple.",
+      "Poner el precio donde se vea. Sin «cotiza con nosotros».",
       "Mandarme el precio nuevo antes del jueves, así no esté perfecto.",
     ],
     pie: "0 de 5 hechas",
@@ -84,9 +84,9 @@ const es = {
 
   regla: {
     rotulo: "La regla, en grande",
-    aviso: "Léala ahora",
+    aviso: "Léela ahora",
     texto:
-      "Si dos semanas seguidas no hizo las tareas, paramos. Sin resentimientos, pero paramos. Lo escribo acá y no en la letra menuda porque es la regla que hace que esto funcione, y porque prefiero que la lea antes de escribirme.",
+      "Si dos semanas seguidas no hiciste las tareas, paramos. Sin resentimientos, pero paramos. Lo escribo acá y no en la letra menuda porque es la regla que hace que esto funcione, y porque prefiero que la leas antes de escribirme.",
   },
 
   paraQuien: {
@@ -110,17 +110,17 @@ const es = {
       ],
     },
     remateA:
-      "Si su empresa ya vende y el problema es que la operación está pegada con una persona en la mitad, lo suyo es ",
+      "Si tu empresa ya vende y el problema es que la operación está pegada con una persona en la mitad, lo tuyo es ",
     remateEnlace: "la consultoría",
     remateB: ", no esto.",
   },
 
   ignia: {
     rotulo: "Antes de escribirme",
-    titulo: "Si lo que busca es un grupo, eso ya existe",
+    titulo: "Si lo que buscas es un grupo, eso ya existe",
     texto:
-      "Si lo que busca es aprender en grupo, con estructura, con currículo y con gente que está exactamente en su mismo momento, eso es el Action Lab de Ignia y probablemente le sirva más que yo. Le dejo el enlace de una vez.",
-    remate: "Acá somos usted y yo, cada semana, y nada más.",
+      "Si lo que buscas es aprender en grupo, con estructura, con currículo y con gente que está exactamente en tu mismo momento, eso es el Action Lab de Ignia y probablemente te sirva más que yo. Te dejo el enlace de una vez.",
+    remate: "Acá somos tú y yo, cada semana, y nada más.",
     cta: "Ver el Action Lab de Ignia",
     url: "https://www.ignia.lat",
   },
@@ -136,20 +136,20 @@ const es = {
     ctaUno: "Tomar el cupo que queda",
     ctaVarios: "Tomar uno de los %n que quedan",
     ctaWa:
-      "Hola Salomón, estoy arrancando ___ y quiero preguntarle por la mentoría uno a uno.",
+      "Hola Salomón, estoy arrancando ___ y quiero preguntarte por la mentoría uno a uno.",
     sinCupo:
-      "Sin cupo por ahora. No hay lista de espera: escríbame y le aviso cuando se libere uno.",
+      "Sin cupo por ahora. No hay lista de espera: escríbeme y te aviso cuando se libere uno.",
     plata: "Sin costo por escribirme. Del precio hablamos solo si arrancamos.",
   },
 
   preguntas: [
     {
-      p: "¿Qué le llevo a la primera sesión?",
-      r: "Lo que esté construyendo y lo que lo tiene trancado ahora mismo. Nada preparado, nada bonito. Si le cuesta escribir en qué está trancado, ya sabemos por dónde arrancar.",
+      p: "¿Qué llevo a la primera sesión?",
+      r: "Lo que estés construyendo y lo que te tiene trancado ahora mismo. Nada preparado, nada bonito. Si te cuesta escribir en qué estás trancado, ya sabemos por dónde arrancar.",
     },
     {
       p: "¿Esto es lo mismo que la consultoría?",
-      r: "No. En la consultoría el trabajo lo hago yo: le construyo la herramienta. Acá el trabajo lo hace usted y yo reviso. Esa es toda la diferencia.",
+      r: "No. En la consultoría el trabajo lo hago yo: te construyo la herramienta. Acá el trabajo lo haces tú y yo reviso. Esa es toda la diferencia.",
     },
     {
       p: "¿Y si no alcanzo a hacer las tareas?",
@@ -160,7 +160,7 @@ const es = {
       r: "Sí. De las siete personas que han pasado, hay emprendedores, fundadores de startup y gente de organizaciones sociales. La mecánica es la misma.",
     },
     {
-      p: "¿De dónde saca el tiempo?",
+      p: "¿De dónde sacas el tiempo?",
       r: "De lunes a viernes construyo Ignia, que es mi empresa. Tengo dos mellizos de cuatro años y no trabajo los domingos. Por eso el tope son cinco personas al tiempo.",
     },
   ],

@@ -14,8 +14,22 @@ interface Props {
   lang: Lang;
   /** En el home la lista cierra apuntando a #cupos; en /sobre-mi no. */
   cierre?: boolean;
+  /** El ancla, para poder enlazarla desde el texto de la página. */
+  id?: string;
+  /** En /sobre-mi la sección se presenta como parte de la biografía y no
+      como credencial de venta, así que el encabezado se puede cambiar. */
+  rotulo?: string;
+  nota?: string;
+  titulo?: string;
 }
-const { lang, cierre = true } = Astro.props;
+const {
+  lang,
+  cierre = true,
+  id = "montado",
+  rotulo,
+  nota,
+  titulo,
+} = Astro.props;
 const c = copia(lang).montado;
 
 const logos: Record<string, ImageMetadata | undefined> = {
@@ -28,16 +42,20 @@ const logos: Record<string, ImageMetadata | undefined> = {
 ---
 
 <section
-  id="montado"
+  id={id}
   class="border-y border-linea bg-papel2 py-[clamp(3.2rem,7vw,5.6rem)]"
 >
   <div class="hoja">
-    <EncabezadoSeccion rotulo={c.rotulo} nota={c.nota} notaCh={42} />
+    <EncabezadoSeccion
+      rotulo={rotulo ?? c.rotulo}
+      nota={nota ?? c.nota}
+      notaCh={42}
+    />
 
     <h2
       class="font-arch max-w-[20ch] text-[clamp(1.9rem,4.4vw,3.4rem)] font-extrabold leading-[1.03] tracking-[-.028em] [font-stretch:104%]"
     >
-      {c.titulo}
+      {titulo ?? c.titulo}
     </h2>
 
     <div

@@ -90,7 +90,7 @@ export default (lang: "es" | "en") => {
           }}
         >
           {es
-            ? "Software hecho a la medida de su empresa y de como ya trabaja."
+            ? "Software hecho a la medida de tu empresa y de como ya trabajas."
             : "Custom software built to fit your company and how it already works."}
         </div>
       </div>

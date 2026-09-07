@@ -19,15 +19,14 @@ const es = {
   rotulo: "Anexo · Material de divulgación",
   nota: "No es un producto. Es cómo la gente me conoce.",
   titulo: "Charlas",
-  manuscrita:
-    "después de oírme una hora usted ya sabe si quiere trabajar conmigo",
+  manuscrita: "después de oírme una hora ya sabes si quieres trabajar conmigo",
   bajada:
     "Me han contratado conferencias, empresas y universidades. Voy con gusto, pero acá no aparecen con precio ni con cupos, porque no son un servicio: son la puerta de entrada. De una charla salen tres conversaciones y de esas, con suerte, sale un trabajo.",
 
   franqueza: {
     rotulo: "Dicho sin rodeos",
     texto:
-      "Las charlas son el mercadeo de lo demás que hago: la consultoría, la mentoría y, cuando viene al caso, Ignia — el modelo de educación superior que construyo de lunes a viernes. Nunca he armado una charla para vender algo: la armo, la doy, y de ahí sale la gente que después me escribe. Prefiero decirlo antes de que usted lo pregunte.",
+      "Las charlas son el mercadeo de lo demás que hago: la consultoría, la mentoría y, cuando viene al caso, Ignia — el modelo de educación superior que construyo de lunes a viernes. Nunca he armado una charla para vender algo: la armo, la doy, y de ahí sale la gente que después me escribe. Prefiero decirlo antes de que lo preguntes.",
     condicion:
       "Me subo al escenario con una condición: hablo de lo que he hecho, no de lo que leí.",
   },
@@ -67,7 +66,7 @@ const es = {
       "Charlas de cultura organizacional.",
     ],
     noNota:
-      "Me las piden seguido y siempre digo que no. Hay gente que las da muchísimo mejor que yo, y con gusto le paso el contacto.",
+      "Me las piden seguido y siempre digo que no. Hay gente que las da muchísimo mejor que yo, y con gusto te paso el contacto.",
   },
 
   formatos: {
@@ -123,8 +122,8 @@ const es = {
 
   kit: {
     rotulo: "Kit del organizador",
-    titulo: "Lo que necesita para el programa",
-    nota: "Sin formulario y sin pedirle nada a cambio. Copie y pegue.",
+    titulo: "Lo que necesitas para el programa",
+    nota: "Sin formulario y sin pedirte nada a cambio. Copia y pega.",
     bioCortaT: "Bio corta",
     bioCortaNota: "Para el programa del evento.",
     bioCorta:
@@ -153,13 +152,13 @@ const es = {
 
   cta: {
     rotulo: "Para invitarme",
-    titulo: "Cuénteme quién va a estar en el público",
+    titulo: "Cuéntame quién va a estar en el público",
     texto:
-      "De eso depende si soy la persona indicada. Contesto yo, no un equipo comercial. Si prefiere hablarlo de una vez, agende veinte minutos en mi calendario.",
+      "De eso depende si soy la persona indicada. Contesto yo, no un equipo comercial. Si prefieres hablarlo de una vez, agenda veinte minutos en mi calendario.",
     wa: "Invitarme a una charla",
     waTexto:
-      "Hola Salomón, quiero invitarlo a dar una charla. Le cuento de qué se trata, qué fecha tenemos y quién va a estar en el público.",
-    agenda: "O agende veinte minutos",
+      "Hola Salomón, quiero invitarte a dar una charla. Te cuento de qué se trata, qué fecha tenemos y quién va a estar en el público.",
+    agenda: "O agenda veinte minutos",
   },
 } as const;
 

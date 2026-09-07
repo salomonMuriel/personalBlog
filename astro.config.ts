@@ -7,6 +7,7 @@ import vercel from "@astrojs/vercel";
 import keystatic from "@keystatic/astro";
 import { SITE } from "./src/config";
 import { rehypeImagenes } from "./src/utils/rehype-imagenes";
+import { rehypeCuentas } from "./src/utils/rehype-cuentas";
 import { routes } from "./src/i18n/ui";
 
 /**
@@ -51,7 +52,7 @@ export default defineConfig({
     keystatic(),
   ],
   markdown: {
-    rehypePlugins: [rehypeImagenes],
+    rehypePlugins: [rehypeImagenes, rehypeCuentas],
     shikiConfig: {
       theme: "one-dark-pro",
       wrap: true,
