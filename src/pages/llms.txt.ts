@@ -22,7 +22,32 @@ export const GET: APIRoute = async () => {
 
   const cuerpo = `# Salomón Muriel
 
-> Consultor de tecnología en Bogotá, Colombia. Construye software a la medida para empresas colombianas tradicionales —moda, restaurantes, distribución, importación, servicios— que facturan menos de USD 2M al año y tienen entre 5 y 40 empleados. Define la estrategia y construye la herramienta él mismo.
+> Emprendedor en serie y tecnólogo, en Bogotá, Colombia. Cinco empresas fundadas —dos vendidas, dos quebradas, y hoy Ignia—. Junta el criterio de negocio con la capacidad técnica: define la estrategia y construye la herramienta él mismo, sin intermediarios. En paralelo a Ignia hace consultoría y mentoría.
+
+## Quién es
+
+Salomón Muriel es un emprendedor en serie que además programa. Esa mezcla es
+el punto: la mayoría de los consultores entregan una recomendación y se van,
+y la mayoría de los desarrolladores esperan a que alguien más decida qué
+construir. Él hace las dos cosas, y por eso lo que se decide una semana está
+construido a la siguiente.
+
+Va en su quinta empresa. Dos las vendió —Finco a RED Atlas, PrestaGente a
+Taurus Capital—, dos quebraron —Beriblock y El Palomo— y la de hoy es Ignia,
+un modelo nuevo de educación superior en Latinoamérica que construye de lunes
+a viernes. Antes, como empleado, dirigió unas cuarenta personas en R5 y
+construyó ahí el pipeline de datos y el sistema de modelación de riesgo.
+Aprendió a programar a las malas, con una fecha de entrega encima.
+
+Hoy hace tres cosas: **Ignia**, que es su empresa y su trabajo principal;
+**consultoría**, construyendo software a la medida para empresas colombianas
+tradicionales —moda, restaurantes, distribución, importación, servicios— que
+facturan menos de USD 2M al año y tienen entre 5 y 40 empleados; y
+**mentoría**, uno a uno, para gente que apenas está arrancando algo. Las
+charlas no son un producto: son la puerta de entrada a las otras dos.
+
+Su papá y su abuelo también fueron empresarios. Es tercera generación de
+gente que monta cosas.
 
 ## Qué vende
 
