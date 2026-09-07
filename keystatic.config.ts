@@ -15,24 +15,32 @@ const repo = "salomonMuriel/personalBlog";
  * En local escribe archivos directamente; en producción abre un commit en
  * GitHub a nombre de Salomón.
  *
- * `KEYSTATIC_GITHUB=true` fuerza el modo GitHub en desarrollo, y existe por
- * una razón concreta: **la app de GitHub sólo se puede crear corriendo en
- * local**. Keystatic tira 500 en la ruta `/api/keystatic/github/created-app`
- * cuando `NODE_ENV !== "development"`, así que intentar el setup desde
- * producción no funciona nunca — y sin esta variable tampoco funcionaba en
- * local, porque acá el modo era siempre `local`. Era un callejón sin salida.
+ * Ojo con cómo se decide: este archivo lo carga **también el navegador**,
+ * porque el admin de Keystatic es una SPA que importa la config. Por eso
+ * todo acá va con `import.meta.env`, que Vite reemplaza estáticamente en
+ * cliente y servidor. Con `process.env` la página queda en blanco con
+ * «ReferenceError: process is not defined».
  *
- *   KEYSTATIC_GITHUB=true npm run dev   →  http://localhost:4321/keystatic
+ * `PUBLIC_KEYSTATIC_GITHUB=true` fuerza el modo GitHub en desarrollo, y
+ * existe por una razón concreta: **la app de GitHub sólo se puede crear
+ * corriendo en local**. Keystatic tira 500 en
+ * `/api/keystatic/github/created-app` cuando `NODE_ENV !== "development"`,
+ * así que el setup desde producción no funciona nunca — y sin esta variable
+ * tampoco funcionaba en local, porque el modo era siempre `local`.
+ *
+ *   PUBLIC_KEYSTATIC_GITHUB=true npm run dev
  *
  * En la pantalla de setup hay que llenar el campo de URL desplegada con
- * https://www.salomonmuriel.com para que la app quede con el callback de
- * producción además del de localhost. Al terminar, Keystatic escribe
- * KEYSTATIC_GITHUB_CLIENT_ID y KEYSTATIC_GITHUB_CLIENT_SECRET en `.env`, y
- * de ahí se suben a Vercel.
+ * https://www.salomonmuriel.com, porque el manifiesto arma `callback_urls`
+ * con localhost + 127.0.0.1 + lo que se escriba ahí. Al terminar, Keystatic
+ * escribe KEYSTATIC_GITHUB_CLIENT_ID y KEYSTATIC_GITHUB_CLIENT_SECRET en
+ * `.env`, y de ahí se suben a Vercel.
  */
+const forzarGithub = import.meta.env.PUBLIC_KEYSTATIC_GITHUB === "true";
+const forzarLocal = import.meta.env.PUBLIC_KEYSTATIC_LOCAL === "true";
+
 const almacenamiento =
-  process.env.KEYSTATIC_GITHUB === "true" ||
-  (!import.meta.env.DEV && process.env.KEYSTATIC_LOCAL !== "true")
+  forzarGithub || (!import.meta.env.DEV && !forzarLocal)
     ? ({ kind: "github", repo } as const)
     : ({ kind: "local" } as const);
 
