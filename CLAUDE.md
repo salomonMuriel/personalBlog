@@ -204,6 +204,34 @@ No hay paso de post-procesamiento de imágenes: Astro ya emite WebP con
 porque corría después de que el adaptador ya había copiado los estáticos a
 `.vercel/output/static`, así que su trabajo nunca llegaba a producción.
 
+## Despliegue
+
+Vercel está conectado a GitHub y **produce producción desde `main`**. Un push
+a `main` despliega el sitio en vivo; una rama abre un preview.
+
+**No use `vercel --prod` desde el CLI.** Deja el sitio nuevo en vivo pero
+`main` atrás, y el siguiente push a `main` revierte producción sin avisar.
+Para publicar: merge a `main` y push.
+
+El merge del cutover se hizo con `--no-ff` a propósito: `git revert -m 1
+ea2d2b0` devuelve el sitio viejo de un comando. Lo que no se revierte es el
+índice de Google —los 410 ya salieron—, así que eso es de una sola vía.
+
+Dos cosas del entorno local que cuestan tiempo si no se saben:
+
+- **No corra `astro build` con un `astro dev` vivo.** El build reescribe
+  `node_modules/.vite/deps` con otro `configHash` mientras el dev server
+  todavía tiene handles de los chunks viejos, y sale
+  `TypeError: Cannot read properties of undefined (reading 'call')` en
+  `EnvironmentPluginContainer.transform`. El watcher ya ignora `dist/` y
+  `.vercel/`, que era la otra mitad del problema.
+- **Use `--strictPort`.** Si el 4321 está ocupado, Astro se va callado al
+  4322 y usted queda hablándole a un servidor viejo, posiblemente en otro
+  modo de Keystatic.
+
+Los preview tienen Deployment Protection: todo devuelve 302 al SSO de
+Vercel. Para revisarlos, `check-redirects.mjs` acepta `--vercel-curl`.
+
 ## Presupuesto de rendimiento
 
 Lighthouse móvil con compresión: **95+ en las cuatro categorías, en las diez
