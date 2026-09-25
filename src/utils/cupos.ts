@@ -9,10 +9,6 @@ export type Cupos = {
   actualizado: string;
 };
 
-/**
- * Los contadores de capacidad. Los edita Keystatic (singleton `cupos`),
- * así que la página no necesita un commit a mano cuando se llena un cupo.
- */
 export const cupos = datos as Cupos;
 
 export const consultoriasLibres = Math.max(

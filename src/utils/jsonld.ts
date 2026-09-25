@@ -3,10 +3,6 @@ import type { Lang } from "@i18n/ui";
 
 const abs = (p: string) => new URL(p, SITE.website).href;
 
-/**
- * La persona. Es la entidad raíz del sitio: todo lo demás la referencia
- * por @id en vez de repetirla.
- */
 export function personaLd(lang: Lang) {
   return {
     "@type": "Person",
@@ -43,7 +39,6 @@ export function personaLd(lang: Lang) {
   };
 }
 
-/** La página como perfil profesional. */
 export function profilePageLd(lang: Lang, url: string) {
   return {
     "@context": "https://schema.org",
@@ -55,11 +50,7 @@ export function profilePageLd(lang: Lang, url: string) {
   };
 }
 
-/**
- * El servicio de consultoría. Sin precio, deliberadamente: la restricción
- * dura del proyecto es silencio absoluto sobre dinero, y `offers` sin
- * `price` es válido en schema.org.
- */
+// Sin precio a propósito; `offers` sin `price` es válido en schema.org.
 export function servicioLd(lang: Lang) {
   return {
     "@context": "https://schema.org",
@@ -88,7 +79,6 @@ export function servicioLd(lang: Lang) {
 
 export type Pregunta = { p: string; r: string };
 
-/** FAQPage: alimenta el bloque de preguntas y el rich result de Google. */
 export function faqLd(preguntas: Pregunta[]) {
   return {
     "@context": "https://schema.org",
@@ -101,7 +91,6 @@ export function faqLd(preguntas: Pregunta[]) {
   };
 }
 
-/** Migas para las páginas secundarias. */
 export function breadcrumbLd(items: { name: string; url: string }[]) {
   return {
     "@context": "https://schema.org",

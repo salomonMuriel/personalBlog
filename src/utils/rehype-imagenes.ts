@@ -3,12 +3,7 @@ import { join } from "node:path";
 import sharp from "sharp";
 import type { Root, Element } from "hast";
 
-/**
- * Las imágenes de /ahora y /sobre-mi vienen de MDX y apuntan a /public,
- * así que Astro no las procesa. Este plugin les pone `loading="lazy"`,
- * `decoding="async"` y —leyendo el archivo en disco— el `width`/`height`
- * real, que es lo que evita que la página salte al cargarlas.
- */
+// Imágenes de MDX que apuntan a /public: lazy + width/height reales para CLS 0.
 
 const cache = new Map<string, Promise<{ w: number; h: number } | null>>();
 

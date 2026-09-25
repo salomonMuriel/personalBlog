@@ -3,12 +3,7 @@ import EncabezadoSeccion from "@components/EncabezadoSeccion.astro";
 import { copia } from "@data/landing";
 import type { Lang } from "@i18n/ui";
 
-/**
- * El tablero de cajitas. La geometría se dibuja en el cliente a partir de
- * `offsetLeft/Top` de cada caja, así que el orden y los `id` de abajo son
- * parte del contrato: `data-a` / `data-b` / `data-r` los lee el script.
- * Portado tal cual de direction-36; no redibujar.
- */
+// Los `id`, el orden y `data-a`/`data-b`/`data-r` son el contrato con el script que dibuja los cables.
 interface Props {
   lang: Lang;
 }
@@ -52,7 +47,6 @@ const insignia =
       />
     </div>
 
-    <!-- interruptor -->
     <div
       class="mt-[clamp(1.8rem,3.6vw,2.6rem)] flex flex-wrap items-center gap-3"
     >

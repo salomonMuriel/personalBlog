@@ -10,8 +10,6 @@ interface Props {
 const { lang, preguntas } = Astro.props;
 const es = lang === "es";
 
-// La nota al margen dice cuántas son, y no siempre son ocho: la portada
-// trae ocho y mentoría cinco. El número sale de la lista.
 const letras = es
   ? ["cero", "una", "dos", "tres", "cuatro", "cinco", "seis", "siete", "ocho"]
   : ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight"];

@@ -5,13 +5,9 @@ export const languages = {
 
 export type Lang = keyof typeof languages;
 
-/** Spanish is the site's first language. English is the secondary tree. */
 export const defaultLang: Lang = "es";
 
-/**
- * Route keys → the path each locale serves them at.
- * Spanish sits at the root; English lives under /en.
- */
+// Las rutas no son paralelas: este mapa es la única fuente para nav, hreflang y sitemap.
 export const routes = {
   home: { es: "/", en: "/en/" },
   mentoria: { es: "/mentoria/", en: "/en/mentoring/" },
@@ -38,18 +34,16 @@ export const ui = {
     "rotulo.ciudad": "Bogotá, Colombia",
 
     "pie.sinFormulario": "Sin formulario",
-    "pie.sinFormularioTxt":
-      "No hay campos que llenar. Un mensaje tuyo, una respuesta mía.",
+    "pie.sinFormularioTxt": "Me escribes y te contesto yo.",
     "pie.sinEquipo": "Sin equipo detrás",
-    "pie.sinEquipoTxt":
-      "El que contesta y el que construye soy yo. Por eso los cupos son los que son.",
+    "pie.sinEquipoTxt": "El que contesta y el que construye soy yo.",
     "pie.otras": "Otras páginas",
     "pie.vigente": "Documento vigente",
     "pie.coords": "Bogotá · 4°42′N 74°04′W",
 
     "contacto.titulo": "Escríbeme",
     "contacto.bajada":
-      "Escoge por dónde te queda más cómodo. Cuéntame qué tienes montado y te digo si te sirvo.",
+      "Cuéntame qué tienes montado y te digo si te puedo ayudar.",
     "contacto.wa": "WhatsApp",
     "contacto.agendar": "Agendar",
     "contacto.agendarNota": "cal.com/salomonmuriel",
@@ -80,18 +74,17 @@ export const ui = {
     "rotulo.ciudad": "Bogotá, Colombia",
 
     "pie.sinFormulario": "No forms",
-    "pie.sinFormularioTxt":
-      "Nothing to fill in. One message from you, one answer from me.",
+    "pie.sinFormularioTxt": "You write, I answer.",
     "pie.sinEquipo": "No team behind me",
     "pie.sinEquipoTxt":
-      "The person who answers and the person who builds are the same. That's why there are so few slots.",
+      "The person who answers and the person who builds are the same.",
     "pie.otras": "Other pages",
     "pie.vigente": "Current document",
     "pie.coords": "Bogotá · 4°42′N 74°04′W",
 
     "contacto.titulo": "Write to me",
     "contacto.bajada":
-      "Pick whichever is easiest. Tell me what you have running and I'll tell you if I'm any use to you.",
+      "Tell me what you have running and I'll tell you if I can help.",
     "contacto.wa": "WhatsApp",
     "contacto.agendar": "Book a call",
     "contacto.agendarNota": "cal.com/salomonmuriel",

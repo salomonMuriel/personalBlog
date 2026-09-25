@@ -1,13 +1,3 @@
-/**
- * Toda la copia de la página de consultoría, en los dos idiomas.
- *
- * El español es el de `design-directions/direction-36.html`, palabra por
- * palabra: está aprobado por el cliente y no se reescribe. El inglés es
- * traducción, y es el idioma secundario del sitio.
- *
- * Los componentes de `src/components/home/` sólo ponen la estructura; el
- * texto sale de acá.
- */
 import type { Lang } from "@i18n/ui";
 
 export type Falla = {
@@ -27,7 +17,7 @@ const es = {
   meta: {
     title: "Se arregla lo chinomático — Salomón Muriel, Bogotá",
     description:
-      "Te construyo software hecho a la medida de tu empresa y de como ya trabajas, en vez de que te toque torcer la empresa para caber en un programa que compraste. Sin cobro mensual por usuario. Consultoría, Bogotá.",
+      "Te construyo software a la medida de cómo ya trabaja tu empresa, en vez de acomodar la empresa a un programa comprado. Sin cobro mensual por usuario. Consultoría, Bogotá.",
   },
 
   hero: {
@@ -35,7 +25,7 @@ const es = {
     linea2: "Lo chinomático",
     manuscrita: "sin cambiarte la empresa entera, una cajita a la vez",
     bajada:
-      "Te construyo software hecho a la medida de tu empresa y de como ya trabajas, en vez de que a ti te toque torcer la empresa para caber en un programa que compraste.",
+      "Te construyo software a la medida de cómo ya trabaja tu empresa, en vez de que te toque acomodar la empresa a un programa que compraste.",
     dicc: {
       palabra: "chi·no·má·ti·co, ca",
       categoria: "adj.",
@@ -61,7 +51,7 @@ const es = {
       ["Quién contesta", "También Salomón", true],
     ] as [string, string, boolean][],
     fichaPie:
-      "El que te contesta el WhatsApp y el que escribe el código son el mismo. Por eso alcanzo para pocos.",
+      "El que te contesta el WhatsApp es el mismo que escribe el código. Por eso trabajo con pocas empresas a la vez.",
   },
 
   cinta: [
@@ -74,11 +64,11 @@ const es = {
 
   danos: {
     rotulo: "Registro de fallas",
-    nota: "Los mismos siete renglones, en empresas que no se conocen entre sí.",
-    titulo: "Lo que me reportan, casi siempre lo mismo",
+    nota: "Se repite en empresas que no tienen nada que ver entre sí.",
+    titulo: "Lo que casi siempre me encuentro",
     etiqueta: "Falla",
     cierre:
-      "Si nada de esto te sonó, probablemente no te sirvo, y prefiero decírtelo acá y no en la cuarta reunión.",
+      "Si nada de esto te suena, probablemente no soy la persona indicada.",
     fallas: [
       {
         n: "01",
@@ -146,7 +136,7 @@ const es = {
         antes: "Si esa persona se enferma, se para. Si renuncia, ",
         marcado: "se lleva el proceso puesto",
         despues: ".",
-        nota: "Y el que llega aprende de oídas, de otro que también aprendió de oídas.",
+        nota: "Y el que llega lo aprende de oídas.",
         manuscrita: false,
       },
     ] as Falla[],
@@ -169,7 +159,7 @@ const es = {
     esperando: "Esperando marcación…",
     ctaWa: "Mandarme esto por WhatsApp",
     ctaWaNota:
-      "Se abre WhatsApp con el texto ya escrito. Lo corriges y lo mandas. Contesto yo.",
+      "Se abre WhatsApp con el mensaje listo. Lo puedes editar antes de mandarlo.",
     ctaAgenda: "O agenda cuarenta y cinco minutos",
     sintomas: [
       "Los pedidos llegan por WhatsApp y alguien los pasa a mano a un Excel.",
@@ -187,12 +177,12 @@ const es = {
       {
         min: 0,
         t: "Sin medir todavía",
-        d: "El aparato no funciona en blanco: marca los renglones que reconozcas.",
+        d: "Marca los renglones que reconozcas.",
       },
       {
         min: 10,
         t: "Chinomático leve",
-        d: "Hay trabajo a mano, pero todavía está descansado. Se arregla rápido.",
+        d: "Hay algo de trabajo a mano, pero poco. Se arregla rápido.",
       },
       {
         min: 30,
@@ -207,7 +197,7 @@ const es = {
       {
         min: 90,
         t: "Chinomático crítico",
-        d: "Tu operación se sostiene en un acuerdo tácito entre dos personas y un chat. Escríbeme hoy.",
+        d: "Tu operación depende de un par de personas y un chat. Hablemos.",
       },
     ],
     waVacio:
@@ -221,10 +211,10 @@ const es = {
 
   cajitas: {
     rotulo: "Cómo te explico mi trabajo",
-    nota: "Si te llevas una sola cosa de esta página, que sea esta.",
+    nota: "Es la idea detrás de todo lo que hago.",
     titulo: "Una empresa es un sistema de cajitas",
     p1: "Mercadeo manda tráfico a la página y a WhatsApp. Eso genera leads para ventas. Ventas le devuelve información a mercadeo y le abre trabajo a operaciones y a administración. Cada una de esas es una cajita, y cada cajita tiene su propio sistema.",
-    p2: "<b class='font-semibold text-tinta'>Yo construyo esas cajitas y las conecto.</b> El CRM que necesita tu proceso de ventas, el sistema con el que trabaja operaciones, la facturación de administración: te construyo el que te falte, hecho a la medida de como ya trabajas, y lo dejo hablando con los de al lado.",
+    p2: "<b class='font-semibold text-tinta'>Yo construyo esas cajitas y las conecto.</b> El CRM que necesita tu proceso de ventas, el sistema con el que trabaja operaciones, la facturación de administración: te construyo el que te falte, a la medida de cómo ya trabajas, y lo dejo conectado con los demás.",
     estadoSistema: "Estado del sistema",
     btnHoy: "Como está hoy",
     btnQueda: "Como queda",
@@ -327,9 +317,9 @@ const es = {
     cierreTitulo:
       "Construyo la cajita y la dejo conectada <b class='text-rojo2'>antes</b> de pasar a la siguiente.",
     cierreP1:
-      "Lo chinomático aparece en la mitad: alguien saca el dato de una cajita y lo mete en la otra, todos los días. Cuando la conexión queda hecha, ese muchacho deja de copiar y pegar y se pone a atender clientes, que es para lo que lo contrataste.",
+      "Lo chinomático aparece en la mitad: alguien saca el dato de una cajita y lo mete en la otra, todos los días. Cuando la conexión queda hecha, esa persona deja de copiar y pegar y vuelve al trabajo para el que la contrataste.",
     cierreP2:
-      "Los numeritos rojos son el orden de un caso típico. El orden real lo decidimos tú y yo, mirando dónde te duele más.",
+      "Los números rojos son el orden de un caso típico. En el tuyo empezamos por donde más duela.",
     cierreManuscrita:
       "si dos cajitas quedan pegadas con una persona en la mitad, quedaron chinomáticas",
   },
@@ -337,33 +327,32 @@ const es = {
   banda: {
     titulo: "Software tuyo, hecho para tu empresa.",
     texto:
-      "La herramienta la construyo a la medida de tus procesos. El código queda a nombre de tu empresa y no te queda un cobro mensual por usuario. Antes de bajarme le enseño a tu gente a cambiarlo sin llamarme.",
+      "La herramienta la construyo a la medida de tus procesos. El código queda a nombre de tu empresa y no te queda un cobro mensual por usuario. Antes de irme le enseño a tu gente a cambiarlo sin llamarme.",
     rotulo: "Qué te construyo",
   },
 
   porque: {
     rotulo: "Diagnóstico diferencial",
     nota: "Tres diferencias de cómo está armado el trabajo.",
-    titulo: "Por qué conmigo sí pasa",
+    titulo: "Cómo trabajo",
     razones: [
       {
         giro: "-rotate-[5deg]",
-        titulo: "Una sola cabeza.",
+        titulo: "Una sola persona.",
         parrafos: [
-          "La estrategia y la herramienta las hace la misma persona: yo. No hay un consultor que entrega la presentación bonita y después un proveedor que la interpreta a su manera. <b class='font-semibold text-tinta'>Lo que decidimos el lunes lo estoy construyendo el martes.</b>",
+          "La estrategia y la herramienta las hago yo. No hay un consultor que entrega una presentación y un proveedor que la interpreta a su manera. <b class='font-semibold text-tinta'>Lo que decidimos el lunes lo empiezo a construir el martes.</b>",
         ],
-        manuscrita: "por eso los cupos son cuatro y no cuarenta",
+        manuscrita: "por eso tomo pocos proyectos",
         giroNota: "-rotate-[1deg]",
       },
       {
         giro: "rotate-[4deg]",
-        titulo: "Te construyo software a la medida, y rápido.",
+        titulo: "Software a la medida, más rápido que antes.",
         parrafos: [
-          "Te construyo la herramienta que tu empresa necesita, hecha para tu manera de trabajar, y la dejo andando rápido. Trabajo apoyado en agentes de inteligencia artificial, no subcontratando.",
-          "Y no solo para programar: <b class='font-semibold text-tinta'>le enseño a tu gente a usar esos mismos agentes</b> para el trabajo de oficina que hoy hacen a mano.",
+          "Programo con agentes de inteligencia artificial en vez de subcontratar, y eso me deja construir rápido.",
+          "También <b class='font-semibold text-tinta'>le enseño a tu gente a usarlos</b> para el trabajo de oficina que hoy hacen a mano.",
         ],
-        manuscrita:
-          "esto cambió de verdad hace poco. no es la misma conversación de hace tres años",
+        manuscrita: "esto cambió muchísimo en los últimos dos años",
         giroNota: "rotate-[1deg]",
       },
       {
@@ -371,8 +360,8 @@ const es = {
         titulo:
           "El software se le acomoda a la empresa, no la empresa al software.",
         parrafos: [
-          "Casi siempre pasa al revés: compras algo hecho para otra empresa y después te toca torcer a tu gente para que te sirva. Yo primero miro cómo se hace hoy de verdad, no como dice el manual, y construyo encima de eso.",
-          "<b class='font-semibold text-tinta'>Por eso la gente lo abre el lunes sin que tengas que estar encima.</b>",
+          "Lo usual es comprar algo hecho para otra empresa y obligar a tu gente a adaptarse. Yo primero miro cómo se hace el trabajo hoy y construyo sobre eso.",
+          "<b class='font-semibold text-tinta'>Por eso la gente sí lo usa.</b>",
         ],
         manuscrita: "la primera semana me siento con quien lo va a usar",
         giroNota: "-rotate-[1deg]",
@@ -382,7 +371,7 @@ const es = {
 
   programa: {
     rotulo: "Programa de obra · 16 semanas",
-    nota: "El trabajo lo hago yo. Tú escribes un mensaje y el resto corre por mi cuenta.",
+    nota: "De la primera conversación a tu equipo usándolo.",
     titulo: "Qué pasa si trabajamos juntos",
     barras: ["Entender", "Diagnóstico", "Construir · una cajita a la vez"],
     etapas: [
@@ -406,8 +395,7 @@ const es = {
       },
     ],
     bitacoraTitulo: "Una semana cualquiera del diagnóstico",
-    bitacoraTexto:
-      "Esto es lo que hago yo mientras tú sigues atendiendo tu negocio. No te pido que llenes formatos ni le quito el día a tu equipo.",
+    bitacoraTexto: "Lo hago yo, mientras tú sigues con tu negocio.",
     bitacoraPie: "Bitácora de campo · Responsable: Salomón",
     bitacoraEncabezado: "Bitácora — semana 2",
     bitacoraResponsable: "Responsable: Salomón",
@@ -425,10 +413,7 @@ const es = {
         "JUE",
         "Escribir el cuello de botella en una frase que quepa en un mensaje",
       ],
-      [
-        "VIE",
-        "Dejar prendida la primera conexión entre dos cajitas, ese mismo viernes",
-      ],
+      ["VIE", "Dejar funcionando la primera conexión entre dos cajitas"],
     ] as [string, string][],
     bitacoraHechas: "5 de 5 hechas",
     bitacoraNinguna: "Ninguna te tocó a ti.",
@@ -436,17 +421,17 @@ const es = {
 
   entrega: {
     rotulo: "Lista de empaque",
-    nota: "Siete renglones que se entregan y se firman, uno por uno.",
-    titulo: "Qué te queda cuando yo me bajo",
+    nota: "Lo que recibes al final del proyecto.",
+    titulo: "Qué te queda cuando termino",
     bajada:
-      "Algo prendido, con tus datos adentro, que tu gente ya está usando el día que yo me bajo.",
+      "Una herramienta funcionando, con tus datos, que tu gente ya está usando.",
     cajaTitulo: "Va en la caja",
     cajaConteo: "07 renglones",
     renglones: [
       {
         n: "01",
         t: "La herramienta funcionando",
-        d: "Con tus datos reales cargados, no de ejemplo. El día de la entrega ya se está usando.",
+        d: "Con tus datos reales, no de ejemplo.",
         resaltado: false,
       },
       {
@@ -457,8 +442,8 @@ const es = {
       },
       {
         n: "03",
-        t: "Te enseño a cambiarlo sin mí, con inteligencia artificial",
-        d: "Antes de bajarme me siento contigo y con tu gente a enseñarles cómo pedirle un cambio a la inteligencia artificial y cómo dejarlo andando. Para mover un botón no tienes que llamarme.",
+        t: "Cómo cambiarlo sin mí",
+        d: "Te enseño a ti y a tu equipo a hacer cambios con inteligencia artificial. Para mover un botón no tienes que llamarme.",
         resaltado: true,
       },
       {
@@ -470,7 +455,7 @@ const es = {
       {
         n: "05",
         t: "Las cuentas, las claves y los accesos",
-        d: "Todo a nombre de la empresa. Ni un dominio ni un usuario queda a nombre mío.",
+        d: "Todo a nombre de la empresa, nada a nombre mío.",
         resaltado: false,
       },
       {
@@ -482,27 +467,27 @@ const es = {
       {
         n: "07",
         t: "Dos revisiones y mi WhatsApp",
-        d: "Al mes y a los dos meses, para ajustar lo que se haya torcido con el uso real. Me escribes a mí, no a una mesa de ayuda.",
+        d: "Al mes y a los dos meses, para ajustar lo que haga falta con el uso. Y me escribes directamente a mí.",
         resaltado: false,
       },
     ] as Renglon[],
-    menudaTitulo: "La letra menuda, en grande",
-    menudaAviso: "Léela ahora",
+    menudaTitulo: "Lo que no incluye",
+    menudaAviso: "Importante",
     menuda:
-      "Y lo que <b class='font-bold'>no</b>: no te cambio la empresa entera, es un proceso a la vez. No te armo el equipo de tecnología, no te vendo licencias de nada y no te queda un cobro mensual por usuario. Si lo que necesitas ya existe y funciona, te lo digo y no te lo construyo.",
+      "<b class='font-bold'>No</b> cambio la empresa entera: es un proceso a la vez. No armo equipos de tecnología ni vendo licencias. Y si lo que necesitas ya existe y funciona, te lo digo en vez de construirlo.",
     manuscrita: "un proceso a la vez, y cuando ese quede hablamos del segundo",
     tampocoTitulo: "Tampoco hago",
     tampoco: [
-      "Escalar una empresa más allá de cierto tamaño. No lo sé hacer.",
-      "Inventar tecnología que todavía no existe. Ni investigación, ni patentes.",
-      "Documentos de ochenta páginas para mostrarle a la junta. Hay gente que lo hace mejor que yo.",
+      "Escalar empresas grandes. No es lo mío.",
+      "Investigación o desarrollo de tecnología nueva.",
+      "Informes largos para la junta directiva.",
     ],
   },
 
   montado: {
     rotulo: "Historial",
-    nota: "Los fracasos también están en la tabla.",
-    titulo: "Lo que he montado con mis propias manos",
+    nota: "Incluidas las que no funcionaron.",
+    titulo: "Lo que he construido",
     pieFoto:
       "La herramienta de valoración que estoy mostrando ahí la construimos nosotros.",
     fotoAlt:
@@ -539,7 +524,7 @@ const es = {
         cuando: "2018 — 2019",
         texto: "Autenticación de pagarés con blockchain.",
         remate: "Quebró.",
-        cola: " Tecnología bonita, mercado que no existía.",
+        cola: " La tecnología funcionaba; el mercado no existía.",
         remateRojo: true,
       },
       {
@@ -547,8 +532,8 @@ const es = {
         nombre: "El Palomo",
         cuando: "2016 — 2017",
         texto: "Flores por suscripción.",
-        remate: "Fracasó de manera espectacular.",
-        cola: " La historia te la cuento en la llamada.",
+        remate: "Fracasó.",
+        cola: " Si quieres, te cuento la historia.",
         remateRojo: true,
       },
       {
@@ -563,8 +548,7 @@ const es = {
       "La primera de la lista es la que me ocupa de lunes a viernes. De esa hablo ",
     cierreEnlace: "más abajo",
     cierre1b: ", cuando te explique por qué hay tan pocos cupos.",
-    cierre2:
-      "Mi papá y mi abuelo también fueron empresarios. Es lo único que hemos sabido hacer.",
+    cierre2: "Mi papá y mi abuelo también fueron empresarios.",
   },
 
   voces: {
@@ -577,8 +561,8 @@ const es = {
     rotulo: "Capacidad instalada",
     nota: "Números reales de hoy. Cuando se llenan, quito el botón.",
     titulo: "Por qué hay tan pocos cupos",
-    p1: "Porque esto no es mi trabajo principal y no quiero que lo sea. De lunes a viernes estoy construyendo Ignia, que es mi empresa. Tengo dos mellizos de cuatro años y salgo a correr.",
-    p2: "<b class='font-semibold text-tinta'>Prefiero atender pocos y atenderlos bien.</b>",
+    p1: "Porque esto no es mi trabajo principal. De lunes a viernes construyo Ignia, que es mi empresa, y el resto del tiempo es para mis mellizos de cuatro años y para salir a correr.",
+    p2: "<b class='font-semibold text-tinta'>Prefiero tener pocos clientes y atenderlos bien.</b>",
     actualizado: "Actualizado el",
     fotosRotulo: "Lo que ocupa el resto del tiempo",
     fotos: [
@@ -595,20 +579,19 @@ const es = {
       {
         clave: "bonfire",
         alt: "Fogata encendida al anochecer, fuera de la ciudad",
-        pie: "Donde se piensan las cosas",
+        pie: "Fuera de la ciudad",
       },
     ],
     ocupadas: "consultorías ocupadas al tiempo",
     ariaCupos: "%s de %t cupos de consultoría ocupados",
     explicacion:
-      "Máximo %t al tiempo, porque construyo yo. Los ocupados son de gente real; no pongo sus nombres hasta que ellos me digan que sí.",
+      "Máximo %t a la vez, porque el que construye soy yo. No publico nombres de clientes sin su permiso.",
     ctaUno: "Tomar el que queda",
     ctaVarios: "Tomar uno de los %n que quedan",
     ctaWa:
       "Hola Salomón, vi que hay un cupo de consultoría libre y quiero contarte mi caso.",
     sinCupo: "Sin cupo por ahora. Escríbeme y te aviso cuando se libere uno.",
-    remateA:
-      "Si lo tuyo es más chiquito y apenas estás arrancando, eso lo trabajo por otro lado: ",
+    remateA: "Si apenas estás arrancando, lo que te sirve es la ",
     remateEnlace: "mentoría",
     remateB: ".",
   },
@@ -618,7 +601,7 @@ const en = {
   meta: {
     title: "Fixing the fake-automated — Salomón Muriel, Bogotá",
     description:
-      "I build software made to fit your company and the way it already works, instead of you bending the company to fit a program you bought. No monthly per-seat fee. Consulting, Bogotá.",
+      "I build software around the way your company already works, instead of bending the company to fit a program you bought. No monthly per-seat fee. Consulting, Bogotá.",
   },
 
   hero: {
@@ -626,7 +609,7 @@ const en = {
     linea2: "The fake-automated",
     manuscrita: "without changing the whole company — one little box at a time",
     bajada:
-      "I build software made to fit your company and the way it already works, instead of you having to bend the company to fit a program you bought.",
+      "I build software around the way your company already works, so you don't have to bend the company to fit a program you bought.",
     dicc: {
       palabra: "chi·no·má·ti·co, ca",
       categoria: "adj. · Colombian Spanish",
@@ -652,7 +635,7 @@ const en = {
       ["Who answers", "Also Salomón", true],
     ] as [string, string, boolean][],
     fichaPie:
-      "The person who answers WhatsApp and the person who writes the code are the same. That's why I only have room for a few.",
+      "The person who answers WhatsApp is the same one who writes the code. That's why I work with few companies at a time.",
   },
 
   cinta: [
@@ -665,11 +648,11 @@ const en = {
 
   danos: {
     rotulo: "Fault log",
-    nota: "The same seven lines, in companies that have never met each other.",
-    titulo: "What gets reported to me — nearly always the same",
+    nota: "It repeats across companies that have nothing in common.",
+    titulo: "What I nearly always find",
     etiqueta: "Fault",
     cierre:
-      "If none of that sounded familiar, I'm probably no use to you, and I'd rather say so here than in the fourth meeting.",
+      "If none of this sounds familiar, I'm probably not the right person.",
     fallas: [
       {
         n: "01",
@@ -736,7 +719,7 @@ const en = {
         antes: "If that person gets sick, it stops. If they quit, ",
         marcado: "the process walks out with them",
         despues: ".",
-        nota: "And whoever comes next learns it by word of mouth, from someone who also learned it that way.",
+        nota: "And whoever comes next learns it by word of mouth.",
         manuscrita: false,
       },
     ] as Falla[],
@@ -759,7 +742,7 @@ const en = {
     esperando: "Waiting for input…",
     ctaWa: "Send me this on WhatsApp",
     ctaWaNota:
-      "WhatsApp opens with the text already written. You edit it and send it. I'm the one who answers.",
+      "WhatsApp opens with the message ready. You can edit it before sending.",
     ctaAgenda: "Or book forty-five minutes",
     sintomas: [
       "Orders arrive on WhatsApp and someone copies them into a spreadsheet by hand.",
@@ -777,12 +760,12 @@ const en = {
       {
         min: 0,
         t: "Nothing measured yet",
-        d: "The instrument doesn't work on a blank sheet: tick the lines you recognise.",
+        d: "Tick the lines you recognise.",
       },
       {
         min: 10,
         t: "Mildly chinomático",
-        d: "There's manual work, but it's still relaxed. Quick to fix.",
+        d: "There's some manual work, but not much. Quick to fix.",
       },
       {
         min: 30,
@@ -797,7 +780,7 @@ const en = {
       {
         min: 90,
         t: "Critically chinomático",
-        d: "Your operation rests on a tacit agreement between two people and a chat thread. Write to me today.",
+        d: "Your operation depends on a couple of people and a chat thread. Let's talk.",
       },
     ],
     waVacio:
@@ -811,10 +794,10 @@ const en = {
 
   cajitas: {
     rotulo: "How I explain my work",
-    nota: "If you take one thing away from this page, make it this one.",
+    nota: "The idea behind everything I do.",
     titulo: "A company is a system of little boxes",
     p1: "Marketing sends traffic to the website and to WhatsApp. That produces leads for sales. Sales feeds information back to marketing and opens up work for operations and admin. Each of those is a little box, and each box has its own system.",
-    p2: "<b class='font-semibold text-tinta'>I build those boxes and connect them.</b> The CRM your sales process needs, the system operations works in, admin's invoicing: I build whichever one is missing, made to fit how you already work, and I leave it talking to the ones next door.",
+    p2: "<b class='font-semibold text-tinta'>I build those boxes and connect them.</b> The CRM your sales process needs, the system operations works in, admin's invoicing: I build whichever one is missing, made to fit how you already work, and I leave it connected to the rest.",
     estadoSistema: "System state",
     btnHoy: "As it is today",
     btnQueda: "As it ends up",
@@ -923,7 +906,7 @@ const en = {
     cierreP1:
       "The fake-automated part shows up in the middle: someone takes data out of one box and puts it into the next, every day. Once the connection is made, that person stops copying and pasting and goes back to serving customers, which is what you hired them for.",
     cierreP2:
-      "The little red numbers are the order of a typical case. The real order is something you and I decide together, looking at where it hurts most.",
+      "The red numbers are the order of a typical case. In yours, we start where it hurts most.",
     cierreManuscrita:
       "if two boxes are held together by a person in the middle, they're chinomáticas",
   },
@@ -938,34 +921,33 @@ const en = {
   porque: {
     rotulo: "Differential diagnosis",
     nota: "Three differences in how the work is put together.",
-    titulo: "Why it actually happens with me",
+    titulo: "How I work",
     razones: [
       {
         giro: "-rotate-[5deg]",
-        titulo: "One single head.",
+        titulo: "One person.",
         parrafos: [
-          "The strategy and the tool are made by the same person: me. There's no consultant handing over a beautiful deck and then a vendor interpreting it their own way. <b class='font-semibold text-tinta'>What we decide on Monday, I'm building on Tuesday.</b>",
+          "I do both the strategy and the tool. There's no consultant handing over a deck and a vendor interpreting it their own way. <b class='font-semibold text-tinta'>What we decide on Monday, I start building on Tuesday.</b>",
         ],
-        manuscrita: "that's why there are four slots and not forty",
+        manuscrita: "that's why I take on few projects",
         giroNota: "-rotate-[1deg]",
       },
       {
         giro: "rotate-[4deg]",
-        titulo: "I build custom software, and fast.",
+        titulo: "Custom software, faster than before.",
         parrafos: [
-          "I build the tool your company needs, made for the way you work, and I get it running quickly. I work leaning on AI agents, not by subcontracting.",
-          "And not just for coding: <b class='font-semibold text-tinta'>I teach your people to use those same agents</b> for the office work they do by hand today.",
+          "I code with AI agents instead of subcontracting, which lets me build fast.",
+          "I also <b class='font-semibold text-tinta'>teach your people to use them</b> for the office work they do by hand today.",
         ],
-        manuscrita:
-          "this genuinely changed recently. it isn't the same conversation as three years ago",
+        manuscrita: "this changed a lot in the last two years",
         giroNota: "rotate-[1deg]",
       },
       {
         giro: "-rotate-[3deg]",
         titulo: "The software fits the company, not the company the software.",
         parrafos: [
-          "It nearly always goes the other way round: you buy something built for another company and then you have to bend your people to make it work. I start by looking at how it's really done today, not how the manual says, and I build on top of that.",
-          "<b class='font-semibold text-tinta'>That's why people open it on Monday without you having to stand over them.</b>",
+          "The usual approach is to buy something built for another company and make your people adapt. I start by looking at how the work gets done today and build on that.",
+          "<b class='font-semibold text-tinta'>That's why people actually use it.</b>",
         ],
         manuscrita:
           "in the first week I sit down with whoever is going to use it",
@@ -976,7 +958,7 @@ const en = {
 
   programa: {
     rotulo: "Works schedule · 16 weeks",
-    nota: "I do the work. You write one message and the rest is on me.",
+    nota: "From the first conversation to your team using it.",
     titulo: "What happens if we work together",
     barras: ["Understand", "Diagnosis", "Build · one box at a time"],
     etapas: [
@@ -1000,8 +982,7 @@ const en = {
       },
     ],
     bitacoraTitulo: "An ordinary week of the diagnosis",
-    bitacoraTexto:
-      "This is what I do while you carry on running your business. I don't ask you to fill in forms or take a day from your team.",
+    bitacoraTexto: "I do it while you carry on with your business.",
     bitacoraPie: "Field log · Responsible: Salomón",
     bitacoraEncabezado: "Field log — week 2",
     bitacoraResponsable: "Responsible: Salomón",
@@ -1016,10 +997,7 @@ const en = {
         "Draw the boxes that already exist and mark where someone is gluing them by hand",
       ],
       ["THU", "Write the bottleneck in one sentence that fits in a message"],
-      [
-        "FRI",
-        "Leave the first connection between two boxes running, that same Friday",
-      ],
+      ["FRI", "Get the first connection between two boxes running"],
     ] as [string, string][],
     bitacoraHechas: "5 of 5 done",
     bitacoraNinguna: "None of them fell to you.",
@@ -1027,17 +1005,17 @@ const en = {
 
   entrega: {
     rotulo: "Packing list",
-    nota: "Seven lines handed over and signed off, one by one.",
-    titulo: "What you're left with when I step off",
+    nota: "What you get at the end of the project.",
+    titulo: "What you're left with when I'm done",
     bajada:
-      "Something running, with your data inside it, that your people are already using the day I step off.",
+      "A working tool, with your data, that your people are already using.",
     cajaTitulo: "In the box",
     cajaConteo: "07 lines",
     renglones: [
       {
         n: "01",
         t: "The tool, running",
-        d: "With your real data loaded, not sample data. On handover day it's already in use.",
+        d: "With your real data, not sample data.",
         resaltado: false,
       },
       {
@@ -1048,8 +1026,8 @@ const en = {
       },
       {
         n: "03",
-        t: "I teach you to change it without me, using AI",
-        d: "Before I step off I sit down with you and your people to teach them how to ask AI for a change and how to ship it. You don't have to call me to move a button.",
+        t: "How to change it without me",
+        d: "I teach you and your team to make changes with AI. You don't have to call me to move a button.",
         resaltado: true,
       },
       {
@@ -1061,7 +1039,7 @@ const en = {
       {
         n: "05",
         t: "The accounts, the passwords and the access",
-        d: "All in the company's name. Not one domain and not one user stays in mine.",
+        d: "All in the company's name, nothing in mine.",
         resaltado: false,
       },
       {
@@ -1073,28 +1051,28 @@ const en = {
       {
         n: "07",
         t: "Two reviews and my WhatsApp",
-        d: "At one month and at two, to adjust whatever real use has bent out of shape. You write to me, not to a help desk.",
+        d: "At one month and at two, to adjust whatever real use calls for. And you write to me directly.",
         resaltado: false,
       },
     ] as Renglon[],
-    menudaTitulo: "The small print, in large type",
-    menudaAviso: "Read it now",
+    menudaTitulo: "What's not included",
+    menudaAviso: "Important",
     menuda:
-      "And what I <b class='font-bold'>don't</b> do: I don't change the whole company, it's one process at a time. I don't build you a technology team, I don't sell you licences for anything, and you're left with no monthly per-seat fee. If what you need already exists and works, I'll tell you so and I won't build it.",
+      "I <b class='font-bold'>don't</b> change the whole company: it's one process at a time. I don't build technology teams or sell licences. And if what you need already exists and works, I'll tell you instead of building it.",
     manuscrita:
       "one process at a time, and when that one is settled we'll talk about the second",
     tampocoTitulo: "I also don't do",
     tampoco: [
-      "Scaling a company past a certain size. I don't know how.",
-      "Inventing technology that doesn't exist yet. No research, no patents.",
-      "Eighty-page documents to show the board. There are people who do that better than me.",
+      "Scaling large companies. It's not my thing.",
+      "Research or developing new technology.",
+      "Long reports for the board.",
     ],
   },
 
   montado: {
     rotulo: "Track record",
-    nota: "The failures are on the table too.",
-    titulo: "What I've built with my own hands",
+    nota: "Including the ones that didn't work.",
+    titulo: "What I've built",
     pieFoto: "The valuation tool I'm showing there is one we built ourselves.",
     fotoAlt:
       "Salomón Muriel showing the Finco platform at a trade fair, next to a teammate",
@@ -1130,7 +1108,7 @@ const en = {
         cuando: "2018 — 2019",
         texto: "Promissory-note authentication with blockchain.",
         remate: "Went under.",
-        cola: " Beautiful technology, a market that didn't exist.",
+        cola: " The technology worked; the market didn't exist.",
         remateRojo: true,
       },
       {
@@ -1138,8 +1116,8 @@ const en = {
         nombre: "El Palomo",
         cuando: "2016 — 2017",
         texto: "Flowers by subscription.",
-        remate: "Failed spectacularly.",
-        cola: " I'll tell you that story on the call.",
+        remate: "Failed.",
+        cola: " Happy to tell you the story.",
         remateRojo: true,
       },
       {
@@ -1154,8 +1132,7 @@ const en = {
       "The first one on the list is what takes up my Monday to Friday. I talk about that ",
     cierreEnlace: "further down",
     cierre1b: ", when I explain why there are so few slots.",
-    cierre2:
-      "My father and my grandfather were business owners too. It's the only thing we've ever known how to do.",
+    cierre2: "My father and my grandfather were business owners too.",
   },
 
   voces: {
@@ -1168,8 +1145,8 @@ const en = {
     rotulo: "Installed capacity",
     nota: "Real numbers, today. When they fill up, I take the button down.",
     titulo: "Why there are so few slots",
-    p1: "Because this isn't my main job and I don't want it to be. Monday to Friday I'm building Ignia, which is my company. I have four-year-old twins and I go running.",
-    p2: "<b class='font-semibold text-tinta'>I'd rather take on few and look after them properly.</b>",
+    p1: "Because this isn't my main job. Monday to Friday I build Ignia, my company, and the rest of the time goes to my four-year-old twins and running.",
+    p2: "<b class='font-semibold text-tinta'>I'd rather have few clients and serve them well.</b>",
     actualizado: "Updated on",
     fotosRotulo: "What the rest of the time goes to",
     fotos: [
@@ -1186,21 +1163,20 @@ const en = {
       {
         clave: "bonfire",
         alt: "A bonfire burning at dusk, outside the city",
-        pie: "Where things get thought through",
+        pie: "Out of the city",
       },
     ],
     ocupadas: "consulting slots taken at once",
     ariaCupos: "%s of %t consulting slots taken",
     explicacion:
-      "%t at a time at most, because I'm the one building. The taken ones are real people; I don't put their names up until they tell me it's fine.",
+      "%t at a time at most, because I'm the one building. I don't publish client names without their permission.",
     ctaUno: "Take the one that's left",
     ctaVarios: "Take one of the %n that are left",
     ctaWa:
       "Hi Salomón, I saw there's a consulting slot free and I'd like to tell you about my case.",
     sinCupo:
       "No slots right now. Write to me and I'll let you know when one opens.",
-    remateA:
-      "If yours is smaller and just getting started, I work on that another way: ",
+    remateA: "If you're just getting started, what you want is ",
     remateEnlace: "mentoring",
     remateB: ".",
   },

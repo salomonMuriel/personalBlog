@@ -1,16 +1,7 @@
 import { SITE } from "@config";
 import { routes } from "@i18n/ui";
 
-/**
- * HTTP 410 para todo lo que se retiró: el blog, los tags, los feeds, las
- * páginas de ideas/recursos/stack y el árbol viejo de /es/.
- *
- * 410 y no 301 a propósito: Google trata un redirect masivo hacia una
- * página que no tiene nada que ver como «soft 404» y lo deja indexado
- * meses. El 410 lo saca del índice mucho más rápido, que es justo lo que
- * queremos antes de relanzar. Las excepciones con enlaces entrantes de
- * verdad van con 301 en `vercel.json`.
- */
+// 410 y no 301: un redirect masivo a una página sin relación queda como soft 404 y tarda meses en salir del índice.
 
 function pagina(lang: "es" | "en") {
   const es = lang === "es";
@@ -80,7 +71,6 @@ function pagina(lang: "es" | "en") {
 
 const cuerpos = { es: pagina("es"), en: pagina("en") };
 
-/** Respuesta 410 lista para devolver desde un endpoint de Astro. */
 export function retirada(lang: "es" | "en" = "es") {
   return new Response(cuerpos[lang], {
     status: 410,

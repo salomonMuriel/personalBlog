@@ -8,9 +8,7 @@ import Iconos from "@components/Iconos.astro";
 import RotuloParte from "@components/RotuloParte.astro";
 import SiteNav from "@components/SiteNav.astro";
 import Contacto from "@components/Contacto.astro";
-// Las cuatro caras que pintan por encima del pliegue. Sin precargarlas, el
-// texto sale con la fuente de respaldo, y cuando llegan cada bloque se
-// reajusta: eso vuelve a disparar el LCP y lo empuja más de un segundo.
+// Precargar las fuentes above-the-fold: sin esto el LCP se corre más de un segundo.
 import archivo from "@fontsource-variable/archivo/files/archivo-latin-wdth-normal.woff2?url";
 import slab from "@fontsource/alfa-slab-one/files/alfa-slab-one-latin-400-normal.woff2?url";
 import mono from "@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-400-normal.woff2?url";
@@ -21,9 +19,7 @@ export interface Props {
   description: string;
   lang?: Lang;
   ogImage?: string;
-  /** JSON-LD extra de la página (Service, FAQPage, BreadcrumbList…). */
   schemas?: unknown[];
-  /** El home ancla la navegación a #arriba; las demás páginas van a "/". */
   navHome?: string;
   noindex?: boolean;
 }
@@ -118,10 +114,7 @@ const verificacionGoogle = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
     <link rel="preconnect" href="https://www.googletagmanager.com" />
 
     <script is:inline define:vars={{ gaId }}>
-      // El shim de gtag queda listo de una vez, así que los clics que
-      // ocurran antes de que baje la librería se encolan y no se pierden.
-      // Los 160 kB de GA se piden cuando el navegador esté desocupado o al
-      // primer gesto del visitante: primero pinta la página, después mide.
+      // El shim encola eventos ya; la librería (160 kB) baja en idle o al primer gesto.
       window.dataLayer = window.dataLayer || [];
       function gtag() {
         dataLayer.push(arguments);
@@ -172,8 +165,6 @@ const verificacionGoogle = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
     </main>
 
     <script>
-      // Entrada escalonada + subrayado rojo de los renglones. Un solo
-      // observador para toda la página.
       const objetivos = document.querySelectorAll("article, .observa, h2, .rv");
       if ("IntersectionObserver" in window) {
         const io = new IntersectionObserver(
@@ -193,8 +184,6 @@ const verificacionGoogle = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
     </script>
 
     <script>
-      // Analítica de conversión: WhatsApp es el canal principal, así que
-      // cada clic se reporta con el lugar de donde salió.
       type Gtag = (...args: unknown[]) => void;
       const enviar = (nombre: string, params: Record<string, unknown>) => {
         const g = (window as unknown as { gtag?: Gtag }).gtag;
@@ -227,8 +216,7 @@ const verificacionGoogle = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
     </script>
 
     <script>
-      // Captura de UTM: se guarda la primera visita y se pega a los enlaces
-      // de WhatsApp, para saber qué campaña trajo la conversación.
+      // UTM de la primera visita, pegadas a los enlaces de WhatsApp.
       const LLAVE = "sm_origen";
       const CAMPOS = [
         "utm_source",

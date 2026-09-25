@@ -4,10 +4,7 @@
    Tailwind las escanea, se lleva al CSS cientos de utilidades muertas. */
 @source "../../src/**/*.{astro,ts,tsx,js,mdx,md}";
 
-/* ── Fuentes ────────────────────────────────────────────────
-   Archivo needs the wdth axis: the display type is set at
-   font-stretch 62–125%. `wdth.css` ships wght 100–900 *and*
-   font-stretch 62%–125% in one file.                          */
+/* Archivo con eje wdth: por eso `wdth.css` y no `index.css`. */
 @import "@fontsource-variable/archivo/wdth.css";
 @import "@fontsource/alfa-slab-one/400.css";
 @import "@fontsource/ibm-plex-mono/400.css";
@@ -51,8 +48,6 @@
   --radius-none: 0;
 }
 
-/* Tailwind 4 has no `gridTemplateColumns` extension key; the 16-column
-   carta de tiempos gets a plain utility instead. */
 @utility grid-cols-16 {
   grid-template-columns: repeat(16, minmax(0, 1fr));
 }

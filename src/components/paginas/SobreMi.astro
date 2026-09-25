@@ -20,13 +20,13 @@ const t = es
       rotulo: "Hoja de vida, sin currículo",
       nota: "Vas a trabajar con una persona, no con una firma.",
       titulo: "Sobre mí",
-      manuscrita: "esto es lo que hay debajo del casco",
+      manuscrita: "la versión larga",
       datos: [
         ["Nombre", "Salomón Muriel"],
         ["Dónde", "Bogotá, Colombia"],
         ["Empresas", "5 · va la quinta"],
         ["Familia", "Casado. Mellizos: Franco y Luca"],
-        ["Media maratón", "2:10 — no es buen tiempo, pero la corrí completa"],
+        ["Media maratón", "2:10"],
         ["Idiomas", "Español e inglés"],
       ] as [string, string][],
       empresasRotulo: "Las empresas",
@@ -53,13 +53,13 @@ const t = es
       rotulo: "A CV, without the CV",
       nota: "You'd be working with a person, not with a firm.",
       titulo: "About me",
-      manuscrita: "this is what's under the helmet",
+      manuscrita: "the long version",
       datos: [
         ["Name", "Salomón Muriel"],
         ["Where", "Bogotá, Colombia"],
         ["Companies", "5 · on the fifth"],
         ["Family", "Married. Twins: Franco and Luca"],
-        ["Half marathon", "2:10 — not a good time, but I ran all of it"],
+        ["Half marathon", "2:10"],
         ["Languages", "Spanish and English"],
       ] as [string, string][],
       empresasRotulo: "The companies",
@@ -111,9 +111,6 @@ const t = es
   </div>
 </section>
 
-<!-- La lista de empresas es su propia sección de la biografía, con
-     encabezado propio: acá no es una credencial de venta como en la
-     portada. El texto de arriba la enlaza con #empresas. -->
 <Montado
   lang={lang}
   cierre={false}

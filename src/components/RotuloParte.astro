@@ -7,8 +7,7 @@ interface Props {
 }
 const { lang } = Astro.props;
 
-// La fecha se pinta en el servidor para que no haya salto al cargar; el
-// script la refresca a la fecha local de Bogotá del visitante.
+// Se pinta en el servidor y el script la pasa a la fecha de Bogotá del visitante.
 const fecha = new Intl.DateTimeFormat(lang === "es" ? "es-CO" : "en-GB", {
   weekday: "long",
   day: "numeric",
