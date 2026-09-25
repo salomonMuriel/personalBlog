@@ -20,12 +20,9 @@ const pares = Object.values(routes).map(r => ({
   en: new URL(r.en, SITE.website).href,
 }));
 
-// https://astro.build/config
 export default defineConfig({
   site: SITE.website,
-  // `server` only so that /keystatic (the CMS admin) can render on demand.
-  // Every content page sets `export const prerender = true`, so the public
-  // site is still fully static — see REBUILD-PLAN.md, Phase 3.
+  // `server` only for /keystatic; content pages are prerendered.
   output: "server",
   adapter: vercel(),
   integrations: [
@@ -65,13 +62,7 @@ export default defineConfig({
     },
     server: {
       watch: {
-        // `astro build` escribe cientos de archivos en `dist/` y
-        // `.vercel/output/` dentro del mismo directorio. Si hay un `astro dev`
-        // vivo, su watcher los ve todos y invalida el grafo de módulos
-        // justo mientras el build reescribe `node_modules/.vite/deps` con
-        // otro configHash. De ahí salía el
-        // «TypeError: Cannot read properties of undefined (reading 'call')»
-        // en EnvironmentPluginContainer.transform.
+        // Un `astro dev` vivo no debe ver la salida del build (ver CLAUDE.md).
         ignored: ["**/dist/**", "**/.vercel/**"],
       },
     },

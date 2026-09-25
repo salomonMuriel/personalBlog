@@ -6,7 +6,6 @@ export const SITE = {
   ogImage: "/og.png",
 } as const;
 
-/** Un solo lugar para los canales de contacto: son la conversión del sitio. */
 export const CONTACTO = {
   whatsapp: "573132465100",
   whatsappBonito: "+57 313 246 5100",
@@ -18,7 +17,6 @@ export const CONTACTO = {
   correo: "salomon.muriel@gmail.com",
 } as const;
 
-/** Arma un enlace de WhatsApp con el mensaje ya escrito. */
 export function wa(texto?: string): string {
   const base = `https://wa.me/${CONTACTO.whatsapp}`;
   return texto ? `${base}?text=${encodeURIComponent(texto)}` : base;

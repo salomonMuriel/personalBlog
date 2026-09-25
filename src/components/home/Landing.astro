@@ -15,10 +15,6 @@ import Faq from "@components/home/Faq.astro";
 import { preguntasEs, preguntasEn } from "@data/preguntas";
 import type { Lang } from "@i18n/ui";
 
-/**
- * El orden de las secciones de direction-36, en un solo lugar, para que
- * `/` y `/en/` no puedan desincronizarse.
- */
 interface Props {
   lang: Lang;
 }

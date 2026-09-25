@@ -5,7 +5,6 @@ import { t, alternatePath } from "@i18n/utils";
 
 interface Props {
   lang: Lang;
-  /** A dónde apunta el nombre: "#arriba" en el home, "/" en las demás. */
   home: string;
 }
 const { lang, home } = Astro.props;
@@ -85,8 +84,6 @@ const saludo =
   </div>
 </header>
 
-<!-- Menú de páginas en móvil: el diseño esconde la navegación bajo md, así
-     que abajo del rótulo va una fila deslizable con las mismas cuatro. -->
 <nav
   class="border-b border-linea bg-papel/90 backdrop-blur-[10px] md:hidden"
   aria-label={t(lang, "nav.paginas")}
@@ -118,14 +115,8 @@ const saludo =
 </nav>
 
 <script>
-  // La barra sólo muestra su línea inferior cuando ya se despegó del tope.
-  // El centinela es el rótulo —los 36 px de arriba—, no <main>: main
-  // envuelve la página entera, así que siempre estaba intersecando y la
-  // línea no aparecía nunca.
-  //
-  // Y se cambia la clase, no se agrega: border-transparent va después de
-  // border-linea en el CSS que emite Tailwind, así que con las dos puestas
-  // gana la transparente y la línea seguiría sin verse.
+  // Centinela = el rótulo, no <main> (main siempre interseca). Se cambia la
+  // clase en vez de agregar: border-transparent gana en el CSS de Tailwind.
   const nav = document.getElementById("nav");
   const centinela = document.getElementById("tope");
   if (nav && centinela && "IntersectionObserver" in window) {

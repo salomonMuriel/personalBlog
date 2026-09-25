@@ -24,7 +24,6 @@ const vigentes = todas.filter(t => !t.data.retired).sort(orden);
 const retiradas = todas.filter(t => t.data.retired).sort(orden);
 
 const anio = (d: Date) => d.getUTCFullYear();
-/** Los PDF y las presentaciones viven en /public/talks/<slug>/. */
 const material = (slug: string, ext: "pdf" | "html") =>
   `/talks/${slug}/${slug}.${ext}`;
 ---
@@ -433,8 +432,6 @@ const material = (slug: string, ext: "pdf" | "html") =>
 </section>
 
 <script>
-  // Copiar la bio al portapapeles: el organizador la necesita en el
-  // programa, no en un correo de ida y vuelta.
   document.querySelectorAll<HTMLButtonElement>(".copiar").forEach(boton => {
     boton.addEventListener("click", async () => {
       const destino = document.getElementById(boton.dataset.copiar ?? "");

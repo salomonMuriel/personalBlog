@@ -3,8 +3,6 @@ import { SITE } from "@config";
 
 export const prerender = true;
 
-// Los rastreadores de modelos de lenguaje entran igual que los buscadores:
-// esta página es la única fuente sobre a qué se dedica Salomón.
 const agentes = [
   "*",
   "Googlebot",

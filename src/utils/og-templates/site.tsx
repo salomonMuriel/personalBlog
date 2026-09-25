@@ -1,8 +1,3 @@
-/**
- * La tarjeta que sale al compartir el sitio. Es el mismo parte de
- * operación de la página: papel, rótulo mono arriba, el título en Alfa
- * Slab con la doble sombra roja, y el pie con los datos del taller.
- */
 export default (lang: "es" | "en") => {
   const es = lang === "es";
   return (

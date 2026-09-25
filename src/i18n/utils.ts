@@ -1,7 +1,6 @@
 import { ui, defaultLang, routes, type Lang, type RouteKey } from "./ui";
 import { getCollection } from "astro:content";
 
-/** Spanish serves from `/`, English from `/en/…`. */
 export function getLangFromUrl(url: URL): Lang {
   return url.pathname === "/en" || url.pathname.startsWith("/en/")
     ? "en"
@@ -15,12 +14,10 @@ export function t(
   return ui[lang][key] ?? ui[defaultLang][key];
 }
 
-/** Path for a named route in a given locale. */
 export function path(lang: Lang, key: RouteKey): string {
   return routes[key][lang];
 }
 
-/** The same page in the other locale — used by the language switcher and hreflang. */
 export function alternatePath(currentPath: string, target: Lang): string {
   const normalised = currentPath.endsWith("/")
     ? currentPath
@@ -42,10 +39,6 @@ const collectionMap = {
 type BaseCollection = keyof typeof collectionMap;
 type CollectionKey<T extends BaseCollection> = (typeof collectionMap)[T][Lang];
 
-/**
- * Fetch the language-specific collection. No runtime filtering — Astro only
- * loads entries from the matching lang directory. IDs are clean slugs.
- */
 export function getLocalizedCollection<T extends BaseCollection>(
   lang: Lang,
   name: T

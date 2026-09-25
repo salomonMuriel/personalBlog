@@ -86,9 +86,9 @@ ahí primero.
 
 ## Dónde está la copia
 
-- **`src/data/landing.ts`** — toda la portada, en `es` y `en`. El español es
-  el de `design-directions/direction-36.html`, palabra por palabra: está
-  aprobado por el cliente y no se reescribe.
+- **`src/data/landing.ts`** — toda la portada, en `es` y `en`. Partió de
+  `design-directions/direction-36.html` y se recortó: copia corta y directa,
+  sin frases de «honestidad» ni remates ingeniosos.
 - **`src/data/mentoria.ts`**, **`src/data/charlas.ts`** — igual, por página.
 - **`src/data/preguntas.ts`** — las ocho preguntas de la portada. Vive
   aparte porque la página también las necesita para el JSON-LD `FAQPage`.

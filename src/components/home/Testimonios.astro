@@ -9,11 +9,7 @@ interface Props {
 }
 const { lang } = Astro.props;
 
-/**
- * Los tres testimonios de direction-36 eran inventados y nunca se
- * publicaron. Esta sección se alimenta de la colección `testimonios` de
- * Keystatic y sencillamente no existe hasta que haya uno real y publicado.
- */
+// No se renderiza mientras la colección esté vacía.
 const c = copia(lang).voces;
 const todos = await getLocalizedCollection(lang, "testimonios");
 const voces = todos

@@ -4,12 +4,6 @@ import { CONTACTO, wa } from "@config";
 import { copia } from "@data/landing";
 import type { Lang } from "@i18n/ui";
 
-/**
- * Hoja de chequeo + carátula. Todo el comportamiento vive en el <script>
- * de abajo, en JS plano: no hay isla de React ni estado que persista.
- * No guarda nada, no pide correo — lo único que produce es un mensaje de
- * WhatsApp ya escrito, con lo marcado adentro.
- */
 interface Props {
   lang: Lang;
 }
@@ -50,7 +44,6 @@ const textos = {
     <div
       class="mt-[clamp(1.8rem,3.6vw,2.6rem)] grid grid-cols-1 items-start gap-[clamp(1.2rem,2.6vw,2rem)] lg:grid-cols-[minmax(0,1.28fr)_minmax(0,1fr)]"
     >
-      <!-- hoja -->
       <div
         class="overflow-hidden rounded border-[1.5px] border-linea2 bg-campo"
       >
@@ -96,7 +89,6 @@ const textos = {
         </div>
       </div>
 
-      <!-- lectura -->
       <div class="lg:sticky lg:top-[76px]">
         <div
           class="overflow-hidden rounded border-t-[3px] border-rojo bg-panel text-panelfg shadow-[0_1px_0_rgba(22,23,26,.06),0_18px_40px_-26px_rgba(22,23,26,.75)]"
@@ -324,15 +316,11 @@ const textos = {
           lineas +
           "\n\n" +
           T.waCierre;
-        // La procedencia de la visita viaja en el mensaje: es la única
-        // manera de saber qué campaña abrió la conversación.
         if (elWa.dataset.utm)
           texto += "\n\n(" + T.waProcedencia + " " + elWa.dataset.utm + ")";
         elWa.href =
           "https://wa.me/" + T.telefono + "?text=" + encodeURIComponent(texto);
       }
-      // Lo que quedó marcado es la señal de calificación: se manda a GA4
-      // junto con el clic.
       elWa.dataset.marcadas = puestas
         .map(function (c) {
           return casillas.indexOf(c) + 1;

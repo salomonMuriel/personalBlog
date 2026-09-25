@@ -1,40 +1,16 @@
 import { config, collection, singleton, fields } from "@keystatic/core";
 
-/**
- * Keystatic edita los MDX/MD que ya lee Astro: no hay base de datos ni una
- * segunda copia del contenido. Cada esquema de acá tiene que coincidir con
- * el Zod de `src/content.config.ts`, o una edición rompe el build.
- *
- * En local escribe archivos directamente; en producción abre un commit en
- * GitHub a nombre de Salomón.
- */
+// Cada esquema tiene que coincidir con el Zod de `src/content.config.ts`.
 
 const repo = "salomonMuriel/personalBlog";
 
 /**
- * En local escribe archivos directamente; en producción abre un commit en
- * GitHub a nombre de Salomón.
+ * Este archivo también lo carga el navegador (el admin es una SPA): usar
+ * `import.meta.env`, nunca `process.env`.
  *
- * Ojo con cómo se decide: este archivo lo carga **también el navegador**,
- * porque el admin de Keystatic es una SPA que importa la config. Por eso
- * todo acá va con `import.meta.env`, que Vite reemplaza estáticamente en
- * cliente y servidor. Con `process.env` la página queda en blanco con
- * «ReferenceError: process is not defined».
- *
- * `PUBLIC_KEYSTATIC_GITHUB=true` fuerza el modo GitHub en desarrollo, y
- * existe por una razón concreta: **la app de GitHub sólo se puede crear
- * corriendo en local**. Keystatic tira 500 en
- * `/api/keystatic/github/created-app` cuando `NODE_ENV !== "development"`,
- * así que el setup desde producción no funciona nunca — y sin esta variable
- * tampoco funcionaba en local, porque el modo era siempre `local`.
- *
+ * La app de GitHub sólo se puede crear en local:
  *   PUBLIC_KEYSTATIC_GITHUB=true npm run dev
- *
- * En la pantalla de setup hay que llenar el campo de URL desplegada con
- * https://www.salomonmuriel.com, porque el manifiesto arma `callback_urls`
- * con localhost + 127.0.0.1 + lo que se escriba ahí. Al terminar, Keystatic
- * escribe KEYSTATIC_GITHUB_CLIENT_ID y KEYSTATIC_GITHUB_CLIENT_SECRET en
- * `.env`, y de ahí se suben a Vercel.
+ * con https://www.salomonmuriel.com como URL desplegada en el setup.
  */
 const forzarGithub = import.meta.env.PUBLIC_KEYSTATIC_GITHUB === "true";
 const forzarLocal = import.meta.env.PUBLIC_KEYSTATIC_LOCAL === "true";

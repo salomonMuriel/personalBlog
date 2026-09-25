@@ -1,18 +1,14 @@
 import type { Pregunta } from "@utils/jsonld";
 
-/**
- * Las ocho de siempre, en el orden en que se las hacen. Vive fuera del
- * componente porque la página también las necesita para el JSON-LD
- * (`FAQPage`), y las dos listas no pueden separarse.
- */
+// También alimenta el JSON-LD `FAQPage`.
 export const preguntasEs: Pregunta[] = [
   {
     p: "Es que yo de tecnología no sé nada.",
-    r: "Perfecto. La mitad de mi trabajo es traducir; si algo no se entiende es culpa mía. Mis clientes son marcas de ropa, restaurantes, distribuidoras, importadores y empresas de servicios.",
+    r: "No hace falta. Parte de mi trabajo es explicarlo claro; si algo no se entiende, es culpa mía. Mis clientes son marcas de ropa, restaurantes, distribuidoras, importadores y empresas de servicios.",
   },
   {
     p: "¿Lo que me vas a entregar es una presentación?",
-    r: "No. Te entrego algo funcionando y en producción, tu equipo capacitado para usarlo y la decisión estratégica escrita en dos páginas, en español y sin jerga.",
+    r: "No. Te entrego algo funcionando, tu equipo capacitado para usarlo y un documento corto, sin jerga, con lo que decidimos y por qué.",
   },
   {
     p: "Ya compré un software carísimo. ¿Toca botarlo?",
@@ -28,7 +24,7 @@ export const preguntasEs: Pregunta[] = [
   },
   {
     p: "¿Y después, cuando quiera cambiar algo?",
-    r: "El código queda a nombre de tu empresa y antes de bajarme les enseño a modificarlo con inteligencia artificial: cómo pedir el cambio y cómo dejarlo andando. No quiero quedar de portero de tu herramienta.",
+    r: "El código queda a nombre de tu empresa y antes de bajarme les enseño a modificarlo con inteligencia artificial: cómo pedir el cambio y cómo dejarlo andando. La idea es que no dependas de mí.",
   },
   {
     p: "¿De dónde sacas el tiempo para esto?",
@@ -36,18 +32,18 @@ export const preguntasEs: Pregunta[] = [
   },
   {
     p: "¿Y si no me sirves?",
-    r: "Te lo digo en la primera llamada y te digo a quién llamar. Llevo suficientes años en esto para conocer a la gente que hace bien lo que yo no hago.",
+    r: "Te lo digo en la primera llamada y, si puedo, te recomiendo a alguien que sí te sirva.",
   },
 ];
 
 export const preguntasEn: Pregunta[] = [
   {
     p: "I don't know anything about technology.",
-    r: "Good. Half my job is translating; if something isn't clear, that's on me. My clients are clothing brands, restaurants, distributors, importers and service businesses.",
+    r: "You don't need to. Part of my job is explaining it clearly; if something isn't clear, that's on me. My clients are clothing brands, restaurants, distributors, importers and service businesses.",
   },
   {
     p: "Am I going to get a slide deck?",
-    r: "No. You get something running in production, your team trained to use it, and the strategic decision written down in two pages, in plain language.",
+    r: "No. You get something running, your team trained to use it, and a short document in plain language with what we decided and why.",
   },
   {
     p: "I already bought expensive software. Do I throw it out?",
@@ -63,7 +59,7 @@ export const preguntasEn: Pregunta[] = [
   },
   {
     p: "What about later, when I want to change something?",
-    r: "The code is in your company's name, and before I step off I teach your people to change it with AI: how to ask for the change and how to ship it. I don't want to end up as the gatekeeper of your own tool.",
+    r: "The code is in your company's name, and before I step off I teach your people to change it with AI: how to ask for the change and how to ship it. The point is that you don't depend on me.",
   },
   {
     p: "Where do you find the time?",
@@ -71,6 +67,6 @@ export const preguntasEn: Pregunta[] = [
   },
   {
     p: "And if you're not the right person for me?",
-    r: "I'll tell you on the first call, and I'll tell you who to call instead. I've been at this long enough to know the people who do well what I don't do.",
+    r: "I'll tell you on the first call and, if I can, point you to someone who is.",
   },
 ];

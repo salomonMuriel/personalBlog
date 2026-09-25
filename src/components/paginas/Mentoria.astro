@@ -33,7 +33,6 @@ const ctaTexto =
   bajada={c.bajada}
   anchoTitulo="max-w-[16ch]"
 >
-  <!-- ficha del servicio -->
   <dl
     class="font-mono mt-[clamp(1.8rem,3.6vw,2.6rem)] grid max-w-[62rem] grid-cols-1 gap-x-10 text-[10.5px] uppercase tracking-[.13em] sm:grid-cols-2"
   >
@@ -137,7 +136,6 @@ const ctaTexto =
       </div>
     </div>
 
-    <!-- la regla -->
     <div
       class="mt-[clamp(2rem,4vw,3rem)] max-w-[62rem] rounded border-[1.5px] border-tinta"
     >
@@ -348,9 +346,6 @@ const ctaTexto =
                 {lang === "es" ? "O agenda una llamada" : "Or book a call"}
               </a>
             </div>
-            <p class="font-mono mt-4 text-[10px] uppercase leading-[1.7] tracking-[.12em] text-gris">
-              {c.cupos.plata}
-            </p>
           </>
         ) : (
           <p class="font-mono mt-5 rounded border-[1.5px] border-dashed border-linea2 px-4 py-3.5 text-[10.5px] uppercase leading-[1.7] tracking-[.14em] text-gris">

@@ -5,10 +5,6 @@ import { getCollection } from "astro:content";
 
 export const prerender = true;
 
-/**
- * Resumen del sitio para modelos de lenguaje. Se genera del mismo
- * contenido que la página, así que no se desactualiza solo.
- */
 export const GET: APIRoute = async () => {
   const charlas = (await getCollection("talks-es"))
     .filter(c => !c.data.draft && !c.data.retired)

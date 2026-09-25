@@ -87,8 +87,7 @@ const casos = [
   ["/en/companies/", 301, "/en/"],
   ["/es/before/", 301, "/ahora/"],
   ["/en/before/", 301, "/en/now/"],
-  // Con `:slug*` estas cuatro se caían al 410: el patrón no captura la
-  // barra final. Quedan como caso de prueba para que no vuelva a pasar.
+  // Regresión: `:slug*` no capturaba la barra final.
   ["/es/before/2024-04-23/", 301, "/ahora/"],
   ["/en/before/2024-04-23/", 301, "/en/now/"],
   ["/es/talks/makers-mindset-entrepreneurship/", 301, "/charlas/"],

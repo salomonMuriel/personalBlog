@@ -19,7 +19,6 @@ if (!ultima) throw new Error("No hay actualizaciones en la colección `now`");
 
 const { Content } = await render(ultima);
 
-/** Las anteriores se renderizan de una vez y se abren con <details>. */
 const archivo = await Promise.all(
   anteriores.map(async e => ({
     header: e.data.header,
@@ -47,8 +46,7 @@ const t = es
       ultimaRotulo: "Última actualización",
       archivoRotulo: "Anteriores",
       archivoTitulo: "Lo que decía antes",
-      archivoNota:
-        "Las actualizaciones viejas se quedan acá. Nada se borra: así se ve para dónde iba la cosa.",
+      archivoNota: "Las actualizaciones anteriores, en orden.",
     }
   : {
       rotulo: "Daily report",
@@ -60,8 +58,7 @@ const t = es
       ultimaRotulo: "Latest update",
       archivoRotulo: "Previously",
       archivoTitulo: "What it used to say",
-      archivoNota:
-        "Old updates stay here. Nothing gets deleted: that's how you see where things were heading.",
+      archivoNota: "Earlier updates, in order.",
     };
 ---
 

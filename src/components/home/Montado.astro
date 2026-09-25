@@ -12,12 +12,8 @@ import elpalomo from "@assets/site/elpalomo.png";
 
 interface Props {
   lang: Lang;
-  /** En el home la lista cierra apuntando a #cupos; en /sobre-mi no. */
   cierre?: boolean;
-  /** El ancla, para poder enlazarla desde el texto de la página. */
   id?: string;
-  /** En /sobre-mi la sección se presenta como parte de la biografía y no
-      como credencial de venta, así que el encabezado se puede cambiar. */
   rotulo?: string;
   nota?: string;
   titulo?: string;
