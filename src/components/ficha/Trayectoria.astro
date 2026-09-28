@@ -1,0 +1,136 @@
+---
+import { Image } from "astro:assets";
+import { copiaFicha, type Empresa } from "@data/ficha";
+import type { Lang } from "@i18n/ui";
+import ignia from "@assets/site/ignia.png";
+import finco from "@assets/site/finco.png";
+import prestagente from "@assets/site/prestagente.png";
+import beriblock from "@assets/site/beriblock.png";
+import elpalomo from "@assets/site/elpalomo.png";
+import Titulo from "./Titulo.astro";
+import Etiqueta from "./Etiqueta.astro";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const c = copiaFicha(lang).trayectoria;
+
+const logos: Record<string, ImageMetadata | undefined> = {
+  ignia,
+  finco,
+  prestagente,
+  beriblock,
+  elpalomo,
+};
+
+const colorResultado: Record<Empresa["tono"], string> = {
+  hoy: "bg-rojo2 border-rojo2 text-white",
+  bien: "border-tinta text-tinta",
+  mal: "border-rojo2/50 text-rojo2",
+  neutro: "border-linea2 text-gris",
+};
+---
+
+<Titulo rotulo={c.rotulo} nota={c.nota} titulo={c.titulo} />
+
+<div class="border-linea mt-4 border-t">
+  {
+    c.empresas.map(e => (
+      <article class="border-linea grid grid-cols-[40px_minmax(0,1fr)] items-center gap-3.5 border-b py-2.5 sm:grid-cols-[40px_minmax(0,1fr)_auto]">
+        <div class="border-linea grid h-10 w-10 place-items-center rounded border bg-white p-1.5">
+          {logos[e.clave] ? (
+            <Image
+              src={logos[e.clave]!}
+              width={56}
+              densities={[1, 2]}
+              alt={e.nombre}
+              loading="eager"
+              class="h-full w-full object-contain"
+            />
+          ) : (
+            <span class="font-mono text-[11px] font-semibold">{e.nombre}</span>
+          )}
+        </div>
+        <div>
+          <p class="font-arch text-[15px] leading-none font-extrabold tracking-[-.02em]">
+            {e.nombre}
+            <span class="text-gris ml-1.5 font-mono text-[9.5px] font-normal tracking-[.1em]">
+              {e.cuando}
+            </span>
+          </p>
+          <p class="text-gris mt-1 text-[12.5px] leading-[1.4]">{e.texto}</p>
+        </div>
+        <span
+          class:list={[
+            "col-start-2 justify-self-start rounded border px-2 py-1 font-mono text-[9px] font-medium tracking-[.12em] whitespace-nowrap uppercase sm:col-start-3 sm:justify-self-end",
+            colorResultado[e.tono],
+          ]}
+        >
+          {e.resultado}
+        </span>
+      </article>
+    ))
+  }
+</div>
+<p class="text-gris mt-2 text-[12.5px]">{c.familia}</p>
+
+<div
+  class="mt-5 grid grid-cols-1 items-start gap-4 sm:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)]"
+>
+  <div class="border-linea2 bg-campo rounded border-[1.5px] px-4 py-3.5">
+    <Etiqueta>{c.bioT}</Etiqueta>
+    <p class="mt-1.5 text-[13px] leading-[1.55]">{c.bio}</p>
+  </div>
+  <div class="border-linea2 bg-campo rounded border-[1.5px] px-4 py-2.5">
+    <Etiqueta class="pt-1">{c.datosT}</Etiqueta>
+    <dl class="mt-1 text-[12px]">
+      {
+        c.datos.map(([k, v], i) => (
+          <div
+            class:list={[
+              "py-[6px]",
+              i < c.datos.length - 1 && "border-linea border-b",
+            ]}
+          >
+            <dt class="text-gris font-mono text-[9px] tracking-[.14em] uppercase">
+              {k}
+            </dt>
+            <dd class="mt-0.5 font-medium">{v}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+</div>
+
+<div class="mt-auto pt-5">
+  <div class="bg-tinta text-panelfg rounded px-5 py-4">
+    <div class="flex flex-col gap-x-6 gap-y-1 sm:flex-row sm:items-baseline">
+      <h2
+        class="font-arch text-[24px] leading-none font-extrabold tracking-[-.025em]"
+      >
+        {c.contactoT}
+      </h2>
+      <p
+        class="text-paneltxt text-[12.5px] leading-[1.45] sm:ml-auto sm:max-w-[48ch] sm:text-right"
+      >
+        {c.contacto}
+      </p>
+    </div>
+    <dl
+      class="border-panelborde mt-3.5 grid grid-cols-1 gap-x-4 gap-y-2.5 border-t pt-3 sm:grid-cols-[1fr_1.55fr_1.3fr_1fr]"
+    >
+      {
+        c.canales.map(([k, v]) => (
+          <div>
+            <dt class="text-rojo3 font-mono text-[9px] tracking-[.16em] uppercase">
+              {k}
+            </dt>
+            <dd class="mt-0.5 text-[12.5px] font-medium break-words">{v}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+</div>

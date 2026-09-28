@@ -1,0 +1,37 @@
+---
+import { copiaFicha } from "@data/ficha";
+import type { Lang } from "@i18n/ui";
+
+interface Props {
+  lang: Lang;
+  numero: number;
+  total: number;
+}
+const { lang, numero, total } = Astro.props;
+const c = copiaFicha(lang).pliego;
+const dosCifras = (n: number) => String(n).padStart(2, "0");
+---
+
+<section class="pliego">
+  <header
+    class="border-tinta flex items-baseline gap-4 border-b-[1.5px] pb-2 font-mono text-[9.5px] tracking-[.18em] uppercase"
+  >
+    <span class="font-semibold">Salomón Muriel</span>
+    <span class="text-gris hidden sm:inline">{c.encabezado}</span>
+    <span class="text-rojo2 ml-auto font-medium"
+      >{dosCifras(numero)} / {dosCifras(total)}</span
+    >
+  </header>
+
+  <div class="pliego-cuerpo">
+    <slot />
+  </div>
+
+  <footer
+    class="border-linea text-gris flex flex-wrap items-baseline gap-x-4 gap-y-1 border-t pt-2 font-mono text-[9px] tracking-[.16em] uppercase"
+  >
+    <span class="text-tinta">salomonmuriel.com</span>
+    <span>{c.pie}</span>
+    <span class="sm:ml-auto">{c.actualizada}</span>
+  </footer>
+</section>

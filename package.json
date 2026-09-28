@@ -15,6 +15,7 @@
     "format": "prettier --write . --plugin=prettier-plugin-astro",
     "prepare": "husky install",
     "lint": "eslint .",
+    "ficha:pdf": "node scripts/ficha-pdf.mjs",
     "check:redirects": "node scripts/check-redirects.mjs",
     "generate-pdf": "node scripts/generate-pdf.js"
   },

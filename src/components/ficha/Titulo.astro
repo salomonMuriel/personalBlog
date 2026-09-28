@@ -1,0 +1,35 @@
+---
+interface Props {
+  rotulo: string;
+  nota?: string;
+  titulo: string;
+  manuscrita?: string;
+}
+const { rotulo, nota, titulo, manuscrita } = Astro.props;
+---
+
+<div class="flex flex-col gap-x-6 gap-y-1 pt-1 sm:flex-row sm:items-baseline">
+  <span
+    class="text-rojo2 font-mono text-[10.5px] font-semibold tracking-[.2em] whitespace-nowrap uppercase"
+    >{rotulo}</span
+  >
+  {
+    nota && (
+      <span class="text-gris max-w-[46ch] text-[12.5px] leading-[1.35] sm:ml-auto sm:text-right">
+        {nota}
+      </span>
+    )
+  }
+</div>
+<h2
+  class="font-arch mt-2 text-[28px] leading-[1.02] font-extrabold tracking-[-.03em] [font-stretch:104%] sm:text-[36px]"
+>
+  {titulo}
+</h2>
+{
+  manuscrita && (
+    <p class="font-pen text-rojo2 mt-1.5 [transform-origin:left] -rotate-[1.2deg] text-[20px] leading-[1.2]">
+      {manuscrita}
+    </p>
+  )
+}

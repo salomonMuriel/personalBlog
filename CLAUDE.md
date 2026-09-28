@@ -50,6 +50,7 @@ npm run sync             # sincronizar tipos de colecciones
 
 npm run check:redirects  # el mapa de cutover (200 / 301 / 410 / 404)
 node scripts/shots.mjs   # capturas a 375 y 1440 px + detector de desborde
+npm run ficha:pdf        # regenera los PDF de la ficha de perfil
 ```
 
 `check:redirects` sin argumento corre contra `localhost:4321` y salta los
@@ -83,6 +84,17 @@ El mapa vive en `src/i18n/ui.ts` (`routes`). Las rutas **no** son paralelas
 verdad para la navegación, el hreflang del `<head>` y el del sitemap
 (`astro.config.ts` lo usa en `serialize`). Si agrega una página, agréguela
 ahí primero.
+
+## Ficha de perfil
+
+`/ficha/` y `/en/brief/`: cinco hojas A4 para agencias de speakers y
+organizadores. Copia en `src/data/ficha/{es,en}.ts`, hojas en
+`src/components/ficha/`, layout propio (`layouts/Ficha.astro`) sin
+navegación ni GA. `noindex` y fuera del sitemap: se reparte por enlace.
+
+Los PDF de `public/prensa/` salen de `npm run ficha:pdf` con el sitio
+corriendo, y el script falla si alguna hoja se desborda del A4. Si cambia
+la copia, regenérelos.
 
 ## Dónde está la copia
 

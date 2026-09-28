@@ -1,0 +1,23 @@
+---
+import type { Lang } from "@i18n/ui";
+import Pliego from "./Pliego.astro";
+import Portada from "./Portada.astro";
+import Consultoria from "./Consultoria.astro";
+import Charlas from "./Charlas.astro";
+import Mentoria from "./Mentoria.astro";
+import Trayectoria from "./Trayectoria.astro";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const hojas = [Portada, Consultoria, Charlas, Mentoria, Trayectoria];
+---
+
+{
+  hojas.map((Hoja, i) => (
+    <Pliego lang={lang} numero={i + 1} total={hojas.length}>
+      <Hoja lang={lang} />
+    </Pliego>
+  ))
+}
