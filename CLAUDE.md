@@ -105,6 +105,10 @@ la copia, regenérelos.
 - **`src/data/preguntas.ts`** — las ocho preguntas de la portada. Vive
   aparte porque la página también las necesita para el JSON-LD `FAQPage`.
 - **`src/i18n/ui.ts`** — navegación, pie y contacto.
+- **`src/data/logos.ts`** — client logos (home belt, `Clientes.astro`) and
+  talk hosts (`/charlas` wall), both rendered by `components/Logos.astro`.
+  Raw files live in `src/assets/logos/originales/`; `uv run scripts/logos.py`
+  turns them into one-ink PNGs. Add a logo there, never by hand.
 
 Los componentes de `src/components/` sólo ponen estructura. Si va a cambiar
 texto, cámbielo en `src/data/`.

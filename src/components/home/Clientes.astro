@@ -1,0 +1,32 @@
+---
+import Logos from "@components/Logos.astro";
+import { copia } from "@data/landing";
+import { clientes } from "@data/logos";
+import type { Lang } from "@i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const c = copia(lang).clientes;
+---
+
+<section
+  id="clientes"
+  aria-label={c.rotulo}
+  class="border-linea bg-papel border-b py-[clamp(1.4rem,3vw,2.1rem)]"
+>
+  <div
+    class="hoja flex flex-col gap-4 md:flex-row md:items-center md:gap-[clamp(1.5rem,3vw,2.75rem)]"
+  >
+    <p
+      class="text-gris flex shrink-0 items-center gap-2.5 font-mono text-[10.5px] leading-[1.5] tracking-[.18em] uppercase md:w-[12.5rem]"
+    >
+      <span class="text-rojo" aria-hidden="true">◆</span>
+      <span class="text-balance">{c.rotulo}</span>
+    </p>
+    <div class="min-w-0 flex-1">
+      <Logos items={clientes} modo="riel" />
+    </div>
+  </div>
+</section>

@@ -2,6 +2,7 @@ import type { APIRoute } from "astro";
 import { SITE, CONTACTO } from "@config";
 import { cupos } from "@utils/cupos";
 import { getCollection } from "astro:content";
+import { clientes } from "@data/logos";
 
 export const prerender = true;
 
@@ -68,6 +69,10 @@ No hay precios publicados en ninguna parte del sitio. Para hablar de dinero hay 
 - **Beriblock** (2018 – 2019): autenticación de pagarés con blockchain. Quebró.
 - **El Palomo** (2016 – 2017): flores por suscripción. Fracasó.
 - **R5**: como empleado, dirigió unas cuarenta personas y construyó el pipeline de datos y el sistema de modelación de riesgo.
+
+## Clientes
+
+Le ha construido tecnología a: ${clientes.map(c => c.alt ?? c.nombre).join(", ")}.
 
 ## Charlas vigentes
 

@@ -3,7 +3,9 @@ import { Image } from "astro:assets";
 import EncabezadoPagina from "@components/EncabezadoPagina.astro";
 import EncabezadoSeccion from "@components/EncabezadoSeccion.astro";
 import { wa, CONTACTO } from "@config";
+import Logos from "@components/Logos.astro";
 import { copiaCharlas } from "@data/charlas";
+import { tarimas } from "@data/logos";
 import { getLocalizedCollection } from "@i18n/utils";
 import type { Lang } from "@i18n/ui";
 import fotoSalo from "@assets/site/fotoSalo.jpeg";
@@ -252,6 +254,7 @@ const material = (slug: string, ext: "pdf" | "html") =>
 
 <!-- ═══ DÓNDE ═══ -->
 <section
+  id="tarimas"
   class="border-y border-linea bg-papel2 py-[clamp(2.2rem,4.5vw,3.4rem)]"
 >
   <div class="hoja">
@@ -261,15 +264,9 @@ const material = (slug: string, ext: "pdf" | "html") =>
     >
       {c.tarimas.titulo}
     </h2>
-    <ul class="mt-5 flex flex-wrap gap-2.5">
-      {
-        c.tarimas.lista.map(x => (
-          <li class="font-mono rounded border border-linea2 bg-campo px-3 py-2 text-[10.5px] uppercase tracking-[.13em]">
-            {x}
-          </li>
-        ))
-      }
-    </ul>
+    <div class="mt-[clamp(1.4rem,3vw,2.2rem)]">
+      <Logos items={tarimas} modo="muro" />
+    </div>
   </div>
 </section>
 

@@ -62,6 +62,10 @@ const es = {
     "Alguien en la mitad, copiando y pegando",
   ],
 
+  clientes: {
+    rotulo: "Le he construido tecnología a",
+  },
+
   danos: {
     rotulo: "Registro de fallas",
     nota: "Se repite en empresas que no tienen nada que ver entre sí.",
@@ -645,6 +649,10 @@ const en = {
     "Systems that don't talk to each other",
     "Someone in the middle, copying and pasting",
   ],
+
+  clientes: {
+    rotulo: "I've built technology for",
+  },
 
   danos: {
     rotulo: "Fault log",

@@ -1,0 +1,37 @@
+---
+import LogoMarca from "@components/LogoMarca.astro";
+import type { Logo } from "@data/logos";
+
+interface Props {
+  items: Logo[];
+  modo: "riel" | "muro";
+}
+const { items, modo } = Astro.props;
+---
+
+{
+  modo === "riel" ? (
+    <div class="cinta difumina">
+      <ul class="riel al-reves items-center">
+        {[false, true].map(oculta =>
+          items.map(logo => (
+            <li
+              class="flex shrink-0 px-[clamp(1.3rem,2.8vw,2.4rem)] opacity-75 transition-opacity duration-300 hover:opacity-100"
+              aria-hidden={oculta ? "true" : undefined}
+            >
+              <LogoMarca logo={logo} alto={30} oculta={oculta} />
+            </li>
+          ))
+        )}
+      </ul>
+    </div>
+  ) : (
+    <ul class="border-linea grid grid-cols-3 border-t border-l md:grid-cols-5">
+      {items.map(logo => (
+        <li class="border-linea bg-campo grid h-[clamp(5rem,9vw,6.6rem)] min-w-0 place-items-center border-r border-b px-3 opacity-80 transition-opacity duration-300 hover:opacity-100">
+          <LogoMarca logo={logo} alto={34} fluido />
+        </li>
+      ))}
+    </ul>
+  )
+}
