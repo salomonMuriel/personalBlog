@@ -1,0 +1,90 @@
+---
+import { copiaFicha } from "@data/ficha";
+import type { Lang } from "@i18n/ui";
+import Titulo from "./Titulo.astro";
+import Etiqueta from "./Etiqueta.astro";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const c = copiaFicha(lang).consultoria;
+---
+
+<Titulo rotulo={c.rotulo} nota={c.nota} titulo={c.titulo} />
+
+<div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+  {
+    c.frentes.map(f => (
+      <article class="border-tinta bg-campo flex flex-col rounded border-[1.5px]">
+        <div class="bg-tinta text-panelfg px-4 py-3">
+          <p class="text-rojo3 font-mono text-[9.5px] tracking-[.18em] uppercase">
+            {f.etiqueta}
+          </p>
+          <h3 class="font-arch mt-1 text-[19px] leading-[1.1] font-extrabold tracking-[-.02em]">
+            {f.titulo}
+          </h3>
+        </div>
+        <div class="flex flex-1 flex-col px-4 pt-3 pb-4">
+          <p class="text-[12.5px] leading-[1.48]">{f.resumen}</p>
+
+          <Etiqueta class="text-gris mt-3.5">{f.temasT}</Etiqueta>
+          <ul class="mt-1.5 space-y-1">
+            {f.temas.map(t => (
+              <li class="relative pl-4 text-[12.5px] leading-[1.42]">
+                <span
+                  class="bg-rojo absolute top-[.62em] left-0 h-[1.5px] w-[7px]"
+                  aria-hidden="true"
+                />
+                {t}
+              </li>
+            ))}
+          </ul>
+
+          <Etiqueta class="text-gris mt-3.5">{f.paraQuienT}</Etiqueta>
+          <p class="mt-1 text-[12.5px] leading-[1.42]">{f.paraQuien}</p>
+
+          <div class="mt-auto pt-3.5">
+            <div class="border-linea border-t pt-2.5">
+              <Etiqueta class="text-rojo2">{f.respaldoT}</Etiqueta>
+              <p class="text-gris mt-1 text-[12.5px] leading-[1.42]">
+                {f.respaldo}
+              </p>
+            </div>
+          </div>
+        </div>
+      </article>
+    ))
+  }
+</div>
+
+<div class="mt-auto pt-4">
+  <Etiqueta class="border-tinta mb-2.5 border-t-[1.5px] pt-2.5"
+    >{c.principiosT}</Etiqueta
+  >
+  <ol class="grid grid-cols-1 gap-x-7 gap-y-2.5 sm:grid-cols-2">
+    {
+      c.principios.map((p, i) => (
+        <li class="grid grid-cols-[1.6rem_minmax(0,1fr)] gap-2">
+          <span class="font-slab text-rojo2 text-[15px] leading-[1.3]">
+            {i + 1}.
+          </span>
+          <div>
+            <p class="text-[13.5px] leading-[1.3] font-bold">{p.t}</p>
+            <p class="text-gris mt-0.5 text-[12px] leading-[1.42]">{p.d}</p>
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+
+  <p
+    class="border-linea2 mt-4 flex items-start gap-2.5 rounded border px-3.5 py-2.5 text-[12.5px] leading-[1.45]"
+  >
+    <svg
+      class="text-rojo2 mt-[2px] h-[13px] w-[13px] flex-none"
+      aria-hidden="true"><use href="#i-x"></use></svg
+    >
+    <span><b class="font-semibold">{c.noHaceT}:</b> {c.noHace}</span>
+  </p>
+</div>

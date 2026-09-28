@@ -1,0 +1,136 @@
+---
+import { Image } from "astro:assets";
+import { copiaFicha } from "@data/ficha";
+import type { Lang } from "@i18n/ui";
+import chicago from "@assets/site/chicago.jpg";
+import Titulo from "./Titulo.astro";
+import Etiqueta from "./Etiqueta.astro";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const copia = copiaFicha(lang);
+const c = copia.mentoria;
+const p = copia.personal;
+---
+
+<Titulo rotulo={c.rotulo} nota={c.nota} titulo={c.titulo} />
+<p class="mt-2.5 max-w-[62ch] text-[14.5px] leading-[1.5]">{c.bajada}</p>
+
+<div
+  class="mt-5 grid grid-cols-1 items-start gap-5 sm:grid-cols-[minmax(0,.9fr)_minmax(0,1.1fr)]"
+>
+  <div class="border-tinta bg-campo rounded border-[1.5px]">
+    <div
+      class="bg-tinta text-panelfg px-4 py-2.5 font-mono text-[9.5px] tracking-[.18em] uppercase"
+    >
+      {c.rotulo}
+    </div>
+    <dl class="px-4 py-1.5 font-mono text-[9.5px] tracking-[.1em] uppercase">
+      {
+        c.ficha.map(([k, v], i) => (
+          <div
+            class:list={[
+              "flex justify-between gap-3 py-[7px]",
+              i < c.ficha.length - 1 && "border-linea border-b",
+            ]}
+          >
+            <dt class="text-gris">{k}</dt>
+            <dd class="text-right font-medium">{v}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+
+  <div>
+    <Etiqueta class="mb-1.5">{c.pasosT}</Etiqueta>
+    <ol class="border-linea border-t">
+      {
+        c.pasos.map(([t, d], i) => (
+          <li class="border-linea grid grid-cols-[1.6rem_minmax(0,1fr)] gap-2 border-b py-[7px]">
+            <span class="font-slab text-rojo2 text-[14px] leading-[1.35]">
+              {i + 1}.
+            </span>
+            <p class="text-[12.5px] leading-[1.45]">
+              <b class="font-bold">{t}.</b> <span class="text-gris">{d}</span>
+            </p>
+          </li>
+        ))
+      }
+    </ol>
+    <p
+      class="border-rojo bg-campo mt-3 border-l-[3px] px-3.5 py-2.5 text-[12.5px] leading-[1.45]"
+    >
+      <b
+        class="text-rojo2 mr-1.5 font-mono text-[9.5px] font-semibold tracking-[.16em] uppercase"
+        >{c.reglaT}</b
+      >
+      {c.regla}
+    </p>
+  </div>
+</div>
+
+<div
+  class="mt-4 grid grid-cols-1 gap-5 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]"
+>
+  <div>
+    <Etiqueta class="mb-1.5">{c.paraQuienT}</Etiqueta>
+    <ul class="space-y-1">
+      {
+        c.paraQuien.map(x => (
+          <li class="flex gap-2.5 text-[12.5px] leading-[1.45]">
+            <svg
+              class="text-rojo2 mt-[2px] h-[13px] w-[13px] flex-none"
+              aria-hidden="true"
+            >
+              <use href="#i-check" />
+            </svg>
+            <span>{x}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+  <p class="text-gris self-end text-[12.5px] leading-[1.5]">{c.grupo}</p>
+</div>
+
+<div class="mt-auto pt-6">
+  <Etiqueta class="border-tinta mb-3 border-t-[1.5px] pt-2.5"
+    >{p.rotulo}</Etiqueta
+  >
+  <div
+    class="grid grid-cols-1 items-start gap-5 sm:grid-cols-[205px_minmax(0,1fr)]"
+  >
+    <figure class="m-0 max-w-[220px]">
+      <div class="border-linea bg-campo rounded border p-[6px]">
+        <Image
+          src={chicago}
+          widths={[240, 480]}
+          sizes="240px"
+          alt={p.fotoAlt}
+          loading="eager"
+          class="aspect-[4/5] h-auto w-full rounded-[1px] object-cover [filter:grayscale(.14)_contrast(1.04)]"
+        />
+      </div>
+      <figcaption
+        class="font-pen text-rojo2 mt-1.5 -rotate-[1.2deg] text-[16px] leading-[1.15]"
+      >
+        {p.fotoPie}
+      </figcaption>
+    </figure>
+    <ul class="border-linea border-t">
+      {
+        p.items.map(x => (
+          <li class="border-linea border-b py-2.5">
+            <p class="font-arch text-[15.5px] leading-[1.2] font-bold tracking-[-.015em]">
+              {x.t}
+            </p>
+            <p class="text-gris mt-0.5 text-[12.5px] leading-[1.45]">{x.d}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</div>

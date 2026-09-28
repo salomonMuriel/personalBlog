@@ -1,0 +1,129 @@
+---
+import { Image } from "astro:assets";
+import { copiaFicha } from "@data/ficha";
+import type { Lang } from "@i18n/ui";
+import fotoSalo from "@assets/site/fotoSalo.jpeg";
+import Etiqueta from "./Etiqueta.astro";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const c = copiaFicha(lang).portada;
+---
+
+<div
+  class="flex items-baseline gap-4 font-mono text-[9.5px] tracking-[.18em] uppercase"
+>
+  <span class="text-rojo2 font-medium">{c.rotulo}</span>
+  <span class="text-gris ml-auto hidden sm:inline">{c.ciudad}</span>
+</div>
+
+<div
+  class="mt-5 grid grid-cols-1 items-start gap-x-9 gap-y-7 sm:grid-cols-[minmax(0,1fr)_200px]"
+>
+  <div class="min-w-0">
+    <h1>
+      <span
+        class="font-arch block text-[64px] leading-[.84] font-black tracking-[.005em] uppercase [font-stretch:62%] [font-variation-settings:'wdth'_62,'wght'_900] sm:text-[124px]"
+        >{c.nombre1}</span
+      >
+      <span
+        class="font-arch block text-[64px] leading-[.84] font-black tracking-[.005em] uppercase [font-stretch:62%] [font-variation-settings:'wdth'_62,'wght'_900] sm:text-[124px]"
+        >{c.nombre2}</span
+      >
+      <span
+        class="font-slab pintado mt-4 block text-[24px] leading-[1.1] tracking-[-.012em] uppercase sm:text-[28px]"
+        >{c.oficio}</span
+      >
+    </h1>
+
+    <p
+      class="font-pen text-rojo2 mt-3 [transform-origin:left] -rotate-[1.4deg] text-[22px] leading-[1.2]"
+    >
+      {c.manuscrita}
+    </p>
+
+    <p class="mt-5 max-w-[52ch] text-[16px] leading-[1.58]">{c.bajada}</p>
+  </div>
+
+  <aside class="relative max-w-[240px] sm:max-w-none">
+    <span
+      class="bg-rojo absolute top-3 bottom-3 -left-[11px] hidden w-[3px] sm:block"
+      aria-hidden="true"></span>
+    <div class="border-linea bg-campo rounded border p-[7px]">
+      <Image
+        src={fotoSalo}
+        widths={[240, 480, 720]}
+        sizes="240px"
+        alt={c.fotoAlt}
+        loading="eager"
+        class="aspect-[4/5] h-auto w-full rounded-[1px] object-cover object-[50%_16%] [filter:grayscale(.14)_contrast(1.05)]"
+      />
+    </div>
+    <dl class="mt-3 font-mono text-[9.5px] tracking-[.12em] uppercase">
+      {
+        c.ficha.map(([k, v], i) => (
+          <div
+            class:list={[
+              "flex justify-between gap-3 py-[6px]",
+              i < c.ficha.length - 1 && "border-linea border-b",
+            ]}
+          >
+            <dt class="text-gris">{k}</dt>
+            <dd class="text-right font-medium">{v}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </aside>
+</div>
+
+<div class="mt-auto pt-8">
+  <Etiqueta class="mb-2.5">{c.cifrasT}</Etiqueta>
+  <dl class="border-tinta grid grid-cols-2 border-y-[1.5px] sm:grid-cols-5">
+    {
+      c.cifras.map(([n, texto], i) => (
+        <div
+          class:list={[
+            "flex flex-col-reverse justify-end gap-1.5 px-3 py-3.5 first:pl-0",
+            i > 0 && "sm:border-linea sm:border-l",
+          ]}
+        >
+          <dt class="text-gris text-[11.5px] leading-[1.35]">{texto}</dt>
+          <dd class="font-slab text-rojo2 text-[23px] leading-none">{n}</dd>
+        </div>
+      ))
+    }
+  </dl>
+
+  <div
+    class="mt-6 grid grid-cols-1 items-start gap-x-9 gap-y-5 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]"
+  >
+    <p
+      class="border-rojo bg-campo border-l-[3px] px-4 py-3 text-[13px] leading-[1.5]"
+    >
+      {c.paraQuien}
+    </p>
+    <div>
+      <Etiqueta class="mb-1.5">{c.indiceT}</Etiqueta>
+      <ol class="text-[13px]">
+        {
+          c.indice.map(([n, t], i) => (
+            <li
+              class:list={[
+                "flex items-baseline gap-3 py-[5px]",
+                i < c.indice.length - 1 && "border-linea border-b",
+              ]}
+            >
+              <span class="text-rojo2 font-mono text-[10px] tracking-[.14em]">
+                {n}
+              </span>
+              <span>{t}</span>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </div>
+</div>

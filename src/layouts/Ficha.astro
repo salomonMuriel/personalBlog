@@ -1,0 +1,151 @@
+---
+import "@styles/base.css";
+import { SITE } from "@config";
+import type { Lang } from "@i18n/ui";
+import { getLangTag } from "@i18n/utils";
+import { copiaFicha, pdfFicha, rutasFicha } from "@data/ficha";
+import Iconos from "@components/Iconos.astro";
+import archivo from "@fontsource-variable/archivo/files/archivo-latin-wdth-normal.woff2?url";
+import slab from "@fontsource/alfa-slab-one/files/alfa-slab-one-latin-400-normal.woff2?url";
+import mono from "@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-400-normal.woff2?url";
+import pen from "@fontsource-variable/caveat/files/caveat-latin-wght-normal.woff2?url";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const c = copiaFicha(lang);
+const otro: Lang = lang === "es" ? "en" : "es";
+const canonical = new URL(rutasFicha[lang], SITE.website).href;
+---
+
+<!doctype html>
+<html lang={getLangTag(lang)}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{c.meta.title}</title>
+    <meta name="description" content={c.meta.description} />
+    <meta name="author" content={SITE.author} />
+    <meta name="robots" content="noindex, follow" />
+    <link rel="canonical" href={canonical} />
+    <link
+      rel="preload"
+      href={archivo}
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="preload" href={slab} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={mono} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={pen} as="font" type="font/woff2" crossorigin />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <meta name="theme-color" content="#E9E8E2" />
+  </head>
+  <body class="font-arch bg-papel2">
+    <Iconos />
+
+    <nav
+      class="solo-pantalla bg-tinta text-panelfg sticky top-0 z-50"
+      aria-label={c.barra.rotulo}
+    >
+      <div
+        class="mx-auto flex h-11 max-w-[210mm] items-center gap-4 px-4 font-mono text-[10.5px] tracking-[.16em] uppercase sm:px-0"
+      >
+        <a href="/" class="text-rojo3 hidden font-semibold sm:inline"
+          >{SITE.author}</a
+        >
+        <span class="text-panelgris hidden sm:inline">{c.barra.rotulo}</span>
+        <a
+          href={rutasFicha[otro]}
+          hreflang={otro}
+          class="text-panelgris hover:text-panelfg transition-colors sm:ml-auto"
+          >{c.barra.otroIdioma}</a
+        >
+        <button
+          type="button"
+          id="imprimir"
+          class="text-panelgris hover:text-panelfg hidden tracking-[.16em] uppercase transition-colors sm:inline"
+        >
+          {c.barra.imprimir}
+        </button>
+        <a
+          href={pdfFicha[lang]}
+          download
+          class="bg-rojo2 hover:bg-rojo ml-auto inline-flex items-center gap-2 rounded px-3 py-1.5 font-medium whitespace-nowrap text-white transition-colors sm:ml-0"
+        >
+          <svg class="h-3.5 w-3.5" aria-hidden="true"
+            ><use href="#i-abajo"></use></svg
+          >{c.barra.pdf}
+        </a>
+      </div>
+    </nav>
+
+    <main class="sm:py-8">
+      <slot />
+    </main>
+
+    <script>
+      document
+        .getElementById("imprimir")
+        ?.addEventListener("click", () => window.print());
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  html {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .pliego {
+    display: flex;
+    flex-direction: column;
+    background: var(--papel);
+    padding: 20px 16px;
+    border-bottom: 1px solid var(--linea);
+  }
+  .pliego-cuerpo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding-block: 18px;
+  }
+  @media (min-width: 640px) {
+    .pliego {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto 28px;
+      padding: 11mm 14mm 9mm;
+      border: 1px solid var(--linea);
+      box-shadow:
+        0 1px 0 rgba(22, 23, 26, 0.05),
+        0 24px 48px -30px rgba(22, 23, 26, 0.5);
+    }
+  }
+  @page {
+    size: A4;
+    margin: 0;
+  }
+  @media print {
+    body {
+      background: var(--papel);
+    }
+    main {
+      padding: 0 !important;
+    }
+    .solo-pantalla {
+      display: none !important;
+    }
+    .pliego {
+      width: 210mm;
+      height: 297mm;
+      min-height: 0;
+      margin: 0;
+      border: 0;
+      box-shadow: none;
+      overflow: hidden;
+      break-after: page;
+    }
+  }
+</style>

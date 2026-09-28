@@ -27,10 +27,12 @@ export default defineConfig({
   adapter: vercel(),
   integrations: [
     sitemap({
-      // /keystatic is an admin surface, and the 410 routes exist only to be
-      // crawled out of the index — neither belongs in the sitemap.
+      // /keystatic is an admin surface, the 410 routes exist only to be
+      // crawled out of the index, and the profile brief is handed out by link.
       filter: page =>
         !page.includes("/keystatic") &&
+        !page.includes("/ficha/") &&
+        !page.includes("/en/brief/") &&
         !page.includes("/posts/") &&
         !page.includes("/tags/"),
       serialize(item) {
