@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hub Digital CEPE · Propuesta Fase 1</title>
+<meta name="description" content="Propuesta para la Fase 1 del Hub Digital de CEPE: Repositorio de Evidencia, mapa de Comunidades de Cambio y diseño listo para construir.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="img/brand/flower.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Livvic:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/nav-hero.css">
+<link rel="stylesheet" href="css/sections.css">
+<link rel="stylesheet" href="css/gantt.css">
+<link rel="stylesheet" href="css/ai.css">
+<link rel="stylesheet" href="css/team.css">
+<link rel="stylesheet" href="css/build.css">
+</head>
+<body>
+<a class="skip-link" href="#reto">Saltar al contenido</a>
+<div class="grain" aria-hidden="true"></div>
+
+<header class="nav" id="nav">
+  <a class="nav__brand" href="#top" aria-label="Evidencia Potencial en Educación, inicio">
+    <img src="img/brand/logo-blue.svg" alt="" width="120" height="59">
+  </a>
+  <nav class="nav__links" id="nav-links" aria-label="Secciones">
+    <a href="#reto">El reto</a>
+    <a href="#hub">Qué construimos</a>
+    <a href="#cronograma">Cronograma</a>
+    <a href="#ia">IA</a>
+    <a href="#equipo">Equipo</a>
+    <a href="#fase-2">Fase 2</a>
+  </nav>
+  <a class="btn btn--small nav__cta" href="hub.html">Abrir el prototipo<span class="island"><svg class="icon"><use href="img/icons.svg#i-arrow"/></svg></span></a>
+  <button class="nav__toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Abrir menú">
+    <svg class="icon icon--open"><use href="img/icons.svg#i-menu"/></svg>
+    <svg class="icon icon--close"><use href="img/icons.svg#i-close"/></svg>
+  </button>
+</header>
+
+<main id="top">
+<!-- HERO -->
+<section class="hero">
+  <img class="hero__blob hero__blob--pink" src="img/brand/blob-pink.svg" alt="" aria-hidden="true">
+  <img class="hero__blob hero__blob--yellow" src="img/brand/blob-yellow.svg" alt="" aria-hidden="true">
+  <img class="hero__blob hero__blob--navy" src="img/brand/blob-navy.svg" alt="" aria-hidden="true">
+
+  <div class="wrap hero__grid">
+    <div class="hero__copy">
+      <span class="pill hero__pill reveal">Propuesta técnica · Hub Digital, Fase 1</span>
+      <h1 class="display hero__title reveal" style="--i:1">Que la <em>evidencia</em> llegue a quien decide</h1>
+      <p class="hero__lede reveal" style="--i:2">Diseñamos el Hub de CEPE: un <strong>Repositorio de Evidencia</strong> y el mapa de sus 14 Comunidades de Cambio, listo para construir.</p>
+      <div class="hero__actions reveal" style="--i:3">
+        <a class="btn btn--yellow" href="#cronograma">Ver el cronograma<span class="island"><svg class="icon"><use href="img/icons.svg#i-down"/></svg></span></a>
+        <a class="btn btn--ghost" href="hub.html">Abrir el prototipo<span class="island"><svg class="icon"><use href="img/icons.svg#i-arrow"/></svg></span></a>
+      </div>
+    </div>
+
+    <div class="hero__visual reveal" style="--i:2">
+      <div class="hero__photo"><img src="img/photo/students-color.webp" alt="Estudiantes sentados en el suelo con cuadernos y computadores" width="1097" height="731" fetchpriority="high"></div>
+      <img class="hero__badge hero__badge--a" src="img/territory/quibdo.webp" alt="" width="108" height="108">
+      <img class="hero__badge hero__badge--b" src="img/territory/cali.webp" alt="" width="108" height="108">
+      <img class="hero__badge hero__badge--c" src="img/territory/meta.webp" alt="" width="108" height="108">
+    </div>
+  </div>
+
+  <dl class="wrap facts reveal" style="--i:4">
+    <div><dt>Entidad</dt><dd>CEPE · EdLab</dd></div>
+    <div><dt>Duración</dt><dd><span class="display">12</span> semanas</dd></div>
+    <div><dt>Vigencia</dt><dd>Oct – Dic 2026</dd></div>
+    <div><dt>Entregables</dt><dd><span class="display">4</span> productos</dd></div>
+    <div><dt>Después</dt><dd><span class="display">3</span> alternativas de fase 2</dd></div>
+  </dl>
+</section>
+
+<div class="ticker" aria-label="Las 14 Comunidades de Cambio">
+  <ul class="ticker__track" id="ticker"></ul>
+</div>
+
+<!-- RETO -->
+<section class="section reto" id="reto">
+  <div class="wrap reto__grid">
+    <div class="reto__lead">
+      <h2 class="display h2 reveal">CEPE ya tiene la evidencia. Lo difícil es que llegue.</h2>
+      <figure class="reto__photo reveal" style="--i:1">
+        <img src="img/photo/pencil-bw.webp" alt="Manos de un niño escribiendo con lápiz sobre un cuaderno, foto en blanco y negro" width="1165" height="777" loading="lazy">
+        <figcaption>«Nadie tiene todas las respuestas, pero todos tenemos algo que aportar.»<span>Comunidades de Cambio · CEPE</span></figcaption>
+      </figure>
+    </div>
+
+    <ol class="reto__list">
+      <li class="pain reveal" style="--i:0" data-color="pink">
+        <span class="pain__n display">1</span>
+        <div><h3>Información dispersa</h3><p>Bases de datos, publicaciones, reportes de aprendizaje, mapas de brechas de evidencia, noticias y eventos viven en lugares distintos, con formas distintas de consultarse y actualizarse.</p></div>
+      </li>
+      <li class="pain reveal" style="--i:1" data-color="yellow">
+        <span class="pain__n display">2</span>
+        <div><h3>Catorce territorios, difíciles de ver juntos</h3><p>Cada Comunidad de Cambio tiene sus actores, su plan y sus iniciativas. Seguirlas y rendir cuentas a financiadores exige demasiado trabajo manual.</p></div>
+      </li>
+      <li class="pain reveal" style="--i:2" data-color="orange">
+        <span class="pain__n display">3</span>
+        <div><h3>Muchos públicos, un solo sitio</h3><p>Directivos, EdLab, PMO, líderes territoriales, aliados y público general necesitan cosas distintas, con reglas de acceso distintas.</p></div>
+      </li>
+      <li class="pain pain--goal reveal" style="--i:3">
+        <img class="pain__flower" src="img/brand/flower.svg" alt="" aria-hidden="true">
+        <h3>Lo que entrega la fase 1</h3>
+        <p>Decisiones verificables: casos de uso priorizados y trazables, matriz de fuentes, prototipo validado con usuarios y tres alternativas de fase 2 con presupuesto desagregado.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- QUÉ CONSTRUIMOS -->
+<section class="section hub" id="hub">
+  <div class="wrap">
+    <h2 class="display h2 hub__title reveal">Un Hub con tres funciones que se alimentan entre sí</h2>
+    <div class="bento">
+      <article class="cell cell--evidence reveal">
+        <img class="cell__scribble" src="img/brand/scribble.svg" alt="" aria-hidden="true">
+        <span class="chip-ai"><svg class="icon"><use href="img/icons.svg#i-spark"/></svg>Función central</span>
+        <h3 class="display">Repositorio de Evidencia</h3>
+        <p>Una biblioteca única, con búsqueda y filtros por tema, territorio y nivel de evidencia. Estudios, reportes de aprendizaje y mapas de brechas, cada uno con su <strong>resumen en lenguaje sencillo</strong> generado con IA y validado por EdLab.</p>
+        <div class="evidence-sample">
+          <p class="evidence-sample__tag">Reporte de aprendizaje · Aprendizajes fundamentales</p>
+          <h4>Resultados de las evaluaciones de lectura en Colombia (EGRA 2023–2025)</h4>
+          <p class="evidence-sample__fact"><strong>6.530</strong> estudiantes evaluados en Barranquilla en 2024: <strong>42 %</strong> en primero y <strong>28 %</strong> en segundo con alto riesgo de rezago.</p>
+          <p class="evidence-sample__src">Ejemplo de lo que el Hub mostraría · Fuente: Banco Mundial y CEPE, 2026</p>
+        </div>
+        <p class="cell__note"><strong>Método CASEL.</strong> La guía de programas de CASEL revisa cada programa y le asigna una designación comparable (<em>SELect</em>, <em>Promising</em> o <em>SEL-Supportive</em>). El Repositorio adopta esa lógica: fichas con nivel de evidencia claro, para comparar sin leer 80 páginas.</p>
+      </article>
+
+      <article class="cell cell--photo reveal" style="--i:1">
+        <img src="img/photo/students-color.webp" alt="" loading="lazy" width="1097" height="731">
+        <p><strong>Dos prioridades de las Comunidades de Cambio</strong>Aprendizajes fundamentales y habilidades sociales y emocionales.</p>
+      </article>
+
+      <article class="cell cell--map reveal" style="--i:2">
+        <div class="cell__badges" aria-hidden="true">
+          <img src="img/territory/choco.webp" alt="" loading="lazy" width="72" height="72"><img src="img/territory/antioquia.webp" alt="" loading="lazy" width="72" height="72"><img src="img/territory/cartagena.webp" alt="" loading="lazy" width="72" height="72"><img src="img/territory/cundinamarca.webp" alt="" loading="lazy" width="72" height="72"><img src="img/territory/amazonas.webp" alt="" loading="lazy" width="72" height="72"><img src="img/territory/cauca.webp" alt="" loading="lazy" width="72" height="72">
+        </div>
+        <h3>Mapa de Comunidades de Cambio</h3>
+        <p>Colombia con acercamiento por territorio: avance del plan, líderes, iniciativas y evidencia conectada.</p>
+      </article>
+
+      <article class="cell cell--field reveal" style="--i:3">
+        <svg class="icon cell__icon"><use href="img/icons.svg#i-audio"/></svg>
+        <h3>Levantamiento en campo, sin Excel</h3>
+        <p>Encuestas desde el celular, con respuestas en audio que la IA transcribe y agrupa por temas.</p>
+      </article>
+
+      <article class="cell cell--assistant reveal" style="--i:4">
+        <svg class="icon cell__icon"><use href="img/icons.svg#i-spark"/></svg>
+        <h3>Asistente que cita sus fuentes</h3>
+        <p>Pregunta en lenguaje natural y recibe respuestas con enlace al documento, al acta o al dato de origen.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- CRONOGRAMA -->
+<section class="section schedule" id="cronograma">
+  <div class="wrap">
+    <p class="pill schedule__pill reveal">Semanas 1 a 12 · 5 de octubre al 18 de diciembre de 2026</p>
+    <div class="schedule__head">
+      <h2 class="display h2 reveal">Las mismas doce semanas. Mucho más trabajo adentro.</h2>
+      <div class="toggle reveal" role="group" aria-label="Modo del cronograma" style="--i:1">
+        <span class="toggle__thumb" aria-hidden="true"></span>
+        <button type="button" data-mode="base" aria-pressed="false">Método tradicional</button>
+        <button type="button" data-mode="ai" aria-pressed="true"><svg class="icon"><use href="img/icons.svg#i-spark"/></svg>Con IA</button>
+      </div>
+    </div>
+
+    <div class="gantt reveal" id="gantt" data-mode="ai">
+      <div class="gantt__scroll">
+        <div class="gantt__inner">
+          <div class="gantt__weeks" aria-hidden="true">
+            <span></span>
+            <span>S1<small>5 oct</small></span><span>S2</span><span>S3</span><span>S4</span><span>S5<small>2 nov</small></span><span>S6</span><span>S7</span><span>S8</span><span>S9<small>30 nov</small></span><span>S10</span><span>S11</span><span>S12</span>
+          </div>
+          <div id="gantt-rows"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="schedule__foot">
+      <ul class="legend">
+        <li><i class="legend__bar"></i>Tarea acelerada con IA</li>
+        <li><i class="legend__ghost"></i>Duración sin IA</li>
+        <li><i class="legend__milestone"></i>Producto aprobado</li>
+        <li><i class="legend__extra"></i>Valor agregado</li>
+      </ul>
+      <p class="schedule__note" id="schedule-note" aria-live="polite"></p>
+    </div>
+
+    <ol class="products" aria-label="Productos y calendario de pagos">
+      <li class="product product--p1 reveal"><b>S1–S2 · 15 %</b><h3>Plan de trabajo y gobierno</h3><p>Metodología, cronograma, riesgos, comunicaciones y plan de campo.</p></li>
+      <li class="product product--p2 reveal" style="--i:1"><b>S2–S6 · 30 %</b><h3>Descubrimiento y fuentes</h3><p>Perfiles, casos de uso trazables y matriz de preparación de fuentes.</p></li>
+      <li class="product product--p3 reveal" style="--i:2"><b>S5–S10 · 30 %</b><h3>Diseño y prototipo validado</h3><p>Arquitectura, mapa territorial, intranet y pruebas con usuarios.</p></li>
+      <li class="product product--p4 reveal" style="--i:3"><b>S9–S12 · 25 %</b><h3>Alternativas y hoja de ruta</h3><p>Tres alternativas comparables, costos únicos y recurrentes.</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- IA -->
+<section class="section ai" id="ia">
+  <div class="wrap">
+    <h2 class="display h2 reveal">Lo que antes tomaba semanas, ahora toma días</h2>
+    <p class="ai__lede reveal" style="--i:1">La IA no es un módulo aparte: es cómo trabajamos. Captura de datos, síntesis y prototipos avanzan más rápido, y en cada paso una persona valida.</p>
+
+    <div class="fronts reveal">
+      <div class="fronts__tabs" role="tablist" aria-label="Frentes donde la IA acelera el trabajo" id="fronts-tabs"></div>
+      <div class="fronts__panel" id="fronts-panel" role="tabpanel" aria-live="polite"></div>
+    </div>
+
+    <div class="trace">
+      <div class="trace__intro reveal">
+        <h3 class="display">Trazabilidad de punta a punta</h3>
+        <p>Los TdR piden que cada caso de uso se rastree hasta la evidencia que lo originó. Con IA, cada frase de una entrevista queda enlazada a un hallazgo, a una necesidad y a un caso de uso. Cualquier persona de CEPE puede preguntar <em>«¿de dónde sale esto?»</em> y ver la cita original.</p>
+      </div>
+      <div class="trace__panel reveal" style="--i:1" id="trace">
+        <div class="trace__bar"><span>Entrevista E-14 · Líder de una Comunidad de Cambio</span><span class="trace__live">Ejemplo ilustrativo</span></div>
+        <ol class="trace__steps">
+          <li class="step" data-tone="pink"><span class="step__tag">Cita</span><p>«Cada mes mandamos el reporte y nunca sabemos si alguien lo leyó, ni cómo nos comparamos con otros territorios.»</p></li>
+          <li class="step" data-tone="yellow"><span class="step__tag">Hallazgo</span><p>Los líderes reportan sin recibir retroalimentación ni referentes de otros territorios.</p></li>
+          <li class="step" data-tone="green"><span class="step__tag">Necesidad</span><p>Perfil «Líder de Comunidad»: ver el avance propio frente a pares y saber qué se hace con lo reportado.</p></li>
+          <li class="step" data-tone="orange"><span class="step__tag">Caso de uso</span><p>Tablero comparado por territorio con reporte mensual automático. <em>Prioridad alta.</em></p></li>
+        </ol>
+        <p class="trace__foot"><svg class="icon"><use href="img/icons.svg#i-check"/></svg>Cada paso lo revisa una persona del equipo antes de entrar al informe.</p>
+      </div>
+    </div>
+
+    <div class="guard reveal">
+      <h3>Reglas de uso de IA · sección 10 de los TdR</h3>
+      <ul>
+        <li><svg class="icon"><use href="img/icons.svg#i-check"/></svg>Validación humana de todo producto generado con IA.</li>
+        <li><svg class="icon"><use href="img/icons.svg#i-lock"/></svg>Ninguna información confidencial en servicios no autorizados por CEPE.</li>
+        <li><svg class="icon"><use href="img/icons.svg#i-people"/></svg>Consentimiento informado y minimización de datos personales.</li>
+        <li><svg class="icon"><use href="img/icons.svg#i-form"/></svg>Transparencia: cada entregable indica qué se asistió con IA.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- EQUIPO -->
+<section class="section team" id="equipo">
+  <div class="wrap">
+    <h2 class="display h2 reveal">La tecnología la ponemos nosotros. Las personas, Anagrama.</h2>
+
+    <div class="people">
+      <figure class="person person--blue reveal">
+        <div class="person__frame"><img src="img/team-salomon.webp" alt="Retrato en blanco y negro de Salomón Muriel" width="640" height="800" loading="lazy"></div>
+        <figcaption><strong>Salomón Muriel</strong><span>Dirección de producto y arquitectura · IA</span></figcaption>
+      </figure>
+      <figure class="person person--yellow reveal" style="--i:1">
+        <div class="person__frame"><img src="img/team-silvia.webp" alt="Retrato en blanco y negro de Silvia, fundadora de Anagrama" width="640" height="800" loading="lazy"></div>
+        <figcaption><strong>Silvia</strong><span>Fundadora · Anagrama</span></figcaption>
+      </figure>
+      <figure class="person person--pink reveal" style="--i:2">
+        <div class="person__frame"><img src="img/team-carolina.webp" alt="Retrato en blanco y negro de Carolina, fundadora de Anagrama" width="640" height="800" loading="lazy"></div>
+        <figcaption><strong>Carolina</strong><span>Fundadora · Anagrama</span></figcaption>
+      </figure>
+    </div>
+
+    <div class="team__grid">
+      <div class="roles reveal">
+        <h3>Los cinco roles de la sección 14 de los TdR</h3>
+        <table>
+          <caption class="sr-only">Quién cubre cada rol mínimo requerido</caption>
+          <thead><tr><th scope="col">Rol requerido</th><th scope="col">Lo cubre</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Dirección de proyecto / producto digital</th><td><span class="who who--blue">Salomón</span><span class="who who--yellow">Silvia</span></td></tr>
+            <tr><th scope="row">Investigación y diseño de servicios</th><td><span class="who who--yellow">Silvia</span><span class="who who--pink">Carolina</span></td></tr>
+            <tr><th scope="row">Arquitectura de soluciones</th><td><span class="who who--blue">Salomón</span></td></tr>
+            <tr><th scope="row">Arquitectura e ingeniería de datos</th><td><span class="who who--blue">Salomón</span></td></tr>
+            <tr><th scope="row">Especialista funcional o de conocimiento educativo</th><td><span class="who who--open">Perfil por confirmar con CEPE</span></td></tr>
+          </tbody>
+        </table>
+        <p class="roles__note">Los TdR permiten que una persona cubra varios roles. Dedicaciones, responsabilidades y reemplazos se detallan en el Producto 1.</p>
+      </div>
+
+      <div class="anagrama reveal" style="--i:1">
+        <img class="anagrama__logo" src="img/anagrama-logo.png" alt="Anagrama" width="1211" height="364" loading="lazy">
+        <p class="anagrama__tag">«Inspiramos organizaciones a innovar pensando en las personas.»</p>
+        <p>Consultora colombiana de innovación, antropología y diseño de negocios. Lleva el trabajo con usuarios y territorios: arquetipos, talleres de cocreación y pruebas de usabilidad.</p>
+        <dl class="anagrama__stats">
+          <div><dt class="display">7</dt><dd>años</dd></div>
+          <div><dt class="display">500+</dt><dd>proyectos</dd></div>
+          <div><dt class="display">15+</dt><dd>países</dd></div>
+        </dl>
+        <p class="anagrama__clients">Han trabajado con Profamilia, EPS Sura, Comfamiliar Risaralda, Novo Nordisk, AbbVie, Dr. Reddy's y Fundación Leucemia y Linfoma.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FASE 2 -->
+<section class="section build" id="fase-2">
+  <img class="build__blob build__blob--pink" src="img/brand/blob-pink-big.svg" alt="" aria-hidden="true">
+  <img class="build__blob build__blob--yellow" src="img/brand/blob-yellow.svg" alt="" aria-hidden="true">
+  <div class="wrap">
+    <p class="pill pill--light reveal">Después de la fase 1</p>
+    <h2 class="display h2 reveal" style="--i:1">También sabemos construirlo</h2>
+    <p class="build__lede reveal" style="--i:2">La fase 1 no incluye desarrollo, y esa decisión es de CEPE. Pero diseñar sin haber construido es adivinar: por eso nuestros presupuestos de fase 2 son realistas y el prototipo no promete lo que no se puede entregar.</p>
+
+    <div class="proof">
+      <article class="proof__card reveal">
+        <img src="img/ignia-logo.webp" alt="Ignia" width="260" height="173" loading="lazy">
+        <h3>Ya en producción · Ignia</h3>
+        <ul>
+          <li>Seguimiento de participantes con alertas de riesgo</li>
+          <li>Encuestas con respuestas en audio, transcritas y resumidas con IA</li>
+          <li>Reportes automáticos de cada sesión</li>
+          <li>Directorio, asistencia y tableros</li>
+        </ul>
+      </article>
+      <div class="proof__arrow reveal" style="--i:1" aria-hidden="true"><svg class="icon"><use href="img/icons.svg#i-arrow"/></svg><span>Llevado a 14 territorios</span></div>
+      <article class="proof__card proof__card--cepe reveal" style="--i:2">
+        <div class="proof__badges" aria-hidden="true"><img src="img/territory/choco.webp" alt="" width="56" height="56" loading="lazy"><img src="img/territory/cali.webp" alt="" width="56" height="56" loading="lazy"><img src="img/territory/meta.webp" alt="" width="56" height="56" loading="lazy"><img src="img/territory/amazonas.webp" alt="" width="56" height="56" loading="lazy"></div>
+        <h3>Posible en el Hub de CEPE</h3>
+        <ul>
+          <li>Mapa con el avance de cada Comunidad de Cambio</li>
+          <li>Levantamiento desde el celular con síntesis de IA</li>
+          <li>Repositorio de Evidencia con resúmenes en lenguaje sencillo</li>
+          <li>Reportes para financiadores en minutos</li>
+        </ul>
+      </article>
+    </div>
+
+    <ol class="steps" aria-label="Tres alternativas para la fase 2">
+      <li class="rung rung--a reveal">
+        <span class="rung__n display">A</span>
+        <h3>Esencial</h3>
+        <p>Los componentes indispensables para los casos de uso priorizados.</p>
+        <ul><li><b>Repositorio de Evidencia</b> con búsqueda, filtros y descargas</li><li>Gestor de contenidos</li><li>Sitio público renovado</li></ul>
+      </li>
+      <li class="rung rung--b reveal" style="--i:1">
+        <span class="rung__n display">B</span>
+        <h3>Intermedia</h3>
+        <p>Todo lo anterior, más las funciones para las Comunidades de Cambio.</p>
+        <ul><li><b>Repositorio de Evidencia</b> con fichas por nivel de evidencia</li><li>Mapa territorial e intranet</li><li>Tablero de seguimiento</li></ul>
+      </li>
+      <li class="rung rung--c reveal" style="--i:2">
+        <span class="rung__n display">C</span>
+        <h3>Completa</h3>
+        <p>La solución avanzada identificada en el diseño.</p>
+        <ul><li><b>Repositorio de Evidencia</b> con asistente de IA que cita fuentes</li><li>ETL de fuentes públicas</li><li>Analítica avanzada de uso</li></ul>
+      </li>
+    </ol>
+    <p class="build__foot reveal">Alcances ilustrativos. La fase 1 los define con CEPE, con costos únicos y recurrentes trazables.</p>
+
+    <div class="cta reveal">
+      <div class="cta__copy">
+        <h3 class="display">Mejor que contarlo: velo funcionando</h3>
+        <p>Armamos este prototipo en días, no en semanas. Así trabajaríamos también durante la consultoría.</p>
+        <a class="btn btn--yellow" href="hub.html">Abrir el prototipo<span class="island"><svg class="icon"><use href="img/icons.svg#i-arrow"/></svg></span></a>
+      </div>
+      <div class="cta__preview" id="cta-preview" aria-hidden="true">
+        <iframe src="hub.html?preview=1" title="Vista previa del prototipo del Hub" loading="lazy" tabindex="-1"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="wrap footer__row">
+      <img src="img/brand/logo-white.svg" alt="Evidencia Potencial en Educación" width="96" height="47">
+      <p>Propuesta para CEPE · EdLab · 2026<br>Salomón Muriel · Software a la medida</p>
+    </div>
+  </footer>
+</section>
+</main>
+
+<script src="js/proposal-data.js"></script>
+<script src="js/gantt.js"></script>
+<script src="js/fronts.js"></script>
+<script src="js/trace.js"></script>
+<script src="js/proposal.js"></script>
+</body>
+</html>

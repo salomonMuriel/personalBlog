@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hub CEPE · Prototipo</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="img/brand/flower.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Livvic:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/hub-shell.css">
+<link rel="stylesheet" href="css/hub-map.css">
+<link rel="stylesheet" href="css/hub-views.css">
+<link rel="stylesheet" href="css/hub-evidence.css">
+</head>
+<body class="app" data-access="intranet">
+<a class="skip-link" href="#content">Saltar al contenido</a>
+
+<aside class="sidebar">
+  <a class="sidebar__brand" href="index.html" aria-label="Volver a la propuesta">
+    <img src="img/brand/logo-white.svg" alt="Evidencia Potencial en Educación" width="132" height="65">
+    <span>Hub digital</span>
+  </a>
+  <nav class="sidebar__nav" aria-label="Módulos del Hub">
+    <p class="sidebar__group">Territorio</p>
+    <button type="button" data-view="map" class="is-active"><svg class="icon"><use href="img/icons.svg#i-map"/></svg><span>Mapa territorial</span></button>
+    <button type="button" data-view="communities" data-intranet><svg class="icon"><use href="img/icons.svg#i-people"/></svg><span>Comunidades de Cambio</span></button>
+    <button type="button" data-view="people" data-intranet><svg class="icon"><use href="img/icons.svg#i-card"/></svg><span>Líderes y miembros</span></button>
+    <p class="sidebar__group">Conocimiento</p>
+    <button type="button" data-view="evidence"><svg class="icon"><use href="img/icons.svg#i-book"/></svg><span>Repositorio de Evidencia</span><em class="sidebar__new">Nuevo</em></button>
+    <button type="button" data-view="survey" data-intranet><svg class="icon"><use href="img/icons.svg#i-form"/></svg><span>Levantamiento</span></button>
+    <button type="button" data-view="assistant" data-intranet><svg class="icon"><use href="img/icons.svg#i-spark"/></svg><span>Asistente IA</span></button>
+  </nav>
+  <div class="sidebar__user">
+    <span class="avatar">LG</span>
+    <div><strong>Laura Gómez</strong><span>EdLab · Administradora</span></div>
+  </div>
+</aside>
+
+<div class="main">
+  <header class="topbar">
+    <a class="topbar__back" href="index.html"><svg class="icon"><use href="img/icons.svg#i-back"/></svg><span>Propuesta</span></a>
+    <form class="search" id="global-search" role="search">
+      <svg class="icon"><use href="img/icons.svg#i-search"/></svg>
+      <input type="search" id="global-search-input" placeholder="Buscar evidencia, territorio o líder" aria-label="Buscar en el Hub" autocomplete="off">
+    </form>
+    <div class="segmented" role="group" aria-label="Tipo de acceso">
+      <button type="button" data-access="public" aria-pressed="false">Sitio público</button>
+      <button type="button" data-access="intranet" aria-pressed="true"><svg class="icon"><use href="img/icons.svg#i-lock"/></svg>Intranet</button>
+    </div>
+    <span class="stamp">Prototipo · datos ilustrativos</span>
+  </header>
+
+  <main class="content" id="content">
+    <!-- MAP -->
+    <section class="view is-active" data-view="map" aria-labelledby="title-map">
+      <div class="view__head">
+        <div><p class="view__kicker">Territorio</p><h1 id="title-map" class="display">Colombia, en tiempo real</h1></div>
+        <p class="view__meta">Actualizado hoy, 7:42 a. m.</p>
+      </div>
+      <div class="kpis" id="kpis"></div>
+      <div class="map-grid">
+        <div class="map-card">
+          <div class="map-card__top">
+            <h2>Comunidades de Cambio</h2>
+            <ul class="map-legend" aria-label="Leyenda">
+              <li><i class="dot dot--ok"></i>Al día</li><li><i class="dot dot--warn"></i>Atención</li><li><i class="dot dot--risk"></i>En riesgo</li>
+            </ul>
+          </div>
+          <svg id="colombia-map" viewBox="0 0 520 660" role="group" aria-label="Mapa de Colombia con las 14 Comunidades de Cambio"></svg>
+          <p class="map-card__hint">Tamaño del sello = miembros. Toca un territorio.</p>
+        </div>
+        <aside class="detail" id="detail" aria-live="polite"></aside>
+      </div>
+    </section>
+
+    <!-- COMMUNITIES -->
+    <section class="view" data-view="communities" aria-labelledby="title-communities">
+      <div class="view__head">
+        <div><p class="view__kicker">Seguimiento</p><h1 id="title-communities" class="display">Comunidades de Cambio</h1></div>
+        <button type="button" class="btn btn--small btn--navy" data-toast="Descarga simulada: comunidades.csv">Descargar CSV<span class="island"><svg class="icon"><use href="img/icons.svg#i-download"/></svg></span></button>
+      </div>
+      <div class="chips" id="status-filters" role="group" aria-label="Filtrar por estado"></div>
+      <div class="table-card"><div class="table-scroll"><table class="table" id="communities-table"></table></div></div>
+    </section>
+
+    <!-- PEOPLE -->
+    <section class="view" data-view="people" aria-labelledby="title-people">
+      <div class="view__head">
+        <div><p class="view__kicker">Directorio</p><h1 id="title-people" class="display">Líderes y miembros</h1></div>
+        <button type="button" class="btn btn--small btn--navy" data-toast="Invitación simulada: se enviaría por correo">Invitar persona<span class="island"><svg class="icon"><use href="img/icons.svg#i-arrow"/></svg></span></button>
+      </div>
+      <div class="chips" id="role-filters" role="group" aria-label="Filtrar por rol"></div>
+      <div class="people-grid" id="people-grid"></div>
+    </section>
+
+    <!-- EVIDENCE -->
+    <section class="view" data-view="evidence" aria-labelledby="title-evidence">
+      <div class="view__head">
+        <div><p class="view__kicker">Conocimiento</p><h1 id="title-evidence" class="display">Repositorio de Evidencia</h1></div>
+        <p class="view__meta" id="evidence-count" aria-live="polite"></p>
+      </div>
+      <p class="evidence-lede">Estudios, revisiones de programas, reportes de aprendizaje y mapas de brechas, con nivel de evidencia y <strong>resumen en lenguaje sencillo</strong> para decidir sin leer 80 páginas.</p>
+      <div class="evidence-layout">
+        <form class="filters" id="evidence-filters" role="search" onsubmit="return false">
+          <label class="field field--search"><span class="sr-only">Buscar en el repositorio</span><svg class="icon"><use href="img/icons.svg#i-search"/></svg><input type="search" id="evidence-query" placeholder="Buscar en el repositorio" autocomplete="off"></label>
+          <fieldset><legend>Tipo</legend><div class="chips chips--wrap" id="filter-type"></div></fieldset>
+          <label class="field"><span>Tema</span><select id="filter-topic"></select></label>
+          <label class="field"><span>Territorio</span><select id="filter-territory"></select></label>
+          <fieldset><legend>Nivel de evidencia</legend><div class="chips chips--wrap" id="filter-level"></div></fieldset>
+          <button type="button" class="link-button" id="filter-reset">Limpiar filtros</button>
+          <p class="filters__note">Los niveles siguen la lógica de las revisiones de CASEL: <em>SELect</em> equivale a nivel alto y <em>Promising</em> a prometedor.</p>
+        </form>
+        <div class="results">
+          <div class="results__bar">
+            <p class="results__notice">Contenidos de ejemplo. Las revisiones de programas vienen de la Guía de Programas de CASEL y el reporte de lectura, del Banco Mundial y CEPE.</p>
+            <label class="field field--inline"><span>Ordenar</span><select id="evidence-sort"><option value="recent">Más recientes</option><option value="level">Nivel de evidencia</option></select></label>
+          </div>
+          <div class="results__list" id="evidence-list"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SURVEY -->
+    <section class="view" data-view="survey" aria-labelledby="title-survey">
+      <div class="view__head">
+        <div><p class="view__kicker">Levantamiento · Fase 1</p><h1 id="title-survey" class="display">Encuesta de necesidades</h1></div>
+        <span class="status-pill status-pill--ok">Abierta · cierra 24 oct</span>
+      </div>
+      <div class="survey-grid">
+        <div class="survey-side">
+          <div class="survey-stats">
+            <div><strong class="display">312</strong><span>respuestas</span></div>
+            <div><strong class="display">48</strong><span>audios transcritos</span></div>
+            <div><strong class="display">14/14</strong><span>territorios</span></div>
+          </div>
+          <div class="phone-wrap">
+            <p class="phone-wrap__label">Así la ve un líder en su celular</p>
+            <div class="phone" id="phone">
+              <div class="phone__notch" aria-hidden="true"></div>
+              <p class="phone__step" id="phone-step"></p>
+              <div class="phone__progress"><i id="phone-progress"></i></div>
+              <p class="phone__question" id="phone-question"></p>
+              <button type="button" class="phone__rec" id="phone-rec" aria-pressed="false"><span class="phone__rec-dot"></span><span class="phone__wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="phone__time" id="phone-time">Grabar respuesta</span></button>
+              <p class="phone__alt">o escribe tu respuesta</p>
+              <button type="button" class="phone__next" id="phone-next">Siguiente</button>
+            </div>
+          </div>
+        </div>
+        <div class="synthesis">
+          <div class="synthesis__head"><span class="chip-ai"><svg class="icon"><use href="img/icons.svg#i-spark"/></svg>Síntesis IA</span><span>Validada por EdLab · 2 ajustes</span></div>
+          <h2 class="display">Lo que dicen los territorios</h2>
+          <div id="themes"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ASSISTANT -->
+    <section class="view" data-view="assistant" aria-labelledby="title-assistant">
+      <div class="view__head">
+        <div><p class="view__kicker">Asistente IA</p><h1 id="title-assistant" class="display">Pregúntale al Hub</h1></div>
+        <p class="view__meta">Responde solo con datos de CEPE y cita sus fuentes</p>
+      </div>
+      <div class="chat">
+        <div class="chat__thread" id="chat-thread" aria-live="polite">
+          <div class="bubble bubble--ai"><span class="chip-ai"><svg class="icon"><use href="img/icons.svg#i-spark"/></svg>Hub</span><p>Hola, Laura. Puedo cruzar el seguimiento de las comunidades, el levantamiento y el Repositorio de Evidencia. ¿Qué necesitas saber?</p></div>
+        </div>
+        <div class="chat__suggestions" id="chat-suggestions"></div>
+        <form class="chat__form" id="chat-form">
+          <label class="sr-only" for="chat-input">Escribe una pregunta</label>
+          <input id="chat-input" type="text" placeholder="Escribe una pregunta" autocomplete="off">
+          <button type="submit" class="chat__send" aria-label="Enviar"><svg class="icon"><use href="img/icons.svg#i-arrow"/></svg></button>
+        </form>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="js/hub-data.js"></script>
+<script src="js/hub-evidence-data.js"></script>
+<script src="js/hub-map.js"></script>
+<script src="js/hub-detail.js"></script>
+<script src="js/hub-views.js"></script>
+<script src="js/hub-survey.js"></script>
+<script src="js/hub-evidence.js"></script>
+<script src="js/hub-chat.js"></script>
+<script src="js/hub.js"></script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+.build { background: var(--navy); color: var(--white); overflow: hidden; padding-bottom: 0; isolation: isolate; }
+.build__blob { position: absolute; z-index: -1; pointer-events: none; }
+.build__blob--pink { width: 46%; right: -14%; top: 4%; opacity: 0.95; }
+.build__blob--yellow { width: 30%; left: -10%; bottom: 2%; opacity: 0.95; transform: rotate(160deg); }
+.build .pill { margin-bottom: 20px; }
+.pill--light { background: rgba(255, 255, 255, 0.16); color: var(--white); }
+.build .h2 { max-width: 14ch; }
+.build__lede { margin-top: 24px; max-width: 60ch; font-size: 1.1875rem; color: rgba(255, 255, 255, 0.9); }
+
+.proof { display: grid; grid-template-columns: 1fr auto 1fr; gap: 20px; align-items: stretch; margin-top: clamp(48px, 6vw, 80px); }
+.proof__card { padding: clamp(24px, 3vw, 36px); border-radius: var(--radius-lg); background: var(--white); color: var(--navy); }
+.proof__card--cepe { background: var(--yellow); }
+.proof__card img { width: 120px; height: auto; margin-bottom: 14px; }
+.proof__badges { display: flex; margin-bottom: 14px; }
+.proof__badges img { width: 56px; height: 56px; margin: 0 -8px 0 0; }
+.proof__card h3 { font-size: 1.375rem; font-weight: 900; margin-bottom: 14px; }
+.proof__card li { position: relative; padding: 9px 0 9px 26px; border-top: 1px solid var(--line); font-weight: 600; }
+.proof__card li::before { content: ""; position: absolute; left: 0; top: 17px; width: 12px; height: 12px; background: url("../img/brand/flower.svg") center / contain no-repeat; }
+.proof__arrow { display: grid; align-content: center; justify-items: center; gap: 10px; max-width: 120px; text-align: center; font-weight: 700; font-size: 0.875rem; color: var(--yellow); }
+.proof__arrow .icon { width: 44px; height: 44px; padding: 10px; border-radius: 50%; background: var(--yellow); color: var(--navy); stroke-width: 2; }
+
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: end; margin-top: clamp(56px, 7vw, 96px); }
+.rung { padding: 30px; border-radius: var(--radius-lg); color: var(--navy); background: var(--white); display: grid; gap: 10px; align-content: start; }
+.rung--a { min-height: 340px; }
+.rung--b { min-height: 420px; background: var(--pink); }
+.rung--c { min-height: 500px; background: var(--yellow); }
+.rung__n { font-size: 3.4rem; line-height: 1; }
+.rung h3 { font-size: 1.5rem; font-weight: 900; }
+.rung > p { font-weight: 600; }
+.rung ul { display: grid; gap: 8px; margin-top: 10px; }
+.rung li { padding-left: 22px; position: relative; }
+.rung li::before { content: "+"; position: absolute; left: 0; font-weight: 900; }
+.rung b { background: rgba(8, 10, 106, 0.1); padding: 0 6px; border-radius: 6px; }
+.build__foot { margin-top: 20px; font-size: 0.9375rem; color: rgba(255, 255, 255, 0.78); }
+
+.cta { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(24px, 4vw, 64px); align-items: center; margin-top: clamp(64px, 8vw, 110px); padding: clamp(28px, 4vw, 56px); border-radius: 40px; background: var(--blue); }
+.cta__copy { display: grid; gap: 22px; justify-items: start; }
+.cta__copy h3 { font-size: clamp(1.8rem, 3.2vw, 2.9rem); line-height: 1.02; }
+.cta__copy p { font-size: 1.125rem; max-width: 36ch; }
+.cta__preview { position: relative; aspect-ratio: 16 / 10; overflow: hidden; border-radius: 20px; background: var(--paper); box-shadow: 0 30px 70px -20px rgba(1, 5, 70, 0.8), 0 0 0 8px rgba(255, 255, 255, 0.2); pointer-events: none; }
+.cta__preview iframe { position: absolute; left: 0; top: 0; width: 1440px; height: 900px; border: 0; transform-origin: top left; transform: scale(var(--preview-scale, 0.5)); }
+
+.footer { margin-top: clamp(64px, 8vw, 110px); padding-block: 36px; border-top: 1px solid rgba(255, 255, 255, 0.18); }
+.footer__row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px; font-size: 0.9375rem; color: rgba(255, 255, 255, 0.82); }
+.footer__row img { width: 96px; height: auto; }
+.footer__row p { text-align: right; }
+
+@media (max-width: 1000px) {
+  .proof { grid-template-columns: 1fr; }
+  .proof__arrow { max-width: none; grid-auto-flow: column; justify-content: start; }
+  .proof__arrow .icon { transform: rotate(90deg); }
+  .steps { grid-template-columns: 1fr; }
+  .rung--a, .rung--b, .rung--c { min-height: 0; }
+  .cta { grid-template-columns: 1fr; }
+  .cta__preview { display: none; }
+  .footer__row p { text-align: left; }
+}

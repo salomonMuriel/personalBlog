@@ -1,0 +1,44 @@
+.team { background: var(--paper); overflow: hidden; }
+.team .pill { margin-bottom: 20px; }
+.people { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(16px, 3vw, 40px); margin-top: clamp(40px, 6vw, 72px); align-items: start; }
+.person:nth-child(2) { margin-top: clamp(24px, 5vw, 72px); }
+.person:nth-child(3) { margin-top: clamp(8px, 2vw, 28px); }
+.person__frame { position: relative; overflow: hidden; aspect-ratio: 4 / 5; border-radius: 999px 999px 32px 32px; background: var(--tone); isolation: isolate; box-shadow: var(--shadow-soft); }
+.person--blue { --tone: var(--blue); } .person--yellow { --tone: var(--yellow); } .person--pink { --tone: var(--pink); }
+.person__frame img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease-out); }
+.person--yellow .person__frame img, .person--pink .person__frame img { mix-blend-mode: multiply; }
+.person--blue .person__frame img { mix-blend-mode: screen; }
+.person:hover .person__frame img { transform: scale(1.05); }
+.person figcaption { display: grid; gap: 2px; margin-top: 18px; padding-left: 8px; }
+.person strong { font-family: var(--font-display); font-weight: 400; text-transform: uppercase; font-size: clamp(1.2rem, 2vw, 1.75rem); line-height: 1; }
+.person figcaption span { color: var(--muted); font-weight: 600; }
+
+.team__grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 24px; margin-top: clamp(56px, 7vw, 96px); align-items: start; }
+.roles { padding: clamp(24px, 3vw, 40px); border-radius: var(--radius-lg); background: var(--white); box-shadow: var(--shadow-card); }
+.roles h3 { font-size: 1.375rem; font-weight: 900; margin-bottom: 18px; }
+.roles table { width: 100%; border-collapse: collapse; }
+.roles th, .roles td { padding: 16px 0; text-align: left; border-top: 1px solid var(--line); vertical-align: middle; }
+.roles thead th { border-top: 0; padding-top: 0; font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+.roles tbody th { font-weight: 700; padding-right: 20px; }
+.who { display: inline-block; margin: 2px 6px 2px 0; padding: 4px 14px; border-radius: 99px; font-weight: 700; font-size: 0.9375rem; }
+.who--blue { background: var(--blue); color: var(--white); } .who--yellow { background: var(--yellow); } .who--pink { background: var(--pink); }
+.who--open { border: 2px dashed var(--muted); color: var(--muted); }
+.roles__note { margin-top: 18px; font-size: 0.9375rem; color: var(--muted); }
+
+.anagrama { position: relative; overflow: hidden; padding: clamp(26px, 3.4vw, 44px); border-radius: var(--radius-lg); background: var(--navy); color: var(--white); display: grid; gap: 18px; isolation: isolate; }
+.anagrama::after { content: ""; position: absolute; z-index: -1; right: -60px; top: -60px; width: 200px; aspect-ratio: 1; background: url("../img/brand/flower.svg") center / contain no-repeat; opacity: 0.9; }
+.anagrama__logo { width: 190px; height: auto; }
+.anagrama__tag { font-size: 1.375rem; font-weight: 900; line-height: 1.2; color: var(--yellow); max-width: 24ch; }
+.anagrama__stats { display: flex; gap: 32px; padding-block: 8px; }
+.anagrama__stats dt { font-size: 2.25rem; color: var(--white); }
+.anagrama__stats dd { font-size: 0.875rem; font-weight: 700; color: rgba(255, 255, 255, 0.78); }
+.anagrama__clients { padding-top: 16px; border-top: 1px solid rgba(255, 255, 255, 0.2); font-size: 0.9375rem; color: rgba(255, 255, 255, 0.86); }
+
+@media (max-width: 1000px) { .team__grid { grid-template-columns: 1fr; } }
+@media (max-width: 640px) {
+  .people { grid-template-columns: 1fr; max-width: 340px; margin-inline: auto; }
+  .person:nth-child(n) { margin-top: 0; }
+  .roles th, .roles td { display: block; padding: 4px 0; border: 0; }
+  .roles tbody tr { display: block; padding: 14px 0; border-top: 1px solid var(--line); }
+  .roles thead { display: none; }
+}
