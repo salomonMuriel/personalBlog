@@ -41,7 +41,7 @@ AJUSTES: dict[str, Ajuste] = {
     "beriblock": Ajuste(fuente="src/assets/site/beriblock.png"),
     "elpalomo": Ajuste(fuente="src/assets/site/elpalomo.png"),
     "cosinte": Ajuste(invertir=True, borrar=[(0.66, 0, 1, 0.47)], recorte=(0, 0, 1, 0.79)),
-    "jda": Ajuste(invertir=True),
+    "jda": Ajuste(silueta=True),
     "ucatolica": Ajuste(invertir_desde=0.46, borrar=[(0.46, 0.66, 1, 1)]),
     "eia": Ajuste(invertir=True),
     "externado": Ajuste(invertir=True),

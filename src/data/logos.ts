@@ -48,7 +48,7 @@ export const clientes: Logo[] = [
   { nombre: "PrestaGente", logo: prestagente, escala: 1.35 },
   { nombre: "Bision Consulting", logo: bision, escala: 1 },
   { nombre: "GuiaColegio.com", logo: guiacolegio, escala: 1.25 },
-  { nombre: "Juan David Aristizábal", logo: jda, escala: 1.05 },
+  { nombre: "Juan David Aristizábal", logo: jda, escala: 0.95 },
   { nombre: "Beriblock", logo: beriblock, rotulo: true },
   { nombre: "El Palomo", logo: elpalomo, rotulo: true },
 ];
