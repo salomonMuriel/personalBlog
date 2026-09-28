@@ -211,6 +211,24 @@ textarea {
   }
 }
 
+/* ── cinta de logos: va al revés de la de texto, más lenta ── */
+.riel.al-reves {
+  animation-duration: 64s;
+  animation-direction: reverse;
+}
+.cinta.difumina {
+  mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 9%,
+    #000 91%,
+    transparent
+  );
+}
+.cinta.difumina:hover .riel {
+  animation-play-state: paused;
+}
+
 /* ── tiquete perforado ── */
 .perfora {
   height: 9px;
@@ -555,6 +573,18 @@ details[open] .resp {
   }
   .riel {
     animation: none;
+  }
+  .riel.al-reves {
+    width: auto;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 1.2rem;
+  }
+  .riel.al-reves > [aria-hidden="true"] {
+    display: none;
+  }
+  .cinta.difumina {
+    mask-image: none;
   }
   .rv {
     opacity: 1;

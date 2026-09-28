@@ -1,0 +1,54 @@
+---
+import { Image } from "astro:assets";
+import type { Logo } from "@data/logos";
+
+interface Props {
+  logo: Logo;
+  alto: number;
+  fluido?: boolean;
+  oculta?: boolean;
+}
+const { logo, alto, fluido = false, oculta = false } = Astro.props;
+const escala = logo.escala ?? 1;
+const texto = !logo.logo || logo.rotulo;
+const altoCss = fluido
+  ? `clamp(${Math.round(alto * 0.65)}px, ${alto / 11}vw, ${alto}px)`
+  : `${alto}px`;
+---
+
+<span
+  class="flex min-w-0 items-center gap-2.5"
+  style={`--alto:${altoCss};--escala:${escala}`}
+>
+  {
+    logo.logo && (
+      <Image
+        src={logo.logo}
+        height={Math.round(alto * escala)}
+        densities={[1, 2]}
+        loading="lazy"
+        decoding="async"
+        alt={oculta || logo.rotulo ? "" : (logo.alt ?? logo.nombre)}
+        class="h-[calc(var(--alto)*var(--escala))] w-auto max-w-full object-contain"
+      />
+    )
+  }
+  {
+    texto && (
+      <span
+        class:list={[
+          "font-arch text-tinta leading-none font-extrabold tracking-[-.025em] [font-stretch:112%]",
+          !logo.logo && "text-center text-[calc(var(--alto)*.5)] text-balance",
+          logo.logo &&
+            !fluido &&
+            "text-[calc(var(--alto)*.56)] whitespace-nowrap",
+          logo.logo &&
+            fluido &&
+            "max-w-[8ch] text-[calc(var(--alto)*.42)] leading-[1.02]",
+        ]}
+      >
+        {logo.nombre}
+      </span>
+    )
+  }
+</span>

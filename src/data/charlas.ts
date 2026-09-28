@@ -97,15 +97,6 @@ const es = {
   tarimas: {
     rotulo: "Dónde",
     titulo: "Dónde he hablado",
-    lista: [
-      "ConfNodo",
-      "EAFIT",
-      "La EIA",
-      "El Externado",
-      "La Universidad Católica",
-      "La Asociación Colombiana de EdTech",
-      "Podcast Ventaja",
-    ],
     nota: "Conferencias, empresas, universidades y gremios. En Colombia, presencial o remoto.",
   },
 
@@ -245,15 +236,6 @@ const en = {
   tarimas: {
     rotulo: "Where",
     titulo: "Where I've spoken",
-    lista: [
-      "ConfNodo",
-      "EAFIT",
-      "EIA",
-      "Externado",
-      "Universidad Católica",
-      "Colombian EdTech Association",
-      "Ventaja podcast",
-    ],
     nota: "Conferences, companies, universities and trade associations. In Colombia, in person or remote.",
   },
 
