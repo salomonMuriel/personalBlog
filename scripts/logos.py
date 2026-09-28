@@ -29,6 +29,8 @@ class Ajuste(BaseModel):
     invertir: bool = False
     silueta: bool = False
     invertir_desde: float | None = None
+    fondo: tuple[int, int, int] | None = None
+    solo_blanco: bool = False
     recorte: tuple[float, float, float, float] | None = None
     borrar: list[tuple[float, float, float, float]] = []
     umbral: tuple[float, float] = (0.1, 0.4)
@@ -47,6 +49,8 @@ AJUSTES: dict[str, Ajuste] = {
     "externado": Ajuste(invertir=True),
     "dr-reddys": Ajuste(invertir=True),
     "correlation-one": Ajuste(invertir=True),
+    "pm-beers": Ajuste(fondo=(157, 36, 142)),
+    "ventaja": Ajuste(solo_blanco=True, umbral=(0.7, 0.9), recorte=(0.02, 0.05, 0.98, 0.27)),
     "confnodo": Ajuste(silueta=True, borrar=[(0.38, 0.6, 1, 1)]),
     "alianza-educativa": Ajuste(invertir=True),
 }
@@ -81,19 +85,33 @@ def erase_fraction(image: Image.Image, box: tuple[float, float, float, float]) -
 
 
 def ink_mask(image: Image.Image, ajuste: Ajuste) -> Image.Image:
-    """Alpha = how far each pixel is from white (or from black when inverted)."""
+    """Alpha = how far each pixel is from the logo's background colour."""
     red, green, blue, alpha = image.split()
     if ajuste.silueta:
         return alpha
-    if ajuste.invertir:
+    if ajuste.fondo:
+        distance = distance_from(image, ajuste.fondo)
+    elif ajuste.solo_blanco:
+        distance = ImageChops.darker(ImageChops.darker(red, green), blue)
+    elif ajuste.invertir:
         distance = ImageChops.lighter(ImageChops.lighter(red, green), blue)
     else:
         darkest = ImageChops.darker(ImageChops.darker(red, green), blue)
         distance = ImageChops.invert(darkest)
+    return ramp(distance, alpha, ajuste)
+
+
+def distance_from(image: Image.Image, color: tuple[int, int, int]) -> Image.Image:
+    solid = Image.new("RGB", image.size, color)
+    difference = ImageChops.difference(image.convert("RGB"), solid).split()
+    return ImageChops.lighter(ImageChops.lighter(difference[0], difference[1]), difference[2])
+
+
+def ramp(distance: Image.Image, alpha: Image.Image, ajuste: Ajuste) -> Image.Image:
     low, high = (int(v * 255) for v in ajuste.umbral)
     span = max(high - low, 1)
-    ramp = distance.point(lambda v: 0 if v <= low else 255 if v >= high else (v - low) * 255 // span)
-    return ImageChops.multiply(ramp, alpha)
+    ramped = distance.point(lambda v: 0 if v <= low else 255 if v >= high else (v - low) * 255 // span)
+    return ImageChops.multiply(ramped, alpha)
 
 
 def split_mask(image: Image.Image, ajuste: Ajuste) -> Image.Image:

@@ -23,6 +23,9 @@ import eia from "@assets/logos/eia.png";
 import productesas from "@assets/logos/productesas.png";
 import halcyon from "@assets/logos/halcyon.png";
 import landaClub from "@assets/logos/landa-club.png";
+import colombiaEdtech from "@assets/logos/colombia-edtech.png";
+import pmBeers from "@assets/logos/pm-beers.png";
+import ventaja from "@assets/logos/ventaja.png";
 
 export type Logo = {
   nombre: string;
@@ -60,13 +63,18 @@ export const tarimas: Logo[] = [
   { nombre: "Universidad Externado", logo: externado, escala: 1.05 },
   { nombre: "Correlation One", logo: correlationOne, escala: 0.55 },
   { nombre: "Amarilo", logo: amarilo, escala: 0.72 },
-  { nombre: "Colombia EdTech" },
+  {
+    nombre: "Colombia EdTech",
+    logo: colombiaEdtech,
+    rotulo: true,
+    escala: 0.85,
+  },
   { nombre: "Universidad Católica de Colombia", logo: ucatolica, escala: 1.5 },
   { nombre: "ConfNodo", logo: confnodo, escala: 1.3 },
-  { nombre: "PM Beers" },
+  { nombre: "PM Beers", logo: pmBeers, escala: 1.8 },
   { nombre: "Universidad EIA", logo: eia, escala: 1.15 },
   { nombre: "Productesas", logo: productesas, escala: 0.62 },
   { nombre: "Halcyon", logo: halcyon, escala: 1.4 },
-  { nombre: "Podcast Ventaja" },
+  { nombre: "Podcast Ventaja", logo: ventaja, escala: 1.05 },
   { nombre: "Landa Club", logo: landaClub, escala: 0.75 },
 ];

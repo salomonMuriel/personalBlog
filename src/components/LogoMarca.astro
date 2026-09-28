@@ -38,9 +38,13 @@ const altoCss = fluido
       <span
         class:list={[
           "font-arch text-tinta leading-none font-extrabold tracking-[-.025em] [font-stretch:112%]",
-          logo.logo
-            ? "text-[calc(var(--alto)*.56)] whitespace-nowrap"
-            : "text-center text-[calc(var(--alto)*.5)] text-balance",
+          !logo.logo && "text-center text-[calc(var(--alto)*.5)] text-balance",
+          logo.logo &&
+            !fluido &&
+            "text-[calc(var(--alto)*.56)] whitespace-nowrap",
+          logo.logo &&
+            fluido &&
+            "max-w-[8ch] text-[calc(var(--alto)*.42)] leading-[1.02]",
         ]}
       >
         {logo.nombre}
