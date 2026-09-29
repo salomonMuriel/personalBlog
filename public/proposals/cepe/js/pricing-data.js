@@ -4,14 +4,14 @@ const PLANS = [
     name: "Fundamental",
     price: 40000000,
     tagline: "Todo lo que piden los TdR, más un MVP funcional.",
-    highlights: ["20 entrevistas + hasta 20 asíncronas", "3 propuestas de diseño", "MVP con funciones básicas"],
+    highlights: ["Hasta 20 entrevistas + hasta 20 asíncronas", "3 propuestas de diseño", "MVP con funciones básicas"],
   },
   {
     id: "ampliado",
     name: "Ampliado",
     price: 60000000,
     tagline: "Más voces, más diseños y un asistente de IA sobre la evidencia.",
-    highlights: ["30 entrevistas + hasta 30 asíncronas", "5 propuestas de diseño", "MVP + asistente de IA"],
+    highlights: ["Hasta 30 entrevistas + hasta 30 asíncronas", "5 propuestas de diseño", "MVP + asistente de IA"],
     recommended: true,
   },
   {
@@ -19,7 +19,7 @@ const PLANS = [
     name: "Integral",
     price: 80000000,
     tagline: "La mayor cobertura y comunicación automatizada con los territorios.",
-    highlights: ["40 entrevistas + hasta 40 asíncronas", "8 propuestas de diseño", "MVP + IA + correos y WhatsApp"],
+    highlights: ["Hasta 40 entrevistas + hasta 40 asíncronas", "8 propuestas de diseño", "MVP + IA + correos y WhatsApp"],
   },
 ];
 
@@ -41,7 +41,7 @@ const COMPARISON_GROUPS = [
   {
     title: "Levantamiento",
     rows: [
-      ["Entrevistas sincrónicas", "Virtuales o presenciales en Bogotá", ["20", "30", "40"]],
+      ["Entrevistas sincrónicas", "Virtuales o presenciales en Bogotá; CEPE convoca y agenda a los participantes", ["hasta 20", "hasta 30", "hasta 40"]],
       ["Entrevistas asíncronas", "Con nuestra herramienta; CEPE convoca a los participantes", ["hasta 20", "hasta 30", "hasta 40"]],
       ["Talleres de cocreación", "Con Comunidades de Cambio y equipo EdLab", ["2", "3", "4"]],
     ],
@@ -83,7 +83,7 @@ const PAYMENTS = [
 const ASSUMPTIONS = [
   "Valores en pesos colombianos, más IVA.",
   "Pagos contra entrega y aprobación de cada producto, según la sección 13 de los TdR.",
-  "CEPE convoca a los participantes de entrevistas, talleres y encuestas asíncronas.",
+  "Las cantidades de entrevistas son máximos. CEPE convoca y agenda a los participantes de entrevistas, talleres y encuestas asíncronas.",
   "Talleres virtuales o en Bogotá. Los viajes a territorio se acuerdan y cotizan aparte.",
   "El MVP sirve para validar con usuarios; no es código productivo y queda como base para la fase 2.",
   "Durante el soporte, las dudas y los ajustes al MVP se cobran por hora. Cada plan incluye 4, 6 u 8 horas sin costo.",
