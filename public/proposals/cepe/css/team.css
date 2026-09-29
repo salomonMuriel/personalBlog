@@ -42,3 +42,10 @@
   .roles tbody tr { display: block; padding: 14px 0; border-top: 1px solid var(--line); }
   .roles thead { display: none; }
 }
+
+.person__bio { margin-top: 10px; font-size: 0.975rem; line-height: 1.5; color: var(--navy); max-width: 38ch; }
+.person__in, .anagrama__in { display: inline-flex; align-items: center; gap: 8px; margin-top: 14px; justify-self: start; padding: 7px 14px 7px 10px; border-radius: 99px; background: var(--white); color: var(--navy); font-weight: 800; font-size: 0.875rem; text-decoration: none; box-shadow: var(--shadow-card); transition: transform 0.5s var(--ease-spring), background-color 0.3s, color 0.3s; }
+.person__in:hover, .anagrama__in:hover { transform: translateY(-2px); background: #0a66c2; color: var(--white); }
+.person__in-icon { width: 16px; height: 16px; fill: currentColor; }
+.anagrama__in { margin-top: 4px; }
+.roles__why { display: block; margin-top: 4px; font-size: 0.8125rem; font-weight: 600; color: var(--muted); }
