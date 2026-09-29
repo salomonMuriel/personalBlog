@@ -65,7 +65,8 @@ const COMPARISON_GROUPS = [
   {
     title: "Acompañamiento",
     rows: [
-      ["Soporte técnico después de la entrega", "Resolución de dudas y ajustes al MVP", ["hasta 1 mes", "hasta 3 meses", "hasta 6 meses"]],
+      ["Soporte técnico después de la entrega", "Acompañamiento al equipo de CEPE en el uso del MVP", ["1 mes", "2 meses", "3 meses"]],
+      ["Horas de dudas y ajustes al MVP sin costo", "Durante el soporte; las horas adicionales se cobran por hora", ["4 h", "6 h", "8 h"]],
       ["Sesiones de transferencia", "Al equipo técnico y editorial de CEPE", ["1", "2", "3"]],
       ["Instalación en la infraestructura de CEPE", "Configuración en sus servidores y cuentas propias", [false, true, true]],
     ],
@@ -85,5 +86,6 @@ const ASSUMPTIONS = [
   "CEPE convoca a los participantes de entrevistas, talleres y encuestas asíncronas.",
   "Talleres virtuales o en Bogotá. Los viajes a territorio se acuerdan y cotizan aparte.",
   "El MVP sirve para validar con usuarios; no es código productivo y queda como base para la fase 2.",
+  "Durante el soporte, las dudas y los ajustes al MVP se cobran por hora. Cada plan incluye 4, 6 u 8 horas sin costo.",
   "Vigencia de la oferta: 60 días.",
 ];
