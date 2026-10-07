@@ -1,0 +1,65 @@
+.bride { background: var(--wash); }
+.bride__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr); gap: clamp(32px, 6vw, 88px); align-items: center; }
+.bride__copy h2 { font-size: clamp(2rem, 4.4vw, 3.1rem); line-height: 1.06; }
+.bride__lede { margin-top: 14px; font-size: 1.05rem; color: var(--stone); max-width: 46ch; }
+.bride__points { margin-top: 28px; display: grid; }
+.bride__points li { display: flex; gap: 14px; align-items: flex-start; padding: 14px 0; border-top: 1px solid var(--line-strong); }
+.bride__points .icon { width: 22px; height: 22px; margin-top: 1px; color: var(--blush-ink); }
+.bride__points b { display: block; font-weight: 500; }
+.bride__points span { display: block; font-size: 0.88rem; color: var(--stone); margin-top: 2px; }
+.bride__plan { margin-top: 18px; font-family: var(--mono); font-size: 0.74rem; color: var(--bark); }
+
+.phone { justify-self: center; width: min(100%, 330px); padding: 10px; border-radius: 40px; background: var(--ink); box-shadow: 0 30px 60px -30px rgb(43 36 32 / 0.5); }
+.phone__screen { height: 640px; overflow: hidden; border-radius: 31px; background: var(--canvas); padding: 22px 18px; display: flex; flex-direction: column; }
+.phone__top { text-align: center; }
+.phone__brand { font-family: var(--brand); font-size: 0.9rem; letter-spacing: 0.14em; }
+.phone__brand small { font-size: 0.55rem; letter-spacing: 0.3em; color: var(--stone); }
+.phone__hello { margin-top: 10px; font-family: var(--serif); font-size: 1.5rem; }
+.phone__tabs { display: flex; justify-content: center; gap: 4px; margin: 12px 0 16px; border-bottom: 1px solid var(--line); }
+.phone__tabs button { border: 0; background: transparent; padding: 8px 10px; font-size: 0.8rem; color: var(--stone); border-bottom: 1.5px solid transparent; margin-bottom: -1px; transition: color 0.2s, border-color 0.2s; }
+.phone__tabs button[aria-selected="true"] { color: var(--ink); border-color: var(--blush); }
+.phone__panel { animation: panel-in 0.35s var(--ease); }
+.phone__panel[hidden] { display: none; }
+
+.pb-dress { display: flex; gap: 12px; align-items: center; padding: 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+.pb-dress img { width: 56px; aspect-ratio: 2 / 3; object-fit: cover; border-radius: 4px; }
+.pb-dress b { display: block; font-family: var(--serif); font-weight: 400; font-size: 1.2rem; }
+.pb-dress span { font-size: 0.78rem; color: var(--stone); }
+.pb-count { display: flex; align-items: baseline; justify-content: center; gap: 8px; margin: 16px 0 12px; }
+.pb-count b { font-family: var(--serif); font-weight: 400; font-size: 2.6rem; line-height: 1; color: var(--blush-ink); }
+.pb-count span { font-size: 0.82rem; color: var(--stone); }
+.pb-dates { position: relative; display: grid; gap: 2px; }
+.pb-dates::before { content: ""; position: absolute; left: 5px; top: 10px; bottom: 10px; border-left: 1px dashed var(--line-strong); }
+.pb-dates li { position: relative; display: grid; grid-template-columns: 72px 1fr; column-gap: 8px; padding: 6px 0 6px 20px; font-size: 0.8rem; }
+.pb-dates li::before { content: ""; position: absolute; left: 1px; top: 11px; width: 9px; height: 9px; border-radius: 50%; background: var(--surface); border: 1.5px solid var(--taupe); }
+.pb-dates li span { font-size: 0.7rem; color: var(--stone); padding-top: 1px; }
+.pb-dates li small { grid-column: 2; font-size: 0.7rem; color: var(--stone); }
+.pb-dates li.is-wedding::before { background: var(--blush); border-color: var(--blush); }
+.pb-dates li.is-wedding b { color: var(--blush-ink); }
+.pb-dates b { font-weight: 500; }
+
+.pb-pay p { display: flex; justify-content: space-between; align-items: baseline; font-size: 0.8rem; color: var(--stone); }
+.pb-pay b { font-family: var(--serif); font-weight: 400; font-size: 1.6rem; color: var(--ink); }
+.pb-bar { height: 8px; margin: 10px 0 6px; border-radius: 2px; background: var(--line); overflow: hidden; }
+.pb-bar i { display: block; height: 100%; width: 0; background: var(--sage); transition: width 1.4s var(--ease) 0.2s; }
+.phone.is-live .pb-bar i { width: calc(var(--p) * 100%); }
+.pb-pay__of { justify-content: flex-end !important; gap: 4px; }
+.pb-ledger { margin-top: 14px; display: grid; }
+.pb-ledger li { display: grid; grid-template-columns: 1fr auto; padding: 9px 0; border-top: 1px solid var(--line); font-size: 0.82rem; }
+.pb-ledger small { grid-column: 1 / -1; font-size: 0.7rem; color: var(--sage); }
+.pb-due { margin-top: 14px; display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 12px; border-radius: 8px; background: var(--surface); border: 1px solid var(--line-strong); }
+.pb-due p { font-size: 0.78rem; color: var(--stone); }
+.pb-due b { display: block; font-weight: 500; font-size: 1rem; color: var(--ink); }
+.pb-due small { font-size: 0.7rem; }
+.pb-due button { border: 0; border-radius: 6px; background: var(--ink); color: var(--canvas); padding: 10px 14px; font-size: 0.82rem; }
+
+.pb-label { font-size: 0.74rem; color: var(--stone); margin: 4px 0 8px; }
+.pb-perks { display: grid; gap: 6px; margin-bottom: 18px; }
+.pb-perks li { padding: 10px 12px; border-radius: 6px; background: var(--blush-wash); }
+.pb-perks b { display: block; font-weight: 500; font-size: 0.86rem; }
+.pb-perks span { font-size: 0.74rem; color: var(--blush-ink); }
+.pb-docs li { padding: 10px 0; border-top: 1px solid var(--line); font-size: 0.82rem; }
+
+@media (max-width: 900px) {
+  .bride__grid { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,70 @@
+/* Matrix */
+.mx { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: clamp(20px, 3vw, 36px); align-items: start; }
+.mx__chart { border: 1px solid var(--line); border-radius: 8px; background: var(--surface); padding: 8px; }
+.mx__chart svg { width: 100%; height: auto; }
+.mx__quick { fill: var(--sage-wash); }
+.mx__axis { stroke: var(--line-strong); stroke-width: 1; }
+.mx__quad { font-family: var(--serif); font-size: 17px; fill: var(--stone); }
+.mx__axis-label { font-family: var(--sans); font-size: 13px; fill: var(--stone); }
+.mx__bubble { cursor: pointer; outline: none; opacity: 0; transform: scale(0.4); transition: opacity 0.6s var(--ease), transform 0.7s var(--ease); transition-delay: calc(var(--i) * 70ms); }
+.mx__chart svg.is-drawn .mx__bubble { opacity: 1; transform: none; }
+.mx__bubble circle { stroke: var(--surface); stroke-width: 2; transition: stroke 0.2s, fill 0.2s; }
+.mx__bubble text { font-family: var(--mono); font-size: 13px; fill: var(--canvas); pointer-events: none; }
+.mx__bubble.p1 circle { fill: var(--ink); }
+.mx__bubble.p2 circle { fill: var(--bark); }
+.mx__bubble.p3 circle { fill: var(--taupe); }
+.mx__bubble.p4 circle { fill: var(--taupe-300); }
+.mx__bubble.is-active circle, .mx__bubble:focus-visible circle { stroke: var(--blush); stroke-width: 4; }
+
+.mi { border: 1px solid var(--line); border-radius: 8px; background: var(--surface); padding: 20px 22px; min-height: 200px; }
+.mi__phase { display: flex; justify-content: space-between; gap: 10px; font-size: 0.78rem; color: var(--stone); }
+.mi h3 { font-size: 1.45rem; line-height: 1.15; margin: 8px 0 10px; }
+.mi__removes { font-size: 0.9rem; color: var(--stone); }
+.mi__removes b { font-family: var(--serif); font-weight: 400; font-size: 1.8rem; color: var(--sage); margin-right: 4px; }
+.mi ul { margin-top: 10px; display: grid; gap: 4px; }
+.mi li { display: flex; gap: 8px; align-items: flex-start; font-size: 0.84rem; padding: 5px 0; border-top: 1px solid var(--line); }
+.mi li .icon { width: 14px; height: 14px; margin-top: 2px; color: var(--bark); }
+.mx__list { margin-top: 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 2px 14px; }
+.mx__list button { display: flex; gap: 10px; align-items: center; width: 100%; text-align: left; border: 0; background: transparent; padding: 6px 4px; border-radius: 4px; font-size: 0.8rem; color: var(--stone); }
+.mx__list button:hover, .mx__list button.is-active { color: var(--ink); background: var(--wash); }
+.mx__n { display: inline-grid; place-items: center; width: 22px; height: 22px; flex: none; border-radius: 50%; font-size: 0.7rem; color: var(--canvas); }
+.mx__n.p1 { background: var(--ink); } .mx__n.p2 { background: var(--bark); } .mx__n.p3 { background: var(--taupe); } .mx__n.p4 { background: var(--taupe-300); }
+@media (max-width: 1000px) { .mx { grid-template-columns: 1fr; } }
+@media (max-width: 560px) { .mx__list { grid-template-columns: 1fr; } }
+
+/* Roadmap */
+.rtabs { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border-top: 1px solid var(--line-strong); margin-bottom: 24px; }
+.rtabs button { position: relative; display: flex; flex-direction: column; gap: 6px; text-align: left; border: 0; background: transparent; padding: 18px 14px 14px 0; font-size: 0.92rem; color: var(--stone); }
+.rtabs button::before { content: ""; position: absolute; left: 0; right: 0; top: -1px; height: 2px; background: transparent; transition: background 0.3s; }
+.rtabs button .num { width: 30px; height: 30px; display: grid; place-items: center; border-radius: 50%; border: 1px solid var(--line-strong); font-size: 0.8rem; background: var(--surface); }
+.rtabs button[aria-pressed="true"] { color: var(--ink); }
+.rtabs button[aria-pressed="true"]::before { background: var(--ink); }
+.rtabs button[aria-pressed="true"] .num { background: var(--ink); color: var(--canvas); border-color: var(--ink); }
+
+.rp { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.3fr); gap: clamp(20px, 4vw, 48px); align-items: start; animation: pd-in 0.4s var(--ease); }
+.rp__text h3 { font-size: clamp(1.6rem, 3vw, 2.2rem); line-height: 1.08; }
+.rp__text > p { margin-top: 10px; color: var(--stone); }
+.rp__items { margin-top: 18px; display: grid; gap: 4px; }
+.rp__items li { display: flex; gap: 10px; align-items: center; padding: 9px 0; border-top: 1px solid var(--line); font-size: 0.92rem; }
+.rp__items .icon { color: var(--sage); }
+.rp__progress { margin-top: 22px; }
+.rp__progress p { font-size: 0.85rem; color: var(--stone); margin-bottom: 10px; }
+.rp__progress b { font-family: var(--serif); font-weight: 400; font-size: 1.6rem; color: var(--ink); margin-right: 4px; }
+.rp__squares { display: grid; grid-template-columns: repeat(18, 1fr); gap: 4px; max-width: 420px; }
+.rp__squares i { aspect-ratio: 1; border-radius: 2px; border: 1.5px dashed var(--taupe-300); transition: background 0.4s var(--ease), border-color 0.4s; }
+.rp__squares i.on { background: var(--sage); border: 1.5px solid var(--sage); }
+.rp__shot { margin: 0; }
+.rp__frame { border: 1px solid var(--line-strong); border-radius: 8px; overflow: hidden; background: var(--surface); box-shadow: var(--shadow-float); }
+.rp__frame img { width: 100%; aspect-ratio: 16 / 11; object-fit: cover; object-position: top left; }
+.rp__shot figcaption { margin-top: 10px; font-size: 0.85rem; color: var(--stone); }
+.rp__thumbs { display: flex; gap: 8px; margin-top: 12px; }
+.rp__thumbs button { width: 92px; border: 1px solid var(--line-strong); border-radius: 4px; padding: 0; overflow: hidden; background: var(--surface); opacity: 0.6; transition: opacity 0.2s; }
+.rp__thumbs button[aria-pressed="true"], .rp__thumbs button:hover { opacity: 1; border-color: var(--ink); }
+.rp__thumbs img { aspect-ratio: 16 / 11; object-fit: cover; object-position: top left; }
+.rp__noshot { display: grid; place-items: center; gap: 10px; text-align: center; aspect-ratio: 16 / 11; border: 1.5px dashed var(--line-strong); border-radius: 8px; color: var(--stone); padding: 24px; }
+.rp__noshot .icon { width: 36px; height: 36px; color: var(--taupe); }
+@media (max-width: 900px) {
+  .rp { grid-template-columns: 1fr; }
+  .rtabs { grid-template-columns: repeat(5, minmax(120px, 1fr)); overflow-x: auto; scroll-snap-type: x mandatory; }
+  .rtabs button { scroll-snap-align: start; }
+}
