@@ -189,6 +189,12 @@ function buildDressLifeScene() {
   });
 }
 
-buildFunnelScene();
-buildRekeyScene();
-buildDressLifeScene();
+if (window.matchMedia("(max-width: 640px)").matches) {
+  buildFunnelSceneCompact();
+  buildRekeySceneCompact();
+  buildDressLifeSceneCompact();
+} else {
+  buildFunnelScene();
+  buildRekeyScene();
+  buildDressLifeScene();
+}

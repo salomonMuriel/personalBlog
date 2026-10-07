@@ -68,3 +68,8 @@
   .rtabs { grid-template-columns: repeat(5, minmax(120px, 1fr)); overflow-x: auto; scroll-snap-type: x mandatory; }
   .rtabs button { scroll-snap-align: start; }
 }
+@media (max-width: 640px) {
+  .mx__quad { font-size: 24px; }
+  .mx__axis-label { font-size: 24px; }
+  .mx__bubble text { font-size: 18px; }
+}

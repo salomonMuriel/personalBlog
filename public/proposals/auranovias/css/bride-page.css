@@ -1,13 +1,13 @@
 .bride { background: var(--wash); }
-.bride__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr); gap: clamp(32px, 6vw, 88px); align-items: center; }
-.bride__copy h2 { font-size: clamp(2rem, 4.4vw, 3.1rem); line-height: 1.06; }
+.bride__grid { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr); gap: clamp(32px, 6vw, 88px); align-items: center; }
+.bride__copy h3 { font-size: clamp(1.6rem, 3vw, 2.2rem); line-height: 1.1; }
 .bride__lede { margin-top: 14px; font-size: 1.05rem; color: var(--stone); max-width: 46ch; }
 .bride__points { margin-top: 28px; display: grid; }
 .bride__points li { display: flex; gap: 14px; align-items: flex-start; padding: 14px 0; border-top: 1px solid var(--line-strong); }
 .bride__points .icon { width: 22px; height: 22px; margin-top: 1px; color: var(--blush-ink); }
 .bride__points b { display: block; font-weight: 500; }
 .bride__points span { display: block; font-size: 0.88rem; color: var(--stone); margin-top: 2px; }
-.bride__plan { margin-top: 18px; font-family: var(--mono); font-size: 0.74rem; color: var(--bark); }
+.bride__plan { margin-top: 14px; font-family: var(--mono); font-size: 0.74rem; color: var(--bark); }
 
 .phone { justify-self: center; width: min(100%, 330px); padding: 10px; border-radius: 40px; background: var(--ink); box-shadow: 0 30px 60px -30px rgb(43 36 32 / 0.5); }
 .phone__screen { height: 640px; overflow: hidden; border-radius: 31px; background: var(--canvas); padding: 22px 18px; display: flex; flex-direction: column; }

@@ -42,8 +42,10 @@ function renderCell(value) {
 
 function renderComparison() {
   const head = `<thead><tr><th scope="col"><span class="sr-only">Componente</span></th>${PLANS.map((plan, index) => `<th scope="col" data-col="${index}">${plan.name}<small class="num">$${formatMillions(plan.price)} M</small></th>`).join("")}</tr></thead>`;
+  const firstPlanWith = values => values.findIndex(value => value !== false);
   const body = COMPARISON_GROUPS.map(group => {
-    const rows = group.rows.map(([label, note, values]) => `<tr>
+    const ordered = [...group.rows].sort((a, b) => firstPlanWith(a[2]) - firstPlanWith(b[2]));
+    const rows = ordered.map(([label, note, values]) => `<tr>
       <th scope="row"><span class="cmp__label">${label}</span><span class="cmp__note">${note}</span></th>
       ${values.map((value, index) => `<td data-col="${index}">${renderCell(value)}</td>`).join("")}
     </tr>`).join("");
@@ -97,10 +99,17 @@ function renderDock() {
     if (button) selectPlan(Number(button.dataset.plan));
   });
   const cards = document.getElementById("pricing-plans");
-  const observer = new IntersectionObserver(([entry]) => {
-    dock.classList.toggle("is-shown", !entry.isIntersecting && entry.boundingClientRect.top < 0);
-  });
-  observer.observe(cards);
+  let pastCards = false;
+  let atClosing = false;
+  const update = () => dock.classList.toggle("is-shown", pastCards && !atClosing);
+  new IntersectionObserver(([entry]) => {
+    pastCards = !entry.isIntersecting && entry.boundingClientRect.top < 0;
+    update();
+  }).observe(cards);
+  new IntersectionObserver(([entry]) => {
+    atClosing = entry.isIntersecting;
+    update();
+  }, { rootMargin: "0px 0px -30% 0px" }).observe(document.getElementById("plan-ctas"));
 }
 
 function sectionInView() {
@@ -120,6 +129,7 @@ function selectPlan(selectedIndex) {
   PricingTiers.setPlan(selectedIndex);
   renderDeliveries(selectedIndex);
   PricingStrip.setPlan(selectedIndex);
+  PricingCta.setPlan(selectedIndex);
   if (anchor) window.scrollBy({ top: anchor.getBoundingClientRect().top - anchorTop, behavior: "instant" });
 }
 

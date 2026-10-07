@@ -19,7 +19,7 @@ const PricingTiers = (() => {
       const [file, caption] = plan.shot;
       return `<figure class="tier__shot"><img src="img/prototipo/${file}.webp" alt="${caption}" loading="lazy"><figcaption>${caption}</figcaption></figure>`;
     }
-    return `<a class="tier__shot tier__shot--bride" href="#mi-boda"><img src="img/vestidos/elena-1.webp" alt="" loading="lazy"><span>Ver Mi boda Aura${icon("arrow-down")}</span></a>`;
+    return `<a class="tier__shot tier__shot--bride" href="#experiencia"><img src="img/vestidos/elena-1.webp" alt="" loading="lazy"><span>Ver la experiencia de la novia${icon("arrow-down")}</span></a>`;
   }
 
   function renderTier(plan, index) {

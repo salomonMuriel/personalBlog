@@ -45,3 +45,15 @@
 .cinta__label { font-family: var(--sans); font-size: 16px; fill: var(--ink); }
 .cinta__note { font-family: var(--sans); font-size: 16px; fill: var(--blush-ink); }
 .cinta__bracket { font-family: var(--serif); font-size: 26px; fill: var(--ink); }
+
+/* Portrait scenes on phones */
+.stage--compact .funnel__value { font-size: 34px; }
+.stage--compact .funnel__label { font-size: 15px; }
+.stage--compact .rk-counter { left: 20px; top: 22px; }
+.stage--compact .rk-source { left: 20px; top: 70px; width: 380px; }
+.stage--compact .rk-tile { width: 182px; height: 112px; padding: 12px 14px; }
+.stage--compact .rk-tile__name { font-size: 17px; }
+.stage--compact .rk-tile__lines { bottom: 14px; gap: 5px; }
+.stage--compact .rk-summary { left: 20px; width: 380px; font-size: 26px; line-height: 1.2; }
+.stage--compact .cinta__bracket { font-size: 21px; }
+.stage--compact .cinta__note { font-size: 15px; }

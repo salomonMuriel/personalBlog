@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="css/pricing-tiers.css">
 <link rel="stylesheet" href="css/pricing-strip.css">
 <link rel="stylesheet" href="css/bride-page.css">
+<link rel="stylesheet" href="css/bride-journey.css">
 <link rel="stylesheet" href="css/training.css">
 </head>
 <body>
@@ -30,7 +31,7 @@
     <nav class="nav__links" aria-label="Secciones">
       <a href="#planes">Planes</a>
       <a href="#pasos">Qué cambia</a>
-      <a href="#mi-boda">Mi boda Aura</a>
+      <a href="#experiencia">Experiencia</a>
       <a href="#ia">Capacitación</a>
       <a href="#comparar">Comparar</a>
       <a href="#entrega">Entrega</a>
@@ -95,19 +96,14 @@
   </div>
 </section>
 
-<section class="section bride" id="mi-boda">
-  <div class="wrap bride__grid">
-    <div class="bride__copy">
-      <h2 class="reveal">Mi boda Aura</h2>
-      <p class="bride__lede reveal" style="--i:1">Una página para cada novia. Le llega por WhatsApp y entra sin contraseña.</p>
-      <ul class="bride__points">
-        <li class="reveal" style="--i:2"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-calendar-blank"/></svg><div><b>Sus fechas siempre a la mano</b><span>Modista, entrega y devolución, sin escribir a la tienda para preguntar.</span></div></li>
-        <li class="reveal" style="--i:3"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-coin"/></svg><div><b>Lo que ha pagado y lo que falta</b><span>Cada abono con su factura y el saldo con su fecha límite.</span></div></li>
-        <li class="reveal" style="--i:4"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-qr-code"/></svg><div><b>Abona cuando quiera</b><span>Desde la misma página, sin pedir la cuenta por chat.</span></div></li>
-        <li class="reveal" style="--i:5"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-gift"/></svg><div><b>Beneficios y recursos de Aura</b><span>Proveedores con descuento, cuidado del vestido y qué llevar a cada cita.</span></div></li>
-      </ul>
-      <p class="bride__plan reveal" style="--i:6">Incluido en el plan Completo</p>
+<section class="section bride" id="experiencia">
+  <div class="wrap">
+    <div class="section__head">
+      <h2 class="reveal">La experiencia de la novia</h2>
+      <p class="reveal" style="--i:1">Desde que reserva hasta que devuelve su vestido, cada novia tiene su propia página y recibe lo que necesita en el momento justo, sin que nadie tenga que acordarse de enviarlo.</p>
+      <p class="bride__plan reveal" style="--i:2">Incluida en el plan Completo</p>
     </div>
+    <div class="bride__grid" id="mi-boda">
     <div class="phone reveal" style="--i:1" id="phone" aria-label="Ejemplo de la página de una novia">
       <div class="phone__screen">
         <header class="phone__top">
@@ -151,9 +147,9 @@
         <div class="phone__panel" data-panel="ti" hidden>
           <p class="pb-label">Beneficios por ser novia Aura</p>
           <ul class="pb-perks">
-            <li><b>Zapatos</b><span>10 % de descuento</span></li>
-            <li><b>Maquillaje y peinado</b><span>15 % de descuento</span></li>
-            <li><b>Fotografía</b><span>Sesión de prueba sin costo</span></li>
+            <li><b>Wedding planner</b><span>10 % de descuento</span></li>
+            <li><b>Flores, maquillaje y fotografía</b><span>Beneficios exclusivos</span></li>
+            <li><b>Zapatos y accesorios</b><span>Beneficios exclusivos</span></li>
           </ul>
           <p class="pb-label">Para tu proceso</p>
           <ul class="pb-docs">
@@ -162,6 +158,31 @@
             <li>Tu contrato y tu pagaré</li>
           </ul>
         </div>
+      </div>
+    </div>
+    <div class="bride__copy">
+        <h3 class="reveal">Mi boda Aura, su propia página</h3>
+        <p class="bride__lede reveal" style="--i:1">Una página para cada novia. Le llega por WhatsApp y entra sin contraseña.</p>
+      <ul class="bride__points">
+        <li class="reveal" style="--i:2"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-calendar-blank"/></svg><div><b>Sus fechas siempre a la mano</b><span>Modista, entrega y devolución, sin escribir a la tienda para preguntar.</span></div></li>
+        <li class="reveal" style="--i:3"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-coin"/></svg><div><b>Lo que ha pagado y lo que falta</b><span>Cada abono con su factura y el saldo con su fecha límite.</span></div></li>
+        <li class="reveal" style="--i:4"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-qr-code"/></svg><div><b>Abona cuando quiera</b><span>Desde la misma página, sin pedir la cuenta por chat.</span></div></li>
+        <li class="reveal" style="--i:5"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-gift"/></svg><div><b>Beneficios y recursos de Aura</b><span>Proveedores con descuento, cuidado del vestido y qué llevar a cada cita.</span></div></li>
+      </ul>
+      </div>
+    </div>
+    <div class="journey__head">
+      <h3 class="reveal">Y un mensaje en cada momento</h3>
+      <p class="reveal" style="--i:1">Por WhatsApp y con la voz de Aura: bienvenida y beneficios al reservar, tips mientras espera y recordatorios de cada fecha de su vestido.</p>
+    </div>
+    <div class="journey reveal">
+      <ol class="journey__stops" id="journey-stops" aria-label="Momentos del proceso"></ol>
+      <div class="chat" aria-label="Mensajes de WhatsApp que recibe la novia">
+        <header class="chat__head">
+          <span class="chat__avatar">A</span>
+          <div><b>Aura Novias</b><small>WhatsApp</small></div>
+        </header>
+        <div class="chat__thread" id="journey-thread" aria-live="polite"></div>
       </div>
     </div>
   </div>
@@ -223,10 +244,14 @@
   </div>
 </section>
 
-<section class="section next" id="siguiente">
-  <div class="wrap next__cta">
-    <h2 class="reveal">Elegimos el plan y empezamos por el inventario</h2>
-    <a class="btn btn--quiet reveal" style="--i:1" href="index.html">Volver al diagnóstico<svg class="icon"><use href="img/icons.svg#i-arrow-right"/></svg></a>
+<section class="section closing" id="siguiente">
+  <div class="wrap">
+    <div class="section__head">
+      <h2 class="reveal">¿Hasta dónde quieres llegar?</h2>
+      <p class="reveal" style="--i:1">Elige tu plan y nos escribes por WhatsApp. Empezamos por el inventario.</p>
+    </div>
+    <div class="pctas" id="plan-ctas"></div>
+    <a class="closing__back reveal" href="index.html"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-arrow-right"/></svg>Volver al diagnóstico</a>
   </div>
 </section>
 
@@ -247,8 +272,10 @@
 <script src="js/pricing-data.js"></script>
 <script src="js/pricing-strip.js"></script>
 <script src="js/pricing-tiers.js"></script>
+<script src="js/pricing-cta.js"></script>
 <script src="js/pricing.js"></script>
 <script src="js/bride-page.js"></script>
+<script src="js/bride-journey.js"></script>
 <script src="js/page.js"></script>
 </body>
 </html>
