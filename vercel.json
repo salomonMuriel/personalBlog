@@ -7,8 +7,18 @@
       "permanent": true
     },
     {
-      "source": "/proposals/:path*",
-      "destination": "https://propuestas.salomonmuriel.com/:path*",
+      "source": "/proposals/",
+      "destination": "https://propuestas.salomonmuriel.com/",
+      "permanent": true
+    },
+    {
+      "source": "/proposals/(.+)/",
+      "destination": "https://propuestas.salomonmuriel.com/$1/",
+      "permanent": true
+    },
+    {
+      "source": "/proposals/(.+)",
+      "destination": "https://propuestas.salomonmuriel.com/$1",
       "permanent": true
     },
 
