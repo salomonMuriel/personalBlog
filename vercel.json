@@ -1,6 +1,17 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "redirects": [
+    {
+      "source": "/proposals",
+      "destination": "https://propuestas.salomonmuriel.com/",
+      "permanent": true
+    },
+    {
+      "source": "/proposals/:path*",
+      "destination": "https://propuestas.salomonmuriel.com/:path*",
+      "permanent": true
+    },
+
     { "source": "/es", "destination": "/", "permanent": true },
     { "source": "/es/", "destination": "/", "permanent": true },
 
