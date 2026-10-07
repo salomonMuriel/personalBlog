@@ -45,7 +45,7 @@ npm run build            # astro build
 npm run build:quiet      # build silencioso
 npm run preview          # previsualizar el build
 npm run lint             # eslint
-npm run format           # prettier
+npm run format           # prettier (format:check no escribe)
 npm run sync             # sincronizar tipos de colecciones
 
 npm run check:redirects  # el mapa de cutover (200 / 301 / 410 / 404)
@@ -56,6 +56,13 @@ npm run ficha:pdf        # regenera los PDF de la ficha de perfil
 `check:redirects` sin argumento corre contra `localhost:4321` y salta los
 301, que los sirve `vercel.json` y sólo existen en Vercel. Con una URL de
 deploy como argumento los verifica todos.
+
+Node ≥ 22.19 (`engines` de `package.json`; `.nvmrc` fija 22.22.2). El
+pre-commit de husky corre `lint-staged`, que
+pasa prettier sobre lo que esté en el índice. No hay suite de pruebas: la
+verificación del sitio son `check:redirects`, `shots.mjs` y Lighthouse.
+`npm run generate-pdf` es un resto de las presentaciones viejas —apunta a
+`../../presentation/`, fuera del repo— y no toca este sitio.
 
 ## Stack
 
@@ -68,6 +75,9 @@ funciones dinámicas.
 
 React y `@astrojs/react` están instalados **únicamente** porque el admin de
 Keystatic es React. Ninguna página del sitio usa una isla.
+
+Los imports van por los alias de `tsconfig.json`: `@config`, `@components/*`,
+`@data/*`, `@i18n/*`, `@layouts/*`, `@utils/*`, `@assets/*`, `@styles/*`.
 
 ## Mapa de rutas
 
@@ -84,6 +94,16 @@ El mapa vive en `src/i18n/ui.ts` (`routes`). Las rutas **no** son paralelas
 verdad para la navegación, el hreflang del `<head>` y el del sitemap
 (`astro.config.ts` lo usa en `serialize`). Si agrega una página, agréguela
 ahí primero.
+
+Cada `src/pages/*.astro` es una cáscara de diez líneas: marca
+`prerender = true`, fija el idioma y monta `Layout.astro` alrededor del
+componente de `components/paginas/`. `Layout` recibe `title`, `description`,
+`lang`, `ogImage`, `schemas` (el JSON-LD extra de esa página), `navHome` y
+`noindex`; y pone por su cuenta el `<head>`, el rótulo, la navegación, el
+bloque de `Contacto` y los tres scripts de instrumentación. El idioma nunca
+se adivina de la URL: **siempre** viaja por `prop` desde la página, que es
+la que sabe en qué árbol está. (`getLangFromUrl` sigue exportado en
+`src/i18n/utils.ts` y no lo llama nadie.)
 
 ## Ficha de perfil
 
@@ -120,6 +140,12 @@ una segunda copia del contenido.
 
 - En dev escribe archivos directamente. En producción abre un commit en
   GitHub (variables en `.env.example`).
+- El modo se decide con `import.meta.env`, **no** con `process.env`: el
+  navegador también carga `keystatic.config.ts` —el admin es una SPA que lo
+  importa— y con `process` la pantalla queda en blanco. Para *crear* la app
+  de GitHub, `PUBLIC_KEYSTATIC_GITHUB=true npm run dev`: Keystatic sólo
+  permite ese flujo desde local. `PUBLIC_KEYSTATIC_LOCAL=true` fuerza lo
+  contrario.
 - **`keystatic.config.ts` y `src/content.config.ts` tienen que coincidir.**
   Un campo que no cuadre con el Zod rompe el build al siguiente deploy.
 - No ponga campos de fecha en `columns:` de una colección — el listado de
@@ -135,6 +161,14 @@ Colecciones y singletons:
 | Sobre mí (ES/EN) | `src/content/pages/about-{es,en}.mdx` |
 | Cupos y capacidad | `src/content/settings/cupos.json` |
 
+Del lado de Astro las colecciones no son `now` y `talks` sino un par por
+idioma —`now-es`, `now-en`, `talks-es`, `talks-en`, `testimonios-es`,
+`testimonios-en`—, que arma la fábrica `localizedCollection` de
+`src/content.config.ts` apuntando cada una a su carpeta. No filtre por
+idioma a mano: pida `getLocalizedCollection(lang, "now")` de
+`src/i18n/utils.ts`. `pages` es la excepción —una sola colección donde el
+idioma va en el nombre del archivo, `about-es.mdx`—.
+
 `cupos.json` es lo que mueve los contadores «2 de 4» de la portada y «3 de
 5» de mentoría, la fecha de actualización y —cuando se llena— el botón, que
 se reemplaza por un aviso. Se lee desde `src/utils/cupos.ts`.
@@ -143,6 +177,11 @@ El MDX de `/ahora` y `/sobre-mi` referencia imágenes de `/public`, no de
 `src/assets`, para que el editor de Keystatic las pueda mostrar y guardar
 sin romperlas. `src/utils/rehype-imagenes.ts` les pone `loading="lazy"` y el
 `width`/`height` real leído del archivo, que es lo que mantiene el CLS en 0.
+
+El About trae cuentas vivas —`%%edad%%`, `%%dias%%`, `%%juntos%%`— que
+resuelve `src/utils/rehype-cuentas.ts` en el build. Eran expresiones de MDX y se cambiaron por esto porque el
+editor de Keystatic no sabe leer una expresión y dejaba la página fuera del
+CMS.
 
 ## Sistema de diseño
 
@@ -212,6 +251,10 @@ WhatsApp es el canal principal, así que la conversión se mide ahí.
   Console las recorra y las saque. **Bórrelo cuando GSC reporte cero.**
 - JSON-LD en `src/utils/jsonld.ts`: `ProfilePage` + `Person` en todas,
   `Service` y `FAQPage` en la portada, `BreadcrumbList` en las secundarias.
+- Las dos imágenes de OG (`/og.png`, `/en/og.png`) se pintan en el build con
+  Satori + resvg: `src/utils/generateOgImages.tsx`, plantilla en
+  `src/utils/og-templates/site.tsx`, fuentes en `src/assets/fonts/og/`.
+  `@resvg/resvg-js` está en `optimizeDeps.exclude` porque es binario nativo.
 - `robots.txt` y `llms.txt` se generan (`src/pages/`). `llms.txt` se arma
   del mismo contenido que la página, así que no se desactualiza solo.
 

@@ -1,6 +1,7 @@
-# Salomón's Personal Website / Blog
+# salomonmuriel.com
 
-Just my happy little corner of the internet.
+Salomón Muriel's consulting practice: custom software for traditional
+Colombian companies whose operation only *looks* automated.
 
 Made with:
 
@@ -9,37 +10,84 @@ Made with:
 ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
 ![Vercel](https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white)
 
-Started from [AstroPaper](https://github.com/satnaing/astro-paper) but has been so heavily customized over time that it bears little resemblance to the original template.
-
 ## What this site is
 
-A personal website and bilingual blog (English/Spanish) that also serves as a consultancy landing page. Content includes blog posts synced from LinkedIn, conference talks, business ideas, "now" page updates, and static pages.
+Five pages in two languages — Spanish at the root, English under `/en/` —
+built to do one thing: get the visitor to start a WhatsApp conversation.
 
-## Key features built on top of the original template
+| Spanish | English |
+|---|---|
+| `/` | `/en/` |
+| `/mentoria/` | `/en/mentoring/` |
+| `/charlas/` | `/en/talks/` |
+| `/sobre-mi/` | `/en/about/` |
+| `/ahora/` | `/en/now/` |
 
-- **Bilingual (EN/ES)** — full i18n support with browser language detection, `[lang]` routing, and a language switcher
-- **LinkedIn sync** — automated GitHub Action (`sync-linkedin.yml`) pulls posts daily via `scripts/sync-linkedin.mjs`, translates them with an LLM, and commits bilingual MDX entries
-- **Astro 6 + Tailwind 4** — major version upgrades from the original template's Astro 4 + Tailwind 3
-- **FontSource fonts** — DM Sans Variable (body) + Syne (headings), replacing the original monospace font
-- **Consultancy homepage** — hero, CTA sections, Cal.com scheduling integration, and PDF proposal generation
-- **Presentations** — Marp-based slide decks with PDF export via Puppeteer
-- **Factory pattern for localized collections** — content collections share schemas via a factory utility
-- **Resources as local content** — replaces the original GitHub-fetched resources list
-- **Schema markup** — ProfilePage + Person structured data for SEO
-- **Reading time estimates** — displayed on post cards and detail pages
-- **Dark/light theme toggle** — custom palette (dark blue + coral)
-- **Explore dropdown nav** — groups Ideas, Resources, Stack under a single nav item
-- `pages` content collection for About, Uses, Resources static content (bilingual MDX)
+It started life as [AstroPaper](https://github.com/satnaing/astro-paper),
+then as a bilingual blog. In 2026 it was rebuilt from scratch as a
+consulting site. The blog, the tag pages, the feeds and the ideas and
+resources sections are gone and return HTTP 410 on purpose, so Google drops
+them instead of parking them as soft 404s. The old `/es/` tree is gone too,
+but the URLs that had real inbound links — `/es/about`, `/es/now`,
+`/es/talks`, `/about`, `/now`, … — are 301'd to their new homes in
+`vercel.json`; only what falls through those rules reaches the 410. What
+Salomón writes now goes on LinkedIn. `REBUILD-PLAN.md` is the record of
+that decision.
+
+## How it's built
+
+- **Astro 6 + Tailwind 4**, deployed on Vercel from `main`.
+- **Static output**, even though the adapter runs in `server` mode: every
+  content page sets `prerender = true`. The server mode exists so
+  `/keystatic` — the CMS admin — can render on demand.
+- **Keystatic** edits the same MDX/MD files Astro reads. No database, no
+  second copy of the content. Locally it writes files; in production it
+  opens a commit on GitHub.
+- **Two vanilla-JS interactive pieces** on the homepage: a ten-checkbox
+  self-diagnostic that scores how manual your operation is and hands you a
+  pre-written WhatsApp message, and an animated HOY → CONECTADO diagram.
+  No React islands anywhere — React is installed only because Keystatic's
+  admin needs it.
+- **The design system lives in CSS**: tokens in the `@theme` block of
+  `src/styles/base.css`, plus a set of hand-written utilities that carry the
+  paper-and-ink look. Fonts are Archivo (variable width axis), Alfa Slab
+  One, IBM Plex Mono and Caveat, all self-hosted and preloaded.
+- **Analytics are conversion-only**: GA4 loads on idle and every contact
+  click reports which section it came from.
+- **Performance budget**: 95+ on all four Lighthouse categories, on all ten
+  pages, on mobile.
+
+## Running it
+
+Node ≥ 22.19.
+
+```bash
+npm install
+npm run dev              # dev server, --host
+npm run build            # astro build
+npm run preview          # preview the build
+npm run lint             # eslint
+npm run format           # prettier
+
+npm run check:redirects  # verifies the 200 / 301 / 410 / 404 map
+node scripts/shots.mjs   # screenshots at 375 and 1440 px, flags overflow
+```
+
+The CMS is at `/keystatic` once the dev server is up. See `.env.example` for
+what production needs, and `CLAUDE.md` for the parts of this repo that are
+easy to break.
 
 ## ✨ Feedback & Suggestions
 
-If you have any suggestions/feedback, you can contact me via [my email](mailto:salomon.muriel@gmail.com).
+If you have any suggestions/feedback, you can contact me via
+[my email](mailto:salomon.muriel@gmail.com).
 
 ## License
 
 Licensed under the MIT License, Copyright © 2024.
 
-Feel free to use the structure as long as you are not impersonating me somewhere. And if you are, please make me look nice!
+Feel free to use the structure as long as you are not impersonating me
+somewhere. And if you are, please make me look nice!
 
 ---
 
