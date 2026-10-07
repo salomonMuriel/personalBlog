@@ -2,7 +2,7 @@ const PLANS = [
   {
     id: "esencial",
     name: "Esencial",
-    price: 5400000,
+    price: 5600000,
     supportMonths: 1,
     changeHours: 2,
     title: "Inventario y asesoría",
@@ -21,7 +21,7 @@ const PLANS = [
   {
     id: "operacion",
     name: "Operación",
-    price: 8400000,
+    price: 9400000,
     supportMonths: 2,
     changeHours: 4,
     title: "Pagos, contrato y ficha de novia",
@@ -40,7 +40,7 @@ const PLANS = [
   {
     id: "completo",
     name: "Completo",
-    price: 12000000,
+    price: 14500000,
     supportMonths: 3,
     changeHours: 6,
     title: "Mi boda Aura, fábrica y tablero",
