@@ -1,0 +1,108 @@
+---
+import type { CopiaCuestionario } from "@data/cuestionario/tipos";
+
+interface Props {
+  copia: CopiaCuestionario;
+}
+const { copia } = Astro.props;
+const k = copia.contacto;
+
+const campo =
+  "mt-1.5 w-full rounded border-[1.5px] border-linea2 bg-campo px-4 py-3 text-[1rem] transition-colors focus:border-tinta aria-[invalid=true]:border-rojo2";
+const etiqueta =
+  "font-mono text-[10.5px] font-medium uppercase tracking-[.16em] text-gris";
+const error = "mt-1.5 text-[13.5px] text-rojo2";
+---
+
+<fieldset data-paso="contacto" hidden class="min-w-0">
+  <legend
+    tabindex="-1"
+    class="font-arch text-[clamp(1.35rem,3vw,1.85rem)] font-bold leading-[1.14] tracking-[-.028em] outline-none [font-stretch:98%]"
+  >
+    {k.titulo}
+  </legend>
+
+  <div class="mt-5 grid gap-4 sm:grid-cols-2">
+    <div>
+      <label for="cq-nombre" class={etiqueta}>{k.nombre}</label>
+      <input
+        id="cq-nombre"
+        name="nombre"
+        autocomplete="name"
+        maxlength="80"
+        required
+        class={campo}
+        aria-describedby="cq-nombre-error"
+      />
+      <p id="cq-nombre-error" class={error} data-error="nombre" hidden>
+        {k.faltaNombre}
+      </p>
+    </div>
+    <div>
+      <label for="cq-empresa" class={etiqueta}>{k.empresa}</label>
+      <input
+        id="cq-empresa"
+        name="empresa"
+        autocomplete="organization"
+        maxlength="120"
+        required
+        class={campo}
+        aria-describedby="cq-empresa-error"
+      />
+      <p id="cq-empresa-error" class={error} data-error="empresa" hidden>
+        {k.faltaEmpresa}
+      </p>
+    </div>
+    <div>
+      <label for="cq-whatsapp" class={etiqueta}>{k.whatsapp}</label>
+      <input
+        id="cq-whatsapp"
+        name="whatsapp"
+        type="tel"
+        inputmode="tel"
+        autocomplete="tel"
+        maxlength="30"
+        required
+        placeholder={k.whatsappPlaceholder}
+        class={campo}
+        aria-describedby="cq-whatsapp-error"
+      />
+      <p id="cq-whatsapp-error" class={error} data-error="whatsapp" hidden>
+        {k.faltaWhatsapp}
+      </p>
+    </div>
+    <div>
+      <label for="cq-correo" class={etiqueta}>{k.correo}</label>
+      <input
+        id="cq-correo"
+        name="correo"
+        type="email"
+        autocomplete="email"
+        maxlength="160"
+        class={campo}
+        aria-describedby="cq-correo-error"
+      />
+      <p id="cq-correo-error" class={error} data-error="correo" hidden>
+        {k.correoInvalido}
+      </p>
+    </div>
+    <div class="sm:col-span-2">
+      <label for="cq-mensaje" class={etiqueta}>{k.mensaje}</label>
+      <textarea
+        id="cq-mensaje"
+        name="mensaje"
+        rows="3"
+        maxlength="1200"
+        class={campo}></textarea>
+    </div>
+  </div>
+
+  <div class="absolute -left-[9999px]" aria-hidden="true">
+    <label for="cq-web">Web</label>
+    <input id="cq-web" name="web" tabindex="-1" autocomplete="off" />
+  </div>
+
+  <p class="mt-4 max-w-[52ch] text-[13.5px] leading-[1.5] text-gris">
+    {k.privacidad}
+  </p>
+</fieldset>

@@ -1,4 +1,4 @@
-import { defineConfig } from "astro/config";
+import { defineConfig, envField } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
 import sitemap from "@astrojs/sitemap";
 import mdx from "@astrojs/mdx";
@@ -25,6 +25,26 @@ export default defineConfig({
   // `server` only for /keystatic; content pages are prerendered.
   output: "server",
   adapter: vercel(),
+  env: {
+    schema: {
+      DATABASE_URL: envField.string({ context: "server", access: "secret" }),
+      RESEND_API_KEY: envField.string({
+        context: "server",
+        access: "secret",
+        optional: true,
+      }),
+      EMAIL_FROM: envField.string({
+        context: "server",
+        access: "secret",
+        optional: true,
+      }),
+      EMAIL_FROM_NAME: envField.string({
+        context: "server",
+        access: "secret",
+        optional: true,
+      }),
+    },
+  },
   integrations: [
     sitemap({
       // /keystatic is an admin surface, the 410 routes exist only to be
@@ -32,6 +52,8 @@ export default defineConfig({
       filter: page =>
         !page.includes("/keystatic") &&
         !page.includes("/ficha/") &&
+        !page.includes("/cuentame/") &&
+        !page.includes("/en/tell-me/") &&
         !page.includes("/en/brief/") &&
         !page.includes("/posts/") &&
         !page.includes("/tags/"),

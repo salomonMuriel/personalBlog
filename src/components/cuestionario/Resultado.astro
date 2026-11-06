@@ -1,0 +1,135 @@
+---
+import { CONTACTO } from "@config";
+import type { CopiaCuestionario } from "@data/cuestionario/tipos";
+import { routes, type Lang } from "@i18n/ui";
+
+interface Props {
+  copia: CopiaCuestionario;
+  lang: Lang;
+}
+const { copia, lang } = Astro.props;
+const r = copia.resultado;
+
+const titulo =
+  "font-arch text-[clamp(1.6rem,3.6vw,2.4rem)] font-extrabold leading-[1.05] tracking-[-.03em] outline-none [font-stretch:100%]";
+const texto = "mt-3 max-w-[54ch] text-[1.05rem] leading-[1.55]";
+const primario =
+  "inline-flex items-center gap-2.5 rounded bg-rojo2 px-5 py-3.5 text-[.97rem] font-bold text-white transition-[background-color,transform] hover:bg-tinta active:translate-y-px";
+const secundario =
+  "inline-flex items-center gap-2.5 rounded border-[1.5px] border-linea2 px-5 py-3.5 text-[.97rem] font-bold transition-[border-color,background-color,transform] hover:border-tinta hover:bg-papel2 active:translate-y-px";
+---
+
+<div data-resultados hidden class="px-5 py-7 sm:px-6">
+  <p
+    class="font-mono text-[10.5px] font-semibold uppercase tracking-[.2em] text-rojo2"
+  >
+    {r.rotulo}
+  </p>
+
+  <div data-resultado="si" hidden class="mt-3">
+    <h2 tabindex="-1" class={titulo} data-plantilla={r.si.titulo}>
+      {r.si.titulo}
+    </h2>
+    <p class={texto}>{r.si.texto}</p>
+    <div class="mt-6 flex flex-wrap gap-3">
+      <a
+        href={CONTACTO.calConsultoria}
+        target="_blank"
+        rel="noopener"
+        data-origen="cuestionario-resultado"
+        class={primario}
+      >
+        {r.si.ctaAgenda}<svg
+          class="h-[18px] w-[18px] opacity-80"
+          aria-hidden="true"><use href="#i-arw"></use></svg
+        >
+      </a>
+      <a
+        href="https://wa.me/"
+        data-wa-resumen
+        target="_blank"
+        rel="noopener"
+        data-origen="cuestionario-resultado"
+        class={secundario}
+      >
+        {r.si.ctaWa}
+      </a>
+    </div>
+  </div>
+
+  <div data-resultado="temprano" hidden class="mt-3">
+    <h2 tabindex="-1" class={titulo} data-plantilla={r.temprano.titulo}>
+      {r.temprano.titulo}
+    </h2>
+    <p class={texto}>{r.temprano.texto}</p>
+    <div class="mt-6 flex flex-wrap gap-3">
+      <a href={routes.mentoria[lang]} class={primario}>
+        {r.temprano.ctaMentoria}<svg
+          class="h-[18px] w-[18px] opacity-80"
+          aria-hidden="true"><use href="#i-arw"></use></svg
+        >
+      </a>
+      <a
+        href="https://wa.me/"
+        data-wa-resumen
+        target="_blank"
+        rel="noopener"
+        data-origen="cuestionario-resultado"
+        class={secundario}
+      >
+        {r.temprano.ctaWa}
+      </a>
+    </div>
+  </div>
+
+  <div data-resultado="explorando" hidden class="mt-3">
+    <h2 tabindex="-1" class={titulo} data-plantilla={r.explorando.titulo}>
+      {r.explorando.titulo}
+    </h2>
+    <p class={texto}>{r.explorando.texto}</p>
+    <div class="mt-6 flex flex-wrap gap-3">
+      <a
+        href="https://wa.me/"
+        data-wa-resumen
+        target="_blank"
+        rel="noopener"
+        data-origen="cuestionario-resultado"
+        class={primario}
+      >
+        {r.explorando.ctaWa}<svg
+          class="h-[18px] w-[18px] opacity-80"
+          aria-hidden="true"><use href="#i-arw"></use></svg
+        >
+      </a>
+    </div>
+  </div>
+
+  <div data-resultado="error" hidden class="mt-3">
+    <h2 tabindex="-1" class={titulo}>{r.error.titulo}</h2>
+    <p class={texto}>{r.error.texto}</p>
+    <div class="mt-6 flex flex-wrap gap-3">
+      <a
+        href="https://wa.me/"
+        data-wa-resumen
+        target="_blank"
+        rel="noopener"
+        data-origen="cuestionario-error"
+        class={primario}
+      >
+        {r.error.ctaWa}<svg
+          class="h-[18px] w-[18px] opacity-80"
+          aria-hidden="true"><use href="#i-arw"></use></svg
+        >
+      </a>
+    </div>
+  </div>
+
+  <p
+    data-horas
+    data-plantilla={r.horas}
+    data-plantilla-mas={r.horasMas}
+    hidden
+    class="font-pen mt-6 max-w-[44ch] -rotate-[1.2deg] text-[clamp(1.2rem,3vw,1.5rem)] leading-[1.25] text-rojo2 [transform-origin:left]"
+  >
+  </p>
+</div>

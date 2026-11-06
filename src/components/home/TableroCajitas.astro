@@ -1,6 +1,7 @@
 ---
 import EncabezadoSeccion from "@components/EncabezadoSeccion.astro";
 import { copia } from "@data/landing";
+import ParCta from "@components/home/ParCta.astro";
 import type { Lang } from "@i18n/ui";
 
 // Los `id`, el orden y `data-a`/`data-b`/`data-r` son el contrato con el script que dibuja los cables.
@@ -48,7 +49,7 @@ const insignia =
     </div>
 
     <div
-      class="mt-[clamp(1.8rem,3.6vw,2.6rem)] flex flex-wrap items-center gap-3"
+      class="sticky top-[60px] z-20 -mx-[clamp(1.25rem,4vw,3.5rem)] mt-[clamp(1.8rem,3.6vw,2.6rem)] flex flex-wrap items-center gap-3 border-b border-linea bg-papel/95 px-[clamp(1.25rem,4vw,3.5rem)] py-2.5 backdrop-blur-[10px] lg:static lg:mx-0 lg:border-0 lg:bg-transparent lg:px-0 lg:py-0 lg:backdrop-blur-none"
     >
       <div
         class="inline-flex overflow-hidden rounded border-[1.5px] border-tinta"
@@ -380,6 +381,17 @@ const insignia =
       >
         {c.cierreManuscrita}
       </p>
+    </div>
+
+    <div
+      class="mt-[clamp(1.8rem,3.4vw,2.6rem)] flex flex-col gap-4 rounded border-[1.5px] border-linea2 bg-campo p-5 sm:p-6 lg:flex-row lg:items-center lg:justify-between"
+    >
+      <p
+        class="font-arch max-w-[30ch] text-[clamp(1.2rem,2.4vw,1.6rem)] font-bold leading-[1.18] tracking-[-.028em] [font-stretch:98%]"
+      >
+        {c.ctaTexto}
+      </p>
+      <ParCta lang={lang} origen="cajitas" />
     </div>
   </div>
 </section>

@@ -22,6 +22,7 @@ export interface Props {
   schemas?: unknown[];
   navHome?: string;
   noindex?: boolean;
+  sinContacto?: boolean;
 }
 
 const {
@@ -32,6 +33,7 @@ const {
   schemas = [],
   navHome,
   noindex = false,
+  sinContacto = false,
 } = Astro.props;
 
 const rutaActual = Astro.url.pathname;
@@ -161,7 +163,7 @@ const verificacionGoogle = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
 
     <main id="arriba">
       <slot />
-      <Contacto lang={lang} />
+      {!sinContacto && <Contacto lang={lang} />}
     </main>
 
     <script>
@@ -187,7 +189,7 @@ const verificacionGoogle = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
       type Gtag = (...args: unknown[]) => void;
       const enviar = (nombre: string, params: Record<string, unknown>) => {
         const g = (window as unknown as { gtag?: Gtag }).gtag;
-        if (typeof g === "function") g(nombre, params);
+        if (typeof g === "function") g("event", nombre, params);
       };
 
       document.addEventListener("click", ev => {
@@ -201,8 +203,11 @@ const verificacionGoogle = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
         if (href.startsWith("https://wa.me/")) {
           enviar("contacto_whatsapp", {
             origen,
-            marcadas: a.dataset.marcadas || "",
-            puntaje: a.dataset.puntaje || "",
+            pagina: location.pathname,
+          });
+        } else if (href.endsWith("/cuentame/") || href.endsWith("/tell-me/")) {
+          enviar("contacto_cuestionario", {
+            origen,
             pagina: location.pathname,
           });
         } else if (href.includes("cal.com/")) {

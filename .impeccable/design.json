@@ -1,0 +1,511 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-06T15:46:40.612223+00:00",
+  "title": "Design System: Salomón Muriel",
+  "extensions": {
+    "colorMeta": {
+      "papel": {
+        "role": "neutral",
+        "displayName": "Office Paper",
+        "canonical": "#f2f1ed",
+        "tonalRamp": [
+          "#2a2823",
+          "#4a473b",
+          "#6b6652",
+          "#8e8667",
+          "#a7a28b",
+          "#c0bdaf",
+          "#dad9d2",
+          "#f3f3f1"
+        ]
+      },
+      "papel2": {
+        "role": "neutral",
+        "displayName": "Second Sheet",
+        "canonical": "#e9e8e2",
+        "tonalRamp": [
+          "#292823",
+          "#49473c",
+          "#696653",
+          "#8b866a",
+          "#a5a28d",
+          "#bfbdb0",
+          "#dad9d3",
+          "#f3f3f1"
+        ]
+      },
+      "campo": {
+        "role": "neutral",
+        "displayName": "Form Field White",
+        "canonical": "#ffffff",
+        "tonalRamp": [
+          "#262626",
+          "#424242",
+          "#5e5e5e",
+          "#7a7a7a",
+          "#999999",
+          "#b8b8b8",
+          "#d6d6d6",
+          "#f2f2f2"
+        ]
+      },
+      "tinta": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "#16171a",
+        "tonalRamp": [
+          "#242528",
+          "#3e4046",
+          "#585b65",
+          "#707584",
+          "#9295a0",
+          "#b3b5bc",
+          "#d4d5d8",
+          "#f2f2f3"
+        ]
+      },
+      "panel": {
+        "role": "neutral",
+        "displayName": "Night Panel",
+        "canonical": "#17181c",
+        "tonalRamp": [
+          "#242528",
+          "#3e4047",
+          "#575a66",
+          "#6f7386",
+          "#9094a2",
+          "#b2b5bd",
+          "#d4d5d9",
+          "#f2f2f3"
+        ]
+      },
+      "panelfg": {
+        "role": "neutral",
+        "displayName": "Panel Text",
+        "canonical": "#eceae4",
+        "tonalRamp": [
+          "#2a2822",
+          "#4b463a",
+          "#6c6551",
+          "#8f8566",
+          "#a9a189",
+          "#c1bcae",
+          "#dad8d2",
+          "#f3f3f1"
+        ]
+      },
+      "panelgris": {
+        "role": "neutral",
+        "displayName": "Panel Grey",
+        "canonical": "#9a988f",
+        "tonalRamp": [
+          "#272725",
+          "#454440",
+          "#62615a",
+          "#817e74",
+          "#9e9c94",
+          "#bab9b5",
+          "#d7d7d5",
+          "#f3f2f2"
+        ]
+      },
+      "gris": {
+        "role": "neutral",
+        "displayName": "Pencil Grey",
+        "canonical": "#65665f",
+        "tonalRamp": [
+          "#272725",
+          "#434441",
+          "#60615c",
+          "#7d7f76",
+          "#9b9c96",
+          "#b9b9b6",
+          "#d7d7d5",
+          "#f2f2f2"
+        ]
+      },
+      "linea": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "#cfcdc4",
+        "tonalRamp": [
+          "#292824",
+          "#47453d",
+          "#676456",
+          "#87826e",
+          "#a29f90",
+          "#bdbbb2",
+          "#d9d8d4",
+          "#f3f3f2"
+        ]
+      },
+      "linea2": {
+        "role": "neutral",
+        "displayName": "Heavy Hairline",
+        "canonical": "#a8a69c",
+        "tonalRamp": [
+          "#282725",
+          "#45443f",
+          "#636259",
+          "#828073",
+          "#9f9d93",
+          "#bbbab4",
+          "#d8d7d5",
+          "#f3f3f2"
+        ]
+      },
+      "rojo": {
+        "role": "primary",
+        "displayName": "Signal Red",
+        "canonical": "#d8332a",
+        "tonalRamp": [
+          "#361917",
+          "#632522",
+          "#952d27",
+          "#cd3028",
+          "#d7615b",
+          "#dc9793",
+          "#e7c7c6",
+          "#f6efee"
+        ]
+      },
+      "rojo2": {
+        "role": "primary",
+        "displayName": "Pen Red",
+        "canonical": "#b3251d",
+        "tonalRamp": [
+          "#361816",
+          "#642420",
+          "#982b25",
+          "#d12d24",
+          "#da5f58",
+          "#dd9692",
+          "#e8c7c5",
+          "#f6eeee"
+        ]
+      },
+      "rojo3": {
+        "role": "primary",
+        "displayName": "Lamp Red",
+        "canonical": "#ea4b3e",
+        "tonalRamp": [
+          "#381714",
+          "#68221c",
+          "#9e281e",
+          "#da291a",
+          "#e15c51",
+          "#e2948d",
+          "#eac6c3",
+          "#f7eeee"
+        ]
+      },
+      "panelborde": {
+        "role": "neutral",
+        "displayName": "Panel Rule",
+        "canonical": "#2c2e34",
+        "tonalRamp": [
+          "#242528",
+          "#3e4046",
+          "#585b65",
+          "#707584",
+          "#9295a0",
+          "#b3b5bc",
+          "#d4d5d8",
+          "#f2f2f3"
+        ]
+      },
+      "panelborde2": {
+        "role": "neutral",
+        "displayName": "Panel Rule Soft",
+        "canonical": "#232529",
+        "tonalRamp": [
+          "#242628",
+          "#3f4146",
+          "#585c65",
+          "#717784",
+          "#9297a0",
+          "#b3b6bc",
+          "#d4d6d8",
+          "#f2f2f3"
+        ]
+      },
+      "panelnota": {
+        "role": "neutral",
+        "displayName": "Panel Note",
+        "canonical": "#8e8d86",
+        "tonalRamp": [
+          "#272725",
+          "#444441",
+          "#61605c",
+          "#7e7d76",
+          "#9c9b96",
+          "#b9b9b6",
+          "#d7d7d5",
+          "#f2f2f2"
+        ]
+      },
+      "paneltxt": {
+        "role": "neutral",
+        "displayName": "Panel Body",
+        "canonical": "#b0aea6",
+        "tonalRamp": [
+          "#282725",
+          "#45443f",
+          "#63615a",
+          "#827f73",
+          "#9e9c94",
+          "#bbb9b4",
+          "#d8d7d5",
+          "#f3f2f2"
+        ]
+      },
+      "panelhondo": {
+        "role": "neutral",
+        "displayName": "Panel Well",
+        "canonical": "#101115",
+        "tonalRamp": [
+          "#232429",
+          "#3c3e49",
+          "#545869",
+          "#6a718b",
+          "#8d92a5",
+          "#b0b3bf",
+          "#d3d4d9",
+          "#f1f2f3"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display-condensed": {
+        "displayName": "Display, condensed",
+        "purpose": "Hero first line; condensed shouts on the contact panel."
+      },
+      "display-painted": {
+        "displayName": "Display, painted",
+        "purpose": "Hero second line only, sign-painter treatment."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section h2 and page h1."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Row statements in logs and lists."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Running text at 44-58ch."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Mono paperwork: rótulos, numbers, metadata, captions."
+      },
+      "handwritten": {
+        "displayName": "Handwritten",
+        "purpose": "Red margin notes, rotated -1 to -1.4deg."
+      }
+    },
+    "shadows": [
+      {
+        "name": "sheet-lift",
+        "value": "0 1px 0 rgba(22,23,26,.05), 0 16px 36px -28px rgba(22,23,26,.55)",
+        "purpose": "The one raised sheet per section (dictionary card, central board box, check sheet)."
+      },
+      {
+        "name": "painted-letter",
+        "value": "text-shadow: 0.042em 0.042em 0 #d8332a, 0.068em 0.068em 0 #16171a",
+        "purpose": "Hero sign-painter line only, with a 0.022em ink stroke and paper fill."
+      },
+      {
+        "name": "focus-ring",
+        "value": "outline: 2.5px solid #d8332a; outline-offset: 3px",
+        "purpose": "Global focus-visible."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-paper",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Reveals, underline sweep, schedule bars, FAQ cross."
+      },
+      {
+        "name": "reveal",
+        "value": "opacity .6s ease + translateY(14px) .7s ease-paper, 70ms stagger",
+        "purpose": "Rows rising into place."
+      },
+      {
+        "name": "underline-sweep",
+        "value": "background-size 0 to 100% over .72s ease-paper",
+        "purpose": "Red marker under key phrases when seen."
+      },
+      {
+        "name": "ticker",
+        "value": "46s linear infinite (logos 64s reverse)",
+        "purpose": "Ink band marquee."
+      },
+      {
+        "name": "wire-march",
+        "value": "stroke-dashoffset -24 over 1.6s linear",
+        "purpose": "Live red wires in the board's today state."
+      },
+      {
+        "name": "needle-spring",
+        "value": "cubic-bezier(0.34, 1.32, 0.64, 1) .55s",
+        "purpose": "Check-sheet gauge needle."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      },
+      {
+        "name": "page-max",
+        "value": "1320px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Solid pen-red action; reserved for WhatsApp.",
+      "html": "<a class=\"ds-btn-primary\" href=\"#\">Escríbeme por WhatsApp<svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"square\" aria-hidden=\"true\"><path d=\"M4 12h15M13 6l6 6-6 6\"/></svg></a>",
+      "css": ".ds-btn-primary{display:inline-flex;align-items:center;gap:10px;background:#b3251d;color:#fff;padding:14px 20px;border-radius:2px;font-family:'Archivo Variable', Archivo, 'Helvetica Neue', Arial, sans-serif;font-size:.97rem;font-weight:700;text-decoration:none;transition:background-color .15s,transform .15s}.ds-btn-primary:hover{background:#16171a}.ds-btn-primary:active{transform:translateY(1px)}.ds-btn-primary:focus-visible{outline:2.5px solid #d8332a;outline-offset:3px}"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Outlined in-page jump.",
+      "html": "<a class=\"ds-btn-secondary\" href=\"#\">Mira cómo se conecta</a>",
+      "css": ".ds-btn-secondary{display:inline-flex;align-items:center;gap:10px;background:transparent;color:#16171a;border:1.5px solid #a8a69c;padding:14px 20px;border-radius:2px;font-family:'Archivo Variable', Archivo, 'Helvetica Neue', Arial, sans-serif;font-size:.97rem;font-weight:700;text-decoration:none;transition:border-color .15s,background-color .15s,transform .15s}.ds-btn-secondary:hover{border-color:#16171a;background:#e9e8e2}.ds-btn-secondary:active{transform:translateY(1px)}.ds-btn-secondary:focus-visible{outline:2.5px solid #d8332a;outline-offset:3px}"
+    },
+    {
+      "name": "Section Header",
+      "kind": "custom",
+      "refersTo": "section-header",
+      "description": "Ink rule, mono document-type label, gris note, then the Archivo headline.",
+      "html": "<div class=\"ds-sec\"><div class=\"ds-sec-strip\"><span class=\"ds-sec-rotulo\">Registro de fallas</span><span class=\"ds-sec-nota\">Se repite en empresas que no tienen nada que ver entre sí.</span></div><h2 class=\"ds-sec-h2\">Lo que se rompe cuando nadie mira</h2></div>",
+      "css": ".ds-sec{background:#f2f1ed;color:#16171a;padding:24px}.ds-sec-strip{display:flex;align-items:baseline;gap:24px;border-top:2.5px solid #16171a;padding-top:12px;margin-bottom:28px}.ds-sec-rotulo{font-family:'IBM Plex Mono', ui-monospace, Menlo, monospace;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.2em;white-space:nowrap}.ds-sec-nota{margin-left:auto;text-align:right;max-width:40ch;font-family:'Archivo Variable', Archivo, 'Helvetica Neue', Arial, sans-serif;font-size:13px;line-height:1.35;color:#65665f}.ds-sec-h2{margin:0;max-width:20ch;font-family:'Archivo Variable', Archivo, 'Helvetica Neue', Arial, sans-serif;font-size:clamp(1.9rem,4.4vw,3.4rem);font-weight:800;font-stretch:104%;line-height:1.03;letter-spacing:-.028em}"
+    },
+    {
+      "name": "Handwritten Note",
+      "kind": "custom",
+      "refersTo": "handwritten-note",
+      "description": "The red pen in the margin.",
+      "html": "<p class=\"ds-pen\">y lo hace bien, por eso nadie se ha dado cuenta</p>",
+      "css": ".ds-pen{margin:0;font-family:'Caveat Variable',Caveat,cursive;font-size:1.5rem;line-height:1.2;color:#b3251d;transform:rotate(-1.4deg);transform-origin:left}"
+    },
+    {
+      "name": "Ruled Row",
+      "kind": "card",
+      "refersTo": "ruled-row",
+      "description": "Fault-log row: mono metadata, statement with red underline, note.",
+      "html": "<article class=\"ds-row\"><div class=\"ds-row-meta\"><span>Falla 01</span><span>Gerencia</span></div><p class=\"ds-row-t\">Las cifras viven en <span class=\"ds-under\">tres hojas de Excel</span>.</p><p class=\"ds-row-n\">El número está en tres lados y ninguno cuadra.</p></article>",
+      "css": ".ds-row{display:grid;grid-template-columns:9.5rem 1.6fr 1fr;gap:8px 32px;border-top:1px solid #cfcdc4;border-bottom:1px solid #cfcdc4;padding:24px 0;background:#f2f1ed;color:#16171a}.ds-row-meta{display:flex;flex-direction:column;font-family:'IBM Plex Mono', ui-monospace, Menlo, monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:.16em;line-height:1.7;color:#65665f}.ds-row-meta span:first-child{color:#b3251d}.ds-row-t{margin:0;font-family:'Archivo Variable', Archivo, 'Helvetica Neue', Arial, sans-serif;font-size:1.5rem;font-weight:700;line-height:1.14;letter-spacing:-.028em}.ds-under{background-image:linear-gradient(#d8332a,#d8332a);background-repeat:no-repeat;background-position:0 88%;background-size:100% .13em}.ds-row-n{margin:0;font-size:14px;line-height:1.5;color:#65665f}"
+    },
+    {
+      "name": "Check Sheet Row",
+      "kind": "input",
+      "refersTo": "check-row",
+      "description": "Square checkbox; checked row tints and strikes through in red.",
+      "html": "<label class=\"ds-reng\"><input type=\"checkbox\" class=\"ds-casilla\" checked><span class=\"ds-reng-t\">Alguien copia datos de un sistema a otro</span></label>",
+      "css": ".ds-reng{display:flex;gap:12px;padding:12px;font-size:1rem;color:#16171a;background:#f2f1ed}.ds-reng:has(.ds-casilla:checked){background:rgba(216,51,42,.055)}.ds-casilla{appearance:none;width:1.4rem;height:1.4rem;flex:none;margin:0;border:1.6px solid #a8a69c;background:#fff;cursor:pointer;transition:background-color .16s,border-color .16s}.ds-casilla:hover{border-color:#d8332a}.ds-casilla:checked{background:#d8332a;border-color:#d8332a}.ds-casilla:focus-visible{outline:2.5px solid #d8332a;outline-offset:3px}.ds-reng:has(.ds-casilla:checked) .ds-reng-t{color:#65665f;text-decoration:line-through;text-decoration-color:#d8332a;text-decoration-thickness:1.6px}"
+    },
+    {
+      "name": "Navigation",
+      "kind": "nav",
+      "refersTo": "nav",
+      "description": "Mono wordmark, gris links with red underline, persistent WhatsApp button.",
+      "html": "<header class=\"ds-nav\"><a class=\"ds-nav-mark\" href=\"#\">Salomón Muriel<span>.</span></a><nav class=\"ds-nav-links\"><a href=\"#\" aria-current=\"page\">Mentoría</a><a href=\"#\">Charlas</a><a href=\"#\">Sobre mí</a></nav><a class=\"ds-nav-cta\" href=\"#\">Escríbeme</a></header>",
+      "css": ".ds-nav{display:flex;align-items:center;gap:24px;height:60px;padding:0 24px;background:rgba(242,241,237,.9);border-bottom:1px solid #cfcdc4;color:#16171a}.ds-nav-mark{margin-right:auto;font-family:'IBM Plex Mono', ui-monospace, Menlo, monospace;font-size:12.5px;font-weight:600;text-transform:uppercase;letter-spacing:.16em;color:#16171a;text-decoration:none}.ds-nav-mark span{color:#b3251d}.ds-nav-links{display:flex;gap:24px}.ds-nav-links a{font-family:'Archivo Variable', Archivo, 'Helvetica Neue', Arial, sans-serif;font-size:14px;font-weight:600;color:#65665f;text-decoration:none;border-bottom:1.5px solid transparent;padding-bottom:3px;transition:color .15s,border-color .15s}.ds-nav-links a:hover,.ds-nav-links a[aria-current]{color:#16171a;border-color:#d8332a}.ds-nav-cta{background:#b3251d;color:#fff;padding:8px 14px;border-radius:2px;font-family:'Archivo Variable', Archivo, 'Helvetica Neue', Arial, sans-serif;font-size:12.5px;font-weight:600;text-decoration:none}.ds-nav-cta:hover{background:#16171a}"
+    },
+    {
+      "name": "Contact Channel Row",
+      "kind": "custom",
+      "refersTo": "contact-panel",
+      "description": "Full-bleed row on the dark panel; floods pen red on hover.",
+      "html": "<div class=\"ds-panel\"><a class=\"ds-chan\" href=\"#\"><span class=\"ds-chan-n\">01</span><span class=\"ds-chan-l\">WhatsApp</span><span class=\"ds-chan-note\">+57 300 000 0000</span><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"square\" aria-hidden=\"true\"><path d=\"M4 12h15M13 6l6 6-6 6\"/></svg></a></div>",
+      "css": ".ds-panel{background:#17181c;color:#eceae4;border-top:1px solid #2c2e34}.ds-chan{display:flex;align-items:center;gap:28px;padding:24px 40px;color:inherit;text-decoration:none;transition:background-color .15s}.ds-chan:hover{background:#b3251d;color:#fff}.ds-chan:focus-visible{outline:2.5px solid #d8332a;outline-offset:-3px}.ds-chan-n,.ds-chan-note{font-family:'IBM Plex Mono', ui-monospace, Menlo, monospace;font-size:10.5px;letter-spacing:.16em;color:#8e8d86}.ds-chan:hover .ds-chan-n,.ds-chan:hover .ds-chan-note{color:rgba(255,255,255,.8)}.ds-chan-l{flex:1;font-family:'Archivo Variable', Archivo, 'Helvetica Neue', Arial, sans-serif;font-size:clamp(1.5rem,6vw,3.2rem);font-weight:900;font-stretch:78%;text-transform:uppercase;line-height:1;letter-spacing:-.03em}.ds-chan svg{width:32px;height:32px;transition:transform .2s}.ds-chan:hover svg{transform:translateX(8px)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Operations Report",
+    "overview": "Every page is a filled-in work order from a small Bogotá practice: a ruled header strip that says *Operations report* with today's date, a sheet of warm grey office paper under a fixed film of grain, form sections stamped in mono capitals on heavy ink rules, and the consultant's red pen in the margin. The visual vocabulary is borrowed from documents a traditional business already handles: check sheets, fault logs, Gantt-style job schedules, packing lists, perforated tickets, a dictionary entry, a sign-painter's lettering. Nothing reads as a startup landing page.\n\nDensity is that of a working document: hairline rules between rows, mono metadata beside every item, generous left-aligned text measures, and almost no decoration that is not also a form element. Color is restrained to paper, ink and one red family; red marks what matters (underlines, checkmarks, the call to action, the pen), and a near-black panel closes each page as the sign-off sheet.\n\nMotion is short and paper-like: rows rise 14px into place in a stagger, red underlines draw themselves under key phrases, schedule bars extend from the left, and a mono ticker runs along an ink band. Everything collapses to static under reduced motion.",
+    "keyCharacteristics": [
+      "Warm paper ground (papel) with a fixed multiply grain overlay across the whole viewport.",
+      "Ink rules as structure: 2.5px over every section header, 1px hairlines between rows.",
+      "One red family, three steps, each with a fixed job.",
+      "Four typefaces with strict roles: condensed Archivo, sign-painted Alfa Slab, Plex Mono labels, Caveat red pen.",
+      "Square, document-like shapes (2px corners), no pill shapes.",
+      "A dark contact panel ends every page."
+    ],
+    "rules": [
+      {
+        "name": "The Red Pen Rule",
+        "body": "Red is never a background for a section or a decorative fill. It appears as a mark (underline, check, rule, bar), as handwriting, or as the solid fill of the one action that leads to WhatsApp.",
+        "section": "colors"
+      },
+      {
+        "name": "The Right Red Rule",
+        "body": "rojo for marks and strokes, rojo2 for text and filled buttons on light ground, rojo3 only on panel or tinta. Don't swap them.",
+        "section": "colors"
+      },
+      {
+        "name": "The Width Axis Rule",
+        "body": "Hierarchy in Archivo is carried by the wdth axis as much as by size: condensed (62-84%) for shouts and numerals, 98-104% for headlines and statements. Archivo is imported with the wdth axis; never swap to a static cut.",
+        "section": "typography"
+      },
+      {
+        "name": "The One Painted Line Rule",
+        "body": "The painted slab treatment appears once per surface, in the hero. It is a sign, not a style.",
+        "section": "typography"
+      },
+      {
+        "name": "The Mono Is Paperwork Rule",
+        "body": "Plex Mono is always small, uppercase and tracked. It labels; it never carries sentences of persuasion.",
+        "section": "typography"
+      },
+      {
+        "name": "The Ruled Form Rule",
+        "body": "Lists are rows separated by 1px linea hairlines inside a bordered block, never grids of floating cards.",
+        "section": "layout"
+      },
+      {
+        "name": "The Sheet Lift Rule",
+        "body": "At most one lifted sheet per section; every other surface lies flat with a border.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** open every section with the header strip: 2.5px tinta rule, mono document-type label, optional gris note, then the Archivo h2.",
+      "**Do** keep red for marks, handwriting and the WhatsApp action, using rojo, rojo2 and rojo3 for their assigned jobs.",
+      "**Do** express hierarchy in Archivo through the wdth axis (62-84% condensed for shouts and numbers, 98-104% for headlines).",
+      "**Do** build lists as hairline-ruled rows with a mono metadata column.",
+      "**Do** close every page with the dark contact panel.",
+      "**Do** use the existing hand-made utilities (grain, ruled lines, painted, underline sweep, checkbox, row, perforation, ticker, reveal, wire, toggle, bar, page width) instead of re-creating them with loose utilities.",
+      "**Do** put three adjacent inline fragments (text, link or underline, text) in one `set:html` string. In Astro a line break inside an `<a>` or between expressions becomes a space: underlines swallow the next space and commas detach.",
+      "**Do** treat the Tablero de cajitas markup as a contract with its script: the wires are drawn from each box's `offsetLeft`/`offsetTop`, so box `id`s, their order and the `data-a`/`data-b`/`data-r` attributes must not change, and its geometry is not to be redrawn.",
+      "**Do** honor reduced motion for every new animation, as the existing ones do."
+    ],
+    "donts": [
+      "**Don't** use rojo3 on paper or rojo2 on the dark panel.",
+      "**Don't** use the painted slab treatment outside the hero line.",
+      "**Don't** round corners past 2px or introduce pill buttons.",
+      "**Don't** stack floating shadowed cards in grids; raise at most one sheet per section.",
+      "**Don't** introduce a new hue, gradient fill or tinted section background beyond papel, papel2, campo, tinta and panel.",
+      "**Don't** set persuasion or body sentences in Plex Mono, or use the mono label as a slogan above a headline that repeats it.",
+      "**Don't** load a static Archivo cut or drop the wdth axis import."
+    ]
+  }
+}

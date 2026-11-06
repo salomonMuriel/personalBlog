@@ -26,7 +26,10 @@ const agentes = [
 ];
 
 const cuerpo = `${agentes
-  .map(a => `User-agent: ${a}\nAllow: /\nDisallow: /keystatic\n`)
+  .map(
+    a =>
+      `User-agent: ${a}\nAllow: /\nDisallow: /keystatic\nDisallow: /api/\nDisallow: /prototipos/\n`
+  )
   .join("\n")}
 Sitemap: ${new URL("sitemap-index.xml", SITE.website).href}
 Sitemap: ${new URL("sitemap-removed.xml", SITE.website).href}

@@ -1,0 +1,50 @@
+---
+import EncabezadoSeccion from "@components/EncabezadoSeccion.astro";
+import { copia } from "@data/landing";
+import { routes, type Lang } from "@i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const todo = copia(lang);
+const c = todo.antes;
+const empresas = todo.montado.empresas;
+---
+
+<section id="antes" class="py-[clamp(2.6rem,5.5vw,4.4rem)]">
+  <div class="hoja">
+    <EncabezadoSeccion rotulo={c.rotulo} nota={c.nota} notaCh={42} />
+
+    <h2
+      class="font-arch max-w-[24ch] text-[clamp(1.6rem,3.6vw,2.6rem)] font-extrabold leading-[1.05] tracking-[-.028em] [font-stretch:104%]"
+    >
+      {c.titulo}
+    </h2>
+
+    <div
+      class="mt-[clamp(1.4rem,3vw,2.2rem)] grid grid-cols-1 border-t border-linea md:grid-cols-2 md:gap-x-[clamp(1.5rem,4vw,3.5rem)]"
+    >
+      {
+        empresas.map(e => (
+          <p
+            class="border-b border-linea py-3.5 text-[.98rem] leading-[1.45] text-gris"
+            set:html={
+              `<b class="font-arch font-extrabold text-tinta">${e.nombre}</b> <span class="font-mono text-[11px] uppercase tracking-[.1em]">${e.cuando}</span><br/>${e.texto}` +
+              ("remate" in e && e.remate
+                ? ` <b class="font-semibold ${e.remateRojo ? "text-rojo2" : "text-tinta"}">${e.remate}</b>`
+                : "") +
+              ("cola" in e && e.cola ? e.cola : "")
+            }
+          />
+        ))
+      }
+    </div>
+
+    <a
+      href={`${routes.sobreMi[lang]}#empresas`}
+      class="mt-5 inline-block border-b-[1.5px] border-current font-semibold text-rojo2 transition-colors hover:text-tinta"
+      >{c.enlace}</a
+    >
+  </div>
+</section>

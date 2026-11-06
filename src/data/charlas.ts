@@ -17,8 +17,8 @@ const es = {
   franqueza: {
     rotulo: "Por qué doy charlas",
     texto:
-      "Las charlas son la forma en que la gente conoce lo demás que hago: la consultoría, la mentoría e Ignia, el modelo de educación superior que construyo de lunes a viernes. Ninguna charla es para vender, pero mucha de la gente que después me escribe me oyó primero en una.",
-    condicion: "Hablo de lo que he hecho, no de lo que leí.",
+      "Las charlas son la forma en que la gente conoce lo demás que hago: la consultoría, la mentoría e Ignia, el modelo de educación superior que estoy construyendo. En tarima no vendo nada, pero mucha de la gente que después me escribe me oyó primero en una charla.",
+    condicion: "Solo hablo de lo que he hecho.",
   },
 
   temas: {
@@ -40,13 +40,13 @@ const es = {
       {
         n: "03",
         t: "Mentalidad maker",
-        d: "Perrenque, curiosidad, resiliencia y creatividad. Construir con lo que hay.",
+        d: "Construir con lo que hay, a punta de perrenque, curiosidad, resiliencia y creatividad.",
         publico: "Para estudiantes y equipos que necesitan mover algo ya.",
       },
       {
         n: "04",
         t: "Trabajo y vida",
-        d: "Quinta empresa, mellizos de cuatro años, una media maratón y un medidor de felicidad publicado.",
+        d: "Una quinta empresa, mellizos de cuatro años, una media maratón y un medidor de felicidad que publico en mi página.",
         publico: "Para eventos corporativos y de talento.",
       },
     ],
@@ -56,7 +56,7 @@ const es = {
       "Charlas de cultura organizacional.",
     ],
     noNota:
-      "Hay gente que las da mucho mejor que yo; con gusto te paso el contacto.",
+      "Hay gente que las da mucho mejor que yo. Con gusto te paso el contacto.",
   },
 
   formatos: {
@@ -70,7 +70,7 @@ const es = {
       },
       {
         t: "Taller",
-        d: "Sesión práctica con el equipo, trabajando sobre su propio caso en vez de sobre un ejemplo.",
+        d: "Sesión práctica en la que el equipo trabaja sobre su propio caso.",
       },
       {
         t: "Conversatorio o panel",
@@ -111,7 +111,7 @@ const es = {
     bioLargaT: "Bio larga",
     bioLargaNota: "Para prensa o para presentar en tarima.",
     bioLarga:
-      "Salomón Muriel tiene 35 años, vive en Bogotá y va en su quinta empresa. Fundó Finco, valoración inmobiliaria con datos e inteligencia artificial para Latinoamérica, vendida a RED Atlas; y PrestaGente, libranza entre personas, vendida a Taurus Capital y todavía operando. Otras dos quebraron: Beriblock y El Palomo. Como empleado dirigió unas cuarenta personas en R5, donde construyó el pipeline de datos y el sistema de modelación de riesgo. Hoy construye Ignia, un modelo nuevo de educación superior en Latinoamérica, y en paralelo tiene una práctica personal de consultoría: le construye software a la medida a empresas colombianas tradicionales. Aprendió a programar a las malas, con una fecha de entrega encima. Aprendió inglés jugando en línea. Es papá de mellizos, Franco y Luca, corrió una media maratón en 2:10 y publica un medidor de felicidad en su página. Su papá y su abuelo también fueron empresarios.",
+      "Salomón Muriel tiene 35 años, vive en Bogotá y va en su quinta empresa. Fundó Finco, valoración inmobiliaria con datos e inteligencia artificial para Latinoamérica, y la vendió a RED Atlas. También fundó PrestaGente, libranza entre personas, que vendió a Taurus Capital y sigue operando. Otras dos quebraron: Beriblock y El Palomo. Como empleado dirigió unas cuarenta personas en R5, donde construyó el pipeline de datos y el sistema de modelación de riesgo. Hoy construye Ignia, un modelo nuevo de educación superior en Latinoamérica, y en paralelo tiene una práctica personal de consultoría en la que le construye software a la medida a empresas colombianas tradicionales. Aprendió a programar a las malas, con una fecha de entrega encima, y el inglés jugando en línea. Es papá de mellizos, Franco y Luca, corrió una media maratón en 2:10 y publica un medidor de felicidad en su página. Su papá y su abuelo también fueron empresarios.",
     copiar: "Copiar",
     copiado: "Copiado",
     fotoT: "Foto",
@@ -159,8 +159,8 @@ const en = {
   franqueza: {
     rotulo: "Why I give talks",
     texto:
-      "Talks are how people get to know the rest of what I do: the consulting, the mentoring and Ignia, the higher-education model I build Monday to Friday. No talk is a sales pitch, but many of the people who write to me first heard me at one.",
-    condicion: "I talk about what I've done, not what I've read.",
+      "Talks are how people get to know the rest of what I do: the consulting, the mentoring and Ignia, the higher-education model I'm building. I don't sell anything on stage, but many of the people who write to me later first heard me at a talk.",
+    condicion: "I only talk about what I've done.",
   },
 
   temas: {
@@ -182,20 +182,20 @@ const en = {
       {
         n: "03",
         t: "Maker mindset",
-        d: "Grit, curiosity, resilience and creativity. Building with what's at hand.",
+        d: "Building with what's at hand, on grit, curiosity, resilience and creativity.",
         publico: "For students and teams that need to move something now.",
       },
       {
         n: "04",
         t: "Work and life",
-        d: "Fifth company, four-year-old twins, a half marathon and a happiness meter published in public.",
+        d: "A fifth company, four-year-old twins, a half marathon and a happiness meter I publish on my site.",
         publico: "For corporate and talent events.",
       },
     ],
     noRotulo: "What I don't talk about",
     no: ["Technical data-science talks.", "Organisational-culture talks."],
     noNota:
-      "There are people who do them far better than me; happy to pass on the contact.",
+      "There are people who do them far better than me. Happy to pass on their contact.",
   },
 
   formatos: {
@@ -209,7 +209,7 @@ const en = {
       },
       {
         t: "Workshop",
-        d: "A hands-on session with the team, working on their own case rather than on an example.",
+        d: "A hands-on session where the team works on its own case.",
       },
       {
         t: "Panel or fireside",
@@ -250,7 +250,7 @@ const en = {
     bioLargaT: "Long bio",
     bioLargaNota: "For press or for a stage introduction.",
     bioLarga:
-      "Salomón Muriel is 35, lives in Bogotá and is on his fifth company. He founded Finco, real-estate valuation with data and AI for Latin America, sold to RED Atlas; and PrestaGente, peer-to-peer payroll lending, sold to Taurus Capital and still operating. Two others failed: Beriblock and El Palomo. As an employee he led around forty people at R5, where he built the data pipeline and the risk-modelling system. Today he builds Ignia, a new model for higher education in Latin America, and alongside it runs a personal consulting practice: building custom software for traditional Colombian companies. He learned to code the hard way, with a deadline on top of him. He learned English playing games online. He's the father of twins, Franco and Luca, ran a half marathon in 2:10 and publishes a happiness meter on his site. His father and grandfather were business owners too.",
+      "Salomón Muriel is 35, lives in Bogotá and is on his fifth company. He founded Finco, real-estate valuation with data and AI for Latin America, and sold it to RED Atlas. He also founded PrestaGente, peer-to-peer payroll lending, which he sold to Taurus Capital and which is still operating. Two others failed: Beriblock and El Palomo. As an employee he led around forty people at R5, where he built the data pipeline and the risk-modelling system. Today he is building Ignia, a new model for higher education in Latin America, and alongside it runs a personal consulting practice where he builds custom software for traditional Colombian companies. He learned to code the hard way, with a deadline on top of him, and learned English playing games online. He's the father of twins, Franco and Luca, ran a half marathon in 2:10 and publishes a happiness meter on his site. His father and grandfather were business owners too.",
     copiar: "Copy",
     copiado: "Copied",
     fotoT: "Photo",

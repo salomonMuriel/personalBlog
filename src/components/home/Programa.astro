@@ -87,72 +87,17 @@ const barras = [
     </div>
 
     <div
-      class="mt-[clamp(2.4rem,5vw,4rem)] grid grid-cols-1 items-center gap-[clamp(1.5rem,4vw,3.5rem)] lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]"
+      class="mt-[clamp(2rem,4vw,3rem)] flex flex-col gap-3 rounded border-[1.5px] border-tinta bg-campo px-5 py-5 sm:flex-row sm:items-baseline sm:gap-6 sm:px-6"
     >
-      <div>
-        <h3
-          class="font-arch max-w-[20ch] text-[clamp(1.3rem,2.6vw,1.95rem)] font-extrabold leading-[1.1] tracking-[-.028em] [font-stretch:100%]"
-        >
-          {c.bitacoraTitulo}
-        </h3>
-        <p class="mt-4 max-w-[46ch] text-[1.02rem] leading-[1.6] text-gris">
-          {c.bitacoraTexto}
-        </p>
-        <p
-          class="font-mono mt-5 text-[10.5px] uppercase leading-[1.8] tracking-[.16em] text-gris"
-        >
-          {c.bitacoraPie}
-        </p>
-      </div>
-
-      <div class="overflow-hidden rounded bg-panel text-panelfg">
-        <div
-          class="font-mono flex flex-wrap items-baseline gap-3 border-b border-panelborde px-4 py-4 text-[10.5px] uppercase tracking-[.18em] text-panelnota sm:px-6"
-        >
-          <span>{c.bitacoraEncabezado}</span><span
-            class="ml-auto font-semibold text-rojo3"
-            >{c.bitacoraResponsable}</span
-          >
-        </div>
-        <div>
-          {
-            c.bitacora.map(([dia, tarea], i) => (
-              <div
-                class:list={[
-                  "grid grid-cols-[3.1rem_1.35rem_1fr] items-start gap-3.5 px-4 py-3.5 sm:px-6",
-                  i > 0 && "border-t border-panelborde2",
-                ]}
-              >
-                <span class="font-mono pt-[3px] text-[11px] tracking-[.14em] text-panelnota">
-                  {dia}
-                </span>
-                <span
-                  class="mt-[1px] grid h-[1.35rem] w-[1.35rem] place-items-center rounded bg-rojo2 text-white"
-                  aria-hidden="true"
-                >
-                  <svg class="h-3.5 w-3.5">
-                    <use href="#i-check" />
-                  </svg>
-                </span>
-                <span class="text-[1rem] leading-[1.35] text-[#8b8a83] line-through decoration-rojo3 decoration-2 [text-decoration-skip-ink:none]">
-                  {tarea}
-                </span>
-              </div>
-            ))
-          }
-        </div>
-        <div
-          class="flex flex-wrap items-baseline gap-x-4 gap-y-1 border-t border-panelborde px-4 py-4 sm:px-6"
-        >
-          <span
-            class="font-mono text-[12px] font-semibold uppercase tracking-[.14em] text-rojo3"
-            >{c.bitacoraHechas}</span
-          >
-          <span class="text-[.95rem] leading-[1.4] text-[#8b8a83]"
-            >{c.bitacoraNinguna}</span
-          >
-        </div>
-      </div>
+      <span
+        class="font-mono flex-none text-[11px] font-semibold uppercase tracking-[.18em] text-rojo2"
+        >{c.garantiaRotulo}</span
+      >
+      <p
+        class="font-arch text-[clamp(1.2rem,2.4vw,1.6rem)] font-bold leading-[1.2] tracking-[-.028em] [font-stretch:98%]"
+      >
+        {c.garantia}
+      </p>
     </div>
   </div>
 </section>

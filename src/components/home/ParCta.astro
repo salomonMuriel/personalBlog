@@ -1,0 +1,69 @@
+---
+import { wa } from "@config";
+import { copia } from "@data/landing";
+import { routes, type Lang } from "@i18n/ui";
+
+interface Props {
+  lang: Lang;
+  origen: string;
+  tono?: "claro" | "oscuro";
+  nota?: boolean;
+  class?: string;
+}
+const {
+  lang,
+  origen,
+  tono = "claro",
+  nota = false,
+  class: clase = "",
+} = Astro.props;
+const c = copia(lang).cta;
+const oscuro = tono === "oscuro";
+
+const base =
+  "inline-flex min-h-[48px] items-center justify-center gap-2.5 rounded px-5 py-3.5 text-[.97rem] font-bold transition-[background-color,border-color,color,transform] active:translate-y-px";
+const primario = oscuro
+  ? "bg-rojo2 text-white hover:bg-papel hover:text-tinta"
+  : "bg-rojo2 text-white hover:bg-tinta";
+const secundario = oscuro
+  ? "border-[1.5px] border-panelnota text-panelfg hover:border-panelfg hover:bg-panelhondo"
+  : "border-[1.5px] border-linea2 hover:border-tinta hover:bg-papel2";
+---
+
+<div class={clase}>
+  <div class="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+    <a
+      href={routes.cuentame[lang]}
+      data-origen={origen}
+      class:list={[base, primario]}
+    >
+      {c.cuestionario}<svg
+        class="h-[18px] w-[18px] opacity-80"
+        aria-hidden="true"><use href="#i-arw"></use></svg
+      >
+    </a>
+    <a
+      href={wa(c.waTexto)}
+      target="_blank"
+      rel="noopener"
+      data-origen={origen}
+      class:list={[base, secundario]}
+    >
+      <svg class="h-[18px] w-[18px] opacity-75" aria-hidden="true"
+        ><use href="#i-chat"></use></svg
+      >{c.wa}
+    </a>
+  </div>
+  {
+    nota && (
+      <p
+        class:list={[
+          "font-mono mt-3.5 text-[11px] uppercase tracking-[.14em]",
+          oscuro ? "text-panelnota" : "text-gris",
+        ]}
+      >
+        {c.cuestionarioNota}
+      </p>
+    )
+  }
+</div>

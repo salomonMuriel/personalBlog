@@ -1,0 +1,61 @@
+---
+import {
+  MULTIPLES,
+  OPCIONES,
+  type ClavePregunta,
+} from "@data/cuestionario/opciones";
+import type { CopiaCuestionario } from "@data/cuestionario/tipos";
+
+interface Props {
+  clave: ClavePregunta;
+  indice: number;
+  copia: CopiaCuestionario;
+}
+const { clave, indice, copia } = Astro.props;
+const pregunta = copia.preguntas[clave];
+const opciones = OPCIONES[clave] as readonly string[];
+const etiquetas = pregunta.opciones as Record<string, string>;
+const max = MULTIPLES[clave];
+const tipo = max ? "checkbox" : "radio";
+const ayuda = !max
+  ? undefined
+  : max < opciones.length
+    ? copia.escogeHasta.replace("%n", String(max))
+    : copia.marcaVarias;
+---
+
+<fieldset data-paso={clave} data-max={max} hidden={indice > 0} class="min-w-0">
+  <legend
+    tabindex="-1"
+    class="font-arch text-[clamp(1.35rem,3vw,1.85rem)] font-bold leading-[1.14] tracking-[-.028em] outline-none [font-stretch:98%]"
+  >
+    {pregunta.titulo}
+  </legend>
+  {ayuda && <p class="mt-2 text-[14px] text-gris">{ayuda}</p>}
+
+  <div class="mt-5 divide-y divide-linea rounded border border-linea">
+    {
+      opciones.map(id => (
+        <label class="reng flex cursor-pointer items-start gap-3.5 px-4 py-3.5 transition-colors">
+          <input type={tipo} name={clave} value={id} class="casilla" />
+          <span class="text-[1rem] leading-[1.4]">{etiquetas[id]}</span>
+        </label>
+      ))
+    }
+  </div>
+
+  {
+    clave === "sector" && (
+      <input
+        type="text"
+        name="sectorOtro"
+        data-otro
+        hidden
+        maxlength="80"
+        placeholder={copia.otraPlaceholder}
+        aria-label={copia.otraPlaceholder}
+        class="mt-3 w-full rounded border-[1.5px] border-linea2 bg-campo px-4 py-3 text-[1rem] focus:border-tinta"
+      />
+    )
+  }
+</fieldset>

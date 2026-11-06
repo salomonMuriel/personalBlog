@@ -4,7 +4,7 @@ const es = {
   meta: {
     title: "Mentoría uno a uno — Salomón Muriel",
     description:
-      "Acompañamiento semanal, uno a uno, para el que está arrancando algo: negocio propio, fundación o startup. Tareas prácticas cada semana, revisadas la semana siguiente. Bogotá.",
+      "Mentoría semanal, uno a uno, para quien está arrancando un negocio propio, una fundación o una startup. Tareas prácticas cada semana, revisadas en la sesión siguiente. Bogotá.",
   },
 
   rotulo: "Salida 02 · Acompañamiento",
@@ -57,7 +57,7 @@ const es = {
     rotulo: "Lista de la semana",
     titulo: "Una semana cualquiera",
     texto: "Una semana real de mentoría, con los datos del negocio cambiados.",
-    encabezado: "Lista — semana 3 de 12",
+    encabezado: "Lista · semana 3 de 12",
     responsable: "Responsable: tú",
     tareas: [
       "Llamar a cinco clientes que compraron una sola vez y preguntarles por qué no volvieron.",
@@ -67,14 +67,14 @@ const es = {
       "Mandarme el precio nuevo antes del jueves, así no esté perfecto.",
     ],
     pie: "0 de 5 hechas",
-    pieNota: "Ninguna se marca sola.",
+    pieNota: "Las revisamos en la próxima sesión.",
   },
 
   regla: {
     rotulo: "La única regla",
     aviso: "Importante",
     texto:
-      "Si pasan dos semanas seguidas sin hacer las tareas, paramos. Sin resentimientos: sin tareas, la mentoría no funciona.",
+      "Si pasan dos semanas seguidas sin hacer las tareas, paramos, porque sin ellas la mentoría no sirve.",
   },
 
   paraQuien: {
@@ -86,7 +86,7 @@ const es = {
         "Negocio propio que todavía no despega.",
         "Fundación u organización social.",
         "Startup en sus primeros meses.",
-        "Alguien reinventándose profesionalmente y con algo que sacar adelante.",
+        "Alguien que está cambiando de carrera y tiene algo que sacar adelante.",
       ],
     },
     no: {
@@ -94,38 +94,35 @@ const es = {
       items: [
         "El que busca que le digan que va bien.",
         "El que busca consejos sueltos, sin tareas.",
-        "El que ya tiene una empresa que vende y lo que le duele es la operación. Eso es consultoría.",
+        "El que ya tiene una empresa que vende y lo que le duele es la operación.",
       ],
     },
     remateA:
-      "Si tu empresa ya vende y el problema es que la operación está pegada con una persona en la mitad, lo tuyo es ",
+      "Si tu empresa ya vende y la operación está pegada con una persona en la mitad, lo tuyo es ",
     remateEnlace: "la consultoría",
-    remateB: ", no esto.",
+    remateB: ".",
   },
 
   ignia: {
     rotulo: "Antes de escribirme",
-    titulo: "Si lo que buscas es un grupo, eso ya existe",
+    titulo: "Si prefieres aprender en grupo",
     texto:
-      "Si prefieres aprender en grupo, con currículo y con gente en tu mismo momento, el Action Lab de Ignia te va a servir más.",
-    remate: "Esto, en cambio, es uno a uno.",
+      "Para eso está el Action Lab de Ignia, con currículo y con gente en tu mismo momento. Te va a servir más que esto.",
+    remate: "Acá es uno a uno y trabajamos sobre tu caso.",
     cta: "Ver el Action Lab de Ignia",
     url: "https://www.ignia.lat",
   },
 
-  cupos: {
-    rotulo: "Capacidad instalada",
-    nota: "Números reales de hoy. Cuando se llenan, quito el botón.",
-    ocupadas: "cupos de mentoría ocupados",
-    ariaCupos: "%s de %t cupos de mentoría ocupados",
-    explicacion:
-      "Máximo %t a la vez, para poder revisar bien las tareas de cada uno.",
-    actualizado: "Actualizado el",
-    ctaUno: "Tomar el cupo que queda",
-    ctaVarios: "Tomar uno de los %n que quedan",
-    ctaWa:
+  empezar: {
+    rotulo: "Para empezar",
+    nota: "La primera conversación es para ver si esto te sirve.",
+    titulo: "Cuéntame qué estás arrancando",
+    texto:
+      "Escríbeme por WhatsApp qué estás construyendo y dónde te trancaste. Te digo si la mentoría es para ti o si te conviene más otra cosa.",
+    ctaWa: "Escribirme por WhatsApp",
+    ctaWaTexto:
       "Hola Salomón, estoy arrancando ___ y quiero preguntarte por la mentoría uno a uno.",
-    sinCupo: "Sin cupo por ahora. Escríbeme y te aviso cuando se libere uno.",
+    ctaAgenda: "O agenda una llamada",
   },
 
   preguntas: [
@@ -145,10 +142,6 @@ const es = {
       p: "¿Sirve si lo mío es una fundación y no una empresa?",
       r: "Sí. De las siete personas que han pasado, hay emprendedores, fundadores de startup y gente de organizaciones sociales. La mecánica es la misma.",
     },
-    {
-      p: "¿De dónde sacas el tiempo?",
-      r: "De lunes a viernes construyo Ignia, que es mi empresa. Tengo dos mellizos de cuatro años y no trabajo los domingos. Por eso el tope son cinco personas al tiempo.",
-    },
   ],
 } as const;
 
@@ -156,7 +149,7 @@ const en = {
   meta: {
     title: "One-to-one mentoring — Salomón Muriel",
     description:
-      "Weekly one-to-one work for anyone starting something: their own business, a nonprofit or a startup. Practical assignments every week, reviewed the following week. Bogotá.",
+      "Weekly one-to-one mentoring for anyone starting their own business, a nonprofit or a startup. Practical assignments every week, reviewed in the following session. Bogotá.",
   },
 
   rotulo: "Track 02 · Mentoring",
@@ -209,7 +202,7 @@ const en = {
     rotulo: "The week's list",
     titulo: "An ordinary week",
     texto: "A real week of mentoring, with the business details changed.",
-    encabezado: "List — week 3 of 12",
+    encabezado: "List · week 3 of 12",
     responsable: "Responsible: you",
     tareas: [
       "Call five customers who bought once and ask them why they didn't come back.",
@@ -219,14 +212,14 @@ const en = {
       "Send me the new price before Thursday, even if it isn't perfect.",
     ],
     pie: "0 of 5 done",
-    pieNota: "None of them ticks itself.",
+    pieNota: "We go over them in the next session.",
   },
 
   regla: {
     rotulo: "The one rule",
     aviso: "Important",
     texto:
-      "If two weeks go by without the assignments done, we stop. No hard feelings: without assignments, mentoring doesn't work.",
+      "If two weeks in a row go by without the assignments done, we stop, because without them mentoring doesn't work.",
   },
 
   paraQuien: {
@@ -238,7 +231,7 @@ const en = {
         "Your own business, not off the ground yet.",
         "A foundation or social organisation.",
         "A startup in its first months.",
-        "Someone reinventing themselves professionally with something to get moving.",
+        "Someone changing careers who has something to get moving.",
       ],
     },
     no: {
@@ -246,39 +239,35 @@ const en = {
       items: [
         "Anyone looking to be told they're doing well.",
         "Anyone looking for advice without assignments.",
-        "Anyone whose company already sells and whose pain is the operation. That's consulting.",
+        "Anyone whose company already sells and whose pain is the operation.",
       ],
     },
     remateA:
-      "If your company already sells and the problem is that the operation is held together by a person in the middle, what you want is ",
-    remateEnlace: "the consulting",
-    remateB: ", not this.",
+      "If your company already sells and the operation is held together by one person in the middle, what you need is ",
+    remateEnlace: "consulting",
+    remateB: ".",
   },
 
   ignia: {
     rotulo: "Before you write to me",
-    titulo: "If what you want is a group, that already exists",
+    titulo: "If you'd rather learn in a group",
     texto:
-      "If you'd rather learn in a group, with a curriculum and people at your stage, Ignia's Action Lab will serve you better.",
-    remate: "This, on the other hand, is one to one.",
+      "That's what Ignia's Action Lab is for, with a curriculum and people at your stage. It will serve you better than this.",
+    remate: "Here it's one to one and we work on your case.",
     cta: "See Ignia's Action Lab",
     url: "https://www.ignia.lat",
   },
 
-  cupos: {
-    rotulo: "Installed capacity",
-    nota: "Real numbers, today. When they fill up, I take the button down.",
-    ocupadas: "mentoring slots taken",
-    ariaCupos: "%s of %t mentoring slots taken",
-    explicacion:
-      "%t at a time at most, so I can review everyone's assignments properly.",
-    actualizado: "Updated on",
-    ctaUno: "Take the slot that's left",
-    ctaVarios: "Take one of the %n that are left",
-    ctaWa:
+  empezar: {
+    rotulo: "Getting started",
+    nota: "The first conversation is to see whether this is for you.",
+    titulo: "Tell me what you're starting",
+    texto:
+      "Message me on WhatsApp with what you're building and where you got stuck. I'll tell you whether mentoring is right for you or whether something else would suit you better.",
+    ctaWa: "Message me on WhatsApp",
+    ctaWaTexto:
       "Hi Salomón, I'm starting ___ and I'd like to ask you about the one-to-one mentoring.",
-    sinCupo:
-      "No slots right now. Write to me and I'll let you know when one opens.",
+    ctaAgenda: "Or book a call",
   },
 
   preguntas: [
@@ -287,7 +276,7 @@ const en = {
       r: "What you're building and what has you stuck right now. No need to prepare anything.",
     },
     {
-      p: "Is this the same as the consulting?",
+      p: "Is this the same as consulting?",
       r: "No. In consulting I do the work: I build you the tool. Here you do the work and I review it.",
     },
     {
@@ -296,11 +285,7 @@ const en = {
     },
     {
       p: "Does it work if mine is a nonprofit rather than a company?",
-      r: "Yes. Of the seven people who've been through it, there are founders, startup founders and people from social organisations. The mechanics are the same.",
-    },
-    {
-      p: "Where do you find the time?",
-      r: "Monday to Friday I build Ignia, which is my company. I have four-year-old twins and I don't work Sundays. That's why the ceiling is five people at a time.",
+      r: "Yes. Of the seven people who've been through it, there are entrepreneurs, startup founders and people from social organisations. The mechanics are the same.",
     },
   ],
 } as const;

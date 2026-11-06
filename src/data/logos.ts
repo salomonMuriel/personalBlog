@@ -1,16 +1,11 @@
-import r5 from "@assets/logos/r5.png";
-import ignia from "@assets/logos/ignia.png";
 import alianzaEducativa from "@assets/logos/alianza-educativa.png";
 import visionamos from "@assets/logos/visionamos.png";
-import finco from "@assets/logos/finco.png";
 import cosinte from "@assets/logos/cosinte.png";
 import visible from "@assets/logos/visible.png";
-import prestagente from "@assets/logos/prestagente.png";
+import entreHilos from "@assets/logos/entre-hilos.png";
 import bision from "@assets/logos/bision.png";
 import guiacolegio from "@assets/logos/guiacolegio.png";
 import jda from "@assets/logos/jda.png";
-import beriblock from "@assets/logos/beriblock.png";
-import elpalomo from "@assets/logos/elpalomo.png";
 import colsubsidio from "@assets/logos/colsubsidio.png";
 import eafit from "@assets/logos/eafit.png";
 import drReddys from "@assets/logos/dr-reddys.png";
@@ -35,9 +30,12 @@ export type Logo = {
   rotulo?: boolean;
 };
 
+// Clients only: his own companies and his former employer live in Montado and /sobre-mi.
 export const clientes: Logo[] = [
-  { nombre: "R5", logo: r5, escala: 1.05 },
-  { nombre: "Ignia", logo: ignia, escala: 1.35 },
+  { nombre: "Aura Novias" },
+  { nombre: "Visible", logo: visible, escala: 0.8 },
+  { nombre: "GuiaColegio.com", logo: guiacolegio, escala: 1.25 },
+  { nombre: "Entre Hilos", logo: entreHilos, escala: 1.15 },
   {
     nombre: "Alianza Educativa",
     alt: "Alianza Educativa (Bogotá)",
@@ -45,15 +43,9 @@ export const clientes: Logo[] = [
     escala: 1.2,
   },
   { nombre: "Visionamos", logo: visionamos, escala: 0.9 },
-  { nombre: "Finco", logo: finco, rotulo: true },
   { nombre: "Cosinte Ltda.", logo: cosinte, escala: 0.66 },
-  { nombre: "Visible", logo: visible, escala: 0.8 },
-  { nombre: "PrestaGente", logo: prestagente, escala: 1.35 },
   { nombre: "Bision Consulting", logo: bision, escala: 1 },
-  { nombre: "GuiaColegio.com", logo: guiacolegio, escala: 1.25 },
   { nombre: "Juan David Aristizábal", logo: jda, escala: 0.95 },
-  { nombre: "Beriblock", logo: beriblock, rotulo: true },
-  { nombre: "El Palomo", logo: elpalomo, rotulo: true },
 ];
 
 export const tarimas: Logo[] = [

@@ -1,0 +1,19 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Cuestionario from "@components/cuestionario/Cuestionario.astro";
+import { copiaCuestionario } from "@data/cuestionario";
+
+export const prerender = true;
+
+const c = copiaCuestionario("en");
+---
+
+<Layout
+  title={c.meta.title}
+  description={c.meta.description}
+  lang="en"
+  noindex
+  sinContacto
+>
+  <Cuestionario lang="en" />
+</Layout>

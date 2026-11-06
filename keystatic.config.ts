@@ -184,7 +184,6 @@ export default config({
     navigation: {
       Español: ["ahoraEs", "charlasEs", "sobreMiEs", "testimoniosEs"],
       English: ["ahoraEn", "charlasEn", "sobreMiEn", "testimoniosEn"],
-      Sitio: ["cupos"],
     },
   },
   collections: {
@@ -196,33 +195,6 @@ export default config({
     testimoniosEn: testimonios("en"),
   },
   singletons: {
-    cupos: singleton({
-      label: "Cupos y capacidad",
-      path: "src/content/settings/cupos",
-      format: { data: "json" },
-      schema: {
-        consultoriasOcupadas: fields.integer({
-          label: "Consultorías ocupadas",
-          validation: { isRequired: true, min: 0, max: 20 },
-        }),
-        consultoriasTotal: fields.integer({
-          label: "Consultorías, máximo al tiempo",
-          validation: { isRequired: true, min: 1, max: 20 },
-        }),
-        mentoriasOcupadas: fields.integer({
-          label: "Mentorías ocupadas",
-          validation: { isRequired: true, min: 0, max: 20 },
-        }),
-        mentoriasTotal: fields.integer({
-          label: "Mentorías, máximo al tiempo",
-          validation: { isRequired: true, min: 1, max: 20 },
-        }),
-        actualizado: fields.date({
-          label: "Actualizado el",
-          validation: { isRequired: true },
-        }),
-      },
-    }),
     sobreMiEs: singleton({
       label: "Sobre mí (ES)",
       path: "src/content/pages/about-es",

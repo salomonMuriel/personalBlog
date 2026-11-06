@@ -14,6 +14,7 @@ export const routes = {
   charlas: { es: "/charlas/", en: "/en/talks/" },
   sobreMi: { es: "/sobre-mi/", en: "/en/about/" },
   ahora: { es: "/ahora/", en: "/en/now/" },
+  cuentame: { es: "/cuentame/", en: "/en/tell-me/" },
 } as const;
 
 export type RouteKey = keyof typeof routes;
@@ -33,8 +34,9 @@ export const ui = {
     "rotulo.practica": "Práctica personal de Salomón Muriel",
     "rotulo.ciudad": "Bogotá, Colombia",
 
-    "pie.sinFormulario": "Sin formulario",
-    "pie.sinFormularioTxt": "Me escribes y te contesto yo.",
+    "pie.empezar": "Cómo empezar",
+    "pie.empezarTxt":
+      "Me escribes por WhatsApp o llenas el cuestionario de dos minutos. Te contesto yo.",
     "pie.sinEquipo": "Sin equipo detrás",
     "pie.sinEquipoTxt": "El que contesta y el que construye soy yo.",
     "pie.otras": "Otras páginas",
@@ -50,6 +52,8 @@ export const ui = {
     "contacto.linkedin": "LinkedIn",
     "contacto.linkedinNota": "Ahí escribo · no tengo blog",
     "contacto.correo": "Correo",
+    "contacto.cuestionario": "Cuestionario",
+    "contacto.cuestionarioNota": "Dos minutos",
 
     "lang.otro": "English",
     "404.titulo": "Esta página ya no está",
@@ -73,8 +77,9 @@ export const ui = {
     "rotulo.practica": "Salomón Muriel's personal practice",
     "rotulo.ciudad": "Bogotá, Colombia",
 
-    "pie.sinFormulario": "No forms",
-    "pie.sinFormularioTxt": "You write, I answer.",
+    "pie.empezar": "How to start",
+    "pie.empezarTxt":
+      "Message me on WhatsApp or fill in the two-minute questionnaire. I answer myself.",
     "pie.sinEquipo": "No team behind me",
     "pie.sinEquipoTxt":
       "The person who answers and the person who builds are the same.",
@@ -91,6 +96,8 @@ export const ui = {
     "contacto.linkedin": "LinkedIn",
     "contacto.linkedinNota": "That's where I write · no blog",
     "contacto.correo": "Email",
+    "contacto.cuestionario": "Questionnaire",
+    "contacto.cuestionarioNota": "Two minutes",
 
     "lang.otro": "Español",
     "404.titulo": "This page isn't here",

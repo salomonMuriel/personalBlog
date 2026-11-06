@@ -19,6 +19,14 @@ const canales = [
   },
   {
     n: "02",
+    label: t(lang, "contacto.cuestionario"),
+    nota: t(lang, "contacto.cuestionarioNota"),
+    href: routes.cuentame[lang],
+    origen: "pie-cuestionario",
+    externo: false,
+  },
+  {
+    n: "03",
     label: t(lang, "contacto.agendar"),
     nota: t(lang, "contacto.agendarNota"),
     href: CONTACTO.cal,
@@ -26,7 +34,7 @@ const canales = [
     externo: true,
   },
   {
-    n: "03",
+    n: "04",
     label: t(lang, "contacto.linkedin"),
     nota: t(lang, "contacto.linkedinNota"),
     href: CONTACTO.linkedin,
@@ -34,7 +42,7 @@ const canales = [
     externo: true,
   },
   {
-    n: "04",
+    n: "05",
     label: t(lang, "contacto.correo"),
     nota: CONTACTO.correo,
     href: `mailto:${CONTACTO.correo}?subject=${encodeURIComponent(
@@ -115,10 +123,10 @@ const otrasPaginas =
         <p
           class="font-mono mb-2 text-[10.5px] uppercase tracking-[.18em] text-rojo3"
         >
-          {t(lang, "pie.sinFormulario")}
+          {t(lang, "pie.empezar")}
         </p>
         <p class="text-[.95rem] leading-[1.5] text-paneltxt">
-          {t(lang, "pie.sinFormularioTxt")}
+          {t(lang, "pie.empezarTxt")}
         </p>
       </div>
       <div
