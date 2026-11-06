@@ -163,9 +163,9 @@
       <div class="hero__text span-6">
         <h1 id="hero-h">Software a la medida para PYMEs</h1>
         <p class="hero__lead">Te construyo el sistema operativo de tu empresa, el software que reemplaza los veinte Excel y el copiar y pegar. Trabajo con empresas de 5 a 40 personas.</p>
-        <div class="btn-row">
-          <a class="btn btn--primary" href="cuentame.html">Cuéntame de tu empresa<svg class="m-arrow" viewBox="0 0 12 12" aria-hidden="true"><path class="m-arrow__stem" d="M1 6h8"/><path class="m-arrow__head" d="M4.5 2.5 8 6l-3.5 3.5"/></svg></a>
-          <a class="btn btn--secondary" href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20tengo%20una%20empresa%20de%20___%20y%20quiero%20contarte%20c%C3%B3mo%20funciona%20hoy.">Escribir por WhatsApp</a>
+        <div class="btn-row" data-pliegue>
+          <a class="btn btn--primary" data-origen="hero" href="cuentame.html">Cuéntame de tu empresa<svg class="m-arrow" viewBox="0 0 12 12" aria-hidden="true"><path class="m-arrow__stem" d="M1 6h8"/><path class="m-arrow__head" d="M4.5 2.5 8 6l-3.5 3.5"/></svg></a>
+          <a class="btn btn--secondary" data-origen="hero" href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20tengo%20una%20empresa%20de%20___%20y%20quiero%20contarte%20c%C3%B3mo%20funciona%20hoy.">Escribir por WhatsApp</a>
         </div>
         <p class="hero__note t-small">El cuestionario toma unos dos minutos. Si prefieres escribirme directo, mi WhatsApp es el <span class="nowrap">+57 313 246 5100</span>.</p>
       </div>
@@ -424,6 +424,25 @@
   <a class="btn btn--secondary" href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20tengo%20una%20empresa%20de%20___%20y%20quiero%20contarte%20c%C3%B3mo%20funciona%20hoy.">WhatsApp</a>
 </nav>
 
+<style>
+  /* The phone bar waits until the hero's own buttons scroll away. */
+  @media (max-width: 639px) {
+    .actionbar { transition: transform .3s ease; }
+    .actionbar[data-oculta="true"] { transform: translateY(110%); }
+  }
+  @media (prefers-reduced-motion: reduce) { .actionbar { transition: none; } }
+</style>
+<script>
+  (() => {
+    const barra = document.querySelector(".actionbar");
+    const botones = document.querySelector(".hero .btn-row");
+    if (!barra || !botones || !("IntersectionObserver" in window)) return;
+    barra.dataset.oculta = "true";
+    new IntersectionObserver(([e]) => {
+      barra.dataset.oculta = String(e.isIntersecting || e.boundingClientRect.top > 0);
+    }).observe(botones);
+  })();
+</script>
 <script type="module" src="assets/system.js"></script>
 <script type="module" src="assets/motion/motion.js"></script>
 <script type="module" src="assets/layout/layout.js"></script>
