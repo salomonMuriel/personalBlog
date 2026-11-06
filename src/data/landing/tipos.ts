@@ -3,8 +3,7 @@ export type Ilustracion =
   | "chat-pedidos"
   | "tabla-piedra"
   | "una-cajita"
-  | "llaves"
-  | "cajitas-conectadas";
+  | "llaves";
 
 export type Falla = {
   n: string;
