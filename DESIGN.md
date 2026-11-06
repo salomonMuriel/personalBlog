@@ -221,8 +221,8 @@ The red pen. Caveat in rojo2, 1.18-1.65rem, rotated -1° to -1.4° with transfor
 - **Border:** 1px linea, or 1.5px linea2 for a form card.
 - **Internal Padding:** 16-24px.
 
-### Check sheet (Chinómetro)
-Square 1.4rem checkboxes in campo with a 1.6px linea2 border; hover border rojo; checked fills rojo with a white tick tilted -8° that pops in. The whole row tints faint red and its label is struck through in red. A gauge needle swings on a springy curve.
+### Questionnaire (`/cuentame/`)
+A dark panel (panel ground) holds the step: rojo3 mono label, a segmented progress bar (one 3px segment per step, rojo3 when done, panelborde ahead), the question in Archivo extrabold, and on desktop a small portrait with the WhatsApp line. Answers are separate campo tiles with a 1.5px linea2 border: square `.casilla` checkboxes for multi-select, round radios for single choice; hover darkens the border to tinta, checked turns it rojo over a faint red fill. Long lists split into two columns on desktop; on phones Back/Next sit in a sticky bar. Every step fits the first screen at 1920x937, 1440x900 and 375x667.
 
 ### Navigation
 A tinta top strip (36px, mono 10.5px, rojo3 report label, panelgris date) sits above a sticky 60px nav on papel at 90% with backdrop blur, gaining a linea bottom border once scrolled. Wordmark in mono with a rojo2 period. Links 14px semibold gris with a 1.5px underline that turns rojo on hover and current page. On mobile the links move to a horizontally scrolling mono row under the bar.
@@ -233,8 +233,11 @@ A full-bleed tinta band with a mono uppercase marquee in panelfg (46s loop); the
 ### Dark contact panel
 Ends every page. panel ground, a giant condensed Archivo title (wdth 70, up to 7.4rem) beside a paneltxt lead. Then four full-bleed channel rows: mono number, condensed uppercase channel name up to 3.2rem, mono note, and an arrow that slides 8px right; the whole row floods rojo2 on hover. Then a three-column footnote grid with rojo3 mono labels and a mono colophon line in panelnota.
 
-### Toggle and board (Tablero de cajitas)
-A segmented 1.5px tinta control; the pressed segment is tinta on papel. The board switches between *today* (dashed rojo wires marching, rojo2 chips, dashed red boxes) and *connected* (solid ink wires, dimmed retired boxes, an ink-topped panel note).
+### Cajitas diagram (`DiagramaCajitas`)
+A still flow on a lifted campo sheet: six boxes (1.5px tinta border, Lucide line icon on a papel chip, Archivo title, mono sub-label) joined by square-elbow ink lines, all inside a dashed rojo frame labelled «Sistema operativo». Left to right on desktop, top to bottom on phones (icons hidden there).
+
+### Illustrations
+Isometric line drawings recoloured into the palette: ink greys for every former navy, signal red for the one accent, warm beige surfaces kept. They sit in a campo mat with 7px padding like photos. Sources are in `src/assets/ilustraciones/`.
 
 ## Do's and Don'ts
 

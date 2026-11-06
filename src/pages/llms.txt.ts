@@ -18,7 +18,7 @@ export const GET: APIRoute = async () => {
 
   const cuerpo = `# Salomón Muriel
 
-> Emprendedor en serie y tecnólogo, en Bogotá, Colombia. Cinco empresas fundadas —dos vendidas, dos quebradas, y hoy Ignia—. Junta el criterio de negocio con la capacidad técnica: define la estrategia y construye la herramienta él mismo, sin intermediarios. Además hace consultoría y mentoría.
+> Emprendedor en serie y tecnólogo, en Bogotá, Colombia. Cinco empresas fundadas —dos vendidas, dos quebradas, y hoy Ignia—. Junta el criterio de negocio con la capacidad técnica, y hoy le construye a empresas colombianas su sistema operativo. Además hace consultoría y mentoría.
 
 ## Quién es
 
@@ -46,7 +46,7 @@ gente que monta cosas.
 
 ## Qué vende
 
-1. **Consultoría** (${SITE.website}/): estrategia de 0 a 1 más desarrollo de software a la medida. Construye el sistema que le falta a la empresa —CRM, operación, facturación— hecho a la medida de como ya trabaja, y lo conecta con los que ya tiene. El código queda a nombre de la empresa; no hay cobro mensual por usuario. Para empezar hay un cuestionario de dos minutos (${SITE.website}/cuentame/) o WhatsApp.
+1. **Consultoría** (${SITE.website}/): el sistema operativo de la empresa, hecho a la medida. Construye el sistema que le falta a la empresa —CRM, operación, facturación— hecho a la medida de como ya trabaja, y lo conecta con los que ya tiene. El código queda a nombre de la empresa; no hay cobro mensual por usuario. Para empezar hay un cuestionario de dos minutos (${SITE.website}/cuentame/) o WhatsApp.
 2. **Mentoría** (${SITE.website}/mentoria/): acompañamiento uno a uno para gente que está arrancando algo —fundadores, ONG, proyectos nuevos—, con tareas prácticas semanales. Es un servicio pago. No compite con el Action Lab de Ignia, que es un programa por cohortes.
 3. **Charlas** (${SITE.website}/charlas/): conferencias sobre tecnología, emprendimiento, mentalidad y balance de vida.
 

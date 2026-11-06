@@ -37,9 +37,9 @@ export const ui = {
     "pie.empezar": "Cómo empezar",
     "pie.empezarTxt":
       "Escríbeme por WhatsApp o llena el cuestionario, que toma unos dos minutos.",
-    "pie.sinEquipo": "Quién hace el trabajo",
-    "pie.sinEquipoTxt":
-      "Lo hago yo, desde la primera conversación hasta la entrega.",
+    "pie.queConstruyo": "Qué construyo",
+    "pie.queConstruyoTxt":
+      "Le construyo a tu empresa su sistema operativo, a la medida de cómo ya trabaja.",
     "pie.otras": "Otras páginas",
     "pie.vigente": "Documento vigente",
     "pie.coords": "Bogotá · 4°42′N 74°04′W",
@@ -81,8 +81,9 @@ export const ui = {
     "pie.empezar": "How to start",
     "pie.empezarTxt":
       "Message me on WhatsApp or fill in the questionnaire, which takes about two minutes.",
-    "pie.sinEquipo": "Who does the work",
-    "pie.sinEquipoTxt": "I do, from the first conversation to the handover.",
+    "pie.queConstruyo": "What I build",
+    "pie.queConstruyoTxt":
+      "I build your company its operating system, made to fit how it already works.",
     "pie.otras": "Other pages",
     "pie.vigente": "Current document",
     "pie.coords": "Bogotá · 4°42′N 74°04′W",

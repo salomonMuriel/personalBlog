@@ -2,7 +2,7 @@ import type { Lang } from "@i18n/ui";
 import { es } from "./es";
 import { en } from "./en";
 
-export type { Falla, Renglon, Sistema } from "./tipos";
+export type { Columna, Falla, Ilustracion, Nodo, Sistema } from "./tipos";
 export type Copia = typeof es;
 
 export const landing = { es, en } as const;

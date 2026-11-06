@@ -56,11 +56,11 @@ function leerContacto(form: HTMLFormElement): Contacto {
   };
 }
 
-function pasoCompleto(fieldset: HTMLFieldSetElement): boolean {
+function pasoCompleto(fieldset: HTMLElement): boolean {
   return fieldset.querySelectorAll("input:checked").length > 0;
 }
 
-function limitarMultiples(fieldset: HTMLFieldSetElement) {
+function limitarMultiples(fieldset: HTMLElement) {
   const max = Number(fieldset.dataset.max);
   if (!max) return;
   const casillas = [
@@ -102,13 +102,16 @@ export function iniciarCuestionario() {
   const version = raiz.dataset.version ?? "v1";
   const form = raiz.querySelector<HTMLFormElement>("[data-formulario]")!;
   const fieldsets = PASOS.map(
-    p => form.querySelector<HTMLFieldSetElement>(`[data-paso="${p}"]`)!
+    p => form.querySelector<HTMLElement>(`[data-paso="${p}"]`)!
   );
+  const titulos = PASOS.map(
+    p => raiz.querySelector<HTMLElement>(`[data-titulo="${p}"]`)!
+  );
+  const segmentos = [...raiz.querySelectorAll<HTMLElement>("[data-segmento]")];
   const atras = raiz.querySelector<HTMLButtonElement>("[data-atras]")!;
   const siguiente = raiz.querySelector<HTMLButtonElement>("[data-siguiente]")!;
   const enviar = raiz.querySelector<HTMLButtonElement>("[data-enviar]")!;
   const textoPaso = raiz.querySelector<HTMLElement>("[data-paso-texto]")!;
-  const barra = raiz.querySelector<HTMLElement>("[data-barra]")!;
   const otro = form.querySelector<HTMLInputElement>("[data-otro]");
 
   const inicio = Date.now();
@@ -118,6 +121,11 @@ export function iniciarCuestionario() {
 
   function pintar(enfocar: boolean) {
     fieldsets.forEach((f, i) => (f.hidden = i !== actual));
+    titulos.forEach((t, i) => (t.hidden = i !== actual));
+    segmentos.forEach((s, i) => {
+      s.classList.toggle("bg-rojo3", i <= actual);
+      s.classList.toggle("bg-panelborde", i > actual);
+    });
     const ultimo = actual === PASOS.length - 1;
     atras.hidden = actual === 0;
     siguiente.hidden = ultimo;
@@ -126,9 +134,8 @@ export function iniciarCuestionario() {
     textoPaso.textContent = (textoPaso.dataset.plantilla ?? "")
       .replace("%n", String(actual + 1))
       .replace("%t", String(PASOS.length));
-    barra.style.width = `${((actual + 1) / PASOS.length) * 100}%`;
     if (!enfocar) return;
-    fieldsets[actual].querySelector<HTMLElement>("legend")?.focus();
+    titulos[actual].querySelector<HTMLElement>("h1")?.focus();
     if (raiz!.getBoundingClientRect().top < 0) {
       raiz!.scrollIntoView({ block: "start", behavior: "smooth" });
     }

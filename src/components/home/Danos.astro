@@ -1,14 +1,18 @@
 ---
+import { Image } from "astro:assets";
 import EncabezadoSeccion from "@components/EncabezadoSeccion.astro";
-import { copia } from "@data/landing";
 import ParCta from "@components/home/ParCta.astro";
+import { copia, type Falla } from "@data/landing";
 import type { Lang } from "@i18n/ui";
+import { ilustraciones } from "@utils/ilustraciones";
 
 interface Props {
   lang: Lang;
 }
 const { lang } = Astro.props;
 const c = copia(lang).danos;
+const fallas = c.fallas as readonly Falla[];
+const giros = ["-rotate-[1deg]", "rotate-[.8deg]", "-rotate-[.6deg]"];
 ---
 
 <section id="danos" class="py-[clamp(3.2rem,7vw,5.6rem)]">
@@ -21,43 +25,46 @@ const c = copia(lang).danos;
       {c.titulo}
     </h2>
 
-    <div class="mt-[clamp(2rem,4vw,3rem)] border-t border-linea">
+    <div
+      class="mt-[clamp(1.8rem,3.6vw,2.8rem)] grid grid-cols-1 gap-x-[clamp(1.2rem,2.6vw,2rem)] gap-y-10 md:grid-cols-3"
+    >
       {
-        c.fallas.map(f => (
-          <article class="grid grid-cols-1 gap-x-8 gap-y-2 border-b border-linea py-[clamp(1.3rem,2.6vw,2rem)] md:grid-cols-[9.5rem_minmax(0,1.6fr)_minmax(0,1fr)]">
-            <div class="font-mono text-[10.5px] uppercase leading-[1.7] tracking-[.16em] text-gris">
-              <div class="text-rojo2">
-                {c.etiqueta} {f.n}
-              </div>
-              <div>{f.quien}</div>
+        fallas.map((f, i) => (
+          <article class="flex flex-col">
+            <p class="font-mono text-[11px] font-semibold uppercase tracking-[.18em] text-rojo2">
+              {c.etiqueta} {f.n}
+            </p>
+            <h3 class="font-arch mt-2 text-[clamp(1.25rem,2.2vw,1.55rem)] font-bold leading-[1.12] tracking-[-.028em] [font-stretch:98%]">
+              {f.titulo}
+            </h3>
+            <p class="mt-2 max-w-[40ch] text-[1rem] leading-[1.5] text-gris md:min-h-[4.5em]">
+              {f.texto}
+            </p>
+            <div class="mt-4 rounded border border-linea bg-campo p-[7px]">
+              <Image
+                src={ilustraciones[f.imagen]}
+                widths={[360, 540, 720]}
+                sizes="(min-width:768px) 30vw, 92vw"
+                loading="lazy"
+                alt={f.alt}
+                class="aspect-[4/3] h-auto w-full rounded-[1px] object-cover"
+              />
             </div>
-            {/* Sin saltos de línea entre los tres trozos: Astro los
-                convertiría en espacios y quedarían comas sueltas. */}
             <p
-              class="font-arch max-w-[30ch] text-[clamp(1.25rem,2.6vw,1.85rem)] font-bold leading-[1.14] tracking-[-.028em] [font-stretch:98%]"
-              set:html={`${f.antes}<span class="subraya">${f.marcado}</span>${f.despues}`}
-            />
-            {f.manuscrita ? (
-              <p
-                class:list={[
-                  "font-pen text-[1.18rem] leading-[1.25] text-rojo2 md:pt-1.5",
-                  f.giro,
-                ]}
-              >
-                {f.nota}
-              </p>
-            ) : (
-              <p class="text-[14px] leading-[1.5] text-gris md:pt-2">
-                {f.nota}
-              </p>
-            )}
+              class:list={[
+                "font-pen mt-3 text-[1.15rem] leading-[1.25] text-rojo2 [transform-origin:left]",
+                giros[i % giros.length],
+              ]}
+            >
+              {f.nota}
+            </p>
           </article>
         ))
       }
     </div>
 
     <div
-      class="mt-[clamp(1.8rem,3.4vw,2.6rem)] grid grid-cols-1 items-end gap-x-[clamp(1.5rem,4vw,3.5rem)] gap-y-5 lg:grid-cols-[minmax(0,1fr)_auto]"
+      class="mt-[clamp(2rem,4vw,3rem)] grid grid-cols-1 items-end gap-x-[clamp(1.5rem,4vw,3.5rem)] gap-y-5 border-t border-linea pt-[clamp(1.4rem,3vw,2.2rem)] lg:grid-cols-[minmax(0,1fr)_auto]"
     >
       <div>
         <p

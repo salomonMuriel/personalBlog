@@ -132,7 +132,7 @@ const es = {
     },
     {
       p: "¿Esto es lo mismo que la consultoría?",
-      r: "No. En la consultoría el trabajo lo hago yo: te construyo la herramienta. Acá el trabajo lo haces tú y yo reviso.",
+      r: "No. En la consultoría le construyo a tu empresa su sistema operativo. Acá el trabajo lo haces tú y yo lo reviso.",
     },
     {
       p: "¿Y si no alcanzo a hacer las tareas?",
@@ -277,7 +277,7 @@ const en = {
     },
     {
       p: "Is this the same as consulting?",
-      r: "No. In consulting I do the work: I build you the tool. Here you do the work and I review it.",
+      r: "No. In consulting I build your company its operating system. Here you do the work and I review it.",
     },
     {
       p: "What if I don't get the assignments done?",

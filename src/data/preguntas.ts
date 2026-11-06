@@ -3,6 +3,10 @@ import type { Pregunta } from "@utils/jsonld";
 // También alimenta el JSON-LD `FAQPage`.
 export const preguntasEs: Pregunta[] = [
   {
+    p: "¿Qué es el sistema operativo de una empresa?",
+    r: "Es el software donde quedan los pedidos, las ventas, la operación y las facturas que hoy están repartidos entre Excel, WhatsApp y programas sueltos. Se hace a la medida de cómo trabaja tu empresa y se conecta con las herramientas que ya le sirven. Queda a nombre de la empresa.",
+  },
+  {
     p: "Es que yo de tecnología no sé nada.",
     r: "No hace falta. Mis clientes son marcas de ropa, restaurantes, distribuidoras, importadores y empresas de servicios. Parte de mi trabajo es explicarlo claro, y si algo no se entiende es culpa mía.",
   },
@@ -16,7 +20,7 @@ export const preguntasEs: Pregunta[] = [
   },
   {
     p: "Tenemos un Notion y un Excel que dicen cosas distintas. ¿Con cuál nos quedamos?",
-    r: "Con uno solo. Miramos cuál usa la gente de verdad, pasamos lo que sirve del otro y apagamos el que sobra. Mientras existan los dos, alguien va a tener que llenar los dos y se va a equivocar.",
+    r: "Con ninguno de los dos. Le construimos a tu empresa su sistema operativo, y ese se vuelve el único lugar donde todos consultan la información. Antes de apagar el Notion y el Excel, pasamos lo que sirva de cada uno.",
   },
   {
     p: "¿Y después, cuando quiera cambiar algo?",
@@ -29,6 +33,10 @@ export const preguntasEs: Pregunta[] = [
 ];
 
 export const preguntasEn: Pregunta[] = [
+  {
+    p: "What is a company's operating system?",
+    r: "It's the software that holds the orders, sales, operations and invoices now scattered across spreadsheets, WhatsApp and separate programs. It's built around how your company works and connects to the tools that already serve it. It stays in your company's name.",
+  },
   {
     p: "I don't know anything about technology.",
     r: "You don't need to. My clients are clothing brands, restaurants, distributors, importers and service businesses. Part of my job is explaining it clearly, and if something isn't clear, that's on me.",
@@ -43,7 +51,7 @@ export const preguntasEn: Pregunta[] = [
   },
   {
     p: "We have a Notion and an Excel that say different things. Which one do we keep?",
-    r: "One of them. We look at which one people actually use, move over what's worth keeping and turn the other one off. While both exist, someone has to fill in both, and they will get it wrong.",
+    r: "Neither. We build your company its operating system, and that becomes the one place where everyone checks the information. Before switching off the Notion and the Excel, we move over whatever is worth keeping from each.",
   },
   {
     p: "What about later, when I want to change something?",

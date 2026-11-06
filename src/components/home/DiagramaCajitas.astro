@@ -1,0 +1,160 @@
+---
+import EncabezadoSeccion from "@components/EncabezadoSeccion.astro";
+import ParCta from "@components/home/ParCta.astro";
+import IconoCajita from "@components/home/IconoCajita.astro";
+import { copia, type Nodo } from "@data/landing";
+import type { Lang } from "@i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const c = copia(lang).cajitas;
+const nodos = c.nodos as Record<string, Nodo>;
+
+// Centres in % of the board: x/y on desktop (left to right), xm/ym on phones (top to bottom).
+const posiciones = [
+  { id: "mercadeo", x: 11, y: 50, xm: 50, ym: 10 },
+  { id: "web", x: 37, y: 24, xm: 25.5, ym: 37 },
+  { id: "chat", x: 37, y: 76, xm: 74.5, ym: 37 },
+  { id: "ventas", x: 63, y: 50, xm: 50, ym: 63 },
+  { id: "ops", x: 89, y: 24, xm: 25.5, ym: 90 },
+  { id: "admin", x: 89, y: 76, xm: 74.5, ym: 90 },
+];
+const enlaces: [string, string][] = [
+  ["mercadeo", "web"],
+  ["mercadeo", "chat"],
+  ["web", "ventas"],
+  ["chat", "ventas"],
+  ["ventas", "ops"],
+  ["ventas", "admin"],
+];
+const posicion = (id: string) => posiciones.find(p => p.id === id)!;
+const codo = (a: string, b: string) => {
+  const p = posicion(a);
+  const q = posicion(b);
+  const medio = (p.x + q.x) / 2;
+  return `M${p.x} ${p.y} H${medio} V${q.y} H${q.x}`;
+};
+const codoMovil = (a: string, b: string) => {
+  const p = posicion(a);
+  const q = posicion(b);
+  const medio = (p.ym + q.ym) / 2;
+  return `M${p.xm} ${p.ym} V${medio} H${q.xm} V${q.ym}`;
+};
+---
+
+<section id="cajitas" class="py-[clamp(3.2rem,7vw,5.6rem)]">
+  <div class="hoja">
+    <EncabezadoSeccion rotulo={c.rotulo} nota={c.nota} notaCh={42} />
+
+    <h2
+      class="font-arch max-w-[20ch] text-[clamp(1.9rem,4.4vw,3.4rem)] font-extrabold leading-[1.03] tracking-[-.028em] [font-stretch:104%]"
+    >
+      {c.titulo}
+    </h2>
+
+    <div
+      class="mt-5 grid grid-cols-1 gap-x-[clamp(1.5rem,4vw,3.5rem)] gap-y-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]"
+    >
+      <p class="max-w-[54ch] text-[1.02rem] leading-[1.6] text-gris">
+        {c.texto}
+      </p>
+      <p
+        class="max-w-[54ch] text-[1.02rem] leading-[1.6] text-gris"
+        set:html={c.texto2}
+      />
+    </div>
+
+    <figure
+      class="mt-[clamp(1.8rem,3.6vw,2.6rem)] rounded border border-linea bg-campo p-[clamp(.9rem,2vw,1.6rem)] shadow-[0_1px_0_rgba(22,23,26,.05),0_16px_36px_-28px_rgba(22,23,26,.55)]"
+      role="img"
+      aria-label={c.alt}
+    >
+      <div
+        class="relative rounded-[1px] border-[1.5px] border-dashed border-rojo px-2 pb-2 pt-5 md:px-4 md:pb-4 md:pt-6"
+        aria-hidden="true"
+      >
+        <span
+          class="font-mono absolute -top-[9px] left-4 bg-campo px-2 text-[11px] font-semibold uppercase tracking-[.2em] text-rojo2"
+          >{c.marco}</span
+        >
+
+        <div class="relative aspect-[335/400] md:aspect-[1200/400]">
+          <svg
+            class="absolute inset-0 h-full w-full md:hidden"
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
+          >
+            {
+              enlaces.map(([a, b]) => (
+                <path
+                  d={codoMovil(a, b)}
+                  fill="none"
+                  stroke="var(--tinta)"
+                  stroke-width="1.5"
+                  vector-effect="non-scaling-stroke"
+                />
+              ))
+            }
+          </svg>
+          <svg
+            class="absolute inset-0 hidden h-full w-full md:block"
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
+          >
+            {
+              enlaces.map(([a, b]) => (
+                <path
+                  d={codo(a, b)}
+                  fill="none"
+                  stroke="var(--tinta)"
+                  stroke-width="1.5"
+                  vector-effect="non-scaling-stroke"
+                />
+              ))
+            }
+          </svg>
+
+          {
+            posiciones.map(p => (
+              <div
+                class="absolute left-[var(--xm)] top-[var(--ym)] flex w-[47%] -translate-x-1/2 -translate-y-1/2 items-center gap-2.5 rounded border-[1.5px] border-tinta bg-campo px-2.5 py-2 md:left-[var(--x)] md:top-[var(--y)] md:w-auto md:min-w-[150px] md:gap-3 md:px-3.5 md:py-2.5"
+                style={`--x:${p.x}%;--y:${p.y}%;--xm:${p.xm}%;--ym:${p.ym}%`}
+              >
+                <span class="hidden h-8 w-8 flex-none place-items-center rounded border border-linea bg-papel md:grid">
+                  <IconoCajita nombre={p.id} />
+                </span>
+                <span class="min-w-0">
+                  <span class="font-arch block truncate text-[.95rem] font-bold leading-tight tracking-[-.02em] md:text-[1.05rem]">
+                    {nodos[p.id].titulo}
+                  </span>
+                  <span class="font-mono block truncate text-[10px] uppercase tracking-[.1em] text-gris md:text-[10.5px] md:tracking-[.12em]">
+                    {nodos[p.id].sub}
+                  </span>
+                </span>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </figure>
+
+    <p
+      class="font-pen mt-5 max-w-[52ch] -rotate-[1deg] text-[clamp(1.25rem,3vw,1.55rem)] leading-[1.25] text-rojo2 [transform-origin:left]"
+    >
+      {c.manuscrita}
+    </p>
+
+    <div
+      class="mt-[clamp(1.6rem,3vw,2.2rem)] flex flex-col gap-4 rounded border-[1.5px] border-linea2 bg-campo p-5 sm:p-6 lg:flex-row lg:items-center lg:justify-between"
+    >
+      <p
+        class="font-arch max-w-[30ch] text-[clamp(1.2rem,2.4vw,1.6rem)] font-bold leading-[1.18] tracking-[-.028em] [font-stretch:98%]"
+      >
+        {c.ctaTexto}
+      </p>
+      <ParCta lang={lang} origen="cajitas" />
+    </div>
+  </div>
+</section>

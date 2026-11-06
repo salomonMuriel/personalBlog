@@ -25,10 +25,10 @@ or a booked exploration call.
 
 ## Positioning
 
-One person does the strategy and writes the code, so nothing is lost between a consultant's deck and a vendor's
-interpretation. He builds fast with AI agents instead of subcontracting. The code, accounts and access belong to the
-client, there is no monthly per-seat fee, and the team is taught to change the system themselves. It is built one
-process at a time, starting where it hurts most.
+He builds each company its «sistema operativo»: one system, made to fit how the company already works, that
+connects the tools worth keeping and replaces the spreadsheets, paper and copy-paste in between. It is built fast with
+AI agents, one process at a time, starting where it hurts most. The code, accounts and access belong to the client,
+there is no monthly per-seat fee, and the team is taught to change the system themselves.
 
 ## Operating Context
 
@@ -76,3 +76,5 @@ understanding the operation, a diagnosis with a first working piece, then buildi
 - Show real systems he built, never mockups passed off as clients.
 - Every screen offers one clear next step: the questionnaire or WhatsApp.
 - Be honest about fit: say who this is not for and point them elsewhere.
+- «Sistema operativo» is the name of the offer and should come up often in the copy.
+- Don't insist that he does everything himself; the site talks about the system, not about who types the code.

@@ -1,19 +1,15 @@
 ---
+import { Image } from "astro:assets";
 import EncabezadoSeccion from "@components/EncabezadoSeccion.astro";
 import { copia } from "@data/landing";
 import type { Lang } from "@i18n/ui";
+import { ilustraciones } from "@utils/ilustraciones";
 
 interface Props {
   lang: Lang;
 }
 const { lang } = Astro.props;
 const c = copia(lang).programa;
-
-const barras = [
-  { clase: "bg-linea text-tinta", col: "1 / span 2", extra: "" },
-  { clase: "bg-rojo2 text-white", col: "2 / span 2", extra: "b2" },
-  { clase: "bg-panel text-panelfg", col: "4 / span 13", extra: "b3" },
-];
 ---
 
 <section
@@ -29,75 +25,54 @@ const barras = [
       {c.titulo}
     </h2>
 
-    <div class="observa mt-[clamp(1.8rem,3.6vw,2.8rem)]">
-      <div class="hidden md:block">
-        <div
-          class="mb-3 grid grid-cols-16 border-b border-linea pb-1.5"
-          aria-hidden="true"
-        >
-          <span class="font-mono relative text-[10.5px] text-gris">S1</span>
-          <span></span><span></span>
-          <span class="font-mono text-[10.5px] text-gris">S4</span>
-          <span></span><span></span><span></span>
-          <span class="font-mono text-[10.5px] text-gris">S8</span>
-          <span></span><span></span><span></span>
-          <span class="font-mono text-[10.5px] text-gris">S12</span>
-          <span></span><span></span><span></span>
-          <span class="font-mono text-right text-[10.5px] text-gris">S16</span>
-        </div>
-        <div class="grid gap-[6px]">
+    <div
+      class="mt-[clamp(1.8rem,3.6vw,2.8rem)] grid grid-cols-1 items-center gap-[clamp(1.6rem,4vw,3.5rem)] lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)]"
+    >
+      <div>
+        <ol class="border-t border-linea">
           {
-            barras.map((b, i) => (
-              <div class="grid grid-cols-16">
-                <div
-                  class:list={[
-                    "barra font-mono truncate rounded px-3 py-2.5 text-[11px] font-semibold uppercase tracking-[.05em]",
-                    b.clase,
-                    b.extra,
-                  ]}
-                  style={`grid-column:${b.col}`}
-                >
-                  {c.barras[i]}
+            c.etapas.map(e => (
+              <li class="border-b border-linea py-4">
+                <div class="flex items-baseline justify-between gap-4">
+                  <h3 class="font-arch text-[1.15rem] font-bold leading-tight tracking-[-.02em]">
+                    {e.titulo}
+                  </h3>
+                  <span class="font-mono flex-none text-[11px] uppercase tracking-[.14em] text-rojo2">
+                    {e.cuando}
+                  </span>
                 </div>
-              </div>
+                <p class="mt-1.5 text-[1rem] leading-[1.5] text-gris">
+                  {e.texto}
+                </p>
+              </li>
             ))
           }
+        </ol>
+
+        <div class="mt-6 border-l-[3px] border-rojo pl-4">
+          <p
+            class="font-mono text-[11px] font-semibold uppercase tracking-[.18em] text-rojo2"
+          >
+            {c.garantiaRotulo}
+          </p>
+          <p
+            class="font-arch mt-1.5 max-w-[34ch] text-[clamp(1.2rem,2.4vw,1.55rem)] font-bold leading-[1.2] tracking-[-.028em] [font-stretch:98%]"
+          >
+            {c.garantia}
+          </p>
         </div>
       </div>
 
-      <div
-        class="mt-6 grid grid-cols-1 gap-[clamp(1.2rem,2.6vw,2rem)] md:mt-8 md:grid-cols-3"
-      >
-        {
-          c.etapas.map(e => (
-            <div class="border-l-2 border-rojo pl-4 md:border-l-0 md:pl-0">
-              <span class="font-mono mb-2 block text-[10.5px] uppercase tracking-[.18em] text-rojo2">
-                {e.cuando}
-              </span>
-              <h3 class="font-arch text-[1.1rem] font-bold leading-[1.15] tracking-[-.02em]">
-                {e.titulo}
-              </h3>
-              <p class="mt-2 text-[.96rem] leading-[1.55] text-gris">
-                {e.texto}
-              </p>
-            </div>
-          ))
-        }
+      <div class="rounded border border-linea bg-campo p-[7px]">
+        <Image
+          src={ilustraciones["una-cajita"]}
+          widths={[480, 720, 1080]}
+          sizes="(min-width:1024px) 48vw, 92vw"
+          loading="lazy"
+          alt={c.alt}
+          class="aspect-[5/4] h-auto w-full rounded-[1px] object-cover"
+        />
       </div>
-    </div>
-
-    <div
-      class="mt-[clamp(2rem,4vw,3rem)] flex flex-col gap-3 rounded border-[1.5px] border-tinta bg-campo px-5 py-5 sm:flex-row sm:items-baseline sm:gap-6 sm:px-6"
-    >
-      <span
-        class="font-mono flex-none text-[11px] font-semibold uppercase tracking-[.18em] text-rojo2"
-        >{c.garantiaRotulo}</span
-      >
-      <p
-        class="font-arch text-[clamp(1.2rem,2.4vw,1.6rem)] font-bold leading-[1.2] tracking-[-.028em] [font-stretch:98%]"
-      >
-        {c.garantia}
-      </p>
     </div>
   </div>
 </section>

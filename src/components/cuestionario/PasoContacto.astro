@@ -14,17 +14,14 @@ const etiqueta =
 const error = "mt-1.5 text-[13.5px] text-rojo2";
 ---
 
-<fieldset data-paso="contacto" hidden class="min-w-0">
-  <legend
-    tabindex="-1"
-    class="font-arch text-[clamp(1.2rem,2.6vw,1.6rem)] font-bold leading-[1.15] tracking-[-.028em] outline-none [font-stretch:98%]"
-  >
-    {k.titulo}
-  </legend>
-
-  <div
-    class="mt-3.5 grid grid-cols-2 gap-x-3 gap-y-3 sm:mt-5 sm:gap-x-4 sm:gap-y-4"
-  >
+<div
+  data-paso="contacto"
+  role="group"
+  aria-labelledby="titulo-contacto"
+  hidden
+  class="min-w-0"
+>
+  <div class="grid grid-cols-2 gap-x-3 gap-y-3 sm:gap-x-4 sm:gap-y-4">
     <div>
       <label for="cq-nombre" class={etiqueta}>{k.nombre}</label>
       <input
@@ -107,4 +104,4 @@ const error = "mt-1.5 text-[13.5px] text-rojo2";
   <p class="mt-3 max-w-[52ch] text-[13px] leading-[1.45] text-gris">
     {k.privacidad}
   </p>
-</fieldset>
+</div>

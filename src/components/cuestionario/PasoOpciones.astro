@@ -16,34 +16,37 @@ const pregunta = copia.preguntas[clave];
 const opciones = OPCIONES[clave] as readonly string[];
 const etiquetas = pregunta.opciones as Record<string, string>;
 const max = MULTIPLES[clave];
-const tipo = max ? "checkbox" : "radio";
-const ayuda = !max
-  ? undefined
-  : max < opciones.length
-    ? copia.escogeHasta.replace("%n", String(max))
-    : copia.marcaVarias;
+const multiple = Boolean(max);
+
+const casilla = multiple
+  ? "casilla"
+  : "h-[1.2rem] w-[1.2rem] flex-none cursor-pointer appearance-none rounded-full border-[1.6px] border-linea2 bg-campo transition-colors checked:border-rojo checked:bg-[radial-gradient(circle,var(--rojo)_0_42%,transparent_46%)] hover:border-rojo";
 ---
 
-<fieldset data-paso={clave} data-max={max} hidden={indice > 0} class="min-w-0">
-  <legend
-    tabindex="-1"
-    class="font-arch text-[clamp(1.2rem,2.6vw,1.6rem)] font-bold leading-[1.15] tracking-[-.028em] outline-none [font-stretch:98%]"
-  >
-    {pregunta.titulo}
-  </legend>
-  {ayuda && <p class="mt-1 text-[14px] text-gris">{ayuda}</p>}
-
+<div
+  data-paso={clave}
+  data-max={max}
+  role="group"
+  aria-labelledby={`titulo-${clave}`}
+  hidden={indice > 0}
+  class="min-w-0"
+>
   <div
     class:list={[
-      "mt-3.5 grid gap-px overflow-hidden rounded border border-linea bg-linea sm:mt-5",
+      "grid gap-1.5 sm:gap-2",
       opciones.length > 5 && "sm:grid-cols-2",
     ]}
   >
     {
       opciones.map(id => (
-        <label class="flex min-h-[45px] cursor-pointer items-center gap-3 bg-campo px-3 py-2 transition-colors hover:bg-[#f7f6f2] has-[:checked]:bg-[#fcf0ee] has-[:disabled]:cursor-default sm:min-h-[52px] sm:px-4 sm:last:odd:col-span-2">
-          <input type={tipo} name={clave} value={id} class="casilla" />
-          <span class="text-[.95rem] leading-[1.3] sm:text-[.98rem]">
+        <label class="flex min-h-[44px] cursor-pointer items-center gap-3 rounded border-[1.5px] border-linea2 bg-campo px-3 py-2 transition-colors hover:border-tinta has-[:checked]:border-rojo has-[:checked]:bg-[#fcf0ee] has-[:disabled]:cursor-default sm:min-h-[52px] sm:px-4">
+          <input
+            type={multiple ? "checkbox" : "radio"}
+            name={clave}
+            value={id}
+            class={casilla}
+          />
+          <span class="text-[.95rem] leading-[1.3] sm:text-[1rem]">
             {etiquetas[id]}
           </span>
         </label>
@@ -61,8 +64,8 @@ const ayuda = !max
         maxlength="80"
         placeholder={copia.otraPlaceholder}
         aria-label={copia.otraPlaceholder}
-        class="mt-2.5 w-full rounded border-[1.5px] border-linea2 bg-campo px-4 py-2.5 text-[1rem] focus:border-tinta"
+        class="mt-2 w-full rounded border-[1.5px] border-linea2 bg-campo px-4 py-2.5 text-[1rem] focus:border-tinta"
       />
     )
   }
-</fieldset>
+</div>

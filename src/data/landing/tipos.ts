@@ -1,15 +1,23 @@
+export type Ilustracion =
+  | "torre-excel"
+  | "chat-pedidos"
+  | "tabla-piedra"
+  | "una-cajita"
+  | "llaves"
+  | "cajitas-conectadas";
+
 export type Falla = {
   n: string;
-  quien: string;
-  antes: string;
-  marcado: string;
-  despues: string;
+  titulo: string;
+  texto: string;
   nota: string;
-  manuscrita: boolean;
-  giro?: string;
+  imagen: Ilustracion;
+  alt: string;
 };
 
-export type Renglon = { n: string; t: string; d: string; resaltado: boolean };
+export type Nodo = { titulo: string; sub: string };
+
+export type Columna = { t: string; d: string };
 
 export type Sistema = {
   clave:

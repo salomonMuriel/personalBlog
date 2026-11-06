@@ -1,10 +1,10 @@
-import type { Falla, Renglon, Sistema } from "./tipos";
+import type { Columna, Falla, Nodo, Sistema } from "./tipos";
 
 export const en = {
   meta: {
     title: "Fixing the fake-automated · Salomón Muriel, Bogotá",
     description:
-      "I build your company's operating system: the software that replaces the spreadsheets that don't match and the copy-paste, made to fit how you already work. Bogotá.",
+      "I build your company its operating system: the software that replaces the spreadsheets that don't match and the copying and pasting, made to fit how you already work. Bogotá.",
   },
 
   cta: {
@@ -18,9 +18,9 @@ export const en = {
   hero: {
     linea1: "We fix",
     linea2: "The fake-automated",
-    manuscrita: "one box at a time, starting where it hurts most",
+    manuscrita: "I go box by box, from the one that hurts most",
     bajada:
-      "I build your company's operating system: the software that replaces the spreadsheets that don't match and the copy-paste, made to fit how you already work.",
+      "I build your company its operating system: the software that replaces the spreadsheets that don't match and the copying and pasting, made to fit how you already work.",
     dicc: {
       palabra: "chi·no·má·ti·co, ca",
       categoria: "adj. · Colombian Spanish",
@@ -35,12 +35,9 @@ export const en = {
     fichaAlt:
       "Portrait of Salomón Muriel, in a green coat with folded arms, against a dark background",
     ficha: [
-      ["Who takes the call", "Salomón", false],
       ["Where", "Bogotá", false],
       ["Own companies", "Five, two sold", false],
-      ["Who programs", "Same person", true],
     ] as [string, string, boolean][],
-    fichaPie: "If you message me on WhatsApp, I'm the one who replies.",
   },
 
   cinta: [
@@ -58,7 +55,7 @@ export const en = {
   danos: {
     rotulo: "Fault log",
     nota: "They repeat across companies that have nothing in common.",
-    titulo: "The faults I see most",
+    titulo: "The problems I hear about most",
     etiqueta: "Fault",
     cierre:
       "If none of this sounds familiar, I'm probably not the right person.",
@@ -67,171 +64,53 @@ export const en = {
     fallas: [
       {
         n: "01",
-        quien: "Reported by the owner",
-        antes: "There are ",
-        marcado: "twenty spreadsheets",
-        despues: " and none of them match.",
+        titulo: "The spreadsheets don't match",
+        texto:
+          "There are twenty spreadsheets nobody keeps up to date, and each one says something different.",
         nota: "and when they disagree, whoever talks loudest in the meeting wins",
-        manuscrita: true,
-        giro: "-rotate-[.8deg]",
+        imagen: "torre-excel",
+        alt: "A tower of binders and spreadsheets about to topple",
       },
       {
         n: "02",
-        quien: "Reported by whoever does it",
-        antes: "People spend the day ",
-        marcado: "copying and pasting",
-        despues: " from one place to another.",
-        nota: "the little boxes aren't connected, and the one who suffers is the one typing",
-        manuscrita: true,
-        giro: "rotate-[.6deg]",
+        titulo: "Orders get lost in the chat",
+        texto:
+          "They arrive on WhatsApp and someone copies them into a spreadsheet at the end of the day.",
+        nota: "and if someone forgets to copy one, the customer is left waiting",
+        imagen: "chat-pedidos",
+        alt: "A phone full of WhatsApp messages surrounded by boxes and invoices",
       },
       {
         n: "03",
-        quien: "Reported by sales",
-        antes: "Orders arrive on WhatsApp and ",
-        marcado: "get lost in the chat",
-        despues: ".",
-        nota: "Or someone copies them into a spreadsheet at the end of the day.",
-        manuscrita: false,
-      },
-      {
-        n: "04",
-        quien: "Reported by accounting",
-        antes: "To find out how much you sold yesterday, ",
-        marcado: "you have to ask someone",
-        despues: ".",
-        nota: "The number lives in three places and each one says something different.",
-        manuscrita: false,
-      },
-      {
-        n: "05",
-        quien: "Reported too late",
-        antes: "If that person quits, ",
-        marcado: "the process walks out with them",
-        despues: ".",
+        titulo: "We're still in the stone age",
+        texto:
+          "To find out what sold yesterday you have to ask someone, and if that person quits, the process leaves with them.",
         nota: "and whoever comes next learns it by word of mouth",
-        manuscrita: true,
-        giro: "-rotate-[1deg]",
+        imagen: "tabla-piedra",
+        alt: "A spreadsheet carved into a stone tablet on a desk",
       },
     ] as Falla[],
   },
 
   cajitas: {
     rotulo: "How I explain my work",
-    nota: "It's the idea I work with.",
+    nota: "The idea I work by.",
     titulo: "A company is a system of little boxes",
-    p1: "Marketing sends traffic to the website and to WhatsApp. That produces leads for sales. Sales feeds information back to marketing and opens up work for operations and admin. Each of those is a little box, and each box has its own system.",
-    p2: "<b class='font-semibold text-tinta'>I build those boxes and connect them.</b> The CRM your sales process needs, the system operations works in, admin's invoicing: I build whichever one is missing, made to fit how you already work, and I leave it connected to the rest.",
-    estadoSistema: "System state",
-    btnHoy: "As it is today",
-    btnQueda: "As it ends up",
-    leyendaManual: "Manual step",
-    leyendaConectado: "Connected",
-    cajas: {
-      mercadeo: {
-        titulo: "Marketing",
-        rotulo: "Whatever the channel",
-        hoy: "A campaign manager on one side and a spreadsheet on the other.",
-        queda:
-          "The same campaign manager. Now it actually knows which campaign brought the sale.",
-        orden: "5th",
-      },
-      web: {
-        titulo: "Website",
-        rotulo: "The site",
-        hoy: "A separate system, from another vendor, that emails someone.",
-        queda:
-          "Still your website. What comes in through it lands where it should.",
-        orden: "4th",
-      },
-      chat: {
-        titulo: "WhatsApp",
-        rotulo: "The chat",
-        hoy: "One person's phone. If that person isn't around, nobody is.",
-        queda:
-          "What's said in the chat is recorded without anyone transcribing it.",
-        orden: "4th",
-      },
-      ventas: {
-        titulo: "Sales",
-        rotulo: "The leads",
-        hoy: "An expensive CRM that's half used, because filling it in is double work.",
-        queda:
-          "The CRM I build for your sales process. Filling it in stopped being extra work.",
-        orden: "1st",
-      },
-      ops: {
-        titulo: "Operations",
-        rotulo: "The work",
-        hoy: "A spreadsheet only one person understands.",
-        queda:
-          "The operations system I build you. The work opens by itself when the sale closes.",
-        orden: "2nd",
-      },
-      opsdos: {
-        titulo: "Operations",
-        titulo2: "(the other one)",
-        rotuloHoy: "Two boxes for the same work",
-        rotuloQueda: "No longer needed",
-        hoy: "The Notion someone set up, with data from eight months ago. And they have to fill in both.",
-        queda:
-          "The work lives in one. Whatever was worth keeping moved across before it was switched off.",
-        orden: "Switched off",
-      },
-      admin: {
-        titulo: "Admin",
-        rotulo: "Invoicing and paperwork",
-        hoy: "Another spreadsheet. And the invoice is made by hand, one at a time.",
-        queda:
-          "The invoice comes out of the sale by itself, data already in it.",
-        orden: "3rd",
-      },
-    },
-    enlaces: {
-      mercadeoWeb: ["The form emails someone", "The lead comes in by itself"],
-      mercadeoChat: [
-        "The campaign sends people to the chat and there it stays",
-        "The chat leaves the lead inside too",
-      ],
-      webVentas: [
-        "Someone copies the email into the CRM",
-        "Nobody copies anything",
-      ],
-      chatVentas: [
-        "Someone transcribes the conversation",
-        "Nobody transcribes",
-      ],
-      ventasOps: [
-        "Word goes out on an internal chat",
-        "The sale opens the work by itself",
-      ],
-      opsOpsdos: ["The same data, all over again", ""],
-      ventasAdmin: [
-        "The invoice is made by hand",
-        "The invoice comes out by itself",
-      ],
-      retorno: [
-        "Nobody feeds the data back",
-        "Every sale tells marketing where it came from",
-      ],
-    },
-    retornoMovil: "And back to marketing:",
-    retornoMovilHoy:
-      "today nobody feeds the data back, so marketing doesn't know which campaign brought the sale.",
-    retornoMovilQueda: "every sale tells marketing where it came from.",
-    verdadNoRotulo: "Three versions of the same number",
-    verdadNo:
-      "None of them agree, and to find out which one is right you have to ask someone.",
-    verdadSiRotulo: "The data in one place",
-    verdadSi:
-      "When someone asks how much was sold yesterday, everyone looks at the same number.",
-    cierreTitulo:
-      "I build the box and leave it connected <b class='text-rojo2'>before</b> moving to the next one.",
-    cierreP1:
-      "The fake-automated part shows up in the middle: someone takes data out of one box and puts it into the next, every day. Once the connection is made, that person stops copying and pasting and goes back to the work you hired them for.",
-    cierreP2:
-      "In “as it ends up”, the red numbers are the order of a typical case. In yours, we start where it hurts most.",
-    cierreManuscrita:
+    texto:
+      "Marketing brings people to the website and to WhatsApp, those people reach sales, and every sale opens work for operations and an invoice for admin. In most companies each box has its own spreadsheet or its own program, and someone moves the data from one to the next by hand.",
+    texto2:
+      "<b class='font-semibold text-tinta'>Once the boxes are connected, your company has its operating system.</b> Information goes in once and reaches wherever it needs to on its own. I build the missing box and leave it connected before moving to the next one.",
+    marco: "Operating system",
+    alt: "Marketing leads to the website and to WhatsApp, both feed sales, and sales opens work for operations and an invoice for admin. All of it sits inside the company's operating system.",
+    nodos: {
+      mercadeo: { titulo: "Marketing", sub: "Campaigns" },
+      web: { titulo: "Website", sub: "Forms" },
+      chat: { titulo: "WhatsApp", sub: "Conversations" },
+      ventas: { titulo: "Sales", sub: "CRM" },
+      ops: { titulo: "Operations", sub: "Orders" },
+      admin: { titulo: "Admin", sub: "Invoices" },
+    } as Record<string, Nodo>,
+    manuscrita:
       "if two boxes are held together by a person in the middle, they're chinomáticas",
     ctaTexto: "Tell me which of these boxes hurts the most.",
   },
@@ -239,16 +118,16 @@ export const en = {
   sistemas: {
     rotulo: "Work delivered",
     nota: "These systems are already running. The screens show test data.",
-    titulo: "Systems I've already built for other companies",
+    titulo: "Operating systems I've already built",
     bajada:
-      "Nearly all of them ran on spreadsheets, WhatsApp and someone copying and pasting.",
+      "Most of these companies ran on spreadsheets, WhatsApp and someone copying and pasting.",
     reemplazo: "Replaced",
     items: [
       {
         clave: "aura",
         sector: "Bridal shop",
         nombre: "Aura Novias",
-        que: "Its operating system: the appointment book, the dress inventory, contracts, payments and the WhatsApp messages to each bride.",
+        que: "Its operating system holds the appointment book, the dress inventory, contracts, payments and the WhatsApp messages to each bride.",
         reemplazo:
           "the booking tool, the dress spreadsheets, the paper bride book and the messages typed by hand.",
         alt: "Aura OS screen with the day's appointments and the dresses to move",
@@ -257,7 +136,7 @@ export const en = {
         clave: "guiacolegio",
         sector: "Schools platform",
         nombre: "Guía Colegio",
-        que: "A CRM built around how they sell: from first contact to close, with the day's tasks and where each school came from.",
+        que: "A CRM built around how they sell, from first contact to close, with the day's tasks and where each school came from.",
         reemplazo: "Kommo, the emails and the team's memory.",
         alt: "Guía Colegio's CRM sales board with schools by stage",
       },
@@ -265,7 +144,7 @@ export const en = {
         clave: "visible",
         sector: "Personal branding agency · being built",
         nombre: "Visible",
-        que: "Its operating system, which I'm building now: every client, every deliverable and every approval in one place, with a portal for the client.",
+        que: "Its operating system, which I'm building now, brings the clients, deliverables and approvals into one place, and has a portal for the client.",
         alt: "Visible's client portal on a phone, with cycle progress and posts to approve",
       },
       {
@@ -287,30 +166,29 @@ export const en = {
   },
 
   banda: {
-    titulo: "I can build your company its operating system too.",
+    titulo: "I can build your company its own operating system too.",
     texto: "Tell me how it runs today and I'll tell you where I'd start.",
   },
 
   porque: {
     rotulo: "Differential diagnosis",
-    nota: "Compared with an agency or an off-the-shelf program.",
+    nota: "Compared with an agency or a program off the shelf.",
     titulo: "How I work",
     razones: [
       {
         giro: "-rotate-[5deg]",
-        titulo: "One person.",
+        titulo: "A single operating system.",
         parrafos: [
-          "I do both the strategy and the software. There's no consultant handing over a deck and a vendor interpreting it their own way. <b class='font-semibold text-tinta'>What we decide on Monday, I start building on Tuesday.</b>",
+          "Many companies buy one program per area and end up with ten that don't talk to each other. I build a system that connects the programs that work and replaces the ones that aren't needed.",
         ],
-        manuscrita:
-          "the person who listens on the first call is the one who codes",
+        manuscrita: "often the program works and just needs connecting",
         giroNota: "-rotate-[1deg]",
       },
       {
         giro: "rotate-[4deg]",
-        titulo: "Custom software, in weeks.",
+        titulo: "I build with AI.",
         parrafos: [
-          "I code with AI agents instead of subcontracting, which lets me build fast.",
+          "I use AI agents to write the code, which lets me deliver a custom system in weeks.",
           "I also <b class='font-semibold text-tinta'>teach your people to use them</b> for the office work they do by hand today.",
         ],
         manuscrita: "this changed a lot in the last two years",
@@ -318,9 +196,9 @@ export const en = {
       },
       {
         giro: "-rotate-[3deg]",
-        titulo: "The software fits your company.",
+        titulo: "The system fits your company.",
         parrafos: [
-          "The usual approach is to buy a program built for another company and make your people adapt. I start by looking at how the work gets done today and build on that, which is why people actually use it.",
+          "A program you buy was made for another company, and your people have to adapt to it. I start by looking at how the work gets done today and build on that, which is why people actually use it.",
         ],
         manuscrita:
           "in the first week I sit down with whoever is going to use it",
@@ -332,78 +210,57 @@ export const en = {
   programa: {
     rotulo: "Works schedule · 16 weeks",
     nota: "From the first conversation to your team using it.",
-    titulo: "What happens if we work together",
-    barras: ["Understand", "Diagnosis", "Build · one box at a time"],
+    titulo: "A 16-week project",
     etapas: [
       {
-        cuando: "Weeks 1 to 2",
+        cuando: "Weeks 1 and 2",
         titulo: "Understand the operation",
-        texto:
-          "I talk to the people who run it, not just to you, and I watch how it's really done.",
+        texto: "I talk to you and to the people who do the work.",
       },
       {
-        cuando: "Weeks 2 to 3",
+        cuando: "Weeks 2 and 3",
         titulo: "Diagnosis",
-        texto:
-          "I hand you a short plan with the bottleneck worth tackling first, and one first thing already working.",
+        texto: "I tell you what to tackle first and hand you a working piece.",
       },
       {
         cuando: "Weeks 4 to 16",
         titulo: "Build",
         texto:
-          "I build the system and the connections between boxes, until your team is using it.",
+          "I put the operating system together box by box, until your team uses it without me.",
       },
     ],
     garantiaRotulo: "Week three",
     garantia:
-      "By then you already have something working. If it isn't useful to you, we stop there.",
+      "If what I hand you in week three isn't useful to you, we stop there.",
+    alt: "A crane sets a new box down next to others that are already connected",
   },
 
   entrega: {
     rotulo: "Packing list",
     nota: "What you get at the end of the project.",
-    titulo: "What you're left with when I'm done",
+    titulo: "What you take with you when I'm done",
     bajada: "In the end you don't depend on me to use it or to change it.",
-    cajaTitulo: "In the box",
-    cajaConteo: "04 lines",
-    renglones: [
+    alt: "An open box with a laptop and a manual, next to a key ring and an open padlock",
+    columnas: [
       {
-        n: "01",
-        t: "The system running, with your real data",
-        d: "And your people already using it, with a recording of the training for whoever joins later.",
-        resaltado: false,
+        t: "Your operating system, running",
+        d: "With your real data, your people already using it and the training recorded for whoever joins later.",
       },
       {
-        n: "02",
-        t: "Everything in your company's name",
-        d: "The code, the accounts, the passwords and the access. There's no monthly per-seat fee, and if tomorrow you want to work with someone else, you take all of it with you.",
-        resaltado: true,
+        t: "Everything in your name",
+        d: "The code, the accounts and the access belong to your company, and there's no monthly per-seat fee.",
       },
       {
-        n: "03",
         t: "How to change it without me",
-        d: "I teach you and your team to make changes with AI. You don't have to call me to move a button.",
-        resaltado: true,
+        d: "I teach you and your team to make changes with AI.",
       },
       {
-        n: "04",
-        t: "The time measured, and my WhatsApp",
-        d: "We time the process going in and coming out, and I hand you the number. There are two reviews, at one month and at two, and you write to me directly.",
-        resaltado: false,
+        t: "The time, measured",
+        d: "We time the process before and after, and review it at one month and at two.",
       },
-    ] as Renglon[],
-    menudaTitulo: "What's not included",
-    menudaAviso: "Important",
-    menuda:
-      "I <b class='font-bold'>don't</b> change the whole company: it's one process at a time. I don't build technology teams or sell licences. And if what you need already exists and works, I'll tell you instead of building it.",
-    manuscrita:
-      "once the first process is up and running, we'll talk about the second",
-    tampocoTitulo: "I also don't do",
-    tampoco: [
-      "Scaling companies that are already large.",
-      "Research or developing new technology.",
-      "Long reports for the board.",
-    ],
+    ] as Columna[],
+    noIncluye:
+      "<b class='font-semibold text-tinta'>Not included:</b> changing the whole company at once, building technology teams or selling licences. And if what you need already exists and works, I'll tell you before building it.",
   },
 
   antes: {
