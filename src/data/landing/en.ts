@@ -264,12 +264,10 @@ export const en = {
       },
       {
         clave: "visible",
-        sector: "Personal branding agency",
+        sector: "Personal branding agency · being built",
         nombre: "Visible",
-        que: "Its operating system: every client, every deliverable and every approval in one place, with a portal for the client.",
-        reemplazo:
-          "Notion, the spreadsheets, the forms and the hand-offs over chat.",
-        alt: "View of Visible's operating system with each client's flow",
+        que: "Its operating system, which I'm building now: every client, every deliverable and every approval in one place, with a portal for the client.",
+        alt: "Visible's client portal on a phone, with cycle progress and posts to approve",
       },
       {
         clave: "colegio",
@@ -277,7 +275,7 @@ export const en = {
         nombre: "Communications and minutes",
         que: "Meetings with families are recorded, AI writes the draft minutes and the family signs them from their phone. The school's emails turn into the week's plan.",
         reemplazo: "minutes written by hand.",
-        alt: "Minutes of a meeting with a family, ready to sign",
+        alt: "Draft minutes of a meeting with a family, written by AI and ready to review",
       },
       {
         clave: "ignia",

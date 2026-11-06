@@ -260,12 +260,10 @@ export const es = {
       },
       {
         clave: "visible",
-        sector: "Agencia de marca personal",
+        sector: "Agencia de marca personal · en construcción",
         nombre: "Visible",
-        que: "Su sistema operativo: cada cliente, cada entrega y cada aprobación en un solo lugar, con un portal para el cliente.",
-        reemplazo:
-          "Notion, las hojas de cálculo, los formularios y los traspasos por chat.",
-        alt: "Vista del sistema operativo de Visible con el flujo de cada cliente",
+        que: "Su sistema operativo, que estoy construyendo ahora: cada cliente, cada entrega y cada aprobación en un solo lugar, con un portal para el cliente.",
+        alt: "Portal del cliente de Visible en el celular, con el avance del ciclo y las publicaciones por aprobar",
       },
       {
         clave: "colegio",
@@ -273,7 +271,7 @@ export const es = {
         nombre: "Comunicaciones y actas",
         que: "Las reuniones con familias se graban, la inteligencia artificial escribe el borrador del acta y la familia la firma desde el celular. Los correos del colegio se vuelven el plan de la semana.",
         reemplazo: "las actas escritas a mano.",
-        alt: "Acta de una reunión con la familia, lista para firmar",
+        alt: "Borrador del acta de una reunión con la familia, escrito por la inteligencia artificial y listo para revisar",
       },
       {
         clave: "ignia",

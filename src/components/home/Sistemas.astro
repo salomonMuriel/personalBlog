@@ -80,7 +80,7 @@ const foto = "h-auto w-full rounded-[1px]";
         resto.map(s => {
           const imagen = pantallaDe(s.clave);
           return (
-            <article class="grid grid-cols-1 gap-x-8 gap-y-3 border-b border-linea py-[clamp(1.3rem,2.6vw,2rem)] md:grid-cols-[9.5rem_minmax(0,1fr)_minmax(0,.9fr)] md:items-start">
+            <article class="grid grid-cols-1 gap-x-8 gap-y-3 border-b border-linea py-[clamp(1.3rem,2.6vw,2rem)] md:grid-cols-[9.5rem_minmax(0,1fr)_minmax(0,.75fr)] md:items-start">
               <div class="font-mono text-[11px] uppercase leading-[1.7] tracking-[.14em] text-gris">
                 <div class="text-rojo2">{s.sector}</div>
               </div>
@@ -99,7 +99,12 @@ const foto = "h-auto w-full rounded-[1px]";
                 )}
               </div>
               {imagen && (
-                <div class={mat}>
+                <div
+                  class:list={[
+                    mat,
+                    imagen.height > imagen.width && "w-full max-w-[170px]",
+                  ]}
+                >
                   <Image
                     src={imagen}
                     widths={[480, 720, 960]}
