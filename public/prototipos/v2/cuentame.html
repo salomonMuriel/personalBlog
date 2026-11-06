@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="es" data-type="service" data-radius="soft" data-buttons="arrow" data-motion>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Salomón Muriel: cuéntame de tu empresa</title>
+<meta name="description" content="Ocho preguntas sobre cómo funciona hoy tu empresa. Las leo yo y te escribo por WhatsApp.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="site-kind" content="other">
+<meta name="page-type" content="service">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400..700&family=Hanken+Grotesk:wght@400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/system.css">
+<link rel="stylesheet" href="assets/ui/cards.css">
+<link rel="stylesheet" href="assets/motion/motion.css">
+<link rel="stylesheet" href="assets/layout/layout.css">
+<style>
+:root {
+  --p-bg: #ffffff; --p-surface: #f4f4f2; --p-ink: #1f2b4d; --p-muted: #646b81;
+  --p-accent: #f7941d; --p-accent-ink: #1f2b4d; --p-action: #f7941d; --p-action-ink: #1f2b4d;
+  --p-inv-bg: #05070a; --p-inv-surface: #111417; --p-inv-ink: #ffffff; --p-inv-muted: #939597;
+  --p-inv-accent: #f7941d; --p-inv-accent-ink: #1f2b4d; --p-inv-action: #f7941d; --p-inv-action-ink: #1f2b4d;
+  --font-display: "Newsreader", Georgia, serif;
+  --font-text: "Hanken Grotesk", system-ui, sans-serif;
+  --display-weight: 400;
+  --display-tracking: -0.018em;
+  --display-tracking-xl: -0.025em;
+  --ly-scale: 1.06;
+}
+</style>
+<!-- page CSS: the questionnaire's own controls. One question a screen: the question, every option and
+     the button fit the first screen at 375x667, 1440x900 and 1920x937. -->
+<style>
+  .skip { position: absolute; width: 1px; height: 1px; overflow: hidden; white-space: nowrap; clip-path: inset(50%); }
+  .skip:focus { width: auto; height: auto; clip-path: none; padding: var(--s-2) var(--s-3); background: var(--bg); z-index: 20; }
+  .cq-nav__lado { display: flex; align-items: center; gap: var(--s-6); margin-left: auto; font-size: var(--t-small); }
+  .cq-nav__paso { color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .cq-nav__lado + .cq-nav__track { position: absolute; left: 0; right: 0; bottom: -1px; height: 3px; background: transparent; }
+  header.nav > .nav__bar { position: relative; }
+  .cq-nav__bar { display: block; height: 100%; width: 11%; background: var(--ink); transition: width 200ms var(--m-ease, ease); }
+  #cuestionario { height: auto; min-height: 100svh; padding-top: calc(var(--nav) + var(--s-7)); padding-bottom: var(--s-7); }
+  #cuestionario > .wrap { height: auto; }
+  .cq__titulo { font: 500 var(--t-body)/1.4 var(--font-text); letter-spacing: 0; color: var(--muted); margin-bottom: var(--s-3); }
+  .cq fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+  .cq legend { padding: 0; font: var(--display-weight) clamp(24px, 1.4vw + 18px, 40px)/1.15 var(--font-display); letter-spacing: var(--display-tracking); max-width: 26ch; text-wrap: balance; }
+  .cq legend:focus { outline: none; }
+  .cq__hint { margin-top: var(--s-2); color: var(--muted); font-size: var(--t-body); }
+  .cq__opts { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s-2); margin-top: var(--s-5); }
+  @media (min-width: 640px) { .cq__opts--dos { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .opt { position: relative; display: flex; align-items: center; gap: var(--s-3); min-height: 48px; padding: 10px var(--s-4);
+    border: 1px solid var(--line-strong); border-radius: var(--r-sm); background: var(--bg); cursor: pointer; font-size: var(--t-body); line-height: 1.3;
+    transition: border-color 140ms var(--m-ease, ease), background-color 140ms var(--m-ease, ease), transform 140ms var(--m-ease, ease); }
+  .opt input { position: absolute; opacity: 0; width: 1px; height: 1px; pointer-events: none; }
+  .opt__box { flex: none; display: grid; place-items: center; width: 20px; height: 20px; border: 1.5px solid var(--line-strong); border-radius: 50%; background: var(--bg); }
+  .opt--multi .opt__box { border-radius: 5px; }
+  .opt__box svg { width: 13px; height: 13px; opacity: 0; color: var(--bg); }
+  .opt:has(input:checked) { border-color: var(--ink); background: var(--surface); box-shadow: inset 0 0 0 1px var(--ink); }
+  .opt:has(input:checked) .opt__box { background: var(--ink); border-color: var(--ink); }
+  .opt:has(input:checked) .opt__box svg { opacity: 1; }
+  .opt:has(input:focus-visible) { outline: 2px solid var(--action); outline-offset: 2px; }
+  .opt:has(input:disabled) { opacity: .45; cursor: not-allowed; }
+  @media (hover: hover) and (pointer: fine) { .opt:hover:not(:has(input:disabled)) { border-color: var(--ink); transform: translateY(-1px); } }
+  .opt:active:not(:has(input:disabled)) { transform: translateY(1px) scale(.985); }
+  .cq__otra { margin-top: var(--s-3); max-width: 420px; }
+  .cq__nav { display: flex; align-items: center; gap: var(--s-4); margin-top: var(--s-5); }
+  .cq__nav > :is([data-siguiente], [data-enviar]) { margin-left: auto; }
+  .cq__nav .btn[disabled] { opacity: .45; pointer-events: none; }
+  .cq__atras { display: inline-flex; align-items: center; gap: var(--s-2); height: 44px; padding: 0 var(--s-1); border: 0; background: none; cursor: pointer;
+    font: 500 var(--t-body)/1 var(--font-text); color: var(--ink); text-decoration: underline; text-underline-offset: 5px; text-decoration-color: var(--line-strong);
+    transition: text-decoration-color 140ms var(--m-ease, ease); }
+  .cq__atras svg { width: 12px; height: 12px; transition: transform 140ms var(--m-ease, ease); }
+  .cq__atras:hover { text-decoration-color: var(--ink); }
+  .cq__atras:hover svg { transform: translateX(-3px); }
+  .cq__atras:focus-visible { outline: 2px solid var(--action); outline-offset: 2px; border-radius: 4px; }
+  .cq .form { margin-top: var(--s-5); gap: var(--s-3) var(--s-4); }
+  .field__error { color: #b3261e; font-size: var(--t-small); font-weight: 500; }
+  .cq__privacy { color: var(--muted); font-size: var(--t-small); margin-top: var(--s-3); max-width: 60ch; }
+  .cq__trap { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+  .cq__result { display: grid; gap: var(--s-5); max-width: 640px; }
+  .cq__result h2 { max-width: 20ch; }
+  .cq__result h2:focus { outline: none; }
+  .cq__horas { font: var(--display-weight) var(--t-h3)/1.25 var(--font-display); letter-spacing: var(--display-tracking); padding-left: var(--s-5); border-left: 2px solid var(--accent); }
+  .cq__aside { display: grid; gap: var(--s-4); align-content: start; padding: var(--s-6); border-radius: var(--r-lg); background: var(--surface); }
+  .cq__aside img { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; object-position: 50% 25%; }
+  .cq__aside p { color: var(--ink); }
+  @media (max-width: 1023px) { .cq__aside, .cq-nav__wa { display: none; } }
+  @media (max-width: 639px) {
+    #cuestionario { padding-top: calc(var(--nav) + var(--s-4)); padding-bottom: 0; }
+    .cq__titulo { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+    .cq__hint { font-size: 15px; }
+    .cq__opts { gap: 6px; margin-top: var(--s-3); }
+    .opt { min-height: 44px; padding: 6px var(--s-3); font-size: 15px; line-height: 1.25; gap: 10px; }
+    .cq__nav { position: sticky; bottom: 0; z-index: 3; margin: var(--s-3) calc(-1 * var(--gut)) 0; padding: var(--s-2) var(--gut) calc(var(--s-2) + env(safe-area-inset-bottom)); background: var(--bg); border-top: 1px solid var(--line); }
+    .cq__nav .btn--primary { flex: 1 1 auto; }
+    .cq .form { margin-top: var(--s-3); gap: var(--s-2); }
+    .cq .field :is(input) { height: 44px; }
+    .cq .field textarea { min-height: 64px; height: 64px; }
+  }
+</style>
+</head>
+<body>
+<!-- type: service (site-kind other). The questionnaire for prototype V2: one question a screen; copy and
+     option ids come from src/data/cuestionario/es.ts and opciones.ts (cuestionario-datos.js is generated
+     from them); it POSTs to /api/cuestionario. -->
+<header class="nav">
+  <div class="wrap nav__bar">
+    <a class="skip" href="#cuestionario">Saltar al cuestionario</a>
+    <a class="nav__logo" href="index.html"><span class="mark" data-mark="stack" aria-hidden="true"></span>Salomón Muriel</a>
+    <div class="cq-nav__lado">
+      <span class="cq-nav__paso" data-paso-texto>Paso 1 de 9</span>
+      <a class="link cq-nav__wa" href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20tengo%20una%20empresa%20de%20___%20y%20quiero%20contarte%20c%C3%B3mo%20funciona%20hoy.">Escribir por WhatsApp</a>
+    </div>
+    <span class="cq-nav__track" aria-hidden="true"><span class="cq-nav__bar" data-barra></span></span>
+  </div>
+</header>
+
+<main id="top">
+  <section class="section" id="cuestionario" aria-labelledby="cq-h">
+    <div class="wrap">
+      <div class="grid grid--top hero-text">
+        <div class="cq span-7" data-cuestionario data-version="v2">
+          <h1 class="cq__titulo" id="cq-h" data-cabecera>Cuéntame de tu empresa</h1>
+          <form class="cq__form" data-formulario novalidate>
+            <div data-pasos></div>
+            <div class="cq__trap" aria-hidden="true"><label>Web <input type="text" name="web" tabindex="-1" autocomplete="off"></label></div>
+            <div class="cq__nav">
+              <button class="cq__atras" type="button" data-atras hidden><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M11 6H3M6.5 2.5 3 6l3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Atrás</button>
+              <button class="btn btn--primary" type="button" data-siguiente disabled>Siguiente<svg class="m-arrow" viewBox="0 0 12 12" aria-hidden="true"><path class="m-arrow__stem" d="M1 6h8"/><path class="m-arrow__head" d="M4.5 2.5 8 6l-3.5 3.5"/></svg></button>
+              <button class="btn btn--primary" type="submit" data-enviar hidden>Enviar<svg class="m-arrow" viewBox="0 0 12 12" aria-hidden="true"><path class="m-arrow__stem" d="M1 6h8"/><path class="m-arrow__head" d="M4.5 2.5 8 6l-3.5 3.5"/></svg></button>
+            </div>
+          </form>
+          <div class="cq__result" data-resultado hidden aria-live="polite">
+            <p class="t-label muted" data-res-rotulo>Recibido</p>
+            <h2 tabindex="-1" data-res-titulo></h2>
+            <p class="t-lead" data-res-texto></p>
+            <p class="cq__horas" data-horas hidden></p>
+            <div class="btn-row" data-res-botones></div>
+          </div>
+        </div>
+        <aside class="cq__aside span-5 start-8">
+          <img src="img/salomon-160w.webp" width="160" height="160" alt="Salomón Muriel" data-source="client" data-subject="retrato de Salomón Muriel">
+          <p class="t-card">Salomón Muriel</p>
+          <p data-nota>Son ocho preguntas y toma unos dos minutos.</p>
+          <p>Leo cada respuesta y te escribo por WhatsApp. Si prefieres escribirme tú primero, mi número es el +57 313 246 5100.</p>
+          <p><a class="link" href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20tengo%20una%20empresa%20de%20___%20y%20quiero%20contarte%20c%C3%B3mo%20funciona%20hoy.">Escribir por WhatsApp</a></p>
+        </aside>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script type="module" src="assets/system.js"></script>
+<script type="module" src="assets/motion/motion.js"></script>
+<script type="module" src="cuentame.js"></script>
+</body>
+</html>
