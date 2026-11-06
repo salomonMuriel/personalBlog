@@ -4,10 +4,10 @@ export const en: CopiaCuestionario = {
   meta: {
     title: "Tell me about your company · Salomón Muriel",
     description:
-      "Eight questions about how your company runs today. I read the answers myself and message you on WhatsApp.",
+      "Eight questions about how your company runs today. I'll reply on WhatsApp.",
   },
   rotulo: "Work order",
-  nota: "It's eight questions and takes about two minutes.",
+  nota: "You can also message me on WhatsApp.",
   titulo: "Tell me about your company",
   paso: "Step %n of %t",
   siguiente: "Next",
@@ -40,7 +40,7 @@ export const en: CopiaCuestionario = {
       },
     },
     donde: {
-      titulo: "Where does the operation's information live today?",
+      titulo: "Where is the operation's information kept today?",
       opciones: {
         excel: "Excel or Google Sheets",
         whatsapp: "WhatsApp chats",
@@ -52,8 +52,7 @@ export const en: CopiaCuestionario = {
       },
     },
     excels: {
-      titulo:
-        "How many spreadsheets does it take to keep the operation running?",
+      titulo: "How many spreadsheets does it take to run the operation?",
       opciones: {
         "0": "None",
         "1-3": "1 to 3",
@@ -113,8 +112,7 @@ export const en: CopiaCuestionario = {
     mensaje: "Anything else I should know? (optional)",
     enviar: "Send",
     enviando: "Sending…",
-    privacidad:
-      "I read it myself and share it with no one. I won't add you to any mailing list.",
+    privacidad: "I only use these details to reply to you.",
     faltaNombre: "Write your name.",
     faltaEmpresa: "Write the company's name.",
     faltaWhatsapp: "Write a WhatsApp number.",
@@ -125,21 +123,21 @@ export const en: CopiaCuestionario = {
     si: {
       titulo: "Thanks, %nombre. I think I can help.",
       texto:
-        "I've got everything. The next step is a 45-minute call where you show me how the operation runs today. If you'd rather, we can carry on over WhatsApp.",
+        "The next step is a 45-minute call where you show me how the operation runs today. If you'd rather, we can carry on over WhatsApp.",
       ctaAgenda: "Book the call",
       ctaWa: "Carry on over WhatsApp",
     },
     temprano: {
       titulo: "Thanks, %nombre.",
       texto:
-        "With fewer than five people, I think mentoring is a better fit, where we work one to one on what you're building. If you still want to talk about a system, message me.",
+        "With fewer than five people, I think mentoring is a better fit, where we work one to one on what you're building. If you still want to talk about an operating system for your company, message me.",
       ctaMentoria: "See the mentoring",
       ctaWa: "Message me on WhatsApp",
     },
     explorando: {
-      titulo: "Thanks, %nombre, it came through.",
+      titulo: "Thanks, %nombre.",
       texto:
-        "I'll message you on WhatsApp in the next few days so you can tell me more. If you'd rather get ahead, message me first.",
+        "I'll message you on WhatsApp in the next few days so you can tell me more. If you don't want to wait, message me first.",
       ctaWa: "Message me on WhatsApp",
     },
     horas:

@@ -1,0 +1,70 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+  id: string;
+  vistas: { imagen: ImageMetadata; titulo: string; alt: string }[];
+}
+const { id, vistas } = Astro.props;
+const soloTelefono = vistas.every(v => v.imagen.height > v.imagen.width);
+---
+
+<div
+  data-galeria
+  id={id}
+  class:list={["min-w-0", soloTelefono && "w-full max-w-[340px]"]}
+>
+  <div
+    class="rounded border border-linea bg-campo p-[7px] shadow-[0_1px_0_rgba(22,23,26,.05),0_16px_36px_-28px_rgba(22,23,26,.55)]"
+  >
+    <div
+      class:list={[
+        "relative overflow-hidden rounded-[1px] bg-papel",
+        soloTelefono ? "aspect-[3/4]" : "aspect-[16/10]",
+      ]}
+    >
+      {
+        vistas.map((v, i) => {
+          const telefono = v.imagen.height > v.imagen.width;
+          return (
+            <div data-vista hidden={i > 0} class="absolute inset-0">
+              <Image
+                src={v.imagen}
+                widths={telefono ? [240, 480] : [640, 960, 1440]}
+                sizes={
+                  telefono
+                    ? "(min-width:1024px) 220px, 40vw"
+                    : "(min-width:1024px) 58vw, 92vw"
+                }
+                loading="lazy"
+                alt={v.alt}
+                class:list={[
+                  "h-full w-full",
+                  telefono ? "object-contain py-3" : "object-cover object-top",
+                ]}
+              />
+            </div>
+          );
+        })
+      }
+    </div>
+  </div>
+
+  {
+    vistas.length > 1 && (
+      <div class="mt-3 flex flex-wrap gap-1.5">
+        {vistas.map((v, i) => (
+          <button
+            type="button"
+            data-mostrar={i}
+            aria-controls={id}
+            aria-pressed={i === 0 ? "true" : "false"}
+            class="font-mono min-h-[36px] rounded border-[1.5px] border-linea2 bg-campo px-2.5 text-[10.5px] uppercase tracking-[.12em] text-gris transition-colors hover:border-tinta hover:text-tinta aria-pressed:border-tinta aria-pressed:bg-tinta aria-pressed:text-papel"
+          >
+            {v.titulo}
+          </button>
+        ))}
+      </div>
+    )
+  }
+</div>

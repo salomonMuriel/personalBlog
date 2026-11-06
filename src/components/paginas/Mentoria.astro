@@ -117,9 +117,13 @@ const c = copiaMentoria(lang);
             class="font-mono text-[12px] font-semibold uppercase tracking-[.14em] text-rojo3"
             >{c.semana.pie}</span
           >
-          <span class="text-[.95rem] leading-[1.4] text-[#8b8a83]"
-            >{c.semana.pieNota}</span
-          >
+          {
+            c.semana.pieNota && (
+              <span class="text-[.95rem] leading-[1.4] text-[#8b8a83]">
+                {c.semana.pieNota}
+              </span>
+            )
+          }
         </div>
       </div>
     </div>
@@ -227,9 +231,13 @@ const c = copiaMentoria(lang);
         <p class="mt-4 max-w-[52ch] text-[1.02rem] leading-[1.6] text-paneltxt">
           {c.ignia.texto}
         </p>
-        <p class="mt-3 max-w-[52ch] text-[1.02rem] leading-[1.6]">
-          <b class="font-semibold">{c.ignia.remate}</b>
-        </p>
+        {
+          c.ignia.remate && (
+            <p class="mt-3 max-w-[52ch] text-[1.02rem] leading-[1.6]">
+              <b class="font-semibold">{c.ignia.remate}</b>
+            </p>
+          )
+        }
       </div>
       <a
         href={c.ignia.url}

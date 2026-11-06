@@ -22,9 +22,13 @@ const columnas = c.columnas as readonly Columna[];
     >
       {c.titulo}
     </h2>
-    <p class="mt-4 max-w-[58ch] text-[1.05rem] leading-[1.55] text-gris">
-      {c.bajada}
-    </p>
+    {
+      c.bajada && (
+        <p class="mt-4 max-w-[58ch] text-[1.05rem] leading-[1.55] text-gris">
+          {c.bajada}
+        </p>
+      )
+    }
 
     <div
       class="mt-[clamp(1.6rem,3.4vw,2.4rem)] rounded border border-linea bg-campo p-[7px]"

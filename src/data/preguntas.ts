@@ -8,11 +8,11 @@ export const preguntasEs: Pregunta[] = [
   },
   {
     p: "Es que yo de tecnología no sé nada.",
-    r: "No hace falta. Mis clientes son marcas de ropa, restaurantes, distribuidoras, importadores y empresas de servicios. Parte de mi trabajo es explicarlo claro, y si algo no se entiende es culpa mía.",
+    r: "No hace falta. Mis clientes son marcas de ropa, restaurantes, distribuidoras, importadores y empresas de servicios. Parte de mi trabajo es explicarlo claro.",
   },
   {
     p: "¿Mi empresa es muy chiquita para esto?",
-    r: "Si ya vendes y son entre cinco y cuarenta personas, no: ahí es donde más sirvo. Donde no sirvo es en una empresa que ya es grande y necesita crecer mucho más.",
+    r: "Si ya vendes y son entre cinco y cuarenta personas, no. Es el tamaño de empresa con el que mejor trabajo. Si tu empresa ya es grande y necesita crecer mucho más, no soy la persona indicada.",
   },
   {
     p: "Ya compré un software carísimo. ¿Toca botarlo?",
@@ -39,11 +39,11 @@ export const preguntasEn: Pregunta[] = [
   },
   {
     p: "I don't know anything about technology.",
-    r: "You don't need to. My clients are clothing brands, restaurants, distributors, importers and service businesses. Part of my job is explaining it clearly, and if something isn't clear, that's on me.",
+    r: "You don't need to. My clients are clothing brands, restaurants, distributors, importers and service businesses. Part of my job is explaining it clearly.",
   },
   {
     p: "Is my company too small for this?",
-    r: "If you're already selling and you have between five and forty people, no: that's where I'm most useful. Where I'm not useful is a company that's already big and needs to grow much further.",
+    r: "If you're already selling and you have between five and forty people, no. That's the size of company I work best with. If your company is already big and needs to grow much further, I'm not the right person.",
   },
   {
     p: "I already bought expensive software. Do I throw it out?",

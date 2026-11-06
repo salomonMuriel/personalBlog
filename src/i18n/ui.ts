@@ -35,8 +35,7 @@ export const ui = {
     "rotulo.ciudad": "Bogotá, Colombia",
 
     "pie.empezar": "Cómo empezar",
-    "pie.empezarTxt":
-      "Escríbeme por WhatsApp o llena el cuestionario, que toma unos dos minutos.",
+    "pie.empezarTxt": "Escríbeme por WhatsApp o llena el cuestionario.",
     "pie.queConstruyo": "Qué construyo",
     "pie.queConstruyoTxt":
       "Le construyo a tu empresa su sistema operativo, a la medida de cómo ya trabaja.",
@@ -51,10 +50,10 @@ export const ui = {
     "contacto.agendar": "Agendar",
     "contacto.agendarNota": "cal.com/salomonmuriel",
     "contacto.linkedin": "LinkedIn",
-    "contacto.linkedinNota": "Ahí publico lo que escribo",
+    "contacto.linkedinNota": "linkedin.com/in/smuriel",
     "contacto.correo": "Correo",
     "contacto.cuestionario": "Cuestionario",
-    "contacto.cuestionarioNota": "Dos minutos",
+    "contacto.cuestionarioNota": "",
 
     "lang.otro": "English",
     "404.titulo": "Esta página ya no está",
@@ -62,7 +61,7 @@ export const ui = {
       "Se dañó el enlace o la página se retiró. Abajo está lo que sí existe.",
     "410.titulo": "Esta página se retiró",
     "410.texto":
-      "El blog de esta página se retiró. Lo que escribo hoy lo publico en LinkedIn.",
+      "Era parte de un blog que ya no existe. Lo que escribo hoy lo publico en LinkedIn.",
   },
   en: {
     "nav.mentoria": "Mentoring",
@@ -79,8 +78,7 @@ export const ui = {
     "rotulo.ciudad": "Bogotá, Colombia",
 
     "pie.empezar": "How to start",
-    "pie.empezarTxt":
-      "Message me on WhatsApp or fill in the questionnaire, which takes about two minutes.",
+    "pie.empezarTxt": "Message me on WhatsApp or fill in the questionnaire.",
     "pie.queConstruyo": "What I build",
     "pie.queConstruyoTxt":
       "I build your company its operating system, made to fit how it already works.",
@@ -95,10 +93,10 @@ export const ui = {
     "contacto.agendar": "Book a call",
     "contacto.agendarNota": "cal.com/salomonmuriel",
     "contacto.linkedin": "LinkedIn",
-    "contacto.linkedinNota": "Where I publish what I write",
+    "contacto.linkedinNota": "linkedin.com/in/smuriel",
     "contacto.correo": "Email",
     "contacto.cuestionario": "Questionnaire",
-    "contacto.cuestionarioNota": "Two minutes",
+    "contacto.cuestionarioNota": "",
 
     "lang.otro": "Español",
     "404.titulo": "This page isn't here",
@@ -106,6 +104,6 @@ export const ui = {
       "Either the link broke or the page was retired. Here's what does exist.",
     "410.titulo": "This page was retired",
     "410.texto":
-      "The blog that used to live here is gone. What I write now goes on LinkedIn.",
+      "It was part of a blog that no longer exists. What I write now goes on LinkedIn.",
   },
 } as const;

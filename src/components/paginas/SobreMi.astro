@@ -17,8 +17,8 @@ const { Content } = await render(entrada);
 
 const t = es
   ? {
-      rotulo: "Hoja de vida, sin currículo",
-      nota: "Vas a trabajar con una persona, no con una firma.",
+      rotulo: "Hoja de vida",
+      nota: "",
       titulo: "Sobre mí",
       manuscrita: "la versión larga",
       datos: [
@@ -30,13 +30,14 @@ const t = es
         ["Idiomas", "Español e inglés"],
       ] as [string, string][],
       empresasRotulo: "Las empresas",
-      empresasNota: "Dos vendidas, dos quebradas y la que me ocupa hoy.",
+      empresasNota: "",
       empresasTitulo: "Lo que he montado",
-      ctaTitulo: "Si quieres hablar",
+      ctaTitulo: "Contacto",
       ctaTexto:
         "Si tu empresa necesita su sistema operativo, cuéntame cómo funciona hoy.",
       cta: "Escribirme",
-      ctaWa: "Hola Salomón, leí tu página y quiero contarte qué tengo montado.",
+      ctaWa:
+        "Hola Salomón, me llamo ______ y tengo una empresa de _____, quiero arreglarle lo chinomático.",
       otras: "Las otras páginas",
       enlaces: [
         [
@@ -50,8 +51,8 @@ const t = es
       ] as [string, string, string][],
     }
   : {
-      rotulo: "A CV, without the CV",
-      nota: "You'd be working with a person, not with a firm.",
+      rotulo: "CV",
+      nota: "",
       titulo: "About me",
       manuscrita: "the long version",
       datos: [
@@ -63,15 +64,14 @@ const t = es
         ["Languages", "Spanish and English"],
       ] as [string, string][],
       empresasRotulo: "The companies",
-      empresasNota:
-        "Two sold, two failed, and the one that keeps me busy today.",
+      empresasNota: "",
       empresasTitulo: "What I've built",
-      ctaTitulo: "If you want to talk",
+      ctaTitulo: "Contact",
       ctaTexto:
         "If your company needs its operating system, tell me how it runs today.",
       cta: "Write to me",
       ctaWa:
-        "Hi Salomón, I read your site and I'd like to tell you what I have running.",
+        "Hi Salomón, my name is ______ and I run a ______ business. I want to fix what's fake-automated in it.",
       otras: "The other pages",
       enlaces: [
         [

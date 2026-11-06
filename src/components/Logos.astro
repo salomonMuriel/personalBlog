@@ -5,8 +5,9 @@ import type { Logo } from "@data/logos";
 interface Props {
   items: Logo[];
   modo: "riel" | "muro";
+  oscuro?: boolean;
 }
-const { items, modo } = Astro.props;
+const { items, modo, oscuro = false } = Astro.props;
 ---
 
 {
@@ -19,7 +20,12 @@ const { items, modo } = Astro.props;
               class="flex shrink-0 px-[clamp(1.3rem,2.8vw,2.4rem)] opacity-75 transition-opacity duration-300 hover:opacity-100"
               aria-hidden={oculta ? "true" : undefined}
             >
-              <LogoMarca logo={logo} alto={30} oculta={oculta} />
+              <LogoMarca
+                logo={logo}
+                alto={30}
+                oculta={oculta}
+                oscuro={oscuro}
+              />
             </li>
           ))
         )}

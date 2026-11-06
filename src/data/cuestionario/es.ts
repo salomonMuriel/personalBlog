@@ -4,10 +4,10 @@ export const es: CopiaCuestionario = {
   meta: {
     title: "Cuéntame de tu empresa · Salomón Muriel",
     description:
-      "Ocho preguntas sobre cómo funciona hoy tu empresa. Las leo yo y te escribo por WhatsApp.",
+      "Ocho preguntas sobre cómo funciona hoy tu empresa. Te respondo por WhatsApp.",
   },
   rotulo: "Orden de trabajo",
-  nota: "Son ocho preguntas y toma unos dos minutos.",
+  nota: "También me puedes escribir por WhatsApp.",
   titulo: "Cuéntame de tu empresa",
   paso: "Paso %n de %t",
   siguiente: "Siguiente",
@@ -40,7 +40,7 @@ export const es: CopiaCuestionario = {
       },
     },
     donde: {
-      titulo: "¿Dónde vive hoy la información de la operación?",
+      titulo: "¿Dónde se guarda hoy la información de la operación?",
       opciones: {
         excel: "Excel o Google Sheets",
         whatsapp: "Chats de WhatsApp",
@@ -112,8 +112,7 @@ export const es: CopiaCuestionario = {
     mensaje: "¿Algo más que deba saber? (opcional)",
     enviar: "Enviar",
     enviando: "Enviando…",
-    privacidad:
-      "Lo leo yo y no lo comparto con nadie. No te voy a meter a ninguna lista de correos.",
+    privacidad: "Solo uso estos datos para responderte.",
     faltaNombre: "Escribe tu nombre.",
     faltaEmpresa: "Escribe el nombre de la empresa.",
     faltaWhatsapp: "Escribe un número de WhatsApp.",
@@ -124,21 +123,21 @@ export const es: CopiaCuestionario = {
     si: {
       titulo: "Gracias, %nombre. Creo que te puedo ayudar.",
       texto:
-        "Ya me llegó todo. El siguiente paso es una llamada de 45 minutos en la que me muestras cómo funciona hoy la operación. Si prefieres, seguimos por WhatsApp.",
+        "El siguiente paso es una llamada de 45 minutos en la que me muestras cómo funciona hoy la operación. Si prefieres, seguimos por WhatsApp.",
       ctaAgenda: "Agendar la llamada",
       ctaWa: "Seguir por WhatsApp",
     },
     temprano: {
       titulo: "Gracias, %nombre.",
       texto:
-        "Con menos de cinco personas, creo que te sirve más la mentoría, donde trabajamos uno a uno sobre lo que estás construyendo. Si igual quieres hablar del sistema, escríbeme.",
+        "Con menos de cinco personas, creo que te sirve más la mentoría, donde trabajamos uno a uno sobre lo que estás construyendo. Si igual quieres hablar de un sistema operativo para tu empresa, escríbeme.",
       ctaMentoria: "Ver la mentoría",
       ctaWa: "Escribirme por WhatsApp",
     },
     explorando: {
-      titulo: "Gracias, %nombre, ya me llegó.",
+      titulo: "Gracias, %nombre.",
       texto:
-        "En estos días te escribo por WhatsApp para que me cuentes con calma. Si quieres adelantar, escríbeme tú.",
+        "En estos días te escribo por WhatsApp para que me cuentes más. Si no quieres esperar, escríbeme tú.",
       ctaWa: "Escribirme por WhatsApp",
     },
     horas:

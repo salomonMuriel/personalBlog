@@ -9,10 +9,10 @@ export const en = {
 
   cta: {
     cuestionario: "Tell me about your company",
-    cuestionarioNota: "The questionnaire takes about two minutes.",
+    cuestionarioNota: "",
     wa: "Message me on WhatsApp",
     waTexto:
-      "Hi Salomón, I run a ___ business and I'd like to tell you how it runs today.",
+      "Hi Salomón, my name is ______ and I run a ______ business. I want to fix what's fake-automated in it.",
   },
 
   hero: {
@@ -40,27 +40,19 @@ export const en = {
     ] as [string, string, boolean][],
   },
 
-  cinta: [
-    "An operating system for a bridal shop",
-    "A CRM for a schools platform",
-    "Meeting minutes families sign from their phone",
-    "WhatsApp reminders that go out on their own",
-    "An agency's whole operation in one place",
-  ],
-
   clientes: {
     rotulo: "I've built technology for",
   },
 
   danos: {
     rotulo: "Fault log",
-    nota: "They repeat across companies that have nothing in common.",
+    nota: "",
     titulo: "The problems I hear about most",
     etiqueta: "Fault",
     cierre:
       "If none of this sounds familiar, I'm probably not the right person.",
     ctaTexto:
-      "If it feels like the company is still in the stone age, tell me how it runs today.",
+      "If your company is still in the stone age, tell me how it runs today.",
     fallas: [
       {
         n: "01",
@@ -94,7 +86,7 @@ export const en = {
 
   cajitas: {
     rotulo: "How I explain my work",
-    nota: "The idea I work by.",
+    nota: "",
     titulo: "A company is a system of little boxes",
     texto:
       "Marketing brings people to the website and to WhatsApp, those people reach sales, and every sale opens work for operations and an invoice for admin. In most companies each box has its own spreadsheet or its own program, and someone moves the data from one to the next by hand.",
@@ -181,7 +173,7 @@ export const en = {
         parrafos: [
           "Many companies buy one program per area and end up with ten that don't talk to each other. I build a system that connects the programs that work and replaces the ones that aren't needed.",
         ],
-        manuscrita: "often the program works and just needs connecting",
+        manuscrita: "",
         giroNota: "-rotate-[1deg]",
       },
       {
@@ -198,7 +190,7 @@ export const en = {
         giro: "-rotate-[3deg]",
         titulo: "The system fits your company.",
         parrafos: [
-          "A program you buy was made for another company, and your people have to adapt to it. I start by looking at how the work gets done today and build on that, which is why people actually use it.",
+          "A program you buy was made for another company, and your people have to adapt to it. I start by looking at how the work gets done today and build on that. That's why people actually use it.",
         ],
         manuscrita:
           "in the first week I sit down with whoever is going to use it",
@@ -208,7 +200,7 @@ export const en = {
   },
 
   programa: {
-    rotulo: "Works schedule · 16 weeks",
+    rotulo: "Works schedule",
     nota: "From the first conversation to your team using it.",
     titulo: "A 16-week project",
     etapas: [
@@ -237,9 +229,9 @@ export const en = {
 
   entrega: {
     rotulo: "Packing list",
-    nota: "What you get at the end of the project.",
+    nota: "",
     titulo: "What you take with you when I'm done",
-    bajada: "In the end you don't depend on me to use it or to change it.",
+    bajada: "",
     alt: "An open box with a laptop and a manual, next to a key ring and an open padlock",
     columnas: [
       {
@@ -265,14 +257,14 @@ export const en = {
 
   antes: {
     rotulo: "Track record",
-    nota: "Including the ones that didn't work.",
+    nota: "",
     titulo: "Before this, I started my own companies",
-    enlace: "The full story, on the about page",
+    enlace: "Read the full story",
   },
 
   montado: {
     rotulo: "Track record",
-    nota: "Including the ones that didn't work.",
+    nota: "",
     titulo: "What I've built",
     pieFoto: "The valuation tool I'm showing there is one we built ourselves.",
     fotoAlt:
@@ -300,7 +292,7 @@ export const en = {
         cuando: "2017 to 2019",
         texto: "Peer-to-peer payroll lending.",
         remate: "Sold to Taurus Capital",
-        cola: " and it still runs, without me.",
+        cola: " and is still operating.",
         remateRojo: false,
       },
       {
@@ -309,7 +301,7 @@ export const en = {
         cuando: "2018 to 2019",
         texto: "Promissory-note authentication with blockchain.",
         remate: "Went under.",
-        cola: " The technology worked; the market didn't exist.",
+        cola: " The technology worked, but there was no market.",
         remateRojo: true,
       },
       {
@@ -318,7 +310,7 @@ export const en = {
         cuando: "2016 to 2017",
         texto: "Flowers by subscription.",
         remate: "Failed.",
-        cola: " Happy to tell you the story.",
+        cola: "",
         remateRojo: true,
       },
       {
@@ -333,8 +325,8 @@ export const en = {
   },
 
   voces: {
-    rotulo: "What they say",
-    nota: "Owners on what changed.",
+    rotulo: "Testimonials",
+    nota: "",
     titulo: "What the people I've worked with say",
   },
 } as const;

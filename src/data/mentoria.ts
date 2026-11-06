@@ -2,22 +2,22 @@ import type { Lang } from "@i18n/ui";
 
 const es = {
   meta: {
-    title: "Mentoría uno a uno — Salomón Muriel",
+    title: "Mentoría uno a uno · Salomón Muriel",
     description:
-      "Mentoría semanal, uno a uno, para quien está arrancando un negocio propio, una fundación o una startup. Tareas prácticas cada semana, revisadas en la sesión siguiente. Bogotá.",
+      "Mentoría uno a uno para quien está arrancando un negocio propio, una fundación o una startup. Cada semana sales con tareas prácticas y en la sesión siguiente las revisamos. Bogotá.",
   },
 
   rotulo: "Salida 02 · Acompañamiento",
-  nota: "Uno a uno, cada semana.",
-  titulo: "Mentoría, uno a uno",
-  manuscrita: "cada semana, con tarea",
+  nota: "",
+  titulo: "Mentoría uno a uno",
+  manuscrita: "",
   bajada:
     "Para quien está arrancando algo y quiere que alguien le haga seguimiento cada semana. Nos vemos, sales con tareas concretas y en la siguiente sesión las revisamos.",
 
   ficha: {
     rotulo: "Ficha del servicio",
     filas: [
-      ["Formato", "Uno a uno, conmigo. Videollamada."],
+      ["Formato", "Uno a uno, por videollamada."],
       ["Cadencia", "Una hora cada semana, con tarea práctica."],
       ["Entre sesiones", "WhatsApp abierto para lo que se atraviese."],
       ["Mínimo", "Tres meses."],
@@ -33,7 +33,7 @@ const es = {
       {
         n: "01",
         t: "La sesión",
-        d: "Una hora, tú y yo. Sin temario: trabajamos sobre tu caso y lo que te tiene trancado hoy.",
+        d: "Una hora por videollamada, sin temario. Trabajamos sobre tu caso y sobre lo que te tiene trancado hoy.",
       },
       {
         n: "02",
@@ -43,7 +43,7 @@ const es = {
       {
         n: "03",
         t: "La semana",
-        d: "Las haces tú. Si te trancas, me escribes.",
+        d: "Haces las tareas durante la semana y, si te trancas, me escribes.",
       },
       {
         n: "04",
@@ -67,7 +67,7 @@ const es = {
       "Mandarme el precio nuevo antes del jueves, así no esté perfecto.",
     ],
     pie: "0 de 5 hechas",
-    pieNota: "Las revisamos en la próxima sesión.",
+    pieNota: "",
   },
 
   regla: {
@@ -108,14 +108,14 @@ const es = {
     titulo: "Si prefieres aprender en grupo",
     texto:
       "Para eso está el Action Lab de Ignia, con currículo y con gente en tu mismo momento. Te va a servir más que esto.",
-    remate: "Acá es uno a uno y trabajamos sobre tu caso.",
+    remate: "",
     cta: "Ver el Action Lab de Ignia",
     url: "https://www.ignia.lat",
   },
 
   empezar: {
     rotulo: "Para empezar",
-    nota: "La primera conversación es para ver si esto te sirve.",
+    nota: "",
     titulo: "Cuéntame qué estás arrancando",
     texto:
       "Escríbeme por WhatsApp qué estás construyendo y dónde te trancaste. Te digo si la mentoría es para ti o si te conviene más otra cosa.",
@@ -136,7 +136,7 @@ const es = {
     },
     {
       p: "¿Y si no alcanzo a hacer las tareas?",
-      r: "Una semana pasa. Dos seguidas, paramos: sin tareas hechas, las sesiones no sirven de mucho.",
+      r: "Una semana sin tareas no es problema, pero si son dos seguidas, paramos.",
     },
     {
       p: "¿Sirve si lo mío es una fundación y no una empresa?",
@@ -147,22 +147,22 @@ const es = {
 
 const en = {
   meta: {
-    title: "One-to-one mentoring — Salomón Muriel",
+    title: "One-to-one mentoring · Salomón Muriel",
     description:
-      "Weekly one-to-one mentoring for anyone starting their own business, a nonprofit or a startup. Practical assignments every week, reviewed in the following session. Bogotá.",
+      "One-to-one mentoring for anyone starting their own business, a nonprofit or a startup. Every week you leave with practical assignments, and we review them in the next session. Bogotá.",
   },
 
   rotulo: "Track 02 · Mentoring",
-  nota: "One to one, every week.",
-  titulo: "Mentoring, one to one",
-  manuscrita: "every week, with homework",
+  nota: "",
+  titulo: "One-to-one mentoring",
+  manuscrita: "",
   bajada:
     "For anyone starting something who wants someone following up every week. We meet, you leave with concrete assignments, and we review them in the next session.",
 
   ficha: {
     rotulo: "Service sheet",
     filas: [
-      ["Format", "One to one, with me. Video call."],
+      ["Format", "One to one, over video call."],
       ["Cadence", "One hour a week, with a practical assignment."],
       ["Between sessions", "WhatsApp open for whatever comes up."],
       ["Minimum", "Three months."],
@@ -178,7 +178,7 @@ const en = {
       {
         n: "01",
         t: "The session",
-        d: "One hour, you and me. No syllabus: we work on your case and whatever has you stuck today.",
+        d: "One hour over video call, with no syllabus. We work on your case and on whatever has you stuck today.",
       },
       {
         n: "02",
@@ -188,7 +188,7 @@ const en = {
       {
         n: "03",
         t: "The week",
-        d: "You do them. If you get stuck, message me.",
+        d: "You do the assignments during the week and, if you get stuck, you message me.",
       },
       {
         n: "04",
@@ -212,7 +212,7 @@ const en = {
       "Send me the new price before Thursday, even if it isn't perfect.",
     ],
     pie: "0 of 5 done",
-    pieNota: "We go over them in the next session.",
+    pieNota: "",
   },
 
   regla: {
@@ -253,14 +253,14 @@ const en = {
     titulo: "If you'd rather learn in a group",
     texto:
       "That's what Ignia's Action Lab is for, with a curriculum and people at your stage. It will serve you better than this.",
-    remate: "Here it's one to one and we work on your case.",
+    remate: "",
     cta: "See Ignia's Action Lab",
     url: "https://www.ignia.lat",
   },
 
   empezar: {
     rotulo: "Getting started",
-    nota: "The first conversation is to see whether this is for you.",
+    nota: "",
     titulo: "Tell me what you're starting",
     texto:
       "Message me on WhatsApp with what you're building and where you got stuck. I'll tell you whether mentoring is right for you or whether something else would suit you better.",
@@ -281,7 +281,7 @@ const en = {
     },
     {
       p: "What if I don't get the assignments done?",
-      r: "One week happens. Two in a row and we stop: without the assignments done, the sessions aren't much use.",
+      r: "One week without the assignments is fine, but if it's two in a row, we stop.",
     },
     {
       p: "Does it work if mine is a nonprofit rather than a company?",

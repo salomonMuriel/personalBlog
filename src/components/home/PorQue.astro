@@ -44,14 +44,16 @@ const c = copia(lang).porque;
                 />
               ))}
             </div>
-            <p
-              class:list={[
-                "font-pen text-[1.2rem] leading-[1.3] text-rojo2 lg:pt-3",
-                r.giroNota,
-              ]}
-            >
-              {r.manuscrita}
-            </p>
+            {r.manuscrita && (
+              <p
+                class:list={[
+                  "font-pen text-[1.2rem] leading-[1.3] text-rojo2 lg:pt-3",
+                  r.giroNota,
+                ]}
+              >
+                {r.manuscrita}
+              </p>
+            )}
           </div>
         ))
       }

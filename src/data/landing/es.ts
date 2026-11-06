@@ -9,10 +9,10 @@ export const es = {
 
   cta: {
     cuestionario: "Cuéntame de tu empresa",
-    cuestionarioNota: "El cuestionario toma unos dos minutos.",
+    cuestionarioNota: "",
     wa: "Escribirme por WhatsApp",
     waTexto:
-      "Hola Salomón, tengo una empresa de ___ y quiero contarte cómo funciona hoy.",
+      "Hola Salomón, me llamo ______ y tengo una empresa de _____, quiero arreglarle lo chinomático.",
   },
 
   hero: {
@@ -40,27 +40,19 @@ export const es = {
     ] as [string, string, boolean][],
   },
 
-  cinta: [
-    "Sistema operativo para una tienda de novias",
-    "CRM para una plataforma de colegios",
-    "Actas que la familia firma desde el celular",
-    "Recordatorios de WhatsApp que salen solos",
-    "La operación de una agencia en un solo lugar",
-  ],
-
   clientes: {
     rotulo: "Le he construido tecnología a",
   },
 
   danos: {
     rotulo: "Registro de fallas",
-    nota: "Se repiten en empresas que no tienen nada que ver entre sí.",
+    nota: "",
     titulo: "Los problemas que más me cuentan",
     etiqueta: "Falla",
     cierre:
       "Si nada de esto te suena, probablemente no soy la persona indicada.",
     ctaTexto:
-      "Si sientes que la empresa sigue en la edad de piedra, cuéntame cómo funciona hoy.",
+      "Si tu empresa sigue en la edad de piedra, cuéntame cómo funciona hoy.",
     fallas: [
       {
         n: "01",
@@ -94,7 +86,7 @@ export const es = {
 
   cajitas: {
     rotulo: "Cómo te explico mi trabajo",
-    nota: "Es la idea con la que trabajo.",
+    nota: "",
     titulo: "Una empresa es un sistema de cajitas",
     texto:
       "Mercadeo trae gente a la página y a WhatsApp, esa gente le llega a ventas, y cada venta le abre trabajo a operaciones y una factura a administración. En casi todas las empresas cada cajita tiene su propio Excel o su propio programa, y alguien pasa los datos de una a otra a mano.",
@@ -181,7 +173,7 @@ export const es = {
         parrafos: [
           "Muchas empresas compran un programa por área y terminan con diez que no se hablan. Construyo un sistema que conecta los programas que sirven y reemplaza los que sobran.",
         ],
-        manuscrita: "muchas veces el programa sirve y solo falta conectarlo",
+        manuscrita: "",
         giroNota: "-rotate-[1deg]",
       },
       {
@@ -198,7 +190,7 @@ export const es = {
         giro: "-rotate-[3deg]",
         titulo: "El sistema se acomoda a tu empresa.",
         parrafos: [
-          "Un programa comprado está hecho para otra empresa, y a tu gente le toca adaptarse a él. Primero miro cómo se hace el trabajo hoy y construyo sobre eso, y por eso la gente sí lo usa.",
+          "Un programa comprado está hecho para otra empresa, y a tu gente le toca adaptarse a él. Primero miro cómo se hace hoy el trabajo y construyo sobre eso. Por eso la gente sí lo usa.",
         ],
         manuscrita: "la primera semana me siento con quien lo va a usar",
         giroNota: "-rotate-[1deg]",
@@ -207,7 +199,7 @@ export const es = {
   },
 
   programa: {
-    rotulo: "Programa de obra · 16 semanas",
+    rotulo: "Programa de obra",
     nota: "De la primera conversación a tu equipo usándolo.",
     titulo: "Un proyecto de 16 semanas",
     etapas: [
@@ -236,9 +228,9 @@ export const es = {
 
   entrega: {
     rotulo: "Lista de empaque",
-    nota: "Lo que recibes al final del proyecto.",
+    nota: "",
     titulo: "Lo que te llevas cuando termino",
-    bajada: "Al final no dependes de mí para usarlo ni para cambiarlo.",
+    bajada: "",
     alt: "Una caja abierta con un computador y un manual, al lado de un llavero y un candado abierto",
     columnas: [
       {
@@ -264,14 +256,14 @@ export const es = {
 
   antes: {
     rotulo: "Historial",
-    nota: "Incluidas las que no funcionaron.",
+    nota: "",
     titulo: "Antes de esto, monté mis propias empresas",
-    enlace: "La historia completa, en sobre mí",
+    enlace: "Leer la historia completa",
   },
 
   montado: {
     rotulo: "Historial",
-    nota: "Incluidas las que no funcionaron.",
+    nota: "",
     titulo: "Lo que he construido",
     pieFoto:
       "La herramienta de valoración que estoy mostrando ahí la construimos nosotros.",
@@ -300,7 +292,7 @@ export const es = {
         cuando: "2017 a 2019",
         texto: "Libranza entre personas.",
         remate: "Vendida a Taurus Capital",
-        cola: " y todavía opera, sin mí.",
+        cola: " y sigue operando.",
         remateRojo: false,
       },
       {
@@ -309,7 +301,7 @@ export const es = {
         cuando: "2018 a 2019",
         texto: "Autenticación de pagarés con blockchain.",
         remate: "Quebró.",
-        cola: " La tecnología funcionaba; el mercado no existía.",
+        cola: " La tecnología funcionaba, pero no había mercado.",
         remateRojo: true,
       },
       {
@@ -318,7 +310,7 @@ export const es = {
         cuando: "2016 a 2017",
         texto: "Flores por suscripción.",
         remate: "Fracasó.",
-        cola: " Si quieres, te cuento la historia.",
+        cola: "",
         remateRojo: true,
       },
       {
@@ -333,8 +325,8 @@ export const es = {
   },
 
   voces: {
-    rotulo: "Lo que dicen",
-    nota: "Dueños contando qué cambió.",
+    rotulo: "Testimonios",
+    nota: "",
     titulo: "Lo que dice la gente con la que ya trabajé",
   },
 } as const;
