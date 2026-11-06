@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="es" data-type="service" data-radius="soft" data-buttons="solid" data-motion>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Salomón Muriel: software a la medida para PYMEs</title>
+<meta name="description" content="Te construyo el sistema operativo de tu empresa: el software que reemplaza los Excel que no cuadran y el copiar y pegar. Trabajo con empresas de 5 a 40 personas.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="site-kind" content="other">
+<meta name="page-type" content="service">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400..700&family=Red+Hat+Text:wght@400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/system.css">
+<link rel="stylesheet" href="assets/ui/cards.css">
+<link rel="stylesheet" href="assets/motion/motion.css">
+<link rel="stylesheet" href="assets/layout/layout.css">
+<link rel="stylesheet" href="assets/icons/icon.css">
+<style>
+:root {
+  --p-bg: #eeecea; --p-surface: #e4e1dd; --p-ink: #333231; --p-muted: #625f5b;
+  --p-accent: #5c6b54; --p-accent-ink: #ffffff; --p-action: #5c6b54; --p-action-ink: #ffffff;
+  --p-inv-bg: #333231; --p-inv-surface: #3e3d3c; --p-inv-ink: #eeecea; --p-inv-muted: #adaba9;
+  --p-inv-accent: #eeecea; --p-inv-accent-ink: #333231; --p-inv-action: #eeecea; --p-inv-action-ink: #333231;
+  --font-display: "Red Hat Display", system-ui, sans-serif;
+  --font-text: "Red Hat Text", system-ui, sans-serif;
+  --display-weight: 400;
+  --display-tracking: -0.025em;
+  --display-tracking-xl: -0.035em;
+}
+</style>
+<link rel="stylesheet" href="assets/diagrams/diagram.css">
+<link rel="stylesheet" href="v3.css">
+</head>
+<body>
+<!-- type: service
+     deal: hero film (the portrait as the poster, no play control: there is no film), palette three-stones,
+     type red-hat (Red Hat Display / Red Hat Text), radius soft, nav nav-centre, close close-type,
+     footer footer-dark (re-dealt from footer-columns, V2's), rhythm surface-pairs (#cajitas and #sistemas),
+     buttons solid, mark wordmark. Kind other: flat grounds, no effect, no moment, one still diagram.
+     comp: comp/comp-desktop.webp and comp/comp-phone.webp -->
+
+<header class="nav nav--centre">
+  <div class="wrap nav__bar">
+    <a class="skip" href="#sintomas">Saltar al contenido</a>
+    <a class="nav__logo" href="#top">Salomón Muriel</a>
+    <nav class="nav__links" aria-label="Secciones">
+      <div class="nav__item"><a class="nav__link" href="#sintomas">Síntomas</a></div>
+      <div class="nav__item"><a class="nav__link" href="#cajitas">Cajitas</a></div>
+      <div class="nav__item">
+        <a class="nav__link" href="#sistemas">Sistemas <svg class="chev" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <div class="nav__menu">
+          <div class="wrap grid">
+            <div class="menu-col span-4">
+              <p class="t-label">Sistemas entregados</p>
+              <a href="#guia-colegio">Guía Colegio<span>CRM de ventas</span></a>
+              <a href="#actas">Actas de un colegio<span>Actas que redacta la IA</span></a>
+              <a href="#plan-semanal">Plan semanal de un colegio<span>Correos convertidos en el plan semanal</span></a>
+            </div>
+            <a class="menu-card span-4 start-9" href="#aura">
+              <div class="panel"><img class="frame__img menu-shot" src="img/aura-hoy-480w.webp" width="480" height="300" alt="Pantalla de Aura OS con las citas del día" loading="lazy" data-source="client" data-subject="Aura OS, citas del día"></div>
+              <span class="t-card">Aura Novias</span>
+              <span class="t-small muted">El sistema operativo de una tienda de novias</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="nav__item"><a class="nav__link" href="#metodo">Método</a></div>
+      <div class="nav__item"><a class="nav__link" href="#preguntas">Preguntas</a></div>
+    </nav>
+    <div class="nav__actions">
+      <a class="btn btn--primary" href="cuentame.html" data-origen="nav">Cuéntame de tu empresa</a>
+    </div>
+    <button class="nav__toggle" type="button" aria-expanded="false" aria-label="Menú">
+      <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M2 5h14M2 13h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero hero--film" aria-labelledby="hero-h">
+    <div class="wrap"><div class="hero-text hero__in">
+      <div class="hero__media hero__fill">
+        <img src="img/salomon-800w.webp" srcset="img/salomon-480w.webp 480w, img/salomon-800w.webp 800w" sizes="(min-width: 1024px) 800px, 100vw" width="800" height="800" alt="Salomón Muriel, de abrigo verde y con los brazos cruzados" fetchpriority="high" data-source="client" data-subject="retrato de Salomón Muriel">
+        <div class="hero__over">
+          <div class="hero__caja">
+            <h1 id="hero-h">Software a la medida para tu PYME</h1>
+            <p class="hero__lead">Te construyo el sistema operativo de tu empresa: el software que reemplaza los Excel que no cuadran y el copiar y pegar. Trabajo con empresas de 5 a 40 personas.</p>
+            <div class="hero__acciones" data-pliegue>
+              <div class="btn-row">
+                <a class="btn btn--primary" href="cuentame.html" data-origen="hero">Cuéntame de tu empresa</a>
+                <a class="btn btn--secondary" href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20tengo%20una%20empresa%20de%20___%20y%20quiero%20contarte%20c%C3%B3mo%20funciona%20hoy." rel="noopener" data-origen="hero">Escríbeme al 313&nbsp;246&nbsp;5100</a>
+              </div>
+              <p class="hero__nota">Son ocho preguntas y toma unos dos minutos.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div></div>
+  </section>
+
+  <section class="section partido g2m" id="sintomas" aria-labelledby="sintomas-h">
+    <div class="wrap" data-peek>
+      <div class="group">
+        <div class="section-head">
+          <h2 id="sintomas-h">Seis problemas que veo en casi todas las PYMEs</h2>
+          <p>Me los cuentan igual en una marca de ropa que en una distribuidora.</p>
+        </div>
+        <ul class="rows sintomas">
+          <li data-peek-to="piedra" tabindex="0"><span class="rows__name">Seguimos en la edad de piedra.</span></li>
+          <li data-peek-to="excel" tabindex="0"><span class="rows__name">Hay veinte Excel y ninguno cuadra con el otro.</span></li>
+          <li data-peek-to="copiar" tabindex="0"><span class="rows__name">Se nos va el día copiando y pegando.</span></li>
+          <li data-peek-to="pedidos" tabindex="0"><span class="rows__name">Los pedidos llegan por WhatsApp y se pierden en el chat.</span></li>
+          <li data-peek-to="preguntar" tabindex="0"><span class="rows__name">Para saber cuánto vendimos ayer toca preguntarle a alguien.</span></li>
+          <li data-peek-to="me-voy" tabindex="0"><span class="rows__name">Si me voy una semana, todo se frena.</span></li>
+        </ul>
+        <p class="partido__cta"><a class="link" href="cuentame.html" data-origen="sintomas">Cuéntame de tu empresa</a></p>
+      </div>
+      <div class="frame frame--photo ilustracion fill" data-visual>
+        <img class="frame__img" data-peek-for="piedra" src="img/piedra-1024w.webp" srcset="img/piedra-400w.webp 400w, img/piedra-640w.webp 640w, img/piedra-1024w.webp 1024w" sizes="(min-width: 1024px) 628px, (min-width: 640px) 420px, 342px" width="1024" height="1024" loading="lazy" alt="Una tabla de piedra con la cuadrícula de una hoja de cálculo tallada, junto a un cincel y un mazo" data-source="generated" data-subject="tabla de piedra con hoja de cálculo">
+        <img class="frame__img" data-peek-for="excel" src="img/veinte-excel-1024w.webp" srcset="img/veinte-excel-400w.webp 400w, img/veinte-excel-640w.webp 640w, img/veinte-excel-1024w.webp 1024w" sizes="(min-width: 1024px) 628px, (min-width: 640px) 420px, 342px" width="1024" height="1024" loading="lazy" alt="Una torre torcida de hojas de cálculo apiladas a punto de caerse" data-source="generated" data-subject="torre de hojas de cálculo" hidden>
+        <img class="frame__img" data-peek-for="copiar" src="img/copiar-1024w.webp" srcset="img/copiar-400w.webp 400w, img/copiar-640w.webp 640w, img/copiar-1024w.webp 1024w" sizes="(min-width: 1024px) 628px, (min-width: 640px) 420px, 342px" width="1024" height="1024" loading="lazy" alt="Dos pantallas frente a frente pasándose hojas de papel, con unas tijeras y un frasco de pegante" data-source="generated" data-subject="copiar y pegar entre pantallas" hidden>
+        <img class="frame__img" data-peek-for="pedidos" src="img/pedidos-1024w.webp" srcset="img/pedidos-400w.webp 400w, img/pedidos-640w.webp 640w, img/pedidos-1024w.webp 1024w" sizes="(min-width: 1024px) 628px, (min-width: 640px) 420px, 342px" width="1024" height="1024" loading="lazy" alt="Un celular del que sale un reguero de burbujas de chat con paquetes y pedidos perdidos entre ellas" data-source="generated" data-subject="pedidos perdidos en el chat" hidden>
+        <img class="frame__img" data-peek-for="preguntar" src="img/preguntar-1024w.webp" srcset="img/preguntar-400w.webp 400w, img/preguntar-640w.webp 640w, img/preguntar-1024w.webp 1024w" sizes="(min-width: 1024px) 628px, (min-width: 640px) 420px, 342px" width="1024" height="1024" loading="lazy" alt="Tres cuadernos con gráficas de ventas distintas y un teléfono descolgado" data-source="generated" data-subject="tres cifras de ventas distintas" hidden>
+        <img class="frame__img" data-peek-for="me-voy" src="img/me-voy-1024w.webp" srcset="img/me-voy-400w.webp 400w, img/me-voy-640w.webp 640w, img/me-voy-1024w.webp 1024w" sizes="(min-width: 1024px) 628px, (min-width: 640px) 420px, 342px" width="1024" height="1024" loading="lazy" alt="Un celular enterrado bajo un montón de notas y una maleta lista al lado" data-source="generated" data-subject="el celular del dueño" hidden>
+      </div>
+    </div>
+  </section>
+
+  <section class="section ground-surface" id="cajitas" aria-labelledby="cajitas-h">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="cajitas-h">Una empresa es un sistema de cajitas</h2>
+        <p>Cada área tiene su sistema y casi nunca se hablan. Construyo la cajita que falta y la dejo conectada con las demás antes de pasar a la siguiente, empezando por la que más duele.</p>
+      </div>
+      <div class="panel cajitas__panel fill" data-visual>
+        <div class="dg" data-diagram><script type="application/json">{"layout": "free", "alt": "Mercadeo lleva a la página web y a WhatsApp, las dos alimentan a ventas, y ventas abre el trabajo de operaciones y la factura de administración.", "ground": "none", "motion": {"pulse": "none"}, "nodes": [{"id": "mercadeo", "label": "Mercadeo", "sub": "Campañas", "icon": "ui:megaphone", "at": [0.1, 0.5], "atCompact": [0.5, 0.08]}, {"id": "web", "label": "Página web", "sub": "Formularios", "icon": "ui:globe", "at": [0.36, 0.22], "atCompact": [0.25, 0.32]}, {"id": "chat", "label": "WhatsApp", "sub": "Conversaciones", "icon": "whatsapp", "at": [0.36, 0.78], "atCompact": [0.75, 0.32]}, {"id": "ventas", "label": "Ventas", "sub": "CRM", "icon": "ui:handshake", "at": [0.62, 0.5], "atCompact": [0.5, 0.58]}, {"id": "ops", "label": "Operaciones", "sub": "Pedidos", "icon": "ui:package", "at": [0.89, 0.22], "atCompact": [0.25, 0.88]}, {"id": "admin", "label": "Administración", "sub": "Facturas", "icon": "ui:receipt", "at": [0.89, 0.78], "atCompact": [0.75, 0.88]}], "edges": [{"from": "mercadeo", "to": "web", "curve": "elbow"}, {"from": "mercadeo", "to": "chat", "curve": "elbow"}, {"from": "web", "to": "ventas", "curve": "elbow"}, {"from": "chat", "to": "ventas", "curve": "elbow"}, {"from": "ventas", "to": "ops", "curve": "elbow"}, {"from": "ventas", "to": "admin", "curve": "elbow"}]}</script></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section ground-surface g2 g2m" id="sistemas" aria-labelledby="sistemas-h">
+    <div class="wrap">
+      <div class="group">
+        <div class="section-head sistemas__head">
+          <h2 id="sistemas-h">Sistemas que ya construí para otras empresas</h2>
+          <p>Casi todas funcionaban a punta de Excel, WhatsApp y alguien copiando y pegando.</p>
+        </div>
+        <article class="card card--open m-nolift sistema sistema--ancho fill" id="aura">
+          <span class="card__tag t-label muted">Tienda de novias</span>
+          <h3>Aura Novias</h3>
+          <p>Su sistema operativo: citas, inventario de vestidos, contratos, pagos y los mensajes de WhatsApp a cada novia. Reemplazó la herramienta de reservas, las hojas de cálculo y el libro de novias en papel.</p>
+          <div class="panel panel--pantalla">
+            <img class="pantalla pantalla--ancha" src="img/aura-hoy-1760w.webp" srcset="img/aura-hoy-1040w.webp 1040w, img/aura-hoy-1760w.webp 1760w" sizes="(max-width: 639px) 640px, 1040px" width="1760" height="1100" alt="Aura OS: las citas del día con el estado de pago de cada novia y los pendientes de devolución" loading="lazy" data-source="client" data-subject="Aura OS, citas del día">
+          </div>
+        </article>
+      </div>
+      <div class="group">
+        <div class="grid sistemas__fila">
+          <article class="card card--open m-nolift sistema span-4" id="guia-colegio">
+            <span class="card__tag t-label muted">Plataforma de colegios</span>
+            <h3>Guía Colegio</h3>
+            <p>Su CRM de ventas, del primer contacto al cierre. Reemplazó Kommo, los correos y la memoria del equipo.</p>
+            <div class="panel panel--pantalla">
+              <img class="pantalla" src="img/guiacolegio-tablero-1200w.webp" srcset="img/guiacolegio-tablero-760w.webp 760w, img/guiacolegio-tablero-1200w.webp 1200w" sizes="(max-width: 639px) 360px, 640px" width="1200" height="750" alt="Tablero de ventas de Guía Colegio con los colegios por etapa" loading="lazy" data-source="client" data-subject="CRM de Guía Colegio">
+            </div>
+          </article>
+          <article class="card card--open m-nolift sistema span-4" id="actas">
+            <span class="card__tag t-label muted">Colegio</span>
+            <h3>Actas de reuniones con familias</h3>
+            <p>La inteligencia artificial escribe el borrador del acta y la familia la firma desde el celular.</p>
+            <div class="panel panel--pantalla">
+              <img class="pantalla" src="img/consto-revisar-1200w.webp" srcset="img/consto-revisar-760w.webp 760w, img/consto-revisar-1200w.webp 1200w" sizes="(max-width: 639px) 360px, 640px" width="1200" height="750" alt="Borrador del acta de una reunión con la familia, listo para que el profesor lo revise" loading="lazy" data-source="client" data-subject="actas de un colegio">
+            </div>
+          </article>
+          <article class="card card--open m-nolift sistema span-4" id="plan-semanal">
+            <span class="card__tag t-label muted">Colegio</span>
+            <h3>El plan de la semana</h3>
+            <p>Los correos del colegio se vuelven el plan de la semana de cada familia, con las fechas de pagos y permisos.</p>
+            <div class="panel panel--pantalla panel--celular">
+              <img class="pantalla pantalla--celular" src="img/memoplan-semana-520w.webp" srcset="img/memoplan-semana-200w.webp 200w, img/memoplan-semana-520w.webp 520w" sizes="(max-width: 639px) 100px, 260px" width="520" height="1125" alt="El plan de la semana en el celular: pagos, autorizaciones y materiales con su fecha" loading="lazy" data-source="client" data-subject="plan semanal de un colegio">
+            </div>
+          </article>
+        </div>
+        <p class="sistemas__cta"><a class="link" href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20tengo%20una%20empresa%20de%20___%20y%20quiero%20contarte%20c%C3%B3mo%20funciona%20hoy." rel="noopener" data-origen="sistemas">Escríbeme al 313&nbsp;246&nbsp;5100</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section g2m" id="metodo" aria-labelledby="metodo-h">
+    <div class="wrap">
+      <div class="group">
+        <div class="section-head">
+          <h2 id="metodo-h">Un proyecto dura unas 16 semanas</h2>
+          <p>Empieza con una llamada de 45 minutos. En la semana 3 ya tienes algo funcionando, y si no te sirve, ahí paramos.</p>
+        </div>
+        <div class="semanas frame" data-visual role="img" aria-label="Dieciséis semanas: entender en la 1 y la 2, diagnóstico en la 2 y la 3 con la primera pieza funcionando en la 3, y construcción de la 4 a la 16">
+          <ol class="semanas__escala" aria-hidden="true">
+            <li>1</li><li>2</li><li class="es-hito">3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li>
+          </ol>
+          <div class="semanas__fila" style="--de: 1; --a: 3" aria-hidden="true"><span>Entender</span></div>
+          <div class="semanas__fila" style="--de: 2; --a: 4" aria-hidden="true"><span>Diagnóstico</span></div>
+          <div class="semanas__fila semanas__fila--acento" style="--de: 4; --a: 17" aria-hidden="true"><span>Construir, una cajita a la vez</span></div>
+        </div>
+      </div>
+      <div class="group">
+        <div class="grid etapas">
+          <div class="span-4">
+            <p class="t-label muted">Semanas 1 y 2</p>
+            <h3>Entender la operación</h3>
+            <p>Hablo contigo y con la gente que hace el trabajo, y miro cómo se hace de verdad.</p>
+          </div>
+          <div class="span-4">
+            <p class="t-label muted">Semanas 2 y 3</p>
+            <h3>Diagnóstico</h3>
+            <p>Te entrego un plan corto con el cuello de botella que conviene atacar primero y una primera pieza ya funcionando.</p>
+          </div>
+          <div class="span-4">
+            <p class="t-label muted">Semanas 4 a 16</p>
+            <h3>Construcción</h3>
+            <p>Construyo el sistema y lo conecto con las herramientas que ya usas, hasta que tu equipo trabaje en él.</p>
+          </div>
+        </div>
+        <p class="metodo__cta"><a class="link" href="cuentame.html" data-origen="metodo">Cuéntame de tu empresa</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section g2m" id="queda" aria-labelledby="queda-h">
+    <div class="wrap">
+      <div class="group">
+        <div class="section-head queda__head">
+          <h2 id="queda-h">Lo que queda a nombre de tu empresa</h2>
+        </div>
+        <div class="frame ilustracion queda__banda fill" data-visual>
+          <img class="frame__img" src="img/herramientas-ancho-1536w.webp" width="1536" height="512" alt="Una caja de herramientas abierta con un destornillador, una llave y un metro, un llavero a un lado y un portátil cerrado al otro" loading="lazy" data-source="generated" data-subject="caja de herramientas, llaves y portátil">
+        </div>
+      </div>
+      <div class="group">
+        <ul class="grid queda">
+          <li class="span-3"><h3>El código, las cuentas y los accesos</h3><p>Quedan a nombre de tu empresa. Si cambias de proveedor, te lo llevas completo.</p></li>
+          <li class="span-3"><h3>Sin cobro mensual por usuario</h3><p>El sistema es tuyo y no pagas licencia por cada persona que lo usa.</p></li>
+          <li class="span-3"><h3>Tu equipo sabe cambiarlo</h3><p>Les enseño a cambiarlo con inteligencia artificial. Para mover un botón no tienes que llamarme.</p></li>
+          <li class="span-3"><h3>Dos revisiones y mi WhatsApp</h3><p>Revisamos al mes y a los dos meses, y me escribes directo a mí.</p></li>
+        </ul>
+        <p class="queda__cta"><a class="link" href="cuentame.html" data-origen="queda">Cuéntame de tu empresa</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section partido g2m" id="trayectoria" aria-labelledby="trayectoria-h">
+    <div class="wrap">
+      <div class="group">
+        <div class="section-head">
+          <h2 id="trayectoria-h">Antes de esto monté cinco empresas</h2>
+          <p>Dos las vendí, dos fracasaron y la quinta es Ignia, donde estoy hoy.</p>
+        </div>
+        <ul class="rows empresas">
+          <li><span class="rows__name"><img src="img/logos/ignia.png" width="78" height="56" alt="" loading="lazy">Ignia</span><span class="rows__value">Hoy</span></li>
+          <li><span class="rows__name"><img src="img/logos/finco.png" width="48" height="56" alt="" loading="lazy">Finco</span><span class="rows__value">Vendida a RED Atlas</span></li>
+          <li><span class="rows__name"><img src="img/logos/prestagente.png" width="78" height="56" alt="" loading="lazy">PrestaGente</span><span class="rows__value">Vendida a Taurus Capital</span></li>
+          <li><span class="rows__name"><img src="img/logos/beriblock.png" width="47" height="56" alt="" loading="lazy">Beriblock</span><span class="rows__value">Quebró</span></li>
+          <li><span class="rows__name"><img src="img/logos/elpalomo.png" width="56" height="56" alt="" loading="lazy">El Palomo</span><span class="rows__value">Fracasó</span></li>
+          <li><span class="rows__name"><img src="img/logos/r5.png" width="78" height="56" alt="" loading="lazy">R5</span><span class="rows__value">Empleado, dirigí unas 40 personas</span></li>
+        </ul>
+      </div>
+      <div class="group trayectoria__der">
+        <div class="frame frame--photo feria">
+          <img class="frame__img" src="img/finco-feria-527w.webp" width="527" height="328" alt="Salomón Muriel mostrando la plataforma de Finco en una feria, junto a un compañero de equipo" loading="lazy" data-source="client" data-subject="Salomón en una feria con Finco">
+        </div>
+        <div class="clientes">
+          <p class="t-label muted">Le he construido tecnología a</p>
+          <ul class="clientes__logos">
+            <li><img src="img/logos/visible.png" width="253" height="56" alt="Visible" loading="lazy"></li>
+            <li><img src="img/logos/guiacolegio.png" width="128" height="56" alt="Guía Colegio" loading="lazy"></li>
+            <li><img src="img/logos/entre-hilos.png" width="61" height="56" alt="Entre Hilos" loading="lazy"></li>
+            <li><img src="img/logos/alianza-educativa.png" width="183" height="56" alt="Alianza Educativa" loading="lazy"></li>
+            <li><img src="img/logos/visionamos.png" width="255" height="56" alt="Visionamos" loading="lazy"></li>
+            <li><img src="img/logos/cosinte.png" width="409" height="56" alt="Cosinte" loading="lazy"></li>
+            <li><img src="img/logos/bision.png" width="197" height="56" alt="Bision Consulting" loading="lazy"></li>
+            <li><img src="img/logos/jda.png" width="224" height="56" alt="Juan David Aristizábal" loading="lazy"></li>
+          </ul>
+        </div>
+        <p class="trayectoria__cta"><a class="link" href="/sobre-mi/">Lee la historia completa</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="preguntas" aria-labelledby="preguntas-h">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="preguntas-h">Lo que más me preguntan en la primera llamada</h2>
+      </div>
+      <div class="grid grid--top preguntas__cols">
+        <div class="faq span-6">
+          <div class="faq__item"><h3>Es que yo de tecnología no sé nada.</h3><p>No hace falta. Mis clientes son marcas de ropa, restaurantes, distribuidoras, importadores y empresas de servicios. Parte de mi trabajo es explicarlo claro, y si algo no se entiende es culpa mía.</p></div>
+          <div class="faq__item"><h3>¿Mi empresa es muy chiquita para esto?</h3><p>Si ya vendes y son entre cinco y cuarenta personas, no: ahí es donde más sirvo. Donde no sirvo es en una empresa que ya es grande y necesita crecer mucho más.</p></div>
+          <div class="faq__item"><h3>Ya compré un software carísimo. ¿Toca botarlo?</h3><p>Casi nunca. Primero miro qué de lo que ya tienes sirve y por qué la gente no lo abre. Muchas veces el programa está bien pero desconectado del resto, y por eso llenarlo es doble trabajo.</p></div>
+        </div>
+        <div class="faq span-6">
+          <div class="faq__item"><h3>Tenemos un Notion y un Excel que dicen cosas distintas. ¿Con cuál nos quedamos?</h3><p>Con uno solo. Miramos cuál usa la gente de verdad, pasamos lo que sirve del otro y apagamos el que sobra. Mientras existan los dos, alguien va a tener que llenar los dos y se va a equivocar.</p></div>
+          <div class="faq__item"><h3>¿Y después, cuando quiera cambiar algo?</h3><p>El código queda a nombre de tu empresa. Antes de irme les enseño a cambiarlo con inteligencia artificial, desde cómo pedir el cambio hasta cómo dejarlo andando, para que no dependas de mí.</p></div>
+          <div class="faq__item"><h3>¿Y si no me sirves?</h3><p>Te lo digo en la primera llamada y, si puedo, te recomiendo a alguien que sí te sirva.</p></div>
+        </div>
+      </div>
+      <p class="preguntas__cta"><a class="link" href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20tengo%20una%20empresa%20de%20___%20y%20quiero%20contarte%20c%C3%B3mo%20funciona%20hoy." rel="noopener" data-origen="preguntas">Escríbeme al 313&nbsp;246&nbsp;5100</a></p>
+    </div>
+  </section>
+</main>
+
+<footer class="footer closing footer--dark ground-inverse g2m" id="contact" aria-labelledby="close-h">
+  <div class="wrap">
+    <div class="closing__cta close--type">
+      <div class="section-head">
+        <h2 id="close-h">Ocho preguntas sobre cómo funciona tu empresa</h2>
+        <p>Las leo yo y te escribo por WhatsApp. Si prefieres escribirme tú, mi número es el 313&nbsp;246&nbsp;5100.</p>
+      </div>
+      <a class="btn btn--primary btn--xl" href="cuentame.html" data-origen="cierre">Cuéntame de tu empresa<svg class="m-arrow" viewBox="0 0 12 12" aria-hidden="true"><path class="m-arrow__stem" d="M1 6h8"/><path class="m-arrow__head" d="M4.5 2.5 8 6l-3.5 3.5"/></svg></a>
+    </div>
+    <div class="closing__links">
+      <div class="grid">
+        <div class="span-4 stack-4">
+          <a class="nav__logo footer__mark" href="#top">Salomón Muriel</a>
+          <p class="footer__lede">Software a la medida para PYMEs, desde Bogotá.</p>
+        </div>
+        <div class="span-2 footer__col"><h4>Esta página</h4><ul><li><a href="#sintomas">Síntomas</a></li><li><a href="#cajitas">Cajitas</a></li><li><a href="#sistemas">Sistemas</a></li><li><a href="#metodo">Método</a></li><li><a href="#preguntas">Preguntas</a></li></ul></div>
+        <div class="span-3 footer__col"><h4>Contacto</h4><ul><li><a href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20tengo%20una%20empresa%20de%20___%20y%20quiero%20contarte%20c%C3%B3mo%20funciona%20hoy." rel="noopener" data-origen="pie">Escríbeme al 313&nbsp;246&nbsp;5100</a></li><li><a href="https://cal.com/salomonmuriel/consultoria" rel="noopener" data-origen="pie">Agenda una llamada de 45 minutos</a></li></ul></div>
+        <div class="span-3 footer__col"><h4>Otras páginas</h4><ul><li><a href="/mentoria/">Mentoría</a></li><li><a href="/charlas/">Charlas</a></li><li><a href="/sobre-mi/">Sobre mí</a></li></ul></div>
+      </div>
+      <div class="footer__legal">
+        <span>&copy; 2026 Salomón Muriel, Bogotá</span>
+        <div class="socials"></div>
+        <span class="credits">Los nombres y logos de clientes y empresas son de sus dueños.</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<nav class="actionbar es-oculta" aria-label="Contacto rápido" data-barra>
+  <a class="btn btn--primary" href="cuentame.html" data-origen="barra">Cuéntame de tu empresa</a>
+  <a class="btn btn--secondary barra__wa" href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20tengo%20una%20empresa%20de%20___%20y%20quiero%20contarte%20c%C3%B3mo%20funciona%20hoy." rel="noopener" data-origen="barra" aria-label="Escríbeme al 313 246 5100"><img src="assets/icons/whatsapp.svg" alt="" width="22" height="22" loading="lazy"></a>
+</nav>
+
+<script type="module" src="assets/system.js"></script>
+<script type="module" src="assets/motion/motion.js"></script>
+<script type="module" src="assets/layout/layout.js"></script>
+<script type="module" src="assets/diagrams/mount.js"></script>
+<script type="module" src="v3.js"></script>
+</body>
+</html>

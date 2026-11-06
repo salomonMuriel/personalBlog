@@ -1,0 +1,260 @@
+/* Page CSS for V3: what sits inside a visual, the hero's portrait, the split sections and the phone bar. */
+
+.skip { position: absolute; width: 1px; height: 1px; overflow: hidden; white-space: nowrap; clip-path: inset(50%); }
+.skip:focus { width: auto; height: auto; clip-path: none; padding: var(--s-2) var(--s-3); background: var(--bg); z-index: 20; }
+
+/* one primary look on every ground: the moss button, also on the charcoal box and the dark footer */
+.hero__over > .hero__caja, footer.closing { --action: var(--p-action); --action-ink: var(--p-action-ink); }
+
+/* hero: the portrait stands on the frame's own dark ground, the words in the solid box */
+.hero--film .hero__media { background: #121316; }
+.hero__caja h1 { max-width: 13ch; }
+.hero__acciones { margin-top: var(--s-6); }
+.hero__over .hero__acciones .btn-row { margin-top: 0; }
+.hero__nota { margin: var(--s-4) 0 0; font-size: var(--t-small); line-height: 1.5; color: var(--muted); }
+@media (min-width: 1024px) {
+  .hero--film .hero__media > img {
+    left: auto; right: 0; width: auto; height: 100%; aspect-ratio: 1; object-position: 50% 0;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 18%);
+    mask-image: linear-gradient(to right, transparent, #000 18%);
+  }
+  .hero__over > .hero__caja { max-width: 620px; }
+}
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .hero__over > .hero__caja { max-width: 470px; padding: var(--s-6); }
+}
+@media (max-width: 1023px) {
+  .hero--film .hero__media { justify-content: flex-start; }
+  .hero--film .hero__media > img {
+    position: relative; inset: auto; flex: 1 1 0; min-height: 0; width: 100%; height: auto;
+    object-fit: cover; object-position: 50% 22%;
+  }
+  .hero__over { padding: 0; }
+  .hero__over > .hero__caja { border-radius: 0; }
+}
+@media (max-width: 639px) {
+  /* the name and the long main action do not fit one phone bar: the hero carries the action, then the phone bar */
+  .nav:not(.is-open) .nav__actions { display: none; }
+  .nav:not(.is-open) .nav__actions + .nav__toggle { margin-left: auto; }
+  /* the phone bar stays hidden while the hero's buttons are on screen, so the hero needs no room for it */
+  .hero { --bar: 0px; --hgap: 12px; }
+  .hero__nota { display: none; }
+  .hero__over > .hero__caja { padding: var(--s-5); }
+  .hero__caja h1 { font-size: 36px; }
+  .hero__over .hero__lead { font-size: 16px; margin-top: var(--s-3); }
+  .hero__acciones { margin-top: var(--s-5); }
+  .hero__acciones .btn-row { gap: var(--s-3); }
+}
+
+/* split sections: the words and rows on the left half, the picture on the right half, top-aligned */
+@media (min-width: 1024px) {
+  main > .section.partido > .wrap { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); align-items: start; align-content: start; }
+  main > .section.partido > .wrap > :first-child { grid-column: 1 / span 6; }
+  main > .section.partido > .wrap > :last-child { grid-column: 7 / -1; }
+  .partido .ilustracion { aspect-ratio: 1; height: auto; }
+}
+.partido__cta { margin-top: var(--s-5); }
+
+/* the illustrations sit whole on a ground of their own tone, their edges faded into it */
+.ilustracion { background: #d3cdc6; min-height: 200px; }
+.ilustracion::before { display: none; }
+.ilustracion > .frame__img {
+  object-fit: contain;
+  -webkit-mask-image: radial-gradient(closest-side, #000 82%, transparent 100%);
+  mask-image: radial-gradient(closest-side, #000 82%, transparent 100%);
+}
+
+/* the pains: one line each at reading size, the picture beside them changes with the row */
+.sintomas > li { padding-block: var(--s-3); }
+.sintomas > li:first-child { padding-top: var(--s-1); }
+.sintomas .rows__name { font: 400 18px/1.4 var(--font-text); }
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .sintomas .rows__name { font-size: 16px; }
+  .sintomas > li { padding-block: 10px; }
+}
+
+/* the boxes diagram on a lighter field inside the stone band */
+.cajitas__panel { --ground-bg: var(--p-bg); --p-h: 300px; }
+
+/* delivered systems: real screens on a pale panel, cut by its right and bottom edges */
+#sistemas .panel, .menu-card .panel { --ground-bg: #d3d8cc; }
+.sistemas__head { max-width: none; }
+.sistemas__head h2 { max-width: 24ch; }
+.sistema > p { max-width: 62ch; color: var(--ink); }
+.sistema--ancho > p { max-width: 100ch; }
+.sistema > .panel { --p-h: 260px; }
+.sistema--ancho > .panel { flex: 1 1 0; min-height: 240px; }
+.card__tag { display: block; margin: 0 0 var(--s-2); }
+.pantalla {
+  position: absolute; z-index: 1; left: var(--s-6); top: var(--s-6); width: 640px; max-width: none; height: auto;
+  border-radius: 8px; border: 1px solid rgb(51 50 49 / .16); background: #fff;
+}
+.pantalla--ancha { width: 1040px; left: var(--s-7); top: var(--s-6); }
+.pantalla--celular { width: 260px; left: 50%; margin-left: -130px; border-radius: 14px; }
+@media (min-width: 1024px) {
+  #sistemas .sistemas__fila > .card.span-4 { grid-column: auto / span 4; }
+  #sistemas > .wrap > .group:last-child > .sistemas__fila { flex: 1 1 auto; min-height: 0; }
+}
+/* tablet and phone: the three smaller systems as rows, the words left and the screen right */
+@media (max-width: 1023px) {
+  .sistemas__fila > .card { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: var(--s-5); align-items: start; }
+  .sistemas__fila > .card > :not(.panel) { grid-column: 1; }
+  .sistemas__fila > .card > .panel { grid-column: 2; grid-row: 1 / span 3; margin: 0; border-radius: var(--r-md); min-height: 168px; height: auto; align-self: stretch; }
+}
+@media (max-width: 639px) {
+  .pantalla { left: var(--s-4); top: var(--s-4); width: 520px; }
+  .pantalla--ancha { width: 640px; left: var(--s-4); margin-left: 0; }
+  .sistema .card__tag { display: none; }
+  .sistemas__fila { row-gap: var(--s-5); }
+  .sistemas__fila > .card { grid-template-columns: minmax(0, 1fr) 112px; column-gap: var(--s-3); }
+  .sistemas__fila > .card > .panel { height: 136px; }
+  .sistemas__fila .pantalla { left: var(--s-3); top: var(--s-3); width: 360px; }
+  .sistemas__fila .pantalla--celular { width: 100px; left: 50%; margin-left: -50px; border-radius: 8px; }
+  #actas .pantalla { left: -60px; }
+  .sistema--ancho > .panel { min-height: 160px; }
+}
+
+/* sixteen weeks: a still chart of the three stages on the week scale */
+.semanas {
+  display: grid; grid-template-columns: repeat(16, minmax(0, 1fr)); row-gap: var(--s-3); column-gap: 0;
+  align-items: start; align-content: start; justify-content: stretch; padding: 0; border: 0; border-radius: 0; background: none;
+}
+.semanas::before { display: none; }
+.semanas__escala {
+  grid-column: 1 / -1; display: grid; grid-template-columns: subgrid; list-style: none; margin: 0 0 var(--s-2); padding: 0;
+  font: 500 var(--t-label)/1 var(--font-text); color: var(--muted); font-variant-numeric: tabular-nums;
+}
+.semanas__escala li { display: flex; align-items: center; height: 28px; padding-left: var(--s-2); border-left: 1px solid var(--line-strong); }
+.semanas__escala li:first-child { padding-left: 0; border-left: 0; }
+.semanas__escala .es-hito { color: var(--accent-ink); background: var(--accent); border-left-color: var(--accent); border-radius: 0 6px 6px 0; }
+.semanas__fila { grid-column: 1 / -1; display: grid; grid-template-columns: subgrid; row-gap: 6px; }
+.semanas__fila > span { grid-column: 1 / -1; font: 500 var(--t-small)/1.3 var(--font-text); color: var(--ink); }
+.semanas__fila::after { content: ""; grid-column: var(--de) / var(--a); height: 10px; border-radius: 999px; background: color-mix(in oklab, var(--ink) 30%, transparent); }
+.semanas__fila--acento::after { background: var(--accent); }
+.etapas { margin-top: var(--s-7); }
+.etapas .t-label { margin: 0 0 var(--s-2); }
+.etapas h3 { margin: 0 0 var(--s-2); font: 500 18px/1.4 var(--font-text); letter-spacing: 0; }
+.metodo__cta { margin-top: var(--s-6); }
+@media (max-width: 1279px) {
+  .semanas { row-gap: var(--s-2); }
+  .etapas { margin-top: var(--s-6); }
+}
+#metodo > .wrap > .group:first-child { flex: 1 1 0; min-height: 0; }
+@media (max-width: 1023px) {
+  .semanas { flex: 1 1 0; min-height: 0; align-content: start; row-gap: var(--s-5); padding-top: var(--s-2); }
+  .semanas__fila > span { font-size: var(--t-body); }
+  .semanas__fila::after { height: 14px; }
+}
+@media (max-width: 639px) {
+  .semanas__escala li { padding-left: 3px; font-size: 11px; height: 24px; }
+  .semanas__escala li:nth-child(even):not(.es-hito) { color: transparent; }
+  #metodo .etapas { margin-top: 0; row-gap: var(--s-5); }
+}
+
+/* what the client keeps: the wide picture, then four short columns */
+.queda__head { max-width: none; }
+#queda .queda__banda { flex: none; height: 384px; min-height: 0; padding: 0; border: 0; }
+.queda { margin: var(--s-6) 0 0; padding: 0; list-style: none; row-gap: var(--s-5); }
+.queda > li { padding-top: var(--s-4); border-top: 1px solid var(--line); }
+.queda h3 { margin: 0; font: 500 18px/1.4 var(--font-text); letter-spacing: 0; }
+.queda p { margin: var(--s-2) 0 0; }
+.queda__cta { margin-top: var(--s-6); }
+@media (min-width: 1024px) and (max-width: 1279px) {
+  #queda .queda__banda { height: 200px; }
+  #queda .queda__banda > .frame__img { object-fit: cover; }
+  .queda > li.span-3 { grid-column: auto / span 6; }
+  .queda { margin-top: var(--s-5); row-gap: var(--s-4); }
+  .queda__cta { margin-top: var(--s-4); }
+}
+@media (max-width: 1023px) {
+  #queda > .wrap > .group:first-child { flex: 1 1 0; min-height: 0; }
+  #queda .queda__banda { flex: 1 1 0; height: auto; min-height: 200px; }
+  /* a tall frame: the wide picture fills it from its middle, the toolbox large */
+  #queda .queda__banda > .frame__img { object-fit: cover; object-position: 50% 50%; }
+}
+@media (min-width: 640px) and (max-width: 1023px) {
+  .queda > li.span-3 { grid-column: auto / span 6; }
+}
+@media (max-width: 639px) {
+  #queda .queda { margin-top: 0; row-gap: var(--s-4); }
+}
+
+/* track record: each company with its own mark */
+.empresas .rows__name { display: inline-flex; align-items: center; gap: var(--s-3); }
+.empresas .rows__name img { width: 44px; height: 26px; object-fit: contain; object-position: left center; flex: none; }
+.empresas > li { align-items: center; padding-block: var(--s-3); }
+.empresas > li:first-child { padding-top: 0; }
+.empresas .rows__value { color: var(--muted); font-weight: 400; }
+.trayectoria__der { display: flex; flex-direction: column; gap: var(--s-6); }
+.feria { --ratio: 62.24%; }
+.clientes .t-label { margin: 0 0 var(--s-4); }
+.clientes__logos { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--s-5); align-items: center; margin: 0; padding: 0; list-style: none; }
+.clientes__logos { row-gap: var(--s-6); }
+.clientes__logos img { display: block; height: 32px; width: auto; max-width: 100%; object-fit: contain; object-position: left center; }
+@media (min-width: 640px) and (max-width: 1023px) {
+  .trayectoria__der { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--gutter); align-items: start; margin-top: var(--s-6); }
+  .clientes__logos { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-4); }
+  .trayectoria__der > .feria { order: 2; }
+}
+.trayectoria__cta { margin: 0; }
+@media (max-width: 1023px) {
+  #sistemas > .wrap > .group:last-child > .sistemas__fila { flex: 1 1 auto; grid-auto-rows: 1fr; }
+}
+@media (min-width: 640px) and (max-width: 1023px) {
+  .trayectoria__cta { grid-column: 1 / -1; order: 3; }
+}
+@media (max-width: 639px) {
+  .clientes__logos { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-6) var(--s-4); }
+  .clientes__logos img { height: 30px; }
+}
+
+/* questions: two open columns, down to the tablet */
+#preguntas .faq h3 { font-size: 18px; }
+.preguntas__cta { margin-top: var(--s-6); }
+@media (min-width: 640px) and (max-width: 1023px) {
+  .preguntas__cols > .faq.span-6 { grid-column: auto / span 6; }
+  #preguntas .faq > .faq__item { padding-block: var(--s-4); }
+  #preguntas .faq > .faq__item:first-child { padding-top: 0; }
+}
+@media (max-width: 639px) {
+  #preguntas { --hm: 2; }
+  .preguntas__cols { row-gap: 0; }
+}
+
+/* 1024 to 1279: a short screen, so the tall sections tighten */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .sistema--ancho > .panel { flex: none; height: 200px; min-height: 0; }
+  .sistema > .panel { --p-h: 240px; }
+  #metodo .section-head, #preguntas .section-head { margin-bottom: var(--s-6); }
+  .semanas { row-gap: 6px; }
+  .semanas__escala { margin-bottom: var(--s-1); }
+  .semanas__escala li { height: 24px; }
+  .etapas { margin-top: var(--s-5); }
+  .etapas h3 { margin-bottom: var(--s-1); }
+  .metodo__cta { margin-top: var(--s-5); }
+  .preguntas__cta { margin-top: var(--s-4); }
+  #preguntas .faq > .faq__item { padding-block: 12px; gap: var(--s-1); }
+  #preguntas .faq h3 { font-size: 17px; line-height: 1.35; }
+  #preguntas .faq > .faq__item:first-child { padding-top: 0; }
+  #preguntas .faq p { line-height: 24px; }
+}
+
+/* tablet: the footer's three link columns fill the row, the big button runs the full line */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .footer .closing__links .footer__col { grid-column: auto / span 4; }
+  .closing__cta.close--type > .btn--xl { width: 100%; }
+}
+
+/* a phone: each section's own link runs the full line, its arrow at the right */
+@media (max-width: 639px) {
+  main > .section .wrap p > .link { display: flex; width: 100%; justify-content: space-between; }
+}
+.sistemas__cta { margin-top: var(--s-5); }
+
+/* the phone bar: hidden while the hero's buttons are on screen */
+@media (max-width: 639px) {
+  .actionbar { grid-auto-flow: row; grid-template-columns: minmax(0, 1fr) 48px; transition: transform .25s var(--ease), visibility .25s; }
+  .actionbar.es-oculta { transform: translateY(110%); visibility: hidden; }
+  .barra__wa { width: 48px; padding: 0; justify-content: center; }
+}
+@media (prefers-reduced-motion: reduce) { .actionbar { transition: none; } }

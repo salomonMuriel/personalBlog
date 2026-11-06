@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="es" data-type="service" data-radius="soft" data-buttons="solid" data-motion>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cuéntame de tu empresa · Salomón Muriel</title>
+<meta name="description" content="Ocho preguntas sobre cómo funciona hoy tu empresa. Las leo yo y te escribo por WhatsApp.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="site-kind" content="other">
+<meta name="page-type" content="service">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400..700&family=Red+Hat+Text:wght@400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/system.css">
+<link rel="stylesheet" href="assets/ui/cards.css">
+<link rel="stylesheet" href="assets/motion/motion.css">
+<link rel="stylesheet" href="assets/layout/layout.css">
+<style>
+:root {
+  --p-bg: #eeecea; --p-surface: #e4e1dd; --p-ink: #333231; --p-muted: #625f5b;
+  --p-accent: #5c6b54; --p-accent-ink: #ffffff; --p-action: #5c6b54; --p-action-ink: #ffffff;
+  --p-inv-bg: #333231; --p-inv-surface: #3e3d3c; --p-inv-ink: #eeecea; --p-inv-muted: #adaba9;
+  --p-inv-accent: #eeecea; --p-inv-accent-ink: #333231; --p-inv-action: #eeecea; --p-inv-action-ink: #333231;
+  --font-display: "Red Hat Display", system-ui, sans-serif;
+  --font-text: "Red Hat Text", system-ui, sans-serif;
+  --display-weight: 400;
+  --display-tracking: -0.025em;
+  --display-tracking-xl: -0.035em;
+}
+</style>
+<link rel="stylesheet" href="cuentame.css">
+</head>
+<body>
+<!-- the questionnaire in V3's language: the question in the hero's dark box, the answers on the stone ground -->
+<header class="nav cq-nav">
+  <div class="wrap nav__bar">
+    <a class="nav__logo" href="index.html">Salomón Muriel</a>
+    <div class="nav__actions">
+      <a class="link cq-nav__wa" href="https://wa.me/573132465100?text=Hola%20Salom%C3%B3n%2C%20tengo%20una%20empresa%20de%20___%20y%20quiero%20contarte%20c%C3%B3mo%20funciona%20hoy." rel="noopener" data-origen="cuestionario">Escríbeme al 313&nbsp;246&nbsp;5100</a>
+    </div>
+  </div>
+</header>
+
+<main id="top" class="cq" data-cuestionario data-version="v3">
+  <div class="wrap cq__grid">
+    <section class="cq__caja" aria-labelledby="cq-pregunta">
+      <div class="cq__cabeza" data-cabeza>
+        <p class="cq__titulo" data-cabecera>Cuéntame de tu empresa</p>
+        <p class="cq__paso" data-paso-texto>Paso 1 de 9</p>
+      </div>
+      <ol class="cq__segmentos" data-segmentos aria-hidden="true"></ol>
+      <h1 class="cq__pregunta" id="cq-pregunta" tabindex="-1" data-pregunta>¿A qué se dedica tu empresa?</h1>
+      <p class="cq__pista" data-pista hidden></p>
+      <p class="cq__nota" data-nota>Son ocho preguntas y toma unos dos minutos.</p>
+      <div class="cq__resultado" data-resultado hidden>
+        <p class="cq__rotulo" data-res-rotulo>Recibido</p>
+        <h2 class="cq__res-titulo" data-res-titulo tabindex="-1"></h2>
+        <p class="cq__res-texto" data-res-texto></p>
+        <p class="cq__horas" data-horas hidden></p>
+        <div class="btn-row" data-res-botones></div>
+      </div>
+    </section>
+
+    <form class="cq__form" data-formulario novalidate>
+      <div data-pasos></div>
+      <div class="cq__web" aria-hidden="true"><label for="web">Web</label><input id="web" name="web" type="text" tabindex="-1" autocomplete="off"></div>
+      <div class="cq__acciones">
+        <button class="btn btn--secondary" type="button" data-atras>Atrás</button>
+        <button class="btn btn--primary" type="button" data-siguiente disabled>Siguiente</button>
+        <button class="btn btn--primary" type="submit" data-enviar hidden>Enviar</button>
+      </div>
+    </form>
+  </div>
+</main>
+
+<script type="module" src="assets/system.js"></script>
+<script type="module" src="assets/motion/motion.js"></script>
+<script type="module" src="cuentame.js"></script>
+</body>
+</html>

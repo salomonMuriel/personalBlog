@@ -1,0 +1,41 @@
+{
+  "name": "comp-desktop",
+  "file": "comp-desktop.png",
+  "variant": null,
+  "provider": "openai",
+  "model": "gpt-image-2.5-flare",
+  "prompt": "A desktop landing page (1440px wide, shown as one long vertical scroll of its first three screens) for Salomón Muriel, who builds custom software for small Colombian companies of 5 to 40 people. Rendered edge to edge, no browser window, no device, no desk.\n\nScreen 1, the hero. A slim top bar: the name \"Salomón Muriel\" at the far left, five small nav words centred (Síntomas, Cajitas, Sistemas, Método, Preguntas), a moss-green button \"Cuéntame de tu empresa\" at the far right. Below it one huge rounded dark frame fills the rest of the first screen, edge to edge of the content column: a near-black studio backdrop with a portrait of a bald, smiling man in a dark green wool coat, arms crossed, standing in the right half. In the frame's lower left sits a solid charcoal box with the headline \"Software a la medida para tu PYME\" in big off-white type on three lines, the paragraph \"Te construyo el sistema operativo de tu empresa: el software que reemplaza los Excel que no cuadran y el copiar y pegar. Trabajo con empresas de 5 a 40 personas.\", a moss-green button \"Cuéntame de tu empresa\" and a pale outline button \"Escríbeme al 313 246 5100\".\n\nScreen 2, pale stone ground. Headline \"Seis problemas que veo en casi todas las PYMEs\". Left half: a ruled list of six sentences in fairly large type, the first one marked active with a small moss-green dot: \"Seguimos en la edad de piedra.\" / \"Hay veinte Excel y ninguno cuadra con el otro.\" / \"Se nos va el día copiando y pegando.\" / \"Los pedidos llegan por WhatsApp y se pierden en el chat.\" / \"Para saber cuánto vendimos ayer toca preguntarle a alguien.\" / \"Si me voy una semana, todo se frena.\" Under the list a small text link \"Cuéntame de tu empresa\" with an arrow. Right half: one large framed illustration, a matte clay miniature of a stone tablet with a spreadsheet grid carved into it.\n\nScreen 3, a slightly darker stone band. Headline \"Una empresa es un sistema de cajitas\" with a short paragraph, then a wide flow diagram across the column, not a single row: Mercadeo on the left branches to Página web and WhatsApp, both feed into Ventas in the middle, Ventas branches to Operaciones and Administración on the right; white rounded boxes with tiny icons, thin charcoal elbow lines, one return line curving back from Administración to Mercadeo.\n\nStyle: Finished, production-quality marketing website design comp, flat UI rendering, crisp readable type, real Spanish copy. Look: warm stone-grey page grounds (#eeecea, with one band in a slightly darker stone #e4e1dd), charcoal ink (#333231) for all text, exactly one muted moss-green accent (#5c6b54) used only for the main button and tiny marks. One neo-grotesk sans family (like Red Hat Display) for everything, headlines large in regular weight with tight letter spacing, never bold. Soft 12px corners, hairline rules, no gradients, no drop shadows, no glassmorphism, no emoji, no stock icons. Quiet, confident, editorial; a one-person craftsman studio from Bogota, not a SaaS template.",
+  "size_requested": "1152x2304",
+  "size_written": "1152x2304",
+  "quality": "medium",
+  "background": "opaque",
+  "output_format": "png",
+  "output_compression": null,
+  "references": [],
+  "mask": null,
+  "alpha": null,
+  "usage": {
+    "input_tokens": 724,
+    "input_tokens_details": {
+      "image_tokens": 0,
+      "text_tokens": 724
+    },
+    "output_tokens": 336,
+    "output_tokens_details": {
+      "image_tokens": 336,
+      "text_tokens": 0
+    },
+    "total_tokens": 1060
+  },
+  "request_id": "req_6202d9669274459abc21ec9943ebb4ba",
+  "estimated_cost_usd": 0.0137,
+  "cost_note": "OpenAI usage x $30/M image out, $8/M image in, $5/M text in (Batch half); other providers: see extra",
+  "style_hash": "aecd2f0226cc",
+  "extra": {
+    "size": "1152x2304",
+    "quality": "medium",
+    "background": "opaque",
+    "output_format": "png"
+  },
+  "created": "2026-11-06T19:09:04+00:00"
+}
