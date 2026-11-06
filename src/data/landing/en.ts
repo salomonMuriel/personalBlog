@@ -9,7 +9,7 @@ export const en = {
 
   cta: {
     cuestionario: "Tell me about your company",
-    cuestionarioNota: "Two minutes · I answer myself",
+    cuestionarioNota: "The questionnaire takes about two minutes.",
     wa: "Message me on WhatsApp",
     waTexto:
       "Hi Salomón, I run a ___ business and I'd like to tell you how it runs today.",
@@ -18,9 +18,9 @@ export const en = {
   hero: {
     linea1: "We fix",
     linea2: "The fake-automated",
-    manuscrita: "without changing the whole company, one little box at a time",
+    manuscrita: "one box at a time, starting where it hurts most",
     bajada:
-      "I build your company's operating system, made to fit how you already work. It's the software that replaces the twenty spreadsheets that don't match and the copying and pasting that happens every day.",
+      "I build your company's operating system: the software that replaces the spreadsheets that don't match and the copy-paste, made to fit how you already work.",
     dicc: {
       palabra: "chi·no·má·ti·co, ca",
       categoria: "adj. · Colombian Spanish",
@@ -38,10 +38,9 @@ export const en = {
       ["Who takes the call", "Salomón", false],
       ["Where", "Bogotá", false],
       ["Own companies", "Five, two sold", false],
-      ["Who answers", "Also Salomón", true],
+      ["Who programs", "Same person", true],
     ] as [string, string, boolean][],
-    fichaPie:
-      "The person who answers WhatsApp is the same one who writes the code.",
+    fichaPie: "If you message me on WhatsApp, I'm the one who replies.",
   },
 
   cinta: [
@@ -58,8 +57,8 @@ export const en = {
 
   danos: {
     rotulo: "Fault log",
-    nota: "It repeats across companies that have nothing in common.",
-    titulo: "What I nearly always find",
+    nota: "They repeat across companies that have nothing in common.",
+    titulo: "The faults I see most",
     etiqueta: "Fault",
     cierre:
       "If none of this sounds familiar, I'm probably not the right person.",
@@ -101,7 +100,7 @@ export const en = {
         antes: "To find out how much you sold yesterday, ",
         marcado: "you have to ask someone",
         despues: ".",
-        nota: "The number lives in three places and none of them match.",
+        nota: "The number lives in three places and each one says something different.",
         manuscrita: false,
       },
       {
@@ -119,7 +118,7 @@ export const en = {
 
   cajitas: {
     rotulo: "How I explain my work",
-    nota: "The idea behind everything I do.",
+    nota: "It's the idea I work with.",
     titulo: "A company is a system of little boxes",
     p1: "Marketing sends traffic to the website and to WhatsApp. That produces leads for sales. Sales feeds information back to marketing and opens up work for operations and admin. Each of those is a little box, and each box has its own system.",
     p2: "<b class='font-semibold text-tinta'>I build those boxes and connect them.</b> The CRM your sales process needs, the system operations works in, admin's invoicing: I build whichever one is missing, made to fit how you already work, and I leave it connected to the rest.",
@@ -220,12 +219,12 @@ export const en = {
     retornoMovilHoy:
       "today nobody feeds the data back, so marketing doesn't know which campaign brought the sale.",
     retornoMovilQueda: "every sale tells marketing where it came from.",
-    verdadNoRotulo: "There's no single source of truth",
+    verdadNoRotulo: "Three versions of the same number",
     verdadNo:
-      "There are three versions of the same number and none of them agree. To find out which one is right, you have to ask someone.",
-    verdadSiRotulo: "A single source of truth",
+      "None of them agree, and to find out which one is right you have to ask someone.",
+    verdadSiRotulo: "The data in one place",
     verdadSi:
-      "The data lives in one place. When someone asks how much was sold yesterday, everyone looks at the same number.",
+      "When someone asks how much was sold yesterday, everyone looks at the same number.",
     cierreTitulo:
       "I build the box and leave it connected <b class='text-rojo2'>before</b> moving to the next one.",
     cierreP1:
@@ -239,10 +238,10 @@ export const en = {
 
   sistemas: {
     rotulo: "Work delivered",
-    nota: "Systems in use. The screens show test data.",
-    titulo: "What I've already built for other companies",
+    nota: "These systems are already running. The screens show test data.",
+    titulo: "Systems I've already built for other companies",
     bajada:
-      "Nearly all of them started the same way: a company running on spreadsheets, WhatsApp and someone copying and pasting.",
+      "Nearly all of them ran on spreadsheets, WhatsApp and someone copying and pasting.",
     reemplazo: "Replaced",
     items: [
       {
@@ -288,13 +287,13 @@ export const en = {
   },
 
   banda: {
-    titulo: "Your company can have its own operating system too.",
+    titulo: "I can build your company its operating system too.",
     texto: "Tell me how it runs today and I'll tell you where I'd start.",
   },
 
   porque: {
     rotulo: "Differential diagnosis",
-    nota: "Three differences in how the work is put together.",
+    nota: "Compared with an agency or an off-the-shelf program.",
     titulo: "How I work",
     razones: [
       {
@@ -303,7 +302,8 @@ export const en = {
         parrafos: [
           "I do both the strategy and the software. There's no consultant handing over a deck and a vendor interpreting it their own way. <b class='font-semibold text-tinta'>What we decide on Monday, I start building on Tuesday.</b>",
         ],
-        manuscrita: "and the one who answers your WhatsApp is me too",
+        manuscrita:
+          "the person who listens on the first call is the one who codes",
         giroNota: "-rotate-[1deg]",
       },
       {
@@ -345,25 +345,25 @@ export const en = {
         cuando: "Weeks 2 to 3",
         titulo: "Diagnosis",
         texto:
-          "A short plan, the bottleneck worth attacking first, and one first thing already working.",
+          "I hand you a short plan with the bottleneck worth tackling first, and one first thing already working.",
       },
       {
         cuando: "Weeks 4 to 16",
         titulo: "Build",
         texto:
-          "I build the system, the CRM and the connections between boxes. It ends with your team using it.",
+          "I build the system and the connections between boxes, until your team is using it.",
       },
     ],
-    garantiaRotulo: "No strings",
+    garantiaRotulo: "Week three",
     garantia:
-      "By week three you already have something working. If it isn't useful to you, we stop there.",
+      "By then you already have something working. If it isn't useful to you, we stop there.",
   },
 
   entrega: {
     rotulo: "Packing list",
     nota: "What you get at the end of the project.",
     titulo: "What you're left with when I'm done",
-    bajada: "Nothing stays tied to me.",
+    bajada: "In the end you don't depend on me to use it or to change it.",
     cajaTitulo: "In the box",
     cajaConteo: "04 lines",
     renglones: [
@@ -397,10 +397,10 @@ export const en = {
     menuda:
       "I <b class='font-bold'>don't</b> change the whole company: it's one process at a time. I don't build technology teams or sell licences. And if what you need already exists and works, I'll tell you instead of building it.",
     manuscrita:
-      "one process at a time, and when that one is settled we'll talk about the second",
+      "once the first process is up and running, we'll talk about the second",
     tampocoTitulo: "I also don't do",
     tampoco: [
-      "Scaling large companies. It's not my thing.",
+      "Scaling companies that are already large.",
       "Research or developing new technology.",
       "Long reports for the board.",
     ],

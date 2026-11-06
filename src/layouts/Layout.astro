@@ -22,7 +22,7 @@ export interface Props {
   schemas?: unknown[];
   navHome?: string;
   noindex?: boolean;
-  sinContacto?: boolean;
+  enfoque?: boolean;
 }
 
 const {
@@ -33,7 +33,7 @@ const {
   schemas = [],
   navHome,
   noindex = false,
-  sinContacto = false,
+  enfoque = false,
 } = Astro.props;
 
 const rutaActual = Astro.url.pathname;
@@ -159,11 +159,15 @@ const verificacionGoogle = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
     </a>
 
     <RotuloParte lang={lang} />
-    <SiteNav lang={lang} home={navHome ?? routes.home[lang]} />
+    <SiteNav
+      lang={lang}
+      home={navHome ?? routes.home[lang]}
+      sinFilaMovil={enfoque}
+    />
 
     <main id="arriba">
       <slot />
-      {!sinContacto && <Contacto lang={lang} />}
+      {!enfoque && <Contacto lang={lang} />}
     </main>
 
     <script>

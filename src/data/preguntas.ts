@@ -4,11 +4,11 @@ import type { Pregunta } from "@utils/jsonld";
 export const preguntasEs: Pregunta[] = [
   {
     p: "Es que yo de tecnología no sé nada.",
-    r: "No hace falta. Parte de mi trabajo es explicarlo claro, y si algo no se entiende es culpa mía. Mis clientes son marcas de ropa, restaurantes, distribuidoras, importadores y empresas de servicios.",
+    r: "No hace falta. Mis clientes son marcas de ropa, restaurantes, distribuidoras, importadores y empresas de servicios. Parte de mi trabajo es explicarlo claro, y si algo no se entiende es culpa mía.",
   },
   {
     p: "¿Mi empresa es muy chiquita para esto?",
-    r: "Si ya vendes y son entre cinco y cuarenta personas, estás justo donde más sirvo. Donde no sirvo es cuando la empresa ya es grande y lo que necesita es crecer mucho más.",
+    r: "Si ya vendes y son entre cinco y cuarenta personas, no: ahí es donde más sirvo. Donde no sirvo es en una empresa que ya es grande y necesita crecer mucho más.",
   },
   {
     p: "Ya compré un software carísimo. ¿Toca botarlo?",
@@ -20,7 +20,7 @@ export const preguntasEs: Pregunta[] = [
   },
   {
     p: "¿Y después, cuando quiera cambiar algo?",
-    r: "El código queda a nombre de tu empresa, y antes de irme les enseño a cambiarlo con inteligencia artificial: cómo pedir el cambio y cómo dejarlo andando. La idea es que no dependas de mí.",
+    r: "El código queda a nombre de tu empresa. Antes de irme les enseño a cambiarlo con inteligencia artificial, desde cómo pedir el cambio hasta cómo dejarlo andando, para que no dependas de mí.",
   },
   {
     p: "¿Y si no me sirves?",
@@ -31,11 +31,11 @@ export const preguntasEs: Pregunta[] = [
 export const preguntasEn: Pregunta[] = [
   {
     p: "I don't know anything about technology.",
-    r: "You don't need to. Part of my job is explaining it clearly, and if something isn't clear, that's on me. My clients are clothing brands, restaurants, distributors, importers and service businesses.",
+    r: "You don't need to. My clients are clothing brands, restaurants, distributors, importers and service businesses. Part of my job is explaining it clearly, and if something isn't clear, that's on me.",
   },
   {
     p: "Is my company too small for this?",
-    r: "If you're already selling and you have between five and forty people, you're exactly where I'm most useful. Where I'm not useful is once the company is big and what it needs is to grow much further.",
+    r: "If you're already selling and you have between five and forty people, no: that's where I'm most useful. Where I'm not useful is a company that's already big and needs to grow much further.",
   },
   {
     p: "I already bought expensive software. Do I throw it out?",
@@ -47,7 +47,7 @@ export const preguntasEn: Pregunta[] = [
   },
   {
     p: "What about later, when I want to change something?",
-    r: "The code is in your company's name, and before I leave I teach your people to change it with AI: how to ask for the change and how to ship it. The point is that you don't depend on me.",
+    r: "The code stays in your company's name. Before I leave, I teach your people to change it with AI, from how to ask for the change to how to ship it, so you don't depend on me.",
   },
   {
     p: "And if you're not the right person for me?",

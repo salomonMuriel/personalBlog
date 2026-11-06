@@ -36,9 +36,10 @@ export const ui = {
 
     "pie.empezar": "Cómo empezar",
     "pie.empezarTxt":
-      "Me escribes por WhatsApp o llenas el cuestionario de dos minutos. Te contesto yo.",
-    "pie.sinEquipo": "Sin equipo detrás",
-    "pie.sinEquipoTxt": "El que contesta y el que construye soy yo.",
+      "Escríbeme por WhatsApp o llena el cuestionario, que toma unos dos minutos.",
+    "pie.sinEquipo": "Quién hace el trabajo",
+    "pie.sinEquipoTxt":
+      "Lo hago yo, desde la primera conversación hasta la entrega.",
     "pie.otras": "Otras páginas",
     "pie.vigente": "Documento vigente",
     "pie.coords": "Bogotá · 4°42′N 74°04′W",
@@ -50,7 +51,7 @@ export const ui = {
     "contacto.agendar": "Agendar",
     "contacto.agendarNota": "cal.com/salomonmuriel",
     "contacto.linkedin": "LinkedIn",
-    "contacto.linkedinNota": "Ahí escribo · no tengo blog",
+    "contacto.linkedinNota": "Ahí publico lo que escribo",
     "contacto.correo": "Correo",
     "contacto.cuestionario": "Cuestionario",
     "contacto.cuestionarioNota": "Dos minutos",
@@ -79,10 +80,9 @@ export const ui = {
 
     "pie.empezar": "How to start",
     "pie.empezarTxt":
-      "Message me on WhatsApp or fill in the two-minute questionnaire. I answer myself.",
-    "pie.sinEquipo": "No team behind me",
-    "pie.sinEquipoTxt":
-      "The person who answers and the person who builds are the same.",
+      "Message me on WhatsApp or fill in the questionnaire, which takes about two minutes.",
+    "pie.sinEquipo": "Who does the work",
+    "pie.sinEquipoTxt": "I do, from the first conversation to the handover.",
     "pie.otras": "Other pages",
     "pie.vigente": "Current document",
     "pie.coords": "Bogotá · 4°42′N 74°04′W",
@@ -94,7 +94,7 @@ export const ui = {
     "contacto.agendar": "Book a call",
     "contacto.agendarNota": "cal.com/salomonmuriel",
     "contacto.linkedin": "LinkedIn",
-    "contacto.linkedinNota": "That's where I write · no blog",
+    "contacto.linkedinNota": "Where I publish what I write",
     "contacto.correo": "Email",
     "contacto.cuestionario": "Questionnaire",
     "contacto.cuestionarioNota": "Two minutes",

@@ -9,7 +9,7 @@ export const es = {
 
   cta: {
     cuestionario: "Cuéntame de tu empresa",
-    cuestionarioNota: "Dos minutos · te contesto yo",
+    cuestionarioNota: "El cuestionario toma unos dos minutos.",
     wa: "Escribirme por WhatsApp",
     waTexto:
       "Hola Salomón, tengo una empresa de ___ y quiero contarte cómo funciona hoy.",
@@ -18,9 +18,9 @@ export const es = {
   hero: {
     linea1: "Se arregla",
     linea2: "Lo chinomático",
-    manuscrita: "sin cambiarte la empresa entera, una cajita a la vez",
+    manuscrita: "una cajita a la vez, empezando por la que más duele",
     bajada:
-      "Te construyo el sistema operativo de tu empresa, a la medida de cómo ya trabajas. Es el software que reemplaza los veinte Excel que no cuadran y el copiar y pegar de todos los días.",
+      "Te construyo el sistema operativo de tu empresa: el software que reemplaza los Excel que no cuadran y el copiar y pegar, hecho a la medida de cómo ya trabajas.",
     dicc: {
       palabra: "chi·no·má·ti·co, ca",
       categoria: "adj.",
@@ -38,10 +38,9 @@ export const es = {
       ["Quién atiende", "Salomón", false],
       ["Dónde", "Bogotá", false],
       ["Empresas propias", "Cinco, dos vendidas", false],
-      ["Quién contesta", "También Salomón", true],
+      ["Quién programa", "Él mismo", true],
     ] as [string, string, boolean][],
-    fichaPie:
-      "El que te contesta el WhatsApp es el mismo que escribe el código.",
+    fichaPie: "Si me escribes por WhatsApp, te contesto yo.",
   },
 
   cinta: [
@@ -58,8 +57,8 @@ export const es = {
 
   danos: {
     rotulo: "Registro de fallas",
-    nota: "Se repite en empresas que no tienen nada que ver entre sí.",
-    titulo: "Lo que casi siempre me encuentro",
+    nota: "Se repiten en empresas que no tienen nada que ver entre sí.",
+    titulo: "Las fallas que más veo",
     etiqueta: "Falla",
     cierre:
       "Si nada de esto te suena, probablemente no soy la persona indicada.",
@@ -101,7 +100,7 @@ export const es = {
         antes: "Para saber cuánto se vendió ayer ",
         marcado: "toca preguntarle a alguien",
         despues: ".",
-        nota: "El número está en tres lados y ninguno cuadra con el otro.",
+        nota: "El número está en tres lados y cada uno dice algo distinto.",
         manuscrita: false,
       },
       {
@@ -119,7 +118,7 @@ export const es = {
 
   cajitas: {
     rotulo: "Cómo te explico mi trabajo",
-    nota: "Es la idea detrás de todo lo que hago.",
+    nota: "Es la idea con la que trabajo.",
     titulo: "Una empresa es un sistema de cajitas",
     p1: "Mercadeo manda tráfico a la página y a WhatsApp. Eso le genera leads a ventas. Ventas le devuelve información a mercadeo y le abre trabajo a operaciones y a administración. Cada una es una cajita, y cada cajita tiene su propio sistema.",
     p2: "<b class='font-semibold text-tinta'>Yo construyo esas cajitas y las conecto.</b> El CRM que necesita tu proceso de ventas, el sistema con el que trabaja operaciones, la facturación de administración: te construyo el que te falte, a la medida de cómo ya trabajas, y lo dejo conectado con los demás.",
@@ -216,12 +215,12 @@ export const es = {
     retornoMovilHoy:
       "hoy nadie devuelve el dato, así que mercadeo no sabe qué campaña trajo la venta.",
     retornoMovilQueda: "cada venta le dice a mercadeo de dónde vino.",
-    verdadNoRotulo: "No hay una sola fuente de verdad",
+    verdadNoRotulo: "Tres versiones del mismo dato",
     verdadNo:
-      "Hay tres versiones del mismo dato y ninguna cuadra con la otra. Para saber cuál sirve, toca preguntarle a alguien.",
-    verdadSiRotulo: "Una sola fuente de verdad",
+      "Ninguna cuadra con la otra, y para saber cuál sirve toca preguntarle a alguien.",
+    verdadSiRotulo: "El dato en un solo lugar",
     verdadSi:
-      "El dato vive en un solo lugar. Cuando alguien pregunta cuánto se vendió ayer, todos miran el mismo número.",
+      "Cuando alguien pregunta cuánto se vendió ayer, todos miran el mismo número.",
     cierreTitulo:
       "Construyo la cajita y la dejo conectada <b class='text-rojo2'>antes</b> de pasar a la siguiente.",
     cierreP1:
@@ -235,10 +234,10 @@ export const es = {
 
   sistemas: {
     rotulo: "Obra entregada",
-    nota: "Sistemas funcionando. Las pantallas tienen datos de prueba.",
-    titulo: "Lo que ya construí para otras empresas",
+    nota: "Son sistemas que ya funcionan. Las pantallas tienen datos de prueba.",
+    titulo: "Sistemas que ya construí para otras empresas",
     bajada:
-      "Casi todas empezaron igual: una empresa que funcionaba a punta de Excel, WhatsApp y alguien copiando y pegando.",
+      "Casi todas funcionaban a punta de Excel, WhatsApp y alguien copiando y pegando.",
     reemplazo: "Reemplazó",
     items: [
       {
@@ -284,13 +283,13 @@ export const es = {
   },
 
   banda: {
-    titulo: "Tu empresa también puede tener su sistema operativo.",
+    titulo: "A tu empresa también le puedo construir su sistema operativo.",
     texto: "Cuéntame cómo funciona hoy y te digo por dónde empezaría.",
   },
 
   porque: {
     rotulo: "Diagnóstico diferencial",
-    nota: "Tres diferencias de cómo está armado el trabajo.",
+    nota: "Frente a una agencia o un programa comprado.",
     titulo: "Cómo trabajo",
     razones: [
       {
@@ -299,7 +298,8 @@ export const es = {
         parrafos: [
           "La estrategia y el software los hago yo. No hay un consultor que entrega una presentación y un proveedor que la interpreta a su manera. <b class='font-semibold text-tinta'>Lo que decidimos el lunes lo empiezo a construir el martes.</b>",
         ],
-        manuscrita: "y el que te contesta el WhatsApp también soy yo",
+        manuscrita:
+          "el que te escucha en la primera llamada es el que programa",
         giroNota: "-rotate-[1deg]",
       },
       {
@@ -340,25 +340,25 @@ export const es = {
         cuando: "Semanas 2 a 3",
         titulo: "Diagnóstico",
         texto:
-          "Un plan corto, el cuello de botella que vale la pena atacar primero y una primera cosa ya funcionando.",
+          "Te entrego un plan corto con el cuello de botella que vale la pena atacar primero, y una primera cosa ya funcionando.",
       },
       {
         cuando: "Semanas 4 a 16",
         titulo: "Construir",
         texto:
-          "Construyo el sistema, el CRM y las conexiones entre cajitas. Termina con tu equipo usándolo.",
+          "Construyo el sistema y las conexiones entre cajitas, hasta que tu equipo lo esté usando.",
       },
     ],
-    garantiaRotulo: "Sin amarrarte",
+    garantiaRotulo: "Semana tres",
     garantia:
-      "En la semana tres ya tienes algo funcionando. Si no te sirve, ahí paramos.",
+      "Para entonces ya tienes algo funcionando. Si no te sirve, ahí paramos.",
   },
 
   entrega: {
     rotulo: "Lista de empaque",
     nota: "Lo que recibes al final del proyecto.",
     titulo: "Qué te queda cuando termino",
-    bajada: "Nada queda amarrado a mí.",
+    bajada: "Al final no dependes de mí para usarlo ni para cambiarlo.",
     cajaTitulo: "Va en la caja",
     cajaConteo: "04 renglones",
     renglones: [
@@ -391,10 +391,10 @@ export const es = {
     menudaAviso: "Importante",
     menuda:
       "<b class='font-bold'>No</b> cambio la empresa entera: es un proceso a la vez. No armo equipos de tecnología ni vendo licencias. Y si lo que necesitas ya existe y funciona, te lo digo en vez de construirlo.",
-    manuscrita: "un proceso a la vez, y cuando ese quede hablamos del segundo",
+    manuscrita: "cuando el primer proceso quede andando, hablamos del segundo",
     tampocoTitulo: "Tampoco hago",
     tampoco: [
-      "Escalar empresas grandes. No es lo mío.",
+      "Escalar empresas que ya son grandes.",
       "Investigación o desarrollo de tecnología nueva.",
       "Informes largos para la junta directiva.",
     ],

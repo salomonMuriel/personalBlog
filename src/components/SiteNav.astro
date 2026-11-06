@@ -6,8 +6,9 @@ import { t, alternatePath } from "@i18n/utils";
 interface Props {
   lang: Lang;
   home: string;
+  sinFilaMovil?: boolean;
 }
-const { lang, home } = Astro.props;
+const { lang, home, sinFilaMovil = false } = Astro.props;
 
 const enlaces = [
   { href: routes.mentoria[lang], label: t(lang, "nav.mentoria") },
@@ -85,7 +86,10 @@ const saludo =
 </header>
 
 <nav
-  class="border-b border-linea bg-papel/90 backdrop-blur-[10px] md:hidden"
+  class:list={[
+    "border-b border-linea bg-papel/90 backdrop-blur-[10px] md:hidden",
+    sinFilaMovil && "hidden",
+  ]}
   aria-label={t(lang, "nav.paginas")}
 >
   <div class="barrita hoja flex gap-5 overflow-x-auto py-2.5">

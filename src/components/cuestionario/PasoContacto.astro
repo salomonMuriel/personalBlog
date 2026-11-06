@@ -8,7 +8,7 @@ const { copia } = Astro.props;
 const k = copia.contacto;
 
 const campo =
-  "mt-1.5 w-full rounded border-[1.5px] border-linea2 bg-campo px-4 py-3 text-[1rem] transition-colors focus:border-tinta aria-[invalid=true]:border-rojo2";
+  "mt-1 w-full min-w-0 rounded border-[1.5px] border-linea2 bg-campo px-3 py-2.5 text-[1rem] transition-colors focus:border-tinta aria-[invalid=true]:border-rojo2 sm:px-4";
 const etiqueta =
   "font-mono text-[10.5px] font-medium uppercase tracking-[.16em] text-gris";
 const error = "mt-1.5 text-[13.5px] text-rojo2";
@@ -17,12 +17,14 @@ const error = "mt-1.5 text-[13.5px] text-rojo2";
 <fieldset data-paso="contacto" hidden class="min-w-0">
   <legend
     tabindex="-1"
-    class="font-arch text-[clamp(1.35rem,3vw,1.85rem)] font-bold leading-[1.14] tracking-[-.028em] outline-none [font-stretch:98%]"
+    class="font-arch text-[clamp(1.2rem,2.6vw,1.6rem)] font-bold leading-[1.15] tracking-[-.028em] outline-none [font-stretch:98%]"
   >
     {k.titulo}
   </legend>
 
-  <div class="mt-5 grid gap-4 sm:grid-cols-2">
+  <div
+    class="mt-3.5 grid grid-cols-2 gap-x-3 gap-y-3 sm:mt-5 sm:gap-x-4 sm:gap-y-4"
+  >
     <div>
       <label for="cq-nombre" class={etiqueta}>{k.nombre}</label>
       <input
@@ -86,12 +88,12 @@ const error = "mt-1.5 text-[13.5px] text-rojo2";
         {k.correoInvalido}
       </p>
     </div>
-    <div class="sm:col-span-2">
+    <div class="col-span-2">
       <label for="cq-mensaje" class={etiqueta}>{k.mensaje}</label>
       <textarea
         id="cq-mensaje"
         name="mensaje"
-        rows="3"
+        rows="2"
         maxlength="1200"
         class={campo}></textarea>
     </div>
@@ -102,7 +104,7 @@ const error = "mt-1.5 text-[13.5px] text-rojo2";
     <input id="cq-web" name="web" tabindex="-1" autocomplete="off" />
   </div>
 
-  <p class="mt-4 max-w-[52ch] text-[13.5px] leading-[1.5] text-gris">
+  <p class="mt-3 max-w-[52ch] text-[13px] leading-[1.45] text-gris">
     {k.privacidad}
   </p>
 </fieldset>

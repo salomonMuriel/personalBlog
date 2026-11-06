@@ -4,10 +4,10 @@ export const en: CopiaCuestionario = {
   meta: {
     title: "Tell me about your company · Salomón Muriel",
     description:
-      "Eight questions about how your operation runs today. I answer myself.",
+      "Eight questions about how your company runs today. I read the answers myself and message you on WhatsApp.",
   },
   rotulo: "Work order",
-  nota: "Two minutes. I answer myself.",
+  nota: "It's eight questions and takes about two minutes.",
   titulo: "Tell me about your company",
   paso: "Step %n of %t",
   siguiente: "Next",
@@ -44,8 +44,8 @@ export const en: CopiaCuestionario = {
       opciones: {
         excel: "Excel or Google Sheets",
         whatsapp: "WhatsApp chats",
-        papel: "Paper, notebooks or a board on the wall",
-        contable: "The accounting software",
+        papel: "Paper or a board on the wall",
+        contable: "Accounting tool (Siigo, Alegra…)",
         crm: "A CRM or an ERP",
         notion: "Notion, Trello or something similar",
         cabeza: "In someone's head",
@@ -65,23 +65,18 @@ export const en: CopiaCuestionario = {
     duele: {
       titulo: "What weighs on you most today?",
       opciones: {
-        copiar: "The day goes on copying and pasting from one place to another",
-        excels: "The spreadsheets don't match and nobody keeps them up to date",
-        preguntar:
-          "To know what we sold or what's in stock, someone has to be asked",
-        pedidos: "Orders arrive on WhatsApp and get lost or retyped by hand",
-        facturas: "Quotes and invoices are made by hand, one at a time",
-        dueno:
-          "Everything goes through my phone, and if I'm away a week it stops",
-        persona: "When someone quits, the process leaves with them",
-        software: "We bought a program and hardly anyone uses it",
-        crecer: "To serve more customers we have to hire more people",
-        piedra: "It feels like we're still in the stone age",
+        copiar: "We lose the day copying and pasting",
+        excels: "The spreadsheets don't match",
+        preguntar: "I can't see our sales without asking",
+        pedidos: "Orders get lost in WhatsApp",
+        facturas: "We quote and invoice by hand",
+        dueno: "If I'm away a week, everything stops",
+        persona: "Some things only one person knows",
+        piedra: "We're still in the stone age",
       },
     },
     horas: {
-      titulo:
-        "Across the whole team, how many hours a week go into that manual work?",
+      titulo: "How many hours a week does that take the team?",
       opciones: {
         "menos-5": "Fewer than 5",
         "5-20": "5 to 20",
@@ -128,21 +123,21 @@ export const en: CopiaCuestionario = {
   resultado: {
     rotulo: "Received",
     si: {
-      titulo: "Done, %nombre. This is exactly what I do.",
+      titulo: "Thanks, %nombre. I think I can help.",
       texto:
-        "I've got everything. The next step is a 45-minute call where you show me how the operation runs today. If you'd rather, let's carry on over WhatsApp.",
+        "I've got everything. The next step is a 45-minute call where you show me how the operation runs today. If you'd rather, we can carry on over WhatsApp.",
       ctaAgenda: "Book the call",
       ctaWa: "Carry on over WhatsApp",
     },
     temprano: {
       titulo: "Thanks, %nombre.",
       texto:
-        "With fewer than five people, what will help you most right now is mentoring: we work one to one on what you're building. If you still want to talk about a system, message me.",
+        "With fewer than five people, I think mentoring is a better fit, where we work one to one on what you're building. If you still want to talk about a system, message me.",
       ctaMentoria: "See the mentoring",
       ctaWa: "Message me on WhatsApp",
     },
     explorando: {
-      titulo: "Thanks, %nombre. It came through.",
+      titulo: "Thanks, %nombre, it came through.",
       texto:
         "I'll message you on WhatsApp in the next few days so you can tell me more. If you'd rather get ahead, message me first.",
       ctaWa: "Message me on WhatsApp",
@@ -154,7 +149,7 @@ export const en: CopiaCuestionario = {
     error: {
       titulo: "It didn't go through.",
       texto:
-        "Something failed on my end. Send me the same thing on WhatsApp; it's already written.",
+        "Something failed on my end. Send me the same thing on WhatsApp; the message is already written.",
       ctaWa: "Send it on WhatsApp",
     },
   },
