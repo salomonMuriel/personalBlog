@@ -1,0 +1,87 @@
+---
+const mapsUrl =
+  "https://www.google.com/maps/search/?api=1&query=La+Rana+Dorada+Usaqu%C3%A9n+Bogot%C3%A1";
+const icsUrl = "/experimentos/cumple/fiesta-salo-35.ics";
+---
+
+<section class="panel">
+  <div class="panel__tab">QUEST LOG</div>
+  <dl class="quest__list">
+    <div>
+      <dt>📅 Fecha</dt>
+      <dd>Sábado 25 de abril · 7:00 PM</dd>
+    </div>
+    <div>
+      <dt>📍 Mapa</dt>
+      <dd>
+        <a href={mapsUrl} target="_blank" rel="noopener noreferrer">
+          La Rana Dorada — Usaquén (Cra 6A # 117-45)
+        </a>
+      </dd>
+    </div>
+    <div>
+      <dt>🎯 Misión</dt>
+      <dd>Cerveza, abrazos, polaroids, trolleos y risa floja.</dd>
+    </div>
+    <div>
+      <dt>👕 Dress code</dt>
+      <dd>Ponte lo que te haga feliz.</dd>
+    </div>
+  </dl>
+  <div class="quest__ctas">
+    <a class="btn btn--primary" href={icsUrl} download>
+      📅 Agregar al calendario
+    </a>
+    <a
+      class="btn btn--secondary"
+      href={mapsUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      🗺️ Cómo llegar
+    </a>
+  </div>
+</section>
+
+<style>
+  .quest__list {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .quest__list > div {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 0.5rem;
+    align-items: baseline;
+  }
+  .quest__list dt {
+    font-family: "Press Start 2P", monospace;
+    font-size: 0.6rem;
+    color: var(--ink-dim);
+    letter-spacing: 0.04em;
+    margin: 0;
+  }
+  .quest__list dd {
+    margin: 0;
+    color: var(--ink);
+  }
+  .quest__ctas {
+    margin-top: 1.25rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  @media (max-width: 520px) {
+    .quest__list > div {
+      grid-template-columns: 1fr;
+      gap: 0.1rem;
+    }
+    .quest__ctas .btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>

@@ -1,0 +1,68 @@
+---
+const achievements: { icon: string; title: string; year: string }[] = [
+  { icon: "🌎", title: "AIESEC Bond", year: "—" },
+  { icon: "💚", title: "Team Nata", year: "2010" },
+  { icon: "👶", title: "Dual Spawn", year: "2022" },
+  { icon: "🚀", title: "Ignia Launch", year: "2024" },
+  { icon: "🎂", title: "Nivel 35", year: "2026" },
+];
+---
+
+<section class="panel">
+  <div class="panel__tab">ACHIEVEMENTS UNLOCKED</div>
+  <ul class="achievements__row">
+    {
+      achievements.map(a => (
+        <li class="ach">
+          <div class="ach__icon" aria-hidden="true">
+            {a.icon}
+          </div>
+          <div class="ach__meta">
+            <span class="ach__title">{a.title}</span>
+            <span class="ach__year">{a.year}</span>
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  .achievements__row {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 0.75rem;
+    overflow-x: auto;
+    padding-bottom: 0.25rem;
+  }
+  .ach {
+    flex: 0 0 auto;
+    min-width: 140px;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.6rem 0.75rem;
+    background: rgba(107, 255, 181, 0.08);
+    border: 2px dashed var(--green);
+  }
+  .ach__icon {
+    font-size: 1.6rem;
+    filter: saturate(1.3);
+  }
+  .ach__meta {
+    display: flex;
+    flex-direction: column;
+  }
+  .ach__title {
+    font-family: "Press Start 2P", monospace;
+    font-size: 0.6rem;
+    color: var(--ink);
+    letter-spacing: 0.03em;
+  }
+  .ach__year {
+    font-size: 0.95rem;
+    color: var(--ink-dim);
+  }
+</style>
