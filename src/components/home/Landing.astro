@@ -25,6 +25,10 @@ interface Props {
 const { lang, hero, vitrina = "galerias" } = Astro.props;
 const HeroElegido = hero ? await cargarHero(hero) : Hero;
 const preguntas = lang === "es" ? preguntasEs : preguntasEn;
+
+// Off until each client approves showing their screens. The dark band goes
+// with it: its «también» refers to those systems.
+const mostrarSistemas = false;
 ---
 
 <HeroElegido lang={lang} />
@@ -32,13 +36,14 @@ const preguntas = lang === "es" ? preguntasEs : preguntasEn;
 <Danos lang={lang} />
 <DiagramaCajitas lang={lang} />
 {
-  vitrina === "triptico" ? (
-    <SistemasTriptico lang={lang} />
-  ) : (
-    <Sistemas lang={lang} />
-  )
+  mostrarSistemas &&
+    (vitrina === "triptico" ? (
+      <SistemasTriptico lang={lang} />
+    ) : (
+      <Sistemas lang={lang} />
+    ))
 }
-<BandaEjecucion lang={lang} />
+{mostrarSistemas && <BandaEjecucion lang={lang} />}
 <PorQue lang={lang} />
 <Programa lang={lang} />
 <Entrega lang={lang} />
