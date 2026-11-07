@@ -15,8 +15,8 @@ export const pantallas: Record<Sistema["clave"], Pantalla[]> = {
       archivo: "aura-hoy-1440",
       titulo: { es: "Agenda del día", en: "Today's agenda" },
       alt: {
-        es: "Aura OS con las citas del día y los vestidos por mover",
-        en: "Aura OS with the day's appointments and the dresses to move",
+        es: "Las citas del día en Aura OS con su estado de pago, y una columna de pendientes con vestidos sin devolver y saldos vencidos",
+        en: "The day's appointments in Aura OS with their payment status, and a column of pending items with unreturned dresses and overdue balances",
       },
     },
     {
@@ -37,9 +37,9 @@ export const pantallas: Record<Sistema["clave"], Pantalla[]> = {
     },
     {
       archivo: "aura-direccion-1440",
-      titulo: { es: "Tablero de dirección", en: "Owners' dashboard" },
+      titulo: { es: "Tablero de las dueñas", en: "Owners' dashboard" },
       alt: {
-        es: "Tablero de las dueñas con citas, cierre por asesora y cartera",
+        es: "Tablero de las dueñas con las citas, el cierre por asesora y la cartera",
         en: "The owners' dashboard with appointments, close rate per advisor and receivables",
       },
     },
@@ -65,7 +65,7 @@ export const pantallas: Record<Sistema["clave"], Pantalla[]> = {
       archivo: "guiacolegio-hoy-1440",
       titulo: { es: "Tareas del día", en: "Today's tasks" },
       alt: {
-        es: "Tareas vencidas y del día del vendedor, varias creadas por automatizaciones",
+        es: "Tareas vencidas y del día de un vendedor, varias creadas por automatizaciones",
         en: "A salesperson's overdue and current tasks, several created by automations",
       },
     },
@@ -79,10 +79,18 @@ export const pantallas: Record<Sistema["clave"], Pantalla[]> = {
     },
     {
       archivo: "guiacolegio-panel-leads-1440",
-      titulo: { es: "Panel para colegios", en: "Schools' panel" },
+      titulo: { es: "Panel del colegio", en: "School panel" },
       alt: {
-        es: "Panel donde cada colegio ve y gestiona las familias interesadas",
-        en: "Panel where each school sees and manages interested families",
+        es: "Las familias interesadas en un colegio, separadas por origen, con la edad del hijo y cuándo quieren empezar",
+        en: "The families interested in a school, split by source, with the child's age and when they want to start",
+      },
+    },
+    {
+      archivo: "guiacolegio-panel-embudo-1440",
+      titulo: { es: "Embudo de usuarios", en: "User funnel" },
+      alt: {
+        es: "Embudo de los usuarios del sitio de Guía Colegio, desde que llegan hasta que contactan un colegio",
+        en: "Funnel of the users of Guía Colegio's site, from when they arrive to when they contact a school",
       },
     },
   ],
@@ -91,84 +99,84 @@ export const pantallas: Record<Sistema["clave"], Pantalla[]> = {
       archivo: "visible-portal-390",
       titulo: { es: "Portal del cliente", en: "Client portal" },
       alt: {
-        es: "Portal del cliente de Visible en el celular, con el avance del ciclo y las publicaciones por aprobar",
-        en: "Visible's client portal on a phone, with cycle progress and posts to approve",
+        es: "Diseño propuesto para el portal del cliente de Visible en el celular, con el avance del ciclo y las publicaciones por aprobar",
+        en: "Proposed design for Visible's client portal on a phone, with cycle progress and posts to approve",
       },
     },
   ],
   colegio: [
     {
       archivo: "consto-revisar-1440",
-      titulo: { es: "Actas escritas con IA", en: "Minutes drafted by AI" },
+      titulo: { es: "Borrador del acta", en: "Draft minutes" },
       alt: {
-        es: "Borrador del acta de una reunión con la familia, escrito por la inteligencia artificial",
-        en: "Draft minutes of a meeting with a family, written by AI",
+        es: "Borrador del acta de una reunión con una familia, escrito por la inteligencia artificial y listo para revisar",
+        en: "Draft minutes of a meeting with a family, written by AI and ready to review",
       },
     },
     {
       archivo: "consto-coordinacion-1440",
-      titulo: { es: "Seguimiento de coordinación", en: "Coordinator view" },
+      titulo: { es: "Vista de coordinación", en: "Coordinator view" },
       alt: {
-        es: "Actas pendientes de firma, desacuerdos y borradores sin revisar",
-        en: "Minutes awaiting signature, disagreements and unreviewed drafts",
+        es: "Vista de coordinación con las actas que esperan la firma de la familia, las familias en desacuerdo y los borradores sin revisar",
+        en: "Coordinator view with minutes awaiting the family's signature, families who disagreed and drafts not yet reviewed",
       },
     },
     {
       archivo: "consto-firma-390",
-      titulo: { es: "Firma de la familia", en: "The family signs" },
+      titulo: { es: "Firma de la familia", en: "Family signature" },
       alt: {
         es: "Una mamá lee el acta en el celular y la firma",
-        en: "A parent reads the minutes on her phone and signs",
+        en: "A mother reads the minutes on her phone and signs them",
       },
     },
     {
       archivo: "memoplan-semana-390",
-      titulo: { es: "La semana de cada familia", en: "Each family's week" },
+      titulo: { es: "Plan de la semana", en: "Plan for the week" },
       alt: {
-        es: "La semana de una familia con pagos, permisos y materiales por fecha",
-        en: "A family's week with payments, permission slips and materials by date",
+        es: "La semana de una familia, con pagos, permisos y materiales por fecha",
+        en: "A family's week, with payments, permission slips and materials by date",
       },
     },
   ],
   ignia: [
     {
       archivo: "ignia-crm-oportunidades-1440",
-      titulo: { es: "CRM de admisiones", en: "Admissions CRM" },
+      titulo: { es: "Tablero de admisiones", en: "Admissions board" },
       alt: {
-        es: "Tablero de oportunidades del CRM de admisiones de Ignia",
-        en: "Opportunities board in Ignia's admissions CRM",
+        es: "Tablero del CRM de admisiones de Ignia, con las oportunidades por etapa",
+        en: "Board in Ignia's admissions CRM, with opportunities by stage",
       },
     },
     {
       archivo: "ignia-crm-hoy-1440",
-      titulo: { es: "Cola del día", en: "Today's queue" },
+      titulo: { es: "Pendientes del día", en: "Today's to-dos" },
       alt: {
-        es: "Cola de trabajo del día para quien agenda las citas",
-        en: "The day's work queue for the person who books appointments",
+        es: "Los pendientes del día de quien agenda las citas, como pagos atrasados y citas sin confirmar",
+        en: "The day's to-dos for the person who books appointments, such as late payments and unconfirmed appointments",
       },
     },
     {
       archivo: "ignia-crm-persona-1440",
-      titulo: { es: "Ficha de cada persona", en: "Person record" },
+      titulo: { es: "Ficha del aspirante", en: "Applicant's record" },
       alt: {
-        es: "Ficha de una persona con su diagnóstico, plan de pagos e historial",
-        en: "A person's record with diagnosis, payment plan and history",
+        es: "Ficha de un aspirante con su diagnóstico, plan de pagos e historial",
+        en: "An applicant's record with their diagnosis, payment plan and history",
       },
     },
     {
-      archivo: "ignia-comunidad-metrics-1440",
-      titulo: { es: "Seguimiento de fellows", en: "Fellows tracking" },
+      archivo: "ignia-crm-automatizaciones-1440",
+      titulo: { es: "Automatizaciones", en: "Automations" },
       alt: {
-        es: "Métricas de participación de los fellows de Ignia",
-        en: "Engagement metrics for Ignia's fellows",
+        es: "Mensajes automáticos de WhatsApp por etapa, cuántas personas tiene en curso cada uno y los próximos envíos por persona",
+        en: "Automated WhatsApp messages by stage, how many people each one has in progress and the upcoming sends by person",
       },
     },
     {
-      archivo: "ignia-diagnostico-inicio-1440",
+      archivo: "ignia-diagnostico-pregunta-1440",
       titulo: { es: "Diagnóstico de admisión", en: "Admissions diagnosis" },
       alt: {
-        es: "Primer paso del diagnóstico de admisión de Ignia",
-        en: "First step of Ignia's admissions diagnosis",
+        es: "Una pregunta del diagnóstico que llena cada aspirante antes de hablar con admisiones",
+        en: "A question from the diagnosis each applicant fills in before talking to admissions",
       },
     },
   ],
