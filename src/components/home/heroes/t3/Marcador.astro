@@ -1,0 +1,284 @@
+---
+interface Props {
+  linea1: string;
+  linea2: string;
+  frases: string[];
+}
+const { linea1, linea2, frases } = Astro.props;
+---
+
+<h1 id="cartel-titulo" class="t3-titulo" data-mide="h1">
+  <span class="t3-l1 font-arch">{linea1}</span>
+  <span class="t3-l2" data-t3-slot data-t3-frases={JSON.stringify(frases)}
+    ><span class="t3-marca"
+      ><span class="t3-banda" aria-hidden="true"></span><span
+        class="t3-reposo font-slab">{linea2}</span
+      ></span
+    ></span
+  >
+</h1>
+<script is:inline>
+  (() => {
+    const slot = document.querySelector("[data-t3-slot]");
+    if (!slot || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    // ?lento=4 plays the whole timeline four times slower, for review.
+    const lento =
+      Number(new URLSearchParams(location.search).get("lento")) || 1;
+    const medida = slot.previousElementSibling;
+    const marca = slot.querySelector(".t3-marca");
+    const banda = slot.querySelector(".t3-banda");
+    const reposo = slot.querySelector(".t3-reposo");
+    const capas = JSON.parse(slot.dataset.t3Frases).map(texto => {
+      const capa = document.createElement("span");
+      capa.className = "t3-frase";
+      capa.setAttribute("aria-hidden", "true");
+      capa.textContent = texto;
+      marca.before(capa);
+      return capa;
+    });
+
+    const ajustar = () => {
+      const ancho = medida.getBoundingClientRect().width;
+      for (const capa of capas) {
+        const escala = Number(capa.style.getPropertyValue("--t3-ajuste")) || 1;
+        const natural = capa.getBoundingClientRect().width / escala;
+        capa.style.setProperty(
+          "--t3-ajuste",
+          Math.min(1, ancho / natural).toFixed(4)
+        );
+      }
+    };
+    const observador = new ResizeObserver(ajustar);
+    observador.observe(slot);
+    observador.observe(medida);
+
+    // Quad on both sides of the hidden swap: the band rests fully closed for only two or three frames.
+    const CUBRE = "cubic-bezier(0.5, 1, 0.89, 1)";
+    const DESTAPA = "cubic-bezier(0.11, 0, 0.5, 0)";
+    const REMATA = "cubic-bezier(0.25, 1, 0.5, 1)";
+    const RITMO = {
+      primera: 1000,
+      repeticion: 850,
+      sostener: [640, 520, 440, 380, 340],
+      cubrir: [240, 220, 205, 190, 175],
+      destapar: [220, 205, 190, 175, 160],
+      cambio: 20,
+      remate: 460,
+    };
+    // Each stroke lands a little differently; the last pose is the resting one in the CSS.
+    const POSES = [
+      "rotate(-0.9deg) translateY(0.02em)",
+      "rotate(0.2deg) translateY(-0.015em)",
+      "rotate(-0.4deg) translateY(0.01em)",
+      "rotate(0.1deg) translateY(-0.02em)",
+      "rotate(-0.8deg) translateY(0.015em)",
+      "rotate(-0.6deg) translateY(0em)",
+    ];
+    // The nib: both ends of the stroke share this profile, so a=b has no area.
+    // The resting clip-path in the CSS is poligono(0, 1).
+    const NIB = [
+      ["-0.3em", 0.14],
+      ["0.18em", 0.0782],
+      ["0.62em", -0.0466],
+      ["calc(100% + 0.3em)", -0.14],
+    ];
+    const punto = (u, [y, desvio]) =>
+      `calc(${+(u * 100).toFixed(3)}% + ${+(-0.16 + u * 0.34 + desvio).toFixed(4)}em) ${y}`;
+    const poligono = (a, b) =>
+      `polygon(${[
+        ...NIB.map(n => punto(b, n)),
+        ...[...NIB].reverse().map(n => punto(a, n)),
+      ].join(", ")})`;
+
+    const guion = desdeReposo => {
+      const recorte = [];
+      const pose = [];
+      const frase = [[0, 0]];
+      const texto = [];
+      let t = 0;
+      const trazo = (duracion, desde, hasta, easing) => {
+        recorte.push([t, ...desde, easing]);
+        t += duracion;
+        recorte.push([t, ...hasta, "linear"]);
+      };
+      if (desdeReposo) {
+        texto.push([0, 1]);
+        pose.push([0, POSES.length - 1]);
+        trazo(RITMO.destapar[0], [0, 1], [1, 1], DESTAPA);
+        texto.push([t, 0]);
+        t += RITMO.repeticion;
+      } else {
+        texto.push([0, 0]);
+        pose.push([0, 0]);
+        recorte.push([0, 0, 0, "linear"]);
+        t += RITMO.primera;
+      }
+      for (let i = 1; i < capas.length; i++) {
+        pose.push([t, i - 1]);
+        trazo(RITMO.cubrir[i - 1], [0, 0], [0, 1], CUBRE);
+        t += RITMO.cambio / 2;
+        frase.push([t, i]);
+        t += RITMO.cambio / 2;
+        trazo(RITMO.destapar[i - 1], [0, 1], [1, 1], DESTAPA);
+        t += RITMO.sostener[i - 1];
+      }
+      pose.push([t, POSES.length - 1]);
+      texto.push([t, 1]);
+      trazo(RITMO.remate, [0, 0], [0, 1], REMATA);
+      frase.push([t, -1]);
+      return { recorte, pose, frase, texto, total: t };
+    };
+
+    // A step series [[t, value], ...] as hard-cut keyframes.
+    const escalones = (serie, total, propiedad, valor) => {
+      const cuadros = [];
+      serie.forEach(([t, v], i) => {
+        if (i)
+          cuadros.push({
+            offset: t / total,
+            [propiedad]: valor(serie[i - 1][1]),
+          });
+        cuadros.push({ offset: t / total, [propiedad]: valor(v) });
+      });
+      cuadros.push({ offset: 1, [propiedad]: valor(serie.at(-1)[1]) });
+      return cuadros;
+    };
+
+    let animaciones = [];
+    const reproducir = desdeReposo => {
+      const g = guion(desdeReposo);
+      const opciones = { duration: g.total * lento, fill: "forwards" };
+      const recorte = g.recorte.map(([t, a, b, easing]) => ({
+        offset: t / g.total,
+        clipPath: poligono(a, b),
+        easing,
+      }));
+      animaciones = [
+        marca.animate(recorte, opciones),
+        banda.animate(
+          escalones(g.pose, g.total, "transform", i => POSES[i]),
+          opciones
+        ),
+        reposo.animate(
+          escalones(g.texto, g.total, "opacity", v => v),
+          opciones
+        ),
+        ...capas.map((capa, n) => {
+          const serie = g.frase.map(([t, i]) => [t, i === n ? 1 : 0]);
+          return capa.animate(
+            escalones(serie, g.total, "opacity", v => v),
+            opciones
+          );
+        }),
+      ];
+      slot.dataset.t3Corriendo = "";
+      Promise.all(animaciones.map(a => a.finished)).then(() => {
+        for (const a of animaciones) a.cancel();
+        delete slot.dataset.t3Corriendo;
+      });
+    };
+
+    if (document.visibilityState === "visible") reproducir(false);
+    else
+      document.addEventListener("visibilitychange", () => reproducir(true), {
+        once: true,
+      });
+    slot.parentElement.addEventListener("pointerenter", e => {
+      if (e.pointerType === "mouse" && !("t3Corriendo" in slot.dataset))
+        reproducir(true);
+    });
+  })();
+</script>
+
+<style>
+  .t3-titulo {
+    position: relative;
+    z-index: 2;
+    order: 2;
+    /* Hugs the words, so hovering the portrait never replays the cycle. */
+    align-self: flex-start;
+    margin-top: calc(var(--img-h) * -0.055);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .t3-l1 {
+    display: block;
+    white-space: nowrap;
+    font-size: var(--l1);
+    line-height: 0.8;
+    text-transform: uppercase;
+    font-stretch: 62%;
+    font-variation-settings:
+      "wdth" 62,
+      "wght" 900;
+    letter-spacing: 0.004em;
+    color: var(--papel);
+  }
+  .t3-l2 {
+    position: relative;
+    display: block;
+    white-space: nowrap;
+    margin-top: 0.3em;
+    /* Sized so both lines lock up to the same width. */
+    font-size: calc(var(--l1) * 0.466);
+    line-height: 0.95;
+    text-transform: uppercase;
+  }
+
+  /* The marker and the resting words share one clip: the nib draws both. */
+  .t3-marca {
+    position: relative;
+    z-index: 1;
+    display: block;
+    isolation: isolate;
+    clip-path: polygon(
+      calc(100% + 0.32em) -0.3em,
+      calc(100% + 0.2582em) 0.18em,
+      calc(100% + 0.1334em) 0.62em,
+      calc(100% + 0.04em) calc(100% + 0.3em),
+      calc(0% + -0.3em) calc(100% + 0.3em),
+      calc(0% + -0.2066em) 0.62em,
+      calc(0% + -0.0818em) 0.18em,
+      calc(0% + -0.02em) -0.3em
+    );
+  }
+  .t3-banda {
+    position: absolute;
+    z-index: -1;
+    inset: -0.2em -0.4em -0.04em -0.38em;
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 50' preserveAspectRatio='none'><path fill='%23b3251d' d='M0 2.4C60 .6 130 2.6 205 1.3 280 0 345 1.2 400 2.8v44.6c-65 2.2-138 .2-210 1.4-72 1.2-132-.4-190 .4Z'/></svg>")
+      center / 100% 100% no-repeat;
+    transform: rotate(-0.6deg);
+  }
+  .t3-reposo {
+    display: block;
+    letter-spacing: -0.012em;
+    color: var(--papel);
+  }
+  .t3-l2 :global(.t3-frase) {
+    position: absolute;
+    z-index: 0;
+    top: 50%;
+    left: 0;
+    translate: 0 -50%;
+    font-family: var(--font-arch);
+    font-size: calc(var(--t3-ajuste, 1) * 1em);
+    line-height: 1;
+    font-stretch: 62%;
+    font-variation-settings:
+      "wdth" 62,
+      "wght" 800;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+    color: var(--txt);
+    opacity: 0;
+  }
+
+  @media (min-width: 1024px) {
+    .t3-titulo {
+      margin-top: auto;
+      padding-top: 24px;
+    }
+  }
+</style>

@@ -5,11 +5,21 @@ const modulos = import.meta.glob<{ default: AstroComponentFactory }>(
   "./Hero*.astro"
 );
 
-export const variantes = ["a", "f", "g", "a1", "a2", "a3"] as const;
+export const variantes = [
+  "a",
+  "f",
+  "g",
+  "a1",
+  "a2",
+  "a3",
+  "t1",
+  "t2",
+  "t3",
+] as const;
 export type Variante = (typeof variantes)[number];
 
 // Variants whose page shows the systems showcase as a rotating triptych.
-export const conTriptico: readonly Variante[] = ["a1"];
+export const conTriptico: readonly Variante[] = ["a1", "t1", "t2", "t3"];
 
 export async function cargarHero(v: Variante) {
   const modulo = await modulos[`./Hero${v.toUpperCase()}.astro`]();

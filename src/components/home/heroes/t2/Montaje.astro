@@ -1,0 +1,294 @@
+---
+// The h1's second line as the film's opening titles: red outlines cut in and out through a
+// mask, faster each time, until «lo chinomático» rises and a bar drags the solid red through it.
+import { montajeT2 } from "@data/heroes/t2";
+---
+
+<script is:inline define:vars={{ montaje: montajeT2 }}>
+  (() => {
+    const slot = document.querySelector("[data-t2-slot]");
+    if (!slot || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    // ?lento=4 plays the whole sequence four times slower, to review the easing.
+    const pedido = Number(new URLSearchParams(location.search).get("lento"));
+    const lento = pedido > 1 ? Math.min(pedido, 10) : 1;
+    const CURVA = montaje.curvas;
+    const medida = slot.previousElementSibling;
+    const reposo = slot.querySelector(".t2-reposo");
+    const raya = slot.querySelector(".t2-raya");
+    const ms = valor => valor * lento;
+
+    // Each glyph's x in em, read from the set line, so the split keeps the kerning and the width.
+    const medir = (nodo, caja) => {
+      const borde = caja.getBoundingClientRect();
+      const em = parseFloat(getComputedStyle(caja).fontSize);
+      const rango = document.createRange();
+      const glifos = [];
+      let palabra = 0;
+      for (let i = 0; i < nodo.length; i++) {
+        if (nodo.data[i] === " ") {
+          palabra++;
+          continue;
+        }
+        rango.setStart(nodo, i);
+        rango.setEnd(nodo, i + 1);
+        const x = (rango.getBoundingClientRect().left - borde.left) / em;
+        glifos.push({ letra: nodo.data[i], x, palabra, i: glifos.length });
+      }
+      return { glifos, ancho: borde.width / em };
+    };
+    const medirTexto = texto => {
+      const prueba = document.createElement("span");
+      prueba.className = "t2-frase";
+      prueba.textContent = texto;
+      slot.append(prueba);
+      const medidas = medir(prueba.firstChild, prueba);
+      prueba.remove();
+      return medidas;
+    };
+    const crearCapa = ({ glifos, ancho }, clase) => {
+      const capa = document.createElement("span");
+      capa.className = clase;
+      capa.setAttribute("aria-hidden", "true");
+      capa.style.width = `${ancho.toFixed(4)}em`;
+      const conNodo = glifos.map(glifo => {
+        const nodo = document.createElement("span");
+        nodo.className = "t2-g";
+        nodo.textContent = glifo.letra;
+        nodo.style.left = `${glifo.x.toFixed(4)}em`;
+        capa.append(nodo);
+        return { ...glifo, nodo };
+      });
+      slot.append(capa);
+      return { capa, glifos: conNodo, ancho };
+    };
+
+    let frases = [];
+    let pago;
+    let pagoMacizo;
+    const ajustar = () => {
+      const ancho = medida.getBoundingClientRect().width;
+      const em = parseFloat(getComputedStyle(slot).fontSize);
+      for (const frase of frases)
+        frase.capa.style.setProperty(
+          "--t2-ajuste",
+          Math.min(1, ancho / (frase.ancho * em)).toFixed(4)
+        );
+    };
+    const preparar = () => {
+      frases = JSON.parse(slot.dataset.frases).map(texto =>
+        crearCapa(medirTexto(texto), "t2-frase")
+      );
+      const medidasPago = medir(reposo.firstChild, reposo);
+      pago = crearCapa(medidasPago, "t2-frase");
+      pagoMacizo = crearCapa(medidasPago, "t2-frase t2-macizo");
+      const observador = new ResizeObserver(ajustar);
+      observador.observe(slot);
+      observador.observe(medida);
+    };
+
+    const turno = (orden, glifo, total) => {
+      if (orden === "letra") return glifo.i;
+      if (orden === "reves") return total - 1 - glifo.i;
+      if (orden === "centro") return Math.abs(glifo.i - (total - 1) / 2);
+      if (orden === "palabra") return glifo.palabra;
+      return 0;
+    };
+    const DENTRO = "translate(0, 0)";
+    const fuera = (eje, distancia) =>
+      eje === "x"
+        ? `translate(${distancia.toFixed(3)}em, 0)`
+        : `translate(0, ${distancia}%)`;
+
+    const animaciones = [];
+    const animar = (nodo, cuadros, desde, hasta, opciones = {}) => {
+      const animacion = nodo.animate(cuadros, {
+        delay: ms(desde),
+        duration: Math.max(1, ms(hasta - desde)),
+        fill: "both",
+        ...opciones,
+      });
+      animaciones.push(animacion);
+      return animacion;
+    };
+    // The layer exists on screen only while its glyphs are moving or held.
+    const VISIBLE = [{ visibility: "visible" }, { visibility: "visible" }];
+    const mostrar = (capa, desde, hasta) =>
+      animar(capa, VISIBLE, desde, hasta, { fill: "none" });
+    const ENCENDIDO = [{ opacity: 0.35 }, { opacity: 1 }];
+    const APAGADO = [{ opacity: 1 }, { opacity: 0 }];
+
+    // inicio: when the entry starts; salida: when the exit starts (null holds the glyphs in place).
+    const montar = (frase, inicio, entra, salida, sale, empujeEntrada) => {
+      const total = frase.glifos.length;
+      const desdeX = empujeEntrada * frase.ancho;
+      const haciaX = -montaje.empuje * frase.ancho;
+      let primero = Infinity;
+      let ultimo = 0;
+      for (const glifo of frase.glifos) {
+        const s =
+          inicio + (entra ? turno(entra.orden, glifo, total) * entra.paso : 0);
+        const llegada = entra
+          ? fuera(entra.eje, entra.eje === "x" ? desdeX : 120)
+          : DENTRO;
+        const e = sale
+          ? salida + turno(sale.orden, glifo, total) * sale.paso
+          : null;
+        const llega = Math.min(s + (entra ? entra.dur : 0), e ?? Infinity);
+        const fin = sale ? e + sale.dur : llega;
+        const cuadros = [
+          {
+            transform: llegada,
+            offset: 0,
+            easing: entra ? CURVA[entra.curva] : "linear",
+          },
+          { transform: DENTRO, offset: (llega - s) / (fin - s || 1) },
+        ];
+        if (sale) {
+          cuadros.push(
+            {
+              transform: DENTRO,
+              offset: (e - s) / (fin - s),
+              easing: sale.eje === "x" ? CURVA.inQuint : CURVA.inQuart,
+            },
+            {
+              transform: fuera(sale.eje, sale.eje === "x" ? haciaX : -118),
+              offset: 1,
+            }
+          );
+        }
+        animar(glifo.nodo, cuadros, s, fin);
+        // Sideways moves also fade: in from 0.35, out to nothing.
+        if (entra?.eje === "x")
+          animar(glifo.nodo, ENCENDIDO, s, s + entra.dur * 0.6, {
+            easing: CURVA.cubic,
+            fill: "backwards",
+          });
+        if (sale?.eje === "x")
+          animar(glifo.nodo, APAGADO, e, fin, {
+            easing: CURVA.inCubic,
+            fill: "forwards",
+          });
+        primero = Math.min(primero, s);
+        ultimo = Math.max(ultimo, fin);
+      }
+      return { primero, ultimo };
+    };
+
+    let corriendo = false;
+    const correr = repetir => {
+      if (corriendo) return;
+      corriendo = true;
+      slot.dataset.t2Estado = "ciclo";
+      animaciones.length = 0;
+
+      const { pago: guion } = montaje;
+      let inicio = repetir ? guion.primera : montaje.primera;
+      if (repetir) {
+        const { ultimo } = montar(pagoMacizo, 0, null, 0, guion.salida, 0);
+        mostrar(pagoMacizo.capa, 0, ultimo);
+      }
+      montaje.tomas.forEach((paso, n) => {
+        const previa = montaje.tomas[n - 1]?.sale;
+        const empuje =
+          previa?.eje === "x"
+            ? (montaje.empuje * paso.entra.dur) / previa.dur
+            : 0;
+        const salida = inicio + paso.tras - paso.antes;
+        const { primero, ultimo } = montar(
+          frases[n],
+          inicio,
+          paso.entra,
+          salida,
+          paso.sale,
+          empuje
+        );
+        mostrar(frases[n].capa, primero, ultimo);
+        inicio += paso.tras;
+      });
+
+      const rayaInicio = inicio + guion.raya;
+      const rellenoInicio = rayaInicio + guion.relleno;
+      const rellenoFin = rellenoInicio + guion.rayaDur;
+      montar(pago, inicio, guion.entra, null, null, 0);
+      mostrar(pago.capa, inicio, rellenoFin);
+      // The solid words wipe in and the outlines wipe out along the same edge.
+      animar(
+        reposo,
+        [
+          { opacity: 1, clipPath: "inset(-0.3em 100% -0.3em 0)" },
+          { opacity: 1, clipPath: "inset(-0.3em -0.1em -0.3em -0.1em)" },
+        ],
+        rellenoInicio,
+        rellenoFin,
+        { easing: CURVA.expo }
+      );
+      animar(
+        pago.capa,
+        [
+          { clipPath: "inset(-0.2em -0.06em 0 -0.06em)" },
+          { clipPath: "inset(-0.2em -0.06em 0 calc(100% + 0.1em))" },
+        ],
+        rellenoInicio,
+        rellenoFin,
+        { easing: CURVA.expo }
+      );
+      // On a replay the bar first leaves the way it came, off to the right.
+      const rayaFin = rayaInicio + guion.rayaDur;
+      const barra = (escala, origen, extra) => ({
+        transform: `scaleX(${escala})`,
+        transformOrigin: origen,
+        ...extra,
+      });
+      const antes = repetir
+        ? [
+            barra(1, "100% 50%", { easing: CURVA.inExpo }),
+            barra(0, "100% 50%", { offset: guion.retiro / rayaFin }),
+          ]
+        : [barra(0, "0% 50%")];
+      const dispara = { offset: rayaInicio / rayaFin, easing: CURVA.expo };
+      animar(
+        raya,
+        [...antes, barra(0, "0% 50%", dispara), barra(1, "0% 50%")],
+        0,
+        rayaFin
+      );
+
+      // Whether it ends or something cancels it, the line goes back to the plain resting words.
+      const terminar = () => {
+        for (const animacion of animaciones) animacion.cancel();
+        delete slot.dataset.t2Estado;
+        corriendo = false;
+      };
+      Promise.all(animaciones.map(animacion => animacion.finished)).then(
+        terminar,
+        terminar
+      );
+    };
+
+    slot.dataset.t2Estado = "espera";
+    const mostrarReposo = () => delete slot.dataset.t2Estado;
+    // On a slow connection the resting words show rather than an empty line.
+    const plazo = setTimeout(mostrarReposo, 2500);
+    document.fonts.load('1em "Alfa Slab One"').then(
+      () => {
+        clearTimeout(plazo);
+        const tarde = !slot.dataset.t2Estado;
+        preparar();
+        slot.parentElement.addEventListener("pointerenter", evento => {
+          if (evento.pointerType === "mouse") correr(true);
+        });
+        if (tarde) return;
+        if (document.visibilityState === "visible") correr(false);
+        else
+          document.addEventListener("visibilitychange", () => correr(false), {
+            once: true,
+          });
+      },
+      () => {
+        clearTimeout(plazo);
+        mostrarReposo();
+      }
+    );
+  })();
+</script>
