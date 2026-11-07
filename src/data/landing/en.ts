@@ -205,7 +205,7 @@ export const en = {
     titulo: "What happens if we work together",
     semanaCorta: "W",
     filas: [
-      { nombre: "Interviews", desde: 1, hasta: 1, entrega: false },
+      { nombre: "Understanding", desde: 1, hasta: 1, entrega: false },
       { nombre: "Box 1", desde: 2, hasta: 3, entrega: true },
       { nombre: "Box 2", desde: 4, hasta: 5, entrega: true },
       { nombre: "Box 3", desde: 6, hasta: 7, entrega: true },

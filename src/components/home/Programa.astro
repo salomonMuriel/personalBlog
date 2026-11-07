@@ -32,7 +32,7 @@ const retraso = (i: number) => `transition-delay:${(i * 0.12).toFixed(2)}s`;
     </h2>
 
     <div
-      class="observa gantt mt-[clamp(1.8rem,3.6vw,2.8rem)] grid grid-cols-[5.4rem_minmax(0,1fr)] items-center sm:grid-cols-[minmax(5.6rem,10.5rem)_minmax(0,1fr)] gap-x-[clamp(.75rem,2vw,1.5rem)] gap-y-[6px]"
+      class="observa gantt mt-[clamp(1.8rem,3.6vw,2.8rem)] grid grid-cols-[6.7rem_minmax(0,1fr)] items-center sm:grid-cols-[minmax(5.6rem,10.5rem)_minmax(0,1fr)] gap-x-[clamp(.75rem,2vw,1.5rem)] gap-y-[6px]"
     >
       <span></span>
       <div
@@ -50,7 +50,7 @@ const retraso = (i: number) => `transition-delay:${(i * 0.12).toFixed(2)}s`;
       {
         c.filas.map((f, i) => (
           <>
-            <span class="font-arch text-[.98rem] font-bold leading-tight tracking-[-.01em]">
+            <span class="font-arch text-[.9rem] font-bold leading-tight sm:text-[.98rem] tracking-[-.01em]">
               {f.nombre}
             </span>
             <div
@@ -86,7 +86,7 @@ const retraso = (i: number) => `transition-delay:${(i * 0.12).toFixed(2)}s`;
       }
 
       <span
-        class="font-arch text-[.98rem] font-bold leading-tight tracking-[-.01em] text-gris"
+        class="font-arch text-[.9rem] font-bold leading-tight sm:text-[.98rem] tracking-[-.01em] text-gris"
       >
         {c.filaAbierta}
       </span>

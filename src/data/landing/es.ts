@@ -204,7 +204,7 @@ export const es = {
     titulo: "Qué pasa si trabajamos juntos",
     semanaCorta: "S",
     filas: [
-      { nombre: "Entrevistas", desde: 1, hasta: 1, entrega: false },
+      { nombre: "Entendimiento", desde: 1, hasta: 1, entrega: false },
       { nombre: "Cajita 1", desde: 2, hasta: 3, entrega: true },
       { nombre: "Cajita 2", desde: 4, hasta: 5, entrega: true },
       { nombre: "Cajita 3", desde: 6, hasta: 7, entrega: true },
