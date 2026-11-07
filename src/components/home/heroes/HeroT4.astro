@@ -1,0 +1,480 @@
+---
+import { Image } from "astro:assets";
+import { wa } from "@config";
+import { copia } from "@data/landing";
+import { heroA1 } from "@data/heroes/a1";
+import { palabras } from "@data/heroes/palabras";
+import { heroT4 } from "@data/heroes/t4";
+import { routes, type Lang } from "@i18n/ui";
+import retrato from "@assets/heroes/a/salo-cartel.jpg";
+import Titulo from "./t4/Titulo.astro";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const c = copia(lang).hero;
+const cta = copia(lang).cta;
+const [primera, segunda, tercera] = c.dicc.acepciones;
+
+const terceraMarcada = tercera.replace(
+  heroA1.marcada,
+  `<mark class="marca">${heroA1.marcada}</mark>`
+);
+---
+
+<section class="cartel" aria-labelledby="cartel-titulo">
+  <div class="hoja cartel__hoja">
+    <p class="cartel__icp" data-mide="icp">{heroA1.icp}</p>
+
+    <div class="cartel__foto" data-mide="foto">
+      <Image
+        src={retrato}
+        widths={[480, 667]}
+        sizes="(min-width:1024px) 667px, 110vw"
+        alt={c.fichaAlt}
+        loading="eager"
+        fetchpriority="high"
+      />
+    </div>
+
+    <Titulo
+      id="cartel-titulo"
+      linea1={c.linea1}
+      linea2={c.linea2}
+      frases={palabras[lang]}
+      escalada={heroT4.escalada[lang]}
+    />
+
+    <p class="cartel__bajada">
+      <span class="hidden md:inline">{c.bajada}</span><span class="md:hidden"
+        >{heroA1.bajadaCorta}</span
+      >
+    </p>
+
+    <div class="cartel__ctas" data-pliegue data-mide="ctas">
+      <a
+        href={routes.cuentame[lang]}
+        data-origen="hero"
+        class="boton boton--rojo"
+      >
+        {cta.cuestionario}<svg aria-hidden="true"><use href="#i-arw"></use></svg
+        >
+      </a>
+      <a
+        href={wa(cta.waTexto)}
+        target="_blank"
+        rel="noopener"
+        data-origen="hero"
+        class="boton boton--linea"
+      >
+        <svg aria-hidden="true"><use href="#i-chat"></use></svg><span
+          class="hidden sm:inline">{cta.wa}</span
+        ><span class="sm:hidden">{heroA1.waCorto}</span>
+      </a>
+    </div>
+
+    <div class="cartel__creditos">
+      <p class="creditos__corrido">
+        <span class="creditos__voz font-slab">{c.dicc.palabra}</span>
+        <span class="creditos__cat">{c.dicc.categoria}</span>
+        <span data-mide="acepcion-1"
+          ><span class="creditos__n">1.</span> <span set:html={primera} /></span
+        >
+        <span class="hidden md:inline"
+          ><span class="creditos__n">2.</span> <span set:html={segunda} /></span
+        >
+      </p>
+      <p class="creditos__tercera" data-mide="remate">
+        <span class="creditos__n font-slab">3.</span>
+        <span set:html={terceraMarcada} />
+      </p>
+    </div>
+  </div>
+  <div class="cartel__grano" aria-hidden="true"></div>
+</section>
+
+<style>
+  .cartel {
+    --hondo: #101115;
+    --tinta: #16171a;
+    --fg: #eceae4;
+    --txt: #b0aea6;
+    --nota: #8e8d86;
+    --rojo2: #b3251d;
+    --rojo3: #ea4b3e;
+    --papel: #f2f1ed;
+    --nav: 61px;
+    --alto: calc(100svh - var(--nav));
+    --margen: clamp(1.25rem, 4vw, 3.5rem);
+    /* The portrait's head starts at 28% of the frame and the chin ends near 52%. */
+    --img-h: calc(var(--alto) * 1.08);
+    /* "SE ARREGLA" sets about 4.6 × its size wide: never wider than the sheet. */
+    --l1: min((100vw - 2 * var(--margen)) / 4.66, 10.6svh, 150px);
+
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    min-height: var(--alto);
+    color: var(--fg);
+    background:
+      linear-gradient(to bottom, transparent 62%, var(--tinta)), var(--hondo);
+  }
+  .cartel :focus-visible {
+    outline-color: var(--papel);
+  }
+
+  .cartel__grano {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    opacity: 0.32;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='1 0 0 0 0  1 0 0 0 0  1 0 0 0 0  0 0 0 0 1'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");
+  }
+
+  .cartel__hoja {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: var(--alto);
+    padding-top: 14px;
+    padding-bottom: 18px;
+  }
+  .cartel__hoja > :not(.cartel__foto) {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ── the portrait: no frame, it dissolves into the stage ── */
+  .cartel__foto {
+    position: relative;
+    z-index: 0;
+    order: 1;
+    /* Grows on tall phones and tablets, showing more of the coat and arms. */
+    flex: 1 0 auto;
+    height: calc(var(--img-h) * 0.31);
+    margin-top: 8px;
+    margin-inline: calc(var(--margen) * -1);
+    overflow: hidden;
+    /* The img blends with this, not with the stage: the mask isolates it. */
+    background:
+      radial-gradient(
+        ellipse 34% 62% at 50% 40%,
+        rgba(236, 234, 228, 0.1),
+        transparent 72%
+      ),
+      var(--hondo);
+    mask-image:
+      linear-gradient(to bottom, #000 58%, transparent 100%),
+      linear-gradient(
+        to right,
+        transparent 0,
+        #000 18%,
+        #000 82%,
+        transparent 100%
+      );
+    mask-composite: intersect;
+  }
+  .cartel__foto :global(img) {
+    position: absolute;
+    left: 50%;
+    top: calc(var(--img-h) * -0.265);
+    height: var(--img-h);
+    width: auto;
+    max-width: none;
+    translate: -50% 0;
+    mix-blend-mode: lighten;
+    filter: grayscale(1) contrast(1.14) brightness(1.03);
+  }
+
+  /* ── tagline ── */
+  .cartel__icp {
+    order: 0;
+    max-width: 32ch;
+    font-size: 15.5px;
+    line-height: 1.3;
+    font-weight: 500;
+    color: var(--fg);
+    text-wrap: balance;
+  }
+
+  .cartel__bajada {
+    order: 3;
+    margin-top: 12px;
+    max-width: 46ch;
+    font-size: 15px;
+    line-height: 1.4;
+    color: var(--txt);
+  }
+
+  /* ── calls to action ── */
+  .cartel__ctas {
+    order: 5;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 18px;
+  }
+  .boton {
+    display: inline-flex;
+    min-height: 48px;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border-radius: 2px;
+    padding: 12px 13px;
+    font-size: 15.5px;
+    font-variation-settings:
+      "wdth" 84,
+      "wght" 700;
+    white-space: nowrap;
+    transition:
+      background-color 0.18s,
+      border-color 0.18s,
+      color 0.18s,
+      transform 0.18s;
+  }
+  .boton:active {
+    transform: translateY(1px);
+  }
+  .boton svg {
+    width: 18px;
+    height: 18px;
+    flex: none;
+  }
+  .boton--rojo {
+    flex: 1 1 auto;
+    background: var(--rojo2);
+    color: #fff;
+  }
+  .boton--rojo:hover {
+    background: var(--papel);
+    color: var(--tinta);
+  }
+  .boton--linea {
+    flex: 1 1 auto;
+    border: 1.5px solid var(--nota);
+    color: var(--fg);
+  }
+  .boton--linea:hover {
+    border-color: var(--papel);
+    background: rgba(236, 234, 228, 0.06);
+  }
+
+  /* ── billing block: the dictionary entry ── */
+  .cartel__creditos {
+    order: 4;
+    margin-top: 16px;
+  }
+  .creditos__corrido {
+    font-size: 13px;
+    line-height: 1.38;
+    letter-spacing: 0.035em;
+    text-transform: uppercase;
+    font-variation-settings:
+      "wdth" 70,
+      "wght" 460;
+    color: var(--txt);
+  }
+  .creditos__corrido :global(b) {
+    font-variation-settings:
+      "wdth" 70,
+      "wght" 800;
+    color: var(--fg);
+  }
+  .creditos__voz {
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 1.36em;
+    line-height: 1;
+    color: var(--fg);
+  }
+  .creditos__cat {
+    text-transform: none;
+    color: var(--nota);
+    margin-right: 0.35em;
+  }
+  .creditos__n {
+    color: var(--rojo3);
+    font-variation-settings:
+      "wdth" 70,
+      "wght" 800;
+  }
+  .creditos__tercera {
+    margin-top: 12px;
+    font-size: 19px;
+    line-height: 1.2;
+    text-transform: uppercase;
+    letter-spacing: 0.012em;
+    font-variation-settings:
+      "wdth" 66,
+      "wght" 820;
+    color: var(--papel);
+  }
+  .creditos__tercera .creditos__n {
+    font-variation-settings: normal;
+    margin-right: 0.12em;
+  }
+
+  /* ── the hand on the last sense ── */
+  .creditos__tercera :global(.marca) {
+    position: relative;
+    z-index: 0;
+    padding: 0 0.12em;
+    margin: 0 -0.02em;
+    background: none;
+    color: var(--papel);
+  }
+  .creditos__tercera :global(.marca)::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: -0.02em -0.06em -0.04em -0.08em;
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'><path fill='%23b3251d' d='M4 6.5C38 3.8 92 4.6 140 3.2c22-.6 40 .2 56 1.4 2.6 6.5 1.6 18.8 2.8 28.6-28 2.8-84 4.1-150 3.6-16-.1-31-.9-46-1.9C1.2 25 .6 15 4 6.5Z'/></svg>")
+      center / 100% 100% no-repeat;
+    rotate: -1.2deg;
+    animation: pintar 0.42s cubic-bezier(0.3, 0.7, 0.2, 1) 0.3s both;
+  }
+
+  /* A left-to-right wipe, like a pen moving. */
+  @keyframes pintar {
+    from {
+      clip-path: inset(-1em 100% -1em -1em);
+    }
+    to {
+      clip-path: inset(-1em -1em -1em -1em);
+    }
+  }
+
+  @media (max-width: 399.98px) {
+    .boton--rojo svg {
+      display: none;
+    }
+  }
+  @media (min-width: 400px) {
+    .boton {
+      padding-inline: 16px;
+    }
+  }
+
+  @media (min-width: 640px) {
+    .boton--rojo,
+    .boton--linea {
+      flex: none;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .cartel {
+      --nav: 61px;
+      --l1: min(15vw, 11svh, 150px);
+    }
+    .cartel__hoja {
+      padding-top: 28px;
+      padding-bottom: 32px;
+    }
+    .cartel__icp {
+      font-size: 19px;
+    }
+    .cartel__bajada {
+      font-size: 17px;
+    }
+    .creditos__corrido {
+      font-size: 14.5px;
+    }
+    .creditos__tercera {
+      font-size: 26px;
+    }
+  }
+
+  /* ── desktop: the one-sheet ── */
+  @media (min-width: 1024px) {
+    .cartel {
+      --l1: min(10.3vw, 16.4svh, 156px);
+      --img-h: calc(var(--alto) / 0.86);
+      --foto-w: calc(var(--img-h) * 0.667);
+    }
+    .cartel__hoja {
+      position: static;
+      padding-top: clamp(22px, 4.2svh, 40px);
+      padding-bottom: clamp(22px, 4svh, 38px);
+    }
+    .cartel__foto {
+      position: absolute;
+      order: 0;
+      top: 0;
+      bottom: 0;
+      height: auto;
+      margin: 0;
+      /* Centred in the room the title leaves (its width is about 4.59 × --l1), never past the viewport. */
+      left: min(
+        100% - var(--foto-w),
+        max(0px, (100% - 1320px) / 2) + var(--margen) +
+          (min(100%, 1320px) - 2 * var(--margen) + var(--l1) * 4.59) / 2 -
+          var(--foto-w) / 2
+      );
+      width: var(--foto-w);
+      background:
+        radial-gradient(
+          ellipse 38% 34% at 50% 26%,
+          rgba(236, 234, 228, 0.1),
+          transparent 72%
+        ),
+        linear-gradient(to bottom, transparent 62%, var(--tinta)), var(--hondo);
+      mask-image:
+        linear-gradient(to bottom, #000 66%, transparent 96%),
+        linear-gradient(
+          to right,
+          transparent 0,
+          #000 22%,
+          #000 86%,
+          transparent 100%
+        );
+    }
+    .cartel__foto :global(img) {
+      left: 0;
+      top: calc(var(--img-h) * -0.14);
+      translate: none;
+    }
+    .cartel__icp {
+      max-width: none;
+      font-size: clamp(18px, 1.55vw, 24px);
+    }
+    .cartel__bajada {
+      max-width: 44ch;
+      margin-top: clamp(14px, 2.4svh, 24px);
+      font-size: clamp(16px, 1.25vw, 18px);
+    }
+    .cartel__ctas {
+      order: 4;
+      margin-top: clamp(18px, 3svh, 30px);
+    }
+    .cartel__creditos {
+      order: 5;
+      margin-top: auto;
+      padding-top: 28px;
+      text-align: center;
+    }
+    .creditos__corrido {
+      max-width: 1120px;
+      margin-inline: auto;
+      font-size: clamp(13.5px, 1vw, 15px);
+      text-wrap: balance;
+    }
+    .creditos__tercera {
+      margin-top: clamp(14px, 2.4svh, 24px);
+      font-size: min(2.5vw, 4.4svh, 38px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .creditos__tercera :global(.marca)::before {
+      animation: none;
+    }
+    .boton {
+      transition: none;
+    }
+  }
+</style>

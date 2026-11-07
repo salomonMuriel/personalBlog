@@ -1,0 +1,495 @@
+---
+import Estilo from "./Estilo.astro";
+
+interface Props {
+  id: string;
+  linea1: string;
+  linea2: string;
+  frases: readonly string[];
+  escalada: readonly string[];
+}
+const { id, linea1, linea2, frases, escalada } = Astro.props;
+---
+
+<Estilo />
+<h1 {id} class="t4-titulo" data-mide="h1">
+  <span class="t4-l1 font-arch">{linea1}</span>
+  <span
+    class="t4-l2 font-slab"
+    data-t4-slot
+    data-frases={JSON.stringify(frases)}
+    data-escalada={JSON.stringify(escalada)}
+    ><span class="t4-marca"
+      ><span class="t4-banda" aria-hidden="true"></span><span class="t4-reposo"
+        >{linea2}</span
+      ></span
+    ></span
+  >
+</h1>
+<script is:inline>
+  (() => {
+    const slot = document.querySelector("[data-t4-slot]");
+    if (!slot || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const titulo = slot.parentElement;
+    const medida = slot.previousElementSibling;
+    const banda = slot.querySelector(".t4-banda");
+    const reposo = slot.querySelector(".t4-reposo");
+    const escalada = JSON.parse(slot.dataset.escalada ?? "[]");
+    // ?lento=4 plays the whole cycle four times slower, for reviewing the easing.
+    const lento =
+      Number(new URLSearchParams(location.search).get("lento")) || 1;
+
+    // One pen stroke per chore, each a little different, in a box 0.01em per unit.
+    // The last one is the line the block grows from, so it runs nearly straight.
+    const RAYAS = [
+      "M6 25C240 23.5 520 22 760 19.6S960 16 1004 15.4",
+      "M6 17.5C220 21.5 620 23.5 1004 19",
+      "M6 28C300 25 700 17 1004 12",
+      "M6 21.5C330 20.5 690 22 960 19.6 980 19.4 996 20.8 1004 23",
+      "M6 15C260 18 640 22.5 1004 24.5",
+      "M6 25.4C340 23.2 670 20.9 1004 18.6",
+    ];
+    // The last stroke, in em from the top of the line: centre, thickness, overhang past the words, tilt.
+    const LINEA = { centro: 0.55, grosor: 0.085, sobra: 0.2, giro: -0.39 };
+    // Per chore, from its onset (ms): rise, word stagger, strike start and length, exit start and length.
+    // The montage speeds up: the first one is read, the last ones flash past.
+    const GUION = [
+      {
+        sube: 520,
+        escalon: 55,
+        tacha: 820,
+        traza: 300,
+        sale: 1200,
+        salida: 240,
+      },
+      {
+        sube: 440,
+        escalon: 40,
+        tacha: 460,
+        traza: 250,
+        sale: 740,
+        salida: 210,
+      },
+      {
+        sube: 380,
+        escalon: 32,
+        tacha: 360,
+        traza: 210,
+        sale: 600,
+        salida: 180,
+      },
+      {
+        sube: 330,
+        escalon: 26,
+        tacha: 300,
+        traza: 180,
+        sale: 510,
+        salida: 165,
+      },
+      {
+        sube: 290,
+        escalon: 20,
+        tacha: 230,
+        traza: 160,
+        sale: 420,
+        salida: 155,
+      },
+      { sube: 270, escalon: 16, tacha: 210, traza: 170, sale: 0, salida: 0 },
+    ];
+    // The next chore starts rising when the previous one is three quarters of the way out.
+    const RELEVO = 0.75;
+    // The chore that gets worse on screen: its word rolls to the next one twice, each roll quicker,
+    // and the chore stays that much longer before the pen gets to it. The two words of a roll move
+    // as one strip, like a counter, while the line condenses to keep its width.
+    const ESCALADA = {
+      giros: [520, 1000],
+      gira: [320, 260],
+      dura: 1100,
+    };
+    // The bridge: the last stroke rests, swells into the marker block, then the word is written on it.
+    const PUENTE = {
+      reposa: 70,
+      engorda: 380,
+      tine: 240,
+      apaga: 90,
+      escribe: 280,
+      escritura: 420,
+    };
+    const PRELUDIO = { borra: 200, adelgaza: 240, apaga: 80 };
+
+    const PLUMA = [0.45, 0, 0.15, 1];
+    const CURVAS = {
+      sube: "cubic-bezier(0.22, 1, 0.36, 1)",
+      sale: "cubic-bezier(0.32, 0, 0.67, 0)",
+      apaga: "cubic-bezier(0.3, 0, 0.6, 1)",
+      pluma: `cubic-bezier(${PLUMA})`,
+      gira: "cubic-bezier(0.6, 0, 0.2, 1)",
+      engorda: "cubic-bezier(0.16, 1, 0.3, 1)",
+      tine: "cubic-bezier(0.33, 1, 0.68, 1)",
+      escribe: "cubic-bezier(0.25, 1, 0.5, 1)",
+      borra: "cubic-bezier(0.32, 0, 0.67, 0)",
+      adelgaza: "cubic-bezier(0.5, 0, 0.75, 0)",
+    };
+    const bezier = (x1, y1, x2, y2) => {
+      const eje = (a, b, s) =>
+        3 * a * s * (1 - s) ** 2 + 3 * b * s * s * (1 - s) + s ** 3;
+      return t => {
+        let bajo = 0;
+        let alto = 1;
+        for (let k = 0; k < 22; k++) {
+          const s = (bajo + alto) / 2;
+          if (eje(x1, x2, s) < t) bajo = s;
+          else alto = s;
+        }
+        return eje(y1, y2, (bajo + alto) / 2);
+      };
+    };
+    // When the pen reaches a point of its stroke, so each word greys out as it is crossed.
+    const pluma = bezier(...PLUMA);
+    const cuandoLlega = avance => {
+      let bajo = 0;
+      let alto = 1;
+      for (let k = 0; k < 20; k++) {
+        const m = (bajo + alto) / 2;
+        if (pluma(m) < avance) bajo = m;
+        else alto = m;
+      }
+      return alto;
+    };
+
+    // The nib that writes the word: a slanted edge, the same profile as the block's chisel ends.
+    // At (0, 1) it uncovers the whole word, at (a, a) nothing.
+    const NIB = [
+      ["-0.3em", 0.14],
+      ["0.18em", 0.0782],
+      ["0.62em", -0.0466],
+      ["calc(100% + 0.3em)", -0.14],
+    ];
+    const punto = (u, [y, desvio]) =>
+      `calc(${+(u * 100).toFixed(3)}% + ${+(-0.16 + u * 0.34 + desvio).toFixed(4)}em) ${y}`;
+    const nib = (a, b) =>
+      `polygon(${[
+        ...NIB.map(n => punto(b, n)),
+        ...[...NIB].reverse().map(n => punto(a, n)),
+      ].join(", ")})`;
+    // The first word reads the same variable as the CSS, so a refit before the roll still lands.
+    const ejes = k => `"wdth" var(--t4-wdth${k ? `-${k}` : ""}), "wght" 600`;
+
+    const tramoya = document.createElement("span");
+    tramoya.className = "t4-tramoya";
+    tramoya.setAttribute("aria-hidden", "true");
+    const capas = JSON.parse(slot.dataset.frases).map((texto, i) => {
+      const capa = document.createElement("span");
+      capa.className = "t4-frase";
+      const linea = document.createElement("span");
+      linea.className = "t4-linea";
+      let rueda = null;
+      let cifras = [];
+      const palabras = texto.split(" ").map((palabra, j) => {
+        const caja = document.createElement("span");
+        caja.className = "t4-palabra";
+        if (escalada.length > 1 && palabra === escalada[0]) {
+          rueda = caja;
+          caja.classList.add("t4-rueda");
+          cifras = escalada.map((forma, k) => {
+            const cifra = document.createElement("span");
+            cifra.className = k ? "t4-cifra t4-siguiente" : "t4-cifra";
+            cifra.textContent = forma;
+            caja.append(cifra);
+            return cifra;
+          });
+        } else caja.textContent = palabra;
+        if (j) linea.append(" ");
+        linea.append(caja);
+        return caja;
+      });
+      capa.append(linea);
+      capa.insertAdjacentHTML(
+        "beforeend",
+        `<svg class="t4-raya" viewBox="0 0 1010 40" preserveAspectRatio="none"><path pathLength="1" d="${RAYAS[i % RAYAS.length]}"/></svg>`
+      );
+      tramoya.append(capa);
+      return {
+        capa,
+        linea,
+        palabras,
+        raya: capa.querySelector("path"),
+        rueda,
+        cifras,
+      };
+    });
+    slot.append(tramoya);
+
+    // Every chore is set to the width of «SE ARREGLA» through the width axis, at one size.
+    // The chore that gets worse gets one fit per word it rolls through, so it condenses as it grows.
+    // The fits live in custom properties the animations read, so a late font load still refits them.
+    const ajustar = () => {
+      const objetivo = medida.getBoundingClientRect().width;
+      for (const { capa, linea, rueda, cifras } of capas) {
+        capa.style.setProperty("--t4-ajuste", "1");
+        const medir = wdth => {
+          capa.style.setProperty("--t4-wdth", String(wdth));
+          const ventana = rueda ? rueda.getBoundingClientRect().width : 0;
+          return {
+            resto: linea.getBoundingClientRect().width - ventana,
+            formas: cifras.map(c => c.getBoundingClientRect().width),
+          };
+        };
+        const angosto = medir(62);
+        const ancho = medir(100);
+        const tamano = parseFloat(getComputedStyle(linea).fontSize);
+        const etapas = (cifras.length ? cifras : [null]).map((_, k) => {
+          const a = angosto.formas[k] ?? 0;
+          const b = ancho.formas[k] ?? 0;
+          const desde = angosto.resto + a;
+          const hasta = ancho.resto + b;
+          const f = Math.min(
+            1,
+            Math.max(0, (objetivo - desde) / (hasta - desde))
+          );
+          return { wdth: 62 + 38 * f, ancho: (a + f * (b - a)) / tamano };
+        });
+        etapas.forEach(({ wdth, ancho }, k) => {
+          capa.style.setProperty(`--t4-wdth-${k}`, wdth.toFixed(2));
+          capa.style.setProperty(`--t4-ancho-${k}`, `${ancho.toFixed(4)}em`);
+        });
+        capa.style.setProperty("--t4-wdth", etapas[0].wdth.toFixed(2));
+        if (rueda) rueda.style.width = "var(--t4-ancho-0)";
+        const ajuste = objetivo / linea.getBoundingClientRect().width;
+        capa.style.setProperty(
+          "--t4-ajuste",
+          Math.min(1.04, ajuste).toFixed(4)
+        );
+      }
+    };
+    const observador = new ResizeObserver(ajustar);
+    observador.observe(medida);
+    document.fonts?.ready.then(ajustar);
+
+    // Word centres as the pen finds them: for the chore that gets worse, on its last word.
+    const centros = ({ capa, palabras, rueda, cifras }, em) => {
+      const ultima = cifras.length - 1;
+      if (rueda) {
+        capa.style.setProperty("--t4-wdth", `var(--t4-wdth-${ultima})`);
+        rueda.style.width = `var(--t4-ancho-${ultima})`;
+      }
+      const lista = palabras.map(
+        p => p.offsetLeft + p.offsetWidth * 0.4 + 0.12 * em
+      );
+      if (rueda) {
+        capa.style.setProperty("--t4-wdth", "var(--t4-wdth-0)");
+        rueda.style.width = "var(--t4-ancho-0)";
+      }
+      return lista;
+    };
+
+    const estilo = getComputedStyle(slot);
+    const color = nombre => estilo.getPropertyValue(nombre).trim();
+    const vivo = color("--t4-vivo");
+    const muerto = color("--t4-muerto");
+    const tinta = color("--t4-tinta");
+    const pluma3 = color("--t4-pluma");
+
+    // The block squeezed onto the last pen stroke: same centre, thickness, length and tilt.
+    const enLinea = em => {
+      const alto = banda.offsetHeight / em;
+      const ancho = banda.offsetWidth / em;
+      const largo = reposo.offsetWidth / em + LINEA.sobra;
+      const centro = banda.offsetTop / em + alto / 2;
+      return `translateY(${(LINEA.centro - centro).toFixed(3)}em) rotate(${LINEA.giro}deg) scale(${(largo / ancho).toFixed(4)}, ${(LINEA.grosor / alto).toFixed(4)})`;
+    };
+    const enReposo = "translateY(0em) rotate(-0.6deg) scale(1, 1)";
+
+    let corriendo = false;
+    const correr = repeticion => {
+      ajustar();
+      const pistas = [];
+      const pista = (el, propiedad, claves) =>
+        pistas.push({ el, propiedad, claves });
+      const em = parseFloat(estilo.fontSize);
+      const linea = enLinea(em);
+      const previo = PRELUDIO.borra + PRELUDIO.adelgaza - 120;
+      let inicio = repeticion ? previo : 0;
+
+      // A replay first takes the resting block back: the word is wiped, the block thins to a line.
+      if (repeticion) {
+        const adelgaza = 60 + PRELUDIO.adelgaza;
+        pista(reposo, "clipPath", [
+          [0, nib(0, 1), CURVAS.borra],
+          [PRELUDIO.borra, nib(1, 1)],
+          [PRELUDIO.borra, nib(0, 0)],
+        ]);
+        pista(banda, "transform", [
+          [60, enReposo, CURVAS.adelgaza],
+          [adelgaza, linea],
+        ]);
+        pista(banda, "backgroundColor", [
+          [60, tinta, "ease-in"],
+          [adelgaza, pluma3],
+        ]);
+        pista(banda, "opacity", [
+          [adelgaza, "1"],
+          [adelgaza + PRELUDIO.apaga, "0"],
+        ]);
+      }
+
+      let golpe = 0;
+      for (const [i, entrada] of capas.entries()) {
+        const { capa, linea: renglon, palabras, raya, rueda, cifras } = entrada;
+        // On a replay the first chore was already read: it runs at the second one's pace.
+        const base =
+          GUION[Math.min(repeticion ? Math.max(i, 1) : i, GUION.length - 1)];
+        const extra = rueda ? ESCALADA.dura : 0;
+        const g = {
+          ...base,
+          tacha: base.tacha + extra,
+          sale: base.sale + extra,
+        };
+        const ultima = i === capas.length - 1;
+        const trazada = inicio + g.tacha + g.traza;
+        golpe = trazada + PUENTE.reposa;
+        const salida = ultima
+          ? golpe + PUENTE.apaga
+          : inicio + g.sale + g.salida;
+        pista(capa, "visibility", [
+          [inicio - 1, "hidden"],
+          [inicio, "visible"],
+          [salida, "visible"],
+          [salida + 1, "hidden"],
+        ]);
+        if (ultima) {
+          // Soaks into the block as it swells over it.
+          pista(capa, "opacity", [
+            [golpe, "1"],
+            [salida, "0"],
+          ]);
+        } else {
+          pista(capa, "transform", [
+            [inicio + g.sale, "translateY(0)", CURVAS.sale],
+            [salida, "translateY(-1.2em)"],
+          ]);
+          // Gone before its strike reaches the first line, which would read as underlining it.
+          pista(capa, "opacity", [
+            [inicio + g.sale + g.salida * 0.4, "1", CURVAS.apaga],
+            [salida, "0"],
+          ]);
+        }
+        if (rueda)
+          ESCALADA.giros.forEach((desde, k) => {
+            if (!cifras[k + 1]) return;
+            const gira = inicio + desde;
+            const para = gira + ESCALADA.gira[k];
+            pista(cifras[k], "transform", [
+              [gira, "translateY(0em)", CURVAS.gira],
+              [para, "translateY(-1.15em)"],
+            ]);
+            pista(cifras[k + 1], "transform", [
+              [gira, "translateY(1.15em)", CURVAS.gira],
+              [para, "translateY(0em)"],
+            ]);
+            // The window and the condensing track the strip, so no gap opens beside the old word.
+            pista(rueda, "width", [
+              [gira, `var(--t4-ancho-${k})`, CURVAS.gira],
+              [para, `var(--t4-ancho-${k + 1})`],
+            ]);
+            pista(renglon, "fontVariationSettings", [
+              [gira, ejes(k), CURVAS.gira],
+              [para, ejes(k + 1)],
+            ]);
+          });
+        const ancho = capa.offsetWidth + 0.24 * em;
+        const lista = centros(entrada, em);
+        for (const [j, palabra] of palabras.entries()) {
+          const t = inicio + j * g.escalon;
+          pista(palabra, "transform", [
+            [t, "translateY(1.3em)", CURVAS.sube],
+            [t + g.sube, "translateY(0)"],
+          ]);
+          const tocada =
+            inicio + g.tacha + g.traza * cuandoLlega(lista[j] / ancho);
+          pista(palabra, "color", [
+            [tocada, vivo, "ease-out"],
+            [tocada + 90, muerto],
+          ]);
+        }
+        pista(raya, "strokeDashoffset", [
+          [inicio + g.tacha, "1.02", CURVAS.pluma],
+          [trazada, "0"],
+        ]);
+        // The last stroke hands over to the block on this frame.
+        if (ultima)
+          pista(raya, "visibility", [
+            [golpe, "visible"],
+            [golpe + 1, "hidden"],
+          ]);
+        inicio += g.sale + g.salida * RELEVO;
+      }
+
+      const escribe = golpe + PUENTE.escribe;
+      const total = escribe + PUENTE.escritura;
+      pista(banda, "opacity", [
+        ...(repeticion ? [[previo, "0"]] : []),
+        [golpe - 1, "0"],
+        [golpe, "1"],
+      ]);
+      pista(banda, "transform", [
+        ...(repeticion ? [[previo, linea]] : []),
+        [golpe, linea, CURVAS.engorda],
+        [golpe + PUENTE.engorda, enReposo],
+      ]);
+      pista(banda, "backgroundColor", [
+        ...(repeticion ? [[previo, pluma3]] : []),
+        [golpe, pluma3, CURVAS.tine],
+        [golpe + PUENTE.tine, tinta],
+      ]);
+      pista(reposo, "clipPath", [
+        ...(repeticion ? [[PRELUDIO.borra, nib(0, 0)]] : []),
+        [escribe, nib(0, 0), CURVAS.escribe],
+        [total, nib(0, 1)],
+      ]);
+
+      // Several tracks may animate one property of one element: merge them in time order.
+      const porPropiedad = new Map();
+      for (const { el, propiedad, claves } of pistas) {
+        const llave = [...porPropiedad.keys()].find(
+          ([e, p]) => e === el && p === propiedad
+        );
+        if (llave) porPropiedad.get(llave).push(...claves);
+        else porPropiedad.set([el, propiedad], [...claves]);
+      }
+      const animaciones = [...porPropiedad].map(([[el, propiedad], claves]) => {
+        claves.sort((a, b) => a[0] - b[0]);
+        const cuadros = claves.map(([ms, valor, curva]) => ({
+          offset: Math.min(1, Math.max(0, ms / total)),
+          [propiedad]: valor,
+          easing: curva ?? "linear",
+        }));
+        if (cuadros[0].offset > 0)
+          cuadros.unshift({ ...cuadros[0], offset: 0, easing: "linear" });
+        if (cuadros.at(-1).offset < 1)
+          cuadros.push({ ...cuadros.at(-1), offset: 1 });
+        return el.animate(cuadros, { duration: total * lento, fill: "both" });
+      });
+      corriendo = true;
+      slot.dataset.t4Estado = "corre";
+      // Cancelling at the end hands the rest state back to the CSS. An animation cancelled
+      // from outside rejects `finished`; the cycle simply ends there.
+      Promise.all(animaciones.map(a => a.finished))
+        .then(() => animaciones.forEach(a => a.cancel()))
+        .catch(() => animaciones.forEach(a => a.cancel()))
+        .finally(() => {
+          corriendo = false;
+          delete slot.dataset.t4Estado;
+        });
+    };
+
+    if (document.visibilityState === "visible") correr(false);
+    else
+      document.addEventListener("visibilitychange", () => correr(false), {
+        once: true,
+      });
+    titulo.addEventListener("pointerenter", e => {
+      if (e.pointerType === "mouse" && !corriendo) correr(true);
+    });
+  })();
+</script>

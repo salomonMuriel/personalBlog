@@ -159,11 +159,7 @@ const verificacionGoogle = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
 
     <div id="tope" class="absolute left-0 top-0 h-px w-px" aria-hidden="true">
     </div>
-    <SiteNav
-      lang={lang}
-      home={navHome ?? routes.home[lang]}
-      sinFilaMovil={enfoque}
-    />
+    <SiteNav lang={lang} home={navHome ?? routes.home[lang]} />
 
     <main id="arriba">
       <slot />

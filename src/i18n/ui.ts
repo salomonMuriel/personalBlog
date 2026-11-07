@@ -27,6 +27,8 @@ export const ui = {
     "nav.ahora": "Ahora",
     "nav.escribirme": "Escribirme",
     "nav.paginas": "Páginas",
+    "nav.menu": "Menú",
+    "nav.cerrar": "Cerrar el menú",
     "nav.saltar": "Saltar al contenido",
     "nav.volver": "Volver al inicio",
 
@@ -66,6 +68,8 @@ export const ui = {
     "nav.ahora": "Now",
     "nav.escribirme": "Message me",
     "nav.paginas": "Pages",
+    "nav.menu": "Menu",
+    "nav.cerrar": "Close the menu",
     "nav.saltar": "Skip to content",
     "nav.volver": "Back home",
 
