@@ -14,7 +14,7 @@ type CopiaHeroA3 = {
 
 export const heroA3: Record<Lang, CopiaHeroA3> = {
   es: {
-    icp: "Para PYMEs que funcionan a punta de Excel y WhatsApp.",
+    icp: "Para PYMEs que funcionan a punta de Excel, papel y WhatsApp.",
     bajadaCorta: "Le construyo a tu empresa su sistema operativo.",
     waCorto: "WhatsApp",
     marcada: "la tuya",
@@ -24,7 +24,7 @@ export const heroA3: Record<Lang, CopiaHeroA3> = {
     pausar: "Pausar las pantallas",
   },
   en: {
-    icp: "For small businesses that still run on Excel and WhatsApp.",
+    icp: "For small businesses that still run on Excel, paper and WhatsApp.",
     bajadaCorta: "I build your company its operating system.",
     waCorto: "WhatsApp",
     marcada: "yours",

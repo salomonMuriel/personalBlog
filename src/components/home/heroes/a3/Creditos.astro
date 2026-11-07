@@ -11,12 +11,10 @@ const dicc = copia(lang).hero.dicc;
 const t = heroA3[lang];
 const [primera, segunda, ultima] = dicc.acepciones;
 
-const ultimaMarcada = ultima
-  .replace(t.marcada, `<mark class="marca">${t.marcada}</mark>`)
-  .replace(
-    t.tachada,
-    `<span class="tachon"><s>${t.tachada}</s><span class="correccion font-pen" aria-hidden="true">${t.correccion}</span></span>`
-  );
+const ultimaMarcada = ultima.replace(
+  t.marcada,
+  `<mark class="marca">${t.marcada}</mark>`
+);
 ---
 
 <div class="a3c">

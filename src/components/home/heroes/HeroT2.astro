@@ -17,12 +17,10 @@ const cta = copia(lang).cta;
 const [primera, segunda, tercera] = c.dicc.acepciones;
 const frases = palabras[lang];
 
-const terceraMarcada = tercera
-  .replace(heroA1.marcada, `<mark class="marca">${heroA1.marcada}</mark>`)
-  .replace(
-    heroA1.tachada,
-    `<span class="tachon"><s>${heroA1.tachada}</s><span class="correccion font-pen" aria-hidden="true">${heroA1.correccion}</span></span>`
-  );
+const terceraMarcada = tercera.replace(
+  heroA1.marcada,
+  `<mark class="marca">${heroA1.marcada}</mark>`
+);
 ---
 
 <section class="cartel" aria-labelledby="cartel-titulo">

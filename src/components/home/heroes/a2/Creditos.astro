@@ -11,12 +11,10 @@ const { palabra, categoria, acepciones, marcada, tachada, correccion } =
   Astro.props;
 const [primera, segunda, ultima] = acepciones;
 
-const ultimaMarcada = ultima
-  .replace(marcada, `<mark class="marca">${marcada}</mark>`)
-  .replace(
-    tachada,
-    `<span class="tachon"><s>${tachada}</s><span class="correccion font-pen" aria-hidden="true">${correccion}</span></span>`
-  );
+const ultimaMarcada = ultima.replace(
+  marcada,
+  `<mark class="marca">${marcada}</mark>`
+);
 ---
 
 <div class="creditos">
