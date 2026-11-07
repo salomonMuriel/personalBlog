@@ -216,7 +216,7 @@ export const es = {
         cuando: "Semana 1",
         titulo: "Te entrevisto",
         texto:
-          "El primer día hablamos de tu negocio para entender cómo se hace el trabajo. Si hace falta, hacemos otra entrevista esa misma semana.",
+          "La primera semana me siento contigo para entender tus procesos de pe a pa.",
       },
       {
         cuando: "Semana 3",

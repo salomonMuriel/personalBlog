@@ -217,7 +217,7 @@ export const en = {
         cuando: "Week 1",
         titulo: "I interview you",
         texto:
-          "On day one we talk about your business so I understand how the work gets done. If needed, we do another interview that same week.",
+          "In the first week I sit down with you to understand your processes from start to finish.",
       },
       {
         cuando: "Week 3",
