@@ -42,9 +42,11 @@
     line-height: 0.95;
     text-transform: uppercase;
   }
-  /* «The fake-automated» is longer than «Lo chinomático»: keep it inside the column. */
-  #cartel-titulo:lang(en) .titular-l2 {
-    font-size: calc(var(--l1) * 0.35);
+  /* «The chinomático» runs a little longer than «Lo chinomático» on phones. */
+  @media (max-width: 1023px) {
+    #cartel-titulo:lang(en) .titular-l2 {
+      font-size: calc(var(--l1) * 0.42);
+    }
   }
   /* The block and the word on it share one clip: the chisel ends of the nib. */
   #cartel-titulo .titular-marca {

@@ -2,7 +2,7 @@ import type { Columna, Falla, Nodo, Sistema } from "./tipos";
 
 export const en = {
   meta: {
-    title: "Fixing the fake-automated · Salomón Muriel, Bogotá",
+    title: "Let's fix the chinomático · Salomón Muriel, Bogotá",
     description:
       "I build your company its operating system: the software that replaces the spreadsheets that don't match and the copying and pasting, made to fit how you already work. Bogotá.",
   },
@@ -12,12 +12,12 @@ export const en = {
     cuestionarioNota: "",
     wa: "Message me on WhatsApp",
     waTexto:
-      "Hi Salomón, my name is ______ and I run a ______ business. I want to fix what's fake-automated in it.",
+      "Hi Salomón, my name is ______ and I run a ______ business. I want to fix what's chinomático in it.",
   },
 
   hero: {
-    linea1: "We fix",
-    linea2: "The fake-automated",
+    linea1: "Let's fix",
+    linea2: "The chinomático",
     icp: "For small businesses that still run on Excel, paper and WhatsApp.",
     bajada:
       "I build your company its operating system: the software that replaces the spreadsheets that don't match and the copying and pasting, made to fit how you already work.",
