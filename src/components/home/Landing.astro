@@ -1,10 +1,8 @@
 ---
 import Hero from "@components/home/Hero.astro";
-import { cargarHero, type Variante } from "@components/home/heroes";
 import Clientes from "@components/home/Clientes.astro";
 import Danos from "@components/home/Danos.astro";
 import DiagramaCajitas from "@components/home/DiagramaCajitas.astro";
-import Sistemas from "@components/home/Sistemas.astro";
 import SistemasTriptico from "@components/home/SistemasTriptico.astro";
 import BandaEjecucion from "@components/home/BandaEjecucion.astro";
 import PorQue from "@components/home/PorQue.astro";
@@ -19,11 +17,8 @@ import type { Lang } from "@i18n/ui";
 
 interface Props {
   lang: Lang;
-  hero?: Variante;
-  vitrina?: "galerias" | "triptico";
 }
-const { lang, hero, vitrina = "galerias" } = Astro.props;
-const HeroElegido = hero ? await cargarHero(hero) : Hero;
+const { lang } = Astro.props;
 const preguntas = lang === "es" ? preguntasEs : preguntasEn;
 
 // Off until each client approves showing their screens. The dark band goes
@@ -31,18 +26,11 @@ const preguntas = lang === "es" ? preguntasEs : preguntasEn;
 const mostrarSistemas = false;
 ---
 
-<HeroElegido lang={lang} />
+<Hero lang={lang} />
 <Clientes lang={lang} />
 <Danos lang={lang} />
 <DiagramaCajitas lang={lang} />
-{
-  mostrarSistemas &&
-    (vitrina === "triptico" ? (
-      <SistemasTriptico lang={lang} />
-    ) : (
-      <Sistemas lang={lang} />
-    ))
-}
+{mostrarSistemas && <SistemasTriptico lang={lang} />}
 {mostrarSistemas && <BandaEjecucion lang={lang} />}
 <PorQue lang={lang} />
 <Programa lang={lang} />

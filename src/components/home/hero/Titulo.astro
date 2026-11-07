@@ -12,32 +12,29 @@ const { id, linea1, linea2, frases, escalada } = Astro.props;
 ---
 
 <Estilo />
-<h1 {id} class="t4-titulo" data-mide="h1">
-  <span class="t4-l1 font-arch">{linea1}</span>
+<h1 {id} class="titular-titulo" data-mide="h1">
+  <span class="titular-l1 font-arch">{linea1}</span>
   <span
-    class="t4-l2 font-slab"
-    data-t4-slot
+    class="titular-l2 font-slab"
+    data-titular-slot
     data-frases={JSON.stringify(frases)}
     data-escalada={JSON.stringify(escalada)}
-    ><span class="t4-marca"
-      ><span class="t4-banda" aria-hidden="true"></span><span class="t4-reposo"
-        >{linea2}</span
+    ><span class="titular-marca"
+      ><span class="titular-banda" aria-hidden="true"></span><span
+        class="titular-reposo">{linea2}</span
       ></span
     ></span
   >
 </h1>
 <script is:inline>
   (() => {
-    const slot = document.querySelector("[data-t4-slot]");
+    const slot = document.querySelector("[data-titular-slot]");
     if (!slot || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const titulo = slot.parentElement;
     const medida = slot.previousElementSibling;
-    const banda = slot.querySelector(".t4-banda");
-    const reposo = slot.querySelector(".t4-reposo");
+    const banda = slot.querySelector(".titular-banda");
+    const reposo = slot.querySelector(".titular-reposo");
     const escalada = JSON.parse(slot.dataset.escalada ?? "[]");
-    // ?lento=4 plays the whole cycle four times slower, for reviewing the easing.
-    const lento =
-      Number(new URLSearchParams(location.search).get("lento")) || 1;
 
     // One pen stroke per chore, each a little different, in a box 0.01em per unit.
     // The last one is the line the block grows from, so it runs nearly straight.
@@ -173,27 +170,30 @@ const { id, linea1, linea2, frases, escalada } = Astro.props;
         ...[...NIB].reverse().map(n => punto(a, n)),
       ].join(", ")})`;
     // The first word reads the same variable as the CSS, so a refit before the roll still lands.
-    const ejes = k => `"wdth" var(--t4-wdth${k ? `-${k}` : ""}), "wght" 600`;
+    const ejes = k =>
+      `"wdth" var(--titular-wdth${k ? `-${k}` : ""}), "wght" 600`;
 
     const tramoya = document.createElement("span");
-    tramoya.className = "t4-tramoya";
+    tramoya.className = "titular-tramoya";
     tramoya.setAttribute("aria-hidden", "true");
     const capas = JSON.parse(slot.dataset.frases).map((texto, i) => {
       const capa = document.createElement("span");
-      capa.className = "t4-frase";
+      capa.className = "titular-frase";
       const linea = document.createElement("span");
-      linea.className = "t4-linea";
+      linea.className = "titular-linea";
       let rueda = null;
       let cifras = [];
       const palabras = texto.split(" ").map((palabra, j) => {
         const caja = document.createElement("span");
-        caja.className = "t4-palabra";
+        caja.className = "titular-palabra";
         if (escalada.length > 1 && palabra === escalada[0]) {
           rueda = caja;
-          caja.classList.add("t4-rueda");
+          caja.classList.add("titular-rueda");
           cifras = escalada.map((forma, k) => {
             const cifra = document.createElement("span");
-            cifra.className = k ? "t4-cifra t4-siguiente" : "t4-cifra";
+            cifra.className = k
+              ? "titular-cifra titular-siguiente"
+              : "titular-cifra";
             cifra.textContent = forma;
             caja.append(cifra);
             return cifra;
@@ -206,7 +206,7 @@ const { id, linea1, linea2, frases, escalada } = Astro.props;
       capa.append(linea);
       capa.insertAdjacentHTML(
         "beforeend",
-        `<svg class="t4-raya" viewBox="0 0 1010 40" preserveAspectRatio="none"><path pathLength="1" d="${RAYAS[i % RAYAS.length]}"/></svg>`
+        `<svg class="titular-raya" viewBox="0 0 1010 40" preserveAspectRatio="none"><path pathLength="1" d="${RAYAS[i % RAYAS.length]}"/></svg>`
       );
       tramoya.append(capa);
       return {
@@ -226,9 +226,9 @@ const { id, linea1, linea2, frases, escalada } = Astro.props;
     const ajustar = () => {
       const objetivo = medida.getBoundingClientRect().width;
       for (const { capa, linea, rueda, cifras } of capas) {
-        capa.style.setProperty("--t4-ajuste", "1");
+        capa.style.setProperty("--titular-ajuste", "1");
         const medir = wdth => {
-          capa.style.setProperty("--t4-wdth", String(wdth));
+          capa.style.setProperty("--titular-wdth", String(wdth));
           const ventana = rueda ? rueda.getBoundingClientRect().width : 0;
           return {
             resto: linea.getBoundingClientRect().width - ventana,
@@ -250,14 +250,17 @@ const { id, linea1, linea2, frases, escalada } = Astro.props;
           return { wdth: 62 + 38 * f, ancho: (a + f * (b - a)) / tamano };
         });
         etapas.forEach(({ wdth, ancho }, k) => {
-          capa.style.setProperty(`--t4-wdth-${k}`, wdth.toFixed(2));
-          capa.style.setProperty(`--t4-ancho-${k}`, `${ancho.toFixed(4)}em`);
+          capa.style.setProperty(`--titular-wdth-${k}`, wdth.toFixed(2));
+          capa.style.setProperty(
+            `--titular-ancho-${k}`,
+            `${ancho.toFixed(4)}em`
+          );
         });
-        capa.style.setProperty("--t4-wdth", etapas[0].wdth.toFixed(2));
-        if (rueda) rueda.style.width = "var(--t4-ancho-0)";
+        capa.style.setProperty("--titular-wdth", etapas[0].wdth.toFixed(2));
+        if (rueda) rueda.style.width = "var(--titular-ancho-0)";
         const ajuste = objetivo / linea.getBoundingClientRect().width;
         capa.style.setProperty(
-          "--t4-ajuste",
+          "--titular-ajuste",
           Math.min(1.04, ajuste).toFixed(4)
         );
       }
@@ -270,25 +273,28 @@ const { id, linea1, linea2, frases, escalada } = Astro.props;
     const centros = ({ capa, palabras, rueda, cifras }, em) => {
       const ultima = cifras.length - 1;
       if (rueda) {
-        capa.style.setProperty("--t4-wdth", `var(--t4-wdth-${ultima})`);
-        rueda.style.width = `var(--t4-ancho-${ultima})`;
+        capa.style.setProperty(
+          "--titular-wdth",
+          `var(--titular-wdth-${ultima})`
+        );
+        rueda.style.width = `var(--titular-ancho-${ultima})`;
       }
       const lista = palabras.map(
         p => p.offsetLeft + p.offsetWidth * 0.4 + 0.12 * em
       );
       if (rueda) {
-        capa.style.setProperty("--t4-wdth", "var(--t4-wdth-0)");
-        rueda.style.width = "var(--t4-ancho-0)";
+        capa.style.setProperty("--titular-wdth", "var(--titular-wdth-0)");
+        rueda.style.width = "var(--titular-ancho-0)";
       }
       return lista;
     };
 
     const estilo = getComputedStyle(slot);
     const color = nombre => estilo.getPropertyValue(nombre).trim();
-    const vivo = color("--t4-vivo");
-    const muerto = color("--t4-muerto");
-    const tinta = color("--t4-tinta");
-    const pluma3 = color("--t4-pluma");
+    const vivo = color("--titular-vivo");
+    const muerto = color("--titular-muerto");
+    const tinta = color("--titular-tinta");
+    const pluma3 = color("--titular-pluma");
 
     // The block squeezed onto the last pen stroke: same centre, thickness, length and tilt.
     const enLinea = em => {
@@ -389,8 +395,8 @@ const { id, linea1, linea2, frases, escalada } = Astro.props;
             ]);
             // The window and the condensing track the strip, so no gap opens beside the old word.
             pista(rueda, "width", [
-              [gira, `var(--t4-ancho-${k})`, CURVAS.gira],
-              [para, `var(--t4-ancho-${k + 1})`],
+              [gira, `var(--titular-ancho-${k})`, CURVAS.gira],
+              [para, `var(--titular-ancho-${k + 1})`],
             ]);
             pista(renglon, "fontVariationSettings", [
               [gira, ejes(k), CURVAS.gira],
@@ -468,10 +474,10 @@ const { id, linea1, linea2, frases, escalada } = Astro.props;
           cuadros.unshift({ ...cuadros[0], offset: 0, easing: "linear" });
         if (cuadros.at(-1).offset < 1)
           cuadros.push({ ...cuadros.at(-1), offset: 1 });
-        return el.animate(cuadros, { duration: total * lento, fill: "both" });
+        return el.animate(cuadros, { duration: total, fill: "both" });
       });
       corriendo = true;
-      slot.dataset.t4Estado = "corre";
+      slot.dataset.titularEstado = "corre";
       // Cancelling at the end hands the rest state back to the CSS. An animation cancelled
       // from outside rejects `finished`; the cycle simply ends there.
       Promise.all(animaciones.map(a => a.finished))
@@ -479,7 +485,7 @@ const { id, linea1, linea2, frases, escalada } = Astro.props;
         .catch(() => animaciones.forEach(a => a.cancel()))
         .finally(() => {
           corriendo = false;
-          delete slot.dataset.t4Estado;
+          delete slot.dataset.titularEstado;
         });
     };
 

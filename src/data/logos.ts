@@ -8,7 +8,6 @@ import alianzaEducativa from "@assets/logos/alianza-educativa.png";
 import visionamos from "@assets/logos/visionamos.png";
 import cosinte from "@assets/logos/cosinte.png";
 import visible from "@assets/logos/visible.png";
-import entreHilos from "@assets/logos/entre-hilos.png";
 import bision from "@assets/logos/bision.png";
 import guiacolegio from "@assets/logos/guiacolegio.png";
 import jda from "@assets/logos/jda.png";
@@ -50,7 +49,6 @@ export const clientes: Logo[] = [
   { nombre: "Finco", logo: finco, rotulo: true },
   { nombre: "Cosinte Ltda.", logo: cosinte, escala: 0.66 },
   { nombre: "Visible", logo: visible, escala: 0.8 },
-  { nombre: "Entre Hilos", logo: entreHilos, escala: 1.15 },
   { nombre: "PrestaGente", logo: prestagente, escala: 1.35 },
   { nombre: "Bision Consulting", logo: bision, escala: 1 },
   { nombre: "GuiaColegio.com", logo: guiacolegio, escala: 1.25 },

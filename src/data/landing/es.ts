@@ -18,9 +18,23 @@ export const es = {
   hero: {
     linea1: "Se arregla",
     linea2: "Lo chinomático",
-    manuscrita: "voy cajita por cajita, desde la que más duele",
+    icp: "Para PYMEs que funcionan a punta de Excel, papel y WhatsApp.",
     bajada:
       "Le construyo a tu empresa su sistema operativo: el software que reemplaza los Excel que no cuadran y el copiar y pegar, hecho a la medida de cómo ya trabajan.",
+    bajadaCorta: "Le construyo a tu empresa su sistema operativo.",
+    // The h1's second line cycles through these, then rests on linea2. Singular
+    // nouns after «Se arregla», short: the poster fits each to the line width.
+    frases: [
+      "el cuaderno de pedidos",
+      "la cotización en Word",
+      "la planilla en papel",
+      "la doble digitación",
+      "el reporte del lunes",
+      "el pantallazo del pago",
+    ],
+    // The phrase holding escalada[0] rolls that word through the rest.
+    escalada: ["doble", "triple", "cuádruple"],
+    waCorto: "WhatsApp",
     dicc: {
       palabra: "chi·no·má·ti·co, ca",
       categoria: "adj.",
@@ -30,13 +44,9 @@ export const es = {
         "Dicho de una empresa: la tuya, probablemente.",
       ],
     },
-    especificacion: "Para empresas de 5 a 40 personas que ya venden",
+    marcada: "la tuya",
     fichaAlt:
-      "Retrato de Salomón Muriel, de abrigo verde y brazos cruzados, sobre fondo oscuro",
-    ficha: [
-      ["Dónde", "Bogotá", false],
-      ["Empresas propias", "Cinco, dos vendidas", false],
-    ] as [string, string, boolean][],
+      "Retrato de Salomón Muriel con los brazos cruzados, sobre fondo oscuro",
   },
 
   clientes: {

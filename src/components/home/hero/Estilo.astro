@@ -1,7 +1,7 @@
 <style is:inline>
   /* Inline, ahead of the title and keyed on its id, so it is in force when the title's script measures the block. */
   /* ── title: the chores get struck, the last strike swells into the marker block ── */
-  #cartel-titulo.t4-titulo {
+  #cartel-titulo.titular-titulo {
     position: relative;
     z-index: 2;
     order: 2;
@@ -12,7 +12,7 @@
     flex-direction: column;
     align-items: flex-start;
   }
-  #cartel-titulo .t4-l1 {
+  #cartel-titulo .titular-l1 {
     display: block;
     white-space: nowrap;
     font-size: var(--l1);
@@ -25,12 +25,12 @@
     letter-spacing: 0.004em;
     color: var(--papel);
   }
-  #cartel-titulo .t4-l2 {
-    --t4-vivo: #d4d1c9;
-    --t4-muerto: #64635e;
+  #cartel-titulo .titular-l2 {
+    --titular-vivo: #d4d1c9;
+    --titular-muerto: #64635e;
     /* The billing block's marker red: paper on it reads at 5.81:1. */
-    --t4-tinta: #b3251d;
-    --t4-pluma: #ea4b3e;
+    --titular-tinta: #b3251d;
+    --titular-pluma: #ea4b3e;
     position: relative;
     display: block;
     white-space: nowrap;
@@ -42,8 +42,12 @@
     line-height: 0.95;
     text-transform: uppercase;
   }
+  /* «The fake-automated» is longer than «Lo chinomático»: keep it inside the column. */
+  #cartel-titulo:lang(en) .titular-l2 {
+    font-size: calc(var(--l1) * 0.35);
+  }
   /* The block and the word on it share one clip: the chisel ends of the nib. */
-  #cartel-titulo .t4-marca {
+  #cartel-titulo .titular-marca {
     position: relative;
     z-index: 1;
     display: block;
@@ -60,24 +64,24 @@
     );
   }
   /* A solid colour cut by the marker's wobbly outline, so the swell can shift from pen red to marker red. */
-  #cartel-titulo .t4-banda {
+  #cartel-titulo .titular-banda {
     position: absolute;
     z-index: -1;
     inset: -0.2em -0.4em -0.04em -0.38em;
-    background-color: var(--t4-tinta);
+    background-color: var(--titular-tinta);
     -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 50' preserveAspectRatio='none'><path d='M0 2.4C60 .6 130 2.6 205 1.3 280 0 345 1.2 400 2.8v44.6c-65 2.2-138 .2-210 1.4-72 1.2-132-.4-190 .4Z'/></svg>")
       center / 100% 100% no-repeat;
     mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 50' preserveAspectRatio='none'><path d='M0 2.4C60 .6 130 2.6 205 1.3 280 0 345 1.2 400 2.8v44.6c-65 2.2-138 .2-210 1.4-72 1.2-132-.4-190 .4Z'/></svg>")
       center / 100% 100% no-repeat;
     transform: rotate(-0.6deg);
   }
-  #cartel-titulo .t4-reposo {
+  #cartel-titulo .titular-reposo {
     display: block;
     letter-spacing: -0.012em;
     color: var(--papel);
   }
   /* A clipped band that ends just under the first line, so a leaving chore never touches it. */
-  #cartel-titulo .t4-tramoya {
+  #cartel-titulo .titular-tramoya {
     position: absolute;
     z-index: 0;
     inset: -0.28em -0.45em -0.26em -0.3em;
@@ -92,42 +96,42 @@
     );
   }
   /* Set in the slab's line box, so every chore shares the resting words' baseline. */
-  #cartel-titulo .t4-frase {
+  #cartel-titulo .titular-frase {
     position: absolute;
     left: 0.3em;
     top: 0.28em;
     white-space: nowrap;
     visibility: hidden;
-    color: var(--t4-vivo);
+    color: var(--titular-vivo);
   }
-  #cartel-titulo .t4-linea {
+  #cartel-titulo .titular-linea {
     font-family: var(--font-arch);
-    font-size: calc(var(--t4-ajuste, 1) * 1em);
+    font-size: calc(var(--titular-ajuste, 1) * 1em);
     line-height: 0.6;
     letter-spacing: 0.01em;
     font-variation-settings:
-      "wdth" var(--t4-wdth, 62),
+      "wdth" var(--titular-wdth, 62),
       "wght" 600;
   }
-  #cartel-titulo .t4-palabra {
+  #cartel-titulo .titular-palabra {
     display: inline-block;
   }
   /* The word that gets worse: a window as wide as the current word, the next one rolls up into it. */
-  #cartel-titulo .t4-rueda {
+  #cartel-titulo .titular-rueda {
     position: relative;
     /* From just above an accented capital down to the baseline. */
     clip-path: inset(-0.33em 0 -0.08em 0);
   }
-  #cartel-titulo .t4-cifra {
+  #cartel-titulo .titular-cifra {
     display: inline-block;
   }
-  #cartel-titulo .t4-siguiente {
+  #cartel-titulo .titular-siguiente {
     position: absolute;
     top: 0;
     left: 0;
     transform: translateY(1.15em);
   }
-  #cartel-titulo .t4-raya {
+  #cartel-titulo .titular-raya {
     position: absolute;
     left: -0.12em;
     top: 0.33em;
@@ -135,7 +139,7 @@
     height: 0.4em;
     overflow: visible;
     fill: none;
-    stroke: var(--t4-pluma);
+    stroke: var(--titular-pluma);
     stroke-width: 8.5;
     stroke-linecap: round;
     stroke-dasharray: 1 2;
@@ -143,7 +147,7 @@
   }
 
   @media (min-width: 1024px) {
-    #cartel-titulo.t4-titulo {
+    #cartel-titulo.titular-titulo {
       margin-top: auto;
       padding-top: 24px;
     }

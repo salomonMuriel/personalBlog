@@ -1,5 +1,5 @@
 // Checks that every [data-mide] element of a hero sits fully inside the first screen.
-// Usage: node scripts/heroes-pliegue.mjs <base-url> <out-dir> <path> [--todas]
+// Usage: node scripts/pliegue-hero.mjs <base-url> <out-dir> [path=/] [--todas]
 // Required marks: h1, foto, acepcion-1, remate (the last sense), icp, ctas. --todas adds the soft viewports.
 import puppeteer from "puppeteer";
 import { mkdirSync } from "node:fs";

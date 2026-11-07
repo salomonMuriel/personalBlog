@@ -18,9 +18,20 @@ export const en = {
   hero: {
     linea1: "We fix",
     linea2: "The fake-automated",
-    manuscrita: "I go box by box, from the one that hurts most",
+    icp: "For small businesses that still run on Excel, paper and WhatsApp.",
     bajada:
       "I build your company its operating system: the software that replaces the spreadsheets that don't match and the copying and pasting, made to fit how you already work.",
+    bajadaCorta: "I build your company its operating system.",
+    frases: [
+      "the order notebook",
+      "the quote typed in Word",
+      "the paper form",
+      "the double data entry",
+      "the Monday report",
+      "the payment screenshot",
+    ],
+    escalada: ["double", "triple", "quadruple"],
+    waCorto: "WhatsApp",
     dicc: {
       palabra: "chi·no·má·ti·co, ca",
       categoria: "adj. · Colombian Spanish",
@@ -30,13 +41,9 @@ export const en = {
         "Said of a company: yours, probably.",
       ],
     },
-    especificacion: "For companies of 5 to 40 people that already sell",
+    marcada: "yours",
     fichaAlt:
-      "Portrait of Salomón Muriel, in a green coat with folded arms, against a dark background",
-    ficha: [
-      ["Where", "Bogotá", false],
-      ["Own companies", "Five, two sold", false],
-    ] as [string, string, boolean][],
+      "Portrait of Salomón Muriel with folded arms, against a dark background",
   },
 
   clientes: {
