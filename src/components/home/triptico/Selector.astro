@@ -1,0 +1,171 @@
+---
+import type { Sistema } from "@data/landing";
+
+interface Props {
+  items: readonly Sistema[];
+  etiqueta: string;
+}
+const { items, etiqueta } = Astro.props;
+---
+
+<div role="tablist" aria-labelledby={etiqueta} class="selector barrita">
+  {
+    items.map((it, i) => (
+      <button
+        type="button"
+        role="tab"
+        id={`pestana-${it.clave}`}
+        aria-controls={`sistema-${it.clave}`}
+        aria-selected={i === 0 ? "true" : "false"}
+        tabindex={i === 0 ? 0 : -1}
+        class="pestana"
+      >
+        <span class="pista" aria-hidden="true">
+          <span class="relleno" data-relleno />
+        </span>
+        <span class="font-arch pestana-nombre">{it.nombre}</span>
+        <span class="pestana-sector font-mono">
+          {it.sector.split(" · ")[0]}
+        </span>
+      </button>
+    ))
+  }
+</div>
+
+<style>
+  .selector {
+    --turno: 5s;
+    grid-area: lista;
+    position: relative;
+    display: flex;
+    gap: 14px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+    /* room for the focus ring inside the scroll box */
+    padding: 4px 4px 6px;
+    margin-inline: -4px;
+  }
+  .pestana {
+    position: relative;
+    flex: 0 0 auto;
+    display: grid;
+    align-content: start;
+    gap: 5px;
+    min-width: 9.5rem;
+    max-width: 13rem;
+    padding: 14px 2px 12px 0;
+    scroll-snap-align: start;
+    text-align: left;
+    color: var(--gris);
+    cursor: pointer;
+    transition: color 140ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .pestana:focus-visible {
+    outline-offset: 2px;
+  }
+  .pestana[aria-selected="true"] {
+    color: var(--tinta);
+  }
+  .pestana-nombre {
+    font-size: 1.06rem;
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.012em;
+  }
+  .pestana-sector {
+    font-size: 10.5px;
+    line-height: 1.35;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gris);
+  }
+  .pista {
+    position: absolute;
+    inset: 0 0 auto;
+    height: 2px;
+    overflow: hidden;
+    background: var(--linea);
+    transition: background-color 140ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .relleno {
+    position: absolute;
+    inset: 0;
+    background: var(--rojo2);
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  [aria-selected="true"] .relleno {
+    transform: scaleX(1);
+  }
+  /* Longhands, so the pause rules below keep their play-state. */
+  :global([data-rotando]) [aria-selected="true"] .relleno {
+    animation-name: llenar;
+    animation-duration: var(--turno);
+    animation-timing-function: linear;
+    animation-fill-mode: both;
+  }
+  :global([data-pausado]) .relleno,
+  :global([data-oculto]) .relleno,
+  :global(.tri-cuerpo:has(:focus-visible)) .relleno {
+    animation-play-state: paused;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    :global(.tri-cuerpo:hover) .relleno {
+      animation-play-state: paused;
+    }
+    .pestana:hover {
+      color: var(--tinta);
+    }
+    .pestana:hover .pista {
+      background: var(--linea2);
+    }
+  }
+  @keyframes llenar {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  @media (min-width: 768px) {
+    .selector {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: var(--hueco, 24px);
+      overflow: visible;
+      padding: 0;
+      margin-inline: 0;
+    }
+    .pestana {
+      min-width: 0;
+      max-width: none;
+    }
+  }
+
+  /* desktop: a column beside the collage */
+  @media (min-width: 1280px) {
+    .selector {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0;
+    }
+    .pestana {
+      padding: 15px 0 16px;
+    }
+    .pista {
+      height: 1px;
+    }
+    [aria-selected="true"] .pista {
+      height: 2px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pestana,
+    .pista {
+      transition: none;
+    }
+  }
+</style>

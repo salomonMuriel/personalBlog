@@ -26,7 +26,6 @@ export const en = {
       categoria: "adj. · Colombian Spanish",
       acepciones: [
         "Said of a process: it <b class='font-bold'>looks</b> automated, but there's someone doing it by hand.",
-        "Said of two systems: they don't talk to each other, and someone glues them together by copying and pasting.",
         "Said of a program: the very expensive one nobody opens any more.",
         "Said of a company: yours, probably.",
       ],

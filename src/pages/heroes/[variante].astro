@@ -1,7 +1,7 @@
 ---
 import Layout from "@layouts/Layout.astro";
 import Landing from "@components/home/Landing.astro";
-import { variantes, type Variante } from "@components/home/heroes";
+import { conTriptico, variantes, type Variante } from "@components/home/heroes";
 import { copia } from "@data/landing";
 
 export const prerender = true;
@@ -21,5 +21,9 @@ const c = copia("es").meta;
   navHome="#arriba"
   noindex
 >
-  <Landing lang="es" hero={variante} />
+  <Landing
+    lang="es"
+    hero={variante}
+    vitrina={conTriptico.includes(variante) ? "triptico" : "galerias"}
+  />
 </Layout>

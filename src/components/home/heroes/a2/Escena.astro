@@ -1,0 +1,181 @@
+---
+import { Image } from "astro:assets";
+import { heroA2 } from "@data/heroes/a2";
+import type { Lang } from "@i18n/ui";
+import retrato from "@assets/heroes/a2/salo-recorte.webp";
+import Pantallas from "./Pantallas.astro";
+import Pausa from "./Pausa.astro";
+
+interface Props {
+  lang: Lang;
+  alt: string;
+}
+const { lang, alt } = Astro.props;
+---
+
+<div
+  class="escena"
+  data-mide="foto"
+  data-a2-escena
+  role="group"
+  aria-label={heroA2.pantallas}
+>
+  <div class="marco">
+    <Pantallas {lang} />
+    <Image
+      class="retrato"
+      src={retrato}
+      widths={[480, 667]}
+      sizes="(min-width: 1024px) 667px, 110vw"
+      {alt}
+      loading="eager"
+      fetchpriority="high"
+    />
+  </div>
+  <Pausa etiqueta={heroA2.pausar} />
+</div>
+<script is:inline>
+  (() => {
+    const escena = document.querySelector("[data-a2-escena]");
+    const boton = escena && escena.querySelector("[data-a2-pausa]");
+    if (!boton || matchMedia("(prefers-reduced-motion: reduce)").matches)
+      return;
+    const PERIODO = 3400;
+    const imagenes = [...escena.querySelectorAll("img[data-set]")];
+    const total = new Set(imagenes.map(img => img.dataset.set)).size;
+    const del = n => imagenes.filter(img => img.dataset.set === String(n));
+    // A set only starts loading one turn before it shows.
+    const preparar = n => del(n).forEach(img => (img.dataset.listo = ""));
+    // The words in the h1 go first; the screens wait until it rests.
+    const girando = () =>
+      "girando" in (document.querySelector("[data-a2-titulo]")?.dataset ?? {});
+    let actual = 0;
+    let reloj = 0;
+    let encima = false;
+    let foco = false;
+    const mostrar = n => {
+      del(actual).forEach(img => {
+        delete img.dataset.activa;
+        img.dataset.saliendo = "";
+        setTimeout(() => delete img.dataset.saliendo, 1300);
+      });
+      del(n).forEach(img => (img.dataset.activa = ""));
+      actual = n;
+      preparar((n + 1) % total);
+    };
+    const tic = () => {
+      const siguiente = (actual + 1) % total;
+      if (girando() || !del(siguiente).every(img => img.complete)) return;
+      mostrar(siguiente);
+    };
+    const andar = (primera = PERIODO) => {
+      clearTimeout(reloj);
+      reloj = 0;
+      const pausada = boton.getAttribute("aria-pressed") === "true";
+      if (pausada || encima || foco || document.hidden) return;
+      const paso = () => {
+        tic();
+        reloj = window.setTimeout(paso, PERIODO);
+      };
+      reloj = window.setTimeout(paso, primera);
+    };
+    const marcar = (cambio, valor) => () => {
+      if (cambio === "encima") encima = valor;
+      else foco = valor;
+      andar();
+    };
+    boton.addEventListener("click", () => {
+      const pausada = boton.getAttribute("aria-pressed") === "true";
+      boton.setAttribute("aria-pressed", String(!pausada));
+      andar();
+    });
+    escena.addEventListener("pointerenter", marcar("encima", true));
+    escena.addEventListener("pointerleave", marcar("encima", false));
+    escena.addEventListener("focusin", marcar("foco", true));
+    escena.addEventListener("focusout", marcar("foco", false));
+    document.addEventListener("visibilitychange", () => andar());
+    document.addEventListener("a2:reposo", () => andar(1200));
+    addEventListener("load", () => preparar(1), { once: true });
+    escena.dataset.vivo = "";
+    andar();
+  })();
+</script>
+
+<style>
+  /* Phones: a band under the tagline, his head between two screens. */
+  .escena {
+    position: relative;
+    z-index: 0;
+    order: 1;
+    flex: 1 0 auto;
+    height: calc(var(--img-h) * 0.31);
+    margin-top: 8px;
+    margin-inline: calc(var(--margen) * -1);
+    overflow: hidden;
+    background:
+      radial-gradient(
+        ellipse 34% 62% at 50% 40%,
+        rgba(236, 234, 228, 0.1),
+        transparent 72%
+      ),
+      var(--hondo);
+    mask-image:
+      linear-gradient(to bottom, #000 58%, transparent 100%),
+      linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+    mask-composite: intersect;
+  }
+  .marco {
+    position: absolute;
+    left: 50%;
+    top: calc(var(--img-h) * -0.265);
+    height: var(--img-h);
+    aspect-ratio: 667 / 1000;
+    translate: -50% 0;
+  }
+
+  .marco :global(.retrato) {
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    filter: contrast(1.14) brightness(1.03);
+  }
+
+  /* ── desktop: the triptych beside the title ── */
+  @media (min-width: 1024px) {
+    .escena {
+      position: absolute;
+      order: 0;
+      top: 0;
+      bottom: 0;
+      left: var(--escena-x);
+      width: min(var(--foto-w), 100% - var(--escena-x));
+      height: auto;
+      margin: 0;
+      overflow: visible;
+      background: none;
+      mask-image: none;
+    }
+    /* The spotlight behind his head, on the frame so it never moves off him. */
+    .marco::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        ellipse 40% 26% at 46% 38%,
+        rgba(236, 234, 228, 0.1),
+        transparent 72%
+      );
+    }
+    .marco {
+      left: 0;
+      top: calc(var(--img-h) * -0.14);
+      translate: none;
+    }
+    .marco :global(.retrato) {
+      /* The image's foot sits on the poster's foot: fade the coat into it. */
+      mask-image: linear-gradient(to bottom, #000 70%, transparent 96%);
+    }
+  }
+</style>

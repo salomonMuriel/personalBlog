@@ -1,0 +1,274 @@
+---
+import type { ImageMetadata } from "astro";
+import { Image } from "astro:assets";
+import { pantallas } from "@data/pantallas";
+import { cuadrosA3, heroA3 } from "@data/heroes/a3";
+import type { Lang } from "@i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = heroA3[lang];
+
+const recortes = import.meta.glob<ImageMetadata>(
+  "/src/assets/heroes/a3/*.webp",
+  { eager: true, import: "default" }
+);
+const todas = Object.values(pantallas).flat();
+
+const cuadros = cuadrosA3.map(archivo => {
+  const datos = todas.find(p => p.archivo === archivo);
+  const src = recortes[`/src/assets/heroes/a3/${archivo}.webp`];
+  if (!datos || !src) throw new Error(`HeroA3: missing still ${archivo}`);
+  return { archivo, src, alt: datos.alt[lang] };
+});
+
+// Frames that can be in the window at load (ten on a tall desktop); the rest wait.
+const aLaVista = 10;
+// The loop slides by one roll; the extra copies keep the window full on big screens.
+const copias = [0, 1, 2];
+const tamano = "(min-width: 1024px) 150px, (min-width: 768px) 96px, 66px";
+---
+
+<div class="a3-tira" data-a3-tira style={`--n:${cuadros.length}`}>
+  <div class="a3-tira__ventana">
+    <div class="a3-tira__pista">
+      {
+        copias.map(copia => (
+          <ul
+            class="a3-tira__rollo"
+            aria-label={copia === 0 ? t.tira : undefined}
+            aria-hidden={copia === 0 ? undefined : "true"}
+          >
+            {cuadros.map((cuadro, i) => (
+              <li class="a3-cuadro">
+                <Image
+                  src={cuadro.src}
+                  widths={[160, 320]}
+                  sizes={tamano}
+                  alt={copia === 0 ? cuadro.alt : ""}
+                  loading={copia === 0 && i < aLaVista ? "eager" : "lazy"}
+                />
+              </li>
+            ))}
+          </ul>
+        ))
+      }
+    </div>
+  </div>
+  <button
+    type="button"
+    class="a3-tira__pausa"
+    data-a3-pausa
+    aria-pressed="false"
+    aria-label={t.pausar}
+    hidden
+  >
+    <svg viewBox="0 0 16 16" aria-hidden="true">
+      <path class="a3-i-pausa" d="M5.5 4v8M10.5 4v8"></path>
+      <path class="a3-i-play" d="M5.5 3.8 12 8l-6.5 4.2z"></path>
+    </svg>
+  </button>
+</div>
+
+<script>
+  // Hover pauses the frames in CSS. The button holds a pause, and keyboard focus
+  // on it stops the strip until the visitor presses play.
+  const tira = document.querySelector<HTMLElement>("[data-a3-tira]");
+  const boton = tira?.querySelector<HTMLButtonElement>("[data-a3-pausa]");
+  const quieto = matchMedia("(prefers-reduced-motion: reduce)");
+  if (tira && boton) {
+    const pausar = (pausada: boolean) => {
+      boton.setAttribute("aria-pressed", String(pausada));
+      tira.toggleAttribute("data-pausada", pausada);
+    };
+    const mostrar = () => {
+      boton.hidden = quieto.matches;
+    };
+    boton.addEventListener("click", () =>
+      pausar(boton.getAttribute("aria-pressed") !== "true")
+    );
+    boton.addEventListener("focus", () => {
+      if (boton.matches(":focus-visible")) pausar(true);
+    });
+    quieto.addEventListener("change", mostrar);
+    mostrar();
+  }
+</script>
+
+<style>
+  /* Runs sideways on phones and tablets, and down the poster's edge on desktops.
+     The frame height (--tira-cuadro, set by the hero) sizes everything else. */
+  .a3-tira {
+    --cuadro-h: var(--tira-cuadro, 44px);
+    --cuadro-w: calc(var(--cuadro-h) * 1.5);
+    --riel: calc(var(--cuadro-h) * 0.16);
+    --linea: calc(var(--cuadro-h) * 0.1);
+    --paso: calc(var(--cuadro-w) + var(--linea));
+    position: relative;
+  }
+
+  .a3-tira__ventana {
+    overflow: hidden;
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 7%,
+      #000 93%,
+      transparent
+    );
+  }
+  .a3-tira__pista {
+    display: flex;
+    width: max-content;
+    animation: a3-rodar calc(var(--n) * 5.5s) linear infinite;
+  }
+  .a3-tira__ventana:hover .a3-tira__pista,
+  .a3-tira[data-pausada] .a3-tira__pista {
+    animation-play-state: paused;
+  }
+  @keyframes a3-rodar {
+    to {
+      translate: calc(-100% / 3) 0;
+    }
+  }
+  @keyframes a3-subir {
+    to {
+      translate: 0 calc(-100% / 3);
+    }
+  }
+
+  .a3-tira__rollo {
+    display: flex;
+  }
+  /* Each still carries its own stretch of film, so the perforations travel with it. */
+  .a3-cuadro {
+    --perforacion: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'><rect x='31' y='26' width='38' height='48' rx='10' fill='%23ece9e3' fill-opacity='.3'/></svg>");
+    flex: none;
+    padding: var(--riel) calc(var(--linea) / 2);
+    background-color: #050506;
+    background-image: var(--perforacion), var(--perforacion);
+    background-repeat: repeat-x;
+    background-size: calc(var(--paso) / 6) var(--riel);
+    background-position:
+      0 0,
+      0 100%;
+  }
+  .a3-cuadro :global(img) {
+    display: block;
+    width: var(--cuadro-w);
+    height: var(--cuadro-h);
+    object-fit: cover;
+    border-radius: 2px;
+    filter: grayscale(1) contrast(1.05) brightness(0.8);
+    transition: filter 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .a3-cuadro:hover :global(img) {
+      filter: none;
+    }
+  }
+
+  /* ── pause ── */
+  .a3-tira__pausa {
+    position: absolute;
+    top: 50%;
+    right: max(var(--margen), (100% - 1320px) / 2 + var(--margen));
+    translate: 0 -50%;
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--tinta);
+    color: var(--papel);
+    box-shadow:
+      0 0 0 1px rgba(236, 234, 228, 0.4),
+      0 6px 18px -6px rgba(0, 0, 0, 0.8);
+    transition: background-color 0.14s;
+  }
+  .a3-tira__pausa[hidden] {
+    display: none;
+  }
+  .a3-tira__pausa::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+  }
+  .a3-tira__pausa:hover {
+    background: var(--rojo2);
+  }
+  .a3-tira__pausa:focus-visible {
+    outline: 2.5px solid var(--papel);
+    outline-offset: 3px;
+  }
+  .a3-tira__pausa svg {
+    width: 14px;
+    height: 14px;
+    fill: currentColor;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .a3-i-pausa {
+    fill: none;
+  }
+  .a3-i-play,
+  .a3-tira__pausa[aria-pressed="true"] .a3-i-pausa {
+    display: none;
+  }
+  .a3-tira__pausa[aria-pressed="true"] .a3-i-play {
+    display: block;
+  }
+
+  /* ── desktop: the strip hangs down the poster's edge ── */
+  @media (min-width: 1024px) {
+    .a3-tira {
+      --paso: calc(var(--cuadro-h) + var(--linea));
+      height: 100%;
+    }
+    .a3-tira__ventana {
+      height: 100%;
+      mask-image: linear-gradient(
+        to bottom,
+        transparent,
+        #000 8%,
+        #000 86%,
+        transparent
+      );
+    }
+    .a3-tira__pista,
+    .a3-tira__rollo {
+      flex-direction: column;
+    }
+    .a3-tira__pista {
+      animation-name: a3-subir;
+    }
+    .a3-cuadro {
+      --perforacion: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'><rect x='26' y='30' width='48' height='40' rx='10' fill='%23ece9e3' fill-opacity='.3'/></svg>");
+      padding: calc(var(--linea) / 2) var(--riel);
+      background-repeat: repeat-y;
+      background-size: var(--riel) calc(var(--paso) / 5);
+      background-position:
+        0 0,
+        100% 0;
+    }
+    .a3-tira__pausa {
+      top: auto;
+      right: 50%;
+      bottom: clamp(14px, 3svh, 28px);
+      translate: 50% 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .a3-tira__pista {
+      animation: none;
+    }
+    .a3-cuadro :global(img) {
+      transition: none;
+    }
+  }
+</style>

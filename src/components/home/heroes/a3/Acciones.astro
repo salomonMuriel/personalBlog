@@ -1,0 +1,108 @@
+---
+import { wa } from "@config";
+import { copia } from "@data/landing";
+import { heroA3 } from "@data/heroes/a3";
+import { routes, type Lang } from "@i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const cta = copia(lang).cta;
+const t = heroA3[lang];
+---
+
+<div class="a3a">
+  <a href={routes.cuentame[lang]} data-origen="hero" class="boton boton--rojo">
+    {cta.cuestionario}<svg aria-hidden="true"><use href="#i-arw"></use></svg>
+  </a>
+  <a
+    href={wa(cta.waTexto)}
+    target="_blank"
+    rel="noopener"
+    data-origen="hero"
+    class="boton boton--linea"
+  >
+    <svg aria-hidden="true"><use href="#i-chat"></use></svg><span
+      class="hidden sm:inline">{cta.wa}</span
+    ><span class="sm:hidden">{t.waCorto}</span>
+  </a>
+</div>
+
+<style>
+  .a3a {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .boton {
+    display: inline-flex;
+    min-height: 48px;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border-radius: 2px;
+    padding: 12px 13px;
+    font-size: 15.5px;
+    font-variation-settings:
+      "wdth" 84,
+      "wght" 700;
+    white-space: nowrap;
+    transition:
+      background-color 0.18s,
+      border-color 0.18s,
+      color 0.18s,
+      transform 0.18s;
+  }
+  .boton:active {
+    transform: translateY(1px);
+  }
+  .boton:focus-visible {
+    outline-color: var(--papel);
+  }
+  .boton svg {
+    width: 18px;
+    height: 18px;
+    flex: none;
+  }
+  .boton--rojo {
+    flex: 1 1 auto;
+    background: var(--rojo2);
+    color: #fff;
+  }
+  .boton--rojo:hover {
+    background: var(--papel);
+    color: var(--tinta);
+  }
+  .boton--linea {
+    flex: 1 1 auto;
+    border: 1.5px solid var(--nota);
+    color: var(--fg);
+  }
+  .boton--linea:hover {
+    border-color: var(--papel);
+    background: rgba(236, 234, 228, 0.06);
+  }
+
+  @media (max-width: 399.98px) {
+    .boton--rojo svg {
+      display: none;
+    }
+  }
+  @media (min-width: 400px) {
+    .boton {
+      padding-inline: 16px;
+    }
+  }
+  @media (min-width: 640px) {
+    .boton--rojo,
+    .boton--linea {
+      flex: none;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .boton {
+      transition: none;
+    }
+  }
+</style>

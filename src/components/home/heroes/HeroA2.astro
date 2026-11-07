@@ -1,0 +1,284 @@
+---
+import { wa } from "@config";
+import { copia } from "@data/landing";
+import { heroA2 } from "@data/heroes/a2";
+import { palabras } from "@data/heroes/palabras";
+import { routes, type Lang } from "@i18n/ui";
+import Titulo from "./a2/Titulo.astro";
+import Escena from "./a2/Escena.astro";
+import Creditos from "./a2/Creditos.astro";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const c = copia(lang).hero;
+const cta = copia(lang).cta;
+---
+
+<section class="cartel" aria-labelledby="cartel-titulo">
+  <div class="hoja cartel__hoja">
+    <p class="cartel__icp" data-mide="icp">{heroA2.icp}</p>
+
+    <Escena {lang} alt={c.fichaAlt} />
+
+    <Titulo
+      id="cartel-titulo"
+      linea1={c.linea1}
+      linea2={c.linea2}
+      frases={palabras[lang]}
+    />
+
+    <p class="cartel__bajada">
+      <span class="hidden md:inline">{c.bajada}</span><span class="md:hidden"
+        >{heroA2.bajadaCorta}</span
+      >
+    </p>
+
+    <div class="cartel__ctas" data-pliegue data-mide="ctas">
+      <a
+        href={routes.cuentame[lang]}
+        data-origen="hero"
+        class="boton boton--rojo"
+      >
+        {cta.cuestionario}<svg aria-hidden="true"><use href="#i-arw"></use></svg
+        >
+      </a>
+      <a
+        href={wa(cta.waTexto)}
+        target="_blank"
+        rel="noopener"
+        data-origen="hero"
+        class="boton boton--linea"
+      >
+        <svg aria-hidden="true"><use href="#i-chat"></use></svg><span
+          class="hidden sm:inline">{cta.wa}</span
+        ><span class="sm:hidden">{heroA2.waCorto}</span>
+      </a>
+    </div>
+
+    <Creditos
+      palabra={c.dicc.palabra}
+      categoria={c.dicc.categoria}
+      acepciones={c.dicc.acepciones}
+      marcada={heroA2.marcada}
+      tachada={heroA2.tachada}
+      correccion={heroA2.correccion}
+    />
+  </div>
+  <div class="cartel__grano" aria-hidden="true"></div>
+</section>
+
+<style>
+  .cartel {
+    --hondo: #101115;
+    --tinta: #16171a;
+    --fg: #eceae4;
+    --txt: #b0aea6;
+    --nota: #8e8d86;
+    --rojo2: #b3251d;
+    --rojo3: #ea4b3e;
+    --papel: #f2f1ed;
+    --nav: 103px;
+    --alto: calc(100svh - var(--nav));
+    --margen: clamp(1.25rem, 4vw, 3.5rem);
+    /* The portrait's head starts at 28% of the frame and the chin ends near 52%.
+       Capped by width so both screens stay beside him on tall phones. */
+    --img-h: min(var(--alto) * 1.08, 100vw * 1.62);
+    /* "SE ARREGLA" sets about 4.6 × its size wide: never wider than the sheet. */
+    --l1: min((100vw - 2 * var(--margen)) / 4.66, 10.6svh, 150px);
+
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    min-height: var(--alto);
+    color: var(--fg);
+    background:
+      linear-gradient(to bottom, transparent 62%, var(--tinta)), var(--hondo);
+  }
+  .cartel :focus-visible {
+    outline-color: var(--papel);
+  }
+
+  .cartel__grano {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    opacity: 0.32;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='1 0 0 0 0  1 0 0 0 0  1 0 0 0 0  0 0 0 0 1'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");
+  }
+
+  .cartel__hoja {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: var(--alto);
+    padding-top: 14px;
+    padding-bottom: 18px;
+  }
+  .cartel__icp,
+  .cartel__bajada,
+  .cartel__ctas {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ── tagline ── */
+  .cartel__icp {
+    order: 0;
+    max-width: 32ch;
+    font-size: 15.5px;
+    line-height: 1.3;
+    font-weight: 500;
+    color: var(--fg);
+    text-wrap: balance;
+  }
+
+  .cartel__bajada {
+    order: 3;
+    margin-top: 12px;
+    max-width: 46ch;
+    font-size: 15px;
+    line-height: 1.4;
+    color: var(--txt);
+  }
+
+  /* ── calls to action ── */
+  .cartel__ctas {
+    order: 5;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 18px;
+  }
+  .boton {
+    display: inline-flex;
+    min-height: 48px;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border-radius: 2px;
+    padding: 12px 13px;
+    font-size: 15.5px;
+    font-variation-settings:
+      "wdth" 84,
+      "wght" 700;
+    white-space: nowrap;
+    transition:
+      background-color 0.18s,
+      border-color 0.18s,
+      color 0.18s,
+      transform 0.18s;
+  }
+  .boton:active {
+    transform: translateY(1px);
+  }
+  .boton svg {
+    width: 18px;
+    height: 18px;
+    flex: none;
+  }
+  .boton--rojo {
+    flex: 1 1 auto;
+    background: var(--rojo2);
+    color: #fff;
+  }
+  .boton--rojo:hover {
+    background: var(--papel);
+    color: var(--tinta);
+  }
+  .boton--linea {
+    flex: 1 1 auto;
+    border: 1.5px solid var(--nota);
+    color: var(--fg);
+  }
+  .boton--linea:hover {
+    border-color: var(--papel);
+    background: rgba(236, 234, 228, 0.06);
+  }
+
+  @media (max-width: 399.98px) {
+    .boton--rojo svg {
+      display: none;
+    }
+  }
+  @media (min-width: 400px) {
+    .boton {
+      padding-inline: 16px;
+    }
+  }
+
+  @media (min-width: 640px) {
+    .boton--rojo,
+    .boton--linea {
+      flex: none;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .cartel {
+      --nav: 61px;
+      --l1: min(15vw, 11svh, 150px);
+    }
+    .cartel__hoja {
+      padding-top: 28px;
+      padding-bottom: 32px;
+    }
+    .cartel__icp {
+      font-size: 19px;
+    }
+    .cartel__bajada {
+      font-size: 17px;
+    }
+  }
+
+  /* ── desktop: the one-sheet ── */
+  @media (min-width: 1024px) {
+    .cartel {
+      --l1: min(10.3vw, 16.4svh, 156px);
+      --img-h: calc(var(--alto) / 0.86);
+      --foto-w: calc(var(--img-h) * 0.667);
+      /* The triptych (phone at 10% of the frame to window at 108%) sits centred
+         in the room right of the title, never closer to it than 24px. */
+      --sangria: max(0px, (100% - 1320px) / 2);
+      --escena-x: calc(
+        var(--sangria) + var(--margen) + var(--l1) * 4.59 + 24px +
+          max(
+            0px,
+            (
+                min(100%, 1320px) - 2 * var(--margen) - var(--l1) * 4.59 -
+                  24px - var(--foto-w) * 0.98
+              ) /
+              2
+          ) -
+          var(--foto-w) * 0.1
+      );
+    }
+    .cartel__hoja {
+      position: static;
+      padding-top: clamp(22px, 4.2svh, 40px);
+      padding-bottom: clamp(22px, 4svh, 38px);
+    }
+    .cartel__icp {
+      max-width: none;
+      font-size: clamp(18px, 1.55vw, 24px);
+    }
+    .cartel__bajada {
+      max-width: 44ch;
+      margin-top: clamp(14px, 2.4svh, 24px);
+      font-size: clamp(16px, 1.25vw, 18px);
+    }
+    .cartel__ctas {
+      order: 4;
+      margin-top: clamp(18px, 3svh, 30px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .boton {
+      transition: none;
+    }
+  }
+</style>

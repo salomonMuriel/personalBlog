@@ -120,9 +120,18 @@ const acepciones = c.hero.dicc.acepciones.map(a => {
           {
             acepciones.map(([dicho, sentido], i) => (
               <li
-                class:list={["hg-acep", `hg-acep-${i + 1}`]}
+                class:list={[
+                  "hg-acep",
+                  i === acepciones.length - 1
+                    ? "hg-acep-ultima"
+                    : `hg-acep-${i + 1}`,
+                ]}
                 data-mide={
-                  i === 0 ? "acepcion-1" : i === 3 ? "acepcion-4" : undefined
+                  i === 0
+                    ? "acepcion-1"
+                    : i === acepciones.length - 1
+                      ? "remate"
+                      : undefined
                 }
               >
                 <span class="hg-num font-slab" aria-hidden="true">
@@ -366,8 +375,7 @@ const acepciones = c.hero.dicc.acepciones.map(a => {
     grid-template-columns: 1rem minmax(0, 1fr);
     gap: 5px;
   }
-  .hg-acep-2,
-  .hg-acep-3 {
+  .hg-acep-2 {
     display: none;
   }
   .hg-num {
@@ -378,7 +386,7 @@ const acepciones = c.hero.dicc.acepciones.map(a => {
   .hg-dicho {
     color: var(--gris);
   }
-  .hg-acep-4 {
+  .hg-acep-ultima {
     margin-inline: -14px;
     margin-bottom: -12px;
     padding: 8px 14px 10px;
@@ -387,7 +395,7 @@ const acepciones = c.hero.dicc.acepciones.map(a => {
     font-size: 1.02rem;
     line-height: 1.3;
   }
-  .hg-acep-4 .hg-num {
+  .hg-acep-ultima .hg-num {
     display: grid;
     place-items: center;
     width: 1.3rem;
@@ -399,10 +407,10 @@ const acepciones = c.hero.dicc.acepciones.map(a => {
     font-size: 0.72rem;
     line-height: 1;
   }
-  .hg-acep-4 .hg-dicho {
+  .hg-acep-ultima .hg-dicho {
     color: var(--tinta);
   }
-  .hg-acep-4 .hg-sentido {
+  .hg-acep-ultima .hg-sentido {
     white-space: nowrap;
     font-weight: 700;
     background: linear-gradient(
@@ -614,7 +622,7 @@ const acepciones = c.hero.dicc.acepciones.map(a => {
       grid-area: dicc;
       padding-inline: 12px;
     }
-    .hg-acep-4 {
+    .hg-acep-ultima {
       margin-inline: -12px;
       padding-inline: 12px;
     }
@@ -672,8 +680,7 @@ const acepciones = c.hero.dicc.acepciones.map(a => {
       grid-template-columns: 1.15rem minmax(0, 1fr);
       gap: 6px;
     }
-    .hg-acep-2,
-    .hg-acep-3 {
+    .hg-acep-2 {
       display: grid;
     }
     .hg-acepciones {
@@ -681,7 +688,7 @@ const acepciones = c.hero.dicc.acepciones.map(a => {
       gap: 8px;
       font-size: 0.92rem;
     }
-    .hg-acep-4 {
+    .hg-acep-ultima {
       margin-inline: -20px;
       margin-bottom: -16px;
       margin-top: 2px;

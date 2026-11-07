@@ -1,0 +1,159 @@
+---
+interface Props {
+  id: string;
+  linea1: string;
+  linea2: string;
+  frases: string[];
+}
+const { id, linea1, linea2, frases } = Astro.props;
+---
+
+<h1 {id} class="titulo" data-mide="h1" data-a2-titulo>
+  <span class="l1 font-arch">{linea1}</span>
+  <span class="l2 font-slab" data-frases={JSON.stringify(frases)}
+    ><span class="reposo">{linea2}</span></span
+  >
+</h1>
+<script is:inline>
+  (() => {
+    const titulo = document.querySelector("[data-a2-titulo]");
+    const slot = titulo && titulo.querySelector("[data-frases]");
+    if (!slot || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const PASO = 1400;
+    const linea1 = titulo.firstElementChild;
+    const reposo = slot.firstElementChild;
+    const frases = JSON.parse(slot.dataset.frases);
+    const fuentes = ['16px "Alfa Slab One"', '900 16px "Archivo Variable"'];
+    const espera = ms => new Promise(r => setTimeout(r, ms));
+    const fijar = (el, estado) => {
+      el.style.transition = "none";
+      el.dataset.estado = estado;
+      void el.offsetWidth;
+      el.style.transition = "";
+    };
+    // Each phrase is fitted to the width of line one, never past the resting size.
+    const crear = () =>
+      frases.map(texto => {
+        const capa = document.createElement("span");
+        capa.className = "a2-frase";
+        capa.setAttribute("aria-hidden", "true");
+        capa.textContent = texto;
+        slot.append(capa);
+        const k = Math.min(1, linea1.offsetWidth / capa.offsetWidth);
+        capa.style.setProperty("--k", k.toFixed(4));
+        fijar(capa, "abajo");
+        return capa;
+      });
+    const recorrer = async (pasos, primera) => {
+      titulo.dataset.girando = "";
+      for (let i = 1; i < pasos.length; i++) {
+        await espera(i === 1 ? primera : PASO);
+        const sale = pasos[i - 1];
+        sale.dataset.estado = "arriba";
+        pasos[i].dataset.estado = "";
+        setTimeout(() => {
+          if (sale.dataset.estado === "arriba") fijar(sale, "abajo");
+        }, 650);
+      }
+      await espera(700);
+      slot.querySelectorAll(".a2-frase").forEach(capa => capa.remove());
+      delete titulo.dataset.girando;
+      titulo.dispatchEvent(new CustomEvent("a2:reposo", { bubbles: true }));
+    };
+    const desdeFrase = () => {
+      const capas = crear();
+      fijar(reposo, "abajo");
+      fijar(capas[0], "");
+      recorrer([...capas, reposo], PASO);
+    };
+    const desdeReposo = () => recorrer([reposo, ...crear(), reposo], 700);
+
+    // Fonts that land with the first paint swap straight to the first phrase.
+    if (fuentes.every(f => document.fonts.check(f))) desdeFrase();
+    else {
+      titulo.dataset.girando = "";
+      const inicio = performance.now();
+      Promise.allSettled(fuentes.map(f => document.fonts.load(f))).then(() =>
+        performance.now() - inicio < 600 ? desdeFrase() : desdeReposo()
+      );
+    }
+    titulo.addEventListener("pointerenter", e => {
+      if (e.pointerType !== "mouse" || "girando" in titulo.dataset) return;
+      desdeReposo();
+    });
+  })();
+</script>
+
+<style>
+  .titulo {
+    position: relative;
+    z-index: 2;
+    order: 2;
+    margin-top: calc(var(--img-h) * -0.055);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .l1 {
+    display: block;
+    white-space: nowrap;
+    font-size: var(--l1);
+    line-height: 0.8;
+    text-transform: uppercase;
+    font-stretch: 62%;
+    font-variation-settings:
+      "wdth" 62,
+      "wght" 900;
+    letter-spacing: 0.004em;
+    color: var(--papel);
+  }
+  .l2 {
+    position: relative;
+    display: block;
+    white-space: nowrap;
+    margin-top: 0.16em;
+    /* Sized so both lines lock up to the same width. */
+    font-size: calc(var(--l1) * 0.466);
+    line-height: 0.95;
+    text-transform: uppercase;
+    letter-spacing: -0.012em;
+    color: var(--rojo3);
+  }
+
+  /* A phrase arrives out of focus and settles; the leaving one blurs out
+     upward faster, so two never read at once. */
+  .reposo,
+  .l2 :global(.a2-frase) {
+    display: block;
+    transition:
+      opacity 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
+      filter 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
+      transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .l2 :global(.a2-frase) {
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: calc(1em * var(--k, 1));
+  }
+  .reposo[data-estado="abajo"],
+  .l2 :global(.a2-frase[data-estado="abajo"]) {
+    opacity: 0;
+    filter: blur(0.1em);
+    transform: translateY(0.2em);
+  }
+  .reposo[data-estado="arriba"],
+  .l2 :global(.a2-frase[data-estado="arriba"]) {
+    opacity: 0;
+    filter: blur(0.1em);
+    transform: translateY(-0.2em);
+    transition-duration: 0.3s, 0.3s, 0.4s;
+  }
+
+  @media (min-width: 1024px) {
+    .titulo {
+      margin-top: auto;
+      padding-top: 24px;
+    }
+  }
+</style>

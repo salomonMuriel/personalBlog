@@ -26,7 +26,6 @@ export const es = {
       categoria: "adj.",
       acepciones: [
         "Dicho de un proceso: que <b class='font-bold'>parece</b> automatizado, pero hay alguien haciéndolo a mano.",
-        "Dicho de dos sistemas: que no se hablan, y alguien los pega copiando y pegando.",
         "Dicho de un programa: el que te vendieron carísimo y hoy nadie abre.",
         "Dicho de una empresa: la tuya, probablemente.",
       ],

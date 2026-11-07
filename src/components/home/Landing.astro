@@ -5,6 +5,7 @@ import Clientes from "@components/home/Clientes.astro";
 import Danos from "@components/home/Danos.astro";
 import DiagramaCajitas from "@components/home/DiagramaCajitas.astro";
 import Sistemas from "@components/home/Sistemas.astro";
+import SistemasTriptico from "@components/home/SistemasTriptico.astro";
 import BandaEjecucion from "@components/home/BandaEjecucion.astro";
 import PorQue from "@components/home/PorQue.astro";
 import Programa from "@components/home/Programa.astro";
@@ -19,8 +20,9 @@ import type { Lang } from "@i18n/ui";
 interface Props {
   lang: Lang;
   hero?: Variante;
+  vitrina?: "galerias" | "triptico";
 }
-const { lang, hero } = Astro.props;
+const { lang, hero, vitrina = "galerias" } = Astro.props;
 const HeroElegido = hero ? await cargarHero(hero) : Hero;
 const preguntas = lang === "es" ? preguntasEs : preguntasEn;
 ---
@@ -29,7 +31,13 @@ const preguntas = lang === "es" ? preguntasEs : preguntasEn;
 <Clientes lang={lang} />
 <Danos lang={lang} />
 <DiagramaCajitas lang={lang} />
-<Sistemas lang={lang} />
+{
+  vitrina === "triptico" ? (
+    <SistemasTriptico lang={lang} />
+  ) : (
+    <Sistemas lang={lang} />
+  )
+}
 <BandaEjecucion lang={lang} />
 <PorQue lang={lang} />
 <Programa lang={lang} />
