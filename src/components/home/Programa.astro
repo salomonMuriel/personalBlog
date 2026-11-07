@@ -10,6 +10,12 @@ interface Props {
 }
 const { lang } = Astro.props;
 const c = copia(lang).programa;
+
+// The ruler stops at week 9; the open row says the rhythm goes on from there.
+const SEMANAS = 9;
+const semanas = Array.from({ length: SEMANAS }, (_, i) => i + 1);
+const desdeAbierta = c.filas[c.filas.length - 1].hasta + 1;
+const retraso = (i: number) => `transition-delay:${(i * 0.12).toFixed(2)}s`;
 ---
 
 <section
@@ -26,7 +32,79 @@ const c = copia(lang).programa;
     </h2>
 
     <div
-      class="mt-[clamp(1.8rem,3.6vw,2.8rem)] grid grid-cols-1 items-center gap-[clamp(1.6rem,4vw,3.5rem)] lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)]"
+      class="observa gantt mt-[clamp(1.8rem,3.6vw,2.8rem)] grid grid-cols-[5.4rem_minmax(0,1fr)] items-center sm:grid-cols-[minmax(5.6rem,10.5rem)_minmax(0,1fr)] gap-x-[clamp(.75rem,2vw,1.5rem)] gap-y-[6px]"
+    >
+      <span></span>
+      <div
+        class="grid border-b border-linea pb-1.5"
+        style={`grid-template-columns:repeat(${SEMANAS},minmax(0,1fr))`}
+        aria-hidden="true"
+      >
+        {
+          semanas.map(s => (
+            <span class="font-mono text-[10.5px] text-gris">{`${c.semanaCorta}${s}`}</span>
+          ))
+        }
+      </div>
+
+      {
+        c.filas.map((f, i) => (
+          <>
+            <span class="font-arch text-[.98rem] font-bold leading-tight tracking-[-.01em]">
+              {f.nombre}
+            </span>
+            <div
+              class="pista grid items-center"
+              style={`grid-template-columns:repeat(${SEMANAS},minmax(0,1fr))`}
+            >
+              <div
+                class:list={[
+                  "barra flex h-9 items-center justify-end rounded px-1.5",
+                  f.entrega ? "bg-tinta" : "bg-linea",
+                ]}
+                style={`grid-column:${f.desde} / ${f.hasta + 1};${retraso(i)}`}
+              >
+                {f.entrega && (
+                  <span class="grid h-6 w-6 place-items-center rounded-[2px] bg-rojo2 text-white">
+                    <svg class="h-3.5 w-3.5" aria-hidden="true">
+                      <use href="#i-check" />
+                    </svg>
+                  </span>
+                )}
+              </div>
+              {i === 1 && (
+                <span
+                  class="font-pen pl-2 text-[clamp(1rem,2vw,1.3rem)] leading-[1.05] text-rojo2"
+                  style={`grid-column:${f.hasta + 1} / -1`}
+                >
+                  ← {c.notaPrimera}
+                </span>
+              )}
+            </div>
+          </>
+        ))
+      }
+
+      <span
+        class="font-arch text-[.98rem] font-bold leading-tight tracking-[-.01em] text-gris"
+      >
+        {c.filaAbierta}
+      </span>
+      <div
+        class="pista grid items-center"
+        style={`grid-template-columns:repeat(${SEMANAS},minmax(0,1fr))`}
+      >
+        <div
+          class="barra abierta h-9 rounded-l border-[1.5px] border-r-0 border-dashed border-linea2 bg-linea/50"
+          style={`grid-column:${desdeAbierta} / -1;${retraso(c.filas.length)}`}
+          aria-hidden="true"
+        >
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="mt-[clamp(2.4rem,5vw,4rem)] grid grid-cols-1 items-center gap-[clamp(1.6rem,4vw,3.5rem)] lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)]"
     >
       <div>
         <ol class="border-t border-linea">
@@ -63,7 +141,9 @@ const c = copia(lang).programa;
         </div>
       </div>
 
-      <div class="rounded border border-linea bg-campo p-[7px]">
+      <div
+        class="mx-auto w-full max-w-[34rem] rounded border border-linea bg-campo p-[7px] lg:max-w-none"
+      >
         <Image
           src={ilustraciones["una-cajita"]}
           widths={[480, 720, 1080]}
@@ -76,3 +156,18 @@ const c = copia(lang).programa;
     </div>
   </div>
 </section>
+
+<style>
+  /* Faint week lines behind the bars. */
+  .pista {
+    background-image: linear-gradient(
+      to right,
+      var(--color-linea) 1px,
+      transparent 1px
+    );
+    background-size: calc(100% / 9) 100%;
+  }
+  .abierta {
+    mask-image: linear-gradient(to right, #000 55%, transparent);
+  }
+</style>

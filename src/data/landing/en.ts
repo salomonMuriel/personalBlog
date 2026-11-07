@@ -201,29 +201,39 @@ export const en = {
 
   programa: {
     rotulo: "Works schedule",
-    nota: "From the first conversation to your team using it.",
-    titulo: "A 16-week project",
+    nota: "Weeks count from the first interview.",
+    titulo: "What happens if we work together",
+    semanaCorta: "W",
+    filas: [
+      { nombre: "Interviews", desde: 1, hasta: 1, entrega: false },
+      { nombre: "Box 1", desde: 2, hasta: 3, entrega: true },
+      { nombre: "Box 2", desde: 4, hasta: 5, entrega: true },
+      { nombre: "Box 3", desde: 6, hasta: 7, entrega: true },
+    ],
+    filaAbierta: "One every two weeks",
+    notaPrimera: "working in week 3",
     etapas: [
       {
-        cuando: "Weeks 1 and 2",
-        titulo: "Understand the operation",
-        texto: "I talk to you and to the people who do the work.",
-      },
-      {
-        cuando: "Weeks 2 and 3",
-        titulo: "Diagnosis",
-        texto: "I tell you what to tackle first and hand you a working piece.",
-      },
-      {
-        cuando: "Weeks 4 to 16",
-        titulo: "Build",
+        cuando: "Week 1",
+        titulo: "I interview you",
         texto:
-          "I put the operating system together box by box, until your team uses it without me.",
+          "On day one we talk about your business so I understand how the work gets done. If needed, we do another interview that same week.",
+      },
+      {
+        cuando: "Week 3",
+        titulo: "I hand you the first box",
+        texto:
+          "I start with the one that hurts most, and two weeks after the interview it's working with your data.",
+      },
+      {
+        cuando: "Every two weeks",
+        titulo: "One more box",
+        texto:
+          "I build the next one and connect it to the earlier ones, until your team uses the operating system without me.",
       },
     ],
-    garantiaRotulo: "Week three",
-    garantia:
-      "If what I hand you in week three isn't useful to you, we stop there.",
+    garantiaRotulo: "Week 3",
+    garantia: "If the first box isn't useful to you, we stop there.",
     alt: "A crane sets a new box down next to others that are already connected",
   },
 

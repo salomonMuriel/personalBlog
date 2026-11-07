@@ -200,29 +200,39 @@ export const es = {
 
   programa: {
     rotulo: "Programa de obra",
-    nota: "De la primera conversación a tu equipo usándolo.",
-    titulo: "Un proyecto de 16 semanas",
+    nota: "Las semanas cuentan desde la primera entrevista.",
+    titulo: "Qué pasa si trabajamos juntos",
+    semanaCorta: "S",
+    filas: [
+      { nombre: "Entrevistas", desde: 1, hasta: 1, entrega: false },
+      { nombre: "Cajita 1", desde: 2, hasta: 3, entrega: true },
+      { nombre: "Cajita 2", desde: 4, hasta: 5, entrega: true },
+      { nombre: "Cajita 3", desde: 6, hasta: 7, entrega: true },
+    ],
+    filaAbierta: "Una cada dos semanas",
+    notaPrimera: "funcionando en la semana 3",
     etapas: [
       {
-        cuando: "Semanas 1 y 2",
-        titulo: "Entender la operación",
-        texto: "Hablo contigo y con la gente que hace el trabajo.",
-      },
-      {
-        cuando: "Semanas 2 y 3",
-        titulo: "Diagnóstico",
-        texto: "Te digo qué atacar primero y te entrego una parte funcionando.",
-      },
-      {
-        cuando: "Semanas 4 a 16",
-        titulo: "Construir",
+        cuando: "Semana 1",
+        titulo: "Te entrevisto",
         texto:
-          "Armo el sistema operativo cajita por cajita, hasta que tu equipo lo use sin mí.",
+          "El primer día hablamos de tu negocio para entender cómo se hace el trabajo. Si hace falta, hacemos otra entrevista esa misma semana.",
+      },
+      {
+        cuando: "Semana 3",
+        titulo: "Te entrego la primera cajita",
+        texto:
+          "Empiezo por la que más duele, y dos semanas después de la entrevista ya funciona con tus datos.",
+      },
+      {
+        cuando: "Cada dos semanas",
+        titulo: "Una cajita más",
+        texto:
+          "Construyo la siguiente y la conecto con las anteriores, hasta que tu equipo use el sistema operativo sin mí.",
       },
     ],
-    garantiaRotulo: "Semana tres",
-    garantia:
-      "Si lo que te entregué en la semana tres no te sirve, ahí paramos.",
+    garantiaRotulo: "Semana 3",
+    garantia: "Si la primera cajita no te sirve, ahí paramos.",
     alt: "Una grúa pone una cajita nueva al lado de otras que ya están conectadas",
   },
 
