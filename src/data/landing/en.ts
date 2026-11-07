@@ -169,12 +169,10 @@ export const en = {
     razones: [
       {
         giro: "-rotate-[5deg]",
-        titulo: "A single operating system.",
+        titulo: "The system fits your company.",
         parrafos: [
-          "Many companies buy one program per area and end up with ten that don't talk to each other. I build a system that connects the programs that work and replaces the ones that aren't needed.",
+          "A program you buy was made for another company, and your people have to adapt to it. I start by looking at how the work gets done today and build on that. That's why people actually use it.",
         ],
-        manuscrita: "",
-        giroNota: "-rotate-[1deg]",
       },
       {
         giro: "rotate-[4deg]",
@@ -183,18 +181,13 @@ export const en = {
           "I use AI agents to write the code, which lets me deliver a custom system in weeks.",
           "I also <b class='font-semibold text-tinta'>teach your people to use them</b> for the office work they do by hand today.",
         ],
-        manuscrita: "this changed a lot in the last two years",
-        giroNota: "rotate-[1deg]",
       },
       {
         giro: "-rotate-[3deg]",
-        titulo: "The system fits your company.",
+        titulo: "A single operating system.",
         parrafos: [
-          "A program you buy was made for another company, and your people have to adapt to it. I start by looking at how the work gets done today and build on that. That's why people actually use it.",
+          "Many companies buy one program per area and end up with ten that don't talk to each other. I build a system that connects the programs that work and replaces the ones that aren't needed.",
         ],
-        manuscrita:
-          "in the first week I sit down with whoever is going to use it",
-        giroNota: "-rotate-[1deg]",
       },
     ],
   },
@@ -232,8 +225,6 @@ export const en = {
           "I build the next one and connect it to the earlier ones, until your team uses the operating system without me.",
       },
     ],
-    garantiaRotulo: "Week 3",
-    garantia: "If the first box isn't useful to you, we stop there.",
     alt: "A crane sets a new box down next to others that are already connected",
   },
 
@@ -261,8 +252,6 @@ export const en = {
         d: "We time the process before and after, and review it at one month and at two.",
       },
     ] as Columna[],
-    noIncluye:
-      "<b class='font-semibold text-tinta'>Not included:</b> changing the whole company at once, building technology teams or selling licences. And if what you need already exists and works, I'll tell you before building it.",
   },
 
   antes: {

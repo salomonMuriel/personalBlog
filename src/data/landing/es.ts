@@ -169,12 +169,10 @@ export const es = {
     razones: [
       {
         giro: "-rotate-[5deg]",
-        titulo: "Un solo sistema operativo.",
+        titulo: "El sistema se acomoda a tu empresa.",
         parrafos: [
-          "Muchas empresas compran un programa por área y terminan con diez que no se hablan. Construyo un sistema que conecta los programas que sirven y reemplaza los que sobran.",
+          "Un programa comprado está hecho para otra empresa, y a tu gente le toca adaptarse a él. Primero miro cómo se hace hoy el trabajo y construyo sobre eso. Por eso la gente sí lo usa.",
         ],
-        manuscrita: "",
-        giroNota: "-rotate-[1deg]",
       },
       {
         giro: "rotate-[4deg]",
@@ -183,17 +181,13 @@ export const es = {
           "Uso agentes de inteligencia artificial para programar, y eso me deja entregar un sistema a la medida en semanas.",
           "También <b class='font-semibold text-tinta'>le enseño a tu gente a usarlos</b> para el trabajo de oficina que hoy hacen a mano.",
         ],
-        manuscrita: "esto cambió muchísimo en los últimos dos años",
-        giroNota: "rotate-[1deg]",
       },
       {
         giro: "-rotate-[3deg]",
-        titulo: "El sistema se acomoda a tu empresa.",
+        titulo: "Un solo sistema operativo.",
         parrafos: [
-          "Un programa comprado está hecho para otra empresa, y a tu gente le toca adaptarse a él. Primero miro cómo se hace hoy el trabajo y construyo sobre eso. Por eso la gente sí lo usa.",
+          "Muchas empresas compran un programa por área y terminan con diez que no se hablan. Construyo un sistema que conecta los programas que sirven y reemplaza los que sobran.",
         ],
-        manuscrita: "la primera semana me siento con quien lo va a usar",
-        giroNota: "-rotate-[1deg]",
       },
     ],
   },
@@ -231,8 +225,6 @@ export const es = {
           "Construyo la siguiente y la conecto con las anteriores, hasta que tu equipo use el sistema operativo sin mí.",
       },
     ],
-    garantiaRotulo: "Semana 3",
-    garantia: "Si la primera cajita no te sirve, ahí paramos.",
     alt: "Una grúa pone una cajita nueva al lado de otras que ya están conectadas",
   },
 
@@ -260,8 +252,6 @@ export const es = {
         d: "Cronometramos el proceso antes y después, y lo revisamos al mes y a los dos meses.",
       },
     ] as Columna[],
-    noIncluye:
-      "<b class='font-semibold text-tinta'>No incluye</b> cambiar la empresa entera de una vez, armar equipos de tecnología ni vender licencias. Y si lo que necesitas ya existe y funciona, te lo digo antes de construirlo.",
   },
 
   antes: {
