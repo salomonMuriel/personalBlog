@@ -25,7 +25,7 @@ export const en = {
       palabra: "chi·no·má·ti·co, ca",
       categoria: "adj. · Colombian Spanish",
       acepciones: [
-        "Said of a process: it <b class='font-bold'>looks</b> automated, but there's someone doing it by hand.",
+        "Said of a process: it <b class='font-bold'>should</b> be automatic, but someone does it by hand or watches over it.",
         "Said of a program: the very expensive one nobody opens any more.",
         "Said of a company: yours, probably.",
       ],

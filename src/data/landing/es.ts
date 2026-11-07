@@ -25,7 +25,7 @@ export const es = {
       palabra: "chi·no·má·ti·co, ca",
       categoria: "adj.",
       acepciones: [
-        "Dicho de un proceso: que <b class='font-bold'>parece</b> automatizado, pero hay alguien haciéndolo a mano.",
+        "Dicho de un proceso: que <b class='font-bold'>debería</b> ser automático, pero lo hace o lo vigila alguien a mano.",
         "Dicho de un programa: el que te vendieron carísimo y hoy nadie abre.",
         "Dicho de una empresa: la tuya, probablemente.",
       ],
