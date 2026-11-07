@@ -1,0 +1,161 @@
+---
+import { Image } from "astro:assets";
+import { wa } from "@config";
+import { copia } from "@data/landing";
+import { heroF } from "@data/heroes/f";
+import { routes, type Lang } from "@i18n/ui";
+import fotoSalo from "@assets/site/fotoSalo.jpeg";
+import "@assets/heroes/f/hero-f.css";
+import "@assets/heroes/f/hero-f-ancho.css";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const c = copia(lang);
+const hero = c.hero;
+const reposo =
+  hero.linea2.charAt(0).toLocaleLowerCase(lang) + hero.linea2.slice(1);
+const acepciones = hero.dicc.acepciones;
+const ultima = acepciones.length - 1;
+
+// The last sense's first clause after the colon carries the headline's underline.
+const [dicho, remate = ""] = acepciones[ultima].split(/:\s/);
+const [tuya, ...resto] = remate.split(", ");
+const estrella = resto.length
+  ? `${dicho}: <span class="hf-tuya">${tuya}</span>, ${resto.join(", ")}`
+  : acepciones[ultima];
+---
+
+<section class="hf" aria-labelledby="hf-h1">
+  <div class="hoja hf-hoja">
+    <div class="hf-grid">
+      <h1 id="hf-h1" class="hf-h1" data-mide="h1">
+        <span class="hf-l1">{hero.linea1}</span>{" "}<span
+          class="hf-slot"
+          data-hf-slot
+          data-frases={JSON.stringify(heroF.frases)}
+          ><span class="hf-frase">{reposo}</span></span
+        >
+      </h1>
+      <script is:inline>
+        (() => {
+          const slot = document.querySelector("[data-hf-slot]");
+          if (!slot || matchMedia("(prefers-reduced-motion: reduce)").matches)
+            return;
+          const reposo = slot.firstElementChild;
+          const frases = JSON.parse(slot.dataset.frases);
+          const espera = ms => new Promise(r => setTimeout(r, ms));
+          const fijar = (el, estado) => {
+            el.style.transition = "none";
+            el.dataset.estado = estado;
+            void el.offsetWidth;
+            el.style.transition = "";
+          };
+          const crear = () =>
+            frases.map(texto => {
+              const capa = document.createElement("span");
+              capa.className = "hf-frase";
+              capa.setAttribute("aria-hidden", "true");
+              capa.textContent = texto;
+              slot.append(capa);
+              fijar(capa, "abajo");
+              return capa;
+            });
+          let corriendo = false;
+          const recorrer = async (pasos, primera = 1700) => {
+            corriendo = true;
+            for (let i = 1; i < pasos.length; i++) {
+              await espera(i === 1 ? primera : 1700);
+              const sale = pasos[i - 1];
+              sale.dataset.estado = "arriba";
+              pasos[i].dataset.estado = "";
+              setTimeout(() => fijar(sale, "abajo"), 700);
+            }
+            await espera(750);
+            slot
+              .querySelectorAll("[aria-hidden]")
+              .forEach(capa => capa.remove());
+            corriendo = false;
+          };
+          const capas = crear();
+          fijar(capas[0], "");
+          fijar(reposo, "abajo");
+          recorrer([...capas, reposo]);
+          slot.closest("h1").addEventListener("pointerenter", e => {
+            if (e.pointerType !== "mouse" || corriendo) return;
+            recorrer([reposo, ...crear(), reposo], 60);
+          });
+        })();
+      </script>
+
+      <div class="hf-linea" aria-hidden="true"></div>
+
+      <div class="hf-pitch">
+        <p class="hf-icp" data-mide="icp">{heroF.icp}</p>
+        <p class="hf-bajada">{hero.bajada}</p>
+        <div class="hf-ctas" data-pliegue data-mide="ctas">
+          <a
+            href={routes.cuentame[lang]}
+            data-origen="hero"
+            class="hf-btn hf-btn--uno"
+            >{c.cta.cuestionario}<svg class="hf-arw" aria-hidden="true"
+              ><use href="#i-arw"></use></svg
+            ></a
+          >
+          <a
+            href={wa(c.cta.waTexto)}
+            target="_blank"
+            rel="noopener"
+            data-origen="hero"
+            class="hf-btn hf-btn--dos"
+            ><svg aria-hidden="true"><use href="#i-chat"></use></svg>{
+              c.cta.wa
+            }</a
+          >
+        </div>
+      </div>
+
+      <div class="hf-dicc">
+        <p class="hf-entrada">
+          <span class="hf-palabra">{hero.dicc.palabra}</span>
+          <span class="hf-cat">{hero.dicc.categoria}</span>
+        </p>
+        <ol>
+          {
+            acepciones.map((a, i) => (
+              <li
+                class:list={[
+                  "hf-acepcion",
+                  i > 0 && i < ultima && "hf-media",
+                  i === ultima && "hf-estrella",
+                ]}
+                data-mide={
+                  i === 0
+                    ? "acepcion-1"
+                    : i === ultima
+                      ? "acepcion-4"
+                      : undefined
+                }
+              >
+                <span class="hf-num">{i + 1}</span>
+                <span set:html={i === ultima ? estrella : a} />
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+
+      <div class="hf-foto" data-mide="foto">
+        <Image
+          src={fotoSalo}
+          widths={[160, 320, 480, 640, 800]}
+          sizes="(min-width:1024px) 360px, (min-width:640px) 300px, 160px"
+          alt={hero.fichaAlt}
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
+    </div>
+  </div>
+</section>

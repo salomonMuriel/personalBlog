@@ -28,7 +28,7 @@ const agentes = [
 const cuerpo = `${agentes
   .map(
     a =>
-      `User-agent: ${a}\nAllow: /\nDisallow: /keystatic\nDisallow: /api/\nDisallow: /prototipos/\n`
+      `User-agent: ${a}\nAllow: /\nDisallow: /keystatic\nDisallow: /api/\nDisallow: /prototipos/\nDisallow: /heroes/\n`
   )
   .join("\n")}
 Sitemap: ${new URL("sitemap-index.xml", SITE.website).href}

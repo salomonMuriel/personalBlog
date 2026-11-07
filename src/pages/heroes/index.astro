@@ -1,0 +1,50 @@
+---
+import Layout from "@layouts/Layout.astro";
+import { variantes } from "@components/home/heroes";
+
+export const prerender = true;
+
+const conceptos: Record<(typeof variantes)[number], string> = {
+  a: "Cartel nocturno",
+  b: "Pequeño Larousse",
+  c: "La hoja de cálculo",
+  d: "Hoja de vida",
+  e: "El taller",
+  f: "La palabra que cambia",
+  g: "Tríptico con sistemas",
+  h: "Dividido, con la ficha pegada",
+};
+---
+
+<Layout
+  title="Versiones del hero"
+  description="Versiones del hero para comparar."
+  lang="es"
+  noindex
+  enfoque
+>
+  <section class="hoja py-12">
+    <h1 class="font-arch text-4xl font-black uppercase">Versiones del hero</h1>
+    <ol class="mt-8 divide-y divide-linea border-y border-linea">
+      <li>
+        <a href="/" class="flex items-baseline gap-4 py-4 hover:text-rojo2"
+          ><span class="font-mono w-8 text-sm uppercase text-gris">hoy</span
+          ><span class="text-lg font-semibold">El hero actual</span></a
+        >
+      </li>
+      {
+        variantes.map(v => (
+          <li>
+            <a
+              href={`/heroes/${v}/`}
+              class="flex items-baseline gap-4 py-4 hover:text-rojo2"
+            >
+              <span class="font-mono w-8 text-sm uppercase text-gris">{v}</span>
+              <span class="text-lg font-semibold">{conceptos[v]}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+</Layout>

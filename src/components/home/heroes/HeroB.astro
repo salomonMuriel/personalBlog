@@ -1,0 +1,683 @@
+---
+import { Image } from "astro:assets";
+import { wa } from "@config";
+import { copia } from "@data/landing";
+import { heroB } from "@data/heroes/b";
+import { routes, type Lang } from "@i18n/ui";
+import lamina from "@assets/heroes/b/lamina.jpg";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const c = copia(lang).hero;
+const cta = copia(lang).cta;
+const [primera, segunda, tercera, cuarta] = c.dicc.acepciones;
+const siguiente = heroB.siguiente;
+---
+
+<section class="hb relative overflow-hidden">
+  <svg class="absolute h-0 w-0" aria-hidden="true" focusable="false">
+    <filter id="hb-tinta" x="-4%" y="-8%" width="108%" height="116%">
+      <feTurbulence
+        type="fractalNoise"
+        baseFrequency="0.75"
+        numOctaves="2"
+        seed="3"
+        result="grano"></feTurbulence>
+      <feDisplacementMap
+        in="SourceGraphic"
+        in2="grano"
+        scale="1.6"
+        xChannelSelector="R"
+        yChannelSelector="G"
+        result="borde"></feDisplacementMap>
+      <feTurbulence
+        type="fractalNoise"
+        baseFrequency="0.06 0.11"
+        numOctaves="3"
+        seed="11"
+        result="manchas"></feTurbulence>
+      <feColorMatrix
+        in="manchas"
+        type="matrix"
+        values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -1.6 0 0 0 1.85"
+        result="vacios"></feColorMatrix>
+      <feComposite in="borde" in2="vacios" operator="in"></feComposite>
+    </filter>
+  </svg>
+
+  <div class="hoja hb-hoja">
+    <div class="hb-cabeza" aria-hidden="true">
+      <span>{heroB.cabeza.primera}</span>
+      <span class="hb-folio">{heroB.cabeza.pagina}</span>
+      <span>{heroB.cabeza.ultima}</span>
+    </div>
+
+    <p class="hb-lema"><dfn>{c.dicc.palabra}</dfn></p>
+
+    <div class="hb-cuerpo">
+      <div class="hb-entrada">
+        <div class="hb-texto">
+          <i class="hb-cat">{c.dicc.categoria}</i>
+          <ol class="hb-acepciones">
+            <li data-mide="acepcion-1">
+              <b>1.</b>
+              <span set:html={primera} />
+            </li>
+            <li class="hb-media"><b>2.</b> <span set:html={segunda} /></li>
+            <li class="hb-media"><b>3.</b> <span set:html={tercera} /></li>
+            <li class="hb-cuarta">
+              <span class="hb-anotada">
+                <span class="hb-marcada" data-mide="acepcion-4">
+                  <b>4.</b>
+                  <span set:html={cuarta} />
+                  <svg
+                    class="hb-circulo"
+                    viewBox="0 0 200 60"
+                    preserveAspectRatio="none"
+                    aria-hidden="true"
+                    ><path
+                      pathLength="1"
+                      d="M30 9C80 2 158 1 186 7c11 3 12 37 2 45-36 8-120 8-172 3C3 53 1 20 9 13c14-10 46-10 78-11"
+                    ></path></svg
+                  >
+                </span>
+                <span class="hb-nota">
+                  <span class="hb-nota-texto">{heroB.notaMargen}</span>
+                  <svg class="hb-flecha" viewBox="0 0 64 84" aria-hidden="true"
+                    ><path pathLength="1" d="M3 78C30 80 52 62 54 8"
+                    ></path><path pathLength="1" d="M42 20l12-14 9 16"
+                    ></path></svg
+                  >
+                </span>
+              </span>
+            </li>
+          </ol>
+        </div>
+
+        <p class="hb-siguiente">
+          <b>{siguiente.palabra}</b>
+          <i>{siguiente.categoria}</i>
+          <span class="hb-materia">{siguiente.materia}</span>
+          {siguiente.definicion}
+        </p>
+      </div>
+
+      <figure class="hb-lamina">
+        <div class="hb-marco">
+          <Image
+            src={lamina}
+            alt={c.fichaAlt}
+            widths={[130, 160, 220, 260, 300, 340, 450, 600]}
+            sizes="(min-width: 1024px) min(35.25vh, 22.5vw), (min-width: 640px) 216px, 33vw"
+            loading="eager"
+            fetchpriority="high"
+            quality={86}
+            data-mide="foto"
+            class="hb-foto"
+          />
+        </div>
+        <figcaption>{heroB.pieLamina}</figcaption>
+      </figure>
+
+      <div class="hb-respuesta">
+        <h1 class="hb-sello" data-mide="h1">
+          <span class="hb-sello-1">{c.linea1}</span>
+          <span class="hb-sello-2">{c.linea2}</span>
+        </h1>
+        <p class="hb-icp" data-mide="icp">{heroB.icp}</p>
+        <p class="hb-bajada">{c.bajada}</p>
+        <div class="hb-ctas" data-pliegue data-mide="ctas">
+          <a
+            href={routes.cuentame[lang]}
+            data-origen="hero"
+            class="hb-boton hb-boton--tinta"
+          >
+            {cta.cuestionario}<svg class="hb-flechita" aria-hidden="true"
+              ><use href="#i-arw"></use></svg
+            >
+          </a>
+          <a
+            href={wa(cta.waTexto)}
+            target="_blank"
+            rel="noopener"
+            data-origen="hero"
+            class="hb-boton hb-boton--linea"
+          >
+            <svg aria-hidden="true"><use href="#i-chat"></use></svg><span
+              class="hb-largo">{cta.wa}</span
+            ><span class="hb-corto">{heroB.waCorto}</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <span class="hb-pestana" aria-hidden="true">{heroB.pestana}</span>
+</section>
+
+<style>
+  .hb {
+    --k: 6.26;
+    --regla: var(--color-linea);
+    --pad-col: 0.85rem;
+  }
+  .hb-hoja {
+    container-type: inline-size;
+    display: flex;
+    flex-direction: column;
+    padding-top: 0.7rem;
+    padding-bottom: 1.4rem;
+  }
+
+  .hb-cabeza {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: baseline;
+    padding-bottom: 0.35rem;
+    border-bottom: 1px solid var(--color-tinta);
+    font-family: var(--font-arch);
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+  .hb-cabeza > :last-child {
+    text-align: right;
+  }
+  .hb-folio {
+    font-weight: 500;
+    color: var(--color-gris);
+  }
+
+  .hb-lema {
+    padding-block: 0.06em 0.1em;
+    font-family: var(--font-arch);
+    font-size: calc(100cqi / var(--k));
+    font-weight: 900;
+    font-variation-settings:
+      "wdth" 62,
+      "wght" 900;
+    line-height: 1;
+    letter-spacing: -0.012em;
+    white-space: nowrap;
+  }
+  .hb-lema dfn {
+    font-style: normal;
+  }
+
+  .hb-cuerpo {
+    flex: 1 1 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "entrada lamina"
+      "respuesta respuesta";
+    border-top: 1px solid var(--regla);
+  }
+
+  .hb-entrada {
+    grid-area: entrada;
+    display: flex;
+    flex-direction: column;
+    padding: 0.75rem var(--pad-col) 0 0;
+  }
+  .hb-texto {
+    font-family: var(--font-arch);
+    font-size: 0.875rem;
+    line-height: 1.4;
+    text-align: justify;
+    hyphens: auto;
+  }
+  .hb-cat,
+  .hb-siguiente i {
+    font-style: italic;
+    font-weight: 400;
+  }
+  .hb-cat {
+    margin-right: 0.2em;
+  }
+  .hb-acepciones,
+  .hb-acepciones > li {
+    display: inline;
+  }
+  .hb-acepciones b {
+    font-weight: 800;
+  }
+  .hb-acepciones > li.hb-media {
+    display: none;
+  }
+  .hb-acepciones > li.hb-cuarta {
+    display: block;
+    margin-top: 0.85rem;
+    padding-inline: 0.55rem;
+    text-align: left;
+    hyphens: manual;
+    text-wrap: balance;
+  }
+  .hb-anotada {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-end;
+    max-width: 13.5em;
+  }
+  .hb-marcada {
+    position: relative;
+    display: inline-block;
+    align-self: stretch;
+  }
+  .hb-circulo {
+    position: absolute;
+    top: -0.6rem;
+    left: -0.95rem;
+    width: calc(100% + 1.75rem);
+    height: calc(100% + 1.15rem);
+    overflow: visible;
+    pointer-events: none;
+  }
+  .hb-circulo path,
+  .hb-flecha path {
+    fill: none;
+    stroke: var(--color-rojo);
+    stroke-width: 2.1;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: hb-trazo 0.7s cubic-bezier(0.5, 0.05, 0.3, 1) 0.2s forwards;
+  }
+
+  .hb-nota,
+  .hb-siguiente {
+    display: none;
+  }
+
+  .hb-lamina {
+    grid-area: lamina;
+    padding: 0.75rem 0 0 var(--pad-col);
+    border-left: 1px solid var(--regla);
+  }
+  .hb-marco {
+    border: 1px solid var(--color-tinta);
+    padding: 3px;
+  }
+  .hb-foto {
+    display: block;
+    width: clamp(6.8rem, 33vw, 9.5rem);
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: 50% 30%;
+  }
+  .hb-lamina figcaption {
+    margin-top: 0.3rem;
+    font-family: var(--font-arch);
+    font-size: 0.7rem;
+    font-style: italic;
+    text-align: center;
+    color: var(--color-gris);
+  }
+
+  .hb-respuesta {
+    grid-area: respuesta;
+    padding-top: 1rem;
+  }
+  .hb-sello {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 0.2rem;
+    padding: 0.16em 0.32em 0.12em;
+    border: 0.07em solid currentColor;
+    box-shadow:
+      inset 0 0 0 0.05em var(--color-papel),
+      inset 0 0 0 0.085em currentColor;
+    border-radius: 0.06em;
+    color: var(--color-rojo);
+    font-family: var(--font-arch);
+    font-size: clamp(1.7rem, 8.2vw, 2.2rem);
+    font-weight: 900;
+    line-height: 0.92;
+    text-transform: uppercase;
+    transform: rotate(-2.5deg);
+    transform-origin: 40% 55%;
+    filter: url(#hb-tinta);
+    mix-blend-mode: multiply;
+    animation: hb-sellar 0.26s cubic-bezier(0.2, 0.9, 0.25, 1) 0.85s both;
+  }
+  .hb-sello > span {
+    white-space: nowrap;
+  }
+  .hb-sello-1 {
+    font-variation-settings:
+      "wdth" 106,
+      "wght" 900;
+  }
+  .hb-sello-2 {
+    font-variation-settings:
+      "wdth" 72,
+      "wght" 900;
+  }
+
+  .hb-icp {
+    margin-top: 0.85rem;
+    max-width: 30ch;
+    font-family: var(--font-arch);
+    font-size: 1.04rem;
+    font-weight: 700;
+    line-height: 1.3;
+    text-wrap: balance;
+  }
+  .hb-bajada {
+    display: none;
+    margin-top: 0.55rem;
+    max-width: 50ch;
+    font-size: 0.95rem;
+    line-height: 1.45;
+  }
+
+  .hb-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.9rem;
+  }
+  .hb-boton {
+    display: inline-flex;
+    flex: 1 1 auto;
+    min-height: 48px;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    border-radius: 2px;
+    padding: 0.7rem 0.75rem;
+    font-family: var(--font-arch);
+    font-size: 0.9rem;
+    font-weight: 700;
+    white-space: nowrap;
+    transition:
+      background-color 0.18s,
+      border-color 0.18s,
+      color 0.18s;
+  }
+  .hb-boton:active {
+    transform: translateY(1px);
+  }
+  .hb-boton svg {
+    width: 18px;
+    height: 18px;
+    flex: none;
+  }
+  .hb-flechita {
+    display: none;
+  }
+  .hb-boton--tinta {
+    background: var(--color-rojo2);
+    color: #fff;
+  }
+  .hb-boton--tinta:hover {
+    background: var(--color-tinta);
+  }
+  .hb-boton--linea {
+    border: 1.5px solid var(--color-linea2);
+    color: var(--color-tinta);
+  }
+  .hb-boton--linea:hover {
+    border-color: var(--color-tinta);
+    background: var(--color-papel2);
+  }
+  .hb-largo {
+    display: none;
+  }
+
+  .hb-pestana {
+    display: none;
+  }
+
+  @keyframes hb-trazo {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  @keyframes hb-sellar {
+    from {
+      transform: rotate(-4deg) scale(1.05);
+    }
+  }
+  @keyframes hb-escribir {
+    from {
+      clip-path: inset(0 100% 0 0);
+    }
+  }
+
+  @media (min-width: 400px) {
+    .hb-flechita {
+      display: block;
+    }
+  }
+
+  @media (max-width: 639px) and (min-height: 780px) {
+    .hb-bajada {
+      display: block;
+    }
+    .hb-texto {
+      font-size: 0.92rem;
+    }
+  }
+
+  @media (min-width: 640px) {
+    .hb {
+      --pad-col: 1.4rem;
+    }
+    .hb-hoja {
+      padding-top: 1rem;
+      padding-bottom: 2rem;
+    }
+    .hb-cabeza {
+      font-size: 0.85rem;
+    }
+    .hb-acepciones > li.hb-media {
+      display: inline;
+    }
+    .hb-texto {
+      font-size: 1rem;
+    }
+    .hb-entrada,
+    .hb-lamina {
+      padding-top: 1rem;
+    }
+    .hb-foto {
+      width: 13.5rem;
+    }
+    .hb-nota {
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-end;
+      gap: 0.1rem;
+      margin-top: 0.7rem;
+      padding-right: 0.15rem;
+      text-align: right;
+      font-family: var(--font-pen);
+      font-size: clamp(1.55rem, 3.1svh, 2.05rem);
+      font-weight: 600;
+      line-height: 1;
+      color: var(--color-rojo2);
+      transform: rotate(-4deg);
+      transform-origin: right bottom;
+    }
+    .hb-nota-texto {
+      animation: hb-escribir 0.45s steps(12, end) 1.05s both;
+    }
+    .hb-flecha {
+      width: 1.75em;
+      height: auto;
+      margin-bottom: 0.45em;
+      overflow: visible;
+    }
+    .hb-flecha path {
+      animation-duration: 0.3s;
+      animation-delay: 1.45s;
+    }
+    .hb-flecha path + path {
+      animation-duration: 0.16s;
+      animation-delay: 1.72s;
+    }
+    .hb-respuesta {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      column-gap: 1.75rem;
+      align-items: start;
+      padding-top: 1.4rem;
+    }
+    .hb-sello {
+      grid-row: span 2;
+      font-size: 2.35rem;
+    }
+    .hb-icp {
+      margin-top: 0.2rem;
+    }
+    .hb-bajada {
+      display: block;
+    }
+    .hb-ctas {
+      grid-column: 1 / -1;
+      margin-top: 1.4rem;
+    }
+    .hb-boton {
+      flex: 0 0 auto;
+      padding-inline: 1.25rem;
+      font-size: 0.97rem;
+    }
+    .hb-largo {
+      display: inline;
+    }
+    .hb-corto {
+      display: none;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .hb {
+      --pad-col: 1.6rem;
+      min-height: calc(100svh - 61px);
+      display: flex;
+    }
+    .hb-hoja {
+      flex: 1 1 auto;
+      width: 100%;
+      padding-top: clamp(0.8rem, 2.2svh, 1.4rem);
+      padding-bottom: clamp(1.2rem, 4svh, 2.4rem);
+    }
+    .hb-cuerpo {
+      grid-template-columns: minmax(0, 0.8fr) auto minmax(0, 1.3fr);
+      grid-template-areas: "entrada lamina respuesta";
+    }
+    .hb-entrada,
+    .hb-lamina {
+      padding-top: clamp(0.9rem, 2.6svh, 1.6rem);
+    }
+    .hb-texto {
+      font-size: clamp(0.94rem, 0.3rem + 1.4svh, 1.2rem);
+      line-height: 1.42;
+    }
+    .hb-siguiente {
+      display: block;
+      margin-top: auto;
+      padding-top: 1rem;
+      font-family: var(--font-arch);
+      font-size: clamp(0.82rem, 0.4rem + 0.8svh, 0.98rem);
+      line-height: 1.4;
+      color: var(--color-gris);
+      text-align: justify;
+      hyphens: auto;
+    }
+    .hb-siguiente b {
+      font-weight: 800;
+      color: var(--color-tinta);
+    }
+    .hb-materia {
+      font-size: 0.86em;
+      font-variant-caps: all-small-caps;
+      letter-spacing: 0.04em;
+    }
+    .hb-foto {
+      width: auto;
+      height: clamp(14rem, min(47svh, 30vw), 28rem);
+      aspect-ratio: 3 / 4;
+    }
+    .hb-lamina {
+      padding-inline: var(--pad-col);
+    }
+    .hb-respuesta {
+      display: flex;
+      flex-direction: column;
+      container-type: inline-size;
+      padding: clamp(1.2rem, 3.4svh, 2.2rem) 0 0 var(--pad-col);
+      border-left: 1px solid var(--regla);
+    }
+    .hb-sello {
+      align-self: flex-start;
+      margin-left: calc(var(--pad-col) * -1 - 0.35rem);
+      font-size: min(100cqi / 8.4, 6.6svh);
+    }
+    .hb-boton {
+      padding-inline: 1rem;
+      font-size: 0.92rem;
+    }
+    .hb-icp {
+      max-width: 26ch;
+      margin-top: clamp(1rem, 4.2svh, 2.6rem);
+      font-size: clamp(1.1rem, 0.2rem + 2.3svh, 1.6rem);
+      line-height: 1.22;
+      letter-spacing: -0.008em;
+    }
+    .hb-bajada {
+      margin-top: clamp(0.6rem, 1.6svh, 1rem);
+      font-size: clamp(0.95rem, 0.35rem + 1.2svh, 1.15rem);
+    }
+    .hb-ctas {
+      margin-top: clamp(1rem, 4svh, 2.4rem);
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .hb-pestana {
+      position: absolute;
+      top: 44%;
+      right: 0;
+      display: grid;
+      width: 2.1rem;
+      height: 5.5rem;
+      place-items: center;
+      border-radius: 0.6rem 0 0 0.6rem;
+      background: var(--color-tinta);
+      color: var(--color-papel);
+      font-family: var(--font-arch);
+      font-size: 1.05rem;
+      font-weight: 800;
+    }
+  }
+
+  @media (min-width: 1024px) and (max-height: 760px) {
+    .hb {
+      --k: 8.06;
+    }
+    .hb-lema {
+      font-variation-settings:
+        "wdth" 82,
+        "wght" 900;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hb-circulo path,
+    .hb-flecha path {
+      animation: none;
+      stroke-dashoffset: 0;
+    }
+    .hb-sello,
+    .hb-nota-texto {
+      animation: none;
+    }
+  }
+</style>

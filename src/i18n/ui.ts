@@ -30,10 +30,6 @@ export const ui = {
     "nav.saltar": "Saltar al contenido",
     "nav.volver": "Volver al inicio",
 
-    "rotulo.parte": "Parte de operación",
-    "rotulo.practica": "Práctica personal de Salomón Muriel",
-    "rotulo.ciudad": "Bogotá, Colombia",
-
     "pie.empezar": "Cómo empezar",
     "pie.empezarTxt": "Escríbeme por WhatsApp o llena el cuestionario.",
     "pie.queConstruyo": "Qué construyo",
@@ -72,10 +68,6 @@ export const ui = {
     "nav.paginas": "Pages",
     "nav.saltar": "Skip to content",
     "nav.volver": "Back home",
-
-    "rotulo.parte": "Operations report",
-    "rotulo.practica": "Salomón Muriel's personal practice",
-    "rotulo.ciudad": "Bogotá, Colombia",
 
     "pie.empezar": "How to start",
     "pie.empezarTxt": "Message me on WhatsApp or fill in the questionnaire.",

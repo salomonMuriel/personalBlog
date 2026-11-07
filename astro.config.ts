@@ -53,6 +53,7 @@ export default defineConfig({
         !page.includes("/keystatic") &&
         !page.includes("/ficha/") &&
         !page.includes("/cuentame/") &&
+        !page.includes("/heroes/") &&
         !page.includes("/en/tell-me/") &&
         !page.includes("/en/brief/") &&
         !page.includes("/posts/") &&

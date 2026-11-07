@@ -1,0 +1,266 @@
+/* Hero F: one oversized headline whose second line cycles once through the
+   pains and rests on the real words. Phones here; wider screens in
+   hero-f-ancho.css. */
+
+.hf {
+  --hf-nav: 98px;
+  --hf-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100svh - var(--hf-nav));
+  padding-block: 14px 22px;
+  overflow-x: clip;
+}
+.hf-hoja {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  width: 100%;
+}
+.hf-grid {
+  container-type: inline-size;
+  display: grid;
+  flex: 1;
+  grid-template-columns: 6.5rem minmax(0, 1fr);
+  grid-template-rows: repeat(5, auto) 1fr;
+  grid-template-areas:
+    "h1 h1"
+    "linea linea"
+    "foto icp"
+    "bajada bajada"
+    "dicc dicc"
+    "ctas ctas";
+  column-gap: 16px;
+}
+
+/* ── headline: --hf-k is the widest phrase's width in em at this face
+   setting plus 2%, so every phrase fits on one line ── */
+.hf-h1 {
+  --hf-k: 7.6;
+  grid-area: h1;
+  font-family: var(--font-arch);
+  font-size: min(calc(100cqi / var(--hf-k)), 64px);
+  font-stretch: 62%;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 0.92;
+  text-wrap: nowrap;
+}
+.hf-l1 {
+  display: block;
+}
+/* A phrase arrives out of focus and settles; its underline then draws in.
+   The leaving one blurs out upward faster, so two never read at once. */
+.hf-slot {
+  display: grid;
+  justify-items: start;
+}
+.hf-frase {
+  grid-area: 1 / 1;
+  white-space: nowrap;
+  padding-bottom: 0.1em;
+  background: linear-gradient(var(--rojo), var(--rojo)) 0 100% / 100%
+    max(3px, 0.05em) no-repeat;
+  transition:
+    opacity 0.5s var(--hf-ease),
+    filter 0.5s var(--hf-ease),
+    transform 0.6s var(--hf-ease),
+    background-size 0.5s var(--hf-ease) 0.3s;
+}
+.hf-frase[data-estado="abajo"] {
+  opacity: 0;
+  filter: blur(0.12em);
+  transform: translateY(0.16em);
+  background-size: 0% max(3px, 0.05em);
+}
+.hf-frase[data-estado="arriba"] {
+  opacity: 0;
+  filter: blur(0.12em);
+  transform: translateY(-0.16em);
+  transition-duration: 0.3s, 0.3s, 0.4s, 0.3s;
+  transition-delay: 0s;
+}
+
+.hf-linea {
+  grid-area: linea;
+  margin-block: 16px 14px;
+  border-top: 1px solid var(--linea);
+}
+
+/* ── pitch ── */
+.hf-pitch {
+  display: contents;
+}
+.hf-icp {
+  grid-area: icp;
+  align-self: center;
+  font-size: 1.06rem;
+  font-weight: 500;
+  line-height: 1.38;
+  text-wrap: balance;
+}
+.hf-bajada {
+  grid-area: bajada;
+  display: none;
+  color: var(--gris);
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+.hf-ctas {
+  grid-area: ctas;
+  align-self: end;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 18px;
+}
+.hf-btn {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border-radius: 2px;
+  padding: 12px 20px;
+  font-size: 0.97rem;
+  font-weight: 700;
+  white-space: nowrap;
+  transition:
+    transform 140ms var(--hf-ease),
+    background-color 140ms var(--hf-ease),
+    border-color 140ms var(--hf-ease);
+}
+.hf-btn svg {
+  width: 18px;
+  height: 18px;
+  flex: none;
+}
+.hf-btn--uno {
+  background: var(--rojo2);
+  color: #fff;
+}
+.hf-btn--dos {
+  border: 1.5px solid var(--linea2);
+}
+.hf-arw {
+  opacity: 0.85;
+  transition: transform 140ms var(--hf-ease);
+}
+@media (hover: hover) and (pointer: fine) {
+  .hf-btn:hover {
+    transform: translateY(-1px);
+  }
+  .hf-btn--uno:hover {
+    background: var(--tinta);
+  }
+  .hf-btn--dos:hover {
+    border-color: var(--tinta);
+    background: var(--papel2);
+  }
+  .hf-btn:hover .hf-arw {
+    transform: translateX(3px);
+  }
+}
+.hf-btn:active {
+  transform: translateY(1px) scale(0.985);
+  transition-duration: 90ms;
+}
+
+/* ── dictionary ── */
+.hf-dicc {
+  grid-area: dicc;
+  margin-top: 16px;
+}
+.hf-entrada {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--linea);
+}
+.hf-palabra {
+  font-family: var(--font-slab);
+  font-size: 1.25rem;
+  line-height: 1.1;
+}
+.hf-cat {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--gris);
+}
+.hf-acepcion {
+  display: grid;
+  grid-template-columns: 1.4rem minmax(0, 1fr);
+  padding-block: 8px;
+  border-bottom: 1px solid var(--linea);
+  font-size: 0.92rem;
+  line-height: 1.42;
+  text-wrap: pretty;
+}
+.hf-media {
+  display: none;
+}
+.hf-num {
+  font-family: var(--font-slab);
+  font-size: 0.82em;
+  line-height: 1.75;
+  color: var(--rojo2);
+}
+.hf-estrella {
+  font-size: 1.02rem;
+  font-weight: 600;
+}
+.hf-tuya {
+  padding-bottom: 0.08em;
+  background: linear-gradient(var(--rojo), var(--rojo)) 0 100% / 100% 2px
+    no-repeat;
+}
+
+/* ── portrait ── */
+.hf-foto {
+  grid-area: foto;
+  position: relative;
+  align-self: start;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 2px;
+  background: #0d0e10;
+}
+.hf-foto img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 30%;
+  transform: scale(1.28);
+  transform-origin: 50% 30%;
+}
+
+/* taller phones have room for the offer line */
+@media (max-width: 639px) and (min-height: 760px) {
+  .hf {
+    padding-block: 20px 26px;
+  }
+  .hf-grid {
+    grid-template-columns: 7.5rem minmax(0, 1fr);
+  }
+  .hf-bajada {
+    display: block;
+    margin-top: 14px;
+    font-size: 0.95rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hf-frase,
+  .hf-btn,
+  .hf-arw {
+    transition: none;
+  }
+  .hf-btn:hover,
+  .hf-btn:active,
+  .hf-btn:hover .hf-arw {
+    transform: none;
+  }
+}

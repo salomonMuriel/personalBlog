@@ -1,0 +1,682 @@
+---
+import { Image } from "astro:assets";
+import { wa } from "@config";
+import { copia } from "@data/landing";
+import { heroD } from "@data/heroes/d";
+import { routes, type Lang } from "@i18n/ui";
+import fotoNoche from "@assets/heroes/d/salo-noche.jpg";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const c = copia(lang);
+const hero = c.hero;
+
+// Each sense becomes a data row: "Dicho de un proceso" is the row label.
+const acepciones = hero.dicc.acepciones.map(texto => {
+  const corte = texto.indexOf(": ");
+  if (corte === -1) return { rotulo: "", definicion: texto };
+  return {
+    rotulo: texto.slice(0, corte),
+    definicion: texto.slice(corte + 2),
+  };
+});
+const marcas = ["acepcion-1", undefined, undefined, "acepcion-4"];
+---
+
+<section class="hd relative isolate overflow-hidden bg-panelhondo">
+  <div class="hd-hoja hoja">
+    <div class="hd-foto">
+      <Image
+        src={fotoNoche}
+        widths={[320, 480, 637]}
+        sizes="(min-width: 1024px) 680px, (min-width: 640px) 460px, 270px"
+        alt={hero.fichaAlt}
+        class="hd-img"
+        loading="eager"
+        fetchpriority="high"
+      />
+      <span class="hd-cara" data-mide="foto" aria-hidden="true"></span>
+    </div>
+
+    <div class="hd-cuerpo">
+      <div class="hd-cabeza">
+        <p class="hd-icp" data-mide="icp">{heroD.icp}</p>
+
+        <h1 class="hd-h1" data-mide="h1">
+          <span>{hero.linea1}</span>
+          <span>{hero.linea2}</span>
+        </h1>
+
+        <p class="hd-resumen">{hero.bajada}</p>
+        <p class="hd-resumen-corto">{heroD.resumenCorto}</p>
+
+        <div class="hd-ctas" data-pliegue data-mide="ctas">
+          <a
+            href={routes.cuentame[lang]}
+            data-origen="hero"
+            class="hd-boton hd-boton--primario"
+          >
+            {c.cta.cuestionario}<svg aria-hidden="true"
+              ><use href="#i-arw"></use></svg
+            >
+          </a>
+          <a
+            href={wa(c.cta.waTexto)}
+            target="_blank"
+            rel="noopener"
+            data-origen="hero"
+            class="hd-boton hd-boton--secundario"
+          >
+            <svg aria-hidden="true"><use href="#i-chat"></use></svg>{c.cta.wa}
+          </a>
+        </div>
+      </div>
+
+      <div class="hd-dicc">
+        <div class="hd-dicc-cab">
+          <p class="hd-palabra">{hero.dicc.palabra}</p>
+          <p class="hd-categoria">{hero.dicc.categoria}</p>
+        </div>
+        <ol class="hd-acepciones">
+          {
+            acepciones.map((a, i) => (
+              <li
+                class:list={[
+                  "hd-acep",
+                  i === 3 && "hd-acep--tuya",
+                  (i === 1 || i === 2) && "hd-acep--media",
+                ]}
+                data-mide={marcas[i]}
+              >
+                <span class="hd-num" aria-hidden="true">
+                  {i + 1}
+                </span>
+                <span class="hd-rotulo">{a.rotulo}</span>
+                <span class="hd-def" set:html={a.definicion} />
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+
+      <dl class="hd-cifras">
+        {
+          heroD.cifras.map(cifra => (
+            <div class="hd-cifra">
+              <dt>{cifra.rotulo}</dt>
+              <dd>{cifra.valor}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hd {
+    --nav: 103px;
+    --tinta-noche: #f3f2ee;
+    --texto-noche: #d4d2cc;
+    --gris-noche: #a19f99;
+    --linea-noche: rgb(255 255 255 / 0.14);
+    --linea-fina: rgb(255 255 255 / 0.08);
+    min-height: calc(100svh - var(--nav));
+    display: grid;
+    color: var(--tinta-noche);
+  }
+  .hd-hoja {
+    position: relative;
+    width: 100%;
+    display: grid;
+  }
+
+  /* Blacks are crushed in the asset; lighten melts the backdrop into the band. */
+  .hd-foto {
+    position: absolute;
+    top: -36px;
+    right: -60px;
+    height: 356px;
+    aspect-ratio: 637 / 860;
+    mix-blend-mode: lighten;
+  }
+  .hd-img {
+    --fade-abajo: linear-gradient(to bottom, #000 46%, transparent 66%);
+    --fade-izquierda: linear-gradient(to right, transparent 0, #000 32%);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    -webkit-mask-image: var(--fade-abajo), var(--fade-izquierda);
+    -webkit-mask-composite: source-in;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-size: 100% 100%;
+    mask-image: var(--fade-abajo), var(--fade-izquierda);
+    mask-composite: intersect;
+    mask-repeat: no-repeat;
+    mask-size: 100% 100%;
+    /* The crop's last row (white shirt) otherwise survives the mask by a pixel. */
+    clip-path: inset(0 0 1.5% 0);
+  }
+  /* Face and shoulders, in percentages of the crop. */
+  .hd-cara {
+    position: absolute;
+    inset: 15% 30% 48% 22%;
+    pointer-events: none;
+  }
+
+  .hd-cuerpo {
+    position: relative;
+    container-type: inline-size;
+    display: flex;
+    flex-direction: column;
+    padding-block: 14px 24px;
+    min-width: 0;
+  }
+  .hd-cabeza {
+    display: contents;
+  }
+
+  .hd-icp {
+    max-width: 12.2rem;
+    font-family: var(--font-arch);
+    font-stretch: 112%;
+    font-weight: 700;
+    font-size: 11.5px;
+    line-height: 1.5;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-wrap: balance;
+    color: var(--color-rojo3);
+  }
+  .hd-resumen {
+    display: none;
+    color: var(--texto-noche);
+  }
+  .hd-resumen-corto {
+    order: 1;
+    max-width: 11.6rem;
+    margin-top: 10px;
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--texto-noche);
+  }
+
+  .hd-h1 {
+    order: 2;
+    margin-top: 34px;
+    font-family: var(--font-arch);
+    font-stretch: 112%;
+    font-weight: 800;
+    font-size: 9.4cqi;
+    line-height: 0.9;
+    letter-spacing: -0.015em;
+    text-transform: uppercase;
+  }
+  .hd-h1 span {
+    display: block;
+    white-space: nowrap;
+  }
+
+  .hd-ctas {
+    order: 4;
+    margin-top: 18px;
+    display: grid;
+    gap: 8px;
+  }
+  .hd-boton {
+    display: inline-flex;
+    min-height: 48px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border-radius: 2px;
+    padding: 12px 20px;
+    font-family: var(--font-arch);
+    font-weight: 700;
+    font-size: 15.5px;
+    white-space: nowrap;
+    transition:
+      background-color 0.18s ease,
+      border-color 0.18s ease,
+      color 0.18s ease,
+      transform 0.12s ease;
+  }
+  .hd-boton svg {
+    width: 18px;
+    height: 18px;
+    flex: none;
+  }
+  .hd-boton:active {
+    transform: translateY(1px);
+  }
+  .hd-boton:focus-visible {
+    outline: 2.5px solid var(--color-rojo3);
+    outline-offset: 3px;
+  }
+  .hd-boton--primario {
+    background: var(--color-rojo2);
+    color: #fff;
+  }
+  .hd-boton--primario:hover {
+    background: var(--tinta-noche);
+    color: var(--color-tinta);
+  }
+  .hd-boton--secundario {
+    border: 1.5px solid var(--color-panelnota);
+    color: var(--tinta-noche);
+  }
+  .hd-boton--secundario:hover {
+    border-color: var(--tinta-noche);
+    background: rgb(255 255 255 / 0.05);
+  }
+
+  /* The dictionary entry takes the place of the CV's timeline block. */
+  .hd-dicc {
+    order: 3;
+    margin-top: 16px;
+    border-top: 1px solid var(--linea-noche);
+    padding-top: 10px;
+  }
+  .hd-dicc-cab {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .hd-dicc-cab::before {
+    content: "";
+    align-self: center;
+    flex: none;
+    width: 14px;
+    height: 3px;
+    background: var(--color-rojo3);
+  }
+  .hd-palabra {
+    font-family: var(--font-arch);
+    font-stretch: 118%;
+    font-weight: 800;
+    font-size: 17px;
+    letter-spacing: -0.01em;
+  }
+  .hd-categoria {
+    font-size: 13px;
+    color: var(--gris-noche);
+  }
+  .hd-acepciones {
+    margin-top: 6px;
+  }
+  .hd-acep {
+    display: grid;
+    grid-template-columns: 22px minmax(0, 1fr);
+    padding-block: 7px;
+    border-top: 1px solid var(--linea-fina);
+  }
+  .hd-acep--media {
+    display: none;
+  }
+  .hd-num {
+    position: relative;
+    grid-row: span 2;
+    font-family: var(--font-arch);
+    font-stretch: 112%;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--gris-noche);
+  }
+  .hd-rotulo {
+    font-family: var(--font-arch);
+    font-stretch: 112%;
+    font-weight: 700;
+    font-size: 10.5px;
+    line-height: 1.6;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gris-noche);
+  }
+  .hd-def {
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--texto-noche);
+  }
+  .hd-def :global(b) {
+    color: var(--tinta-noche);
+  }
+  .hd-acep--tuya .hd-num {
+    color: var(--color-rojo3);
+  }
+  .hd-acep--tuya .hd-num::before {
+    content: "";
+    position: absolute;
+    left: -13px;
+    top: calc(0.75em - 3px);
+    width: 6px;
+    height: 6px;
+    background: var(--color-rojo3);
+    transform: rotate(45deg);
+  }
+  .hd-acep--tuya .hd-def {
+    position: relative;
+    isolation: isolate;
+    justify-self: start;
+    margin-top: 3px;
+    padding: 3px 9px 4px;
+    font-family: var(--font-arch);
+    font-stretch: 112%;
+    font-weight: 800;
+    font-size: 16px;
+    line-height: 1.25;
+    color: #fff;
+  }
+  /* The CV's solid timeline bar, drawn once behind text that is already legible. */
+  .hd-acep--tuya .hd-def::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: 2px;
+    background: var(--color-rojo2);
+    transform-origin: left center;
+    animation: hd-barra 0.75s cubic-bezier(0.16, 1, 0.3, 1) 0.45s both;
+  }
+  @keyframes hd-barra {
+    from {
+      transform: scaleX(0);
+    }
+  }
+
+  .hd-cifras {
+    display: none;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    border-top: 1px solid var(--linea-noche);
+  }
+  .hd-cifra {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: flex-end;
+    padding: 12px 12px 0 0;
+  }
+  .hd-cifra + .hd-cifra {
+    padding-left: 16px;
+    border-left: 1px solid var(--linea-noche);
+  }
+  .hd-cifra dd {
+    font-family: var(--font-arch);
+    font-stretch: 118%;
+    font-weight: 800;
+    font-size: 32px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .hd-cifra dd::before {
+    content: "";
+    display: block;
+    width: 16px;
+    height: 3px;
+    margin-bottom: 9px;
+    background: var(--color-rojo3);
+  }
+  .hd-cifra dt {
+    margin-top: 6px;
+    font-size: 13px;
+    line-height: 1.35;
+    color: var(--gris-noche);
+  }
+
+  /* Tall phones have room for the whole entry. */
+  @media (max-width: 639px) and (min-height: 760px) {
+    .hd-acep--media {
+      display: grid;
+    }
+    .hd-foto {
+      right: -66px;
+      height: 392px;
+    }
+    .hd-h1 {
+      margin-top: 52px;
+    }
+  }
+
+  /* ── tablet: name on top, portrait beside the summary ── */
+  @media (min-width: 640px) {
+    .hd {
+      --nav: 60px;
+    }
+    .hd-foto {
+      top: calc(56px + 7vw);
+      right: -56px;
+      height: min(74vw, 620px);
+    }
+    .hd-img {
+      --fade-abajo: linear-gradient(to bottom, #000 54%, transparent 88%);
+      --fade-izquierda: linear-gradient(to right, transparent 0, #000 28%);
+    }
+    .hd-cuerpo {
+      padding-block: 28px 32px;
+    }
+    .hd-icp {
+      max-width: none;
+      font-size: 13px;
+      letter-spacing: 0.15em;
+    }
+    .hd-h1 {
+      order: 1;
+      margin-top: 14px;
+      font-stretch: 125%;
+      font-size: 8.6cqi;
+      line-height: 0.88;
+    }
+    .hd-resumen {
+      display: block;
+      order: 2;
+      max-width: 50cqi;
+      margin-top: 26px;
+      font-size: 17px;
+      line-height: 1.5;
+    }
+    .hd-resumen-corto {
+      display: none;
+    }
+    .hd-ctas {
+      order: 3;
+      max-width: 50cqi;
+      margin-top: 24px;
+      width: max-content;
+      gap: 10px;
+    }
+    .hd-dicc {
+      order: 4;
+      margin-top: auto;
+    }
+    .hd-acep {
+      grid-template-columns: 26px 13rem minmax(0, 1fr);
+      align-items: baseline;
+      padding-block: 9px;
+    }
+    .hd-acep--media {
+      display: grid;
+    }
+    .hd-num {
+      grid-row: auto;
+    }
+    .hd-def {
+      font-size: 15px;
+    }
+    .hd-acep--tuya .hd-def {
+      margin-top: 0;
+      font-size: 18px;
+    }
+    .hd-cifras {
+      order: 5;
+      margin-top: 28px;
+    }
+  }
+  @media (min-width: 640px) and (min-height: 900px) {
+    .hd-cifras {
+      display: grid;
+    }
+  }
+
+  /* ── desktop: copy left, portrait right, data rows below ── */
+  @media (min-width: 1024px) {
+    .hd-foto {
+      top: -5%;
+      right: 0;
+      height: min(108%, 1000px);
+      transform: translateX(14%);
+    }
+    .hd-img {
+      --fade-abajo: linear-gradient(to bottom, #000 56%, transparent 92%);
+      --fade-izquierda: linear-gradient(to right, transparent 0, #000 26%);
+    }
+    .hd-cara {
+      inset: 15% 18% 46% 20%;
+    }
+    .hd-cuerpo {
+      display: grid;
+      grid-template-rows: auto minmax(24px, 1fr) auto;
+      padding-block: clamp(22px, 4.6vh, 48px) clamp(18px, 3.4vh, 36px);
+    }
+    .hd-cabeza {
+      grid-row: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .hd-h1 {
+      margin-top: 16px;
+      font-size: min(6cqi, 10.4vh);
+    }
+    .hd-resumen {
+      max-width: 34rem;
+      margin-top: 22px;
+      font-size: 18px;
+    }
+    .hd-ctas {
+      max-width: none;
+      margin-top: 26px;
+      display: flex;
+      gap: 12px;
+    }
+    .hd-dicc {
+      grid-row: 3;
+      max-width: 40rem;
+      margin-top: 0;
+    }
+    .hd-palabra {
+      font-size: 21px;
+    }
+    .hd-categoria {
+      font-size: 14px;
+    }
+    .hd-acepciones {
+      margin-top: 10px;
+    }
+    .hd-acep {
+      grid-template-columns: 28px 12.5rem minmax(0, 1fr);
+      padding-block: 9px;
+    }
+    .hd-rotulo {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+    }
+    .hd-def {
+      font-size: 16px;
+    }
+    .hd-acep--tuya .hd-num::before {
+      left: -16px;
+    }
+    .hd-acep--tuya .hd-def {
+      font-size: 20px;
+      padding: 4px 11px 5px;
+    }
+    .hd-cifras {
+      grid-row: 5;
+      margin-top: 0;
+    }
+    .hd-cifra dd {
+      font-size: 34px;
+    }
+  }
+  @media (min-width: 1280px) {
+    .hd-dicc {
+      max-width: 49rem;
+    }
+    .hd-acep {
+      grid-template-columns: 28px 14.5rem minmax(0, 1fr);
+    }
+    .hd-rotulo {
+      letter-spacing: 0.14em;
+    }
+  }
+  /* The metrics row only where the band is tall enough to hold it. */
+  @media (min-width: 1024px) and (min-height: 840px) {
+    .hd-cuerpo {
+      grid-template-rows: auto minmax(24px, 1fr) auto minmax(18px, 1fr) auto;
+    }
+    .hd-cifras {
+      display: grid;
+    }
+  }
+  @media (min-width: 1024px) and (min-height: 1000px) {
+    .hd-h1 {
+      margin-top: 20px;
+    }
+    .hd-resumen {
+      margin-top: 26px;
+      font-size: 19px;
+    }
+    .hd-ctas {
+      margin-top: 32px;
+    }
+    .hd-palabra {
+      font-size: 24px;
+    }
+    .hd-acep {
+      padding-block: 13px;
+    }
+    .hd-def {
+      font-size: 17px;
+    }
+    .hd-acep--tuya .hd-def {
+      font-size: 23px;
+    }
+    .hd-cifra dd {
+      font-size: 42px;
+    }
+    .hd-cifra dt {
+      font-size: 14px;
+    }
+  }
+  @media (min-width: 1024px) and (max-height: 720px) {
+    .hd-h1 {
+      margin-top: 12px;
+      font-size: min(6cqi, 9.8vh);
+    }
+    .hd-resumen {
+      margin-top: 14px;
+      font-size: 17px;
+    }
+    .hd-ctas {
+      margin-top: 18px;
+    }
+    .hd-acepciones {
+      margin-top: 6px;
+    }
+    .hd-acep {
+      padding-block: 6px;
+    }
+    .hd-acep--tuya .hd-def {
+      font-size: 18px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hd-boton {
+      transition: none;
+    }
+    .hd-acep--tuya .hd-def::before {
+      animation: none;
+    }
+  }
+</style>
