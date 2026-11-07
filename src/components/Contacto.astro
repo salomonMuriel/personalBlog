@@ -19,6 +19,14 @@ const canales = [
   },
   {
     n: "02",
+    label: t(lang, "contacto.cuestionario"),
+    nota: t(lang, "contacto.cuestionarioNota"),
+    href: routes.cuentame[lang],
+    origen: "pie-cuestionario",
+    externo: false,
+  },
+  {
+    n: "03",
     label: t(lang, "contacto.agendar"),
     nota: t(lang, "contacto.agendarNota"),
     href: CONTACTO.cal,
@@ -26,7 +34,7 @@ const canales = [
     externo: true,
   },
   {
-    n: "03",
+    n: "04",
     label: t(lang, "contacto.linkedin"),
     nota: t(lang, "contacto.linkedinNota"),
     href: CONTACTO.linkedin,
@@ -34,7 +42,7 @@ const canales = [
     externo: true,
   },
   {
-    n: "04",
+    n: "05",
     label: t(lang, "contacto.correo"),
     nota: CONTACTO.correo,
     href: `mailto:${CONTACTO.correo}?subject=${encodeURIComponent(
@@ -52,8 +60,8 @@ const a = (href: string, texto: string) =>
 
 const otrasPaginas =
   lang === "es"
-    ? `${a(routes.mentoria.es, "Mentoría")} para el que está arrancando, ${a(routes.charlas.es, "charlas")} si me quieres invitar a hablar, ${a(routes.sobreMi.es, "sobre mí")} si quieres saber con quién te vas a meter y ${a(routes.ahora.es, "ahora")} para ver en qué ando esta temporada.`
-    : `${a(routes.mentoria.en, "Mentoring")} if you're just starting, ${a(routes.charlas.en, "talks")} if you want me on a stage, ${a(routes.sobreMi.en, "about")} if you want to know who you're getting into this with, and ${a(routes.ahora.en, "now")} for what I'm up to this season.`;
+    ? `${a(routes.mentoria.es, "Mentoría")} para el que está arrancando, ${a(routes.charlas.es, "charlas")} si me quieres invitar a hablar, ${a(routes.sobreMi.es, "sobre mí")} para conocer mi historia y ${a(routes.ahora.es, "ahora")} para ver en qué ando esta temporada.`
+    : `${a(routes.mentoria.en, "Mentoring")} if you're just starting, ${a(routes.charlas.en, "talks")} if you want me on a stage, ${a(routes.sobreMi.en, "about")} for my story, and ${a(routes.ahora.en, "now")} for what I'm up to this season.`;
 ---
 
 <section id="contacto" class="bg-panel text-panelfg">
@@ -115,10 +123,10 @@ const otrasPaginas =
         <p
           class="font-mono mb-2 text-[10.5px] uppercase tracking-[.18em] text-rojo3"
         >
-          {t(lang, "pie.sinFormulario")}
+          {t(lang, "pie.empezar")}
         </p>
         <p class="text-[.95rem] leading-[1.5] text-paneltxt">
-          {t(lang, "pie.sinFormularioTxt")}
+          {t(lang, "pie.empezarTxt")}
         </p>
       </div>
       <div
@@ -127,10 +135,10 @@ const otrasPaginas =
         <p
           class="font-mono mb-2 text-[10.5px] uppercase tracking-[.18em] text-rojo3"
         >
-          {t(lang, "pie.sinEquipo")}
+          {t(lang, "pie.queConstruyo")}
         </p>
         <p class="text-[.95rem] leading-[1.5] text-paneltxt">
-          {t(lang, "pie.sinEquipoTxt")}
+          {t(lang, "pie.queConstruyoTxt")}
         </p>
       </div>
       <div class="py-5 md:pl-7">

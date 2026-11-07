@@ -14,6 +14,7 @@ export const routes = {
   charlas: { es: "/charlas/", en: "/en/talks/" },
   sobreMi: { es: "/sobre-mi/", en: "/en/about/" },
   ahora: { es: "/ahora/", en: "/en/now/" },
+  cuentame: { es: "/cuentame/", en: "/en/tell-me/" },
 } as const;
 
 export type RouteKey = keyof typeof routes;
@@ -26,17 +27,16 @@ export const ui = {
     "nav.ahora": "Ahora",
     "nav.escribirme": "Escribirme",
     "nav.paginas": "Páginas",
+    "nav.menu": "Menú",
+    "nav.cerrar": "Cerrar el menú",
     "nav.saltar": "Saltar al contenido",
     "nav.volver": "Volver al inicio",
 
-    "rotulo.parte": "Parte de operación",
-    "rotulo.practica": "Práctica personal de Salomón Muriel",
-    "rotulo.ciudad": "Bogotá, Colombia",
-
-    "pie.sinFormulario": "Sin formulario",
-    "pie.sinFormularioTxt": "Me escribes y te contesto yo.",
-    "pie.sinEquipo": "Sin equipo detrás",
-    "pie.sinEquipoTxt": "El que contesta y el que construye soy yo.",
+    "pie.empezar": "Cómo empezar",
+    "pie.empezarTxt": "Escríbeme por WhatsApp o llena el cuestionario.",
+    "pie.queConstruyo": "Qué construyo",
+    "pie.queConstruyoTxt":
+      "Le construyo a tu empresa su sistema operativo, a la medida de cómo ya trabaja.",
     "pie.otras": "Otras páginas",
     "pie.vigente": "Documento vigente",
     "pie.coords": "Bogotá · 4°42′N 74°04′W",
@@ -48,8 +48,10 @@ export const ui = {
     "contacto.agendar": "Agendar",
     "contacto.agendarNota": "cal.com/salomonmuriel",
     "contacto.linkedin": "LinkedIn",
-    "contacto.linkedinNota": "Ahí escribo · no tengo blog",
+    "contacto.linkedinNota": "linkedin.com/in/smuriel",
     "contacto.correo": "Correo",
+    "contacto.cuestionario": "Cuestionario",
+    "contacto.cuestionarioNota": "",
 
     "lang.otro": "English",
     "404.titulo": "Esta página ya no está",
@@ -57,7 +59,7 @@ export const ui = {
       "Se dañó el enlace o la página se retiró. Abajo está lo que sí existe.",
     "410.titulo": "Esta página se retiró",
     "410.texto":
-      "El blog de esta página se retiró. Lo que escribo hoy lo publico en LinkedIn.",
+      "Era parte de un blog que ya no existe. Lo que escribo hoy lo publico en LinkedIn.",
   },
   en: {
     "nav.mentoria": "Mentoring",
@@ -66,18 +68,16 @@ export const ui = {
     "nav.ahora": "Now",
     "nav.escribirme": "Message me",
     "nav.paginas": "Pages",
+    "nav.menu": "Menu",
+    "nav.cerrar": "Close the menu",
     "nav.saltar": "Skip to content",
     "nav.volver": "Back home",
 
-    "rotulo.parte": "Operations report",
-    "rotulo.practica": "Salomón Muriel's personal practice",
-    "rotulo.ciudad": "Bogotá, Colombia",
-
-    "pie.sinFormulario": "No forms",
-    "pie.sinFormularioTxt": "You write, I answer.",
-    "pie.sinEquipo": "No team behind me",
-    "pie.sinEquipoTxt":
-      "The person who answers and the person who builds are the same.",
+    "pie.empezar": "How to start",
+    "pie.empezarTxt": "Message me on WhatsApp or fill in the questionnaire.",
+    "pie.queConstruyo": "What I build",
+    "pie.queConstruyoTxt":
+      "I build your company its operating system, made to fit how it already works.",
     "pie.otras": "Other pages",
     "pie.vigente": "Current document",
     "pie.coords": "Bogotá · 4°42′N 74°04′W",
@@ -89,8 +89,10 @@ export const ui = {
     "contacto.agendar": "Book a call",
     "contacto.agendarNota": "cal.com/salomonmuriel",
     "contacto.linkedin": "LinkedIn",
-    "contacto.linkedinNota": "That's where I write · no blog",
+    "contacto.linkedinNota": "linkedin.com/in/smuriel",
     "contacto.correo": "Email",
+    "contacto.cuestionario": "Questionnaire",
+    "contacto.cuestionarioNota": "",
 
     "lang.otro": "Español",
     "404.titulo": "This page isn't here",
@@ -98,6 +100,6 @@ export const ui = {
       "Either the link broke or the page was retired. Here's what does exist.",
     "410.titulo": "This page was retired",
     "410.texto":
-      "The blog that used to live here is gone. What I write now goes on LinkedIn.",
+      "It was part of a blog that no longer exists. What I write now goes on LinkedIn.",
   },
 } as const;

@@ -17,8 +17,8 @@ export function personaLd(lang: Lang) {
         : "Technology consultant and founder",
     description:
       lang === "es"
-        ? "Construyo software a la medida para empresas colombianas tradicionales: defino la estrategia y construyo la herramienta yo mismo."
-        : "I build custom software for traditional Colombian businesses: I define the strategy and build the tool myself.",
+        ? "Le construyo a cada empresa su sistema operativo: software a la medida que reemplaza los Excel que no cuadran y el copiar y pegar."
+        : "I build each company its operating system: custom software that replaces the spreadsheets that don't match and the copying and pasting.",
     knowsLanguage: ["es", "en"],
     address: {
       "@type": "PostalAddress",

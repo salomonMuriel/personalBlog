@@ -1,0 +1,247 @@
+---
+import EncabezadoSeccion from "@components/EncabezadoSeccion.astro";
+import Collage from "@components/home/triptico/Collage.astro";
+import Pausa from "@components/home/triptico/Pausa.astro";
+import Selector from "@components/home/triptico/Selector.astro";
+import { copia, type Sistema } from "@data/landing";
+import { triptico } from "@data/triptico";
+import { routes, type Lang } from "@i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const c = copia(lang);
+const s = c.sistemas;
+const t = triptico[lang];
+const items = s.items as readonly Sistema[];
+---
+
+<section
+  id="sistemas"
+  class="tri border-linea bg-papel2 border-y"
+  data-triptico
+>
+  <div class="hoja">
+    <EncabezadoSeccion rotulo={s.rotulo} nota={s.nota} notaCh={42} />
+
+    <div class="tri-cabeza">
+      <h2
+        id="sistemas-titulo"
+        class="font-arch text-[clamp(1.9rem,4.4vw,3.4rem)] leading-[1.03] font-extrabold tracking-[-.028em] [font-stretch:104%]"
+      >
+        {s.titulo}
+      </h2>
+      <p class="tri-bajada">{s.bajada}</p>
+    </div>
+
+    <div class="tri-cuerpo">
+      <Pausa etiqueta={t.pausar} />
+
+      <Selector items={items} etiqueta="sistemas-titulo" />
+
+      <div class="tri-escena" data-escena aria-live="off">
+        {
+          items.map((it, i) => (
+            <div
+              role="tabpanel"
+              id={`sistema-${it.clave}`}
+              aria-labelledby={`pestana-${it.clave}`}
+              tabindex="0"
+              class="tri-panel"
+              data-activo={i === 0 ? "" : undefined}
+              data-listo={i === 0 ? "" : undefined}
+            >
+              <div class="tri-texto">
+                <div>
+                  <p class="text-rojo2 font-mono text-[11px] tracking-[.16em] uppercase">
+                    {it.sector}
+                  </p>
+                  <h3 class="font-arch tri-nombre">{it.nombre}</h3>
+                  <p class="tri-que">{it.que}</p>
+                </div>
+                {it.reemplazo && (
+                  <p class="tri-reemplazo">
+                    <b class="text-tinta font-semibold">{s.reemplazo}</b>{" "}
+                    {it.reemplazo}
+                  </p>
+                )}
+              </div>
+              <div class="tri-collage">
+                <Collage clave={it.clave} lang={lang} />
+              </div>
+            </div>
+          ))
+        }
+      </div>
+
+      <a
+        href={routes.cuentame[lang]}
+        data-origen="sistemas"
+        class="tri-cta bg-rojo2 hover:bg-tinta inline-flex min-h-[48px] items-center justify-center gap-2.5 rounded px-5 py-3.5 text-[.97rem] font-bold text-white transition-[background-color,transform] active:translate-y-px"
+      >
+        {c.cta.cuestionario}<svg
+          class="h-[18px] w-[18px] opacity-80"
+          aria-hidden="true"><use href="#i-arw"></use></svg
+        >
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { iniciarTriptico } from "@components/home/triptico/rotacion";
+
+  const raiz = document.querySelector<HTMLElement>("[data-triptico]");
+  if (raiz) iniciarTriptico(raiz);
+</script>
+
+<style>
+  .tri {
+    --hueco: clamp(1.5rem, 3.4vw, 3rem);
+    padding-block: clamp(2.75rem, 4.6vw, 4rem);
+  }
+  .tri-bajada {
+    margin-top: 0.75rem;
+    max-width: 58ch;
+    font-size: 1.05rem;
+    line-height: 1.55;
+    color: var(--gris);
+  }
+  .tri-cuerpo {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "escena" "lista" "cta";
+    row-gap: 1.25rem;
+    margin-top: clamp(1.6rem, 3vw, 2.4rem);
+  }
+  .tri-escena {
+    grid-area: escena;
+    display: grid;
+  }
+  .tri-panel {
+    grid-area: 1 / 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    visibility: hidden;
+    transition: visibility 0s linear 0.6s;
+  }
+  .tri-panel[data-activo] {
+    visibility: visible;
+    transition-delay: 0s;
+  }
+  .tri-panel:focus-visible {
+    outline-offset: 8px;
+  }
+  .tri-texto {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0.9rem;
+    opacity: 0;
+    transition: opacity 0.18s ease;
+  }
+  [data-activo] .tri-texto {
+    opacity: 1;
+    transition: opacity 0.32s ease 0.18s;
+  }
+  .tri-nombre {
+    margin-top: 0.5rem;
+    font-size: clamp(1.5rem, 2.6vw, 2.05rem);
+    font-weight: 800;
+    line-height: 1.04;
+    letter-spacing: -0.028em;
+  }
+  .tri-que {
+    margin-top: 0.75rem;
+    max-width: 46ch;
+    font-size: 1.02rem;
+    line-height: 1.55;
+    text-wrap: pretty;
+  }
+  .tri-reemplazo {
+    max-width: 46ch;
+    font-size: 0.96rem;
+    line-height: 1.5;
+    color: var(--gris);
+    text-wrap: pretty;
+  }
+  .tri-collage {
+    margin-top: auto;
+    opacity: 0;
+    transition: opacity 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  [data-activo] .tri-collage {
+    opacity: 1;
+  }
+  .tri-panel:not([data-listo]) .tri-collage {
+    content-visibility: hidden;
+  }
+
+  .tri-cta {
+    grid-area: cta;
+  }
+
+  @media (min-width: 768px) {
+    .tri-panel {
+      display: grid;
+      grid-template-columns: minmax(0, 40fr) minmax(0, 60fr);
+      column-gap: var(--hueco);
+    }
+    .tri-collage {
+      align-self: end;
+    }
+    .tri-cta {
+      justify-self: start;
+    }
+  }
+
+  /* desktop: words, collage, selector */
+  @media (min-width: 1280px) {
+    .tri-cabeza {
+      display: grid;
+      grid-template-columns: minmax(0, 87fr) minmax(0, 27fr);
+      column-gap: var(--hueco);
+      align-items: end;
+    }
+    .tri-cuerpo {
+      grid-template-columns: minmax(0, 87fr) minmax(0, 27fr);
+      grid-template-rows: auto 1fr auto;
+      grid-template-areas: "escena lista" "escena ." "escena cta";
+      column-gap: var(--hueco);
+      row-gap: 0;
+    }
+    .tri-panel {
+      grid-template-columns: minmax(0, 29fr) minmax(0, 58fr);
+    }
+    .tri-nombre {
+      font-size: 2.3rem;
+    }
+    .tri-que {
+      margin-top: 1rem;
+      font-size: 1.1rem;
+    }
+    .tri-reemplazo {
+      padding-top: 0.9rem;
+      border-top: 1px solid var(--linea);
+      font-size: 1rem;
+    }
+    .tri-cta {
+      justify-self: stretch;
+      justify-content: space-between;
+      min-height: 56px;
+      padding-inline: 1.25rem;
+      white-space: nowrap;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tri-panel,
+    .tri-texto,
+    [data-activo] .tri-texto,
+    .tri-collage {
+      transition: none;
+    }
+  }
+</style>

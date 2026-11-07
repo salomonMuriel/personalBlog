@@ -1,5 +1,6 @@
 ---
 import { wa } from "@config";
+import { copia } from "@data/landing";
 import { routes, type Lang } from "@i18n/ui";
 import { t, alternatePath } from "@i18n/utils";
 
@@ -8,6 +9,7 @@ interface Props {
   home: string;
 }
 const { lang, home } = Astro.props;
+const cta = copia(lang).cta;
 
 const enlaces = [
   { href: routes.mentoria[lang], label: t(lang, "nav.mentoria") },
@@ -25,8 +27,13 @@ const otroHref = alternatePath(actual, otro);
 
 const saludo =
   lang === "es"
-    ? "Hola Salomón, tengo una empresa de ___ y quiero contarte qué tengo montado."
-    : "Hi Salomón, I run a ___ business and I'd like to tell you what I have running.";
+    ? "Hola Salomón, me llamo ______ y tengo una empresa de _____, quiero arreglarle lo chinomático."
+    : "Hi Salomón, my name is ______ and I run a ______ business. I want to fix what's chinomático in it.";
+
+const logo =
+  "font-mono mr-auto whitespace-nowrap text-[12.5px] font-semibold uppercase tracking-[.16em]";
+const botonIcono =
+  "-mr-2.5 inline-flex h-11 w-11 items-center justify-center rounded text-tinta transition-colors hover:bg-papel2 md:hidden";
 ---
 
 <header
@@ -34,10 +41,8 @@ const saludo =
   class="sticky top-0 z-40 border-b border-transparent bg-papel/90 backdrop-blur-[10px] transition-[border-color,background-color] duration-300"
 >
   <div class="hoja">
-    <div class="flex h-[60px] items-center gap-4">
-      <a
-        href={home}
-        class="font-mono mr-auto whitespace-nowrap text-[12.5px] font-semibold uppercase tracking-[.16em]"
+    <div class="flex h-[60px] items-center gap-3 md:gap-4">
+      <a href={home} class={logo}
         >Salomón Muriel<span class="text-rojo2">.</span></a
       >
 
@@ -80,43 +85,139 @@ const saludo =
           ><use href="#i-arw"></use></svg
         >
       </a>
+
+      <button
+        type="button"
+        class={botonIcono}
+        aria-label={t(lang, "nav.menu")}
+        aria-haspopup="dialog"
+        aria-expanded="false"
+        aria-controls="menu-movil"
+        data-abrir-menu
+      >
+        <svg
+          class="h-[22px] w-[22px]"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          aria-hidden="true"><path d="M4 8h16M4 16h16"></path></svg
+        >
+      </button>
     </div>
   </div>
 </header>
 
-<nav
-  class="border-b border-linea bg-papel/90 backdrop-blur-[10px] md:hidden"
-  aria-label={t(lang, "nav.paginas")}
+<dialog
+  id="menu-movil"
+  class="menu-movil fixed inset-0 m-0 h-dvh max-h-none w-full max-w-none flex-col overflow-y-auto bg-papel p-0 text-tinta open:flex md:hidden"
+  aria-label={t(lang, "nav.menu")}
 >
-  <div class="barrita hoja flex gap-5 overflow-x-auto py-2.5">
-    {
-      enlaces.map(e => (
-        <a
-          href={e.href}
-          aria-current={actual === e.href ? "page" : undefined}
-          class:list={[
-            "font-mono whitespace-nowrap border-b-[1.5px] pb-[2px] text-[11px] uppercase tracking-[.14em] font-semibold",
-            actual === e.href
-              ? "border-rojo text-tinta"
-              : "border-transparent text-gris",
-          ]}
+  <div class="hoja w-full">
+    <div class="flex h-[60px] items-center gap-3">
+      <a href={home} class={logo}
+        >Salomón Muriel<span class="text-rojo2">.</span></a
+      >
+      <button
+        type="button"
+        class={botonIcono}
+        aria-label={t(lang, "nav.cerrar")}
+        data-cerrar-menu
+      >
+        <svg class="h-[22px] w-[22px]" aria-hidden="true"
+          ><use href="#i-x"></use></svg
         >
-          {e.label}
-        </a>
-      ))
-    }
+      </button>
+    </div>
+  </div>
+
+  <nav class="hoja mt-4 w-full" aria-label={t(lang, "nav.paginas")}>
+    <ul class="border-t border-linea">
+      {
+        enlaces.map(e => (
+          <li class="border-b border-linea">
+            <a
+              href={e.href}
+              aria-current={actual === e.href ? "page" : undefined}
+              class="font-arch flex items-center justify-between py-4 text-[2.1rem] uppercase leading-none [font-variation-settings:'wdth'_62,'wght'_900]"
+            >
+              <span
+                class:list={[
+                  actual === e.href &&
+                    "underline decoration-rojo decoration-[3px] underline-offset-[6px]",
+                ]}
+              >
+                {e.label}
+              </span>
+              <svg class="h-5 w-5 text-rojo2" aria-hidden="true">
+                <use href="#i-arw" />
+              </svg>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
     <a
       href={otroHref}
       hreflang={otro}
-      class="font-mono ml-auto whitespace-nowrap border-b-[1.5px] border-transparent pb-[2px] text-[11px] uppercase tracking-[.14em] text-gris"
+      class="font-mono mt-5 inline-block py-2 text-[12px] uppercase tracking-[.16em] text-gris"
       >{t(lang, "lang.otro")}</a
     >
+  </nav>
+
+  <div class="hoja mt-auto flex w-full flex-col gap-3 pb-8 pt-8">
+    <a
+      href={routes.cuentame[lang]}
+      data-origen="menu"
+      class="inline-flex min-h-[48px] items-center justify-center gap-2.5 rounded bg-rojo2 px-5 py-3.5 text-[.97rem] font-bold text-white"
+    >
+      {cta.cuestionario}<svg
+        class="h-[18px] w-[18px] opacity-80"
+        aria-hidden="true"><use href="#i-arw"></use></svg
+      >
+    </a>
+    <a
+      href={wa(cta.waTexto)}
+      target="_blank"
+      rel="noopener"
+      data-origen="menu"
+      class="inline-flex min-h-[48px] items-center justify-center gap-2.5 rounded border-[1.5px] border-linea2 px-5 py-3.5 text-[.97rem] font-bold"
+    >
+      <svg class="h-[18px] w-[18px] opacity-75" aria-hidden="true"
+        ><use href="#i-chat"></use></svg
+      >{cta.wa}
+    </a>
   </div>
-</nav>
+</dialog>
+
+<style>
+  .menu-movil[open] {
+    animation: menu-entrar 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .menu-movil::backdrop {
+    background: rgb(22 23 26 / 0.4);
+  }
+  :global(html.menu-abierto) {
+    overflow: hidden;
+  }
+  @keyframes menu-entrar {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .menu-movil[open] {
+      animation: none;
+    }
+  }
+</style>
 
 <script>
-  // Centinela = el rótulo, no <main> (main siempre interseca). Se cambia la
-  // clase en vez de agregar: border-transparent gana en el CSS de Tailwind.
+  // Centinela = el borde de arriba de la página, no <main> (main siempre
+  // interseca). Se cambia la clase en vez de agregar: border-transparent gana
+  // en el CSS de Tailwind.
   const nav = document.getElementById("nav");
   const centinela = document.getElementById("tope");
   if (nav && centinela && "IntersectionObserver" in window) {
@@ -125,5 +226,29 @@ const saludo =
       nav.classList.toggle("border-linea", !arriba);
       nav.classList.toggle("border-transparent", arriba);
     }).observe(centinela);
+  }
+
+  const menu = document.getElementById("menu-movil");
+  const abrir = document.querySelector<HTMLButtonElement>("[data-abrir-menu]");
+  if (menu instanceof HTMLDialogElement && abrir) {
+    abrir.addEventListener("click", () => {
+      menu.showModal();
+      abrir.setAttribute("aria-expanded", "true");
+      document.documentElement.classList.add("menu-abierto");
+    });
+    menu.addEventListener("close", () => {
+      abrir.setAttribute("aria-expanded", "false");
+      document.documentElement.classList.remove("menu-abierto");
+    });
+    menu
+      .querySelector("[data-cerrar-menu]")
+      ?.addEventListener("click", () => menu.close());
+    // Same-page anchors and the WhatsApp tab don't unload the page, so close it.
+    menu.addEventListener("click", e => {
+      if (e.target instanceof Element && e.target.closest("a")) menu.close();
+    });
+    matchMedia("(min-width: 768px)").addEventListener("change", e => {
+      if (e.matches && menu.open) menu.close();
+    });
   }
 </script>

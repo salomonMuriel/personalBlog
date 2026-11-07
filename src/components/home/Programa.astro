@@ -1,7 +1,9 @@
 ---
+import { Image } from "astro:assets";
 import EncabezadoSeccion from "@components/EncabezadoSeccion.astro";
 import { copia } from "@data/landing";
 import type { Lang } from "@i18n/ui";
+import { ilustraciones } from "@utils/ilustraciones";
 
 interface Props {
   lang: Lang;
@@ -9,11 +11,11 @@ interface Props {
 const { lang } = Astro.props;
 const c = copia(lang).programa;
 
-const barras = [
-  { clase: "bg-linea text-tinta", col: "1 / span 2", extra: "" },
-  { clase: "bg-rojo2 text-white", col: "2 / span 2", extra: "b2" },
-  { clase: "bg-panel text-panelfg", col: "4 / span 13", extra: "b3" },
-];
+// The ruler stops at week 9; the open row says the rhythm goes on from there.
+const SEMANAS = 9;
+const semanas = Array.from({ length: SEMANAS }, (_, i) => i + 1);
+const desdeAbierta = c.filas[c.filas.length - 1].hasta + 1;
+const retraso = (i: number) => `transition-delay:${(i * 0.12).toFixed(2)}s`;
 ---
 
 <section
@@ -29,130 +31,130 @@ const barras = [
       {c.titulo}
     </h2>
 
-    <div class="observa mt-[clamp(1.8rem,3.6vw,2.8rem)]">
-      <div class="hidden md:block">
-        <div
-          class="mb-3 grid grid-cols-16 border-b border-linea pb-1.5"
-          aria-hidden="true"
-        >
-          <span class="font-mono relative text-[10.5px] text-gris">S1</span>
-          <span></span><span></span>
-          <span class="font-mono text-[10.5px] text-gris">S4</span>
-          <span></span><span></span><span></span>
-          <span class="font-mono text-[10.5px] text-gris">S8</span>
-          <span></span><span></span><span></span>
-          <span class="font-mono text-[10.5px] text-gris">S12</span>
-          <span></span><span></span><span></span>
-          <span class="font-mono text-right text-[10.5px] text-gris">S16</span>
-        </div>
-        <div class="grid gap-[6px]">
-          {
-            barras.map((b, i) => (
-              <div class="grid grid-cols-16">
-                <div
-                  class:list={[
-                    "barra font-mono truncate rounded px-3 py-2.5 text-[11px] font-semibold uppercase tracking-[.05em]",
-                    b.clase,
-                    b.extra,
-                  ]}
-                  style={`grid-column:${b.col}`}
-                >
-                  {c.barras[i]}
-                </div>
-              </div>
-            ))
-          }
-        </div>
-      </div>
-
+    <div
+      class="observa gantt mt-[clamp(1.8rem,3.6vw,2.8rem)] grid grid-cols-[6.7rem_minmax(0,1fr)] items-center sm:grid-cols-[minmax(5.6rem,10.5rem)_minmax(0,1fr)] gap-x-[clamp(.75rem,2vw,1.5rem)] gap-y-[6px]"
+    >
+      <span></span>
       <div
-        class="mt-6 grid grid-cols-1 gap-[clamp(1.2rem,2.6vw,2rem)] md:mt-8 md:grid-cols-3"
+        class="grid border-b border-linea pb-1.5"
+        style={`grid-template-columns:repeat(${SEMANAS},minmax(0,1fr))`}
+        aria-hidden="true"
       >
         {
-          c.etapas.map(e => (
-            <div class="border-l-2 border-rojo pl-4 md:border-l-0 md:pl-0">
-              <span class="font-mono mb-2 block text-[10.5px] uppercase tracking-[.18em] text-rojo2">
-                {e.cuando}
-              </span>
-              <h3 class="font-arch text-[1.1rem] font-bold leading-[1.15] tracking-[-.02em]">
-                {e.titulo}
-              </h3>
-              <p class="mt-2 text-[.96rem] leading-[1.55] text-gris">
-                {e.texto}
-              </p>
-            </div>
+          semanas.map(s => (
+            <span class="font-mono text-[10.5px] text-gris">{`${c.semanaCorta}${s}`}</span>
           ))
         }
+      </div>
+
+      {
+        c.filas.map((f, i) => (
+          <>
+            <span class="font-arch text-[.9rem] font-bold leading-tight sm:text-[.98rem] tracking-[-.01em]">
+              {f.nombre}
+            </span>
+            <div
+              class="pista grid items-center"
+              style={`grid-template-columns:repeat(${SEMANAS},minmax(0,1fr))`}
+            >
+              <div
+                class:list={[
+                  "barra flex h-9 items-center justify-end rounded px-1.5",
+                  f.entrega ? "bg-tinta" : "bg-linea",
+                ]}
+                style={`grid-column:${f.desde} / ${f.hasta + 1};${retraso(i)}`}
+              >
+                {f.entrega && (
+                  <span class="grid h-6 w-6 place-items-center rounded-[2px] bg-rojo2 text-white">
+                    <svg class="h-3.5 w-3.5" aria-hidden="true">
+                      <use href="#i-check" />
+                    </svg>
+                  </span>
+                )}
+              </div>
+              {i === 1 && (
+                <span
+                  class="font-pen pl-2 text-[clamp(1rem,2vw,1.3rem)] leading-[1.05] text-rojo2"
+                  style={`grid-column:${f.hasta + 1} / -1`}
+                >
+                  ← {c.notaPrimera}
+                </span>
+              )}
+            </div>
+          </>
+        ))
+      }
+
+      <span
+        class="font-arch text-[.9rem] font-bold leading-tight sm:text-[.98rem] tracking-[-.01em] text-gris"
+      >
+        {c.filaAbierta}
+      </span>
+      <div
+        class="pista grid items-center"
+        style={`grid-template-columns:repeat(${SEMANAS},minmax(0,1fr))`}
+      >
+        <div
+          class="barra abierta h-9 rounded-l border-[1.5px] border-r-0 border-dashed border-linea2 bg-linea/50"
+          style={`grid-column:${desdeAbierta} / -1;${retraso(c.filas.length)}`}
+          aria-hidden="true"
+        >
+        </div>
       </div>
     </div>
 
     <div
-      class="mt-[clamp(2.4rem,5vw,4rem)] grid grid-cols-1 items-center gap-[clamp(1.5rem,4vw,3.5rem)] lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]"
+      class="mt-[clamp(2.4rem,5vw,4rem)] grid grid-cols-1 items-center gap-[clamp(1.6rem,4vw,3.5rem)] lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)]"
     >
       <div>
-        <h3
-          class="font-arch max-w-[20ch] text-[clamp(1.3rem,2.6vw,1.95rem)] font-extrabold leading-[1.1] tracking-[-.028em] [font-stretch:100%]"
-        >
-          {c.bitacoraTitulo}
-        </h3>
-        <p class="mt-4 max-w-[46ch] text-[1.02rem] leading-[1.6] text-gris">
-          {c.bitacoraTexto}
-        </p>
-        <p
-          class="font-mono mt-5 text-[10.5px] uppercase leading-[1.8] tracking-[.16em] text-gris"
-        >
-          {c.bitacoraPie}
-        </p>
-      </div>
-
-      <div class="overflow-hidden rounded bg-panel text-panelfg">
-        <div
-          class="font-mono flex flex-wrap items-baseline gap-3 border-b border-panelborde px-4 py-4 text-[10.5px] uppercase tracking-[.18em] text-panelnota sm:px-6"
-        >
-          <span>{c.bitacoraEncabezado}</span><span
-            class="ml-auto font-semibold text-rojo3"
-            >{c.bitacoraResponsable}</span
-          >
-        </div>
-        <div>
+        <ol class="border-t border-linea">
           {
-            c.bitacora.map(([dia, tarea], i) => (
-              <div
-                class:list={[
-                  "grid grid-cols-[3.1rem_1.35rem_1fr] items-start gap-3.5 px-4 py-3.5 sm:px-6",
-                  i > 0 && "border-t border-panelborde2",
-                ]}
-              >
-                <span class="font-mono pt-[3px] text-[11px] tracking-[.14em] text-panelnota">
-                  {dia}
-                </span>
-                <span
-                  class="mt-[1px] grid h-[1.35rem] w-[1.35rem] place-items-center rounded bg-rojo2 text-white"
-                  aria-hidden="true"
-                >
-                  <svg class="h-3.5 w-3.5">
-                    <use href="#i-check" />
-                  </svg>
-                </span>
-                <span class="text-[1rem] leading-[1.35] text-[#8b8a83] line-through decoration-rojo3 decoration-2 [text-decoration-skip-ink:none]">
-                  {tarea}
-                </span>
-              </div>
+            c.etapas.map(e => (
+              <li class="border-b border-linea py-4">
+                <div class="flex items-baseline justify-between gap-4">
+                  <h3 class="font-arch text-[1.15rem] font-bold leading-tight tracking-[-.02em]">
+                    {e.titulo}
+                  </h3>
+                  <span class="font-mono flex-none text-[11px] uppercase tracking-[.14em] text-rojo2">
+                    {e.cuando}
+                  </span>
+                </div>
+                <p class="mt-1.5 text-[1rem] leading-[1.5] text-gris">
+                  {e.texto}
+                </p>
+              </li>
             ))
           }
-        </div>
-        <div
-          class="flex flex-wrap items-baseline gap-x-4 gap-y-1 border-t border-panelborde px-4 py-4 sm:px-6"
-        >
-          <span
-            class="font-mono text-[12px] font-semibold uppercase tracking-[.14em] text-rojo3"
-            >{c.bitacoraHechas}</span
-          >
-          <span class="text-[.95rem] leading-[1.4] text-[#8b8a83]"
-            >{c.bitacoraNinguna}</span
-          >
-        </div>
+        </ol>
+      </div>
+
+      <div
+        class="mx-auto w-full max-w-[34rem] rounded border border-linea bg-campo p-[7px] lg:max-w-none"
+      >
+        <Image
+          src={ilustraciones["una-cajita"]}
+          widths={[480, 720, 1080]}
+          sizes="(min-width:1024px) 48vw, 92vw"
+          loading="lazy"
+          alt={c.alt}
+          class="aspect-[5/4] h-auto w-full rounded-[1px] object-cover"
+        />
       </div>
     </div>
   </div>
 </section>
+
+<style>
+  /* Faint week lines behind the bars. */
+  .pista {
+    background-image: linear-gradient(
+      to right,
+      var(--color-linea) 1px,
+      transparent 1px
+    );
+    background-size: calc(100% / 9) 100%;
+  }
+  .abierta {
+    mask-image: linear-gradient(to right, #000 55%, transparent);
+  }
+</style>

@@ -1,0 +1,71 @@
+---
+import {
+  MULTIPLES,
+  OPCIONES,
+  type ClavePregunta,
+} from "@data/cuestionario/opciones";
+import type { CopiaCuestionario } from "@data/cuestionario/tipos";
+
+interface Props {
+  clave: ClavePregunta;
+  indice: number;
+  copia: CopiaCuestionario;
+}
+const { clave, indice, copia } = Astro.props;
+const pregunta = copia.preguntas[clave];
+const opciones = OPCIONES[clave] as readonly string[];
+const etiquetas = pregunta.opciones as Record<string, string>;
+const max = MULTIPLES[clave];
+const multiple = Boolean(max);
+
+const casilla = multiple
+  ? "casilla"
+  : "h-[1.2rem] w-[1.2rem] flex-none cursor-pointer appearance-none rounded-full border-[1.6px] border-linea2 bg-campo transition-colors checked:border-rojo checked:bg-[radial-gradient(circle,var(--rojo)_0_42%,transparent_46%)] hover:border-rojo";
+---
+
+<div
+  data-paso={clave}
+  data-max={max}
+  role="group"
+  aria-labelledby={`titulo-${clave}`}
+  hidden={indice > 0}
+  class="min-w-0"
+>
+  <div
+    class:list={[
+      "grid gap-1.5 sm:gap-2",
+      opciones.length > 5 && "sm:grid-cols-2",
+    ]}
+  >
+    {
+      opciones.map(id => (
+        <label class="flex min-h-[44px] cursor-pointer items-center gap-3 rounded border-[1.5px] border-linea2 bg-campo px-3 py-2 transition-colors hover:border-tinta has-[:checked]:border-rojo has-[:checked]:bg-[#fcf0ee] has-[:disabled]:cursor-default sm:min-h-[52px] sm:px-4">
+          <input
+            type={multiple ? "checkbox" : "radio"}
+            name={clave}
+            value={id}
+            class={casilla}
+          />
+          <span class="text-[.95rem] leading-[1.3] sm:text-[1rem]">
+            {etiquetas[id]}
+          </span>
+        </label>
+      ))
+    }
+  </div>
+
+  {
+    clave === "sector" && (
+      <input
+        type="text"
+        name="sectorOtro"
+        data-otro
+        hidden
+        maxlength="80"
+        placeholder={copia.otraPlaceholder}
+        aria-label={copia.otraPlaceholder}
+        class="mt-2 w-full rounded border-[1.5px] border-linea2 bg-campo px-4 py-2.5 text-[1rem] focus:border-tinta"
+      />
+    )
+  }
+</div>

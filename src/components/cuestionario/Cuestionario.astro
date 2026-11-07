@@ -1,0 +1,127 @@
+---
+import { Image } from "astro:assets";
+import { CONTACTO, wa } from "@config";
+import { copiaCuestionario, ORDEN } from "@data/cuestionario";
+import type { Lang } from "@i18n/ui";
+import fotoSalo from "@assets/site/fotoSalo.jpeg";
+import PasoOpciones from "./PasoOpciones.astro";
+import PasoContacto from "./PasoContacto.astro";
+import Resultado from "./Resultado.astro";
+import PanelPregunta from "./PanelPregunta.astro";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const c = copiaCuestionario(lang);
+const total = ORDEN.length + 1;
+const datos = JSON.stringify(c).replace(/</g, "\\u003c");
+---
+
+<section class="pb-[clamp(2rem,5vw,4rem)] pt-[clamp(.5rem,2.4vw,2rem)]">
+  <div class="hoja">
+    <div
+      data-cuestionario
+      data-idioma={lang}
+      data-version="v1"
+      class="grid grid-cols-1 items-start gap-3 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-6"
+    >
+      <PanelPregunta copia={c} total={total}>
+        <div
+          slot="pie"
+          class="mt-8 hidden items-center gap-3.5 border-t border-panelborde pt-5 lg:flex"
+        >
+          <Image
+            src={fotoSalo}
+            widths={[56, 112]}
+            sizes="56px"
+            alt=""
+            class="h-14 w-14 flex-none rounded-[2px] object-cover object-[50%_16%]"
+          />
+          <p class="text-[14px] leading-[1.5] text-paneltxt">
+            {c.nota}
+            <a
+              href={wa(c.wa.encabezado)}
+              target="_blank"
+              rel="noopener"
+              data-origen="cuestionario-panel"
+              class="mt-1 block font-semibold text-panelfg underline decoration-rojo3 underline-offset-4 hover:text-white"
+              >WhatsApp {CONTACTO.whatsappBonito}</a
+            >
+          </p>
+        </div>
+      </PanelPregunta>
+
+      <form data-formulario novalidate class="min-w-0">
+        {
+          ORDEN.map((clave, i) => (
+            <PasoOpciones clave={clave} indice={i} copia={c} />
+          ))
+        }
+        <PasoContacto copia={c} />
+
+        <div
+          class="sticky bottom-0 z-10 -mx-[clamp(1.25rem,4vw,3.5rem)] mt-3 flex items-center justify-between gap-3 border-t border-linea bg-papel/95 px-[clamp(1.25rem,4vw,3.5rem)] py-2.5 backdrop-blur-[10px] sm:static sm:mx-0 sm:mt-5 sm:border-0 sm:bg-transparent sm:px-0 sm:py-0 sm:backdrop-blur-none"
+        >
+          <button
+            type="button"
+            data-atras
+            hidden
+            class="inline-flex min-h-[48px] items-center gap-2 rounded border-[1.5px] border-linea2 px-4 text-[.95rem] font-semibold transition-colors hover:border-tinta hover:bg-papel2"
+          >
+            <svg class="h-4 w-4 rotate-180" aria-hidden="true"
+              ><use href="#i-arw"></use></svg
+            >{c.atras}
+          </button>
+          <span class="flex-1"></span>
+          <button
+            type="button"
+            data-siguiente
+            class="inline-flex min-h-[48px] items-center gap-2.5 rounded bg-tinta px-5 text-[.97rem] font-bold text-papel transition-[background-color,transform,opacity] hover:bg-rojo2 active:translate-y-px disabled:pointer-events-none disabled:opacity-35"
+          >
+            {c.siguiente}<svg
+              class="h-[18px] w-[18px] opacity-80"
+              aria-hidden="true"><use href="#i-arw"></use></svg
+            >
+          </button>
+          <button
+            type="submit"
+            data-enviar
+            data-texto-enviando={c.contacto.enviando}
+            hidden
+            class="inline-flex min-h-[48px] items-center gap-2.5 rounded bg-rojo2 px-5 text-[.97rem] font-bold text-white transition-[background-color,transform] hover:bg-tinta active:translate-y-px disabled:opacity-60"
+          >
+            {c.contacto.enviar}<svg
+              class="h-[18px] w-[18px] opacity-80"
+              aria-hidden="true"><use href="#i-arw"></use></svg
+            >
+          </button>
+        </div>
+      </form>
+
+      <Resultado copia={c} lang={lang} />
+
+      <noscript>
+        <p class="text-[1rem]">
+          <a
+            href={wa(c.wa.encabezado)}
+            class="border-b-[1.5px] border-current font-semibold text-rojo2"
+            >WhatsApp</a
+          >
+        </p>
+      </noscript>
+    </div>
+  </div>
+</section>
+
+<script
+  type="application/json"
+  id="cuestionario-copia"
+  is:inline
+  set:html={datos}
+/>
+
+<script>
+  import { iniciarCuestionario } from "./cuestionario.client";
+  iniciarCuestionario();
+</script>

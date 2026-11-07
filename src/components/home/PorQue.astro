@@ -23,7 +23,7 @@ const c = copia(lang).porque;
     <div class="mt-[clamp(2.2rem,4.5vw,3.4rem)] space-y-[clamp(2rem,4vw,3rem)]">
       {
         c.razones.map((r, i) => (
-          <div class="grid grid-cols-1 gap-x-8 gap-y-3 lg:grid-cols-[3.6rem_minmax(0,1fr)_minmax(0,14rem)]">
+          <div class="grid grid-cols-1 gap-x-8 gap-y-3 lg:grid-cols-[3.6rem_minmax(0,1fr)]">
             <span
               class:list={[
                 "font-slab block select-none text-[3.1rem] leading-[.78] text-rojo",
@@ -44,14 +44,6 @@ const c = copia(lang).porque;
                 />
               ))}
             </div>
-            <p
-              class:list={[
-                "font-pen text-[1.2rem] leading-[1.3] text-rojo2 lg:pt-3",
-                r.giroNota,
-              ]}
-            >
-              {r.manuscrita}
-            </p>
           </div>
         ))
       }

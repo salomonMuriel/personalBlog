@@ -9,6 +9,7 @@
       "@components/*": ["components/*"],
       "@content/*": ["content/*"],
       "@data/*": ["data/*"],
+      "@db/*": ["db/*"],
       "@layouts/*": ["layouts/*"],
       "@pages/*": ["pages/*"],
       "@styles/*": ["styles/*"],

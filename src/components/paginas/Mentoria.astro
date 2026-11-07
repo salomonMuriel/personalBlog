@@ -5,24 +5,12 @@ import Faq from "@components/home/Faq.astro";
 import { wa, CONTACTO } from "@config";
 import { copiaMentoria } from "@data/mentoria";
 import { routes, type Lang } from "@i18n/ui";
-import { cupos, mentoriasLibres, fechaLarga } from "@utils/cupos";
 
 interface Props {
   lang: Lang;
 }
 const { lang } = Astro.props;
 const c = copiaMentoria(lang);
-
-const hayCupo = mentoriasLibres > 0;
-const numeros: Record<Lang, string[]> = {
-  es: ["cero", "uno", "dos", "tres", "cuatro", "cinco"],
-  en: ["zero", "one", "two", "three", "four", "five"],
-};
-const cuantos = numeros[lang][mentoriasLibres] ?? String(mentoriasLibres);
-const ctaTexto =
-  mentoriasLibres === 1
-    ? c.cupos.ctaUno
-    : c.cupos.ctaVarios.replace("%n", cuantos);
 ---
 
 <EncabezadoPagina
@@ -129,9 +117,13 @@ const ctaTexto =
             class="font-mono text-[12px] font-semibold uppercase tracking-[.14em] text-rojo3"
             >{c.semana.pie}</span
           >
-          <span class="text-[.95rem] leading-[1.4] text-[#8b8a83]"
-            >{c.semana.pieNota}</span
-          >
+          {
+            c.semana.pieNota && (
+              <span class="text-[.95rem] leading-[1.4] text-[#8b8a83]">
+                {c.semana.pieNota}
+              </span>
+            )
+          }
         </div>
       </div>
     </div>
@@ -239,9 +231,13 @@ const ctaTexto =
         <p class="mt-4 max-w-[52ch] text-[1.02rem] leading-[1.6] text-paneltxt">
           {c.ignia.texto}
         </p>
-        <p class="mt-3 max-w-[52ch] text-[1.02rem] leading-[1.6]">
-          <b class="font-semibold">{c.ignia.remate}</b>
-        </p>
+        {
+          c.ignia.remate && (
+            <p class="mt-3 max-w-[52ch] text-[1.02rem] leading-[1.6]">
+              <b class="font-semibold">{c.ignia.remate}</b>
+            </p>
+          )
+        }
       </div>
       <a
         href={c.ignia.url}
@@ -259,100 +255,54 @@ const ctaTexto =
   </div>
 </section>
 
-<!-- ═══ CUPOS ═══ -->
+<!-- ═══ EMPEZAR ═══ -->
 <section
   class="border-b border-linea bg-papel2 py-[clamp(2.6rem,5.5vw,4.4rem)]"
 >
   <div class="hoja">
     <EncabezadoSeccion
-      rotulo={c.cupos.rotulo}
-      nota={c.cupos.nota}
+      rotulo={c.empezar.rotulo}
+      nota={c.empezar.nota}
       notaCh={42}
     />
 
     <div
       class="max-w-[46rem] rounded border-[1.5px] border-linea2 bg-campo p-5 sm:p-6"
     >
-      <div class="flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <p
-            class="font-arch text-[clamp(2.4rem,5.4vw,3.6rem)] font-black leading-none tabular-nums tracking-[-.05em] [font-stretch:84%]"
-          >
-            <span class="text-rojo2">{cupos.mentoriasOcupadas}</span>
-            {lang === "es" ? "de" : "of"}
-            {cupos.mentoriasTotal}
-          </p>
-          <p class="mt-1.5 text-[13.5px] text-gris">{c.cupos.ocupadas}</p>
-        </div>
-        <div
-          class="flex gap-[6px]"
-          role="img"
-          aria-label={c.cupos.ariaCupos
-            .replace("%s", String(cupos.mentoriasOcupadas))
-            .replace("%t", String(cupos.mentoriasTotal))}
+      <p
+        class="font-arch text-[clamp(1.8rem,4.2vw,2.6rem)] font-black uppercase leading-[.95] tracking-[-.02em] [font-stretch:84%]"
+      >
+        {c.empezar.titulo}
+      </p>
+      <p class="mt-4 text-[1.02rem] leading-[1.55] text-gris">
+        {c.empezar.texto}
+      </p>
+      <div class="mt-5 flex flex-wrap gap-3">
+        <a
+          href={wa(c.empezar.ctaWaTexto)}
+          target="_blank"
+          rel="noopener"
+          data-origen="mentoria-empezar"
+          class="inline-flex items-center gap-2.5 rounded bg-rojo2 px-5 py-3.5 text-[.95rem] font-bold text-white transition-[background-color,transform] hover:bg-tinta active:translate-y-px"
         >
-          {
-            Array.from({ length: cupos.mentoriasTotal }).map((_, i) => (
-              <i
-                class:list={[
-                  "block h-5 w-5 rounded border-[1.5px]",
-                  i < cupos.mentoriasOcupadas
-                    ? "border-tinta bg-tinta"
-                    : "border-linea2",
-                ]}
-              />
-            ))
-          }
-        </div>
+          {c.empezar.ctaWa}
+          <svg class="h-[18px] w-[18px] opacity-80" aria-hidden="true">
+            <use href="#i-arw"></use>
+          </svg>
+        </a>
+        <a
+          href={CONTACTO.calMentoria}
+          target="_blank"
+          rel="noopener"
+          data-origen="mentoria-agenda"
+          class="inline-flex items-center gap-2.5 rounded border-[1.5px] border-linea2 px-5 py-3.5 text-[.95rem] font-bold transition-[border-color,background-color,transform] hover:border-tinta hover:bg-papel2 active:translate-y-px"
+        >
+          <svg class="h-4 w-4 opacity-70" aria-hidden="true">
+            <use href="#i-cal"></use>
+          </svg>
+          {c.empezar.ctaAgenda}
+        </a>
       </div>
-      <p
-        class="mt-5 border-t border-linea pt-5 text-[.96rem] leading-[1.55] text-gris"
-      >
-        {c.cupos.explicacion.replace("%t", String(cupos.mentoriasTotal))}
-      </p>
-      <p
-        class="font-mono mt-3 text-[10.5px] uppercase leading-[1.8] tracking-[.16em] text-gris"
-      >
-        {c.cupos.actualizado}
-        {fechaLarga(cupos.actualizado, lang)}
-      </p>
-
-      {
-        hayCupo ? (
-          <>
-            <div class="mt-5 flex flex-wrap gap-3">
-              <a
-                href={wa(c.cupos.ctaWa)}
-                target="_blank"
-                rel="noopener"
-                data-origen="mentoria-cupos"
-                class="inline-flex items-center gap-2.5 rounded bg-rojo2 px-5 py-3.5 text-[.95rem] font-bold text-white transition-[background-color,transform] hover:bg-tinta active:translate-y-px"
-              >
-                {ctaTexto}
-                <svg class="h-[18px] w-[18px] opacity-80" aria-hidden="true">
-                  <use href="#i-arw" />
-                </svg>
-              </a>
-              <a
-                href={CONTACTO.calMentoria}
-                target="_blank"
-                rel="noopener"
-                data-origen="mentoria-agenda"
-                class="inline-flex items-center gap-2.5 rounded border-[1.5px] border-linea2 px-5 py-3.5 text-[.95rem] font-bold transition-[border-color,background-color,transform] hover:border-tinta hover:bg-papel2 active:translate-y-px"
-              >
-                <svg class="h-4 w-4 opacity-70" aria-hidden="true">
-                  <use href="#i-cal" />
-                </svg>
-                {lang === "es" ? "O agenda una llamada" : "Or book a call"}
-              </a>
-            </div>
-          </>
-        ) : (
-          <p class="font-mono mt-5 rounded border-[1.5px] border-dashed border-linea2 px-4 py-3.5 text-[10.5px] uppercase leading-[1.7] tracking-[.14em] text-gris">
-            {c.cupos.sinCupo}
-          </p>
-        )
-      }
     </div>
   </div>
 </section>

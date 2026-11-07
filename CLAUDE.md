@@ -9,8 +9,8 @@ software a la medida a empresas colombianas tradicionales** que facturan
 menos de USD 2M al año y cuya operación es *chinomática* —parece
 automatizada, pero hay alguien haciéndola a mano—.
 
-Seis páginas de contenido casi estático, dos islas de interactividad en JS
-plano, y un objetivo único: que el visitante escriba por WhatsApp.
+Six mostly static content pages and one goal: that the visitor fills in the
+qualification questionnaire (`/cuentame/`) or writes on WhatsApp.
 
 El rebuild descrito en `REBUILD-PLAN.md` **ya está hecho**. Ese documento
 queda como registro de decisiones; este archivo describe el estado actual.
@@ -50,6 +50,8 @@ npm run sync             # sincronizar tipos de colecciones
 
 npm run check:redirects  # el mapa de cutover (200 / 301 / 410 / 404)
 node scripts/shots.mjs   # capturas a 375 y 1440 px + detector de desborde
+node scripts/pliegue-hero.mjs http://localhost:4321 <out-dir> / --todas
+                         # the hero must fit the first screen (see Hero)
 npm run ficha:pdf        # regenera los PDF de la ficha de perfil
 ```
 
@@ -76,6 +78,14 @@ funciones dinámicas.
 React y `@astrojs/react` están instalados **únicamente** porque el admin de
 Keystatic es React. Ninguna página del sitio usa una isla.
 
+The questionnaire endpoint `src/pages/api/cuestionario.ts` (`prerender = false`)
+validates with Zod (`src/utils/cuestionario-esquema.ts`), saves a row to Neon
+through Drizzle (`src/db/`, table `respuestas_cuestionario`) and emails Salomón
+through Resend (`src/utils/correo-cuestionario.ts`). Secrets come from
+`astro:env/server`: `DATABASE_URL`, `RESEND_API_KEY`, `EMAIL_FROM`,
+`EMAIL_FROM_NAME`. Schema changes go through `drizzle-kit push`, on a Neon
+branch first.
+
 Los imports van por los alias de `tsconfig.json`: `@config`, `@components/*`,
 `@data/*`, `@i18n/*`, `@layouts/*`, `@utils/*`, `@assets/*`, `@styles/*`.
 
@@ -88,6 +98,7 @@ Los imports van por los alias de `tsconfig.json`: `@config`, `@components/*`,
 | `/charlas/` | `/en/talks/` | `components/paginas/Charlas.astro` |
 | `/sobre-mi/` | `/en/about/` | `components/paginas/SobreMi.astro` |
 | `/ahora/` | `/en/now/` | `components/paginas/Ahora.astro` |
+| `/cuentame/` | `/en/tell-me/` | `components/cuestionario/Cuestionario.astro` (noindex, out of the sitemap) |
 
 El mapa vive en `src/i18n/ui.ts` (`routes`). Las rutas **no** son paralelas
 —`/mentoria/` ↔ `/en/mentoring/`—, así que ese objeto es la única fuente de
@@ -118,9 +129,12 @@ la copia, regenérelos.
 
 ## Dónde está la copia
 
-- **`src/data/landing.ts`** — toda la portada, en `es` y `en`. Partió de
-  `design-directions/direction-36.html` y se recortó: copia corta y directa,
-  sin frases de «honestidad» ni remates ingeniosos.
+- **`src/data/landing/{es,en}.ts`** — the whole home page (`copia(lang)` from
+  `@data/landing`), including the hero's rotating phrases and the dictionary
+  entry. Every copy change goes through the humanizer skill.
+- **`src/data/cuestionario/`** — the questionnaire. `opciones.ts` holds the
+  option ids shared by the form, the endpoint and the email, most urgent
+  answer first.
 - **`src/data/mentoria.ts`**, **`src/data/charlas.ts`** — igual, por página.
 - **`src/data/preguntas.ts`** — las ocho preguntas de la portada. Vive
   aparte porque la página también las necesita para el JSON-LD `FAQPage`.
@@ -159,7 +173,6 @@ Colecciones y singletons:
 | Charlas (ES/EN) | `src/content/talks/{es,en}/*.md` |
 | Testimonios (ES/EN) | `src/content/testimonios/{es,en}/*.md` (vacío a propósito) |
 | Sobre mí (ES/EN) | `src/content/pages/about-{es,en}.mdx` |
-| Cupos y capacidad | `src/content/settings/cupos.json` |
 
 Del lado de Astro las colecciones no son `now` y `talks` sino un par por
 idioma —`now-es`, `now-en`, `talks-es`, `talks-en`, `testimonios-es`,
@@ -168,10 +181,6 @@ idioma —`now-es`, `now-en`, `talks-es`, `talks-en`, `testimonios-es`,
 idioma a mano: pida `getLocalizedCollection(lang, "now")` de
 `src/i18n/utils.ts`. `pages` es la excepción —una sola colección donde el
 idioma va en el nombre del archivo, `about-es.mdx`—.
-
-`cupos.json` es lo que mueve los contadores «2 de 4» de la portada y «3 de
-5» de mentoría, la fecha de actualización y —cuando se llena— el botón, que
-se reemplaza por un aviso. Se lee desde `src/utils/cupos.ts`.
 
 El MDX de `/ahora` y `/sobre-mi` referencia imágenes de `/public`, no de
 `src/assets`, para que el editor de Keystatic las pueda mostrar y guardar
@@ -205,35 +214,53 @@ Dos cuidados al escribir plantillas:
 1. **Espacios en blanco.** En Astro un salto de línea dentro de un `<a>` o
    entre expresiones se vuelve un espacio: subrayados que se comen el
    espacio siguiente, comas separadas del texto. Donde tres trozos van
-   pegados, use `set:html` (ya está hecho en `Danos`, `Montado`, `Contacto`,
-   `Cupos`).
-2. **El tablero de cajitas** (`TableroCajitas.astro`) dibuja los cables
-   midiendo `offsetLeft/offsetTop` de cada caja. Los `id`, el orden y los
-   `data-a`/`data-b`/`data-r` son un contrato con el script. Portado tal
-   cual de direction-36: no redibujar la geometría.
+   pegados, use `set:html` (ya está hecho en `Danos`, `Montado`, `Contacto`).
+2. **The cajitas diagram** (`DiagramaCajitas.astro`) places its nodes by
+   percentage and draws the elbows as SVG paths with a non-scaling stroke;
+   phones get their own positions.
 
-## Las dos islas interactivas
+## Hero
 
-Ambas en JS plano dentro de su `.astro`. Sin React, sin framework de islas.
+`components/home/Hero.astro`: a black-and-white poster. The h1 «Se arregla /
+Lo chinomático» is `hero/Titulo.astro` + `hero/Estilo.astro`: on load the
+second line runs the phrases in `hero.frases` (each struck by a red pen, the
+«doble» one rolling through `hero.escalada`), then the last strike swells into
+the red block that holds «LO CHINOMÁTICO». Plain JS with the Web Animations
+API; it plays once, replays on mouse hover and rests still under reduced
+motion. The h1 box never moves while it runs.
 
-- **Chinómetro** (`components/home/Chinometro.astro`): diez casillas → un
-  puntaje de 0 a 100, aguja y arco SVG, y un mensaje de WhatsApp ya escrito
-  con lo que el visitante marcó. No pide correo ni guarda nada.
-- **Tablero de cajitas** (`components/home/TableroCajitas.astro`): el
-  diagrama de HOY vs CONECTADO. Es la sección favorita del cliente.
+The owner's rule: photo, h1, senses 1 and 3 of the dictionary entry, the
+«Para PYMEs que…» line and both CTAs fit the first screen at 1920×937,
+1440×900 and 375×667. The elements carry `data-mide`; `scripts/pliegue-hero.mjs`
+measures them. Phones assume the 61px one-row nav (`--nav`).
+
+## Other interactive pieces
+
+Plain JS inside their `.astro`. No React, no island framework.
+
+- **Questionnaire** (`components/cuestionario/`, `cuestionario.client.ts`):
+  one question per screen, posts to `/api/cuestionario`, ends with a result
+  that hands off to Cal.com or a pre-filled WhatsApp message.
+- **Mobile menu** (`SiteNav.astro`): on phones the page links live in a
+  full-screen `<dialog>` behind the menu button.
+- **Mobile CTA bar** (`BarraMovil.astro`): shows once the hero CTAs scroll away.
+- **Systems showcase** (`SistemasTriptico.astro`): rotates through the
+  companies' screens. **Hidden** behind `mostrarSistemas` in `Landing.astro`
+  until each client approves showing their screens.
 
 ## Instrumentación
 
-WhatsApp es el canal principal, así que la conversión se mide ahí.
+Conversion is the questionnaire or WhatsApp.
 
 - `Layout.astro` engancha un solo listener de clics y manda a GA4
   `contacto_whatsapp`, `contacto_agenda`, `contacto_correo` y
-  `contacto_linkedin`. Cada enlace de contacto lleva `data-origen="…"`, que
-  es el que dice desde qué sección salió el clic.
-- El evento del chinómetro además lleva `marcadas` y `puntaje`: eso es la
-  señal de calificación del lead antes de que empiece la conversación.
-- Las UTM de la primera visita se guardan en `sessionStorage` y se pegan al
-  final del mensaje de WhatsApp del chinómetro.
+  `contacto_linkedin`, plus `contacto_cuestionario` for links to `/cuentame/`.
+  Cada enlace de contacto lleva `data-origen="…"`, que es el que dice desde
+  qué sección salió el clic.
+- The questionnaire sends `cuestionario_inicio`, `cuestionario_paso` and
+  `cuestionario_enviado`.
+- First-visit UTMs are kept in `sessionStorage` (`sm_origen`) and saved with
+  each questionnaire answer.
 - La librería de GA4 (160 kB) se baja en `requestIdleCallback` o al primer
   gesto; el shim de `gtag` queda listo de una vez para no perder eventos.
 - Cal.com: un tipo de evento por oferta en `src/config.ts` (`calConsultoria`,

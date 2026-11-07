@@ -1,16 +1,16 @@
 import r5 from "@assets/logos/r5.png";
 import ignia from "@assets/logos/ignia.png";
+import finco from "@assets/logos/finco.png";
+import prestagente from "@assets/logos/prestagente.png";
+import beriblock from "@assets/logos/beriblock.png";
+import elpalomo from "@assets/logos/elpalomo.png";
 import alianzaEducativa from "@assets/logos/alianza-educativa.png";
 import visionamos from "@assets/logos/visionamos.png";
-import finco from "@assets/logos/finco.png";
 import cosinte from "@assets/logos/cosinte.png";
 import visible from "@assets/logos/visible.png";
-import prestagente from "@assets/logos/prestagente.png";
 import bision from "@assets/logos/bision.png";
 import guiacolegio from "@assets/logos/guiacolegio.png";
 import jda from "@assets/logos/jda.png";
-import beriblock from "@assets/logos/beriblock.png";
-import elpalomo from "@assets/logos/elpalomo.png";
 import colsubsidio from "@assets/logos/colsubsidio.png";
 import eafit from "@assets/logos/eafit.png";
 import drReddys from "@assets/logos/dr-reddys.png";
@@ -37,6 +37,7 @@ export type Logo = {
 
 export const clientes: Logo[] = [
   { nombre: "R5", logo: r5, escala: 1.05 },
+  { nombre: "Aura Novias" },
   { nombre: "Ignia", logo: ignia, escala: 1.35 },
   {
     nombre: "Alianza Educativa",

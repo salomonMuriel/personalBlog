@@ -1,0 +1,64 @@
+---
+import { wa } from "@config";
+import { copia } from "@data/landing";
+import { routes, type Lang } from "@i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const c = copia(lang).cta;
+---
+
+<div
+  id="barra-movil"
+  data-visible="false"
+  class="fixed inset-x-0 bottom-0 z-40 border-t border-linea bg-papel/95 px-4 pb-[calc(.75rem+env(safe-area-inset-bottom))] pt-3 backdrop-blur-[10px] transition-transform duration-300 data-[visible=false]:translate-y-full motion-reduce:transition-none md:hidden"
+>
+  <div class="flex gap-2.5">
+    <a
+      href={routes.cuentame[lang]}
+      data-origen="barra-movil"
+      tabindex="-1"
+      class="inline-flex min-h-[48px] flex-1 items-center justify-center gap-2 rounded bg-rojo2 px-4 text-[.95rem] font-bold text-white active:translate-y-px"
+    >
+      {c.cuestionario}
+    </a>
+    <a
+      href={wa(c.waTexto)}
+      target="_blank"
+      rel="noopener"
+      data-origen="barra-movil"
+      tabindex="-1"
+      aria-label={c.wa}
+      class="inline-flex min-h-[48px] w-[52px] flex-none items-center justify-center rounded border-[1.5px] border-linea2 active:translate-y-px"
+    >
+      <svg class="h-5 w-5" aria-hidden="true"><use href="#i-chat"></use></svg>
+    </a>
+  </div>
+</div>
+
+<script>
+  const barra = document.getElementById("barra-movil");
+  const heroCta = document.querySelector('a[data-origen="hero"]');
+  const contacto = document.getElementById("contacto");
+  if (barra && heroCta && "IntersectionObserver" in window) {
+    let pasoHero = false;
+    let enContacto = false;
+    const pintar = () => {
+      const visible = pasoHero && !enContacto;
+      barra.dataset.visible = String(visible);
+      barra.querySelectorAll("a").forEach(a => (a.tabIndex = visible ? 0 : -1));
+    };
+    new IntersectionObserver(([e]) => {
+      pasoHero = !e.isIntersecting && e.boundingClientRect.top < 0;
+      pintar();
+    }).observe(heroCta);
+    if (contacto) {
+      new IntersectionObserver(([e]) => {
+        enContacto = e.isIntersecting;
+        pintar();
+      }).observe(contacto);
+    }
+  }
+</script>

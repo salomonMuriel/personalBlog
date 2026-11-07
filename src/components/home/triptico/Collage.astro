@@ -1,0 +1,195 @@
+---
+import { Image } from "astro:assets";
+import type { Sistema } from "@data/landing";
+import { pantallas } from "@data/pantallas";
+import type { Lang } from "@i18n/ui";
+import { imagenDe } from "@utils/pantallas";
+import { composiciones, PROPORCION, type Pieza } from "./composiciones";
+
+interface Props {
+  clave: Sistema["clave"];
+  lang: Lang;
+}
+const { clave, lang } = Astro.props;
+
+// Collage width in CSS px at 1280+, and in vw below; used only for `sizes`.
+// The phone figure is two thirds of the real 90vw so 3x screens get about 2x.
+const COLLAGE_ESCRITORIO = 580;
+const COLLAGE_TABLETA = 50;
+const COLLAGE_CELULAR = 60;
+const ESCALERA_ESCRITORIO = [640, 960, 1280, 1600, 2000, 2400, 2880];
+const ESCALERA_CELULAR = [320, 480, 640, 780];
+
+const datos = pantallas[clave];
+
+function fuente(archivo: string) {
+  const imagen = imagenDe(archivo);
+  const pantalla = datos.find(p => p.archivo === archivo);
+  if (!imagen || !pantalla) throw new Error(`Triptico: missing ${archivo}`);
+  return { imagen, pantalla, ancho: imagen.width / 2, alto: imagen.height / 2 };
+}
+
+function proporcion(p: Pieza) {
+  if (p.forma === "ventana") return 3 / 2;
+  if (p.forma === "celular") return 1 / 2;
+  const [, , w, h] = p.region!;
+  return w / h;
+}
+
+// Width the whole screen is drawn at when this piece fills its share.
+function anchoCompleto(p: Pieza) {
+  const { ancho } = fuente(p.archivo);
+  const fraccion = p.region ? p.region[2] / ancho : 1;
+  return p.w / 100 / fraccion;
+}
+
+const piezas = composiciones[clave];
+
+// Pieces cut from one screen share the largest request, so it downloads once.
+const factorPorArchivo = new Map<string, number>();
+for (const p of piezas) {
+  const previo = factorPorArchivo.get(p.archivo) ?? 0;
+  factorPorArchivo.set(p.archivo, Math.max(previo, anchoCompleto(p)));
+}
+
+const vistas = piezas.map((p, i) => {
+  const { imagen, pantalla, ancho, alto } = fuente(p.archivo);
+  const [rx, ry, rw] = p.region ?? [0, 0, ancho, alto];
+  const factor = factorPorArchivo.get(p.archivo)!;
+  const primeraDelArchivo =
+    piezas.findIndex(q => q.archivo === p.archivo) === i;
+  const telefono = ancho < 600;
+  return {
+    pieza: p,
+    imagen,
+    titulo: pantalla.titulo[lang],
+    alt: primeraDelArchivo ? pantalla.alt[lang] : "",
+    widths: telefono ? ESCALERA_CELULAR : ESCALERA_ESCRITORIO,
+    sizes: [
+      `(min-width: 1280px) ${Math.round(factor * COLLAGE_ESCRITORIO)}px`,
+      `(min-width: 768px) ${Math.round(factor * COLLAGE_TABLETA)}vw`,
+      `${Math.round(factor * COLLAGE_CELULAR)}vw`,
+    ].join(", "),
+    estilo: [
+      `--x:${p.x}%`,
+      `--y:${p.y}%`,
+      `--w:${p.w}%`,
+      `--z:${p.z ?? 1}`,
+      `--cx:${rx / ancho}`,
+      `--cy:${ry / alto}`,
+      `--cw:${rw / ancho}`,
+      `aspect-ratio:${proporcion(p).toFixed(4)}`,
+    ].join(";"),
+  };
+});
+---
+
+<div class="collage" style={`--proporcion:${PROPORCION}`}>
+  {
+    vistas.map(v => (
+      <div class:list={["pieza", `pieza-${v.pieza.forma}`]} style={v.estilo}>
+        {v.pieza.forma === "ventana" && (
+          <span class="titulo-ventana font-mono" aria-hidden="true">
+            {v.titulo}
+          </span>
+        )}
+        <div class="marco">
+          <Image
+            src={v.imagen}
+            widths={v.widths}
+            sizes={v.sizes}
+            alt={v.alt}
+            quality={75}
+            loading="lazy"
+          />
+        </div>
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .collage {
+    position: relative;
+    container-type: inline-size;
+    width: 100%;
+    aspect-ratio: var(--proporcion);
+    --sombra:
+      0 1px 2px rgb(22 23 26 / 0.1), 0 18px 40px -20px rgb(22 23 26 / 0.45);
+  }
+  .pieza {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    width: var(--w);
+    z-index: var(--z);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 3px;
+    background: var(--campo);
+    box-shadow: var(--sombra);
+  }
+  .marco {
+    position: relative;
+    flex: 1;
+    overflow: hidden;
+  }
+  .marco :global(img) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 0 0;
+  }
+  .pieza-recorte .marco :global(img) {
+    inset: auto;
+    left: 0;
+    top: 0;
+    width: calc(100% / var(--cw));
+    height: auto;
+    max-width: none;
+    transform: translate(calc(var(--cx) * -100%), calc(var(--cy) * -100%));
+  }
+  .titulo-ventana {
+    flex: none;
+    display: flex;
+    align-items: center;
+    gap: 0.9cqw;
+    height: 3.4cqw;
+    padding-inline: 1.6cqw;
+    border-bottom: 1px solid var(--linea);
+    background: #f7f6f2;
+    color: var(--gris);
+    font-size: max(9px, 1.55cqw);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .titulo-ventana::before {
+    content: "";
+    flex: none;
+    width: 0.9cqw;
+    height: 0.9cqw;
+    min-width: 4px;
+    min-height: 4px;
+    border-radius: 50%;
+    background: var(--rojo);
+  }
+  .pieza-celular {
+    padding: 1.1cqw;
+    border-radius: 3.6cqw;
+    background: var(--tinta);
+  }
+  .pieza-celular .marco {
+    border-radius: 2.6cqw;
+    background: var(--campo);
+  }
+  @media (max-width: 767px) {
+    .titulo-ventana {
+      font-size: 0;
+      height: 4.4cqw;
+    }
+  }
+</style>

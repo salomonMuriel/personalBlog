@@ -1,6 +1,5 @@
 import type { APIRoute } from "astro";
 import { SITE, CONTACTO } from "@config";
-import { cupos } from "@utils/cupos";
 import { getCollection } from "astro:content";
 import { clientes } from "@data/logos";
 
@@ -19,7 +18,7 @@ export const GET: APIRoute = async () => {
 
   const cuerpo = `# Salomón Muriel
 
-> Emprendedor en serie y tecnólogo, en Bogotá, Colombia. Cinco empresas fundadas —dos vendidas, dos quebradas, y hoy Ignia—. Junta el criterio de negocio con la capacidad técnica: define la estrategia y construye la herramienta él mismo, sin intermediarios. En paralelo a Ignia hace consultoría y mentoría.
+> Emprendedor en serie y tecnólogo, en Bogotá, Colombia. Cinco empresas fundadas —dos vendidas, dos quebradas, y hoy Ignia—. Junta el criterio de negocio con la capacidad técnica, y hoy le construye a empresas colombianas su sistema operativo. Además hace consultoría y mentoría.
 
 ## Quién es
 
@@ -31,12 +30,11 @@ construido a la siguiente.
 
 Va en su quinta empresa. Dos las vendió —Finco a RED Atlas, PrestaGente a
 Taurus Capital—, dos quebraron —Beriblock y El Palomo— y la de hoy es Ignia,
-un modelo nuevo de educación superior en Latinoamérica que construye de lunes
-a viernes. Antes, como empleado, dirigió unas cuarenta personas en R5 y
+un modelo nuevo de educación superior en Latinoamérica. Antes, como empleado, dirigió unas cuarenta personas en R5 y
 construyó ahí el pipeline de datos y el sistema de modelación de riesgo.
 Aprendió a programar a las malas, con una fecha de entrega encima.
 
-Hoy hace tres cosas: **Ignia**, que es su empresa y su trabajo principal;
+Hoy hace tres cosas: **Ignia**, que es su empresa;
 **consultoría**, construyendo software a la medida para empresas colombianas
 tradicionales —moda, restaurantes, distribución, importación, servicios— que
 facturan menos de USD 2M al año y tienen entre 5 y 40 empleados; y
@@ -48,8 +46,8 @@ gente que monta cosas.
 
 ## Qué vende
 
-1. **Consultoría** (${SITE.website}/): estrategia de 0 a 1 más desarrollo de software a la medida. Construye el sistema que le falta a la empresa —CRM, operación, facturación— hecho a la medida de como ya trabaja, y lo conecta con los que ya tiene. El código queda a nombre de la empresa; no hay cobro mensual por usuario. Capacidad: ${cupos.consultoriasOcupadas} de ${cupos.consultoriasTotal} cupos ocupados.
-2. **Mentoría** (${SITE.website}/mentoria/): acompañamiento uno a uno para gente que está arrancando algo —fundadores, ONG, proyectos nuevos—, con tareas prácticas semanales. Es un servicio pago. Capacidad: ${cupos.mentoriasOcupadas} de ${cupos.mentoriasTotal} cupos ocupados. No compite con el Action Lab de Ignia, que es un programa por cohortes.
+1. **Consultoría** (${SITE.website}/): el sistema operativo de la empresa, hecho a la medida. Construye el sistema que le falta a la empresa —CRM, operación, facturación— hecho a la medida de como ya trabaja, y lo conecta con los que ya tiene. El código queda a nombre de la empresa; no hay cobro mensual por usuario. Para empezar hay un cuestionario de dos minutos (${SITE.website}/cuentame/) o WhatsApp.
+2. **Mentoría** (${SITE.website}/mentoria/): acompañamiento uno a uno para gente que está arrancando algo —fundadores, ONG, proyectos nuevos—, con tareas prácticas semanales. Es un servicio pago. No compite con el Action Lab de Ignia, que es un programa por cohortes.
 3. **Charlas** (${SITE.website}/charlas/): conferencias sobre tecnología, emprendimiento, mentalidad y balance de vida.
 
 No hay precios publicados en ninguna parte del sitio. Para hablar de dinero hay que escribirle.
@@ -63,7 +61,7 @@ No hay precios publicados en ninguna parte del sitio. Para hablar de dinero hay 
 
 ## Trayectoria
 
-- **Ignia** (2025 – hoy): modelo nuevo de educación superior en Latinoamérica. Su empresa actual, de lunes a viernes. Le construyó la página, el sistema de operación de los cursos, el CRM y el portal de comunidad.
+- **Ignia** (2025 – hoy): modelo nuevo de educación superior en Latinoamérica. Su empresa actual. Le construyó la página, el sistema de operación de los cursos, el CRM y el portal de comunidad.
 - **Finco** (2019 – 2022): valoración inmobiliaria con datos e inteligencia artificial para Latinoamérica, cien mil reportes al año. Vendida a RED Atlas.
 - **PrestaGente** (2017 – 2019): libranza entre personas. Vendida a Taurus Capital; sigue operando.
 - **Beriblock** (2018 – 2019): autenticación de pagarés con blockchain. Quebró.

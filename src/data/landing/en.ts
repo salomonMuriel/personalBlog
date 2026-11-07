@@ -1,0 +1,338 @@
+import type { Columna, Falla, Nodo, Sistema } from "./tipos";
+
+export const en = {
+  meta: {
+    title: "Let's fix the chinomático · Salomón Muriel, Bogotá",
+    description:
+      "I build your company its operating system: the software that replaces the spreadsheets that don't match and the copying and pasting, made to fit how you already work. Bogotá.",
+  },
+
+  cta: {
+    cuestionario: "Tell me about your company",
+    cuestionarioNota: "",
+    wa: "Message me on WhatsApp",
+    waTexto:
+      "Hi Salomón, my name is ______ and I run a ______ business. I want to fix what's chinomático in it.",
+  },
+
+  hero: {
+    linea1: "Let's fix",
+    linea2: "The chinomático",
+    icp: "For small businesses that still run on Excel, paper and WhatsApp.",
+    bajada:
+      "I build your company its operating system: the software that replaces the spreadsheets that don't match and the copying and pasting, made to fit how you already work.",
+    bajadaCorta: "I build your company its operating system.",
+    frases: [
+      "the order notebook",
+      "the quote typed in Word",
+      "the paper form",
+      "the double data entry",
+      "the Monday report",
+      "the payment screenshot",
+    ],
+    escalada: ["double", "triple", "quadruple"],
+    waCorto: "WhatsApp",
+    dicc: {
+      palabra: "chi·no·má·ti·co, ca",
+      categoria: "adj. · Colombian Spanish",
+      acepciones: [
+        "Said of a process: it <b class='font-bold'>should</b> be automatic, but someone does it by hand.",
+        "Said of a system: one made of spreadsheets, WhatsApp and paper.",
+        "Said of a company: yours, probably.",
+      ],
+    },
+    marcada: "yours",
+    fichaAlt:
+      "Portrait of Salomón Muriel with folded arms, against a dark background",
+  },
+
+  clientes: {
+    rotulo: "I've built technology for",
+  },
+
+  danos: {
+    rotulo: "Fault log",
+    nota: "",
+    titulo: "The problems I hear about most",
+    etiqueta: "Fault",
+    cierre:
+      "If none of this sounds familiar, I'm probably not the right person.",
+    ctaTexto:
+      "If your company is still in the stone age, tell me how it runs today.",
+    fallas: [
+      {
+        n: "01",
+        titulo: "The spreadsheets don't match",
+        texto:
+          "There are twenty spreadsheets nobody keeps up to date, and each one says something different.",
+        nota: "and when they disagree, whoever talks loudest in the meeting wins",
+        imagen: "torre-excel",
+        alt: "A tower of binders and spreadsheets about to topple",
+      },
+      {
+        n: "02",
+        titulo: "Orders get lost in the chat",
+        texto:
+          "They arrive on WhatsApp and someone copies them into a spreadsheet at the end of the day.",
+        nota: "and if someone forgets to copy one, the customer is left waiting",
+        imagen: "chat-pedidos",
+        alt: "A phone full of WhatsApp messages surrounded by boxes and invoices",
+      },
+      {
+        n: "03",
+        titulo: "We're still in the stone age",
+        texto:
+          "To find out what sold yesterday you have to ask someone, and if that person quits, the process leaves with them.",
+        nota: "and whoever comes next learns it by word of mouth",
+        imagen: "tabla-piedra",
+        alt: "A spreadsheet carved into a stone tablet on a desk",
+      },
+    ] as Falla[],
+  },
+
+  cajitas: {
+    rotulo: "How I explain my work",
+    nota: "",
+    titulo: "A company is a system of little boxes",
+    texto:
+      "Marketing brings people to the website and to WhatsApp, those people reach sales, and every sale opens work for operations and an invoice for admin. In most companies each box has its own spreadsheet or its own program, and someone moves the data from one to the next by hand.",
+    texto2:
+      "<b class='font-semibold text-tinta'>Once the boxes are connected, your company has its operating system.</b> Information goes in once and reaches wherever it needs to on its own. I build the missing box and leave it connected before moving to the next one.",
+    marco: "Operating system",
+    alt: "Marketing leads to the website and to WhatsApp, both feed sales, and sales opens work for operations and an invoice for admin. All of it sits inside the company's operating system.",
+    nodos: {
+      mercadeo: { titulo: "Marketing", sub: "Campaigns" },
+      web: { titulo: "Website", sub: "Forms" },
+      chat: { titulo: "WhatsApp", sub: "Conversations" },
+      ventas: { titulo: "Sales", sub: "CRM" },
+      ops: { titulo: "Operations", sub: "Orders" },
+      admin: { titulo: "Admin", sub: "Invoices" },
+    } as Record<string, Nodo>,
+    manuscrita:
+      "if two boxes are held together by a person in the middle, they're chinomáticas",
+    ctaTexto: "Tell me which of these boxes hurts the most.",
+  },
+
+  sistemas: {
+    rotulo: "Work delivered",
+    nota: "All of these systems are in use except Visible, which is being built. The screens show test data.",
+    titulo: "Operating systems I've built",
+    bajada:
+      "Most of these companies ran on Excel and WhatsApp, with someone copying and pasting from one to the other.",
+    reemplazo: "Replaced",
+    items: [
+      {
+        clave: "aura",
+        sector: "Bridal shop",
+        nombre: "Aura Novias",
+        que: "Its operating system keeps the appointment book, the dress inventory, contracts, payments and the WhatsApp messages to each bride.",
+        reemplazo:
+          "the booking tool, the dress spreadsheets, the paper bride book and the messages that were sent by hand.",
+        alt: "The day's appointments in Aura OS with their payment status, and a column of pending items with unreturned dresses and overdue balances",
+      },
+      {
+        clave: "guiacolegio",
+        sector: "Schools platform",
+        nombre: "Guía Colegio",
+        que: "A CRM built for how they sell, from first contact to close, and a panel where each school sees the families that come to it.",
+        reemplazo:
+          "Kommo and the follow-up the team kept by email and from memory.",
+        alt: "Sales board in Guía Colegio's CRM, with schools by stage",
+      },
+      {
+        clave: "visible",
+        sector: "Personal branding agency · being built",
+        nombre: "Visible",
+        que: "Its operating system will bring together clients, deliverables and approvals, and each client will have their own portal.",
+        alt: "Proposed design for Visible's client portal on a phone, with cycle progress and posts to approve",
+      },
+      {
+        clave: "colegio",
+        sector: "School",
+        nombre: "Communications and minutes",
+        que: "Meetings with families are recorded, AI writes the draft minutes and the family signs them from their phone. The system also turns the school's emails into each family's plan for the week.",
+        reemplazo: "minutes written by hand.",
+        alt: "Draft minutes of a meeting with a family, written by AI and ready to review",
+      },
+      {
+        clave: "ignia",
+        sector: "Education",
+        nombre: "Ignia",
+        que: "Its admissions system starts with a diagnosis each applicant fills in. After that, each case is followed in a CRM that confirms appointments and sends reminders over WhatsApp.",
+        alt: "Board in Ignia's admissions CRM, with opportunities by stage",
+      },
+    ] as Sistema[],
+  },
+
+  banda: {
+    titulo: "I can build your company its own operating system too.",
+    texto: "Tell me how it runs today and I'll tell you where I'd start.",
+  },
+
+  porque: {
+    rotulo: "Differential diagnosis",
+    nota: "Compared with an agency or a program off the shelf.",
+    titulo: "How I work",
+    razones: [
+      {
+        giro: "-rotate-[5deg]",
+        titulo: "The system fits your company.",
+        parrafos: [
+          "A program you buy was made for another company, and your people have to adapt to it. I start by looking at how the work gets done today and build on that. That's why people actually use it.",
+        ],
+      },
+      {
+        giro: "rotate-[4deg]",
+        titulo: "I build with AI.",
+        parrafos: [
+          "I use AI agents to write the code, which lets me deliver a custom system in weeks.",
+          "I also <b class='font-semibold text-tinta'>teach your people to use them</b> for the office work they do by hand today.",
+        ],
+      },
+      {
+        giro: "-rotate-[3deg]",
+        titulo: "A single operating system.",
+        parrafos: [
+          "Many companies buy one program per area and end up with ten that don't talk to each other. I build a system that connects the programs that work and replaces the ones that aren't needed.",
+        ],
+      },
+    ],
+  },
+
+  programa: {
+    rotulo: "Works schedule",
+    nota: "Weeks count from the first interview.",
+    titulo: "What happens if we work together",
+    semanaCorta: "W",
+    filas: [
+      { nombre: "Understanding", desde: 1, hasta: 1, entrega: false },
+      { nombre: "Box 1", desde: 2, hasta: 3, entrega: true },
+      { nombre: "Box 2", desde: 4, hasta: 5, entrega: true },
+      { nombre: "Box 3", desde: 6, hasta: 7, entrega: true },
+    ],
+    filaAbierta: "One every two weeks",
+    notaPrimera: "working in week 3",
+    etapas: [
+      {
+        cuando: "Week 1",
+        titulo: "I interview you",
+        texto:
+          "In the first week I sit down with you to understand your processes from start to finish.",
+      },
+      {
+        cuando: "Week 3",
+        titulo: "I hand you the first box",
+        texto:
+          "I start with the one that hurts most, and two weeks after the interview it's working with your data.",
+      },
+      {
+        cuando: "Every two weeks",
+        titulo: "One more box",
+        texto:
+          "I build the next one and connect it to the earlier ones, until your team uses the operating system without me.",
+      },
+    ],
+    alt: "A crane sets a new box down next to others that are already connected",
+  },
+
+  entrega: {
+    rotulo: "Packing list",
+    nota: "",
+    titulo: "What you take with you when I'm done",
+    bajada: "",
+    alt: "An open box with a laptop and a manual, next to a key ring and an open padlock",
+    columnas: [
+      {
+        t: "Your operating system, running",
+        d: "With your real data, your people already using it and the training recorded for whoever joins later.",
+      },
+      {
+        t: "Everything in your name",
+        d: "The code, the accounts and the access belong to your company, and there's no monthly per-seat fee.",
+      },
+      {
+        t: "How to change it without me",
+        d: "I teach you and your team to make changes with AI.",
+      },
+      {
+        t: "The time, measured",
+        d: "We time the process before and after, and review it at one month and at two.",
+      },
+    ] as Columna[],
+  },
+
+  antes: {
+    rotulo: "Track record",
+    nota: "",
+    titulo: "Before this, I started my own companies",
+    enlace: "Read the full story",
+  },
+
+  montado: {
+    rotulo: "Track record",
+    nota: "",
+    titulo: "What I've built",
+    pieFoto: "The valuation tool I'm showing there is one we built ourselves.",
+    fotoAlt:
+      "Salomón Muriel showing the Finco platform at a trade fair, next to a teammate",
+    empresas: [
+      {
+        clave: "ignia",
+        nombre: "Ignia",
+        cuando: "Today",
+        texto:
+          "A new model for higher education. I built its website, the system the courses run on, the CRM and the community portal.",
+      },
+      {
+        clave: "finco",
+        nombre: "Finco",
+        cuando: "2019 to 2022",
+        texto:
+          "Real-estate valuation with data and AI for all of Latin America. A hundred thousand reports a year.",
+        remate: "Sold to RED Atlas.",
+        remateRojo: false,
+      },
+      {
+        clave: "prestagente",
+        nombre: "PrestaGente",
+        cuando: "2017 to 2019",
+        texto: "Peer-to-peer payroll lending.",
+        remate: "Sold to Taurus Capital",
+        cola: " and is still operating.",
+        remateRojo: false,
+      },
+      {
+        clave: "beriblock",
+        nombre: "Beriblock",
+        cuando: "2018 to 2019",
+        texto: "Promissory-note authentication with blockchain.",
+        remate: "Went under.",
+        cola: " The technology worked, but there was no market.",
+        remateRojo: true,
+      },
+      {
+        clave: "elpalomo",
+        nombre: "El Palomo",
+        cuando: "2016 to 2017",
+        texto: "Flowers by subscription.",
+        remate: "Failed.",
+        cola: "",
+        remateRojo: true,
+      },
+      {
+        clave: "r5",
+        nombre: "R5",
+        cuando: "As an employee",
+        texto:
+          "I led around forty people. I built the entire data pipeline and the risk-modelling system.",
+      },
+    ],
+    cierre2: "My father and my grandfather were business owners too.",
+  },
+
+  voces: {
+    rotulo: "Testimonials",
+    nota: "",
+    titulo: "What the people I've worked with say",
+  },
+} as const;

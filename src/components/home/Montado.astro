@@ -119,15 +119,9 @@ const logos: Record<string, ImageMetadata | undefined> = {
 
         {
           cierre && (
-            <>
-              <p
-                class="mt-5 max-w-[52ch] text-[1.02rem] leading-[1.6]"
-                set:html={`${c.cierre1a}<a href="#cupos" class="border-b-[1.5px] border-current font-semibold text-rojo2 transition-colors hover:text-tinta">${c.cierreEnlace}</a>${c.cierre1b}`}
-              />
-              <p class="mt-3 max-w-[52ch] text-[.96rem] leading-[1.55] text-gris">
-                {c.cierre2}
-              </p>
-            </>
+            <p class="mt-5 max-w-[52ch] text-[.96rem] leading-[1.55] text-gris">
+              {c.cierre2}
+            </p>
           )
         }
       </div>

@@ -1,0 +1,80 @@
+---
+interface Props {
+  etiqueta: string;
+}
+const { etiqueta } = Astro.props;
+---
+
+<button
+  type="button"
+  class="pausa"
+  data-pausa
+  aria-pressed="false"
+  aria-label={etiqueta}
+>
+  <svg viewBox="0 0 16 16" aria-hidden="true">
+    <path class="icono-pausa" d="M5.5 4v8M10.5 4v8"></path>
+    <path class="icono-seguir" d="M5.5 3.8 12 8l-6.5 4.2z"></path>
+  </svg>
+</button>
+
+<style>
+  /* Sits on the collage's bottom-right corner: the parent grid's "escena" area. */
+  .pausa {
+    grid-area: escena;
+    align-self: end;
+    justify-self: end;
+    position: relative;
+    z-index: 5;
+    display: none;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    margin: 12px;
+    border-radius: 50%;
+    background: rgb(22 23 26 / 0.86);
+    color: #fff;
+    box-shadow: 0 0 0 1px rgb(255 255 255 / 0.35);
+    transition:
+      background-color 140ms cubic-bezier(0.2, 0.8, 0.2, 1),
+      transform 90ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  :global([data-rotando]) .pausa {
+    display: grid;
+  }
+  .pausa::before {
+    content: "";
+    position: absolute;
+    inset: -6px;
+  }
+  .pausa:hover {
+    background: var(--rojo2);
+  }
+  .pausa:active {
+    transform: scale(0.94);
+  }
+  svg {
+    width: 14px;
+    height: 14px;
+    fill: currentColor;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .icono-pausa {
+    fill: none;
+  }
+  .icono-seguir,
+  [aria-pressed="true"] .icono-pausa {
+    display: none;
+  }
+  [aria-pressed="true"] .icono-seguir {
+    display: block;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pausa {
+      transition: none;
+    }
+  }
+</style>

@@ -60,7 +60,7 @@ export default (lang: "es" | "en") => {
             textTransform: "uppercase",
           }}
         >
-          {es ? "Se arregla" : "We fix"}
+          {es ? "Se arregla" : "Let's fix"}
         </div>
         <div
           style={{
@@ -72,7 +72,7 @@ export default (lang: "es" | "en") => {
             textTransform: "uppercase",
           }}
         >
-          {es ? "lo chinomático" : "the fake-automated"}
+          {es ? "lo chinomático" : "the chinomático"}
         </div>
         <div
           style={{
